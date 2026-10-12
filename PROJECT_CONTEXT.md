@@ -2,13 +2,13 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **5**. Состояние на: **2026-10-13**, Europe/Moscow. Фаза: **G0_APPROVED_PRE_IMPLEMENTATION**.
+Ревизия: **6**. Состояние на: **2026-10-13**, Europe/Moscow. Фаза: **G0_APPROVED_PRE_IMPLEMENTATION**.
 
 ## Краткое текущее состояние
 
 | Поле | Фактический статус |
 |---|---|
-| Текущая задача | DEV-REVIEW-001: READY_FOR_REVIEW |
+| Текущая задача | DEV-REVIEW-001: COMPLETED |
 | G0 | APPROVED |
 | G1 | NOT_READY |
 | G2 | NOT_READY |
@@ -46,7 +46,7 @@ README объясняет проект посетителю; это не сви�
 
 По запросу тимлида подготовлен docs/development/CODE_REVIEW.md; его полный текст включается в этот переносимый снимок. Он охватывает Go-стиль, ошибки/context, конкурентность, данные, идемпотентность, тесты и доказательства, наблюдаемость, замечания и критерии слияния. После bootstrap изменения готовятся в отдельных ветках и через PR; ИИ не одобряет и не сливает собственную работу. Для merge нужны решение человека по предъявленному изменению и явное поручение на само действие либо действие тимлида.
 
-Статус пакета правил, PR и принятие тимлидом указаны в структурированном состоянии ниже. Подготовленный документ и зелёный CI не означают человеческое одобрение. G0 остаётся принятым; G1–G4 не меняют статусы из-за добавления правил. Сейчас Go-модуль отсутствует: Go CI, конфигурация golangci-lint и версии инструментов будут подключены в G1-P01. GitHub branch protection отдельно не настроена этим документом. При общей GitHub-учётной записи решение человека фиксируется в чате/комментарии с PR и SHA; не изображать approval другим участником.
+Статус пакета правил, PR и принятие тимлидом указаны в структурированном состоянии ниже. PR #1 с HEAD 214eb34 слит аккаунтом тимлида Includeoyasi; это наблюдаемое действие в репозитории, а не придуманное текстовое approval. Подготовленный документ и зелёный CI сами по себе не означают человеческое одобрение. G0 остаётся принятым; G1–G4 не меняют статусы из-за добавления правил. Сейчас Go-модуль отсутствует: Go CI, конфигурация golangci-lint и версии инструментов будут подключены в G1-P01. GitHub branch protection отдельно не настроена этим документом. При общей GitHub-учётной записи решение человека фиксируется в чате/комментарии с PR и SHA либо подтверждается его наблюдаемым действием слияния; не изображать approval другим участником.
 
 Готовый текст для первого сообщения другому агенту:
 
@@ -248,7 +248,7 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 5,
+  "context_revision": 6,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-13",
   "user_timezone": "Europe/Moscow",
@@ -257,17 +257,17 @@ JSON ниже является частью этого файла и доста�
   "current_task": {
     "id": "DEV-REVIEW-001",
     "description": "Установить классические правила Go code review с учётом инвариантов Faultline Lab",
-    "status": "READY_FOR_REVIEW",
+    "status": "COMPLETED",
     "result": {
       "policy_file": "docs/development/CODE_REVIEW.md",
-      "human_acceptance": "NOT_RECORDED",
-      "branch": "docs/go-review-policy",
+      "human_acceptance": "VERIFIED_TEAM_LEAD_ACCOUNT_MERGE_OF_PR_1",
+      "branch": "docs/review-policy-handoff",
       "pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/1",
       "business_implementation": "NOT_STARTED",
       "go_checks": "NOT_RUN_NO_GO_MODULE",
       "repository_protection": "NOT_CONFIGURED_BY_THIS_TASK",
       "local_validation": "PASS",
-      "documentation_ci": "PASS_ON_POLICY_COMMIT_214eb34"
+      "documentation_ci": "PASS_ON_ACCEPTED_MAIN_COMMIT_c1e55fd"
     }
   },
   "roles": {
@@ -316,18 +316,19 @@ JSON ниже является частью этого файла и доста�
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
+    "git_commit": "31c0a71951a22fc90ac0114a37b243bd82b47f6c",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
         "number": 1,
         "url": "https://github.com/Includeoyasi/faultline-lab/pull/1",
-        "state": "OPEN",
+        "state": "MERGED",
         "head_ref": "docs/go-review-policy",
         "base_ref": "main",
-        "head_at_snapshot": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
-        "human_review": "PENDING",
-        "merged": false
+        "head_at_merge": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
+        "human_review": "ACCEPTED_BY_TEAM_LEAD_ACCOUNT_MERGE",
+        "merged": true,
+        "merge_commit": "c1e55fdfca98e12e518f722300bd85ed85c1d85e"
       }
     ]
   },
@@ -348,7 +349,8 @@ JSON ниже является частью этого файла и доста�
     "Публичное оформление и актуализация переносимого контекста завершены; реализация G1-P01 остаётся следующим шагом",
     "Подготовлен Go code review standard: стиль, errors/context, concurrency, SQL/контракты/идемпотентность, тесты, наблюдаемость и критерии приёмки",
     "Правила связаны с AGENTS, workflow, CONTRIBUTING, README, шаблоном PR и полным переносимым контекстом; отдельное одобрение тимлида пока не получено",
-    "Правила опубликованы в ветке docs/go-review-policy и PR #1; локальные проверки и документационный CI исходного коммита прошли; слияние и человеческое принятие ожидаются"
+    "Правила опубликованы в ветке docs/go-review-policy и PR #1; локальные проверки и документационный CI исходного коммита прошли; слияние и человеческое принятие ожидаются",
+    "PR #1 с правилами Go code review слит аккаунтом тимлида Includeoyasi; CI main на merge commit c1e55fd прошёл. Правила действуют; реализация G1 ещё не начата."
   ],
   "next_implementation_packet": {
     "id": "G1-P01",
@@ -460,6 +462,14 @@ JSON ниже является частью этого файла и доста�
       "detail": "Ветка docs/go-review-policy опубликована, GitHub PR #1 открыт в main с HEAD 214eb34. Documentation push run 38318256118 завершился success. PR не одобрен ИИ и не слит; решение тимлида не получено.",
       "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/1",
       "ci_url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38318256118"
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Observe team lead merge and reconcile current main",
+      "result": "PASS",
+      "detail": "GitHub API подтвердил PR #1 merged=true, merged_by=Includeoyasi, accepted HEAD 214eb34, merge c1e55fd. Main CI run 38318650575 success. Origin/main получен; последующее обновление контекста перенесено на актуальный main без конфликтов. ИИ не выполнял слияние.",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/1",
+      "ci_url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38318650575"
     }
   ],
   "source_documents": [
@@ -559,6 +569,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-13",
       "summary": "Зафиксированы PR #1, опубликованная ветка, успешные локальные проверки и CI 214eb34; правила готовы к ревью тимлида, слияние не выполнялось.",
       "trigger": "Фактические результаты Git push, GitHub PR creation и Actions."
+    },
+    {
+      "revision": 6,
+      "date": "2026-10-13",
+      "summary": "Замечено и проверено слияние PR #1 аккаунтом тимлида. Правила действуют в main; статусы reconciled с merge c1e55fd и успешным CI. Handoff обновляется отдельной веткой.",
+      "trigger": "GitHub PR metadata и фактическое обновление origin/main во время текущей задачи."
     }
   ],
   "repository": {
@@ -576,21 +592,30 @@ JSON ниже является частью этого файла и доста�
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
     "verified_ci": {
       "workflow": "Documentation",
-      "head_sha": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
+      "head_sha": "c1e55fdfca98e12e518f722300bd85ed85c1d85e",
       "status": "COMPLETED",
       "conclusion": "SUCCESS",
-      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38318256118",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38318650575",
       "event": "push",
-      "scope": "Документация и переносимый контекст исходного коммита правил; не подтверждает человеческое ревью или Go-код."
+      "scope": "Документационный CI main после принятия правил; не является проверкой последующего handoff PR или Go-кода."
     },
-    "snapshot_ref": "docs/go-review-policy"
+    "snapshot_ref": "docs/review-policy-handoff"
   },
   "review_policy": {
     "document": "docs/development/CODE_REVIEW.md",
-    "status": "PREPARED_FOR_TEAM_LEAD_REVIEW",
+    "status": "ACCEPTED_VIA_TEAM_LEAD_REPOSITORY_MERGE",
     "requested_on": "2026-10-13",
     "request_evidence": "Прямое сообщение тимлида: Давай теперь установим классические для современной разработки на Go правила код-ревью",
-    "human_approval": null,
+    "human_approval": {
+      "kind": "OBSERVED_REPOSITORY_MERGE",
+      "actor": "Includeoyasi",
+      "date_local": "2026-10-13",
+      "merged_at_utc": "2026-10-12T22:47:27Z",
+      "accepted_head": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
+      "merge_commit": "c1e55fdfca98e12e518f722300bd85ed85c1d85e",
+      "pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/1",
+      "detail": "GitHub API подтвердил слияние аккаунтом тимлида. ИИ не вызывал merge/approve; текстовое approval не приписывается пользователю."
+    },
     "normal_change_delivery": "FOCUSED_BRANCH_AND_PR",
     "merge": "EXPLICIT_HUMAN_DECISION_AND_ACTION_AUTHORIZATION",
     "go_checks_activation": "G1-P01_WITH_FIRST_GO_MODULE",
@@ -606,8 +631,8 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `a2b8a1fbd92f9fbfa2e347cf087f67a10ebdc34f3ee9af7ac6ee18bca95b5792` |
-| `tools/context_intro.md` | `cb952b8277b0b140479eb1a8e88cb4280a963762af840fb65cf0fd6558edc9de` |
+| `CONTEXT_STATE.json` | `af2588830e56e986df797f1f4b28a4aaa5ca696905e7bb5559ba617d2b22a49f` |
+| `tools/context_intro.md` | `4aea668cdcc08e5d2beacbbbc869493a88862adfefc19e115684ce66a02fe78f` |
 | `tools/update_context.ps1` | `a0c3c6d4a2f84cc143bd670600218ca6cfa7ce30b7a770608f9aa06be8934b26` |
 | `README.md` | `0720f80a667c94917a534fe05ec547bdff8bcb853913d18440310b987c5ee16a` |
 | `README.ru.md` | `5bb9f4229ddb1ceab2de38c40a44b0f4eee19219554b58f37c07ae7e89865cd9` |
@@ -621,7 +646,7 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/adr/0001-approved-g0.md` | `700f9e578e681c7902f619143a24d92c68df9401a2de54a03d416507502ac748` |
 | `CONTRIBUTING.md` | `079ad6fef1d464c5e9eac849cddb381b2805d198c15a13bf0404dea8dd46a4bd` |
 | `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
-| `docs/development/CODE_REVIEW.md` | `7630502087570aaf155ff4156aff9907c0899e551edbb2a9809d39bbd3890333` |
+| `docs/development/CODE_REVIEW.md` | `38a5e040f20ab385792a676546ad69d99a6647e68a2c4426f64107c415c14ddd` |
 
 ## Полные самостоятельные приложения
 
@@ -646,7 +671,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/docs/assets/banner.svg" alt="Faultline Lab — three services, real failure modes, measurable decisions" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/docs/assets/banner.svg" alt="Faultline Lab — three services, real failure modes, measurable decisions" width="100%">
 </p>
 
 <p align="center">
@@ -664,7 +689,7 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Current state
@@ -761,7 +786,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience | Planned |
 | **G4** | Reproducible engineering lab | Planned |
 
-The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
 
 #### Repository map
 
@@ -816,7 +841,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/docs/assets/banner.svg" alt="Faultline Lab — три сервиса, реальные сценарии сбоев, измеримые решения" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/docs/assets/banner.svg" alt="Faultline Lab — три сервиса, реальные сценарии сбоев, измеримые решения" width="100%">
 </p>
 
 <p align="center">
@@ -834,7 +859,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Состояние проекта
@@ -916,7 +941,7 @@ flowchart LR
 
 **G0 принят.** G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Следующие контрольные точки ещё не достигнуты.
 
-[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/PROJECT_CONTEXT.md) включает полные документы, статусы и согласования: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/PROJECT_CONTEXT.md) включает полные документы, статусы и согласования: его можно передать агенту без доступа к репозиторию.
 
 #### С чего начать
 
@@ -964,7 +989,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Проверить распределённый процесс | [Атлас G0](#appendix-g0-processes) → [Принятие G0](#appendix-adr-0001) |
 | Принять участие в разработке | [CONTRIBUTING](#appendix-contributing) → [Правила ревью](#appendix-code-review) → [Workflow](#appendix-development-process) → [AGENTS](#appendix-agents) |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
@@ -974,7 +999,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [Workflow](#appendix-development-process): роли человека и ИИ, состав ревью и контрольные точки G0–G4.
 - [Правила ревью](#appendix-code-review): стандарт Go, блокирующие замечания, проверки и критерии слияния.
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/CONTEXT_STATE.json): текущая работа, проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/CONTEXT_STATE.json): текущая работа, проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -2050,7 +2075,7 @@ Codex — исполнитель разработки: готовит проек
 
 #### Стандарт код-ревью
 
-[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/.github/pull_request_template.md) содержит краткий применимый чек-лист.
 
 После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; тимлид рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению тимлида или действие самого тимлида.
 
@@ -2294,7 +2319,7 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [current context](https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). AI implementers must also follow [AGENTS.md](#appendix-agents).
+Read the [current context](https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). AI implementers must also follow [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
@@ -2364,7 +2389,7 @@ SOFTWARE.
 
 ### Правила код-ревью Faultline Lab
 
-Подготовлены по запросу тимлида 13 октября 2026 года. Документ задаёт рабочий стандарт для Go-кода и распределённых процессов проекта. Пакет правил предъявляется отдельным PR; его подготовка не является одобрением тимлида или принятием G1.
+Приняты через слияние [PR #1](https://github.com/Includeoyasi/faultline-lab/pull/1) аккаунтом тимлида `Includeoyasi` 13 октября 2026 года, Europe/Moscow. Принятый HEAD: `214eb34`; merge commit: `c1e55fd`. Документ задаёт рабочий стандарт для Go-кода и распределённых процессов проекта. Принятие правил не является приёмкой G1.
 
 **Цель ревью:** понятное, корректное и сопровождаемое изменение с проверяемыми доказательствами. Сначала проверяем бизнес-поведение и отказные сценарии, затем устройство кода. Форматирование выполняют инструменты.
 
@@ -2492,4 +2517,4 @@ SOFTWARE.
 - Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
 - Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
 
-Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.

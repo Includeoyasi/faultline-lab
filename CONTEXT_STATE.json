@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 5,
+  "context_revision": 6,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-13",
   "user_timezone": "Europe/Moscow",
@@ -10,17 +10,17 @@
   "current_task": {
     "id": "DEV-REVIEW-001",
     "description": "Установить классические правила Go code review с учётом инвариантов Faultline Lab",
-    "status": "READY_FOR_REVIEW",
+    "status": "COMPLETED",
     "result": {
       "policy_file": "docs/development/CODE_REVIEW.md",
-      "human_acceptance": "NOT_RECORDED",
-      "branch": "docs/go-review-policy",
+      "human_acceptance": "VERIFIED_TEAM_LEAD_ACCOUNT_MERGE_OF_PR_1",
+      "branch": "docs/review-policy-handoff",
       "pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/1",
       "business_implementation": "NOT_STARTED",
       "go_checks": "NOT_RUN_NO_GO_MODULE",
       "repository_protection": "NOT_CONFIGURED_BY_THIS_TASK",
       "local_validation": "PASS",
-      "documentation_ci": "PASS_ON_POLICY_COMMIT_214eb34"
+      "documentation_ci": "PASS_ON_ACCEPTED_MAIN_COMMIT_c1e55fd"
     }
   },
   "roles": {
@@ -69,18 +69,19 @@
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
+    "git_commit": "31c0a71951a22fc90ac0114a37b243bd82b47f6c",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
         "number": 1,
         "url": "https://github.com/Includeoyasi/faultline-lab/pull/1",
-        "state": "OPEN",
+        "state": "MERGED",
         "head_ref": "docs/go-review-policy",
         "base_ref": "main",
-        "head_at_snapshot": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
-        "human_review": "PENDING",
-        "merged": false
+        "head_at_merge": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
+        "human_review": "ACCEPTED_BY_TEAM_LEAD_ACCOUNT_MERGE",
+        "merged": true,
+        "merge_commit": "c1e55fdfca98e12e518f722300bd85ed85c1d85e"
       }
     ]
   },
@@ -101,7 +102,8 @@
     "Публичное оформление и актуализация переносимого контекста завершены; реализация G1-P01 остаётся следующим шагом",
     "Подготовлен Go code review standard: стиль, errors/context, concurrency, SQL/контракты/идемпотентность, тесты, наблюдаемость и критерии приёмки",
     "Правила связаны с AGENTS, workflow, CONTRIBUTING, README, шаблоном PR и полным переносимым контекстом; отдельное одобрение тимлида пока не получено",
-    "Правила опубликованы в ветке docs/go-review-policy и PR #1; локальные проверки и документационный CI исходного коммита прошли; слияние и человеческое принятие ожидаются"
+    "Правила опубликованы в ветке docs/go-review-policy и PR #1; локальные проверки и документационный CI исходного коммита прошли; слияние и человеческое принятие ожидаются",
+    "PR #1 с правилами Go code review слит аккаунтом тимлида Includeoyasi; CI main на merge commit c1e55fd прошёл. Правила действуют; реализация G1 ещё не начата."
   ],
   "next_implementation_packet": {
     "id": "G1-P01",
@@ -213,6 +215,14 @@
       "detail": "Ветка docs/go-review-policy опубликована, GitHub PR #1 открыт в main с HEAD 214eb34. Documentation push run 38318256118 завершился success. PR не одобрен ИИ и не слит; решение тимлида не получено.",
       "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/1",
       "ci_url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38318256118"
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Observe team lead merge and reconcile current main",
+      "result": "PASS",
+      "detail": "GitHub API подтвердил PR #1 merged=true, merged_by=Includeoyasi, accepted HEAD 214eb34, merge c1e55fd. Main CI run 38318650575 success. Origin/main получен; последующее обновление контекста перенесено на актуальный main без конфликтов. ИИ не выполнял слияние.",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/1",
+      "ci_url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38318650575"
     }
   ],
   "source_documents": [
@@ -312,6 +322,12 @@
       "date": "2026-10-13",
       "summary": "Зафиксированы PR #1, опубликованная ветка, успешные локальные проверки и CI 214eb34; правила готовы к ревью тимлида, слияние не выполнялось.",
       "trigger": "Фактические результаты Git push, GitHub PR creation и Actions."
+    },
+    {
+      "revision": 6,
+      "date": "2026-10-13",
+      "summary": "Замечено и проверено слияние PR #1 аккаунтом тимлида. Правила действуют в main; статусы reconciled с merge c1e55fd и успешным CI. Handoff обновляется отдельной веткой.",
+      "trigger": "GitHub PR metadata и фактическое обновление origin/main во время текущей задачи."
     }
   ],
   "repository": {
@@ -329,21 +345,30 @@
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
     "verified_ci": {
       "workflow": "Documentation",
-      "head_sha": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
+      "head_sha": "c1e55fdfca98e12e518f722300bd85ed85c1d85e",
       "status": "COMPLETED",
       "conclusion": "SUCCESS",
-      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38318256118",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38318650575",
       "event": "push",
-      "scope": "Документация и переносимый контекст исходного коммита правил; не подтверждает человеческое ревью или Go-код."
+      "scope": "Документационный CI main после принятия правил; не является проверкой последующего handoff PR или Go-кода."
     },
-    "snapshot_ref": "docs/go-review-policy"
+    "snapshot_ref": "docs/review-policy-handoff"
   },
   "review_policy": {
     "document": "docs/development/CODE_REVIEW.md",
-    "status": "PREPARED_FOR_TEAM_LEAD_REVIEW",
+    "status": "ACCEPTED_VIA_TEAM_LEAD_REPOSITORY_MERGE",
     "requested_on": "2026-10-13",
     "request_evidence": "Прямое сообщение тимлида: Давай теперь установим классические для современной разработки на Go правила код-ревью",
-    "human_approval": null,
+    "human_approval": {
+      "kind": "OBSERVED_REPOSITORY_MERGE",
+      "actor": "Includeoyasi",
+      "date_local": "2026-10-13",
+      "merged_at_utc": "2026-10-12T22:47:27Z",
+      "accepted_head": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
+      "merge_commit": "c1e55fdfca98e12e518f722300bd85ed85c1d85e",
+      "pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/1",
+      "detail": "GitHub API подтвердил слияние аккаунтом тимлида. ИИ не вызывал merge/approve; текстовое approval не приписывается пользователю."
+    },
     "normal_change_delivery": "FOCUSED_BRANCH_AND_PR",
     "merge": "EXPLICIT_HUMAN_DECISION_AND_ACTION_AUTHORIZATION",
     "go_checks_activation": "G1-P01_WITH_FIRST_GO_MODULE",
