@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 2,
+  "context_revision": 3,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-13",
   "user_timezone": "Europe/Moscow",
@@ -9,13 +9,16 @@
   "current_phase": "G0_APPROVED_PRE_IMPLEMENTATION",
   "current_task": {
     "id": "REPO-BOOTSTRAP-001",
-    "description": "Подготовить публичный репозиторий Faultline Lab, оформление, структуру и первый коммит",
-    "status": "IN_PROGRESS",
+    "description": "Создать публичный репозиторий Faultline Lab, оформить структуру и опубликовать первый коммит",
+    "status": "COMPLETED",
     "result": {
-      "repository_created": true,
-      "first_commit": "PENDING",
-      "publication": "PENDING",
+      "repository_url": "https://github.com/Includeoyasi/faultline-lab",
+      "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
+      "publication": "VERIFIED",
       "license": "MIT",
+      "documentation_ci": "PASS_ON_FIRST_COMMIT",
+      "primary_handoff_file": "PROJECT_CONTEXT.md",
+      "embedded_source_documents": 12,
       "business_implementation": "NOT_STARTED"
     }
   },
@@ -65,7 +68,7 @@
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": null,
+    "git_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": []
   },
@@ -81,7 +84,9 @@
     "Проверены сборка, соответствие источникам, структура приложений/ссылок, кодировка и отсутствие устаревшего ожидания принятия G0",
     "Создан публичный GitHub-репозиторий Includeoyasi/faultline-lab с описанием и темами; локальный Git и origin инициализированы",
     "Документы разложены по docs; добавлены двуязычный README, SVG-обложка, карта документации, MIT по выбору тимлида и шаблоны ревью",
-    "Добавлены переносимая проверка документации и CI workflow; фактический запуск CI пока ожидает первого push"
+    "Добавлены переносимая проверка документации и CI workflow; CI первого опубликованного коммита прошёл на Ubuntu runner",
+    "Первый коммит 6897f4a опубликован в main, ветка отслеживает origin/main; GitHub README и структура проверены после публикации",
+    "Публичное оформление и актуализация переносимого контекста завершены; реализация G1-P01 остаётся следующим шагом"
   ],
   "next_implementation_packet": {
     "id": "G1-P01",
@@ -161,6 +166,18 @@
         "powershell.exe -NoProfile -File tools/update_context.ps1 -CheckOnly"
       ],
       "detail": "Проверены 15 Markdown-файлов, 115 локальных ссылок и 50 Mermaid-блоков вместе с повторениями внутри снимка. Снимок включает 12 документов и 15 SHA-256. CheckOnly проходит в PowerShell 7 и Windows PowerShell 5.1. SVG-обложка отрендерена и визуально проверена. Рендеринг всех Mermaid-схем и тесты сервисов не выполнялись."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Initial commit publication and GitHub Actions",
+      "result": "PASS",
+      "commands": [
+        "git commit",
+        "git push -u origin main",
+        "GitHub API: workflow runs and job steps"
+      ],
+      "detail": "Git push создал удалённый main и tracking origin/main. Documentation run 38317062261 завершён success на коммите 6897f4a; оба шага проверки документов и контекста проходят на Ubuntu. Публичный README, MIT, темы и файловая структура доступны в GitHub.",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38317062261"
     }
   ],
   "source_documents": [
@@ -237,6 +254,12 @@
       "date": "2026-10-13",
       "summary": "Проект получил имя Faultline Lab; создан GitHub-репозиторий, оформлены README/обложка/структура, выбрана MIT. Подготовка первого коммита.",
       "trigger": "Пользователь поручил инициализировать Git, создать публичный репозиторий и первый коммит; затем выбрал MIT."
+    },
+    {
+      "revision": 3,
+      "date": "2026-10-13",
+      "summary": "Первый коммит опубликован; CI успешно проверен; репозиторий и модель human-led AI development оформлены; переносимый контекст фиксирует завершение bootstrap.",
+      "trigger": "Фактические результаты первого push, GitHub Actions и проверки публичного README."
     }
   ],
   "repository": {
@@ -246,10 +269,19 @@
     "url": "https://github.com/Includeoyasi/faultline-lab",
     "visibility": "PUBLIC",
     "default_branch": "main",
-    "status": "CREATED_AWAITING_INITIAL_PUSH",
+    "status": "PUBLISHED",
     "description": "A Go microservices lab for testing scale, failure and recovery — built through human-led AI collaboration.",
     "license": "MIT",
     "license_approval": "Прямое сообщение тимлида 2026-10-13: возьми MIT",
-    "context_commit_semantics": "git_commit фиксирует HEAD на момент подготовки снимка; финальный HEAD проверяется через git rev-parse HEAD, поскольку снимок не может содержать hash собственного коммита."
+    "context_commit_semantics": "git_commit фиксирует HEAD на момент подготовки снимка; финальный HEAD проверяется через git rev-parse HEAD, поскольку снимок не может содержать hash собственного коммита.",
+    "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
+    "verified_ci": {
+      "workflow": "Documentation",
+      "head_sha": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
+      "status": "COMPLETED",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38317062261",
+      "scope": "Только документация и свежесть переносимого контекста; сервисные тесты отсутствуют."
+    }
   }
 }

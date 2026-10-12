@@ -8,6 +8,11 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/Includeoyasi/faultline-lab/actions/workflows/docs.yml"><img src="https://github.com/Includeoyasi/faultline-lab/actions/workflows/docs.yml/badge.svg" alt="Documentation checks"></a>
+  · <a href="LICENSE">MIT License</a>
+</p>
+
+<p align="center">
   <a href="README.ru.md">Русский</a> ·
   <a href="docs/README.md">Documentation</a> ·
   <a href="docs/architecture/PROCESSES.md">Process atlas</a> ·

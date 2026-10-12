@@ -2,13 +2,13 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **2**. Состояние на: **2026-10-13**, Europe/Moscow. Фаза: **G0_APPROVED_PRE_IMPLEMENTATION**.
+Ревизия: **3**. Состояние на: **2026-10-13**, Europe/Moscow. Фаза: **G0_APPROVED_PRE_IMPLEMENTATION**.
 
 ## Краткое текущее состояние
 
 | Поле | Фактический статус |
 |---|---|
-| Текущая задача | REPO-BOOTSTRAP-001: IN_PROGRESS |
+| Текущая задача | REPO-BOOTSTRAP-001: COMPLETED |
 | G0 | APPROVED |
 | G1 | NOT_READY |
 | G2 | NOT_READY |
@@ -242,7 +242,7 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 2,
+  "context_revision": 3,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-13",
   "user_timezone": "Europe/Moscow",
@@ -250,13 +250,16 @@ JSON ниже является частью этого файла и доста�
   "current_phase": "G0_APPROVED_PRE_IMPLEMENTATION",
   "current_task": {
     "id": "REPO-BOOTSTRAP-001",
-    "description": "Подготовить публичный репозиторий Faultline Lab, оформление, структуру и первый коммит",
-    "status": "IN_PROGRESS",
+    "description": "Создать публичный репозиторий Faultline Lab, оформить структуру и опубликовать первый коммит",
+    "status": "COMPLETED",
     "result": {
-      "repository_created": true,
-      "first_commit": "PENDING",
-      "publication": "PENDING",
+      "repository_url": "https://github.com/Includeoyasi/faultline-lab",
+      "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
+      "publication": "VERIFIED",
       "license": "MIT",
+      "documentation_ci": "PASS_ON_FIRST_COMMIT",
+      "primary_handoff_file": "PROJECT_CONTEXT.md",
+      "embedded_source_documents": 12,
       "business_implementation": "NOT_STARTED"
     }
   },
@@ -306,7 +309,7 @@ JSON ниже является частью этого файла и доста�
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": null,
+    "git_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": []
   },
@@ -322,7 +325,9 @@ JSON ниже является частью этого файла и доста�
     "Проверены сборка, соответствие источникам, структура приложений/ссылок, кодировка и отсутствие устаревшего ожидания принятия G0",
     "Создан публичный GitHub-репозиторий Includeoyasi/faultline-lab с описанием и темами; локальный Git и origin инициализированы",
     "Документы разложены по docs; добавлены двуязычный README, SVG-обложка, карта документации, MIT по выбору тимлида и шаблоны ревью",
-    "Добавлены переносимая проверка документации и CI workflow; фактический запуск CI пока ожидает первого push"
+    "Добавлены переносимая проверка документации и CI workflow; CI первого опубликованного коммита прошёл на Ubuntu runner",
+    "Первый коммит 6897f4a опубликован в main, ветка отслеживает origin/main; GitHub README и структура проверены после публикации",
+    "Публичное оформление и актуализация переносимого контекста завершены; реализация G1-P01 остаётся следующим шагом"
   ],
   "next_implementation_packet": {
     "id": "G1-P01",
@@ -402,6 +407,18 @@ JSON ниже является частью этого файла и доста�
         "powershell.exe -NoProfile -File tools/update_context.ps1 -CheckOnly"
       ],
       "detail": "Проверены 15 Markdown-файлов, 115 локальных ссылок и 50 Mermaid-блоков вместе с повторениями внутри снимка. Снимок включает 12 документов и 15 SHA-256. CheckOnly проходит в PowerShell 7 и Windows PowerShell 5.1. SVG-обложка отрендерена и визуально проверена. Рендеринг всех Mermaid-схем и тесты сервисов не выполнялись."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Initial commit publication and GitHub Actions",
+      "result": "PASS",
+      "commands": [
+        "git commit",
+        "git push -u origin main",
+        "GitHub API: workflow runs and job steps"
+      ],
+      "detail": "Git push создал удалённый main и tracking origin/main. Documentation run 38317062261 завершён success на коммите 6897f4a; оба шага проверки документов и контекста проходят на Ubuntu. Публичный README, MIT, темы и файловая структура доступны в GitHub.",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38317062261"
     }
   ],
   "source_documents": [
@@ -478,6 +495,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-13",
       "summary": "Проект получил имя Faultline Lab; создан GitHub-репозиторий, оформлены README/обложка/структура, выбрана MIT. Подготовка первого коммита.",
       "trigger": "Пользователь поручил инициализировать Git, создать публичный репозиторий и первый коммит; затем выбрал MIT."
+    },
+    {
+      "revision": 3,
+      "date": "2026-10-13",
+      "summary": "Первый коммит опубликован; CI успешно проверен; репозиторий и модель human-led AI development оформлены; переносимый контекст фиксирует завершение bootstrap.",
+      "trigger": "Фактические результаты первого push, GitHub Actions и проверки публичного README."
     }
   ],
   "repository": {
@@ -487,11 +510,20 @@ JSON ниже является частью этого файла и доста�
     "url": "https://github.com/Includeoyasi/faultline-lab",
     "visibility": "PUBLIC",
     "default_branch": "main",
-    "status": "CREATED_AWAITING_INITIAL_PUSH",
+    "status": "PUBLISHED",
     "description": "A Go microservices lab for testing scale, failure and recovery — built through human-led AI collaboration.",
     "license": "MIT",
     "license_approval": "Прямое сообщение тимлида 2026-10-13: возьми MIT",
-    "context_commit_semantics": "git_commit фиксирует HEAD на момент подготовки снимка; финальный HEAD проверяется через git rev-parse HEAD, поскольку снимок не может содержать hash собственного коммита."
+    "context_commit_semantics": "git_commit фиксирует HEAD на момент подготовки снимка; финальный HEAD проверяется через git rev-parse HEAD, поскольку снимок не может содержать hash собственного коммита.",
+    "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
+    "verified_ci": {
+      "workflow": "Documentation",
+      "head_sha": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
+      "status": "COMPLETED",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38317062261",
+      "scope": "Только документация и свежесть переносимого контекста; сервисные тесты отсутствуют."
+    }
   }
 }
 ```
@@ -502,11 +534,11 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `158370ef85be171140f993c7ba5fa65d1bc216d385340d4ca8071c1d02d48a5a` |
+| `CONTEXT_STATE.json` | `7899cc6f5a792fbfbe8ce76d7a4bf9a86efdfcc540f04effbad79096d3c9131a` |
 | `tools/context_intro.md` | `0e4a8d7fd2c123b7a7c7a786b25181dfd8ca2dc8bc89b2c73b20ab285bf15c51` |
 | `tools/update_context.ps1` | `ccc2c3da104cbf74c8bd11bd4970262ecaf715dfa8f8260971fb04feddea2010` |
-| `README.md` | `be36eec95b90b7f59ccdcee743a048d246f8ed5875bc93b2dbc26fd8396befed` |
-| `README.ru.md` | `4e66849a8f0c0cdf1030952554c295dababc4b449e7957baf8c6b90aa0487106` |
+| `README.md` | `164707580999c817156f74563d17dea15eb7fc33fd610ca5b986587062225a46` |
+| `README.ru.md` | `cda7f18497eef12abdbb258ba83933d48ed39b1f4f131666d328b4cc09f61777` |
 | `docs/README.md` | `e902dabf0ea9e57e17d616c08fb15574fdd5751099887e7160d4c9ad25adcb64` |
 | `docs/ROADMAP.md` | `44abbd4c97ab735bfd1ab3332c79b74c320452d52b8bfa3714fdeadded60df87` |
 | `docs/architecture/DESIGN.md` | `cd150f15b8a676453f77197687d2f8df4e68944ac77c63d2d867c2779d6fd750` |
@@ -546,6 +578,11 @@ SHA-256 относится к исходному файлу на момент с
 <p align="center">
   <strong>A small business system. A deliberate breaking point. Evidence for every fix.</strong><br>
   A Go microservices lab for studying scale, failure and recovery through human-led AI development.
+</p>
+
+<p align="center">
+  <a href="https://github.com/Includeoyasi/faultline-lab/actions/workflows/docs.yml"><img src="https://github.com/Includeoyasi/faultline-lab/actions/workflows/docs.yml/badge.svg" alt="Documentation checks"></a>
+  · <a href="#appendix-license">MIT License</a>
 </p>
 
 <p align="center">
@@ -711,6 +748,11 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 <p align="center">
   <strong>Небольшой бизнес. Управляемые сбои. Доказательства эффективности решений.</strong><br>
   Лаборатория микросервисов на Go, разрабатываемая ИИ под руководством человека.
+</p>
+
+<p align="center">
+  <a href="https://github.com/Includeoyasi/faultline-lab/actions/workflows/docs.yml"><img src="https://github.com/Includeoyasi/faultline-lab/actions/workflows/docs.yml/badge.svg" alt="Проверки документации"></a>
+  · <a href="#appendix-license">MIT License</a>
 </p>
 
 <p align="center">
