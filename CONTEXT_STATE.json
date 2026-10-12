@@ -1,25 +1,24 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 3,
+  "context_revision": 4,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-13",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "current_phase": "G0_APPROVED_PRE_IMPLEMENTATION",
   "current_task": {
-    "id": "REPO-BOOTSTRAP-001",
-    "description": "Создать публичный репозиторий Faultline Lab, оформить структуру и опубликовать первый коммит",
-    "status": "COMPLETED",
+    "id": "DEV-REVIEW-001",
+    "description": "Установить классические правила Go code review с учётом инвариантов Faultline Lab",
+    "status": "READY_FOR_REVIEW",
     "result": {
-      "repository_url": "https://github.com/Includeoyasi/faultline-lab",
-      "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-      "publication": "VERIFIED",
-      "license": "MIT",
-      "documentation_ci": "PASS_ON_FIRST_COMMIT",
-      "primary_handoff_file": "PROJECT_CONTEXT.md",
-      "embedded_source_documents": 12,
-      "business_implementation": "NOT_STARTED"
+      "policy_file": "docs/development/CODE_REVIEW.md",
+      "human_acceptance": "NOT_RECORDED",
+      "branch": "docs/go-review-policy",
+      "pull_request": "PENDING_CREATION",
+      "business_implementation": "NOT_STARTED",
+      "go_checks": "NOT_RUN_NO_GO_MODULE",
+      "repository_protection": "NOT_CONFIGURED_BY_THIS_TASK"
     }
   },
   "roles": {
@@ -68,7 +67,7 @@
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
+    "git_commit": "85b32e8505270d8ecb7c7a5dafefa841c5070627",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": []
   },
@@ -86,7 +85,9 @@
     "Документы разложены по docs; добавлены двуязычный README, SVG-обложка, карта документации, MIT по выбору тимлида и шаблоны ревью",
     "Добавлены переносимая проверка документации и CI workflow; CI первого опубликованного коммита прошёл на Ubuntu runner",
     "Первый коммит 6897f4a опубликован в main, ветка отслеживает origin/main; GitHub README и структура проверены после публикации",
-    "Публичное оформление и актуализация переносимого контекста завершены; реализация G1-P01 остаётся следующим шагом"
+    "Публичное оформление и актуализация переносимого контекста завершены; реализация G1-P01 остаётся следующим шагом",
+    "Подготовлен Go code review standard: стиль, errors/context, concurrency, SQL/контракты/идемпотентность, тесты, наблюдаемость и критерии приёмки",
+    "Правила связаны с AGENTS, workflow, CONTRIBUTING, README, шаблоном PR и полным переносимым контекстом; отдельное одобрение тимлида пока не получено"
   ],
   "next_implementation_packet": {
     "id": "G1-P01",
@@ -178,6 +179,18 @@
       ],
       "detail": "Git push создал удалённый main и tracking origin/main. Documentation run 38317062261 завершён success на коммите 6897f4a; оба шага проверки документов и контекста проходят на Ubuntu. Публичный README, MIT, темы и файловая структура доступны в GitHub.",
       "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38317062261"
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Go review policy documentation and portable snapshot",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly",
+        "powershell.exe -NoProfile -File tools/update_context.ps1 -CheckOnly",
+        "git diff --check"
+      ],
+      "detail": "Проверены 16 Markdown-файлов, 144 локальные ссылки, fences/кодировка и отсутствие машинных путей. Снимок содержит 13 документов и 16 fingerprints; актуальность проходит в PowerShell 7 и Windows PowerShell 5.1. Go-проверки NOT_RUN: модуль и сервисы ещё отсутствуют. Человеческая приёмка правил не заявляется."
     }
   ],
   "source_documents": [
@@ -240,6 +253,11 @@
       "path": "LICENSE",
       "anchor": "appendix-license",
       "title": "MIT License"
+    },
+    {
+      "path": "docs/development/CODE_REVIEW.md",
+      "anchor": "appendix-code-review",
+      "title": "Правила Go code review и критерии принятия изменений"
     }
   ],
   "change_history": [
@@ -260,6 +278,12 @@
       "date": "2026-10-13",
       "summary": "Первый коммит опубликован; CI успешно проверен; репозиторий и модель human-led AI development оформлены; переносимый контекст фиксирует завершение bootstrap.",
       "trigger": "Фактические результаты первого push, GitHub Actions и проверки публичного README."
+    },
+    {
+      "revision": 4,
+      "date": "2026-10-13",
+      "summary": "Подготовлен стандарт Go code review и обновлены инструкции/шаблон PR; создана ветка docs/go-review-policy. Go CI включается с первым модулем; человеческое одобрение не заявляется.",
+      "trigger": "Прямое поручение тимлида установить современные правила Go code review."
     }
   ],
   "repository": {
@@ -281,7 +305,19 @@
       "status": "COMPLETED",
       "conclusion": "SUCCESS",
       "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38317062261",
-      "scope": "Только документация и свежесть переносимого контекста; сервисные тесты отсутствуют."
-    }
+      "scope": "Результат исторического bootstrap main. Не является подтверждением CI текущей ветки правил ревью."
+    },
+    "snapshot_ref": "docs/go-review-policy"
+  },
+  "review_policy": {
+    "document": "docs/development/CODE_REVIEW.md",
+    "status": "PREPARED_FOR_TEAM_LEAD_REVIEW",
+    "requested_on": "2026-10-13",
+    "request_evidence": "Прямое сообщение тимлида: Давай теперь установим классические для современной разработки на Go правила код-ревью",
+    "human_approval": null,
+    "normal_change_delivery": "FOCUSED_BRANCH_AND_PR",
+    "merge": "EXPLICIT_HUMAN_DECISION_AND_ACTION_AUTHORIZATION",
+    "go_checks_activation": "G1-P01_WITH_FIRST_GO_MODULE",
+    "github_branch_protection": "NOT_CONFIGURED_BY_THIS_TASK"
   }
 }

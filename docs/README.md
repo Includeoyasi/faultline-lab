@@ -8,7 +8,7 @@
 | :--- | :--- |
 | Быстро оценить проект | [README](../README.ru.md) → [Дизайн](architecture/DESIGN.md) → [Roadmap](ROADMAP.md) |
 | Проверить распределённый процесс | [Атлас G0](architecture/PROCESSES.md) → [Принятие G0](adr/0001-approved-g0.md) |
-| Принять участие в разработке | [CONTRIBUTING](../CONTRIBUTING.md) → [Workflow](development/WORKFLOW.md) → [AGENTS](../AGENTS.md) |
+| Принять участие в разработке | [CONTRIBUTING](../CONTRIBUTING.md) → [Правила ревью](development/CODE_REVIEW.md) → [Workflow](development/WORKFLOW.md) → [AGENTS](../AGENTS.md) |
 | Подготовить эксперимент | [Roadmap](ROADMAP.md) → [Шаблон отчёта](experiments/REPORT_TEMPLATE.md) |
 | Ввести другого ИИ в задачу | [Переносимый контекст](../PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
@@ -18,6 +18,7 @@
 - [Процессы](architecture/PROCESSES.md): 15 подробных схем транзакций, отказов, гонок и восстановления.
 - [Roadmap](ROADMAP.md): этапы 0–7, критерии готовности, риски и 12 сценариев экспериментов.
 - [Workflow](development/WORKFLOW.md): роли человека и ИИ, состав ревью и контрольные точки G0–G4.
+- [Правила ревью](development/CODE_REVIEW.md): стандарт Go, блокирующие замечания, проверки и критерии слияния.
 - [ADR 0001](adr/0001-approved-g0.md): свидетельство явного принятия G0.
 - [Структурированное состояние](../CONTEXT_STATE.json): текущая работа, проверки и история ревизий.
 

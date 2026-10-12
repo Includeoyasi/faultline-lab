@@ -2,13 +2,13 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **3**. Состояние на: **2026-10-13**, Europe/Moscow. Фаза: **G0_APPROVED_PRE_IMPLEMENTATION**.
+Ревизия: **4**. Состояние на: **2026-10-13**, Europe/Moscow. Фаза: **G0_APPROVED_PRE_IMPLEMENTATION**.
 
 ## Краткое текущее состояние
 
 | Поле | Фактический статус |
 |---|---|
-| Текущая задача | REPO-BOOTSTRAP-001: COMPLETED |
+| Текущая задача | DEV-REVIEW-001: READY_FOR_REVIEW |
 | G0 | APPROVED |
 | G1 | NOT_READY |
 | G2 | NOT_READY |
@@ -41,6 +41,12 @@
 README объясняет проект посетителю; это не свидетельство работающей реализации. GitHub URL, публикация, Git baseline и CI подтверждаются структурированным состоянием ниже. Поле git_commit обозначает HEAD, доступный на момент подготовки снимка; снимок не может содержать hash собственного коммита. Агент с репозиторием проверяет фактический HEAD командой git rev-parse HEAD.
 
 Инструмент tools/check_docs.mjs проверяет локальные ссылки, Markdown fences, UTF-8 и отсутствие машинных путей. CI выполняет эту проверку и CheckOnly для переносимого контекста. Успех документационного CI не означает успех сервисных тестов. Полные зарегистрированные документы включены в приложения; ссылки между ними преобразованы во внутренние anchors. Вспомогательные файлы и изображения могут быть представлены публичными ссылками и не нужны для понимания принятых бизнес-правил.
+
+### Правила код-ревью
+
+По запросу тимлида подготовлен docs/development/CODE_REVIEW.md; его полный текст включается в этот переносимый снимок. Он охватывает Go-стиль, ошибки/context, конкурентность, данные, идемпотентность, тесты и доказательства, наблюдаемость, замечания и критерии слияния. После bootstrap изменения готовятся в отдельных ветках и через PR; ИИ не одобряет и не сливает собственную работу. Для merge нужны решение человека по предъявленному изменению и явное поручение на само действие либо действие тимлида.
+
+Статус пакета правил, PR и принятие тимлидом указаны в структурированном состоянии ниже. Подготовленный документ и зелёный CI не означают человеческое одобрение. G0 остаётся принятым; G1–G4 не меняют статусы из-за добавления правил. Сейчас Go-модуль отсутствует: Go CI, конфигурация golangci-lint и версии инструментов будут подключены в G1-P01. GitHub branch protection отдельно не настроена этим документом. При общей GitHub-учётной записи решение человека фиксируется в чате/комментарии с PR и SHA; не изображать approval другим участником.
 
 Готовый текст для первого сообщения другому агенту:
 
@@ -242,25 +248,24 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 3,
+  "context_revision": 4,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-13",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "current_phase": "G0_APPROVED_PRE_IMPLEMENTATION",
   "current_task": {
-    "id": "REPO-BOOTSTRAP-001",
-    "description": "Создать публичный репозиторий Faultline Lab, оформить структуру и опубликовать первый коммит",
-    "status": "COMPLETED",
+    "id": "DEV-REVIEW-001",
+    "description": "Установить классические правила Go code review с учётом инвариантов Faultline Lab",
+    "status": "READY_FOR_REVIEW",
     "result": {
-      "repository_url": "https://github.com/Includeoyasi/faultline-lab",
-      "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-      "publication": "VERIFIED",
-      "license": "MIT",
-      "documentation_ci": "PASS_ON_FIRST_COMMIT",
-      "primary_handoff_file": "PROJECT_CONTEXT.md",
-      "embedded_source_documents": 12,
-      "business_implementation": "NOT_STARTED"
+      "policy_file": "docs/development/CODE_REVIEW.md",
+      "human_acceptance": "NOT_RECORDED",
+      "branch": "docs/go-review-policy",
+      "pull_request": "PENDING_CREATION",
+      "business_implementation": "NOT_STARTED",
+      "go_checks": "NOT_RUN_NO_GO_MODULE",
+      "repository_protection": "NOT_CONFIGURED_BY_THIS_TASK"
     }
   },
   "roles": {
@@ -309,7 +314,7 @@ JSON ниже является частью этого файла и доста�
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
+    "git_commit": "85b32e8505270d8ecb7c7a5dafefa841c5070627",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": []
   },
@@ -327,7 +332,9 @@ JSON ниже является частью этого файла и доста�
     "Документы разложены по docs; добавлены двуязычный README, SVG-обложка, карта документации, MIT по выбору тимлида и шаблоны ревью",
     "Добавлены переносимая проверка документации и CI workflow; CI первого опубликованного коммита прошёл на Ubuntu runner",
     "Первый коммит 6897f4a опубликован в main, ветка отслеживает origin/main; GitHub README и структура проверены после публикации",
-    "Публичное оформление и актуализация переносимого контекста завершены; реализация G1-P01 остаётся следующим шагом"
+    "Публичное оформление и актуализация переносимого контекста завершены; реализация G1-P01 остаётся следующим шагом",
+    "Подготовлен Go code review standard: стиль, errors/context, concurrency, SQL/контракты/идемпотентность, тесты, наблюдаемость и критерии приёмки",
+    "Правила связаны с AGENTS, workflow, CONTRIBUTING, README, шаблоном PR и полным переносимым контекстом; отдельное одобрение тимлида пока не получено"
   ],
   "next_implementation_packet": {
     "id": "G1-P01",
@@ -419,6 +426,18 @@ JSON ниже является частью этого файла и доста�
       ],
       "detail": "Git push создал удалённый main и tracking origin/main. Documentation run 38317062261 завершён success на коммите 6897f4a; оба шага проверки документов и контекста проходят на Ubuntu. Публичный README, MIT, темы и файловая структура доступны в GitHub.",
       "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38317062261"
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Go review policy documentation and portable snapshot",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly",
+        "powershell.exe -NoProfile -File tools/update_context.ps1 -CheckOnly",
+        "git diff --check"
+      ],
+      "detail": "Проверены 16 Markdown-файлов, 144 локальные ссылки, fences/кодировка и отсутствие машинных путей. Снимок содержит 13 документов и 16 fingerprints; актуальность проходит в PowerShell 7 и Windows PowerShell 5.1. Go-проверки NOT_RUN: модуль и сервисы ещё отсутствуют. Человеческая приёмка правил не заявляется."
     }
   ],
   "source_documents": [
@@ -481,6 +500,11 @@ JSON ниже является частью этого файла и доста�
       "path": "LICENSE",
       "anchor": "appendix-license",
       "title": "MIT License"
+    },
+    {
+      "path": "docs/development/CODE_REVIEW.md",
+      "anchor": "appendix-code-review",
+      "title": "Правила Go code review и критерии принятия изменений"
     }
   ],
   "change_history": [
@@ -501,6 +525,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-13",
       "summary": "Первый коммит опубликован; CI успешно проверен; репозиторий и модель human-led AI development оформлены; переносимый контекст фиксирует завершение bootstrap.",
       "trigger": "Фактические результаты первого push, GitHub Actions и проверки публичного README."
+    },
+    {
+      "revision": 4,
+      "date": "2026-10-13",
+      "summary": "Подготовлен стандарт Go code review и обновлены инструкции/шаблон PR; создана ветка docs/go-review-policy. Go CI включается с первым модулем; человеческое одобрение не заявляется.",
+      "trigger": "Прямое поручение тимлида установить современные правила Go code review."
     }
   ],
   "repository": {
@@ -522,8 +552,20 @@ JSON ниже является частью этого файла и доста�
       "status": "COMPLETED",
       "conclusion": "SUCCESS",
       "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38317062261",
-      "scope": "Только документация и свежесть переносимого контекста; сервисные тесты отсутствуют."
-    }
+      "scope": "Результат исторического bootstrap main. Не является подтверждением CI текущей ветки правил ревью."
+    },
+    "snapshot_ref": "docs/go-review-policy"
+  },
+  "review_policy": {
+    "document": "docs/development/CODE_REVIEW.md",
+    "status": "PREPARED_FOR_TEAM_LEAD_REVIEW",
+    "requested_on": "2026-10-13",
+    "request_evidence": "Прямое сообщение тимлида: Давай теперь установим классические для современной разработки на Go правила код-ревью",
+    "human_approval": null,
+    "normal_change_delivery": "FOCUSED_BRANCH_AND_PR",
+    "merge": "EXPLICIT_HUMAN_DECISION_AND_ACTION_AUTHORIZATION",
+    "go_checks_activation": "G1-P01_WITH_FIRST_GO_MODULE",
+    "github_branch_protection": "NOT_CONFIGURED_BY_THIS_TASK"
   }
 }
 ```
@@ -534,21 +576,22 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `7899cc6f5a792fbfbe8ce76d7a4bf9a86efdfcc540f04effbad79096d3c9131a` |
-| `tools/context_intro.md` | `0e4a8d7fd2c123b7a7c7a786b25181dfd8ca2dc8bc89b2c73b20ab285bf15c51` |
-| `tools/update_context.ps1` | `ccc2c3da104cbf74c8bd11bd4970262ecaf715dfa8f8260971fb04feddea2010` |
-| `README.md` | `164707580999c817156f74563d17dea15eb7fc33fd610ca5b986587062225a46` |
-| `README.ru.md` | `cda7f18497eef12abdbb258ba83933d48ed39b1f4f131666d328b4cc09f61777` |
-| `docs/README.md` | `e902dabf0ea9e57e17d616c08fb15574fdd5751099887e7160d4c9ad25adcb64` |
+| `CONTEXT_STATE.json` | `5b845cb1cc1502980d4dae3069458ab20a78c9e769aa6da0ece42db8c10d8005` |
+| `tools/context_intro.md` | `cb952b8277b0b140479eb1a8e88cb4280a963762af840fb65cf0fd6558edc9de` |
+| `tools/update_context.ps1` | `a0c3c6d4a2f84cc143bd670600218ca6cfa7ce30b7a770608f9aa06be8934b26` |
+| `README.md` | `0720f80a667c94917a534fe05ec547bdff8bcb853913d18440310b987c5ee16a` |
+| `README.ru.md` | `5bb9f4229ddb1ceab2de38c40a44b0f4eee19219554b58f37c07ae7e89865cd9` |
+| `docs/README.md` | `c84025b4edf4b6ded7b4ee5f06b05bb8ad36029ef397cd33fca384e403a8c24a` |
 | `docs/ROADMAP.md` | `44abbd4c97ab735bfd1ab3332c79b74c320452d52b8bfa3714fdeadded60df87` |
 | `docs/architecture/DESIGN.md` | `cd150f15b8a676453f77197687d2f8df4e68944ac77c63d2d867c2779d6fd750` |
 | `docs/architecture/PROCESSES.md` | `fb6ef989e7773a353c216f60029f25444accc363a9ee06cac58845c02087b8e1` |
-| `docs/development/WORKFLOW.md` | `b35fc89abcd2e93d4975483a4ad92989e284e9b8d0a2543147ae645b7c47d371` |
+| `docs/development/WORKFLOW.md` | `e62d8f11c1d49cc5e4d6ccd0359600e52ae160e11fe99dec2d2b8f2aa1eabfb8` |
 | `docs/experiments/REPORT_TEMPLATE.md` | `4f569aab52ba34a68bb2e8b4551c6a3bf4932277c26c3b4206dbb505781a2cab` |
-| `AGENTS.md` | `cb9f73ef208bae8b300abaf040b5aceb9d076d9cac5d7bc3010eda2311d5ea85` |
+| `AGENTS.md` | `01b13be8165a4219c754174d41d58fd31f4d2daa11493238f1c3b6e74e078468` |
 | `docs/adr/0001-approved-g0.md` | `700f9e578e681c7902f619143a24d92c68df9401a2de54a03d416507502ac748` |
-| `CONTRIBUTING.md` | `401ae6debb07ad6161ffb0794c939e4ae134f072d515bf1b757cdaaffec0e038` |
+| `CONTRIBUTING.md` | `079ad6fef1d464c5e9eac849cddb381b2805d198c15a13bf0404dea8dd46a4bd` |
 | `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
+| `docs/development/CODE_REVIEW.md` | `9101ecb3614cebc52589be87552983302c418fa7cd181a54630a54e1363b6eca` |
 
 ## Полные самостоятельные приложения
 
@@ -564,6 +607,7 @@ SHA-256 относится к исходному файлу на момент с
 - [Запись принятия архитектуры G0](#appendix-adr-0001) — `docs/adr/0001-approved-g0.md`
 - [Участие, ревью и проверки](#appendix-contributing) — `CONTRIBUTING.md`
 - [MIT License](#appendix-license) — `LICENSE`
+- [Правила Go code review и критерии принятия изменений](#appendix-code-review) — `docs/development/CODE_REVIEW.md`
 
 <a id="appendix-readme-en"></a>
 
@@ -572,7 +616,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/main/docs/assets/banner.svg" alt="Faultline Lab — three services, real failure modes, measurable decisions" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/docs/assets/banner.svg" alt="Faultline Lab — three services, real failure modes, measurable decisions" width="100%">
 </p>
 
 <p align="center">
@@ -590,7 +634,7 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Current state
@@ -687,7 +731,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience | Planned |
 | **G4** | Reproducible engineering lab | Planned |
 
-Review expectations are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
 
 #### Repository map
 
@@ -742,7 +786,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/main/docs/assets/banner.svg" alt="Faultline Lab — три сервиса, реальные сценарии сбоев, измеримые решения" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/docs/assets/banner.svg" alt="Faultline Lab — три сервиса, реальные сценарии сбоев, измеримые решения" width="100%">
 </p>
 
 <p align="center">
@@ -760,7 +804,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Состояние проекта
@@ -842,7 +886,7 @@ flowchart LR
 
 **G0 принят.** G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Следующие контрольные точки ещё не достигнуты.
 
-[Порядок разработки](#appendix-development-process) описывает ревью. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md) включает полные документы, статусы и согласования: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/PROJECT_CONTEXT.md) включает полные документы, статусы и согласования: его можно передать агенту без доступа к репозиторию.
 
 #### С чего начать
 
@@ -888,9 +932,9 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | :--- | :--- |
 | Быстро оценить проект | [README](#appendix-readme-ru) → [Дизайн](#appendix-design-review) → [Roadmap](#appendix-roadmap) |
 | Проверить распределённый процесс | [Атлас G0](#appendix-g0-processes) → [Принятие G0](#appendix-adr-0001) |
-| Принять участие в разработке | [CONTRIBUTING](#appendix-contributing) → [Workflow](#appendix-development-process) → [AGENTS](#appendix-agents) |
+| Принять участие в разработке | [CONTRIBUTING](#appendix-contributing) → [Правила ревью](#appendix-code-review) → [Workflow](#appendix-development-process) → [AGENTS](#appendix-agents) |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
@@ -898,8 +942,9 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [Процессы](#appendix-g0-processes): 15 подробных схем транзакций, отказов, гонок и восстановления.
 - [Roadmap](#appendix-roadmap): этапы 0–7, критерии готовности, риски и 12 сценариев экспериментов.
 - [Workflow](#appendix-development-process): роли человека и ИИ, состав ревью и контрольные точки G0–G4.
+- [Правила ревью](#appendix-code-review): стандарт Go, блокирующие замечания, проверки и критерии слияния.
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/main/CONTEXT_STATE.json): текущая работа, проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/CONTEXT_STATE.json): текущая работа, проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -1973,6 +2018,14 @@ Codex — исполнитель разработки: готовит проек
 
 Обычные исправления по ревью выполняются в рамках того же пакета. После исправлений повторяются проверки, затронутые изменением. Невыполненные проверки явно обозначаются как невыполненные; объясняется причина и что необходимо для их запуска.
 
+#### Стандарт код-ревью
+
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+
+После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; тимлид рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению тимлида или действие самого тимлида.
+
+В одном GitHub-аккаунте нельзя получить обычный независимый approval от автора PR. Человеческое решение может быть зафиксировано в чате/комментарии с PR и SHA и затем в контексте. Правила работы не означают автоматически включённую GitHub branch protection. Сейчас выполняется документационный CI; Go-проверки и закреплённая конфигурация инструментов подключаются в G1-P01 с первым модулем.
+
 #### Контрольные точки
 
 | Точка | Когда | Материалы для согласования | Критерий перехода |
@@ -2150,6 +2203,7 @@ PROJECT_CONTEXT.md — самостоятельный пакет для друг
 - Read PROJECT_CONTEXT.md first for the portable project handoff, current status and approvals. Read docs/development/WORKFLOW.md for review expectations and docs/ROADMAP.md for the project scope when the repository is available.
 - G0 was explicitly approved by the human on 2026-10-13 (Europe/Moscow): "G0 полностью принят." The architecture and business rules in docs/architecture/DESIGN.md and docs/architecture/PROCESSES.md are approved. Do not ask for G0 approval again. G1-G4 remain future review gates; prepare the work for a gate before requesting its approval.
 - Work autonomously within an approved stage. Keep changes small enough for focused code review and include actual validation results and known limitations.
+- Follow docs/development/CODE_REVIEW.md for Go style, correctness, concurrency, data, tests and review evidence. After repository bootstrap, prepare changes on a focused branch and present a PR when GitHub is available. Do not approve or merge your own changes; merging requires an explicit human decision and authorization for the action. Go checks become executable with G1-P01, not before a Go module exists.
 - Stop before progressing through an unapproved review gate. Present a concrete, complete review packet and identify the decision needed from the team lead.
 - Significant changes to approved service boundaries, invariants, incompatible contracts or infrastructure scope require a concrete proposal and human approval.
 - Keep exactly three business services: Orders, Inventory and Payments. Do not add another business service to host workflow orchestration.
@@ -2210,7 +2264,9 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [current context](https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). AI implementers must also follow [AGENTS.md](#appendix-agents).
+Read the [current context](https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). AI implementers must also follow [AGENTS.md](#appendix-agents).
+
+The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
 G0 is approved. G1–G4 remain future review gates. Significant changes to approved service boundaries, invariants or incompatible contracts require a concrete proposal and the team lead's decision.
 
@@ -2238,7 +2294,7 @@ The checker validates local links, Markdown fence balance, text encoding and acc
 
 #### Branches and commits
 
-Use `main` as the baseline, short descriptive branches such as `feat/orders-bootstrap`, and focused commits with clear intent. Suggested prefixes: `feat:`, `fix:`, `docs:`, `test:`, `chore:`. Include both canonical document changes and their generated context in the same review packet.
+Use `main` as the baseline, short descriptive branches such as `feat/orders-bootstrap`, and focused commits with clear intent. After bootstrap, submit changes through a pull request; the AI does not approve or merge its own work. The human reviews the current change and authorizes merging; passing CI alone is insufficient. Prefer squash merge after acceptance. Suggested prefixes: `feat:`, `fix:`, `docs:`, `test:`, `chore:`. Include both canonical document changes and their generated context in the same review packet.
 
 Runtime instructions and required service checks will be added with the first implementation.
 
@@ -2269,3 +2325,141 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+<a id="appendix-code-review"></a>
+
+## Приложение: Правила Go code review и критерии принятия изменений
+
+Полный исходный документ: `docs/development/CODE_REVIEW.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Правила код-ревью Faultline Lab
+
+Подготовлены по запросу тимлида 13 октября 2026 года. Документ задаёт рабочий стандарт для Go-кода и распределённых процессов проекта. Пакет правил предъявляется отдельным PR; его подготовка не является одобрением тимлида или принятием G1.
+
+**Цель ревью:** понятное, корректное и сопровождаемое изменение с проверяемыми доказательствами. Сначала проверяем бизнес-поведение и отказные сценарии, затем устройство кода. Форматирование выполняют инструменты.
+
+#### 1. Порядок ревью и слияния
+
+1. Одна ветка и один PR решают одну понятную задачу. Связанный рефакторинг допустим; посторонние изменения выносятся отдельно. Для крупной работы сначала показать границы и порядок небольших пакетов, сохраняя работоспособность каждого.
+2. После первоначального bootstrap изменения готовятся в ветках от `main`. Обычный путь — PR, проверки, ревью тимлида, затем squash merge. ИИ самостоятельно не одобряет и не сливает собственные изменения.
+3. До ревью исполнитель проверяет diff, удаляет отладочные фрагменты и предоставляет проблему, результат, решения, команды проверок и ограничения. Исходники, миграции, контракты и соответствующие тесты рассматриваются вместе.
+4. Блокирующие замечания устраняются либо явно разрешаются тимлидом с причиной. Новые изменения после ревью предъявляются повторно; существенная правка делает прежнее согласование недостаточным. Одобрение и успешные проверки должны относиться к предъявленному HEAD.
+5. Слияние требует явного решения человека, успешных применимых проверок и актуального контекста. Не применять auto-merge до такого решения. Если человек поручает ИИ выполнить merge, это отдельное явное поручение.
+6. G0 уже принят. Обычный PR не заменяет приёмку G1–G4; переходы через эти точки регулирует [workflow](#appendix-development-process). Существенная смена принятой архитектуры требует решения тимлида и ADR.
+
+Это правила работы, а не заявление о включённой защите ветки GitHub. Если человек и ИИ используют один GitHub-аккаунт, автор не может выдать своему PR обычный GitHub approval. Тогда решение человека фиксируется в чате либо комментарии со ссылкой на PR и рассматриваемый SHA и переносится в контекст. Не подменять его одобрением ИИ и не заявлять независимое ревью по факту успешного CI. Настройка branch protection и отдельного аккаунта исполнителя — отдельная задача.
+
+#### 2. Как оформлять замечания
+
+| Метка | Смысл | Влияние на слияние |
+| :--- | :--- | :--- |
+| `blocking` | Дефект, риск потери данных, нарушение контракта/инварианта, существенный пробел проверок | Исправить либо получить конкретное решение тимлида |
+| `question` | Нужно понять поведение или основание решения | Ответить; если обнаружен риск, явно сделать замечание блокирующим |
+| `suggestion` | Улучшение с обоснованным эффектом | Обсудить; само по себе не блокирует |
+| `nit` | Необязательная косметика или личное предпочтение | Не блокирует |
+
+Комментарий указывает место, конкретный сценарий, последствие и ожидаемое свойство. Например: `blocking: offset подтверждается до сохранения job; crash в этом окне теряет оплату. Сохранить inbox и job одной транзакцией до ACK и проверить рестарт.` Обсуждаем код и наблюдаемое поведение; спор разрешаем правилами, фактами и воспроизводимым примером. Косметика вне стандарта не становится блокирующей только из-за предпочтения ревьюера.
+
+#### 3. Стиль и простота Go
+
+- Код проходит `gofmt`; импорты обрабатываются `goimports`. Названия пакетов описывают ответственность; избегаем универсальных `utils`, `common` и лишнего повторения имени пакета в типах.
+- Приняты обычные Go-имена: `orderID`, `ServeHTTP`, `ErrNotFound`; локальные имена соразмерны области видимости. Идентификаторы и комментарии к Go API — на английском; подробная проектная документация может быть на русском.
+- Ранние возвраты делают успешный путь прямым. Не вводим жёсткие лимиты строк, длины функций или числа параметров: блокируем сложность, мешающую понять поведение, и показываем её причину.
+- Интерфейс появляется у потребителя, когда ему действительно нужна граница. Предпочитаем небольшой интерфейс и конкретный возвращаемый тип; не добавляем интерфейс для каждой структуры или общий framework ради моков.
+- Зависимости передаются явно через конструкторы. Избегаем изменяемых глобальных клиентов, скрытых побочных эффектов `init` и service locator. Допустимые исключения, например регистрация драйвера, должны быть понятны из кода.
+- Generics, reflection, дополнительные слои и библиотеки требуют конкретной пользы. Вначале используем простое решение и возможности стандартной библиотеки; не проектируем абстракции для несуществующих задач.
+- Комментарии объясняют контракт, причину и ограничение. Экспортируемый API документирован; generated code не редактируется вручную и проверяется воспроизводимой генерацией, когда она появится.
+
+Основа стиля: [Go Code Review Comments](https://go.dev/wiki/CodeReviewComments) и [Google Go Style Guide](https://google.github.io/styleguide/go/guide). Проектные требования здесь являются нашим выбранным стандартом, а не утверждением, что все Go-команды используют одинаковые правила.
+
+#### 4. Ошибки и context
+
+- Значимая ошибка обрабатывается. Осознанно игнорируемый результат объясняется; не скрываем ошибки БД, публикации, сериализации или завершения ресурса. Ошибка очистки не должна незаметно заменить исходную причину сбоя.
+- Добавляем полезный контекст через `fmt.Errorf("reserve inventory: %w", err)`, если вызывающему коду нужен исходный тип/сентинел. Проверяем цепочку через `errors.Is`/`errors.As`; не классифицируем ошибки по тексту сообщения.
+- Доменные ошибки отделены от ошибок транспорта и временных отказов. gRPC-код, retryability и значение неизвестного результата заданы явно. Нехватка товара не становится `Internal`; timeout не становится доказанным бизнес-отказом.
+- `panic` не используется для ожидаемых ошибок клиента, провайдера или БД. Решение завершить процесс находится на границе приложения; библиотечный код не вызывает `os.Exit`/`log.Fatal` и не обходит cleanup.
+- `context.Context` передаётся первым аргументом операции и не бывает `nil`. Контекст запроса не сохраняется как состояние доменной сущности. Не заменяем его на `Background` глубоко внутри RPC/SQL, чтобы скрыть отмену.
+- Deadline проходит в зависимости; каждый созданный cancel вызывается. Фоновый воркер использует управляемый контекст своего жизненного цикла и ограниченный бюджет попытки. После сохранения принятой работы уход клиента не удаляет job: это правило процесса, а не игнорирование context.
+- Ошибка логируется у границы, где принимается решение о её обработке; не печатаем одну цепочку на каждом слое. Осмысленные логи попытки и окончательного исхода различимы.
+
+Семантика отмены и времени жизни: [документация context](https://pkg.go.dev/context).
+
+#### 5. Конкурентность и ресурсы
+
+- У каждой goroutine есть владелец, условие завершения и способ дождаться её остановки. Конкурентная работа, очереди и количество попыток ограничены; overload не создаёт бесконечные goroutines.
+- Владение состоянием и синхронизация явны. Не копируем используемые mutex/atomic-значения; указатели сами по себе не делают доступ безопасным. Канал закрывает сторона, владеющая отправкой.
+- Блокирующие ожидания, retry/backoff и симулированные задержки учитывают отмену. Нет busy loop и сна в открытой SQL-транзакции. Синхронная функция предпочтительна, если фоновая работа не нужна по контракту.
+- Соединения, SQL rows, файлы и таймеры имеют понятный срок жизни. Проверяем `rows.Err()` после итерации; транзакция заканчивается commit или rollback. Connection pool ограничен и учитывается суммарно по репликам.
+- Shutdown прекращает приём работы, даёт ограниченное время текущим операциям и оставляет незавершённую принятую работу восстанавливаемой. Readiness и liveness имеют разные смыслы, когда зависимости и фоновые jobs появятся.
+- `go test -race` обязателен для применимого Go-пакета изменений на поддерживаемом runner. Успех подтверждает только исполнившиеся пути; он не доказывает отсутствие всех гонок.
+
+Ограничения детектора: [Go race detector](https://go.dev/doc/articles/race_detector). Правила SQL API: [database/sql](https://pkg.go.dev/database/sql); при выборе другого драйвера также проверяем его собственный контракт.
+
+#### 6. Данные и распределённые эффекты
+
+Здесь проверяется соответствие [принятому дизайну](#appendix-design-review) и [процессам G0](#appendix-g0-processes):
+
+| Область | Обязательное свойство ревью |
+| :--- | :--- |
+| PostgreSQL | Сервис владеет своей БД; SQL параметризован; транзакции короткие; конкурентная мутация защищена условием/версией и ledger |
+| Миграция | Понятны совместимость со старым кодом, блокировки, порядок выкладки и восстановление. Обратная миграция не объявляется безопасной без проверки потери данных |
+| Деньги и количество | Денежные суммы хранятся в целых минимальных единицах с валютой; проверяются допустимый диапазон, переполнение и согласованная сумма. Количество и остатки не уходят в недопустимое состояние |
+| gRPC | Валидируются входы, сроки и размеры; сохранённый отказ и повторный запрос имеют стабильный смысл; timeout означает неизвестный исход |
+| Kafka | Схема/версия, event ID и ключ партиции понятны; дубликаты и поздние события ожидаемы; поведение poison event и replay определено |
+| Outbox/inbox/jobs | Состояние и outbox записаны атомарно; sent marker следует после Kafka ACK; inbox и продолжение сохранены до offset commit; crash windows проверены |
+| Идемпотентность | Один ключ с тем же смыслом даёт прежний результат, включая подтверждённый отказ; иной payload под прежним ключом не создаёт новый эффект |
+| Отмена | Version fencing и cancellation barrier блокируют поздние эффекты; `COMPLETED` и `CANCELLED` подтверждены данными владельцев |
+| Redis | Кэш не разрешает продажу; miss/stale/unavailable имеют определённое поведение; fallback не создаёт неограниченное давление на БД |
+
+Внешний RPC, Kafka publish и задержка симулятора не выполняются внутри бизнес-транзакции БД. Мок, который всегда отвечает успешно, не подтверждает атомарность PostgreSQL или семантику Kafka. Если изменение затрагивает эти свойства, нужны соответствующие интеграционные сценарии. Низкий Kafka lag не заменяет проверку backlog долговечных задач и бизнес-инвариантов.
+
+#### 7. Тесты и доказательства
+
+- Тест проверяет наблюдаемый контракт и существенный риск. Для нового поведения нужны соответствующие случаи; для исправления дефекта — регрессия, когда её можно воспроизвести. Не добавляем тесты, повторяющие устройство функции, для простой правки текста или форматирования.
+- Используем стандартный `testing`, subtests и table-driven cases, когда случаи действительно параллельны по структуре. Тесты изолированы: `t.Parallel` не делит изменяемый fixture/БД; cleanup выполняется через `t.Cleanup` или явного владельца.
+- Синхронизация тестов задаётся событиями, каналами и ограниченным ожиданием. Случайный `Sleep` не служит доказательством завершения. Время, seed и симулированные исходы контролируются там, где это влияет на повторяемость.
+- SQL-конкуренция, уникальные ограничения, outbox и Kafka ACK проверяются на реальных зависимостях в интеграционных тестах. Unit test и интеграционный прогон имеют отдельные команды и результаты; отсутствие среды обозначается `NOT_RUN`.
+- Применимые сценарии: повторный ключ; другой payload под тем же ключом; конфликт за остаток; отмена/deadline; timeout после commit; duplicate/late event; рестарт в изменённом crash window; ошибка или отказ зависимости. Не требуем весь каталог для каждого PR — выбираем затронутые свойства.
+- Coverage помогает найти непроверенные ветки, но фиксированный процент не заменяет проверку инвариантов. Fuzzing уместен для парсеров, валидации и кодеков; benchmark и profile — при заявлении об улучшении производительности.
+- Результаты нагрузки сравниваются по принятой [методике roadmap](#appendix-roadmap) и [шаблону отчёта](#appendix-report-template): условия, ресурсы, drain, verifier и неизвестные исходы сохраняются. Числа не придумываются и не переносятся из чужих измерений.
+
+Дополнительный инструмент проверки входов: [Go fuzzing](https://go.dev/doc/tutorial/fuzz).
+
+#### 8. Наблюдаемость и безопасность
+
+Конфигурация валидируется при запуске. Секреты, connection strings с паролями и чувствительные payload не попадают в репозиторий или логи. Входные размеры, очереди и сроки ограничены; SQL не собирается конкатенацией пользовательских значений. Fault hooks включаются явно в профиле эксперимента, отключены в обычном профиле и отражены в manifest.
+
+Логи структурированы и позволяют связать заказ, событие, шаг и попытку. `order_id`, `trace_id`, `event_id` и `run_id` остаются полями логов, а не labels с неограниченной кардинальностью. Метрики различают технический ответ и бизнес-исход, Kafka lag и durable job backlog. При появлении алерта ревью проверяет условие, ожидаемое действие и ссылку на диагностику.
+
+Новая зависимость обоснована задачей; `go.mod` и `go.sum` согласованы. Версии Go, инструментов, генераторов и CI actions закрепляются воспроизводимо. Для найденной вызываемой уязвимости показываем исправление либо решение тимлида о конкретном риске; техническая ошибка сканера не считается чистым результатом.
+
+Основа проверки зависимостей: [Go security best practices](https://go.dev/doc/security/best-practices) и [govulncheck](https://go.dev/doc/tutorial/govulncheck).
+
+#### 9. Автоматические проверки и момент подключения
+
+**Сейчас:** существует только документационный CI `Links and portable context`. Go-модуль, Go CI, конфигурация линтера и зависимости инструментов ещё не созданы. Команды ниже задают требования для первого работающего Go-пакета G1-P01; они не запускались в текущем документальном пакете.
+
+| Проверка | Требование после появления Go-модуля |
+| :--- | :--- |
+| Формат и импорты | `gofmt` и `goimports`: CI проверяет отсутствие diff, а не исправляет файлы молча |
+| Сборка | `go build ./...` на закреплённой версии Go |
+| Статический анализ | `golangci-lint run ./...` с явным набором `govet`, `staticcheck`, `errcheck`, `ineffassign`, `unused` |
+| Unit tests | `go test ./...`; чистый обязательный CI прогон использует `-count=1` |
+| Гонки | `go test -race -count=1 ./...` на поддерживаемой среде |
+| Зависимости | `go mod tidy` без diff в `go.mod`/`go.sum`; `go mod verify` |
+| Уязвимости | `govulncheck ./...`; версия инструмента закреплена, результат и ошибки запуска различимы |
+| Документация | `node tools/check_docs.mjs` и `tools/update_context.ps1 -CheckOnly` |
+
+`govet` внутри golangci-lint покрывает выбранный запуск vet; отдельный `go vet ./...` можно использовать для диагностики без требования дублировать одинаковый анализ в CI. Не включаем все существующие линтеры. `nolint` имеет узкую область, название линтера и причину; массовое подавление для зелёного CI недопустимо. Набор и версии инструментов фиксируются в первом Go-пакете и проверяются его реальным запуском. Список анализаторов сверяется с [документацией golangci-lint](https://golangci-lint.run/docs/linters/).
+
+Интеграционные тесты и проверка генерации подключаются вместе с соответствующими SQL/протоколами/Kafka; команды и профили будут добавлены при реализации. Результат `SKIPPED`, недоступная зависимость или отсутствие нужного теста не выдаются за успешную проверку. Предлагаемые настройки CI не называются включёнными GitHub required checks, пока настройка репозитория не выполнена и не проверена.
+
+#### 10. Когда изменение готово к принятию
+
+- Цель и поведение ясны, изменение входит в согласованный объём и сохраняет принятую архитектуру.
+- Блокирующие дефекты исправлены; существенные отклонения и риски имеют явное решение тимлида.
+- Применимые проверки прошли на предъявленном изменении; непроведённые проверки и их причины видны ревьюеру.
+- Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
+- Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
+
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/docs/go-review-policy/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.

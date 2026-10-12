@@ -114,7 +114,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience | Planned |
 | **G4** | Reproducible engineering lab | Planned |
 
-Review expectations are in the [development workflow](docs/development/WORKFLOW.md). [AGENTS.md](AGENTS.md) gives implementers their working rules; [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
+The [code review standard](docs/development/CODE_REVIEW.md) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](docs/development/WORKFLOW.md). [AGENTS.md](AGENTS.md) gives implementers their working rules; [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
 
 ## Repository map
 
