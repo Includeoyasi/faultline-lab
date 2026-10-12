@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **4**. Состояние на: **2026-10-13**, Europe/Moscow. Фаза: **G0_APPROVED_PRE_IMPLEMENTATION**.
+Ревизия: **5**. Состояние на: **2026-10-13**, Europe/Moscow. Фаза: **G0_APPROVED_PRE_IMPLEMENTATION**.
 
 ## Краткое текущее состояние
 
@@ -248,7 +248,7 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 4,
+  "context_revision": 5,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-13",
   "user_timezone": "Europe/Moscow",
@@ -262,10 +262,12 @@ JSON ниже является частью этого файла и доста�
       "policy_file": "docs/development/CODE_REVIEW.md",
       "human_acceptance": "NOT_RECORDED",
       "branch": "docs/go-review-policy",
-      "pull_request": "PENDING_CREATION",
+      "pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/1",
       "business_implementation": "NOT_STARTED",
       "go_checks": "NOT_RUN_NO_GO_MODULE",
-      "repository_protection": "NOT_CONFIGURED_BY_THIS_TASK"
+      "repository_protection": "NOT_CONFIGURED_BY_THIS_TASK",
+      "local_validation": "PASS",
+      "documentation_ci": "PASS_ON_POLICY_COMMIT_214eb34"
     }
   },
   "roles": {
@@ -314,9 +316,20 @@ JSON ниже является частью этого файла и доста�
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "85b32e8505270d8ecb7c7a5dafefa841c5070627",
+    "git_commit": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
-    "pull_requests": []
+    "pull_requests": [
+      {
+        "number": 1,
+        "url": "https://github.com/Includeoyasi/faultline-lab/pull/1",
+        "state": "OPEN",
+        "head_ref": "docs/go-review-policy",
+        "base_ref": "main",
+        "head_at_snapshot": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
+        "human_review": "PENDING",
+        "merged": false
+      }
+    ]
   },
   "completed_work": [
     "Подготовлен практический roadmap с этапами, критериями, рисками и оценками объёма",
@@ -334,7 +347,8 @@ JSON ниже является частью этого файла и доста�
     "Первый коммит 6897f4a опубликован в main, ветка отслеживает origin/main; GitHub README и структура проверены после публикации",
     "Публичное оформление и актуализация переносимого контекста завершены; реализация G1-P01 остаётся следующим шагом",
     "Подготовлен Go code review standard: стиль, errors/context, concurrency, SQL/контракты/идемпотентность, тесты, наблюдаемость и критерии приёмки",
-    "Правила связаны с AGENTS, workflow, CONTRIBUTING, README, шаблоном PR и полным переносимым контекстом; отдельное одобрение тимлида пока не получено"
+    "Правила связаны с AGENTS, workflow, CONTRIBUTING, README, шаблоном PR и полным переносимым контекстом; отдельное одобрение тимлида пока не получено",
+    "Правила опубликованы в ветке docs/go-review-policy и PR #1; локальные проверки и документационный CI исходного коммита прошли; слияние и человеческое принятие ожидаются"
   ],
   "next_implementation_packet": {
     "id": "G1-P01",
@@ -438,6 +452,14 @@ JSON ниже является частью этого файла и доста�
         "git diff --check"
       ],
       "detail": "Проверены 16 Markdown-файлов, 144 локальные ссылки, fences/кодировка и отсутствие машинных путей. Снимок содержит 13 документов и 16 fingerprints; актуальность проходит в PowerShell 7 и Windows PowerShell 5.1. Go-проверки NOT_RUN: модуль и сервисы ещё отсутствуют. Человеческая приёмка правил не заявляется."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Publish Go review policy branch and PR",
+      "result": "PASS",
+      "detail": "Ветка docs/go-review-policy опубликована, GitHub PR #1 открыт в main с HEAD 214eb34. Documentation push run 38318256118 завершился success. PR не одобрен ИИ и не слит; решение тимлида не получено.",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/1",
+      "ci_url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38318256118"
     }
   ],
   "source_documents": [
@@ -531,6 +553,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-13",
       "summary": "Подготовлен стандарт Go code review и обновлены инструкции/шаблон PR; создана ветка docs/go-review-policy. Go CI включается с первым модулем; человеческое одобрение не заявляется.",
       "trigger": "Прямое поручение тимлида установить современные правила Go code review."
+    },
+    {
+      "revision": 5,
+      "date": "2026-10-13",
+      "summary": "Зафиксированы PR #1, опубликованная ветка, успешные локальные проверки и CI 214eb34; правила готовы к ревью тимлида, слияние не выполнялось.",
+      "trigger": "Фактические результаты Git push, GitHub PR creation и Actions."
     }
   ],
   "repository": {
@@ -548,11 +576,12 @@ JSON ниже является частью этого файла и доста�
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
     "verified_ci": {
       "workflow": "Documentation",
-      "head_sha": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
+      "head_sha": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
       "status": "COMPLETED",
       "conclusion": "SUCCESS",
-      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38317062261",
-      "scope": "Результат исторического bootstrap main. Не является подтверждением CI текущей ветки правил ревью."
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38318256118",
+      "event": "push",
+      "scope": "Документация и переносимый контекст исходного коммита правил; не подтверждает человеческое ревью или Go-код."
     },
     "snapshot_ref": "docs/go-review-policy"
   },
@@ -565,7 +594,8 @@ JSON ниже является частью этого файла и доста�
     "normal_change_delivery": "FOCUSED_BRANCH_AND_PR",
     "merge": "EXPLICIT_HUMAN_DECISION_AND_ACTION_AUTHORIZATION",
     "go_checks_activation": "G1-P01_WITH_FIRST_GO_MODULE",
-    "github_branch_protection": "NOT_CONFIGURED_BY_THIS_TASK"
+    "github_branch_protection": "NOT_CONFIGURED_BY_THIS_TASK",
+    "pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/1"
   }
 }
 ```
@@ -576,7 +606,7 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `5b845cb1cc1502980d4dae3069458ab20a78c9e769aa6da0ece42db8c10d8005` |
+| `CONTEXT_STATE.json` | `a2b8a1fbd92f9fbfa2e347cf087f67a10ebdc34f3ee9af7ac6ee18bca95b5792` |
 | `tools/context_intro.md` | `cb952b8277b0b140479eb1a8e88cb4280a963762af840fb65cf0fd6558edc9de` |
 | `tools/update_context.ps1` | `a0c3c6d4a2f84cc143bd670600218ca6cfa7ce30b7a770608f9aa06be8934b26` |
 | `README.md` | `0720f80a667c94917a534fe05ec547bdff8bcb853913d18440310b987c5ee16a` |
@@ -591,7 +621,7 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/adr/0001-approved-g0.md` | `700f9e578e681c7902f619143a24d92c68df9401a2de54a03d416507502ac748` |
 | `CONTRIBUTING.md` | `079ad6fef1d464c5e9eac849cddb381b2805d198c15a13bf0404dea8dd46a4bd` |
 | `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
-| `docs/development/CODE_REVIEW.md` | `9101ecb3614cebc52589be87552983302c418fa7cd181a54630a54e1363b6eca` |
+| `docs/development/CODE_REVIEW.md` | `7630502087570aaf155ff4156aff9907c0899e551edbb2a9809d39bbd3890333` |
 
 ## Полные самостоятельные приложения
 
@@ -2347,7 +2377,7 @@ SOFTWARE.
 5. Слияние требует явного решения человека, успешных применимых проверок и актуального контекста. Не применять auto-merge до такого решения. Если человек поручает ИИ выполнить merge, это отдельное явное поручение.
 6. G0 уже принят. Обычный PR не заменяет приёмку G1–G4; переходы через эти точки регулирует [workflow](#appendix-development-process). Существенная смена принятой архитектуры требует решения тимлида и ADR.
 
-Это правила работы, а не заявление о включённой защите ветки GitHub. Если человек и ИИ используют один GitHub-аккаунт, автор не может выдать своему PR обычный GitHub approval. Тогда решение человека фиксируется в чате либо комментарии со ссылкой на PR и рассматриваемый SHA и переносится в контекст. Не подменять его одобрением ИИ и не заявлять независимое ревью по факту успешного CI. Настройка branch protection и отдельного аккаунта исполнителя — отдельная задача.
+Это правила работы, а не заявление о включённой защите ветки GitHub. Если человек и ИИ используют один GitHub-аккаунт, автор не может выдать своему PR обычный GitHub approval ([ограничение GitHub](https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/approving-a-pull-request-with-required-reviews)). Тогда решение человека фиксируется в чате либо комментарии со ссылкой на PR и рассматриваемый SHA и переносится в контекст. Не подменять его одобрением ИИ и не заявлять независимое ревью по факту успешного CI. Настройка branch protection и отдельного аккаунта исполнителя — отдельная задача.
 
 #### 2. Как оформлять замечания
 

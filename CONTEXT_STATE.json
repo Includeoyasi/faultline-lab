@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 4,
+  "context_revision": 5,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-13",
   "user_timezone": "Europe/Moscow",
@@ -15,10 +15,12 @@
       "policy_file": "docs/development/CODE_REVIEW.md",
       "human_acceptance": "NOT_RECORDED",
       "branch": "docs/go-review-policy",
-      "pull_request": "PENDING_CREATION",
+      "pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/1",
       "business_implementation": "NOT_STARTED",
       "go_checks": "NOT_RUN_NO_GO_MODULE",
-      "repository_protection": "NOT_CONFIGURED_BY_THIS_TASK"
+      "repository_protection": "NOT_CONFIGURED_BY_THIS_TASK",
+      "local_validation": "PASS",
+      "documentation_ci": "PASS_ON_POLICY_COMMIT_214eb34"
     }
   },
   "roles": {
@@ -67,9 +69,20 @@
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "85b32e8505270d8ecb7c7a5dafefa841c5070627",
+    "git_commit": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
-    "pull_requests": []
+    "pull_requests": [
+      {
+        "number": 1,
+        "url": "https://github.com/Includeoyasi/faultline-lab/pull/1",
+        "state": "OPEN",
+        "head_ref": "docs/go-review-policy",
+        "base_ref": "main",
+        "head_at_snapshot": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
+        "human_review": "PENDING",
+        "merged": false
+      }
+    ]
   },
   "completed_work": [
     "Подготовлен практический roadmap с этапами, критериями, рисками и оценками объёма",
@@ -87,7 +100,8 @@
     "Первый коммит 6897f4a опубликован в main, ветка отслеживает origin/main; GitHub README и структура проверены после публикации",
     "Публичное оформление и актуализация переносимого контекста завершены; реализация G1-P01 остаётся следующим шагом",
     "Подготовлен Go code review standard: стиль, errors/context, concurrency, SQL/контракты/идемпотентность, тесты, наблюдаемость и критерии приёмки",
-    "Правила связаны с AGENTS, workflow, CONTRIBUTING, README, шаблоном PR и полным переносимым контекстом; отдельное одобрение тимлида пока не получено"
+    "Правила связаны с AGENTS, workflow, CONTRIBUTING, README, шаблоном PR и полным переносимым контекстом; отдельное одобрение тимлида пока не получено",
+    "Правила опубликованы в ветке docs/go-review-policy и PR #1; локальные проверки и документационный CI исходного коммита прошли; слияние и человеческое принятие ожидаются"
   ],
   "next_implementation_packet": {
     "id": "G1-P01",
@@ -191,6 +205,14 @@
         "git diff --check"
       ],
       "detail": "Проверены 16 Markdown-файлов, 144 локальные ссылки, fences/кодировка и отсутствие машинных путей. Снимок содержит 13 документов и 16 fingerprints; актуальность проходит в PowerShell 7 и Windows PowerShell 5.1. Go-проверки NOT_RUN: модуль и сервисы ещё отсутствуют. Человеческая приёмка правил не заявляется."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Publish Go review policy branch and PR",
+      "result": "PASS",
+      "detail": "Ветка docs/go-review-policy опубликована, GitHub PR #1 открыт в main с HEAD 214eb34. Documentation push run 38318256118 завершился success. PR не одобрен ИИ и не слит; решение тимлида не получено.",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/1",
+      "ci_url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38318256118"
     }
   ],
   "source_documents": [
@@ -284,6 +306,12 @@
       "date": "2026-10-13",
       "summary": "Подготовлен стандарт Go code review и обновлены инструкции/шаблон PR; создана ветка docs/go-review-policy. Go CI включается с первым модулем; человеческое одобрение не заявляется.",
       "trigger": "Прямое поручение тимлида установить современные правила Go code review."
+    },
+    {
+      "revision": 5,
+      "date": "2026-10-13",
+      "summary": "Зафиксированы PR #1, опубликованная ветка, успешные локальные проверки и CI 214eb34; правила готовы к ревью тимлида, слияние не выполнялось.",
+      "trigger": "Фактические результаты Git push, GitHub PR creation и Actions."
     }
   ],
   "repository": {
@@ -301,11 +329,12 @@
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
     "verified_ci": {
       "workflow": "Documentation",
-      "head_sha": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
+      "head_sha": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
       "status": "COMPLETED",
       "conclusion": "SUCCESS",
-      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38317062261",
-      "scope": "Результат исторического bootstrap main. Не является подтверждением CI текущей ветки правил ревью."
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38318256118",
+      "event": "push",
+      "scope": "Документация и переносимый контекст исходного коммита правил; не подтверждает человеческое ревью или Go-код."
     },
     "snapshot_ref": "docs/go-review-policy"
   },
@@ -318,6 +347,7 @@
     "normal_change_delivery": "FOCUSED_BRANCH_AND_PR",
     "merge": "EXPLICIT_HUMAN_DECISION_AND_ACTION_AUTHORIZATION",
     "go_checks_activation": "G1-P01_WITH_FIRST_GO_MODULE",
-    "github_branch_protection": "NOT_CONFIGURED_BY_THIS_TASK"
+    "github_branch_protection": "NOT_CONFIGURED_BY_THIS_TASK",
+    "pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/1"
   }
 }
