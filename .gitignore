@@ -1,0 +1,35 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+
+# Go build and test output
+/bin/
+/dist/
+/coverage/
+*.test
+coverage.out
+coverage.html
+
+# Local lab data; intentional reports belong in docs/experiments/
+/.local/
+/data/
+/artifacts/
+/tmp/
+
+# Editor and operating system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+
+# Dependency caches
+node_modules/
+__pycache__/
+.venv/

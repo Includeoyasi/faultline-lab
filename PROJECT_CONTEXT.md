@@ -1,0 +1,2229 @@
+# PROJECT_CONTEXT — Faultline Lab
+
+Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
+
+Ревизия: **2**. Состояние на: **2026-10-13**, Europe/Moscow. Фаза: **G0_APPROVED_PRE_IMPLEMENTATION**.
+
+## Краткое текущее состояние
+
+| Поле | Фактический статус |
+|---|---|
+| Текущая задача | REPO-BOOTSTRAP-001: IN_PROGRESS |
+| G0 | APPROVED |
+| G1 | NOT_READY |
+| G2 | NOT_READY |
+| G3 | NOT_READY |
+| G4 | NOT_READY |
+| Код бизнес-сервисов | NOT_CREATED |
+| Инфраструктура Compose | NOT_CREATED |
+| Эксперименты | NOT_RUN |
+| Следующий пакет | G1-P01: NOT_STARTED |
+
+## Как использовать этот файл в другом чате
+
+Это самостоятельный пакет контекста проекта Faultline Lab. Его можно целиком прикрепить к любому чату ChatGPT или передать другому ИИ-агенту вместе с конкретной промежуточной задачей. Доступ к исходному компьютеру не требуется, чтобы понять цель, согласованную архитектуру, бизнес-правила, этапы, эксперименты, порядок ревью и состояние проекта на дату снимка.
+
+Файл содержит четыре слоя:
+
+1. Краткий статус и правила входа в задачу.
+2. Структурированное текущее состояние, согласования, проверки, открытые задачи и история изменений.
+3. Реестр источников с SHA-256 для проверки соответствия локальному проекту.
+4. Полные тексты проектных документов, включая все архитектурные схемы и шаблон отчёта. Это встроенные приложения, а не ссылки, которые требуют открыть локальные файлы.
+
+Если нужен быстрый вход, прочитай статус, этот вводный раздел, текущее состояние и затем приложения по своей задаче. Если требуется точное архитектурное решение, прочитай полные принятые правила и сценарии, а не только краткую сводку.
+
+### Идентичность проекта и публичный репозиторий
+
+Публичное имя проекта — **Faultline Lab**, репозиторий — `Includeoyasi/faultline-lab`. В прежних материалах проект назывался Microservices Lab; это тот же проект с теми же принятыми бизнес-правилами G0. Тимлид выбрал лицензию MIT прямым сообщением «возьми MIT» 13 октября 2026 года.
+
+Публичное введение находится в README.md и README.ru.md. Канонические спецификации перенесены в docs/: docs/ROADMAP.md, docs/architecture/DESIGN.md, docs/architecture/PROCESSES.md, docs/development/WORKFLOW.md и docs/experiments/REPORT_TEMPLATE.md. Правила исполнителя и структурированное состояние остаются в корне. Путь на исходном компьютере не требуется и в публичный снимок не включается.
+
+README объясняет проект посетителю; это не свидетельство работающей реализации. GitHub URL, публикация, Git baseline и CI подтверждаются структурированным состоянием ниже. Поле git_commit обозначает HEAD, доступный на момент подготовки снимка; снимок не может содержать hash собственного коммита. Агент с репозиторием проверяет фактический HEAD командой git rev-parse HEAD.
+
+Инструмент tools/check_docs.mjs проверяет локальные ссылки, Markdown fences, UTF-8 и отсутствие машинных путей. CI выполняет эту проверку и CheckOnly для переносимого контекста. Успех документационного CI не означает успех сервисных тестов. Полные зарегистрированные документы включены в приложения; ссылки между ними преобразованы во внутренние anchors. Вспомогательные файлы и изображения могут быть представлены публичными ссылками и не нужны для понимания принятых бизнес-правил.
+
+Готовый текст для первого сообщения другому агенту:
+
+```text
+Прочитай приложенный PROJECT_CONTEXT.md как контекст моего проекта Faultline Lab.
+Я — тимлид и ревьюер; ты выполняешь следующую конкретную задачу: <задача>.
+Сначала кратко укажи, на какой ревизии контекста работаешь, как задача связана с roadmap
+и какие файлы или сведения необходимы именно для неё. Затем выполни задачу.
+Учитывай принятые решения и статусы контрольных точек; G0 уже полностью принят.
+Различай предложенное решение, реально применённые изменения и выполненные проверки.
+Если у тебя нет репозитория, предоставь полный переносимый результат и изменения контекста,
+не утверждая, что код сохранён или тесты запущены на исходном компьютере.
+В конце перечисли результат, проверки, ограничения и предложи обновление контекста.
+```
+
+### Как читать авторитет и статус информации
+
+Системные правила конкретного ИИ и его реальные разрешения остаются действующими. Внутри проектных решений приоритет имеет последнее явное указание тимлида, затем зафиксированные согласования/ADR, затем текущее состояние и принятые спецификации. Гипотезы, примеры и будущие этапы не превращаются в выполненную работу только потому, что подробно описаны.
+
+Если новая задача пользователя меняет старое решение, зафиксируй изменение. Если документы или копии контекста противоречат друг другу, назови конкретное противоречие и доступные даты/ревизии. Не делай вид, что обе несовместимые версии одновременно верны.
+
+G0 полностью принят пользователем; это согласование архитектуры, а не доказательство реализации. Для последующих G1–G4 используй фактический статус в структурированном состоянии. NOT_READY означает, что результат ещё нужно подготовить, а не что запрещено готовить его. Перед следующим зависимым этапом нужна приёмка соответствующей контрольной точки.
+
+## Зачем создаётся проект
+
+Пользователь хочет небольшой стенд, имитирующий современный бизнес, на котором можно воспроизводить проблемы недостаточного масштабирования, придумывать решения, проверять их эффективность и собирать полный отчёт. Главный продукт — лаборатория инженерных экспериментов вокруг работающего бизнес-процесса.
+
+Обязательный стек: Go, PostgreSQL, Kafka, Redis, gRPC, Grafana и централизованные логи. Дополнения принятой архитектуры: Prometheus для метрик и Loki/Alloy для логов в MVP; OpenTelemetry/Tempo для расширенной диагностики позже. Начальная среда — локальный Docker Compose. Kubernetes не входит в обязательный старт.
+
+Бизнес-домен — мини-магазин: заказ → резервирование → симулированная оплата → завершение или отмена. Ровно три бизнес-сервиса:
+
+- **Orders**: приём заказа, сохранённый управляющий процесс, состояния, отмена и компенсации.
+- **Inventory**: каталог/цены стенда, складские остатки, резерв, подтверждение продажи и освобождение.
+- **Payments**: внутренний симулятор провайдера, платёжный ledger, отказ, запрет позднего списания и возврат.
+
+Воркеры, outbox publishers и управление процессом остаются внутри этих сервисов. Генератор нагрузки, verifier, labctl и инфраструктура — инструменты стенда, а не дополнительные бизнес-сервисы.
+
+Работу выполняет ИИ; пользователь выступает тимлидом, задаёт приоритеты, проводит код-ревью и согласует ключевые этапы. Не менять эту модель на самостоятельное принятие собственных решений от лица ревьюера. Работа других агентов используется по конкретному поручению; сам факт существования этого контекста не запускает делегирование.
+
+## Архитектурные опорные правила
+
+### Владение данными
+
+У каждого сервиса свои таблицы, своя база и отдельная роль PostgreSQL. В стартовом профиле три базы расположены в одном экземпляре PostgreSQL. Прямой SQL-доступ сервисов к чужим данным запрещён. Проверяющая утилита лаборатории может читать экспорт владельцев или отдельные read-only подключения для сверки.
+
+Все долгоживущие бизнес-состояния, ключи операций, inbox/outbox, jobs и ledger хранятся в PostgreSQL. Redis — кеш чтений доступности Inventory. Reserve никогда не доверяет кешу как основанию для продажи. Промежуточное значение доступности может устареть; успешный Reserve обязан опираться на атомарный результат PostgreSQL.
+
+Цена и сумма фиксируются Inventory при резервировании и сохраняются Orders. Payments использует доверенную сумму из события Orders. В MVP одна валюта и целые суммы в минимальных денежных единицах; реальные платежи отсутствуют.
+
+### gRPC и Kafka
+
+gRPC используется для непосредственных команд/чтений: Create/Get/Cancel заказа; Reserve/GetReservation/Commit/Release склада; Get/Cancel/Refund платежа. Kafka запускает асинхронную платёжную обработку и переносит результаты бизнес-операций.
+
+Ключевые события: OrderAwaitingPayment, PaymentSucceeded, PaymentDeclined, PaymentCancelled, PaymentRefunded, InventoryReserved, InventoryCommitted, InventoryReleased, OrderCompleted, OrderCancelled. Принятые топики: orders.events.v1, payments.events.v1, inventory.events.v1; ключ — order_id; стартовая гипотеза — три партиции на топик и обычные consumer groups.
+
+Порядок между разными топиками не предполагается. aggregate_version относится к владельцу конкретного агрегата; нельзя складывать версии Payments и Inventory в одну последовательность. Несколько publishers одного агрегата не должны переставлять его версии. В MVP допустим один активный publisher сервиса под lease с возможностью takeover.
+
+### Сохранённая работа и повторы
+
+CreateOrder подтверждает принятие после commit заказа, request key и reserve job. Уход клиента не удаляет принятую работу. Воркер продолжает её со своим контекстом и бюджетом шага.
+
+Outbox атомарно сохраняется с изменением владельца; отправленным событие помечается после подтверждения Kafka. Crash между publish и sent marker приводит к повторной доставке. Inbox и изменение/создание продолжения работы фиксируются одной транзакцией потребителя. Offset подтверждается после долговечного сохранения. Долгая обработка идёт из job и может завершаться позже подтверждения offset.
+
+Идемпотентность использует устойчивые бизнес-ключи: client_request_id для заказа, operation_id для мутации, event_id для события и уникальность ledger-эффекта. Повтор с тем же ключом и другим существенным payload — конфликт. Подтверждённый бизнес-отказ тоже сохраняется: повтор отказанного Reserve не создаёт резерв после пополнения склада.
+
+Timeout после мутации означает неизвестный результат. Повторять нужно тот же operation_id либо сверять прежний эффект, а не создавать новую операцию. NOT_FOUND при ещё выполняющемся RPC не гарантирует, что эффект не появится позже. Короткие SQL-транзакции, условные состояния, отмена, operation keys и сохранённые повторные попытки имеют разные роли и не заменяют друг друга.
+
+Сквозная общая exactly-once между Kafka и PostgreSQL не обещается. Проект проверяет конкретные идемпотентные эффекты и бизнес-инварианты в явно описанной модели отказов.
+
+### Завершение и отмена
+
+Заказ проходит ACCEPTED → RESERVING → PAYMENT_PENDING → FINALIZING → COMPLETED. Нехватка товара даёт REJECTED. Отмена или отказ оплаты ведёт через CANCELLING к CANCELLED после подтверждения компенсаций.
+
+Принятие отмены и переход по успешной оплате в FINALIZING конкурируют за один условный переход актуальной версии Orders. Если отмена принята, поздний PaymentSucceeded компенсируется и не запускает Commit. Если уже выбрана FINALIZING, CancelOrder отклоняется; процесс доводится до завершения.
+
+CANCELLED требует двух подтверждённых условий: активного резерва нет, а списания нет либо оно возвращено. Запрос на возврат, deadline, намерение отмены или сообщение «возврат начат» недостаточны. Release и Cancel сохраняют запрет будущей операции для order_id даже при отсутствии первоначальной записи, чтобы старый запрос/событие не воскресил отменённый процесс.
+
+У резерва в MVP нет независимого TTL, который сам освобождает товар во время оплаты. Срок обработки и намерение отмены контролирует Orders. Возврат уже проданного/доставленного товара вне MVP; нельзя подменять Release обратной продажей.
+
+## Инварианты для любой промежуточной задачи
+
+Для ссылок в ревью использовать следующие краткие идентификаторы; полные определения есть в roadmap:
+
+| ID | Обязательное свойство |
+|---|---|
+| INV-01 | available ≥ 0, reserved ≥ 0, on_hand ≥ reserved |
+| INV-02 | Баланс склада учитывает available, reserved, sold и явные пополнения; повтор не меняет ledger дважды |
+| INV-03 | На order_id максимум один успешный debit; возвраты не превышают списание |
+| INV-04 | COMPLETED имеет оплату ожидаемой суммы и COMMITTED резерв |
+| INV-05 | CANCELLED не имеет активного резерва и невозвращённого debit; поздние операции не меняют этот смысл |
+| INV-06 | Один client_request_id соответствует одному неизменному заказу; несовместимый повтор отклоняется |
+| INV-07 | Каждый принятый заказ учтён как терминальный, незавершённый или неизвестный при недоступности данных |
+
+Межсервисная временная рассогласованность допускается в нетерминальных состояниях и измеряется по длительности. Отрицательный склад, лишний debit и ложный COMPLETED не становятся допустимыми из-за нагрузки или скорости восстановления. NEEDS_REVIEW и зависший процесс не считаются успехом.
+
+## Что входит в MVP и следующие этапы
+
+MVP — этапы 0–2: работающие три сервиса, весь обязательный стек, сквозной успех/отказ, минимальные компенсации, outbox/inbox, durable jobs и идемпотентность, Redis для чтений, логи/базовые дашборды, генератор/верификатор и первый вручную собранный отчёт.
+
+Дальше: расширенная диагностика/алерты/трассировка, crash windows и replay, нагрузочные решения, несколько реплик и партиции, автоматизация отчётов. Kubernetes допускается отдельным согласованным этапом ради конкретного предмета эксперимента.
+
+Вне MVP: реальный платёжный провайдер, авторизация, доставка, налоги, скидки, полноценный UI магазина и возврат доставленных товаров. Нельзя незаметно расширять MVP этими направлениями.
+
+Контрольные точки: G0 — архитектура; G1 — основа заказа/склада; G2 — сквозной MVP; G3 — устойчивость; G4 — готовая лаборатория. Следующие точки принимаются по готовому проверяемому результату. Перечень первых пакетов и текущий следующий шаг находятся в структурированном состоянии.
+
+Часы/дни в roadmap — исходная оценка ручной разработки, не обещание календарного срока выполнения ИИ. Численные SLO, RPS, TTL, deadlines, размеры пулов и повторов имеют статус принятых стартовых гипотез/ориентиров, а не измеренных свойств будущей реализации.
+
+## Как выполнять промежуточную задачу
+
+### С репозиторием
+
+1. Прочитать текущую ревизию и последнее поручение тимлида.
+2. Сверить файловое состояние, Git diff и действующие инструкции; контекст не заменяет чтение кода, который меняется.
+3. Ограничить задачу одним понятным пакетом и перечислить затрагиваемые инварианты/API.
+4. Выполнить работу в рамках принятого этапа. Технические детали внутри архитектуры выбирать самостоятельно; существенную смену границ, семантики или инфраструктуры представить конкретным предложением для согласования.
+5. Запустить необходимые смысловые проверки. Представить точные команды и наблюдаемые результаты; невыполненное обозначить явно.
+6. Обновить контекст и связанные документы, затем передать результат на ревью согласно контрольной точке.
+
+### Без репозитория и компьютера
+
+По этому файлу можно анализировать архитектуру, проектировать контракты, SQL и тестовые сценарии, готовить отдельные полные файлы, ревьюировать предоставленный код, планировать эксперименты и уточнять отчёты. Встроенные приложения содержат исходную спецификацию.
+
+Если задача требует менять существующий код, его фактический текст должен быть предоставлен отдельно или встроен в обновлённый пакет. Не восстанавливать отсутствующий код по догадке и не объявлять предположенную структуру существующей. Запрашивать только конкретные недостающие материалы для текущей задачи; доступ к исходному компьютеру не является обязательным условием для концептуальной работы.
+
+Результат без доступа к файлам должен включать переносимое содержание: полный предлагаемый файл/patch/контракт, основание решения, проверки, которые действительно выполнены в доступной среде, проверки, оставшиеся для локального запуска, и дельту контекста. Для предложенных изменений использовать статус PROPOSED/NOT_APPLIED, для неисполненных проверок — NOT_RUN. Код, написанный в сообщении, ещё не является применённым кодом локального проекта.
+
+Рекомендуемая форма результата другому исполнителю:
+
+```text
+Основа: project_id и context_revision.
+Задача: конкретный ID/цель и границы.
+Результат: применено / предложено без применения; полные файлы или patch.
+Затронутые решения и инварианты: список.
+Проверки: команда, среда, наблюдаемый результат; отдельно NOT_RUN.
+Новые предположения, ограничения и вопросы: список.
+Дельта контекста: что нужно добавить/исправить в статусе, документах и следующем шаге.
+Нужное решение тимлида: только если затронута контрольная точка или существенная смена G0.
+```
+
+## Методика экспериментов: что нельзя потерять
+
+Цикл: baseline → проблема → гипотеза → одно изменение → повтор → сравнение → вывод. Нагрузочные проблемы и намеренно внесённые отказы разделяются. Цель измерения — завершённый бизнес при корректных данных, а не только количество быстрых ответов CreateOrder.
+
+Генератор должен уметь open-loop arrival rate, seed, профиль SKU, чтения, долю отказов и timeline. Фиксировать плановую/фактическую отправку и пропущенные запуски; насыщение генератора нельзя скрывать снижением нагрузки. Число завершённых и latency показываются рядом с rejected/unresolved/unknown.
+
+Для каждого прогона сохранять код/dirty diff, конфигурацию, image digests, общий ресурсный бюджет, replicas/worker/pool caps, Kafka partitions/groups, dataset/stock/seed, warmup/measure/drain, фактические воздействия и полноту телеметрии. Сравнивать одинаковые начальные условия. Изменение ресурсов — отдельный фактор.
+
+После нагрузки выполнить drain до лимита и сверку request keys/ledger/состояний. Неразрешённые исходы не удаляются из данных. Повторять A/B парами с фиксированными seeds внутри пары и заранее заданным набором между парами. Показывать разброс и недостаточность выборки; не заявлять статистическую значимость без оснований.
+
+Не усреднять p95/p99 между репликами. Объединять подходящие histogram buckets/сырые наблюдения либо прямо показывать статистику отдельных прогонов. Измерять Kafka lag и durable job backlog отдельно. Увеличение реплик проверять вместе с распределением gRPC и суммарным давлением SQL-пулов.
+
+Отчёт должен содержать гипотезу, условия, фактическое изменение, результаты A/B, графики, инварианты, ресурсы, регрессии, ограничения, решение и следующий эксперимент. В приложениях есть полный каталог из 12 сценариев и точный шаблон отчёта.
+
+## Актуальность, версии и обновление
+
+Этот файл является **снимком на указанную дату и ревизию**. Актуальность локального пакета поддерживается обязательным обновлением после содержательной работы и проверкой источников. Переданная копия в другом чате не может автоматически узнать о более поздних изменениях без их передачи.
+
+Локальный порядок обновления:
+
+1. Обновить затронутые спецификации, ADR и фактические сведения.
+2. В CONTEXT_STATE.json обновить статусы, approvals, результаты проверок, доступные версии/commit, блокеры, следующий шаг и историю изменений.
+3. Увеличить context_revision; context_updated_on брать из актуального пользовательского контекста Europe/Moscow. Не подменять дату произвольным временем хоста.
+4. Если меняется вводная сводка, обновить tools/context_intro.md.
+5. Если появился существенный новый ADR/контракт, который нужен агенту без компьютера, добавить его в source_documents. При появлении реализации включить точные внешние контракты и модели данных; для работы с конкретным кодом подготовить релевантные файлы.
+6. Запустить из корня проекта:
+
+```powershell
+.\tools\update_context.ps1
+.\tools\update_context.ps1 -CheckOnly
+```
+
+7. Передать последнюю проверенную PROJECT_CONTEXT.md вместе с пакетом ревью. Изменение только генерируемого локального файла будет потеряно при следующей сборке; менять нужно источники.
+
+Инструмент не требует Go, Docker, сети, Python или зависимостей Node.js. Он использует стандартный PowerShell, собирает полные документы и записывает UTF-8. CheckOnly ничего не изменяет и сообщает несовпадение снимка с текущими источниками. Он не подтверждает истинность человеческих утверждений, не запускает сервисные тесты и не проверяет новую кодовую реализацию.
+
+Удалённый порядок: другой агент получает ревизию N, выполняет свою задачу и возвращает результат с basis_revision=N и предложением обновления. Если локально уже существует ревизия N+1, сравнить изменения, объединить совместимые результаты и проверить конфликтующие решения. Не заменять более свежий контекст старой копией. Принятие архитектурной смены или следующей точки подтверждает тимлид.
+
+История изменений должна сохранять факт принятия G0 и важные дальнейшие решения. Старые сведения о реализации заменяются текущим статусом, но история и основания решений остаются доступными. Закрытые блокеры/замечания отмечаются решёнными либо переносятся в историю, а не продолжают выглядеть активными.
+
+## Что агент обязан отличать
+
+- **APPROVED** — прямое согласование тимлида с зафиксированным основанием.
+- **PLANNED / PROPOSED** — намеченное поведение или предложение, ещё не реализация.
+- **IMPLEMENTED / APPLIED** — изменения действительно существуют в указанном рабочем состоянии.
+- **VERIFIED / PASS** — приведённая проверка реально выполнена и имеет наблюдаемый результат.
+- **NOT_RUN / NOT_CHECKED / UNKNOWN** — проверка не выполнена или факт недоступен.
+- **NOT_READY** у контрольной точки — результат ещё не готов для приёмки.
+- **INCONCLUSIVE** у эксперимента — данные не дают достаточного основания принять/отклонить гипотезу.
+
+В контекст не включать пароли, токены, реальные платёжные данные или секреты среды. Синтетические данные, логические имена, версии, параметры ресурсов и обезличенные результаты достаточны для передачи задачи.
+
+Ни один перечень будущих файлов, CLI-команд или метрик в приложениях не доказывает, что они уже созданы. Источником фактического прогресса служит следующий раздел со структурированным состоянием и доказательствами.
+
+## Структурированное состояние, проверки и история
+
+JSON ниже является частью этого файла и достаточен для чтения без отдельного CONTEXT_STATE.json. Null/NOT_CHECKED/NOT_CREATED означают отсутствие подтверждённых сведений, а не нулевые значения или успешное завершение.
+
+```json
+{
+  "schema_version": 1,
+  "project_id": "faultline-lab",
+  "context_revision": 2,
+  "context_created_on": "2026-10-13",
+  "context_updated_on": "2026-10-13",
+  "user_timezone": "Europe/Moscow",
+  "language": "ru",
+  "current_phase": "G0_APPROVED_PRE_IMPLEMENTATION",
+  "current_task": {
+    "id": "REPO-BOOTSTRAP-001",
+    "description": "Подготовить публичный репозиторий Faultline Lab, оформление, структуру и первый коммит",
+    "status": "IN_PROGRESS",
+    "result": {
+      "repository_created": true,
+      "first_commit": "PENDING",
+      "publication": "PENDING",
+      "license": "MIT",
+      "business_implementation": "NOT_STARTED"
+    }
+  },
+  "roles": {
+    "human": "Тимлид, владелец решений, код-ревьюер",
+    "ai": "Исполнитель разработки, проверок, экспериментов и документации"
+  },
+  "gates": [
+    {
+      "id": "G0",
+      "status": "APPROVED",
+      "approved_on": "2026-10-13",
+      "approval_evidence": "Прямое сообщение пользователя: G0 полностью принят.",
+      "conditions": []
+    },
+    {
+      "id": "G1",
+      "status": "NOT_READY",
+      "meaning": "Основа заказа и склада; согласование после реализации этапа 1"
+    },
+    {
+      "id": "G2",
+      "status": "NOT_READY",
+      "meaning": "Сквозной MVP и первый эксперимент после этапа 2"
+    },
+    {
+      "id": "G3",
+      "status": "NOT_READY",
+      "meaning": "Устойчивость после этапа 4"
+    },
+    {
+      "id": "G4",
+      "status": "NOT_READY",
+      "meaning": "Готовая лаборатория после этапа 7"
+    }
+  ],
+  "implementation_status": {
+    "business_service_code": "NOT_CREATED",
+    "go_module": "NOT_CREATED",
+    "protobuf_files": "NOT_CREATED",
+    "sql_migrations": "NOT_CREATED",
+    "docker_compose": "NOT_CREATED",
+    "load_generator": "NOT_CREATED",
+    "business_verifier": "NOT_CREATED",
+    "dashboards_alerts": "NOT_CREATED",
+    "experiments": "NOT_RUN",
+    "measured_capacity": null,
+    "actual_runtime_versions": null,
+    "git_repository": "INITIALIZED",
+    "git_commit": null,
+    "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
+    "pull_requests": []
+  },
+  "completed_work": [
+    "Подготовлен практический roadmap с этапами, критериями, рисками и оценками объёма",
+    "Подготовлен шаблон отчёта об инженерном эксперименте",
+    "Описаны архитектура, API на уровне методов, события, состояния, компенсации и инварианты",
+    "Определены роли тимлида и ИИ-исполнителя и контрольные точки G0–G4",
+    "Добавлены 15 подробных схем процессов G0 и 3 обзорные схемы в архитектурном пакете",
+    "G0 полностью принят пользователем 2026-10-13; принятие зафиксировано в ADR 0001",
+    "Создан самостоятельный PROJECT_CONTEXT.md с быстрым вводным разделом, текущим состоянием и полными проектными приложениями",
+    "Добавлены CONTEXT_STATE.json, инструменты генерации/проверки свежести и обязательные правила обновления контекста",
+    "Проверены сборка, соответствие источникам, структура приложений/ссылок, кодировка и отсутствие устаревшего ожидания принятия G0",
+    "Создан публичный GitHub-репозиторий Includeoyasi/faultline-lab с описанием и темами; локальный Git и origin инициализированы",
+    "Документы разложены по docs; добавлены двуязычный README, SVG-обложка, карта документации, MIT по выбору тимлида и шаблоны ревью",
+    "Добавлены переносимая проверка документации и CI workflow; фактический запуск CI пока ожидает первого push"
+  ],
+  "next_implementation_packet": {
+    "id": "G1-P01",
+    "status": "NOT_STARTED",
+    "goal": "Проверяемая основа проекта: три Go entrypoints, конфигурация, health, graceful shutdown и JSON-логи",
+    "approval_dependency": "G0 уже принят; повторное согласование G0 не требуется",
+    "following_packets": [
+      "G1-P02: Compose core, отдельные базы/роли, миграции и seed",
+      "G1-P03: protobuf, ключи операций, состояния и классификация ошибок",
+      "G1-P04: Create/Get/GetByRequestKey и долговечная задача Orders",
+      "G1-P05: Reserve/Commit/Release/GetReservation, ledger и cancellation barrier"
+    ]
+  },
+  "active_blockers": [],
+  "open_review_comments": [],
+  "pending_implementation_choices": [
+    "Проверить наличие и версии Go, Docker/Compose и фактические ресурсы среды",
+    "Выбрать и закрепить версии Go, библиотек и контейнерных образов",
+    "Создать Go-модуль github.com/Includeoyasi/faultline-lab в G1-P01; Git main/origin уже настроены",
+    "Подготовить точные protobuf-схемы, error codes и SQL-модели в рамках G0",
+    "Определить конкретную реализацию lease/version fencing, outbox ordering и durable job dispatch",
+    "Откалибровать гипотетические SLO и ресурсные лимиты после работающего MVP"
+  ],
+  "environment_facts": {
+    "local_host": "Windows",
+    "shell": "PowerShell",
+    "user_timezone": "Europe/Moscow",
+    "project_path_at_snapshot": null,
+    "path_required_to_read_context": false,
+    "go_available": "NOT_CHECKED",
+    "docker_available": "NOT_CHECKED",
+    "cpu_ram_disk_budget": "NOT_CHECKED",
+    "local_directory_name": "faultline-lab"
+  },
+  "validation_evidence": [
+    {
+      "date": "2026-10-13",
+      "check": "Inventory of the project files and Git repository status",
+      "result": "PASS",
+      "detail": "До создания контекста обнаружены только шесть проектных Markdown-файлов. Git rev-parse подтвердил отсутствие репозитория в этом пути и родителях."
+    },
+    {
+      "date": "2026-10-11",
+      "check": "Markdown structure and encoding for G0 visuals",
+      "result": "PASS",
+      "detail": "Проверены кодировка, парные fences и типы Mermaid: 15 схем в docs/architecture/PROCESSES.md, 3 в docs/architecture/DESIGN.md, 1 в docs/ROADMAP.md. Это не проверка рендеринга Mermaid и не тесты сервисов."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Generate portable context and check source freshness",
+      "result": "PASS",
+      "commands": [
+        ".\\tools\\update_context.ps1",
+        ".\\tools\\update_context.ps1 -CheckOnly"
+      ],
+      "detail": "Собраны 7 полных проектных документов и реестр 10 SHA-256 источников. CheckOnly подтвердил соответствие переносимого снимка исходным файлам."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Portable context structure and approval consistency",
+      "result": "PASS",
+      "detail": "Встроены 19 Mermaid-схем; fences сбалансированы; все 7 внутренних anchors существуют; UTF-8 без replacement characters. Устаревшие утверждения, что принятие G0 ещё не получено, в документах не обнаружены. Рендеринг схем и бизнес-тесты не запускались."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "GitHub repository creation and local Git bootstrap",
+      "result": "PASS",
+      "detail": "GitHub API подтвердил владельца Includeoyasi, публичность, URL и создание репозитория. Git main и origin созданы. Авторство настроено локально с GitHub noreply email. Коммит и push ещё не выполнены."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Repository documentation and portable context checks",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly",
+        "powershell.exe -NoProfile -File tools/update_context.ps1 -CheckOnly"
+      ],
+      "detail": "Проверены 15 Markdown-файлов, 115 локальных ссылок и 50 Mermaid-блоков вместе с повторениями внутри снимка. Снимок включает 12 документов и 15 SHA-256. CheckOnly проходит в PowerShell 7 и Windows PowerShell 5.1. SVG-обложка отрендерена и визуально проверена. Рендеринг всех Mermaid-схем и тесты сервисов не выполнялись."
+    }
+  ],
+  "source_documents": [
+    {
+      "path": "README.md",
+      "anchor": "appendix-readme-en",
+      "title": "Публичное введение на английском"
+    },
+    {
+      "path": "README.ru.md",
+      "anchor": "appendix-readme-ru",
+      "title": "Публичное введение на русском"
+    },
+    {
+      "path": "docs/README.md",
+      "anchor": "appendix-docs-index",
+      "title": "Карта документации"
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "anchor": "appendix-roadmap",
+      "title": "Полный roadmap, архитектура, эксперименты и методика"
+    },
+    {
+      "path": "docs/architecture/DESIGN.md",
+      "anchor": "appendix-design-review",
+      "title": "Принятый архитектурный пакет G0"
+    },
+    {
+      "path": "docs/architecture/PROCESSES.md",
+      "anchor": "appendix-g0-processes",
+      "title": "Подробные визуальные схемы G0"
+    },
+    {
+      "path": "docs/development/WORKFLOW.md",
+      "anchor": "appendix-development-process",
+      "title": "Роли, ревью, контрольные точки и обновление контекста"
+    },
+    {
+      "path": "docs/experiments/REPORT_TEMPLATE.md",
+      "anchor": "appendix-report-template",
+      "title": "Полный шаблон отчёта"
+    },
+    {
+      "path": "AGENTS.md",
+      "anchor": "appendix-agents",
+      "title": "Локальные инструкции ИИ-исполнителю"
+    },
+    {
+      "path": "docs/adr/0001-approved-g0.md",
+      "anchor": "appendix-adr-0001",
+      "title": "Запись принятия архитектуры G0"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "anchor": "appendix-contributing",
+      "title": "Участие, ревью и проверки"
+    },
+    {
+      "path": "LICENSE",
+      "anchor": "appendix-license",
+      "title": "MIT License"
+    }
+  ],
+  "change_history": [
+    {
+      "revision": 1,
+      "date": "2026-10-13",
+      "summary": "Первый переносимый контекст; явное принятие G0; полные проектные приложения; механизм обновления и проверки свежести",
+      "trigger": "Пользователь: G0 полностью принят. Создай файл для хранения контекста задачи..."
+    },
+    {
+      "revision": 2,
+      "date": "2026-10-13",
+      "summary": "Проект получил имя Faultline Lab; создан GitHub-репозиторий, оформлены README/обложка/структура, выбрана MIT. Подготовка первого коммита.",
+      "trigger": "Пользователь поручил инициализировать Git, создать публичный репозиторий и первый коммит; затем выбрал MIT."
+    }
+  ],
+  "repository": {
+    "name": "Faultline Lab",
+    "slug": "faultline-lab",
+    "owner": "Includeoyasi",
+    "url": "https://github.com/Includeoyasi/faultline-lab",
+    "visibility": "PUBLIC",
+    "default_branch": "main",
+    "status": "CREATED_AWAITING_INITIAL_PUSH",
+    "description": "A Go microservices lab for testing scale, failure and recovery — built through human-led AI collaboration.",
+    "license": "MIT",
+    "license_approval": "Прямое сообщение тимлида 2026-10-13: возьми MIT",
+    "context_commit_semantics": "git_commit фиксирует HEAD на момент подготовки снимка; финальный HEAD проверяется через git rev-parse HEAD, поскольку снимок не может содержать hash собственного коммита."
+  }
+}
+```
+
+## Реестр включённых источников
+
+SHA-256 относится к исходному файлу на момент сборки. Генерируемый PROJECT_CONTEXT.md исключён из реестра, чтобы не создавать циклическую контрольную сумму. Проверка CheckOnly сравнивает весь снимок с результатом повторной сборки из актуальных источников.
+
+| Источник | SHA-256 |
+|---|---|
+| `CONTEXT_STATE.json` | `158370ef85be171140f993c7ba5fa65d1bc216d385340d4ca8071c1d02d48a5a` |
+| `tools/context_intro.md` | `0e4a8d7fd2c123b7a7c7a786b25181dfd8ca2dc8bc89b2c73b20ab285bf15c51` |
+| `tools/update_context.ps1` | `ccc2c3da104cbf74c8bd11bd4970262ecaf715dfa8f8260971fb04feddea2010` |
+| `README.md` | `be36eec95b90b7f59ccdcee743a048d246f8ed5875bc93b2dbc26fd8396befed` |
+| `README.ru.md` | `4e66849a8f0c0cdf1030952554c295dababc4b449e7957baf8c6b90aa0487106` |
+| `docs/README.md` | `e902dabf0ea9e57e17d616c08fb15574fdd5751099887e7160d4c9ad25adcb64` |
+| `docs/ROADMAP.md` | `44abbd4c97ab735bfd1ab3332c79b74c320452d52b8bfa3714fdeadded60df87` |
+| `docs/architecture/DESIGN.md` | `cd150f15b8a676453f77197687d2f8df4e68944ac77c63d2d867c2779d6fd750` |
+| `docs/architecture/PROCESSES.md` | `fb6ef989e7773a353c216f60029f25444accc363a9ee06cac58845c02087b8e1` |
+| `docs/development/WORKFLOW.md` | `b35fc89abcd2e93d4975483a4ad92989e284e9b8d0a2543147ae645b7c47d371` |
+| `docs/experiments/REPORT_TEMPLATE.md` | `4f569aab52ba34a68bb2e8b4551c6a3bf4932277c26c3b4206dbb505781a2cab` |
+| `AGENTS.md` | `cb9f73ef208bae8b300abaf040b5aceb9d076d9cac5d7bc3010eda2311d5ea85` |
+| `docs/adr/0001-approved-g0.md` | `700f9e578e681c7902f619143a24d92c68df9401a2de54a03d416507502ac748` |
+| `CONTRIBUTING.md` | `401ae6debb07ad6161ffb0794c939e4ae134f072d515bf1b757cdaaffec0e038` |
+| `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
+
+## Полные самостоятельные приложения
+
+- [Публичное введение на английском](#appendix-readme-en) — `README.md`
+- [Публичное введение на русском](#appendix-readme-ru) — `README.ru.md`
+- [Карта документации](#appendix-docs-index) — `docs/README.md`
+- [Полный roadmap, архитектура, эксперименты и методика](#appendix-roadmap) — `docs/ROADMAP.md`
+- [Принятый архитектурный пакет G0](#appendix-design-review) — `docs/architecture/DESIGN.md`
+- [Подробные визуальные схемы G0](#appendix-g0-processes) — `docs/architecture/PROCESSES.md`
+- [Роли, ревью, контрольные точки и обновление контекста](#appendix-development-process) — `docs/development/WORKFLOW.md`
+- [Полный шаблон отчёта](#appendix-report-template) — `docs/experiments/REPORT_TEMPLATE.md`
+- [Локальные инструкции ИИ-исполнителю](#appendix-agents) — `AGENTS.md`
+- [Запись принятия архитектуры G0](#appendix-adr-0001) — `docs/adr/0001-approved-g0.md`
+- [Участие, ревью и проверки](#appendix-contributing) — `CONTRIBUTING.md`
+- [MIT License](#appendix-license) — `LICENSE`
+
+<a id="appendix-readme-en"></a>
+
+## Приложение: Публичное введение на английском
+
+Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+<p align="center">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/main/docs/assets/banner.svg" alt="Faultline Lab — three services, real failure modes, measurable decisions" width="100%">
+</p>
+
+<p align="center">
+  <strong>A small business system. A deliberate breaking point. Evidence for every fix.</strong><br>
+  A Go microservices lab for studying scale, failure and recovery through human-led AI development.
+</p>
+
+<p align="center">
+  <a href="#appendix-readme-ru">Русский</a> ·
+  <a href="#appendix-docs-index">Documentation</a> ·
+  <a href="#appendix-g0-processes">Process atlas</a> ·
+  <a href="#appendix-roadmap">Roadmap</a> ·
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md">Agent handoff</a>
+</p>
+
+#### Current state
+
+**Architecture approved · implementation next.** The team lead accepted G0 on **13 October 2026**. The initial repository snapshot contains the design, visual process atlas, development workflow and portable agent context. Service code, runtime infrastructure and measured experiment results are still to come.
+
+| Ready | Next | Later |
+| :--- | :--- | :--- |
+| Approved architecture and business invariants | Three Go service entrypoints, configuration, health and shutdown | Repeatable load and failure experiments |
+| Detailed process diagrams and review gates | PostgreSQL ownership, migrations and gRPC contracts | Grafana dashboards, alerts and experiment reports |
+| Portable context with a freshness check | Durable workflows, Kafka and compensation | Scaling comparisons under equal resource budgets |
+
+No capacity numbers or performance improvements are claimed before measurement. The [roadmap](#appendix-roadmap) distinguishes design hypotheses from acceptance criteria and observed results.
+
+#### What this project investigates
+
+Faultline Lab models a mini-shop: **order → reservation → simulated payment → completion or cancellation**. Around that business process, the planned lab will generate load, inject faults, verify invariants and compare engineering decisions.
+
+The useful result of an experiment is more than a latency chart: it explains whether the business stayed correct, what failed, which change helped, how much it cost and whether the result can be reproduced.
+
+| Business service | Owns | Critical responsibility |
+| :--- | :--- | :--- |
+| **Orders** | Order state and durable workflow jobs | Coordinate completion and compensation; account for accepted requests |
+| **Inventory** | Stock, reservations and stock ledger | Prevent overselling; commit or release a reservation safely |
+| **Payments** | Simulated provider, payment jobs and payment ledger | Prevent duplicate debits; cancel or refund safely |
+
+Exactly three business services. Workflow coordination lives inside Orders; load generators and verifiers are lab tools.
+
+#### Architecture
+
+The diagram shows the approved boundaries. The full transaction sequence, cancellation races and recovery paths are documented in the [process atlas](#appendix-g0-processes).
+
+```mermaid
+flowchart LR
+    Client["Client / load generator"] -->|gRPC| Orders["Orders<br/>Workflow + durable jobs"]
+    Orders -->|"gRPC: reserve / commit / release"| Inventory["Inventory<br/>Stock + reservation ledger"]
+    Orders -->|"gRPC: query / cancel / refund"| Payments["Payments<br/>Simulated provider + ledger"]
+    Orders -->|outbox| Kafka["Kafka<br/>Domain events"]
+    Inventory -->|outbox| Kafka
+    Payments -->|outbox| Kafka
+    Kafka -->|"payment requests"| Payments
+    Kafka -->|"payment + inventory results"| Orders
+    Orders --- ODB[("Orders database")]
+    Inventory --- IDB[("Inventory database")]
+    Payments --- PDB[("Payments database")]
+    Inventory -.->|"availability cache"| Redis[(Redis)]
+```
+
+**Planned stack:** Go · gRPC · PostgreSQL · Kafka · Redis · Prometheus · Grafana · Loki · Alloy. Local Docker Compose comes first; distributed tracing is a later extension. A single local PostgreSQL instance hosts three databases with separate roles. Services never read one another's tables. Redis caches availability; PostgreSQL authorizes reservations.
+
+The accepted design makes recovery explicit:
+
+- Business state and its outbox event commit together. Duplicate delivery is expected; inbox deduplication and operation keys preserve meaning.
+- An RPC timeout means the outcome is unknown. Recovery reuses the operation key or reconciles authoritative state.
+- `COMPLETED` requires confirmed payment and committed inventory. `CANCELLED` requires no active reservation and no unrefunded debit.
+- Cancellation and finalization compete for one versioned transition. Persisted cancellation barriers block late reservation or debit.
+- Consumer lag and unfinished business work are measured separately. A committed Kafka offset does not prove a workflow has finished.
+
+#### The experiment loop
+
+```mermaid
+flowchart LR
+    H["Hypothesis"] --> B["Baseline<br/>fixed seed + resource budget"]
+    B --> F["Load / fault scenario"]
+    F --> V["Drain + business verifier"]
+    V --> C["Change one decision"]
+    C --> R["Repeat under equal conditions"]
+    R --> E["Report<br/>correctness + performance + cost"]
+    E -.-> H
+```
+
+The [experiment catalog](#appendix-roadmap) includes load ramps, bursts, hot products, database contention, Kafka backlog and partition skew, slow dependencies, retry storms, crash windows, Redis failures, late payments and poison events.
+
+Reports retain offered versus actual load, unresolved outcomes, resource limits and repeat variability. The [report template](#appendix-report-template) defines the evidence to collect. There are no completed experiment reports yet.
+
+#### Human-led AI development
+
+The maintainer acts as **team lead and code reviewer**. The AI acts as **implementer**: it prepares focused changes, runs available checks, documents evidence and addresses review comments. The human approves architecture and milestone transitions.
+
+```mermaid
+flowchart LR
+    Task["Scoped task"] --> AI["AI implementation<br/>+ checks + evidence"]
+    AI --> Review["Human code review"]
+    Review -->|changes requested| AI
+    Review -->|accepted| Context["Update portable context"]
+    Context --> Next["Next task / approved gate"]
+```
+
+| Gate | Result | Status |
+| :--- | :--- | :--- |
+| **G0** | Architecture, invariants and development plan | Approved |
+| **G1** | Orders and Inventory foundation | Planned |
+| **G2** | End-to-end MVP and first experiment | Planned |
+| **G3** | Failure recovery and resilience | Planned |
+| **G4** | Reproducible engineering lab | Planned |
+
+Review expectations are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
+
+#### Repository map
+
+```text
+faultline-lab/
+├── README.md                    # Public overview in English
+├── README.ru.md                 # Public overview in Russian
+├── CONTRIBUTING.md              # Review and contribution expectations
+├── AGENTS.md                    # Instructions for AI implementers
+├── CONTEXT_STATE.json           # Status, approvals and validation evidence
+├── PROJECT_CONTEXT.md           # Generated, self-contained agent handoff
+├── docs/
+│   ├── README.md                # Guided reading paths
+│   ├── ROADMAP.md               # Stages, experiments and acceptance criteria
+│   ├── architecture/           # Approved design and process atlas
+│   ├── development/            # Human review and AI implementation workflow
+│   ├── experiments/            # Experiment report template
+│   ├── adr/                    # Recorded decisions and approvals
+│   └── assets/                 # Repository visuals
+├── tools/                      # Context generation and documentation checks
+└── .github/                    # Documentation CI and review templates
+```
+
+Runtime directories will be added with their first working implementation. The [roadmap](#appendix-roadmap) contains the planned code layout.
+
+#### Working with this snapshot
+
+Clone the repository and start with the [documentation index](#appendix-docs-index):
+
+```bash
+git clone https://github.com/Includeoyasi/faultline-lab.git
+cd faultline-lab
+```
+
+Documentation checks require Node.js 20+ and PowerShell 7+; the context generator also runs on Windows PowerShell 5.1:
+
+```powershell
+node tools/check_docs.mjs
+pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
+```
+
+After changing canonical documents, update `CONTEXT_STATE.json` and its revision, regenerate with `pwsh -NoProfile -File tools/update_context.ps1`, then run the checks again. These commands validate documentation and snapshot freshness. Runtime setup instructions will accompany the implementation.
+
+#### License
+
+[MIT](#appendix-license) · Copyright © 2026 Dmitrii Morozov.
+
+<a id="appendix-readme-ru"></a>
+
+## Приложение: Публичное введение на русском
+
+Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+<p align="center">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/main/docs/assets/banner.svg" alt="Faultline Lab — три сервиса, реальные сценарии сбоев, измеримые решения" width="100%">
+</p>
+
+<p align="center">
+  <strong>Небольшой бизнес. Управляемые сбои. Доказательства эффективности решений.</strong><br>
+  Лаборатория микросервисов на Go, разрабатываемая ИИ под руководством человека.
+</p>
+
+<p align="center">
+  <a href="#appendix-readme-en">English</a> ·
+  <a href="#appendix-docs-index">Документация</a> ·
+  <a href="#appendix-g0-processes">Атлас процессов</a> ·
+  <a href="#appendix-roadmap">Roadmap</a> ·
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md">Контекст для агентов</a>
+</p>
+
+#### Состояние проекта
+
+**Архитектура принята, реализация впереди.** Тимлид полностью согласовал G0 **13 октября 2026 года**. Сейчас репозиторий содержит архитектуру, подробные схемы, roadmap, порядок ревью и переносимый контекст. Код сервисов, запускаемая инфраструктура и результаты экспериментов ещё не созданы.
+
+Ближайший пакет **G1-P01**: три Go entrypoints, конфигурация, health, graceful shutdown и JSON-логи. Проверки документации не являются тестами будущих сервисов. Производительность стенда пока не измерялась.
+
+#### Идея
+
+Faultline Lab — мини-магазин и лаборатория инженерных экспериментов вокруг него. Бизнес-процесс: **заказ → резервирование товара → симулированная оплата → завершение или отмена**.
+
+Мы будем воспроизводить перегрузку, сбои зависимостей, задержки событий и ошибки восстановления; затем менять инженерное решение и сравнивать результаты в одинаковых условиях. Отчёт должен отвечать, сохранилась ли корректность бизнеса, что изменилось в производительности и ресурсах и можно ли повторить результат.
+
+| Сервис | Ответственность | Что защищает |
+| :--- | :--- | :--- |
+| **Orders** | Заказ, сохранённые шаги процесса, отмена и компенсации | Учёт принятых запросов и корректные конечные состояния |
+| **Inventory** | Остатки, резервы и складской ledger | Отсутствие перепродажи и безопасное освобождение резерва |
+| **Payments** | Симуляция провайдера, платежи и возвраты | Отсутствие повторного списания и поздней оплаты после отмены |
+
+Ровно три бизнес-сервиса. Управление процессом остаётся в Orders; генератор нагрузки и verifier — инструменты лаборатории.
+
+#### Принятая архитектура
+
+```mermaid
+flowchart LR
+    Client["Клиент / генератор нагрузки"] -->|gRPC| Orders["Orders<br/>Заказ + durable jobs"]
+    Orders -->|"gRPC: резерв / продажа / освобождение"| Inventory["Inventory<br/>Остатки + ledger"]
+    Orders -->|"gRPC: запрос / отмена / возврат"| Payments["Payments<br/>Симулятор + ledger"]
+    Orders -->|outbox| Kafka["Kafka<br/>Бизнес-события"]
+    Inventory -->|outbox| Kafka
+    Payments -->|outbox| Kafka
+    Kafka -->|"запрос оплаты"| Payments
+    Kafka -->|"результаты оплаты и склада"| Orders
+    Inventory -.->|"кэш доступности"| Redis[(Redis)]
+```
+
+Планируемый стек: **Go, gRPC, PostgreSQL, Kafka, Redis, Prometheus, Grafana, Loki и Alloy**. Первая среда — локальный Docker Compose. У каждого сервиса своя база и роль PostgreSQL; чтение чужих таблиц исключено. Redis помогает читать доступность, а резерв разрешает PostgreSQL.
+
+Принятые опорные правила:
+
+- Бизнес-изменение и outbox-событие сохраняются одной транзакцией. Дубликаты доставки учитываются через inbox и ключи операций.
+- Timeout RPC означает неизвестный результат. Восстановление повторяет тот же ключ или сверяет состояние владельца данных.
+- `COMPLETED` требует подтверждённой оплаты и продажи товара. `CANCELLED` требует отсутствия активного резерва и невозвращённого списания.
+- Отмена и финализация конкурируют за переход версии Orders. Сохранённые запреты отмены блокируют поздний резерв или списание.
+- Kafka lag измеряется отдельно от незавершённых бизнес-задач.
+
+В [атласе G0](#appendix-g0-processes) разобраны локальные транзакции, успешная покупка, отказы, гонки, поздние события и восстановление.
+
+#### Цикл эксперимента
+
+```mermaid
+flowchart LR
+    H["Гипотеза"] --> B["Базовый прогон<br/>seed + лимиты ресурсов"]
+    B --> F["Нагрузка / сбой"]
+    F --> V["Drain + проверка бизнес-инвариантов"]
+    V --> C["Одно изменение решения"]
+    C --> R["Повтор в тех же условиях"]
+    R --> E["Отчёт<br/>корректность + скорость + ресурсы"]
+    E -.-> H
+```
+
+В каталоге roadmap — постепенная нагрузка, всплески, горячий SKU, блокировки PostgreSQL, backlog и перекос партиций Kafka, медленные зависимости, лавина повторов, рестарты, сбои Redis, поздняя оплата и poison events.
+
+Мы учитываем предложенную и фактическую нагрузку, неизвестные исходы и разброс повторов. Цифры эффективности появятся после измерений. [Шаблон отчёта](#appendix-report-template) определяет состав доказательств; готовых результатов пока нет.
+
+#### Человек и ИИ
+
+Владелец проекта — **тимлид и ревьюер**. ИИ — **исполнитель**: готовит изменения, выполняет проверки, фиксирует доказательства и исправляет замечания. Человек принимает архитектуру и ключевые этапы.
+
+```mermaid
+flowchart LR
+    T["Конкретная задача"] --> AI["ИИ: реализация<br/>проверки и доказательства"]
+    AI --> R["Ревью тимлида"]
+    R -->|замечания| AI
+    R -->|принято| C["Обновление контекста"]
+    C --> N["Следующая задача / этап"]
+```
+
+**G0 принят.** G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Следующие контрольные точки ещё не достигнуты.
+
+[Порядок разработки](#appendix-development-process) описывает ревью. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md) включает полные документы, статусы и согласования: его можно передать агенту без доступа к репозиторию.
+
+#### С чего начать
+
+1. [Карта документации](#appendix-docs-index) — выбрать маршрут чтения.
+2. [Принятый дизайн](#appendix-design-review) — границы и инварианты.
+3. [Процессы G0](#appendix-g0-processes) — подробные визуальные сценарии.
+4. [Roadmap](#appendix-roadmap) — этапы, критерии и эксперименты.
+5. [CONTRIBUTING.md](#appendix-contributing) — как подготовить проверяемое изменение.
+
+Структура репозитория показана в [English README](#appendix-readme-en). Каталоги реализации будут добавляться вместе с работающим содержимым.
+
+```bash
+git clone https://github.com/Includeoyasi/faultline-lab.git
+cd faultline-lab
+```
+
+Проверки документации: Node.js 20+ и PowerShell 7+. Генератор контекста также совместим с Windows PowerShell 5.1:
+
+```powershell
+node tools/check_docs.mjs
+pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
+```
+
+После изменения источников обнови `CONTEXT_STATE.json`, увеличь ревизию и выполни `pwsh -NoProfile -File tools/update_context.ps1`, затем проверки. Инструкции запуска сервисов появятся с реализацией.
+
+#### Лицензия
+
+[MIT](#appendix-license) · Copyright © 2026 Dmitrii Morozov.
+
+<a id="appendix-docs-index"></a>
+
+## Приложение: Карта документации
+
+Полный исходный документ: `docs/README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Карта документации
+
+**Faultline Lab** · G0 принят 13 октября 2026 года · Реализация ещё не начата.
+
+#### Маршруты чтения
+
+| Задача читателя | Маршрут |
+| :--- | :--- |
+| Быстро оценить проект | [README](#appendix-readme-ru) → [Дизайн](#appendix-design-review) → [Roadmap](#appendix-roadmap) |
+| Проверить распределённый процесс | [Атлас G0](#appendix-g0-processes) → [Принятие G0](#appendix-adr-0001) |
+| Принять участие в разработке | [CONTRIBUTING](#appendix-contributing) → [Workflow](#appendix-development-process) → [AGENTS](#appendix-agents) |
+| Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+
+#### Источники решений
+
+- [Дизайн](#appendix-design-review): принятые границы сервисов, контракты, состояния и инварианты.
+- [Процессы](#appendix-g0-processes): 15 подробных схем транзакций, отказов, гонок и восстановления.
+- [Roadmap](#appendix-roadmap): этапы 0–7, критерии готовности, риски и 12 сценариев экспериментов.
+- [Workflow](#appendix-development-process): роли человека и ИИ, состав ревью и контрольные точки G0–G4.
+- [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/main/CONTEXT_STATE.json): текущая работа, проверки и история ревизий.
+
+`PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
+
+<a id="appendix-roadmap"></a>
+
+## Приложение: Полный roadmap, архитектура, эксперименты и методика
+
+Полный исходный документ: `docs/ROADMAP.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Faultline Lab: roadmap лаборатории инженерных экспериментов
+
+Цель проекта — воспроизводимо исследовать, как небольшой бизнес-процесс ведёт себя под нагрузкой и при сбоях, а затем проверять эффективность изменений. Итоговый продукт состоит из трёх бизнес-сервисов и инструментов вокруг них: генератора нагрузки, сценариев отказов, наблюдаемости, проверок корректности и отчётов.
+
+Это план разработки, а не результаты уже проведённых испытаний. Все численные пороги ниже — начальные гипотезы, которые нужно откалибровать на своём компьютере.
+
+Разработку выполняет Codex; пользователь выступает тимлидом, проводит код-ревью и согласует ключевые переходы. Порядок работы зафиксирован в `docs/development/WORKFLOW.md`. Архитектурный пакет `docs/architecture/DESIGN.md` и схемы `docs/architecture/PROCESSES.md` полностью приняты пользователем 2026-10-13. Реализация сервисов ещё не начата. Переносимый актуальный контекст находится в `PROJECT_CONTEXT.md`; следующая контрольная точка — G1.
+
+#### 1. Допущения и границы
+
+- Один исполнитель разработки — Codex, тимлид и ревьюер — пользователь. Первоначальные оценки объёма рассчитаны для ручной работы разработчика, знакомого с Go, SQL и Docker: один день равен примерно шести продуктивным часам. Эти оценки не являются сроками выполнения Codex; прогресс оценивается по готовности результатов и согласованным контрольным точкам.
+- Первая среда — Linux-контейнеры в Docker Compose; на Windows предполагается Docker Desktop с Linux backend. Реально доступные CPU, память, диск и ограничения Docker фиксируются в каждом эксперименте.
+- Ровно три бизнес-сервиса: Orders, Inventory и Payments. Воркеры, оркестратор процесса и outbox publisher работают внутри соответствующего сервиса. Утилиты лаборатории и инфраструктура не становятся дополнительными бизнес-сервисами.
+- Одна валюта, целые суммы в минимальных денежных единицах, один склад, небольшой фиксированный каталог и заранее загруженные остатки.
+- В MVP нет авторизации, доставки, налогов, скидок, UI магазина и возвратов уже доставленных товаров. Возврат платежа нужен для компенсации отменённого заказа.
+- Платёжный провайдер — модель внутри Payments. Она умеет детерминированно отвечать успехом или отказом, задерживать ответ и моделировать неизвестный результат. Реальные деньги не используются.
+- Сначала один PostgreSQL с тремя базами и отдельными ролями. У сервисов нет прав читать чужие базы. Позже базы можно разнести, если именно разделение ресурсов становится предметом эксперимента.
+- Один Kafka broker в первом профиле. Этот профиль проверяет обработку событий, backlog и перезапуски, но не отказоустойчивость реплицированного кластера. Для последней нужен отдельный профиль с несколькими брокерами.
+- Версии Go, зависимостей и образы контейнеров закрепляются явно. В отчёт попадают теги и digest образов; плавающий `latest` не является описанием воспроизводимой среды.
+
+Достаточный конечный результат: новый сценарий задаётся конфигурацией; один запуск создаёт нагрузку, применяет сбой, собирает данные и проверяет инварианты; сравнение двух вариантов формирует отчёт с выводом, ограничениями и исходными данными.
+
+#### 2. Архитектура
+
+```mermaid
+flowchart LR
+    L[Loadgen и labctl] -->|gRPC CreateOrder / GetOrder| O[Orders]
+    L -->|gRPC GetAvailability| I[Inventory]
+
+    subgraph B[Три бизнес-сервиса]
+        O -->|gRPC Reserve / Commit / Release| I
+        O -->|gRPC GetPayment / Cancel / Refund| P[Payments]
+    end
+
+    O -->|OrderAwaitingPayment| K[Kafka]
+    K -->|Событие заказа| P
+    P -->|PaymentSucceeded / Declined / Refunded| K
+    I -->|InventoryReserved / Committed / Released| K
+    K -->|Результаты платежа и резерва| O
+
+    subgraph DB[Один PostgreSQL, три отдельные базы]
+        DO[(orders_db)]
+        DI[(inventory_db)]
+        DP[(payments_db)]
+    end
+    O --> DO
+    I --> DI
+    P --> DP
+    I --> R[(Redis: кеш доступности)]
+
+    O -.->|Метрики| M[Prometheus]
+    I -.->|Метрики| M
+    P -.->|Метрики| M
+    O -.->|JSON stdout| A[Grafana Alloy]
+    I -.->|JSON stdout| A
+    P -.->|JSON stdout| A
+    A --> LK[Loki]
+    M --> G[Grafana и локальные алерты]
+    LK --> G
+```
+
+Инфраструктура для MVP: PostgreSQL, Kafka, Redis, Prometheus, Grafana, Loki и Alloy. Prometheus хранит метрики; Loki хранит логи; Grafana показывает оба источника. Сбор Docker-логов через Alloy соответствует официальному примеру Grafana. [Документация Loki и Alloy](https://grafana.com/docs/loki/latest/get-started/quick-start/tutorial/).
+
+На этапе расширенной диагностики добавить OpenTelemetry и Tempo. Они нужны для ответа на конкретный вопрос: где заказ провёл время — в gRPC, очереди, SQL или обработчике событий. Сбор трасс должен иметь одинаковую конфигурацию в сравниваемых прогонах.
+
+##### Владение данными
+
+| Сервис | Ответственность | Основные данные | Что не делает |
+|---|---|---|---|
+| Orders | Приём заказа, долговечное управление шагами, отмена и компенсации | orders, order_items, workflow_jobs, transition_history, inbox, outbox, request_keys | Не меняет складские и платёжные таблицы |
+| Inventory | Остатки, цены каталога для стенда, резервирование, подтверждение продажи, освобождение | products, stock, reservations, reservation_items, operations, inventory_ledger, outbox | Не решает, успешен ли заказ в целом |
+| Payments | Симуляция платежа, запрет позднего списания после отмены, возврат | payments, payment_jobs, payment_ledger, inbox, outbox, operation_keys | Не резервирует товар и не завершает заказ |
+
+Цены фиксируются Inventory в момент резервирования; Orders сохраняет этот снимок. Payments получает сумму из события Orders, а не произвольную сумму клиента. Общими могут быть protobuf-контракты и инструменты телеметрии; бизнес-логика и SQL каждого сервиса остаются внутри него.
+
+##### Назначение транспорта
+
+**gRPC** используется там, где нужен непосредственный результат операции: принять заказ, узнать состояние, атомарно зарезервировать товар, подтвердить или освободить резерв, запросить статус платежа и выполнить компенсацию.
+
+**Kafka** переносит факты и отделяет приём заказа от платежной обработки. Payments запускается по `OrderAwaitingPayment`. Orders принимает результаты Payments и Inventory. Inventory подтверждает фиксацию продажи событием `InventoryCommitted`, после которого Orders завершает заказ.
+
+Таким образом, все три сервиса используют и gRPC, и Kafka. Долговечный управляющий процесс находится в Orders; отдельный сервис для него не нужен.
+
+**Redis** — кеш чтения `GetAvailability`, принадлежащий Inventory. Сначала TTL около двух секунд с небольшим случайным разбросом и best-effort invalidation после изменения склада. Кеш может временно показывать устаревшую доступность. `Reserve` всегда проверяет PostgreSQL. Redis не хранит единственную копию идемпотентности, платежей или остатков.
+
+Пользу кеша проверять на смешанном профиле просмотра и заказа. Проверять только создающие записи запросы и ожидать ускорения от кеша чтений было бы неверной постановкой эксперимента.
+
+#### 3. Бизнес-процесс и контракты
+
+##### Успешный путь
+
+1. `Orders.CreateOrder(client_request_id, items)` в одной SQL-транзакции создаёт заказ, ключ запроса и долговечную задачу резервирования. После commit клиент получает `order_id` и `ACCEPTED`. Ответ означает принятие, а не завершение покупки.
+2. Внутренний воркер Orders вызывает `Inventory.Reserve(order_id, operation_id, items)`.
+3. Inventory атомарно создаёт резерв, обновляет остатки и пишет `InventoryReserved` в outbox. Повтор с тем же ключом возвращает прежний результат. Orders сохраняет резерв, сумму и `OrderAwaitingPayment` в своей транзакции.
+4. Publisher Orders доставляет событие в Kafka. Payments записывает inbox и долговечную payment job в своей транзакции, затем подтверждает обработанный Kafka offset.
+5. Воркер Payments выполняет симуляцию задержки вне SQL-транзакции. Короткая транзакция проверяет текущее состояние, записывает единственное списание и `PaymentSucceeded` в outbox либо фиксирует отказ и `PaymentDeclined`.
+6. Orders атомарно принимает `PaymentSucceeded`, меняет состояние на `FINALIZING` и создаёт задачу `CommitReservation`. Inventory фиксирует продажу и `InventoryCommitted` в одной транзакции.
+7. Orders обрабатывает `InventoryCommitted`, проверяет подтверждённую оплату, переводит заказ в `COMPLETED` и публикует `OrderCompleted`.
+
+Если Orders упал после ответа Inventory, повторяется тот же шаг с тем же `operation_id`. Если Kafka временно недоступна, событие остаётся в outbox. Если воркер умер после получения задачи, истечение lease позволяет продолжить её другим экземпляром.
+
+##### Состояния
+
+| Сущность | Основные состояния |
+|---|---|
+| Заказ | ACCEPTED → RESERVING → PAYMENT_PENDING → FINALIZING → COMPLETED |
+| Ветка отказа заказа | REJECTED при нехватке товара; CANCELLING → CANCELLED после завершения компенсаций |
+| Резерв | RESERVED → COMMITTED или RELEASED; RELEASED также служит запретом позднего Reserve для отменённого order_id |
+| Платёж | PROCESSING → SUCCEEDED или DECLINED; отмена до списания → CANCELLED; возврат списанного платежа → REFUND_PENDING → REFUNDED |
+
+`NEEDS_REVIEW` можно добавить для исчерпанного автоматического восстановления. Это нерешённый бизнес-процесс, который ухудшает результат эксперимента, а не успешный терминальный исход.
+
+В MVP отмена клиентом разрешена до FINALIZING. Переход PAYMENT_PENDING → FINALIZING и принятие CancelOrder конкурируют за один условный переход версии в Orders: выигрывает одна ветка. После FINALIZING отмена отклоняется, процесс доводится до COMPLETED. Это позволяет не моделировать возврат уже проданного товара. Если намерение отмены победило раньше, поздний PaymentSucceeded запускает возврат и не создаёт Commit job. Старый воркер проверяет актуальную версию и разрешённый шаг перед выполнением мутации.
+
+##### Отказы и компенсации
+
+| Ситуация | Действие |
+|---|---|
+| Недостаточно товара | Атомарно отказать в резервировании всего заказа, завершить как REJECTED, не запускать оплату |
+| Платёж отклонён | Зафиксировать отказ, освободить резерв, завершить как CANCELLED |
+| gRPC timeout после мутации | Считать результат неизвестным; повторить тот же operation_id или запросить состояние |
+| Kafka недоступна | Держать событие в outbox, контролировать возраст и объём накопления; при исчерпании заданного лимита ограничивать новый приём |
+| Оплата успешна, Inventory временно недоступен | Оставить FINALIZING, повторять CommitReservation и сверять состояние; временный отказ не является поводом немедленно вернуть деньги |
+| Резерв уже освобождён, оплата успешна | Перейти к возврату; CANCELLED выставить после подтверждения возврата |
+| Позднее платёжное событие после начала отмены | Продолжить отмену: запретить ещё не выполненное списание либо вернуть выполненное |
+| Результат Commit неизвестен | Сначала сверить резерв. Если COMMITTED, завершить заказ; если RELEASED, компенсировать оплату |
+
+`ReleaseReservation(order_id)` должен сохранять терминальный запрет даже если Reserve ещё не успел создать запись. `CancelPayment(order_id)` аналогично сохраняет запрет будущего списания; если списание уже произошло, возвращает состояние для последующего `RefundPayment`. Иначе задержанный запрос или событие могут воскресить отменённый процесс.
+
+В MVP резерв не исчезает по независимому TTL. Срок процесса контролирует Orders, который сохраняет намерение отмены и доводит компенсации до конца. Автоматическое истечение резерва добавить позже как отдельный протокол и проверить гонки с оплатой и Commit.
+
+##### gRPC API
+
+| Сервис | Методы |
+|---|---|
+| Orders | CreateOrder, GetOrder, GetOrderByRequestKey, CancelOrder |
+| Inventory | GetAvailability, Reserve, GetReservation, CommitReservation, ReleaseReservation |
+| Payments | GetPayment, CancelPayment, RefundPayment |
+
+Mutating RPC принимают ключ операции и проверяют hash существенных параметров. Повтор ключа с другим payload — конфликт, а не новый заказ. Платёжная симуляция запускается событиями; отдельный публичный `Charge` в MVP не нужен.
+
+Идемпотентность включает подтверждённые бизнес-отказы. Например, недостаток товара сохраняется как результат operation_id без частичных складских изменений. Повтор того же ключа после пополнения склада не превращает завершённый отказ в новый успешный резерв.
+
+##### Kafka
+
+| Топик | События | Consumer group |
+|---|---|---|
+| orders.events.v1 | OrderAwaitingPayment, OrderCompleted, OrderCancelled | payments-v1, фильтрует только нужные события |
+| payments.events.v1 | PaymentSucceeded, PaymentDeclined, PaymentRefunded, PaymentCancelled | orders-payments-v1 |
+| inventory.events.v1 | InventoryReserved, InventoryCommitted, InventoryReleased | orders-inventory-v1 |
+
+Envelope: `event_id`, `event_type`, `schema_version`, `order_id`, `aggregate_version`, `occurred_at`, `correlation_id`, `causation_id`, `traceparent`, `payload`. `aggregate_version` относится к владельцу события; нельзя сравнивать версии Inventory и Payments как одну последовательность.
+
+Начать с трёх партиций на топик и ключа `order_id`, затем экспериментировать с другим числом. Использовать обычные consumer groups. Kafka упорядочивает записи внутри партиции; общего порядка между топиками нет. Параллельная обработка в приложении также не должна нарушать требуемый порядок. Kafka-транзакции сами по себе не создают общую атомарную транзакцию с PostgreSQL. [Официальное описание Kafka](https://kafka.apache.org/43/design/design/).
+
+Publisher outbox сохраняет порядок версий одного агрегата: несколько publishers не должны одновременно отправлять разные версии одного order_id в случайном порядке. В MVP допустим один активный publisher на сервис с DB lease; другие экземпляры могут принять lease после его потери. Позже проверить шардирование publishers. State machine обязана безопасно переживать дубликаты и опоздавшие факты даже при корректном порядке публикации.
+
+#### 4. Гарантии корректности
+
+##### Обязательные инварианты
+
+1. `available >= 0`, `reserved >= 0`, `on_hand >= reserved` в Inventory.
+2. При отсутствии пополнений `initial_stock = available + reserved + sold`. При пополнениях они учитываются в ledger; одна операция Commit или Release меняет баланс только один раз.
+3. На order_id не более одного успешного списания. Сумма возвратов не превышает сумму списания. В MVP один полный возврат.
+4. `COMPLETED` означает подтверждённую оплату на ожидаемую сумму и `COMMITTED` резерв.
+5. `CANCELLED` означает отсутствие активного резерва и отсутствие невозвращённого списания; поздние операции не могут нарушить этот результат.
+6. На client_request_id существует максимум один заказ с неизменным смыслом запроса.
+7. Каждый принятый заказ существует в Orders и учтён итоговым verifier как терминальный, незавершённый или неизвестный из-за недоступности данных. Неучтённые заказы недопустимы.
+
+Состояние PAYMENT_PENDING при резерве RESERVED — нормальная временная рассогласованность. Успешная оплата и FINALIZING во время краткого отказа Inventory также допустимы, но их длительность учитывается. Завершённый заказ без оплаты, отрицательные остатки и двойной debit — нарушение безопасности при любой длительности.
+
+Глобальный verifier после прекращения нагрузки читает экспорт данных владельцев или использует отдельные read-only учётные записи трёх баз. Это инструмент лаборатории; сами сервисы не получают доступ к чужим данным. Во время активных изменений глобальная сверка должна учитывать версии и повторно подтверждать подозрительные пары, чтобы разные моменты чтения не выглядели ложным нарушением. После drain выполняется обязательная полная сверка.
+
+##### Механизмы и момент внедрения
+
+| Механизм | Когда | Назначение и проверка |
+|---|---|---|
+| SQL constraints, уникальные operation keys, условные переходы состояния | Этап 1 | Конкурентные Reserve и повторные запросы не создают лишний резерв или эффект |
+| Долговечные шаги Orders, lease, version check | Этапы 1–2 | Перезапуск продолжает сохранённый шаг; старый воркер не перезаписывает новое состояние |
+| Transactional outbox у всех трёх сервисов | Этап 2 | Падение между SQL commit и Kafka publish не теряет событие |
+| Inbox и durable jobs у Kafka-потребителей | Этап 2 | Дубликат события не создаёт второй job или бизнес-эффект |
+| Reconciliation и компенсации | Минимум в этапе 2, расширение в этапе 4 | Неизвестный результат RPC и поздние результаты не оставляют ложный terminal state |
+| DLQ/quarantine и управляемый replay | Этап 4 | Некорректное событие диагностируется и воспроизводится без тихой потери процесса |
+| Политика circuit breaker и admission control | Этап 5 после измерения | Ограничить каскадное накопление работы; оценить успешный goodput, отказы и восстановление |
+
+Inbox, бизнес-переход и создаваемые jobs/outbox записываются одной транзакцией. Kafka offset подтверждается после неё. Если дальше нужна долгая работа, она уже представлена durable job. При параллельной обработке offset можно продвигать только через непрерывный диапазон завершённых записей, а не сразу до самого высокого готового offset.
+
+Outbox помечается отправленным после подтверждения Kafka; падение перед отметкой приведёт к повторной публикации. Поэтому повторная доставка ожидаема, и защита строится на бизнес-ключах и SQL-транзакциях. Обещание проекта — определённые идемпотентные эффекты и проверяемые инварианты в заданной модели отказов, а не универсальная сквозная exactly-once.
+
+Для склада использовать короткую транзакцию: условное увеличение `reserved` при достаточном `on_hand - reserved`, запись резерва и ledger. Несколько SKU блокировать в стабильном порядке; при недостатке хотя бы одной позиции откатывать весь резерв. PostgreSQL при конкурентном UPDATE в Read Committed повторно проверяет WHERE для изменённой строки. Это полезно для такого условного обновления, но не заменяет проектирование всей транзакции. [Transaction isolation](https://www.postgresql.org/docs/current/transaction-iso.html). Единый порядок блокировок и короткие транзакции уменьшают риск deadlock. [Explicit locking](https://www.postgresql.org/docs/current/explicit-locking.html).
+
+На RPC всегда задавать deadline и передавать отмену в SQL и последующие вызовы. gRPC по умолчанию не устанавливает deadline; приложение должно прекращать запущенную работу после отмены. [gRPC deadlines](https://grpc.io/docs/guides/deadlines/).
+
+Это относится к работе текущего запроса. Уже сохранённая и принятая durable job имеет собственный контекст процесса и бюджет бизнес-шага; уход клиента после CreateOrder не удаляет заказ и не отменяет его обработку. Повтор клиентского запроса разрешает неизвестный результат через тот же request key.
+
+Начальная политика: одна повторная попытка для идемпотентной мутации, только для классифицированной временной ошибки и внутри оставшегося deadline; backoff с jitter. Дальнейшее восстановление делает durable job с сохранённым next_attempt_at. Не включать независимые длинные retry loops одновременно у клиента, gRPC и воркера. Встроенную retry policy gRPC нужно задавать явно и проверять счётчик реальных попыток. [gRPC retry](https://grpc.io/docs/guides/retry/).
+
+Длительные задержки провайдера, ожидание gRPC и Kafka не должны удерживать открытую SQL-транзакцию. Ограниченные пулы и worker queues — исходная управляемая конфигурация; изменение их размеров станет экспериментом.
+
+#### 5. Наблюдаемость
+
+##### Логи и корреляция
+
+JSON-логи в stdout: `timestamp`, `level`, `service`, `instance`, `version`, `run_id`, `order_id`, `operation_id`, `event_id`, `correlation_id`, `trace_id`, `step`, `attempt`, `duration_ms`, `outcome`, `error_code`.
+
+Логировать переход состояния, неизвестный результат операции, повтор, компенсацию, конфликт ключа и помещение в quarantine. Содержимое платёжных данных для стенда — синтетическое. Успешные однотипные чтения можно семплировать; журналы бизнес-операций, на которые опирается проверка, находятся в PostgreSQL, а не только в логах.
+
+`order_id`, `trace_id`, `event_id` и `run_id` — поля логов, не Prometheus labels и не индексные labels Loki. Labels метрик ограничить `service`, `method`, `code`, `step`, `event_type`, `outcome` с заранее ограниченными наборами. Высокая кардинальность увеличивает стоимость хранения и обработки метрик. [Prometheus instrumentation](https://prometheus.io/docs/practices/instrumentation/).
+
+##### Метрики и дашборды
+
+| Дашборд | Показатели | Какой вопрос решает |
+|---|---|---|
+| Бизнес-процесс | Offered/sent/accepted orders, completed orders/s, business rejects, technical failures, отмены, время до терминального состояния, oldest pending age, незавершённые заказы | Завершает ли система покупки при заданном спросе? |
+| gRPC и Go | p50/p95/p99, timeout/error/retry rate, inflight, goroutines, GC, CPU/RSS | Где растёт задержка и сколько работы удерживается? |
+| PostgreSQL | Время acquire из пула, занятые/свободные соединения, SQL latency, lock waits, deadlocks, долгие транзакции | База медленно работает или приложение ждёт её допуска? |
+| Kafka и jobs | Lag по group/topic/partition, возраст старейшего необработанного события, event completion rate, длительность rebalance, job/outbox depth и oldest age | Где накапливается работа и успевает ли она завершаться? |
+| Redis | Hit/miss, ошибки и latency, частота fallback, загрузка SQL при fallback, возраст возвращённых данных | Кеш снижает нагрузку без опасного доверия устаревшим данным? |
+| Корректность | Нарушения каждого инварианта, dangling reservations, unmatched payments, failed reconciliation | Не куплено ли ускорение ценой неверных результатов? |
+
+Lag по committed offsets показывает прогресс передачи в durable job, если consumer подтверждает событие на этом этапе. Поэтому низкий Kafka lag не доказывает, что платежи уже обработаны: отдельно нужны возраст и размер payment_jobs.
+
+Метрики сервисов снимает Prometheus. На ранних этапах runner сохраняет `docker stats`, доступные SQL-показатели и Kafka offsets. На этапе 3 добавить инфраструктурные exporters с проверкой совместимости своего Docker окружения. Накладные расходы verifier и exporters также фиксировать и держать одинаковыми в A/B.
+
+##### Начальные SLI/SLO
+
+Профиль для SLO: достаточно товара, симулятор всегда одобряет платёж, нет внесённых отказов, нагрузка R0. R0 — не обещанное число: её определить первым ступенчатым тестом.
+
+| SLI | Начальная гипотеза |
+|---|---|
+| Приём валидного заказа | Не менее 99% уникальных отправленных заказов получают подтверждение принятия за 300 мс |
+| Завершение бизнеса | Не менее 99% уникальных отправленных валидных заказов переходят в COMPLETED за 2 секунды с момента отправки |
+| Безопасность данных | Ноль отрицательных остатков, двойных списаний и ложных COMPLETED |
+| Полнота обработки после drain | Каждый принятый заказ учтён; в профиле без отказов нет незавершённых процессов |
+| Восстановление | После 30 секунд недоступности зависимости backlog и задержки возвращаются в исходный диапазон за 120 секунд; уточнить по baseline |
+
+Доля завершённых среди принятых — полезная диагностическая метрика. Для оценки способности обслужить спрос нужен также знаменатель всех отправленных валидных заказов: иначе отклонение большей части нагрузки искусственно улучшит результат.
+
+Ожидаемые sold-out и payment declines учитывать отдельно от технических ошибок. Правила ожидаемого поведения задаются до запуска. Для fault-сценариев заранее задаются отдельные критерии допустимой деградации и восстановления; нельзя после теста исключать из знаменателя неудачные запросы.
+
+Начальные локальные алерты в Grafana:
+
+- Верификатор подтвердил нарушение инварианта — сразу критический сигнал.
+- При положительном входящем потоке нет бизнес-завершений 30 секунд — сигнал остановки процесса.
+- Старейший заказ старше 10 секунд либо объём backlog растёт несколько окон подряд — сигнал деградации.
+- gRPC p99 превышает 300 мс или доля технических ошибок превышает 1% на достаточной выборке несколько минут — сигнал нарушения начального бюджета.
+- Долгое ожидание соединения, рост outbox age, недоступность telemetry collectors — отдельные диагностические сигналы.
+
+Runner фиксирует момент начала проблемы, переход алерта в firing и восстановление. Порог и `for` подбирать по baseline; выбранный `for` ограничивает минимальную скорость обнаружения. Во время запланированных сбоев сигналы не скрывать: они являются частью результата.
+
+#### 6. Генератор и управление экспериментами
+
+Начать с маленького Go CLI `loadgen`, использующего те же protobuf-контракты. Поддержать open-loop запуск заказов с заданной частотой, фиксированный seed, список SKU и независимую сверку результатов. Не создавать для него отдельную постоянную бизнес-платформу.
+
+Open-loop нужен, чтобы рост latency не снижал автоматически предлагаемую системе нагрузку. Такое снижение в закрытой модели способно скрывать перегрузку; различие подробно описано в документации k6. Реализуется оно и в собственном Go-генераторе. [Open and closed load models](https://grafana.com/docs/k6/latest/using-k6/scenarios/concepts/open-vs-closed/).
+
+Для каждой операции сохранять плановое время отправки, фактическую отправку, ответ, ключ запроса и итоговый бизнес-статус. Если генератор исчерпал свой лимит inflight, записать skipped/late launches: не тормозить незаметно расписание. Измерять CPU генератора и расхождение target/sent rate. Результат при насыщении самого генератора маркировать как непригодный для оценки capacity стенда.
+
+Параметры профиля:
+
+- orders/s, ступени роста и burst;
+- доля чтений каталога и статуса заказа;
+- число товаров в заказе, размер каталога и распределение popular SKU;
+- исходный склад: избыточный для capacity-тестов, ограниченный для hot-stock;
+- детерминированная доля payment declines и задержек, keyed по order_id и seed;
+- лимиты inflight генератора, число воркеров сервисов и pool sizes;
+- таймлайн сбоя, длительность, направление сетевого воздействия;
+- прогрев, основное окно, drain, повторы и ресурсный бюджет.
+
+Способы внесения отказов: test-only delay/error hooks, управляемая остановка и запуск контейнера, сетевой proxy по нужной зависимости. Задержка SQL в тестовой ветке должна быть отличима от реальной блокировки/плохого плана SQL. Все hooks отключаются обычной конфигурацией, а их активация попадает в manifest.
+
+#### 7. Roadmap
+
+Этапы 0–2 дают MVP. Он содержит весь обязательный стек, сквозной процесс и первый отчёт, собранный вручную. Этапы 3–7 делают лабораторию удобной для более глубоких экспериментов.
+
+Контрольные точки тимлида: G0 — архитектура перед кодом; G1 — базовая работа с заказом и складом после этапа 1; G2 — сквозной MVP после этапа 2; G3 — устойчивость после этапа 4; G4 — итоговая лаборатория после этапа 7. G0 полностью принят 2026-10-13; G1–G4 ещё не достигнуты. Внутри этапов изменения готовятся небольшими пакетами для код-ревью. Переход через контрольную точку выполняется после явного согласования пользователя. Существенные изменения ранее согласованной архитектуры выносятся на отдельное согласование.
+
+| Этап | Цель и задачи | Зависит от | Результат и критерий готовности | Демонстрация | Дни | Основной риск |
+|---|---|---|---|---|---|---|
+| 0. Контракт эксперимента | Описать состояние и инварианты; определить API/события; выбрать baseline data и ресурсный профиль; подготовить monorepo и Compose | — | Контракты и initial manifest сохранены; инфраструктура поднимается; у каждой БД отдельная роль | Проверка доступности и невозможности читать чужую БД | 2–3 | Долгое проектирование вместо первого работающего среза |
+| 1. Создание и резерв | Go-сервисы, миграции; Create/Get; атомарный Reserve/Commit/Release; модель платежа; request keys; durable step; JSON-логи и базовые метрики | 0 | Заказ переживает перезапуск в RESERVING; повтор запроса не дублирует заказ; конкуренция не создаёт отрицательный склад | 1000 попыток купить 100 единиц одного SKU | 4–6 | Неверная транзакция или слишком долгие блокировки |
+| 2. Сквозной MVP | Kafka workflow; outbox/inbox; payment jobs; минимальные компенсации; кеш чтения Redis; Loki/Alloy/Grafana; loadgen и verifier | 1 | 1000 заказов завершаются; отказы оплаты освобождают товар; повторы и контрольные crash windows не нарушают инварианты; первый baseline отчёт сохранён | Ступени нагрузки и сравнение одного изменения worker limit | 6–9 | Попытка отложить восстановление и потерять доверие к baseline |
+| 3. Диагностика | Полные дашборды и алерты; SQL/пул/Kafka/job telemetry; OpenTelemetry и Tempo; учёт overhead | 2 | Для медленного заказа виден участок ожидания; искусственная задержка даёт ожидаемый сигнал и алерт; конфигурация dashboards хранится в репозитории | 500 мс задержки Payments и сравнение таймлайна событий, метрик и trace | 3–5 | Высокая кардинальность и влияние самой телеметрии |
+| 4. Устойчивость | Late events, cancel races, timeout-after-commit, DLQ/quarantine и replay; проверки reconciliation; schema compatibility | 2; наблюдаемость из 3 помогает | Сценарии имеют утверждённые результаты; после исправления и replay нет потерь и двойных эффектов; нерешённые заказы явно учтены | Убить publisher после publish до отметки; задержать успех оплаты до отмены | 6–9 | Объявить компенсацию завершённой при неизвестном результате |
+| 5. Нагрузка и решения | Прогон каталога узких мест; SQL/pool/workers; retries; cache; backpressure; сравнение гипотез по одной | 3–4 | Минимум четыре сценария имеют baseline, изменение и повторное измерение; улучшение не ухудшает корректность | Short transaction против долгой; ограниченные retries против retry storm | 5–8 | Сменить несколько факторов и потерять причинную связь |
+| 6. Масштабирование | gRPC routing, несколько реплик, Kafka partitions/publishers; connection budgets; при необходимости разнести базы; optional multi-broker profile | 5 | Сравнение 1/2/4 реплик при том же суммарном CPU и при увеличенном бюджете; показано ограничение масштабирования | Replicas vs partitions; hot SKU vs равномерная нагрузка | 4–6 | Пиннинг gRPC на одном backend, горячая строка склада или рост суммарного SQL-пула |
+| 7. Отчёты и regression suite | labctl автоматизирует setup/run/drain/verify/export/compare; JSON manifest, графики, Markdown report; короткий набор сценариев | 2, шаблон стабилизирован в 5–6 | Одна команда воспроизводит сравнение и выдаёт артефакты; smoke/regression suite находит намеренно внесённую ошибку | Повтор A/B с одинаковым seed и сравнение отчётов | 4–6 | Отчёт скрывает пропуски телеметрии, backlog или различия среды |
+
+Базовая сумма: **34–52 рабочих дня, приблизительно 204–312 часов**. При 20 часах в неделю — ориентировочно 10–16 недель; при 10 часах — 20–31 неделя. Это оценка при принятых допущениях, без времени на изучение Go/Docker с нуля и без Kubernetes. MVP: **12–18 рабочих дней, 72–108 часов**. После MVP уточнить остальные оценки по фактической скорости.
+
+##### Первый полезный эксперимент после MVP
+
+1. При достаточном складе и всегда успешной оплате выполнить ступени 10 → 25 → 50 → 100 orders/s, по 3–5 минут. При необходимости скорректировать диапазон. Снять accepted/completed throughput, e2e latency, oldest job age, pool waits, Kafka и outbox backlog.
+2. Найти первый устойчивый узкий участок. Если это последовательная payment processing, проверить изменение `payment_workers: 1 → 4` при тех же CPU/памяти. Если ограничение другое, выбрать изменение по наблюдаемому сигналу.
+3. Повторить одинаковый профиль и сравнить goodput, p95/p99, незавершённые заказы, CPU и инварианты. Не менять одновременно pool size, число реплик и профиль отказов.
+4. Сохранить первый отчёт. Это диагностический эксперимент; подтверждение предельной capacity требует более долгих и повторных прогонов на этапе 5.
+
+##### Когда нужен Kubernetes
+
+После этапа 7 возможен отдельный этап на 5–10 дней, если предмет исследования — rolling update, readiness, распределение по узлам, лимиты/requests или autoscaling. Он не нужен для первых экспериментов с Kafka, gRPC, SQL, кешем и нагрузкой. Автомасштабирование должно опираться на проверенный сигнал, например возраст работы, а не только CPU. Одноузловый кластер всё ещё не доказывает устойчивость к потере физического узла.
+
+#### 8. Каталог экспериментов
+
+Нагрузочные сценарии растят спрос или меняют его распределение. Fault-сценарии намеренно ломают зависимость. Они имеют разные критерии успеха: максимальный устойчивый goodput против ограниченной деградации и восстановления.
+
+| ID / тип | Проблема и воспроизведение | Сигналы | Гипотеза / изменение | Оценка улучшения | Компромисс |
+|---|---|---|---|---|---|
+| L1: рост нагрузки | Ступени до выхода из SLO; товар не заканчивается, оплата всегда успешна | offered/accepted/completed, p99, oldest pending, CPU, pool/job waits | Изменить ровно один обнаруженный bottleneck: индекс, короткую транзакцию, число воркеров | Максимальный устойчивый orders/s при одном SLO и бюджете; backlog не имеет устойчивого роста | Латентное накопление работы может выглядеть как высокая скорость приёма |
+| L2: burst | После спокойного окна подать 5×R0 на 30 секунд, затем R0 | Peak pending, heap/goroutines, rejects, drain time | Ограниченный inflight, admission control, раздельные worker budgets | Меньше технических ошибок и faster recovery; goodput и доля отказов показаны вместе | Shed requests нельзя исключать из общей оценки спроса |
+| L3: горячий товар | 80–90% заказов на один SKU; отдельные тесты с обильным и ограниченным остатком | Lock wait, Reserve latency, business sold-out, inventory ledger | Сократить locked section; стабильный lock order; сравнить сериализацию по SKU как альтернативу | Короткие ожидания и корректный баланс; после terminal/drain для 100 единиц нет более 100 продаж и нет dangling reserve | Больше реплик не устраняет конкурентную запись в одну строку; serialization может снизить параллелизм |
+| L4: SQL bottleneck | Отдельно плохой план чтения, долгий lock и маленький pool; не смешивать их | SQL latency/plan, acquire wait, lock wait, deadlocks, query count | Индекс для своего запроса, уменьшение времени транзакции, изменение pool cap | Улучшение e2e и SQL при том же профиле; pool не перегружает общий PostgreSQL | Большой pool способен ухудшить базу; индекс увеличивает цену записи |
+| L5: Kafka backlog | Снизить throughput consumer либо processing worker; сохранять поток producer | Lag по партициям, возраст events/jobs, oldest outbox, rebalance | Batching, workers, число обычных consumers и partitions в отдельных тестах | Возраст backlog и время догонки, бизнес goodput | Низкий Kafka lag при большом durable-job backlog — ложный признак здоровья |
+| L6: partition skew | Для отдельного профиля большинство ключей направить в одну партицию; держать stock contention отдельным фактором | Lag/throughput по партициям, idle consumers | Изменить ключ или распределение, если бизнес-порядок это допускает | Снижение перекоса и e2e latency при сохранении семантики | Новое число партиций меняет распределение ключей; не менять его на ходу без плана порядка и миграции |
+| F1: зависимость медленная/недоступна | 500 мс → 2 с задержки или остановка Inventory/Payments на 30 секунд | Deadlines, job age, accepted/completed, inflight, recovery | Deadline budgets, bounded retries, durable reconciliation; затем breaker | Ограниченная память/очередь, ноль нарушений, recovery target | Слишком короткий deadline увеличивает неизвестные результаты и повторную работу |
+| F2: retry storm | Временно возвращать UNAVAILABLE; сравнить агрессивную и ограниченную политику | Attempts/logical request, load amplification, CPU, queue age | Одна retry policy, backoff+jitter и budget | Меньше лишних попыток, выше completed goodput, короче восстановление | Более длинное ожидание единичного клиента; breaker/admission отклоняют часть спроса |
+| F3: crash windows | Убить процесс после DB commit до publish, после publish до sent marker, после consumer commit до offset | Replay count, duplicate suppression, outbox/jobs, ledger | Outbox/inbox и устойчивые operation keys; проверяется действующая реализация | Сверка всех заказов после рестарта; ноль лишних списаний и lost events в модели сохранённых дисков | Проверка не включает уничтожение данных БД или исчерпание retention |
+| F4: Redis down/stale | Остановить Redis, одновременно истечь ключам, задержать invalidation | Hit rate, stale-read rate, SQL fallback, Reserve correctness | Короткий fallback deadline, TTL jitter, singleflight; сравнить отказ и fallback | Read latency, SQL нагрузка и успешные заказы; ноль Reserve по кешу | Fallback может вызвать stampede в PostgreSQL; отображение остатков может быть устаревшим |
+| F5: поздняя оплата/отмена | Задержать PaymentSucceeded до начала отмены; конкурирующие Commit/Release | State transitions, compensations, unmatched debit, terminal state | Durable cancel intent, cancellation barriers, idempotent refund | В итоге корректный COMPLETED или CANCELLED, единственный debit, отсутствие невозвращённых сумм у отменённых | Нужно больше состояний; нельзя объявлять неизвестный результат отменённым |
+| F6: poison event / replay | Внести неверную схему или payload в конкретную партицию | Quarantine depth, errors, blocked partition, pending order age | Durable quarantine и контролируемый replay после исправления | Проблема видна, запись сохранена, процесс после replay корректен | Пропуск записи ради доступности ломает бизнес-порядок, если его не учитывает state machine |
+
+Для F6 сначала сохранять проблемное событие и контекст в durable quarantine, затем разрешать продвижение offset согласно явной политике. Если DLQ находится в Kafka, outage Kafka не должен приводить к подтверждению потерянной DLQ-записи. Replay сохраняет исходный event_id/operation semantics и не обходит обычную идемпотентность. После изменения кода отдельно решить, что делать с ранее обработанными результатами: просто новый event_id способен создать второй эффект.
+
+В F5 гонку приёма CancelOrder с PaymentSucceeded проверять через допустимые состояния Orders. Конкурентные Commit/Release — дополнительная проверка примитивов Inventory и внесённых нарушений протокола. В штатном MVP Orders не создаёт Release после начала FINALIZING; иначе для компенсации уже проданного товара понадобился бы отдельный протокол возврата склада.
+
+#### 9. Методика сравнения
+
+##### Протокол запуска
+
+1. **Гипотеза до измерения.** Например: уменьшение времени удержания транзакции увеличит completed orders/s при том же CPU, без роста p99 и нарушений. Задать минимально полезный эффект и допустимые регрессии.
+2. **Одинаковое исходное состояние.** Загрузить один seed dataset, очистить тестовые базы/кеш/топики либо создать изолированный namespace запуска. Сервисные operation keys и Kafka offsets не должны переходить из предыдущего прогона. Сброс допустим только для явно выделенного стенда.
+3. **Manifest.** Git commit, dirty diff, версии и image digests, конфигурация, ресурсы, replicas, worker/pool caps, topics/partitions/groups, seed, stock, fault timeline, OS/Docker и ограничения машины.
+4. **Прогрев.** Начать с двух минут, проверить выход в steady state. Прогревочные заказы обработать до конца и исключить из измеряемой когорты; состояние склада затем привести к одинаковому оговорённому старту. Cold-cache и warm-cache — разные сценарии.
+5. **Основное окно.** Первое подтверждающее сравнение: десять минут одинаковой нагрузки. Диагностические ступени могут быть короче. Всё окно сценария, включая burst/fault, включается в анализ; исключаются только заранее оговорённые warmup и cooldown.
+6. **Drain.** Прекратить новые заказы, оставить workers и зависимости работать. Ждать исчерпания jobs/outbox и завершения когорты до заданного лимита, например пяти минут. По истечении лимита перечислить unresolved и unknown; не выбрасывать их из данных.
+7. **Verifier.** Проверить ledger, состояния, остатки, уникальность операций и полноту по списку request keys генератора. Неизвестные ответы CreateOrder сверить через GetOrderByRequestKey: timeout не означает, что заказ не был создан.
+8. **Повторы.** Для первого A/B — минимум три пары, чередуя порядок A/B; для подтверждения предпочтительно пять. Использовать одинаковый seed внутри пары и заранее заданный набор разных seeds между парами. Повторить при нестабильной среде или небольшом эффекте.
+9. **Сравнение.** Показать значения каждого прогона, median эффекта, разброс, объём выборки и ресурсную цену. Несколько прогонов не являются доказательством статистической значимости. Для близких результатов увеличить число пар и длительность.
+
+##### Метрики результата
+
+- `goodput = успешно завершённые заказы / длительность измеряемого окна`, с явным указанием, какие завершения относятся к окну. Отдельно показать completed во время drain.
+- `business_success_ratio = завершённые ожидаемо успешные заказы когорты / все отправленные ожидаемо успешные заказы когорты` на контрольный момент.
+- `accepted_completion_ratio` — вторичная метрика завершений среди принятых. Показывается вместе с accepted/offered, чтобы не скрывать load shedding.
+- `recovery_time` — от снятия отказа до возврата backlog age и latency в заранее выбранный baseline диапазон и удержания в нём контрольное окно, например минуту.
+- `amplification = физические попытки зависимого вызова / логические операции`.
+- `resource_efficiency` — completed orders на CPU-second; также RSS и disk/network объём. Показать отдельно нагрузку сервисов, инфраструктуры и генератора.
+- `invariant_violations` и `unresolved_after_drain` — отдельные обязательные результаты, а не примечание к производительности.
+
+E2E latency в отчёте считается для когорты и имеет рядом число успешных, отказанных и незавершённых заказов. Percentile только успешно завершённых заказов без этих чисел может скрыть деградацию. Незавершённым не присваивать выдуманное время завершения; показывать их наблюдаемый возраст и долю цензурированных наблюдений.
+
+Не усреднять p95/p99 между репликами. Для общего percentile объединять подходящие histogram buckets либо сырые наблюдения. Между прогонами можно показывать median их p95, прямо называя это статистикой прогонов, а не percentile всей выборки.
+
+До/после сравнивать при одинаковом суммарном бюджете. Если добавлены CPU/память, выносить отдельный вариант «расширение ресурсов». Для реплик считать суммарные DB pools: четыре пула по 20 соединений дают другое давление на БД, чем один на 20. Проверять, что gRPC resolver/load-balancing policy действительно распределяет вызовы: один долгоживущий канал к одному backend не является тестом равномерного масштабирования.
+
+При росте capacity искать максимальный поток, который выдерживает SLO и не показывает устойчивого роста backlog на всём контрольном окне. Быстрый приём с бесконечно растущей очередью — не устойчивый throughput.
+
+Процент изменения считать только при ненулевом baseline и показывать абсолютную разницу. Если одна из конфигураций нарушает инварианты, её ускорение не принимается как улучшение. Если генератор или сбор данных не обеспечили заданную нагрузку/полноту, результат обозначается `inconclusive` с причиной.
+
+#### 10. Минимальная автоматизация
+
+Предлагаемая структура будущего репозитория:
+
+```text
+cmd/orders/
+cmd/inventory/
+cmd/payments/
+cmd/loadgen/
+cmd/labctl/
+internal/orders/  internal/inventory/  internal/payments/
+api/proto/
+migrations/orders/  migrations/inventory/  migrations/payments/
+deploy/compose/
+observability/dashboards/  observability/alerts/
+experiments/scenarios/
+reports/<experiment>/<run>/
+docs/adr/
+```
+
+Это предлагаемая структура реализации; текущие файлы содержат только план и шаблон отчёта.
+
+Этап 2: запуск Compose и loadgen вручную, экспорт JSON/CSV, Markdown отчёт по шаблону. Этап 4: hooks и crash scripts. Этап 7: `labctl` объединяет уже проверенные действия.
+
+Проектируемые команды `labctl`:
+
+```text
+labctl prepare --scenario baseline --variant A
+labctl run --scenario baseline --variant A
+labctl verify --run <run_id>
+labctl export --run <run_id>
+labctl compare --baseline <A_runs> --candidate <B_runs>
+```
+
+Контракт scenario должен содержать: seed, dataset, arrival schedule, read/order mix, fault timeline, replicas/resources, worker/pool limits, warmup/measure/drain и критерии оценки. Это собственная схема runner, а не готовый формат какого-либо существующего инструмента.
+
+Артефакты одного запуска:
+
+```text
+manifest.json       # Полная конфигурация, версии, среда и dirty diff reference
+requests.jsonl      # Расписание, отправка, результат и request keys
+business-results.csv
+metrics.json        # Экспорт временных рядов и счётчиков
+faults.jsonl        # Фактическое, а не только запланированное время воздействий
+invariants.json     # Проверки и список unresolved/unknown
+logs/               # Выбранные логи вокруг инцидента
+charts/             # PNG/SVG throughput, latency, backlog, resources
+report.md
+```
+
+Report формируется из численных данных, а не только screenshots Grafana. Ссылки на дашборды с окном времени полезны для диагностики; графики и исходные данные сохраняются локально, чтобы отчёт не зависел от retention Grafana/Loki/Prometheus.
+
+Regression suite: короткий успешный процесс, конкуренция за остаток, повтор CreateOrder, повтор события, crash после SQL commit, неизвестный gRPC результат, поздняя оплата при отмене. Проверки направлены на бизнес-инварианты и реальные crash windows; не требуется писать тест на каждый элемент конфигурации.
+
+#### 11. Шаблон отчёта
+
+Отдельный файл `docs/experiments/REPORT_TEMPLATE.md` содержит форму для заполнения. Обязательная последовательность:
+
+1. Проблема, гипотеза и критерии принятия изменения.
+2. Среда, ресурсы, версии, данные, профиль нагрузки и fault timeline.
+3. Единственное проверяемое изменение и фактический diff.
+4. Показатели A/B с выборкой и разбросом; отдельно accepted, completed, rejected, unresolved.
+5. Графики по одной шкале времени, включая drain и восстановление.
+6. Проверка инвариантов и связь ошибок с order_id/operation_id.
+7. Цена ресурсов, регрессии, накладные расходы и ограничения.
+8. Вывод `accepted`, `rejected` или `inconclusive` с объяснением.
+9. Следующий эксперимент.
+
+#### 12. Первые десять задач
+
+1. **Зафиксировать бизнес-правила.** Написать короткий ADR с состояниями заказа/резерва/платежа, моментом COMPLETED и условиями CANCELLED. Готово: неизвестный платёжный результат имеет явное поведение.
+2. **Создать минимальный monorepo.** Три Go entrypoints, отдельные конфигурации, graceful shutdown, gRPC health и JSON logger. Готово: каждый процесс запускается и сообщает версию.
+3. **Поднять инфраструктуру Compose.** PostgreSQL, Kafka и Redis в core-профиле; Grafana/Prometheus/Loki/Alloy в obs-профиле. Готово: healthchecks проходят, image versions закреплены, логи видны в Grafana.
+4. **Создать базы, роли и миграции.** Отдельные credentials, constraints и ledger/operation keys. Готово: Inventory не может читать orders_db, первичный stock загружается повторяемо.
+5. **Описать protobuf и envelope событий.** Ключи операций, ошибки, версии, trace/correlation. Готово: можно сгенерировать клиентов и однозначно классифицировать business reject, temporary error и unknown outcome.
+6. **Реализовать CreateOrder/GetOrder/GetOrderByRequestKey.** Durable reserve job и уникальный client_request_id. Готово: повтор возвращает тот же order_id; другой payload с тем же ключом отклоняется.
+7. **Реализовать атомарный Inventory.** Reserve, Commit, Release, cancellation barrier, GetReservation. Готово: конкурентные заказы на ограниченный остаток сохраняют баланс; повтор мутации не меняет его второй раз.
+8. **Сделать детерминированный Payments.** Durable jobs, approve/decline, задержка вне транзакции, cancel barrier и refund. Готово: одинаковый seed воспроизводит исходы; на order_id максимум один debit.
+9. **Соединить сервисы через Kafka.** Outbox/inbox, устойчивые publishers, сохранённые шаги Orders и минимальная сверка неизвестных результатов. Готово: сквозной успех/отказ и контрольный перезапуск дают правильные terminal states.
+10. **Запустить первый loadgen + verifier.** JSON/CSV результатов, базовый Grafana dashboard, чтение через Redis и первый отчёт. Готово: один ступенчатый тест воспроизводится, каждый запрос учтён, узкое место выбрано по данным.
+
+Приоритизация: сначала корректный сквозной путь и измеримость, затем дополнительные способы диагностики, затем эксперименты и их автоматизация. Любое добавление инфраструктуры должно помогать ответить на конкретный вопрос или закрывать выявленный пробел в корректности.
+
+<a id="appendix-design-review"></a>
+
+## Приложение: Принятый архитектурный пакет G0
+
+Полный исходный документ: `docs/architecture/DESIGN.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### G0: принятый архитектурный пакет
+
+Статус: **G0 полностью принят тимлидом 2026-10-13, Europe/Moscow**. Прямое решение пользователя: «G0 полностью принят». Этот документ фиксирует принятую архитектуру из docs/ROADMAP.md и docs/architecture/PROCESSES.md. Код сервисов ещё не создан; начало согласованной реализации для G1 разрешено.
+
+#### Визуальное описание G0
+
+Подробные схемы находятся в [docs/architecture/PROCESSES.md](#appendix-g0-processes): последовательность успешного заказа и локальные транзакции, состояния трёх сущностей, недостаток товара, отказ оплаты, гонка отмены, поздняя оплата, outbox/inbox, неизвестный результат RPC, Redis и цикл эксперимента.
+
+##### Общий путь и владелец каждого шага
+
+```mermaid
+flowchart TB
+    C["Клиент: создать заказ"] --> O["Orders: сохранить заказ и reserve_job"]
+    O --> A["Ответ клиенту: ACCEPTED"]
+    O --> I["gRPC → Inventory: зарезервировать"]
+    I --> K1["Orders → Kafka: OrderAwaitingPayment"]
+    K1 --> P["Payments: симуляция оплаты"]
+    P --> K2["Kafka → Orders: PaymentSucceeded"]
+    K2 --> F{"Отмена уже принята?"}
+    F -->|Нет| FIN["Orders: FINALIZING; gRPC CommitReservation"]
+    FIN --> IS["Inventory: COMMITTED; событие InventoryCommitted"]
+    IS --> DONE["Orders: COMPLETED"]
+    F -->|Да| CANCEL["Сохранить CANCELLING; выполнить компенсации"]
+    CANCEL --> SAFE["Резерв освобождён; списание отсутствует или возвращено"]
+    SAFE --> END["Orders: CANCELLED"]
+```
+
+Схема показывает успешное резервирование и оплату. Недостаток товара и PaymentDeclined раскрыты отдельно в разделах 4–5 визуального описания. Ответ ACCEPTED выдаётся после commit в Orders, а дальнейшие шаги выполняются по сохранённым задачам.
+
+##### Состояния заказа и допустимая отмена
+
+```mermaid
+stateDiagram-v2
+    [*] --> ACCEPTED
+    ACCEPTED --> RESERVING
+    RESERVING --> PAYMENT_PENDING: Резерв подтверждён
+    RESERVING --> REJECTED: Товара недостаточно
+    PAYMENT_PENDING --> FINALIZING: Оплата успешна; отмена не принята
+    FINALIZING --> COMPLETED: Продажа и оплата подтверждены
+    ACCEPTED --> CANCELLING: Отмена принята
+    RESERVING --> CANCELLING: Отмена принята
+    PAYMENT_PENDING --> CANCELLING: Отмена или отказ оплаты
+    CANCELLING --> CANCELLED: Компенсации подтверждены
+    REJECTED --> [*]
+    COMPLETED --> [*]
+    CANCELLED --> [*]
+    note right of FINALIZING
+        CancelOrder отклоняется.
+        Сбой означает ожидание и восстановление.
+    end note
+```
+
+Успешная оплата и отмена конкурируют за один переход версии Orders. Победа отмены означает компенсацию, победа финализации — доведение покупки до COMPLETED. Timeout сам по себе не создаёт терминальное состояние.
+
+##### Долговечность и очереди
+
+```mermaid
+flowchart LR
+    TX["TX производителя: бизнес-данные + outbox"] --> PUB["Publisher внутри владельца"]
+    PUB --> K["Kafka"]
+    K --> IN["TX потребителя: inbox + durable job"]
+    IN --> OFFSET["Подтвердить offset"]
+    IN --> W["Воркер внутри сервиса"]
+    W --> EFFECT["Короткая TX: идемпотентный эффект + outbox"]
+```
+
+Низкий Kafka lag означает продвижение доставки до сохранённых jobs. Чтобы увидеть реальную обработку, дополнительно измеряются очередь jobs и время завершения заказа. Отдельные crash windows показаны в разделе 8 визуального описания.
+
+#### Принятые решения
+
+| Решение | Принятый вариант | Почему | Как проверяем |
+|---|---|---|---|
+| Бизнес-модель | Мини-магазин, один склад, одна валюта; заказ → резерв → симулированная оплата → завершение/отмена | Даёт конкуренцию за ресурсы, асинхронный процесс и измеримые бизнес-инварианты | Успех, нехватка товара, отказ и поздний результат оплаты |
+| Три сервиса | Orders управляет процессом; Inventory владеет складом; Payments владеет платёжным ledger | У каждого изменения данных есть один владелец; управляющий процесс не требует четвёртого сервиса | Проверка прав БД и запрет чужих SQL-запросов |
+| gRPC | Приём/чтение заказа; Reserve/Commit/Release; запрос статуса, отмена и возврат платежа | Непосредственный результат и явные ключи повторяемых операций | Повтор RPC, deadline после commit и сверка неизвестного результата |
+| Kafka | Orders запускает оплату фактом OrderAwaitingPayment; Payments и Inventory публикуют результаты; Orders продолжает процесс | Можно отдельно менять производительность приёма и обработки, воспроизводить backlog и повторы | Consumer pause, повторная доставка, накопление durable jobs |
+| Согласованность | Локальные SQL-транзакции плюс долговечный процесс в Orders; outbox/inbox в MVP | Сохранённый шаг восстанавливается после перезапуска, повтор события не создаёт второй эффект | Падения до/после publish и consumer commit |
+| PostgreSQL | Один экземпляр, три базы и отдельные роли | Малый стартовый объём инфраструктуры при сохранении владения данными | Сервис не может читать чужую базу; измеряется общий ресурсный bottleneck |
+| Redis | Кеш чтений Inventory, без авторитетных складских или платёжных записей | Даёт предмет эксперимента с hit rate, stale reads и fallback | Недоступность Redis и устаревшая доступность не позволяют продать лишний товар |
+| Наблюдаемость | В MVP Prometheus, Grafana, Loki, Alloy; расширение трассировки на этапе 3 | Нужны как скорость приёма, так и завершения бизнеса, диагностика backlog и ошибок | Искусственная задержка видна в метриках/логах и вызывает ожидаемый сигнал |
+| Среда | Локальный Docker Compose, закреплённые версии и manifest ресурсов | Воспроизводимый старт без обязательного отдельного кластера | Повтор прогонов из одной конфигурации |
+
+#### Принятые бизнес-правила
+
+- CreateOrder подтверждает принятие только после сохранения заказа и задачи в PostgreSQL. Уход клиента не отменяет уже принятую работу.
+- Ключ клиентского запроса неизменно определяет один заказ. Повтор с другим payload возвращает конфликт.
+- Подтверждённый бизнес-отказ тоже сохраняется как результат операции. Повтор отказанного Reserve с тем же operation_id не создаёт новый резерв после изменения остатков.
+- COMPLETED возможен только при успешной оплате ожидаемой суммы и подтверждённом COMMITTED резерве.
+- Отмена клиентом разрешена до FINALIZING. Начало финализации и принятие отмены конкурируют за один переход версии Orders. После FINALIZING отмена отклоняется; заказ доводится до завершения.
+- Если отмена победила, поздняя успешная оплата компенсируется возвратом и не запускает Commit. CANCELLED означает отсутствие активного резерва и невозвращённого списания.
+- Release и Cancel сохраняют запрет поздней операции даже если исходный резерв или платёж ещё не был создан. Симулятор платежей перед фиксацией эффекта проверяет актуальное состояние.
+- Независимого истечения резерва по TTL в MVP нет. Срок обработки и намерение отмены сохраняет Orders.
+- Измерение незавершённых процессов обязательно. NEEDS_REVIEW, неизвестный исход и timeout не считаются успешным завершением.
+
+Полные состояния, контракт событий, операции, crash windows и инварианты описаны в разделах 3–4 docs/ROADMAP.md. Эти правила особенно важны для ревью: они определяют поведение при гонках и границы будущих API.
+
+#### Граница MVP
+
+Включены три Go-сервиса, отдельные базы, весь обязательный стек, сквозной успех/отказ, минимальные компенсации, идемпотентность, outbox/inbox, восстановление сохранённого шага, кеш чтений, базовые дашборды/логи, loadgen, verifier и первый ручной отчёт.
+
+Для следующих этапов оставлены: полная трассировка и набор алертов, quarantine/replay, расширенный каталог отказов, несколько реплик, автоматическое сравнение и генерация отчётов. Kubernetes — отдельный предмет согласования, если появится эксперимент, который требует его возможностей.
+
+Авторизация, доставка, скидки, полноценный магазинный UI и возврат доставленного товара находятся вне согласуемого MVP.
+
+#### Первый пакет реализации после G0
+
+Цель — получить проверяемую основу проекта и затем первый работающий срез «создать заказ → атомарно зарезервировать товар».
+
+Порядок небольших пакетов для код-ревью:
+
+1. Три Go entrypoints, конфигурация, health, shutdown и JSON-логи.
+2. Compose для PostgreSQL/Kafka/Redis, отдельные БД/роли, миграции и seed.
+3. Protobuf-контракты с operation keys, состояниями и классификацией ошибок.
+4. Create/Get/GetByRequestKey и долговечная задача Orders.
+5. Reserve/Commit/Release/GetReservation с ledger, блокировками и cancellation barrier.
+
+К G1 предъявляются код, точные команды запуска, результаты повторного запроса, конкурентной покупки ограниченного остатка и перезапуска на сохранённом шаге. Остальная часть сквозного процесса развивается после G1.
+
+#### Решение по G0 и последующие изменения
+
+G0 принят полностью, без дополнительных условий в сообщении пользователя от 2026-10-13. Решение сохранено также в docs/adr/0001-approved-g0.md и PROJECT_CONTEXT.md. Следующая контрольная точка — G1 после подготовки основы заказа и склада.
+
+Существенные изменения принятой архитектуры по-прежнему согласуются с тимлидом отдельно. Обычные детали реализации внутри G0 выбираются самостоятельно и предъявляются в небольших пакетах для код-ревью. Принятие архитектуры не означает, что реализация, испытания или следующие контрольные точки уже завершены.
+
+<a id="appendix-g0-processes"></a>
+
+## Приложение: Подробные визуальные схемы G0
+
+Полный исходный документ: `docs/architecture/PROCESSES.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### G0: визуальное описание процессов
+
+Статус: **G0 полностью принят тимлидом 2026-10-13, Europe/Moscow**. Схемы раскрывают принятые решения из docs/architecture/DESIGN.md и docs/ROADMAP.md. Они описывают согласованное планируемое поведение; реализация и измерения ещё не выполнены.
+
+Порядок чтения: общий процесс → успешный заказ → состояния → отказы и отмена → восстановление → кеш → цикл эксперимента.
+
+#### Легенда
+
+- В sequence-диаграммах сплошная стрелка — gRPC-запрос; обратная пунктирная — ответ. Для Kafka стрелки подписаны как публикация, доставка или подтверждение offset.
+- `TX Orders`, `TX Inventory`, `TX Payments` — отдельные короткие транзакции в базе владельца. Общей транзакции трёх сервисов нет.
+- `job` — сохранённая задача внутреннего воркера сервиса; это не четвёртый бизнес-сервис.
+- `outbox` — событие, сохранённое вместе с бизнес-изменением; `inbox` — запись о принятом событии, защищающая от повторной обработки.
+- `operation_id` идентифицирует бизнес-операцию. Повтор имеет тот же ключ и смысл; новая сетевая попытка не создаёт новую операцию.
+- У Kafka-стрелок есть задержка и возможная повторная доставка. Положение стрелки на схеме не обещает мгновенную обработку.
+
+#### 1. Общий бизнес-процесс
+
+Вопрос для ревью: кто владеет каждым шагом и в какой момент заказ можно считать завершённым?
+
+```mermaid
+flowchart TB
+    A["Клиент создаёт заказ"] --> B["Orders: сохранить заказ и задачу"]
+    B --> ACK["Клиент получает ACCEPTED"]
+    B --> R["Orders вызывает Inventory.Reserve по gRPC"]
+    R --> CHECK{"Inventory: хватает товара?"}
+    CHECK -->|Нет| REJ["Orders: REJECTED"]
+    CHECK -->|Да| HELD["Inventory: RESERVED; Orders: PAYMENT_PENDING"]
+    HELD --> EVT["Orders → Kafka: OrderAwaitingPayment"]
+    EVT --> PAY["Payments: симуляция оплаты"]
+    PAY --> RESULT{"Результат оплаты"}
+    RESULT -->|Успех| PAID["Kafka → Orders: PaymentSucceeded"]
+    RESULT -->|Отказ| DECL["Kafka → Orders: PaymentDeclined"]
+    PAID --> BRANCH{"Orders: какая ветка уже выбрана?"}
+    BRANCH -->|Отмена принята| REF["Компенсировать оплату и освободить резерв"]
+    BRANCH -->|Отмена не принята| FIN["Orders: FINALIZING"]
+    FIN --> COM["gRPC CommitReservation"]
+    COM --> INV["Inventory: COMMITTED + InventoryCommitted"]
+    INV --> DONE["Orders: COMPLETED"]
+    DECL --> RELEASE["Освободить резерв; подтвердить платёжный исход"]
+    REF --> SAFE{"Подтверждены оба условия отмены?"}
+    RELEASE --> SAFE
+    SAFE -->|Да| CANCELLED["Orders: CANCELLED"]
+    SAFE -->|Пока нет| WAIT["CANCELLING: повтор и сверка"]
+    WAIT --> SAFE
+```
+
+`ACCEPTED` — подтверждение сохранения запроса. `COMPLETED` — подтверждённая покупка: деньги списаны на ожидаемую сумму, резерв превращён в продажу. Ветка клиентской отмены подробно показана в схемах 6–7.
+
+#### 2. Успешный заказ: взаимодействия и транзакции
+
+Вопрос для ревью: какие данные должны пережить падение после каждой стрелки?
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant C as Клиент
+    participant O as Orders
+    participant I as Inventory
+    participant K as Kafka
+    participant P as Payments
+
+    C->>O: gRPC CreateOrder(request_key, items)
+    Note over O: TX Orders: ACCEPTED + request_key + reserve_job
+    O-->>C: order_id, ACCEPTED
+
+    O->>I: gRPC Reserve(order_id, operation_id)
+    Note over I: TX Inventory: резерв + ledger + InventoryReserved в outbox
+    I-->>O: reservation_id, снимок суммы
+    Note over O: TX Orders: PAYMENT_PENDING + OrderAwaitingPayment в outbox
+    O-->>K: publish OrderAwaitingPayment
+    K-->>P: delivery OrderAwaitingPayment
+    Note over P: TX Payments: inbox + payment_job
+    P-->>K: commit offset после TX
+
+    Note over P: Воркер симулирует задержку вне SQL-транзакции
+    Note over P: TX Payments: единственный debit + SUCCEEDED + outbox
+    P-->>K: publish PaymentSucceeded
+    K-->>O: delivery PaymentSucceeded
+    Note over O: TX Orders: inbox + FINALIZING + commit_job
+    O-->>K: commit offset после TX
+
+    O->>I: gRPC CommitReservation(operation_id)
+    Note over I: TX Inventory: COMMITTED + ledger + outbox
+    I-->>O: COMMITTED
+    I-->>K: publish InventoryCommitted
+    K-->>O: delivery InventoryCommitted
+    Note over O: TX Orders: inbox + COMPLETED + OrderCompleted в outbox
+    O-->>K: publish OrderCompleted
+
+    C->>O: gRPC GetOrder(order_id)
+    O-->>C: COMPLETED
+```
+
+Publisher каждого сервиса работает из его outbox. Воркеры работают из сохранённых jobs. Они изображены внутри своего владельца, чтобы на схеме оставались ровно три бизнес-сервиса.
+
+Inventory также публикует `InventoryReserved` и `InventoryReleased`; Orders использует их для наблюдения и сверки. Они опущены на успешной sequence-схеме, чтобы выделить события, непосредственно продолжающие этот путь.
+
+#### 3. Состояния заказа
+
+Вопрос для ревью: какие переходы являются допустимыми, а какие нужно запретить?
+
+```mermaid
+stateDiagram-v2
+    [*] --> ACCEPTED: Заказ и задача сохранены
+    ACCEPTED --> RESERVING: Воркер начал шаг
+    RESERVING --> PAYMENT_PENDING: Резерв и сумма подтверждены
+    RESERVING --> REJECTED: Подтверждена нехватка товара
+    PAYMENT_PENDING --> FINALIZING: Успешная оплата; отмена не принята
+    FINALIZING --> COMPLETED: InventoryCommitted; оплата подтверждена
+
+    ACCEPTED --> CANCELLING: Принята отмена
+    RESERVING --> CANCELLING: Принята отмена
+    PAYMENT_PENDING --> CANCELLING: Отмена или отказ оплаты
+    CANCELLING --> CANCELLED: Резерв безопасен; списания нет или оно возвращено
+
+    RESERVING --> RESERVING: Неизвестный RPC; повтор того же ключа
+    PAYMENT_PENDING --> PAYMENT_PENDING: Ожидание и сверка платежа
+    FINALIZING --> FINALIZING: Повтор Commit и ожидание события
+    CANCELLING --> CANCELLING: Повтор компенсации и сверка
+
+    REJECTED --> [*]
+    COMPLETED --> [*]
+    CANCELLED --> [*]
+
+    note right of FINALIZING
+        Точка прекращения клиентской отмены.
+        CancelOrder отклоняется.
+        Временный сбой сохраняет FINALIZING.
+    end note
+```
+
+Timeout, недоступность зависимости и рост Kafka lag не превращают заказ автоматически в REJECTED или CANCELLED. Пока результат не разрешён, заказ остаётся в соответствующем нетерминальном состоянии. Если позже добавляется NEEDS_REVIEW, он тоже учитывается как нерешённый процесс.
+
+##### 3.1. Состояния резерва
+
+```mermaid
+stateDiagram-v2
+    state "Записи ещё нет" as ABSENT
+    [*] --> ABSENT
+    ABSENT --> RESERVED: Reserve успешно сохранён
+    ABSENT --> RELEASED: Release сохраняет запрет позднего Reserve
+    RESERVED --> RESERVED: Повтор того же Reserve
+    RESERVED --> COMMITTED: Commit фиксирует продажу
+    RESERVED --> RELEASED: Release освобождает товар
+    COMMITTED --> COMMITTED: Повтор Commit без второго эффекта
+    RELEASED --> RELEASED: Повтор Release без второго эффекта
+
+    note right of RELEASED
+        Поздний Reserve запрещён.
+        Commit из RELEASED отклоняется.
+    end note
+
+    note right of COMMITTED
+        Release из COMMITTED отклоняется.
+        Возврат проданного товара вне MVP.
+    end note
+```
+
+##### 3.2. Состояния платежа
+
+```mermaid
+stateDiagram-v2
+    state "Платежа ещё нет" as ABSENT
+    [*] --> ABSENT
+    ABSENT --> PROCESSING: Событие сохранено в inbox и job
+    ABSENT --> CANCELLED: Cancel сохраняет запрет позднего списания
+    PROCESSING --> SUCCEEDED: Единственный debit сохранён
+    PROCESSING --> DECLINED: Подтверждён отказ
+    PROCESSING --> CANCELLED: Cancel победил до фиксации debit
+    SUCCEEDED --> REFUND_PENDING: Принят возврат
+    REFUND_PENDING --> REFUNDED: Полный refund подтверждён
+    REFUND_PENDING --> REFUND_PENDING: Повтор возврата с тем же ключом
+    SUCCEEDED --> SUCCEEDED: Повтор исходной операции
+    CANCELLED --> CANCELLED: Позднее событие не создаёт debit
+    REFUNDED --> REFUNDED: Повтор платежа или возврата без нового эффекта
+
+    note right of SUCCEEDED
+        Cancel не стирает списание.
+        Для отмены нужен Refund.
+    end note
+```
+
+Задержка симулятора происходит вне SQL-транзакции. Перед фиксацией debit воркер проверяет актуальное состояние: сохранённая отмена имеет силу и для уже начатой симуляции.
+
+#### 4. Недостаточно товара
+
+Вопрос для ревью: может ли оплата начаться до гарантированного резерва?
+
+```mermaid
+sequenceDiagram
+    participant O as Orders
+    participant I as Inventory
+    O->>I: gRPC Reserve(order_id, operation_id, items)
+    Note over I: Проверить весь заказ одной транзакцией
+    Note over I: Товара недостаточно: складские изменения откатываются
+    Note over I: Результат отказа operation_id сохраняется долговечно
+    I-->>O: Подтверждённый business reject
+    Note over O: TX Orders: REJECTED + результат шага
+    Note over O: OrderAwaitingPayment не создаётся
+```
+
+Для многопозиционного заказа недостаток одной позиции отменяет весь резерв. При этом подтверждённый результат операции сохраняется: повтор того же operation_id возвращает тот же отказ, даже если остатки позже изменились. Это достигается проверкой всех заблокированных позиций до мутаций либо откатом складской части к savepoint с последующей фиксацией результата операции. Технический timeout при Reserve не равен подтверждённой нехватке товара.
+
+#### 5. Платёж отклонён
+
+Вопрос для ревью: когда можно завершить отмену, если освобождение склада временно не работает?
+
+```mermaid
+sequenceDiagram
+    participant P as Payments
+    participant K as Kafka
+    participant O as Orders
+    participant I as Inventory
+
+    Note over P: TX Payments: DECLINED + PaymentDeclined в outbox
+    P-->>K: publish PaymentDeclined
+    K-->>O: delivery PaymentDeclined
+    Note over O: TX Orders: inbox + CANCELLING + release_job
+    O->>I: gRPC ReleaseReservation(order_id, operation_id)
+
+    alt Release подтверждён
+        Note over I: TX Inventory: RELEASED + ledger + outbox
+        I-->>O: RELEASED
+        Note over O: Списания нет; резерв освобождён
+        Note over O: TX Orders: CANCELLED + outbox
+    else Timeout или временная недоступность
+        I-->>O: Результат неизвестен или временная ошибка
+        Note over O: Оставить CANCELLING; сохранить следующий повтор
+        O->>I: Повтор Release с тем же operation_id
+        I-->>O: Прежний или вновь подтверждённый RELEASED
+        Note over O: TX Orders: CANCELLED после проверки условий
+    end
+```
+
+Ветка повторов на схеме сокращена. Если зависимость остаётся недоступной, новые попытки не объявляются успешными: процесс остаётся CANCELLING и попадает в отчёт о незавершённых заказах.
+
+#### 6. Гонка отмены и успешной оплаты
+
+Вопрос для ревью: где принимается решение, исключающее одновременные Commit и компенсацию?
+
+```mermaid
+flowchart TB
+    CANCEL["CancelOrder"] --> CAS["Orders DB: условный переход текущей версии"]
+    PAID["PaymentSucceeded"] --> CAS
+    CAS --> WHO{"Какой переход победил?"}
+
+    WHO -->|Финализация| F["PAYMENT_PENDING → FINALIZING"]
+    F --> DENY["CancelOrder: отмена отклонена"]
+    F --> CJ["Сохранить commit_job"]
+    CJ --> IC["Inventory: COMMITTED"]
+    IC --> OK["Orders: COMPLETED"]
+
+    WHO -->|Отмена| C["Допустимое состояние → CANCELLING"]
+    C --> CANCELJOB["Сохранить задачи отмены платежа и освобождения резерва"]
+    CANCELJOB --> STATE{"Платёж уже списан?"}
+    STATE -->|Нет| BLOCK["CancelPayment: сохранить запрет списания"]
+    STATE -->|Да| RF["RefundPayment: подтвердить возврат"]
+    BLOCK --> PROOF["Проверить платёжный исход и RELEASED резерв"]
+    RF --> PROOF
+    PROOF --> CC["Orders: CANCELLED"]
+```
+
+Условный переход — короткая транзакция в Orders по актуальному состоянию/версии. Проигравший обработчик перечитывает результат и следует выбранной ветке. Принятая отмена не создаёт commit_job; выбранная FINALIZING не создаёт release_job.
+
+На практике CANCELLING может начинаться и до PAYMENT_PENDING. Запрет позднего Reserve в Inventory и позднего списания в Payments защищает от запросов и событий, отправленных старым воркером до отмены.
+
+#### 7. Поздняя успешная оплата после принятой отмены
+
+Вопрос для ревью: достаточно ли игнорировать запоздавшее событие, если деньги уже были списаны?
+
+```mermaid
+sequenceDiagram
+    participant C as Клиент
+    participant O as Orders
+    participant P as Payments
+    participant I as Inventory
+    participant K as Kafka
+
+    Note over P: Платёж SUCCEEDED; debit уже сохранён
+    P-->>K: publish PaymentSucceeded
+    Note over K,O: Доставка в Orders задержана
+
+    C->>O: gRPC CancelOrder(order_id)
+    Note over O: TX Orders: CANCELLING + cancellation jobs
+    O-->>C: Отмена принята; компенсации ещё выполняются
+    O->>P: gRPC CancelPayment(order_id, operation_id)
+    P-->>O: SUCCEEDED: нужен возврат
+    O->>I: gRPC ReleaseReservation(order_id, operation_id)
+    I-->>O: RELEASED подтверждён
+    O->>P: gRPC RefundPayment(order_id, operation_id)
+    Note over P: Возврат выполняется через сохранённый шаг
+    Note over P: TX Payments: refund ledger + REFUNDED + outbox
+    P-->>O: REFUNDED подтверждён
+    Note over O: TX Orders: оба условия подтверждены; CANCELLED + outbox
+
+    K-->>O: delivery старого PaymentSucceeded
+    Note over O: Записать inbox; сохранить ветку отмены
+    Note over O: Не создавать Commit; возврат уже подтверждён
+    P-->>K: publish PaymentRefunded
+    K-->>O: delivery PaymentRefunded
+    Note over O: Идемпотентно подтвердить уже известный исход
+```
+
+На этой схеме Refund успевает подтвердиться через gRPC. При неизвестном результате возврата Orders остаётся CANCELLING и использует повтор с тем же ключом, GetPayment или событие PaymentRefunded. Одного намерения возврата недостаточно для CANCELLED.
+
+#### 8. События и падения: outbox, inbox и jobs
+
+Вопрос для ревью: что уже сохранено в каждом crash window и что будет повторено?
+
+##### 8.1. Запись и публикация
+
+```mermaid
+flowchart TB
+    A["Бизнес-операция владельца"] --> TX
+    subgraph TX["Одна SQL-транзакция производителя"]
+        B["Сохранить бизнес-состояние"] --> E["Сохранить событие в outbox"]
+    end
+    TX --> COMMIT["SQL commit"]
+    COMMIT --> PUB["Внутренний publisher читает outbox"]
+    PUB --> K["Kafka подтверждает публикацию"]
+    K --> SENT["Пометить outbox как отправленный"]
+
+    COMMIT -.-> CR1["Падение до publish: событие осталось в БД"]
+    CR1 --> PUB
+    K -.-> CR2["Падение до sent marker: публикация повторится"]
+    CR2 --> PUB
+```
+
+Crash до SQL commit не сохраняет ни бизнес-изменение, ни событие. Crash после commit оставляет событие для publisher. Повторная публикация после успешной Kafka-записи ожидаема; event_id сохраняется.
+
+##### 8.2. Приём события и долгая работа
+
+```mermaid
+flowchart TB
+    K["Kafka доставляет event_id"] --> CHECK{"event_id уже в inbox?"}
+    CHECK -->|Да| OLD["Нового job нет; прежний результат сохранён"]
+    CHECK -->|Нет| TX
+    subgraph TX["Одна SQL-транзакция потребителя"]
+        IN["Вставить inbox с unique event_id"] --> JOB["Сохранить переход и durable job"]
+    end
+    TX --> COMMIT["SQL commit"]
+    COMMIT --> OFF["Подтвердить Kafka offset"]
+    OLD --> OFF
+    COMMIT --> WORK["Внутренний воркер забирает job по lease"]
+    WORK --> RUN["Долгая работа вне SQL-транзакции"]
+    RUN --> EFFECT["Короткая TX: проверить состояние и operation_id; сохранить эффект и outbox"]
+    EFFECT --> DONE["Job завершён; результат долговечен"]
+
+    COMMIT -.-> CR["Падение до offset: Kafka доставит дубликат"]
+    CR --> K
+    WORK -.-> WCR["Падение воркера: lease истечёт"]
+    WCR --> WORK
+```
+
+Ромб inbox — логическая схема, а не отдельный небезопасный SELECT перед INSERT. Проверка дубликата и создание job защищены unique constraint и одной транзакцией, включая конкурентную доставку.
+
+Offset подтверждает, что продолжение работы сохранено, а не что платёж уже завершён. Поэтому нужны два вида наблюдаемости: Kafka lag и возраст/размер durable jobs. Повтор job использует прежний operation_id и повторно проверяет актуальное состояние перед эффектом.
+
+#### 9. Неизвестный результат gRPC
+
+Вопрос для ревью: означает ли timeout, что Inventory не успел изменить остатки?
+
+```mermaid
+sequenceDiagram
+    participant O as Orders
+    participant I as Inventory
+    participant D as Inventory DB
+
+    O->>I: Reserve(order_id, operation_id)
+    I->>D: TX: резерв + операция + ledger + outbox
+    D-->>I: COMMIT выполнен
+    I--xO: Ответ потерян или deadline истёк
+    Note over O: Результат неизвестен; не считать Reserve неуспешным
+
+    O->>I: Повтор Reserve с тем же operation_id
+    I->>D: Найти сохранённый результат операции
+    D-->>I: Прежний reservation_id и сумма
+    I-->>O: Тот же подтверждённый результат
+    Note over O: Продолжить сохранённый шаг
+```
+
+Вместо повтора можно начать со сверки GetReservation. Но NOT_FOUND во время ещё выполняющегося запроса не доказывает отсутствие будущего эффекта. Безопасность обеспечивают прежний ключ операции, атомарность и cancellation barrier, если уже выбран путь отмены.
+
+Точно так же timeout CreateOrder не означает, что заказа нет: клиент повторяет request_key или вызывает GetOrderByRequestKey. Timeout Commit и Refund требует сверки прежнего эффекта, а не новой операции с новым ключом.
+
+#### 10. Чтение через Redis и запись в PostgreSQL
+
+Вопрос для ревью: где допустима устаревшая информация и где нужен авторитетный результат?
+
+```mermaid
+flowchart TB
+    READ["gRPC GetAvailability"] --> CACHE{"Redis: кеш доступен и ключ найден?"}
+    CACHE -->|Да| ADVICE["Вернуть ориентировочную доступность"]
+    CACHE -->|Нет или ошибка| DBREAD["Прочитать Inventory DB"]
+    DBREAD --> FILL["Best-effort записать кеш с TTL"]
+    FILL --> ADVICE
+
+    WRITE["gRPC Reserve"] --> DBTX["Inventory DB: атомарно проверить и зарезервировать"]
+    DBTX --> ANSWER["Авторитетный результат Reserve"]
+    DBTX -.-> INVALID["Best-effort invalidation кеша после commit"]
+```
+
+Устаревший кеш может показать товар доступным, а Reserve затем корректно откажет. Это измеряемый stale read, не продажа лишнего товара. Ошибка кеша не должна отменять уже выполненную складскую транзакцию; fallback и его нагрузка на SQL становятся отдельным экспериментом.
+
+#### 11. Цикл инженерного эксперимента
+
+Вопрос для ревью: какие данные позволяют принять решение об эффективности изменения?
+
+```mermaid
+flowchart TB
+    H["Проблема → гипотеза → критерии до запуска"] --> FIX["Зафиксировать версии, данные, seed и ресурсы"]
+    FIX --> A["Прогон A: baseline"]
+    A --> CHANGE["Изменить один проверяемый фактор"]
+    CHANGE --> B["Прогон B: candidate"]
+    B --> REPEAT["Повторить пары A/B; собрать разброс"]
+    REPEAT --> DRAIN["Остановить вход; дождаться обработки или лимита drain"]
+    DRAIN --> VER["Сверить все request keys, ledger и состояния"]
+    VER --> DATA{"Данные и нагрузка достаточны?"}
+    DATA -->|Нет| INC["INCONCLUSIVE: объяснить пробел и повторить"]
+    DATA -->|Да| INV{"Инварианты соблюдены?"}
+    INV -->|Нет| BAD["REJECTED: исправить нарушение"]
+    INV -->|Да| MET["Сравнить goodput, latency, backlog, recovery и ресурсы"]
+    MET --> REPORT["Отчёт: принять, отклонить или продолжить измерение"]
+    REPORT --> NEXT["Следующий эксперимент"]
+```
+
+Каждый отдельный прогон A или B включает свой прогрев, измеряемое окно, drain и verifier. На схеме общие шаги после серии обозначают сбор уже проверенных результатов. Незавершённые заказы не исчезают из знаменателя; они остаются отдельным результатом.
+
+#### 12. Процесс ревью G0
+
+```mermaid
+flowchart LR
+    P["Предложение G0: архитектура и схемы"] --> R["Ревью тимлида"]
+    R --> D{"Решение"}
+    D -->|Изменить| C["Уточнить решения и обновить схемы"]
+    C --> R
+    D -->|Согласовано| G["Зафиксировать принятую версию G0"]
+    G --> CODE["Первые небольшие пакеты кода для ревью"]
+    CODE --> G1["G1: основа заказа и склада"]
+```
+
+G0 прошёл ветку согласования: пользователь полностью принял его 2026-10-13. Схема остаётся описанием процесса ревью и для последующих изменений. После замечаний схемы, контракты и бизнес-правила обновляются вместе; существенные изменения согласуются отдельно.
+
+#### Контрольные вопросы тимлиду
+
+| Область | Что должно быть однозначно после ревью |
+|---|---|
+| Успех | ACCEPTED отличается от COMPLETED; завершение требует оплаты и продажи |
+| Отмена | Понятна точка FINALIZING и ветка позднего успеха оплаты |
+| Корректность | Повторы не создают второй эффект; отменённый процесс не воскресает |
+| Долговечность | Видно, что сохраняется перед ответом клиента и Kafka offset |
+| Восстановление | Timeout остаётся неизвестным исходом до сверки; jobs/outbox переживают рестарт |
+| Масштабирование | Приём, Kafka delivery и processing jobs имеют отдельные очереди и показатели |
+| Кеш | Redis ускоряет чтения; складская запись проверяет PostgreSQL |
+| Эксперимент | Вывод учитывает незавершённые процессы, инварианты и ресурсный бюджет |
+
+<a id="appendix-development-process"></a>
+
+## Приложение: Роли, ревью, контрольные точки и обновление контекста
+
+Полный исходный документ: `docs/development/WORKFLOW.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Порядок разработки и ревью
+
+#### Роли
+
+Пользователь — тимлид: определяет приоритеты, утверждает ключевые решения, проводит код-ревью и согласует переходы между основными этапами.
+
+Codex — исполнитель разработки: готовит проектные решения, реализует согласованный объём, выполняет необходимые проверки, собирает доказательства корректности и эффективности, документирует результат и исправляет замечания.
+
+Это распределение ролей задано пользователем. Архитектура и процесс G0 полностью приняты тимлидом 13 октября 2026 года; контрольные точки ниже входят в текущий согласованный порядок работы и могут быть изменены тимлидом.
+
+#### Пакет изменений
+
+Каждый пакет имеет одну понятную цель: например, атомарный Reserve, durable payment job или приём конкретного Kafka-события. Работа внутри согласованного этапа выполняется самостоятельно. Размер пакета выбирается так, чтобы тимлид мог проверить бизнес-поведение и существенный diff за одно ревью.
+
+Для каждого пакета Codex представляет:
+
+1. Задачу и соответствующий этап roadmap.
+2. Изменённое поведение и существенные проектные решения.
+3. Локальный diff либо PR, когда для проекта доступен настроенный remote.
+4. Команды воспроизведения и фактические результаты проверок.
+5. Известные ограничения и открытые вопросы, влияющие на принятие изменения.
+6. Критерии готовности и предложение следующего пакета.
+
+Обычные исправления по ревью выполняются в рамках того же пакета. После исправлений повторяются проверки, затронутые изменением. Невыполненные проверки явно обозначаются как невыполненные; объясняется причина и что необходимо для их запуска.
+
+#### Контрольные точки
+
+| Точка | Когда | Материалы для согласования | Критерий перехода |
+|---|---|---|---|
+| G0: архитектура | Перед реализацией | docs/architecture/DESIGN.md, схемы docs/architecture/PROCESSES.md, архитектура и состояния из docs/ROADMAP.md, границы MVP, порядок реализации | Тимлид согласовал предложенные решения или сформулировал необходимые изменения |
+| G1: основа данных и операций | После этапа 1 | Код и миграции; API заказа и склада; повторный запрос; конкуренция за остатки; сохранённый шаг после рестарта | Ревью принято, обязательные проверки проходят, нет нерешённых нарушений складских инвариантов |
+| G2: сквозной MVP | После этапа 2 | Сквозной процесс трёх сервисов, Kafka/outbox/inbox, платежи и компенсации, Redis и наблюдаемость, первый эксперимент и отчёт | Подтверждены успешный процесс, отказ оплаты, идемпотентность и контрольный перезапуск; каждый тестовый заказ учтён |
+| G3: устойчивость | После этапа 4 | Сценарии неизвестного результата, поздних событий, отмены, replay; объяснение политики ошибок и recovery | Ревью и сценарии приняты; нерешённые процессы явно учитываются; отсутствуют ложные terminal states |
+| G4: готовая лаборатория | После этапа 7 | Каталог экспериментов, результаты сравнения решений, масштабирование, автоматический запуск/сверка/отчёты, инструкции | Тимлид воспроизвёл или проверил заявленный цикл; отчёты отражают корректность, ресурсы и ограничения |
+
+Статус G0: **полностью принят 2026-10-13, Europe/Moscow**. Прямое решение пользователя: «G0 полностью принят». G1–G4 ещё не достигнуты. Реализация сервисов в текущих файлах отсутствует. Работа над согласованной основой для G1 разрешена; повторное согласование G0 не требуется.
+
+На контрольной точке Codex сначала доводит текущий пакет до проверяемого результата, затем предоставляет его тимлиду. Следующий этап, зависящий от согласования, начинается после явного решения. Замечания тимлида вносятся в пакет до повторного рассмотрения.
+
+#### Изменения, требующие отдельного согласования
+
+- Изменение ответственности сервисов, бизнес-инвариантов или момента окончательного завершения/отмены заказа.
+- Несовместимое изменение API, событий, данных или политики идемпотентности.
+- Добавление бизнес-сервиса либо инфраструктуры, существенно меняющей объём или среду запуска.
+- Изменение утверждённых критериев эксперимента, которое влияет на вывод об эффективности.
+
+Настройки, рефакторинг и необходимые проверки в рамках согласованного решения выполняются самостоятельно. Если найденный дефект требует смены архитектуры, Codex готовит конкретное предложение и объясняет, какой инвариант или сценарий заставляет пересмотреть решение.
+
+#### Порядок принятия решений
+
+План или гипотеза помечаются как предложенные. Согласование тимлидом фиксируется отдельно от фактической реализации и результатов проверки. Успешные тесты подтверждают проверенные свойства, а не заменяют решение ревьюера.
+
+Решения, меняющие проект, сохраняются в ADR с причиной и последствиями. Итог пакета содержит текущий статус контрольной точки, оставшиеся замечания и ссылку на воспроизводимый результат.
+
+Исходные оценки часов в docs/ROADMAP.md описывают объём ручной разработки. Для работы Codex календарный прогноз уточняется по фактическим ограничениям среды, времени проверок и ревью. Контрольная точка достигается по критериям готовности.
+
+#### Актуальность переносимого контекста
+
+PROJECT_CONTEXT.md — самостоятельный пакет для другого ИИ-агента или чата без доступа к рабочему компьютеру. В нём есть краткое введение, точный статус, история решений и полные тексты проектных документов.
+
+Каждый содержательный пакет работы завершать обновлением контекста: что изменено, что реально проверено, какие замечания остаются, состояние G0–G4, версии/commit при наличии, следующие задачи и блокеры. Обновить CONTEXT_STATE.json, соответствующие исходные документы и при необходимости tools/context_intro.md; увеличить revision и поставить дату из актуального пользовательского контекста Europe/Moscow. Затем выполнить tools/update_context.ps1 и проверку tools/update_context.ps1 -CheckOnly.
+
+Проверка выявляет несоответствие переносимого файла его локальным источникам. Достоверность статусов реализации и результатов проверок обеспечивается фактическими данными исполнителя; сама генерация не запускает тесты сервисов.
+
+Перед передачей другому агенту использовать последнюю проверенную ревизию PROJECT_CONTEXT.md. Переданная копия является снимком: изменения, выполненные в другом чате, нужно вернуть вместе с обновлением контекста и согласовать с более новой локальной версией. Агент без доступа к файлам не помечает предложения как применённый код и проверки как выполненные.
+
+<a id="appendix-report-template"></a>
+
+## Приложение: Полный шаблон отчёта
+
+Полный исходный документ: `docs/experiments/REPORT_TEMPLATE.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Отчёт об инженерном эксперименте
+
+> Шаблон. Значения ниже заполняются после реальных прогонов. Пустые поля не являются измеренными нулевыми значениями.
+
+#### 1. Вывод
+
+- ID эксперимента: `<id>`
+- Решение: `<accepted / rejected / inconclusive>`
+- Проверяемое изменение: `<одно изменение>`
+- Наблюдаемый эффект: `<абсолютная разница, процент при ненулевой базе, разброс>`
+- Корректность: `<инварианты; unresolved/unknown; полнота данных>`
+- Цена и регрессии: `<ресурсы, отказы, сложность, задержка>`
+
+#### 2. Проблема и гипотеза
+
+**Проблема:** `<бизнес-симптом и подтверждающий технический сигнал>`
+
+**Гипотеза:** `<изменение X должно улучшить показатель Y за счёт механизма Z>`
+
+**Критерии, заданные до запуска:**
+
+- Минимально полезный эффект: `<порог>`
+- Допустимые регрессии: `<пороги>`
+- Инварианты: `<нулевая терпимость или конкретный проверяемый контракт>`
+- Допустимое время восстановления: `<порог и определение восстановления>`
+- Условия непригодного измерения: `<насыщение генератора, пропуски данных, различие среды>`
+
+#### 3. Условия
+
+| Параметр | A: baseline | B: candidate |
+|---|---|---|
+| Commit / dirty diff | `<значение>` | `<значение>` |
+| Образы и digests | `<значение>` | `<значение>` |
+| Суммарные CPU/RAM и Docker limits | `<значение>` | `<значение>` |
+| Реплики, worker limits, SQL pools | `<значение>` | `<значение>` |
+| Kafka topics/partitions/groups | `<значение>` | `<значение>` |
+| Dataset, stock, seed | `<значение>` | `<значение>` |
+| Offered arrival rate и read/order mix | `<значение>` | `<значение>` |
+| Fault timeline: план и факт | `<значение>` | `<значение>` |
+| Warmup / measure / drain | `<значение>` | `<значение>` |
+| Повторы и порядок A/B | `<значение>` | `<значение>` |
+| Telemetry / sampling / verifier load | `<значение>` | `<значение>` |
+
+**Точные run IDs и ссылки на manifest:** `<список>`
+
+**Фактический diff:** `<что изменено; подтверждение отсутствия других изменений>`
+
+#### 4. Результаты
+
+Показывать отдельно результаты каждой пары прогонов. Агрегат должен включать объём выборки и разброс. Median p95 отдельных прогонов так и называется; это не p95 всех запросов.
+
+| Показатель | A | B | Разница | Разброс / выборка |
+|---|---|---|---|---|
+| Offered / sent / skipped unique orders | `<…>` | `<…>` | `<…>` | `<…>` |
+| Accepted / unknown ingress result | `<…>` | `<…>` | `<…>` | `<…>` |
+| Completed в окне / во время drain | `<…>` | `<…>` | `<…>` | `<…>` |
+| Business rejects / technical failures | `<…>` | `<…>` | `<…>` | `<…>` |
+| Unresolved / unknown после drain | `<…>` | `<…>` | `<…>` | `<…>` |
+| Completed goodput | `<…>` | `<…>` | `<…>` | `<…>` |
+| E2E p50 / p95 / p99 для завершённых | `<…>` | `<…>` | `<…>` | `<…>` |
+| Business success ratio среди sent eligible | `<…>` | `<…>` | `<…>` | `<…>` |
+| gRPC errors / deadlines / retries | `<…>` | `<…>` | `<…>` | `<…>` |
+| SQL latency / pool acquire / lock wait | `<…>` | `<…>` | `<…>` | `<…>` |
+| Kafka lag и oldest event age | `<…>` | `<…>` | `<…>` | `<…>` |
+| Job/outbox backlog и oldest age | `<…>` | `<…>` | `<…>` | `<…>` |
+| Recovery time / drain time | `<…>` | `<…>` | `<…>` | `<…>` |
+| CPU-seconds / RSS / disk / network | `<…>` | `<…>` | `<…>` | `<…>` |
+| Completed orders / CPU-second | `<…>` | `<…>` | `<…>` | `<…>` |
+
+**Определения знаменателей и временных окон:** `<eligible задано заранее; completion cohort; treatment of retries; time origin>`
+
+**Цензурированные наблюдения:** `<число незавершённых и наблюдаемый возраст; они не исключены из success ratio>`
+
+#### 5. Графики
+
+Добавить PNG/SVG с единой шкалой времени и отметками начала/конца fault:
+
+1. Offered/sent/accepted/completed throughput.
+2. gRPC и business latency; рядом доля незавершённых.
+3. Kafka, durable jobs и outbox backlog/age.
+4. CPU, память, SQL pool и lock waits.
+5. Восстановление после снятия отказа; firing/resolved алертов.
+
+**Ссылки на сохранённые графики, сырые данные и Grafana time window:** `<ссылки>`
+
+#### 6. Корректность
+
+| Проверка | A | B | Доказательство |
+|---|---|---|---|
+| Неотрицательные остатки и баланс available/reserved/sold | `<…>` | `<…>` | `<invariants.json / ledger>` |
+| Не более одного debit на order_id | `<…>` | `<…>` | `<ledger>` |
+| Возвраты не превышают списания | `<…>` | `<…>` | `<ledger>` |
+| COMPLETED имеет оплату и committed reserve | `<…>` | `<…>` | `<сверка>` |
+| CANCELLED не имеет резерва или невозвращённого debit | `<…>` | `<…>` | `<сверка>` |
+| Все request keys учтены, включая unknown ingress | `<…>` | `<…>` | `<requests.jsonl + orders>` |
+| Поздние/повторные события не создали повторных эффектов | `<…>` | `<…>` | `<operation keys / history>` |
+
+**Нерешённые процессы:** `<order_id, состояние, возраст, причина; либо подтверждённое отсутствие>`
+
+**Модель отказов и границы проверки:** `<сохранены ли диски, ограничен ли retention, работала ли сверка>`
+
+#### 7. Интерпретация
+
+- Подтверждает ли сигнал предполагаемый механизм улучшения: `<объяснение>`.
+- Изменился ли ресурсный бюджет: `<объяснение>`.
+- Скрывает ли хороший percentile больше отказов или незавершённых заказов: `<проверка>`.
+- Насколько эффект больше межпрогонного разброса: `<оценка без необоснованной статистической уверенности>`.
+- Что не удалось доказать: `<ограничения локальной среды, данных и длительности>`.
+- Цена поддержки изменения: `<код, эксплуатация, настройка>`.
+
+#### 8. Решение и следующий эксперимент
+
+**Решение:** `<принять / отклонить / увеличить объём измерений>`.
+
+**Причина:** `<сопоставление с заранее выбранными критериями>`.
+
+**Следующий эксперимент:** `<гипотеза, изменяемый фактор, ожидаемый сигнал>`.
+
+<a id="appendix-agents"></a>
+
+## Приложение: Локальные инструкции ИИ-исполнителю
+
+Полный исходный документ: `AGENTS.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Instructions for this project
+
+- The human user is the team lead and code reviewer. Codex implements the project and prepares reviewable changes.
+- Read PROJECT_CONTEXT.md first for the portable project handoff, current status and approvals. Read docs/development/WORKFLOW.md for review expectations and docs/ROADMAP.md for the project scope when the repository is available.
+- G0 was explicitly approved by the human on 2026-10-13 (Europe/Moscow): "G0 полностью принят." The architecture and business rules in docs/architecture/DESIGN.md and docs/architecture/PROCESSES.md are approved. Do not ask for G0 approval again. G1-G4 remain future review gates; prepare the work for a gate before requesting its approval.
+- Work autonomously within an approved stage. Keep changes small enough for focused code review and include actual validation results and known limitations.
+- Stop before progressing through an unapproved review gate. Present a concrete, complete review packet and identify the decision needed from the team lead.
+- Significant changes to approved service boundaries, invariants, incompatible contracts or infrastructure scope require a concrete proposal and human approval.
+- Keep exactly three business services: Orders, Inventory and Payments. Do not add another business service to host workflow orchestration.
+- Never report measurements, tests or approvals that have not actually occurred. Keep proposed decisions, implemented behavior and observed results distinct.
+- Keep the portable context current after every substantive task, review resolution, approval, experiment, environment change or newly discovered blocker. Update CONTEXT_STATE.json and the affected source documents, increment the context revision, then run tools/update_context.ps1 and tools/update_context.ps1 -CheckOnly. Include the refreshed PROJECT_CONTEXT.md in the review packet.
+- PROJECT_CONTEXT.md is generated from CONTEXT_STATE.json, tools/context_intro.md and the embedded canonical documents. Update those inputs instead of editing only the generated local file. Do not put secrets in any context artifact.
+- An agent without the repository works from the dated snapshot and returns an updated context/change proposal with its result. It must distinguish proposed edits from locally applied changes and list checks it could not run. Separate snapshots are reconciled by revision and evidence, not by silently overwriting a newer context.
+
+<a id="appendix-adr-0001"></a>
+
+## Приложение: Запись принятия архитектуры G0
+
+Полный исходный документ: `docs/adr/0001-approved-g0.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### ADR 0001: принятие архитектуры G0
+
+- Дата решения: 2026-10-13, Europe/Moscow.
+- Статус: accepted.
+- Кто принял: пользователь, тимлид проекта.
+- Прямое основание: сообщение пользователя «G0 полностью принят».
+
+#### Контекст
+
+Пользователь поручает ИИ разработку pet-проекта и сам проводит код-ревью и согласует ключевые этапы. Подготовлены roadmap, архитектурный пакет и визуальные схемы процессов. Реализация к моменту решения ещё не создана.
+
+#### Принятое решение
+
+Принят G0, описанный в docs/architecture/DESIGN.md, docs/architecture/PROCESSES.md, docs/ROADMAP.md и docs/development/WORKFLOW.md:
+
+- Ровно три бизнес-сервиса Go: Orders, Inventory, Payments.
+- Orders хранит долговечный процесс; четвёртый сервис-оркестратор не добавляется.
+- gRPC — непосредственные команды/чтения и компенсации; Kafka — бизнес-события и асинхронная платёжная обработка.
+- Сначала один PostgreSQL с тремя отдельными базами/ролями и владением данными внутри сервиса.
+- Redis кеширует чтения Inventory; резервирование доверяет PostgreSQL.
+- Outbox, inbox, operation keys и durable jobs входят в MVP.
+- Бизнес-инварианты, граница клиентской отмены FINALIZING и компенсации поздней успешной оплаты приняты в описанном виде.
+- Начальная среда — Docker Compose; Prometheus/Grafana и Loki/Alloy входят в MVP, расширенная трассировка — в следующий этап.
+- Нагрузка, сбои, verifier, воспроизводимые A/B-эксперименты и отчётность — основная цель проекта.
+- Работа предъявляется небольшими пакетами для ревью; следующие точки — G1–G4.
+
+#### Последствия
+
+Повторно запрашивать согласование G0 не нужно. Можно готовить согласованную основу для G1. Принятие G0 не заменяет код-ревью, проверки или согласование последующих точек.
+
+Точные версии библиотек и образов, protobuf-файлы, миграции и конкретные параметры исполнения пока не выбраны или не реализованы. Их выбор выполняется внутри принятой архитектуры и предъявляется на ревью; существенное изменение архитектуры требует нового согласования.
+
+В том же сообщении пользователь запросил подробный, переносимый и регулярно обновляемый файл контекста для других ИИ-агентов. Это отдельная задача документирования, выполненная до начала реализации сервисов.
+
+<a id="appendix-contributing"></a>
+
+## Приложение: Участие, ревью и проверки
+
+Полный исходный документ: `CONTRIBUTING.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Contributing to Faultline Lab
+
+This repository documents a project built with AI implementation and human technical leadership. Changes should be understandable to a reviewer and supported by reproducible evidence.
+
+#### Before changing anything
+
+Read the [current context](https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). AI implementers must also follow [AGENTS.md](#appendix-agents).
+
+G0 is approved. G1–G4 remain future review gates. Significant changes to approved service boundaries, invariants or incompatible contracts require a concrete proposal and the team lead's decision.
+
+#### A reviewable change
+
+1. Name the problem, intended behavior and roadmap packet.
+2. Keep the diff focused; explain decisions that affect correctness or operability.
+3. Run checks appropriate to the change. Record exact commands, observed results and checks that could not run.
+4. Update affected documentation and `CONTEXT_STATE.json`; increment the context revision and regenerate `PROJECT_CONTEXT.md`.
+5. Use the pull request template to present the result. Address review comments before moving through the next gate.
+
+AI assistance should be disclosed in the review packet. The human reviewer remains responsible for accepting decisions. Never claim tests, approvals or measurements that did not occur.
+
+#### Documentation checks
+
+Requires Node.js 20+ and PowerShell 7+ for the commands below. The generator also supports Windows PowerShell 5.1 (`powershell` instead of `pwsh`).
+
+```powershell
+node tools/check_docs.mjs
+pwsh -NoProfile -File tools/update_context.ps1
+pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
+```
+
+The checker validates local links, Markdown fence balance, text encoding and accidental machine-specific paths. The context check compares the generated snapshot with all registered sources. These checks do not validate service behavior or fully parse Mermaid syntax.
+
+#### Branches and commits
+
+Use `main` as the baseline, short descriptive branches such as `feat/orders-bootstrap`, and focused commits with clear intent. Suggested prefixes: `feat:`, `fix:`, `docs:`, `test:`, `chore:`. Include both canonical document changes and their generated context in the same review packet.
+
+Runtime instructions and required service checks will be added with the first implementation.
+
+<a id="appendix-license"></a>
+
+## Приложение: MIT License
+
+Полный исходный документ: `LICENSE`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+MIT License
+
+Copyright (c) 2026 Dmitrii Morozov
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

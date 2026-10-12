@@ -1,0 +1,255 @@
+{
+  "schema_version": 1,
+  "project_id": "faultline-lab",
+  "context_revision": 2,
+  "context_created_on": "2026-10-13",
+  "context_updated_on": "2026-10-13",
+  "user_timezone": "Europe/Moscow",
+  "language": "ru",
+  "current_phase": "G0_APPROVED_PRE_IMPLEMENTATION",
+  "current_task": {
+    "id": "REPO-BOOTSTRAP-001",
+    "description": "Подготовить публичный репозиторий Faultline Lab, оформление, структуру и первый коммит",
+    "status": "IN_PROGRESS",
+    "result": {
+      "repository_created": true,
+      "first_commit": "PENDING",
+      "publication": "PENDING",
+      "license": "MIT",
+      "business_implementation": "NOT_STARTED"
+    }
+  },
+  "roles": {
+    "human": "Тимлид, владелец решений, код-ревьюер",
+    "ai": "Исполнитель разработки, проверок, экспериментов и документации"
+  },
+  "gates": [
+    {
+      "id": "G0",
+      "status": "APPROVED",
+      "approved_on": "2026-10-13",
+      "approval_evidence": "Прямое сообщение пользователя: G0 полностью принят.",
+      "conditions": []
+    },
+    {
+      "id": "G1",
+      "status": "NOT_READY",
+      "meaning": "Основа заказа и склада; согласование после реализации этапа 1"
+    },
+    {
+      "id": "G2",
+      "status": "NOT_READY",
+      "meaning": "Сквозной MVP и первый эксперимент после этапа 2"
+    },
+    {
+      "id": "G3",
+      "status": "NOT_READY",
+      "meaning": "Устойчивость после этапа 4"
+    },
+    {
+      "id": "G4",
+      "status": "NOT_READY",
+      "meaning": "Готовая лаборатория после этапа 7"
+    }
+  ],
+  "implementation_status": {
+    "business_service_code": "NOT_CREATED",
+    "go_module": "NOT_CREATED",
+    "protobuf_files": "NOT_CREATED",
+    "sql_migrations": "NOT_CREATED",
+    "docker_compose": "NOT_CREATED",
+    "load_generator": "NOT_CREATED",
+    "business_verifier": "NOT_CREATED",
+    "dashboards_alerts": "NOT_CREATED",
+    "experiments": "NOT_RUN",
+    "measured_capacity": null,
+    "actual_runtime_versions": null,
+    "git_repository": "INITIALIZED",
+    "git_commit": null,
+    "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
+    "pull_requests": []
+  },
+  "completed_work": [
+    "Подготовлен практический roadmap с этапами, критериями, рисками и оценками объёма",
+    "Подготовлен шаблон отчёта об инженерном эксперименте",
+    "Описаны архитектура, API на уровне методов, события, состояния, компенсации и инварианты",
+    "Определены роли тимлида и ИИ-исполнителя и контрольные точки G0–G4",
+    "Добавлены 15 подробных схем процессов G0 и 3 обзорные схемы в архитектурном пакете",
+    "G0 полностью принят пользователем 2026-10-13; принятие зафиксировано в ADR 0001",
+    "Создан самостоятельный PROJECT_CONTEXT.md с быстрым вводным разделом, текущим состоянием и полными проектными приложениями",
+    "Добавлены CONTEXT_STATE.json, инструменты генерации/проверки свежести и обязательные правила обновления контекста",
+    "Проверены сборка, соответствие источникам, структура приложений/ссылок, кодировка и отсутствие устаревшего ожидания принятия G0",
+    "Создан публичный GitHub-репозиторий Includeoyasi/faultline-lab с описанием и темами; локальный Git и origin инициализированы",
+    "Документы разложены по docs; добавлены двуязычный README, SVG-обложка, карта документации, MIT по выбору тимлида и шаблоны ревью",
+    "Добавлены переносимая проверка документации и CI workflow; фактический запуск CI пока ожидает первого push"
+  ],
+  "next_implementation_packet": {
+    "id": "G1-P01",
+    "status": "NOT_STARTED",
+    "goal": "Проверяемая основа проекта: три Go entrypoints, конфигурация, health, graceful shutdown и JSON-логи",
+    "approval_dependency": "G0 уже принят; повторное согласование G0 не требуется",
+    "following_packets": [
+      "G1-P02: Compose core, отдельные базы/роли, миграции и seed",
+      "G1-P03: protobuf, ключи операций, состояния и классификация ошибок",
+      "G1-P04: Create/Get/GetByRequestKey и долговечная задача Orders",
+      "G1-P05: Reserve/Commit/Release/GetReservation, ledger и cancellation barrier"
+    ]
+  },
+  "active_blockers": [],
+  "open_review_comments": [],
+  "pending_implementation_choices": [
+    "Проверить наличие и версии Go, Docker/Compose и фактические ресурсы среды",
+    "Выбрать и закрепить версии Go, библиотек и контейнерных образов",
+    "Создать Go-модуль github.com/Includeoyasi/faultline-lab в G1-P01; Git main/origin уже настроены",
+    "Подготовить точные protobuf-схемы, error codes и SQL-модели в рамках G0",
+    "Определить конкретную реализацию lease/version fencing, outbox ordering и durable job dispatch",
+    "Откалибровать гипотетические SLO и ресурсные лимиты после работающего MVP"
+  ],
+  "environment_facts": {
+    "local_host": "Windows",
+    "shell": "PowerShell",
+    "user_timezone": "Europe/Moscow",
+    "project_path_at_snapshot": null,
+    "path_required_to_read_context": false,
+    "go_available": "NOT_CHECKED",
+    "docker_available": "NOT_CHECKED",
+    "cpu_ram_disk_budget": "NOT_CHECKED",
+    "local_directory_name": "faultline-lab"
+  },
+  "validation_evidence": [
+    {
+      "date": "2026-10-13",
+      "check": "Inventory of the project files and Git repository status",
+      "result": "PASS",
+      "detail": "До создания контекста обнаружены только шесть проектных Markdown-файлов. Git rev-parse подтвердил отсутствие репозитория в этом пути и родителях."
+    },
+    {
+      "date": "2026-10-11",
+      "check": "Markdown structure and encoding for G0 visuals",
+      "result": "PASS",
+      "detail": "Проверены кодировка, парные fences и типы Mermaid: 15 схем в docs/architecture/PROCESSES.md, 3 в docs/architecture/DESIGN.md, 1 в docs/ROADMAP.md. Это не проверка рендеринга Mermaid и не тесты сервисов."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Generate portable context and check source freshness",
+      "result": "PASS",
+      "commands": [
+        ".\\tools\\update_context.ps1",
+        ".\\tools\\update_context.ps1 -CheckOnly"
+      ],
+      "detail": "Собраны 7 полных проектных документов и реестр 10 SHA-256 источников. CheckOnly подтвердил соответствие переносимого снимка исходным файлам."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Portable context structure and approval consistency",
+      "result": "PASS",
+      "detail": "Встроены 19 Mermaid-схем; fences сбалансированы; все 7 внутренних anchors существуют; UTF-8 без replacement characters. Устаревшие утверждения, что принятие G0 ещё не получено, в документах не обнаружены. Рендеринг схем и бизнес-тесты не запускались."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "GitHub repository creation and local Git bootstrap",
+      "result": "PASS",
+      "detail": "GitHub API подтвердил владельца Includeoyasi, публичность, URL и создание репозитория. Git main и origin созданы. Авторство настроено локально с GitHub noreply email. Коммит и push ещё не выполнены."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Repository documentation and portable context checks",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly",
+        "powershell.exe -NoProfile -File tools/update_context.ps1 -CheckOnly"
+      ],
+      "detail": "Проверены 15 Markdown-файлов, 115 локальных ссылок и 50 Mermaid-блоков вместе с повторениями внутри снимка. Снимок включает 12 документов и 15 SHA-256. CheckOnly проходит в PowerShell 7 и Windows PowerShell 5.1. SVG-обложка отрендерена и визуально проверена. Рендеринг всех Mermaid-схем и тесты сервисов не выполнялись."
+    }
+  ],
+  "source_documents": [
+    {
+      "path": "README.md",
+      "anchor": "appendix-readme-en",
+      "title": "Публичное введение на английском"
+    },
+    {
+      "path": "README.ru.md",
+      "anchor": "appendix-readme-ru",
+      "title": "Публичное введение на русском"
+    },
+    {
+      "path": "docs/README.md",
+      "anchor": "appendix-docs-index",
+      "title": "Карта документации"
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "anchor": "appendix-roadmap",
+      "title": "Полный roadmap, архитектура, эксперименты и методика"
+    },
+    {
+      "path": "docs/architecture/DESIGN.md",
+      "anchor": "appendix-design-review",
+      "title": "Принятый архитектурный пакет G0"
+    },
+    {
+      "path": "docs/architecture/PROCESSES.md",
+      "anchor": "appendix-g0-processes",
+      "title": "Подробные визуальные схемы G0"
+    },
+    {
+      "path": "docs/development/WORKFLOW.md",
+      "anchor": "appendix-development-process",
+      "title": "Роли, ревью, контрольные точки и обновление контекста"
+    },
+    {
+      "path": "docs/experiments/REPORT_TEMPLATE.md",
+      "anchor": "appendix-report-template",
+      "title": "Полный шаблон отчёта"
+    },
+    {
+      "path": "AGENTS.md",
+      "anchor": "appendix-agents",
+      "title": "Локальные инструкции ИИ-исполнителю"
+    },
+    {
+      "path": "docs/adr/0001-approved-g0.md",
+      "anchor": "appendix-adr-0001",
+      "title": "Запись принятия архитектуры G0"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "anchor": "appendix-contributing",
+      "title": "Участие, ревью и проверки"
+    },
+    {
+      "path": "LICENSE",
+      "anchor": "appendix-license",
+      "title": "MIT License"
+    }
+  ],
+  "change_history": [
+    {
+      "revision": 1,
+      "date": "2026-10-13",
+      "summary": "Первый переносимый контекст; явное принятие G0; полные проектные приложения; механизм обновления и проверки свежести",
+      "trigger": "Пользователь: G0 полностью принят. Создай файл для хранения контекста задачи..."
+    },
+    {
+      "revision": 2,
+      "date": "2026-10-13",
+      "summary": "Проект получил имя Faultline Lab; создан GitHub-репозиторий, оформлены README/обложка/структура, выбрана MIT. Подготовка первого коммита.",
+      "trigger": "Пользователь поручил инициализировать Git, создать публичный репозиторий и первый коммит; затем выбрал MIT."
+    }
+  ],
+  "repository": {
+    "name": "Faultline Lab",
+    "slug": "faultline-lab",
+    "owner": "Includeoyasi",
+    "url": "https://github.com/Includeoyasi/faultline-lab",
+    "visibility": "PUBLIC",
+    "default_branch": "main",
+    "status": "CREATED_AWAITING_INITIAL_PUSH",
+    "description": "A Go microservices lab for testing scale, failure and recovery — built through human-led AI collaboration.",
+    "license": "MIT",
+    "license_approval": "Прямое сообщение тимлида 2026-10-13: возьми MIT",
+    "context_commit_semantics": "git_commit фиксирует HEAD на момент подготовки снимка; финальный HEAD проверяется через git rev-parse HEAD, поскольку снимок не может содержать hash собственного коммита."
+  }
+}
