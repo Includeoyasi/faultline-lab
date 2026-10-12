@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **6**. Состояние на: **2026-10-13**, Europe/Moscow. Фаза: **G0_APPROVED_PRE_IMPLEMENTATION**.
+Ревизия: **7**. Состояние на: **2026-10-13**, Europe/Moscow. Фаза: **G0_APPROVED_PRE_IMPLEMENTATION**.
 
 ## Краткое текущее состояние
 
@@ -248,7 +248,7 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 6,
+  "context_revision": 7,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-13",
   "user_timezone": "Europe/Moscow",
@@ -267,7 +267,8 @@ JSON ниже является частью этого файла и доста�
       "go_checks": "NOT_RUN_NO_GO_MODULE",
       "repository_protection": "NOT_CONFIGURED_BY_THIS_TASK",
       "local_validation": "PASS",
-      "documentation_ci": "PASS_ON_ACCEPTED_MAIN_COMMIT_c1e55fd"
+      "documentation_ci": "PASS_ON_ACCEPTED_MAIN_COMMIT_c1e55fd",
+      "context_update_pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/2"
     }
   },
   "roles": {
@@ -316,7 +317,7 @@ JSON ниже является частью этого файла и доста�
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "31c0a71951a22fc90ac0114a37b243bd82b47f6c",
+    "git_commit": "1774df8ec7eaf5a43d59fb12b868abad3f3da1f9",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -329,6 +330,16 @@ JSON ниже является частью этого файла и доста�
         "human_review": "ACCEPTED_BY_TEAM_LEAD_ACCOUNT_MERGE",
         "merged": true,
         "merge_commit": "c1e55fdfca98e12e518f722300bd85ed85c1d85e"
+      },
+      {
+        "number": 2,
+        "url": "https://github.com/Includeoyasi/faultline-lab/pull/2",
+        "state": "OPEN",
+        "head_ref": "docs/review-policy-handoff",
+        "base_ref": "main",
+        "scope": "Отражение принятия PR #1 и обновление переносимого контекста",
+        "human_review": "PENDING",
+        "merged": false
       }
     ]
   },
@@ -350,7 +361,8 @@ JSON ниже является частью этого файла и доста�
     "Подготовлен Go code review standard: стиль, errors/context, concurrency, SQL/контракты/идемпотентность, тесты, наблюдаемость и критерии приёмки",
     "Правила связаны с AGENTS, workflow, CONTRIBUTING, README, шаблоном PR и полным переносимым контекстом; отдельное одобрение тимлида пока не получено",
     "Правила опубликованы в ветке docs/go-review-policy и PR #1; локальные проверки и документационный CI исходного коммита прошли; слияние и человеческое принятие ожидаются",
-    "PR #1 с правилами Go code review слит аккаунтом тимлида Includeoyasi; CI main на merge commit c1e55fd прошёл. Правила действуют; реализация G1 ещё не начата."
+    "PR #1 с правилами Go code review слит аккаунтом тимлида Includeoyasi; CI main на merge commit c1e55fd прошёл. Правила действуют; реализация G1 ещё не начата.",
+    "Создан отдельный PR #2 для обновления сведений о принятии правил и переносимого контекста; PR #1 уже принят и слит тимлидом"
   ],
   "next_implementation_packet": {
     "id": "G1-P01",
@@ -575,6 +587,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-13",
       "summary": "Замечено и проверено слияние PR #1 аккаунтом тимлида. Правила действуют в main; статусы reconciled с merge c1e55fd и успешным CI. Handoff обновляется отдельной веткой.",
       "trigger": "GitHub PR metadata и фактическое обновление origin/main во время текущей задачи."
+    },
+    {
+      "revision": 7,
+      "date": "2026-10-13",
+      "summary": "В переносимый снимок добавлен PR #2 для отражения принятия Go review standard; правила уже действуют через PR #1 в main.",
+      "trigger": "Создание отдельного handoff PR после наблюдаемого слияния тимлидом."
     }
   ],
   "repository": {
@@ -631,7 +649,7 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `af2588830e56e986df797f1f4b28a4aaa5ca696905e7bb5559ba617d2b22a49f` |
+| `CONTEXT_STATE.json` | `d6c27957d4e413bb69a4ecf2c5164300b3e379a9f77c1f0320ca96aeb420272d` |
 | `tools/context_intro.md` | `4aea668cdcc08e5d2beacbbbc869493a88862adfefc19e115684ce66a02fe78f` |
 | `tools/update_context.ps1` | `a0c3c6d4a2f84cc143bd670600218ca6cfa7ce30b7a770608f9aa06be8934b26` |
 | `README.md` | `0720f80a667c94917a534fe05ec547bdff8bcb853913d18440310b987c5ee16a` |

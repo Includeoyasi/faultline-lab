@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 6,
+  "context_revision": 7,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-13",
   "user_timezone": "Europe/Moscow",
@@ -20,7 +20,8 @@
       "go_checks": "NOT_RUN_NO_GO_MODULE",
       "repository_protection": "NOT_CONFIGURED_BY_THIS_TASK",
       "local_validation": "PASS",
-      "documentation_ci": "PASS_ON_ACCEPTED_MAIN_COMMIT_c1e55fd"
+      "documentation_ci": "PASS_ON_ACCEPTED_MAIN_COMMIT_c1e55fd",
+      "context_update_pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/2"
     }
   },
   "roles": {
@@ -69,7 +70,7 @@
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "31c0a71951a22fc90ac0114a37b243bd82b47f6c",
+    "git_commit": "1774df8ec7eaf5a43d59fb12b868abad3f3da1f9",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -82,6 +83,16 @@
         "human_review": "ACCEPTED_BY_TEAM_LEAD_ACCOUNT_MERGE",
         "merged": true,
         "merge_commit": "c1e55fdfca98e12e518f722300bd85ed85c1d85e"
+      },
+      {
+        "number": 2,
+        "url": "https://github.com/Includeoyasi/faultline-lab/pull/2",
+        "state": "OPEN",
+        "head_ref": "docs/review-policy-handoff",
+        "base_ref": "main",
+        "scope": "Отражение принятия PR #1 и обновление переносимого контекста",
+        "human_review": "PENDING",
+        "merged": false
       }
     ]
   },
@@ -103,7 +114,8 @@
     "Подготовлен Go code review standard: стиль, errors/context, concurrency, SQL/контракты/идемпотентность, тесты, наблюдаемость и критерии приёмки",
     "Правила связаны с AGENTS, workflow, CONTRIBUTING, README, шаблоном PR и полным переносимым контекстом; отдельное одобрение тимлида пока не получено",
     "Правила опубликованы в ветке docs/go-review-policy и PR #1; локальные проверки и документационный CI исходного коммита прошли; слияние и человеческое принятие ожидаются",
-    "PR #1 с правилами Go code review слит аккаунтом тимлида Includeoyasi; CI main на merge commit c1e55fd прошёл. Правила действуют; реализация G1 ещё не начата."
+    "PR #1 с правилами Go code review слит аккаунтом тимлида Includeoyasi; CI main на merge commit c1e55fd прошёл. Правила действуют; реализация G1 ещё не начата.",
+    "Создан отдельный PR #2 для обновления сведений о принятии правил и переносимого контекста; PR #1 уже принят и слит тимлидом"
   ],
   "next_implementation_packet": {
     "id": "G1-P01",
@@ -328,6 +340,12 @@
       "date": "2026-10-13",
       "summary": "Замечено и проверено слияние PR #1 аккаунтом тимлида. Правила действуют в main; статусы reconciled с merge c1e55fd и успешным CI. Handoff обновляется отдельной веткой.",
       "trigger": "GitHub PR metadata и фактическое обновление origin/main во время текущей задачи."
+    },
+    {
+      "revision": 7,
+      "date": "2026-10-13",
+      "summary": "В переносимый снимок добавлен PR #2 для отражения принятия Go review standard; правила уже действуют через PR #1 в main.",
+      "trigger": "Создание отдельного handoff PR после наблюдаемого слияния тимлидом."
     }
   ],
   "repository": {
