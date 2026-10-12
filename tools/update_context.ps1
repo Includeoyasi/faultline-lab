@@ -9,6 +9,7 @@ $introPath = Join-Path $PSScriptRoot 'context_intro.md'
 $outputPath = Join-Path $projectRoot 'PROJECT_CONTEXT.md'
 $stateText = [System.IO.File]::ReadAllText($statePath, [System.Text.Encoding]::UTF8)
 $state = $stateText | ConvertFrom-Json
+$snapshotRef = if ($state.repository.snapshot_ref) { $state.repository.snapshot_ref } else { 'main' }
 
 if ($state.schema_version -ne 1) { throw 'Unsupported context schema version.' }
 if ($state.context_revision -lt 1) { throw 'context_revision must be positive.' }
@@ -50,7 +51,7 @@ function Add-PortableDocument([string]$Content, [string]$SourceRelativePath, [ob
                 if (-not $resolvedTarget.StartsWith($rootPrefix, [System.StringComparison]::OrdinalIgnoreCase)) { throw ('Portable link leaves project: ' + $target) }
                 $repositoryRelative = $resolvedTarget.Substring($rootPrefix.Length).Replace('\', '/')
                 $fragment = if ($targetParts.Count -eq 2) { '#' + $targetParts[1] } else { '' }
-                return $linkMatch.Groups['prefix'].Value + $state.repository.url + '/blob/main/' + $repositoryRelative + $fragment + $linkMatch.Groups['suffix'].Value
+                return $linkMatch.Groups['prefix'].Value + $state.repository.url + '/blob/' + $snapshotRef + '/' + $repositoryRelative + $fragment + $linkMatch.Groups['suffix'].Value
             })
         }
         $documentLines.Add($portableLine)

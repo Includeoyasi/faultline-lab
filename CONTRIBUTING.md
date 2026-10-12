@@ -6,6 +6,8 @@ This repository documents a project built with AI implementation and human techn
 
 Read the [current context](PROJECT_CONTEXT.md), [approved design](docs/architecture/DESIGN.md) and [development workflow](docs/development/WORKFLOW.md). AI implementers must also follow [AGENTS.md](AGENTS.md).
 
+The [code review standard](docs/development/CODE_REVIEW.md) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
+
 G0 is approved. G1–G4 remain future review gates. Significant changes to approved service boundaries, invariants or incompatible contracts require a concrete proposal and the team lead's decision.
 
 ## A reviewable change
@@ -32,6 +34,6 @@ The checker validates local links, Markdown fence balance, text encoding and acc
 
 ## Branches and commits
 
-Use `main` as the baseline, short descriptive branches such as `feat/orders-bootstrap`, and focused commits with clear intent. Suggested prefixes: `feat:`, `fix:`, `docs:`, `test:`, `chore:`. Include both canonical document changes and their generated context in the same review packet.
+Use `main` as the baseline, short descriptive branches such as `feat/orders-bootstrap`, and focused commits with clear intent. After bootstrap, submit changes through a pull request; the AI does not approve or merge its own work. The human reviews the current change and authorizes merging; passing CI alone is insufficient. Prefer squash merge after acceptance. Suggested prefixes: `feat:`, `fix:`, `docs:`, `test:`, `chore:`. Include both canonical document changes and their generated context in the same review packet.
 
 Runtime instructions and required service checks will be added with the first implementation.
