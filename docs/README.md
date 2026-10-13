@@ -14,7 +14,8 @@
 | Посмотреть оформление | [Концепции баннера](design/BANNER_OPTIONS.md) — три варианта и выбранное решение |
 | Принять участие в разработке | [CONTRIBUTING](../CONTRIBUTING.md) → [Правила ревью](development/CODE_REVIEW.md) → [Workflow](development/WORKFLOW.md) → [AGENTS](../AGENTS.md) |
 | Проверить ближайший PR | [P01](development/packets/P01.md) — задачи, зависимости, критерии и фактический прогресс |
-| Следить за выполнением | [Учёт задач](development/TASK_TRACKING.md) — предложенный порядок Issues/PR и снимков контекста |
+| Следить за выполнением | [Учёт задач](development/TASK_TRACKING.md) — GitHub Issues/PR и снимки контекста |
+| Проверить права и защиту main | [Безопасность репозитория](development/REPOSITORY_SECURITY.md) — действующая защита и переход на аккаунт исполнителя |
 | Подготовить эксперимент | [Roadmap](ROADMAP.md) → [Шаблон отчёта](experiments/REPORT_TEMPLATE.md) |
 | Ввести другого ИИ в задачу | [Переносимый контекст](../PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 

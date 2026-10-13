@@ -2,13 +2,13 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **14**. Состояние на: **2026-10-13**, Europe/Moscow. Фаза: **G0_APPROVED_PRE_IMPLEMENTATION**.
+Ревизия: **17**. Состояние на: **2026-10-13**, Europe/Moscow. Фаза: **G0_APPROVED_PRE_IMPLEMENTATION**.
 
 ## Краткое текущее состояние
 
 | Поле | Фактический статус |
 |---|---|
-| Текущая задача | REPO-TRACKING-001: PUBLICATION_COMPLETED_PENDING_HUMAN_REVIEW |
+| Текущая задача | REPO-SECURITY-001: MAIN_PROTECTED_EXECUTOR_CONNECTED_SECURITY_PR_AWAITING_OWNER_REVIEW |
 | G0 | APPROVED |
 | G1 | NOT_READY |
 | G2 | NOT_READY |
@@ -46,7 +46,7 @@ README объясняет проект посетителю; это не сви�
 
 По запросу владельца проекта подготовлен docs/development/CODE_REVIEW.md; его полный текст включается в этот переносимый снимок. Он охватывает Go-стиль, ошибки/context, конкурентность, данные, идемпотентность, тесты и доказательства, наблюдаемость, замечания и критерии слияния. После bootstrap изменения готовятся в отдельных ветках и через PR; ИИ не одобряет и не сливает собственную работу. Для merge нужны решение человека по предъявленному изменению и явное поручение на само действие либо действие владельца проекта.
 
-Статус пакета правил, PR и принятие владельцем проекта указаны в структурированном состоянии ниже. PR #1 с HEAD 214eb34 слит аккаунтом владельца проекта Includeoyasi; это наблюдаемое действие в репозитории, а не придуманное текстовое approval. Подготовленный документ и зелёный CI сами по себе не означают человеческое одобрение. G0 остаётся принятым; G1–G4 не меняют статусы из-за добавления правил. Сейчас Go-модуль отсутствует: Go CI, конфигурация golangci-lint и версии инструментов будут подключены в P01. GitHub branch protection отдельно не настроена этим документом. При общей GitHub-учётной записи решение человека фиксируется в чате/комментарии с PR и SHA либо подтверждается его наблюдаемым действием слияния; не изображать approval другим участником.
+Статус пакета правил, PR и принятие владельцем проекта указаны в структурированном состоянии ниже. PR #1 с HEAD 214eb34 слит аккаунтом владельца проекта Includeoyasi; это наблюдаемое действие в репозитории, а не придуманное текстовое approval. Подготовленный документ и зелёный CI сами по себе не означают человеческое одобрение. G0 остаётся принятым; G1–G4 не меняют статусы из-за добавления правил. Сейчас Go-модуль отсутствует: Go CI, конфигурация golangci-lint и версии инструментов будут подключены в P01. По последующему прямому поручению main защищён: обязательное независимое approval, актуальный успешный Documentation CI, закрытые обсуждения, сброс старых ревью и применение к администратору; force push и удаление запрещены. Новые PR создаются от AI-Your-Bro, а Includeoyasi ревьюирует и принимает решения. Авторизация AI-Your-Bro проверена через GitHub API; его права write/push без admin подтверждены, приглашение принято. Локальная Git identity переключена только для этого репозитория; новые PR от владельца не создаются. Владелец прямо отказался включать 2FA; статус API не вернул, включение не заявляется. Чат не заменяет обязательное GitHub approval. Подготовленный CODEOWNERS станет действующим после merge в main; фактические значения, ограничения и шаги подключения включены в docs/development/REPOSITORY_SECURITY.md и структурированное состояние.
 
 Готовый текст для первого сообщения другому агенту:
 
@@ -258,55 +258,62 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 14,
+  "context_revision": 17,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-13",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "current_phase": "G0_APPROVED_PRE_IMPLEMENTATION",
   "current_task": {
-    "id": "REPO-TRACKING-001",
-    "description": "Зафиксировать согласованные документы и оформить задачи P01 в GitHub",
-    "status": "PUBLICATION_COMPLETED_PENDING_HUMAN_REVIEW",
-    "authorization": "Прямое поручение владельца проекта: молодец, фиксируй изменения и заводи задачи",
+    "id": "REPO-SECURITY-001",
+    "description": "Разделить GitHub identity владельца и исполнителя и включить защиту main",
+    "status": "MAIN_PROTECTED_EXECUTOR_CONNECTED_SECURITY_PR_AWAITING_OWNER_REVIEW",
+    "authorization": "Владелец поручил отдельный аккаунт исполнителя для всех новых PR и защиту main; затем предоставил логин AI-Your-Bro",
     "result": {
-      "issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/3",
-      "issue_number": 3,
-      "packet": "P01",
-      "interval": "AFTER_G0_BEFORE_G1",
-      "task_count": 8,
-      "implementation_completed": 0,
-      "branch": "docs/portable-lab-plan",
-      "target_branch": "main",
-      "base_commit": "1a0b3f356529e262fe902a1e419e16169e8c6b08",
-      "commit_created": true,
+      "main_protection": "APPLIED_AND_READ_BACK",
+      "executor_login": "AI-Your-Bro",
+      "profile": "VERIFIED_EXISTS",
+      "invitation": "ACCEPTED_WRITE_ACCESS_VERIFIED",
+      "authentication": "VERIFIED_AI_YOUR_BRO_GCM_OAUTH_DEVICE_FLOW",
+      "two_factor_authentication": "USER_DECLINED_ENABLEMENT_API_STATUS_NOT_RETURNED",
+      "branch": "chore/executor-security",
+      "base_commit": "8c392b8ed4145d8b2b9efa93c5be14d9fdf113d1",
+      "local_docs": "PREPARED",
+      "codeowners": "PUBLISHED_IN_OPEN_PR_NOT_IN_MAIN",
+      "local_validation": "PASS",
+      "new_commit_created": true,
       "pushed": true,
-      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
-      "delivery": "PUBLISHED_DOCUMENTATION_PR",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
+      "publication_dependency": null,
       "business_implementation": "NOT_STARTED",
       "go_checks": "NOT_RUN_NO_GO_MODULE",
-      "local_validation": "PASS",
-      "documentation_ci": {
-        "workflow": "Documentation",
-        "head_sha": "2c28d127764210f1019c114a4b3d5b1cd59b529c",
-        "status": "COMPLETED",
-        "conclusion": "SUCCESS",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38402553170",
-        "event": "pull_request",
-        "scope": "CI документационного коммита на момент снимка; после обновления контекста проверять актуальный HEAD PR #4"
-      },
+      "git_identity": "CONFIGURED_LOCALLY_FOR_AI_YOUR_BRO",
+      "observed_published_commit": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
+      "pull_request_number": 5,
+      "pull_request_author": "AI-Your-Bro",
+      "review_requested_from": "Includeoyasi",
       "human_review": "PENDING",
       "merged": false,
-      "observed_published_commit": "2c28d127764210f1019c114a4b3d5b1cd59b529c",
-      "pull_request_number": 4,
-      "publication_note": "Наблюдённый commit/CI относятся к HEAD до коммита этого handoff; финальный HEAD и проверки доступны в PR. Снимок не может содержать собственный hash."
+      "documentation_ci": {
+        "workflow": "Documentation",
+        "head_sha": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
+        "status": "COMPLETED",
+        "conclusion": "SUCCESS",
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38413156014",
+        "event": "pull_request",
+        "scope": "Документационный CI исходного security PR; после коммита handoff проверять актуальный HEAD PR #5"
+      },
+      "handoff_note": "Наблюдённый HEAD и CI относятся к исходному коммиту security PR. Финальный hash собственного handoff не может находиться внутри снимка; текущий HEAD/checks проверяются в PR."
     }
   },
   "roles": {
     "human": "Владелец проекта; ревьюер при проверке кода",
     "ai": "Исполнитель разработки, проверок, экспериментов и документации",
     "terminology_confirmed_on": "2026-10-13",
-    "authority_changed": false
+    "authority_changed": false,
+    "github_owner": "Includeoyasi",
+    "github_executor": "AI-Your-Bro",
+    "github_identity_transition_confirmed_on": "2026-10-13"
   },
   "gates": [
     {
@@ -350,7 +357,7 @@ JSON ниже является частью этого файла и доста�
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "2c28d127764210f1019c114a4b3d5b1cd59b529c",
+    "git_commit": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -379,15 +386,33 @@ JSON ниже является частью этого файла и доста�
       {
         "number": 4,
         "url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
-        "state": "OPEN",
+        "state": "MERGED",
         "head_ref": "docs/portable-lab-plan",
         "base_ref": "main",
         "scope": "Согласованные документы, граница лаборатории, Docker-план, ресурсные профили, выбранный баннер и P01 backlog",
         "code_packet": false,
-        "human_review": "PENDING",
-        "merged": false,
+        "human_review": "MERGED_REPOSITORY_STATE_OBSERVED",
+        "merged": true,
         "observed_head": "2c28d127764210f1019c114a4b3d5b1cd59b529c",
-        "observation_note": "HEAD при создании PR; коммит актуализации снимка выполняется позже. Проверять текущий HEAD на GitHub."
+        "observation_note": "GitHub REST подтвердил merge; ИИ не выполнял approve/merge. Переоформлять этот PR не требуется.",
+        "head_at_merge": "83e00760c67f5aa79940bda05444c2c6838e84a0",
+        "merge_commit": "8c392b8ed4145d8b2b9efa93c5be14d9fdf113d1",
+        "merged_at_utc": "2026-10-13T13:50:50Z"
+      },
+      {
+        "number": 5,
+        "url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
+        "state": "OPEN",
+        "author": "AI-Your-Bro",
+        "head_ref": "chore/executor-security",
+        "base_ref": "main",
+        "scope": "Защита main, CODEOWNERS, разделение GitHub identity и обновление контекста",
+        "code_packet": false,
+        "human_review": "PENDING",
+        "requested_reviewer": "Includeoyasi",
+        "merged": false,
+        "observed_head": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
+        "observation_note": "HEAD при создании PR; финальный handoff commit добавляется позже, текущий HEAD доступен на GitHub."
       }
     ]
   },
@@ -418,7 +443,11 @@ JSON ниже является частью этого файла и доста�
     "Подготовлена явная декомпозиция первого PR G1-P01 на восемь задач с зависимостями и критериями; код 0/8. Предложен GitHub Issues, внешние карточки/доска не создавались",
     "Маркеры контрольных точек и пакетов разделены: первый кодовый PR P01 находится после G0 и до G1; переименованы активные задачи и ссылки, критерии сохранены",
     "Создан GitHub Issue #3 для P01 с восемью задачами, зависимостями и полными критериями; стадия TODO, код 0/8. Ссылки добавлены в README, roadmap, workflow, спецификацию и переносимый контекст.",
-    "Коммит 2c28d12 опубликован в docs/portable-lab-plan; открыт документационный PR #4 и прикреплён к чату. Его исходный Documentation CI прошёл; человеческое ревью и merge ожидаются. Issue #3 остаётся TODO, 0/8."
+    "Коммит 2c28d12 опубликован в docs/portable-lab-plan; открыт документационный PR #4 и прикреплён к чату. Его исходный Documentation CI прошёл; человеческое ревью и merge ожидаются. Issue #3 остаётся TODO, 0/8.",
+    "Включена и повторно проверена защита main, включая администратора. Профиль исполнителя AI-Your-Bro проверен; приглашение write отправлено и OAuth вход запущен. CODEOWNERS и документы подготовлены локально; приглашение/авторизация ещё ожидаются.",
+    "Наблюдено слияние PR #4 в main 8c392b8 с принятым HEAD 83e0076; выбранный баннер и P01 backlog находятся в основной ветке. ИИ не выполнял merge.",
+    "OAuth исполнителя AI-Your-Bro завершён через GCM device flow; API подтвердил actor и write/push без admin. Приглашение принято, локальная Git identity/credential username переключены только в этом репозитории. Владелец отказался включать 2FA; API статус 2FA не вернул.",
+    "От AI-Your-Bro опубликован первый security commit fbbaef0 и PR #5; у Includeoyasi запрошено ревью. GitHub подтвердил автора/коммиттера исполнителя; исходный Documentation CI прошёл. CODEOWNERS в открытом PR, активация в main ожидает решения владельца."
   ],
   "next_implementation_packet": {
     "id": "P01",
@@ -797,6 +826,60 @@ JSON ниже является частью этого файла и доста�
         "git diff --check"
       ],
       "detail": "Проверены 22 Markdown-файла, 234 локальные ссылки, структура 56 Mermaid-блоков и актуальность ревизии 14 с 19 документами/22 fingerprints. Снимок содержит созданные Issue #3 и PR #4; code/runtime checks NOT_RUN. Наблюдённый CI указан с точным SHA; новый handoff HEAD проверяется отдельно в PR."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "GitHub main protection and executor profile",
+      "result": "PASS",
+      "detail": "Независимый GET подтвердил administrator enforcement, 1 approval, stale dismissal, last-push approval, CODEOWNERS flag, strict CI с GitHub Actions app 15368, conversation resolution, запрет force push/deletion. branches/main protected=true. Профиль AI-Your-Bro ID 342030453 существует. Приглашение write ID 337527166 создано. Это не проверка принятия приглашения, OAuth или 2FA."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Main protection and executor onboarding documentation",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly",
+        "git diff --check"
+      ],
+      "detail": "23 Markdown-файла, 244 локальные ссылки, структура 56 Mermaid-блоков, 21 встроенный документ и 24 fingerprints ревизии 15. CODEOWNERS проверен как локально подготовленный; публикация/авторизация исполнителя не заявляются. Go/runtime tests NOT_RUN."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Executor authenticated identity and least privilege",
+      "result": "PASS",
+      "detail": "GCM login завершён с exit 0. Авторизованный GET /user: AI-Your-Bro ID 342030453. GET collaborators/AI-Your-Bro/permission от исполнителя: write, push=true, admin=false. Локальные user.name, user.email и credential username прочитаны обратно. 2FA не заявляется включённой."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Authenticated executor and protected-main documentation",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly",
+        "git diff --check",
+        "git diff --cached --check"
+      ],
+      "detail": "23 Markdown-файла, 244 локальные ссылки, структура 56 Mermaid-блоков; ревизия 16, 21 встроенный документ и 24 fingerprints. CODEOWNERS назначает все файлы Includeoyasi; авторизация исполнителя и write без admin наблюдены. 2FA не включена этим заданием по решению владельца. Go/runtime tests не запускались."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Executor-authored security PR publication",
+      "result": "PASS",
+      "head_sha": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
+      "url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
+      "detail": "PR #5 user.login=AI-Your-Bro, requested_reviewers содержит Includeoyasi. GitHub commit author и committer AI-Your-Bro. Исходный Documentation pull_request run SUCCESS. ИИ не approve/merge; проверка финального handoff HEAD отдельно в PR."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Published executor PR portable handoff",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly",
+        "git diff --check"
+      ],
+      "detail": "23 Markdown-файла, 244 локальные ссылки, структура 56 Mermaid-блоков; ревизия 17, 21 встроенный документ и 24 fingerprints. Публикация PR #5 и авторство исполнителя отражены, CODEOWNERS в main не заявлен до merge, решение владельца о 2FA сохранено. Текущий HEAD/CI проверяются в PR; Go/runtime N/A."
     }
   ],
   "source_documents": [
@@ -893,7 +976,17 @@ JSON ниже является частью этого файла и доста�
     {
       "path": "docs/development/TASK_TRACKING.md",
       "anchor": "appendix-task-tracking",
-      "title": "Предложенный порядок Issues, статусов и переносимых снимков"
+      "title": "GitHub Issues, статусы и переносимые снимки"
+    },
+    {
+      "path": "docs/development/REPOSITORY_SECURITY.md",
+      "anchor": "appendix-repository-security",
+      "title": "Защита main, отдельный исполнитель и состояние подключения"
+    },
+    {
+      "path": ".github/CODEOWNERS",
+      "anchor": "appendix-codeowners",
+      "title": "Подготовленный CODEOWNERS для человеческого ревью"
     }
   ],
   "change_history": [
@@ -980,6 +1073,24 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-13",
       "summary": "Сохранены фактические публикация коммита, PR #4 и успешный CI его исходного HEAD. Переносимый контекст и документы теперь содержат реальные ссылки на tracker и review. Main не изменён; код P01 не начат.",
       "trigger": "Завершение поручения владельца: фиксация изменений и создание задач"
+    },
+    {
+      "revision": 15,
+      "date": "2026-10-13",
+      "summary": "Main защищён и настройки прочитаны обратно. Владелец предоставил AI-Your-Bro; профиль существует, приглашение write отправлено. Новые PR от Includeoyasi запрещены; публикация локального CODEOWNERS/контекста ждёт авторизации исполнителя. Наблюдено слияние PR #4.",
+      "trigger": "Владелец поручил отдельный аккаунт исполнителя для всех новых PR и защиту main; затем предоставил логин AI-Your-Bro"
+    },
+    {
+      "revision": 16,
+      "date": "2026-10-13",
+      "summary": "Подтверждены OAuth, принятие приглашения и write без admin у AI-Your-Bro. Настроена локальная Git identity, учтён прямой отказ владельца от 2FA. Защита main сохранена; подготовка первого security PR от исполнителя.",
+      "trigger": "Владелец завершил device flow и сообщил готово; отдельным ответом отказался включать 2FA"
+    },
+    {
+      "revision": 17,
+      "date": "2026-10-13",
+      "summary": "Первый PR нового порядка #5 создан от AI-Your-Bro к владельцу Includeoyasi. Сохранены реальная публикация, автор/коммиттер, requested review и исходный успешный CI. Main защищён; CODEOWNERS ещё не слит.",
+      "trigger": "Завершение поручения по подключению исполнителя и защите main; handoff для человеческого ревью"
     }
   ],
   "repository": {
@@ -1004,20 +1115,21 @@ JSON ниже является частью этого файла и доста�
       "event": "push",
       "scope": "Документационный CI main после принятия правил; не является проверкой последующего handoff PR или Go-кода."
     },
-    "snapshot_ref": "docs/portable-lab-plan",
+    "snapshot_ref": "chore/executor-security",
     "current_publication": {
-      "branch": "docs/portable-lab-plan",
-      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
-      "observed_commit": "2c28d127764210f1019c114a4b3d5b1cd59b529c",
+      "branch": "chore/executor-security",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
+      "author": "AI-Your-Bro",
+      "observed_commit": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
       "merged": false,
       "observed_ci": {
         "workflow": "Documentation",
-        "head_sha": "2c28d127764210f1019c114a4b3d5b1cd59b529c",
+        "head_sha": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
         "status": "COMPLETED",
         "conclusion": "SUCCESS",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38402553170",
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38413156014",
         "event": "pull_request",
-        "scope": "CI документационного коммита на момент снимка; после обновления контекста проверять актуальный HEAD PR #4"
+        "scope": "Документационный CI исходного security PR; после коммита handoff проверять актуальный HEAD PR #5"
       }
     }
   },
@@ -1039,8 +1151,12 @@ JSON ниже является частью этого файла и доста�
     "normal_change_delivery": "FOCUSED_BRANCH_AND_PR",
     "merge": "EXPLICIT_HUMAN_DECISION_AND_ACTION_AUTHORIZATION",
     "go_checks_activation": "P01_WITH_FIRST_GO_MODULE",
-    "github_branch_protection": "NOT_CONFIGURED_BY_THIS_TASK",
-    "pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/1"
+    "github_branch_protection": "ENABLED_AND_VERIFIED_2026_10_13",
+    "pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/1",
+    "pull_request_author": "AI-Your-Bro",
+    "github_approval_required": true,
+    "chat_approval_does_not_bypass_github": true,
+    "current_identity_transition_pr": "https://github.com/Includeoyasi/faultline-lab/pull/5"
   },
   "environment_strategy": {
     "status": "USER_APPROVED_APPROACH_NOT_IMPLEMENTED",
@@ -1079,7 +1195,7 @@ JSON ниже является частью этого файла и доста�
     "macos_container_start_verified": false
   },
   "branding_notes": {
-    "status": "USER_SELECTED_PUBLISHED_IN_REVIEW_BRANCH",
+    "status": "USER_SELECTED_MERGED_TO_MAIN",
     "selected_on": "2026-10-13",
     "brief": "Три варианта: технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее",
     "document": "docs/design/BANNER_OPTIONS.md",
@@ -1098,8 +1214,9 @@ JSON ниже является частью этого файла и доста�
     "published": true,
     "note": "Линии декоративные, не изображают измерения; оба README используют общий SVG",
     "published_branch": "docs/portable-lab-plan",
-    "published_to_main": false,
-    "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/4"
+    "published_to_main": true,
+    "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
+    "merge_commit": "8c392b8ed4145d8b2b9efa93c5be14d9fdf113d1"
   },
   "task_tracking": {
     "status": "ACTIVE_GITHUB_ISSUE_CREATED",
@@ -1142,7 +1259,8 @@ JSON ниже является частью этого файла и доста�
       "source": "GitHub REST create response"
     },
     "documentation_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
-    "documentation_pr_closes_packet": false
+    "documentation_pr_closes_packet": false,
+    "documentation_pr_merged": true
   },
   "review_sequence": {
     "confirmed_on": "2026-10-13",
@@ -1158,6 +1276,97 @@ JSON ниже является частью этого файла и доста�
     "previous_packet_label": "G1-P01",
     "current_packet_label": "P01",
     "note": "Переименование устраняет неоднозначность; объём кода, восемь задач и критерии не меняются. Старые метки в истории относятся к тому же пакету."
+  },
+  "repository_security": {
+    "observed_on": "2026-10-13",
+    "document": "docs/development/REPOSITORY_SECURITY.md",
+    "main_protected": true,
+    "source": "GitHub REST PUT branch protection followed by independent GET; branches/main confirms protected=true",
+    "enforce_admins": true,
+    "required_status_checks": {
+      "strict": true,
+      "checks": [
+        {
+          "context": "Links and portable context",
+          "app_id": 15368
+        }
+      ]
+    },
+    "required_pull_request_reviews": {
+      "required_approving_review_count": 1,
+      "dismiss_stale_reviews": true,
+      "require_last_push_approval": true,
+      "require_code_owner_reviews": true
+    },
+    "required_conversation_resolution": true,
+    "allow_force_pushes": false,
+    "allow_deletions": false,
+    "codeowners": {
+      "path": ".github/CODEOWNERS",
+      "owner": "Includeoyasi",
+      "status": "PUBLISHED_IN_OPEN_PR_NOT_IN_MAIN",
+      "effective_after": "HUMAN_REVIEW_AND_MERGE_INTO_MAIN",
+      "interim_review": "One independent approval required; owner-specific CODEOWNERS rule has no file in main yet",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/5"
+    },
+    "go_checks": "ADD_REQUIRED_CHECKS_AFTER_P01_WORKFLOW_EXISTS",
+    "bypasses_added": false,
+    "destructive_probes": "NOT_PERFORMED_CONFIGURATION_READ_BACK_ONLY",
+    "executor_has_admin": false
+  },
+  "executor_identity": {
+    "login": "AI-Your-Bro",
+    "github_user_id": 342030453,
+    "profile_url": "https://github.com/AI-Your-Bro",
+    "profile_status": "VERIFIED_EXISTS_USER_PROVIDED_LOGIN",
+    "profile_created_at_utc": "2026-10-13T13:58:33Z",
+    "registered_by_ai": false,
+    "machine_account_control": "PROJECT_OWNER",
+    "terms": "GitHub requires human registration of machine accounts; automatic registration was not performed",
+    "invitation": {
+      "id": 337527166,
+      "status": "ACCEPTED_WRITE_ACCESS_VERIFIED",
+      "permissions": "write",
+      "url": "https://github.com/Includeoyasi/faultline-lab/invitations"
+    },
+    "observed_repository_permission_before_invitation": "read",
+    "authentication": "VERIFIED_GET_USER_AI_YOUR_BRO",
+    "two_factor_authentication": {
+      "status": "USER_DECLINED_ENABLEMENT",
+      "api_status": "NOT_RETURNED_FOR_CURRENT_OAUTH_TOKEN",
+      "date": "2026-10-13",
+      "evidence": "Прямой ответ владельца: я не хочу ее включать"
+    },
+    "credentials_storage": "Windows Credential Manager; OAuth device flow completed; credentials not written to Git/context",
+    "connector_actor": "Includeoyasi; do not create new PRs through this connector until executor authentication is available",
+    "git_identity": {
+      "scope": "LOCAL_REPOSITORY_ONLY",
+      "name": "AI-Your-Bro",
+      "email": "342030453+AI-Your-Bro@users.noreply.github.com",
+      "credential_username": "AI-Your-Bro",
+      "global_identity_changed": false
+    },
+    "new_pr_policy": "AUTHOR_MUST_BE_AI_YOUR_BRO; OWNER_REVIEWS; AI_NEVER_APPROVES_OWN_WORK",
+    "verified_access": {
+      "permission": "write",
+      "push": true,
+      "admin": false,
+      "source": "GET repo collaborator permission authenticated as AI-Your-Bro"
+    },
+    "api_write_transport": "Executor credential requested by username; GET /user actor checked before every API mutation. Owner-connected GitHub integration not used to create new PRs.",
+    "first_pull_request": {
+      "number": 5,
+      "url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
+      "author": "AI-Your-Bro",
+      "review_requested_from": "Includeoyasi",
+      "verification": "Creation response user.login and requested_reviewers checked"
+    },
+    "first_commit": {
+      "sha": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
+      "github_author": "AI-Your-Bro",
+      "github_committer": "AI-Your-Bro",
+      "verified": true
+    }
   }
 }
 ```
@@ -1168,28 +1377,30 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `f34c04aca03617f17169f0ced3f019a488f5d1289e95e338f45b07c99c2e4b73` |
-| `tools/context_intro.md` | `476d17df50215f17d9efd574fd70b959194885e4be933607df421208f7c8cfad` |
+| `CONTEXT_STATE.json` | `d2fdef35a41d6964d7d0b8d81f4a5dabebe49055bd2669a2b99998f003378046` |
+| `tools/context_intro.md` | `65baaf59029447ecc4d64c1fb278c92c643cde18f3f373a9b1c58b5ebe8f8787` |
 | `tools/update_context.ps1` | `a0c3c6d4a2f84cc143bd670600218ca6cfa7ce30b7a770608f9aa06be8934b26` |
 | `README.md` | `b7d60eb7a0712d74d6b707fb44cb315d529494feba63c75b27d083930e1e9aa5` |
 | `README.ru.md` | `2dde0bace4cf95289e5f4ca21a3dca4c8f153fd4a5e866a09f7dc2a699ea49d5` |
-| `docs/README.md` | `781ad8125712d5d230132b44151273a3cd02ff0eb1789398568a019b206a45f6` |
+| `docs/README.md` | `a1a05488cd847608f79ae413eee70b31f8565f7ecd9427f9d324741e74a978bc` |
 | `docs/ROADMAP.md` | `06fae590b2859ade4f9a0d6705f9fb482ab38d45a3a4125ac4da38b4d907e915` |
 | `docs/architecture/DESIGN.md` | `6db3d3ff87a24520ff2c7205051db0056251e2c867ee0d093fe8e4fc78aa14dd` |
 | `docs/architecture/PROCESSES.md` | `dd6d00ee9d169236fe0f0d14de4b6f54d778a7cf79489f6b6a3354357e2e9ec6` |
-| `docs/development/WORKFLOW.md` | `46b4f9b8058aa3210f500dfa38284fc72bba057e3e06ab30cb306d805d5fd21a` |
+| `docs/development/WORKFLOW.md` | `d7620ce2e3871d436eb389946aa13610a4ef2283b4b128fbcb54929fac30d84b` |
 | `docs/experiments/REPORT_TEMPLATE.md` | `4f569aab52ba34a68bb2e8b4551c6a3bf4932277c26c3b4206dbb505781a2cab` |
-| `AGENTS.md` | `b350fee476a1d4e799b486c51eb9336078580a47b2d4507526e098feb1b10acc` |
+| `AGENTS.md` | `2ace8ed086ae8d0a881d838799cde2c2f7a0dbdd827719fbeb15d8863927e283` |
 | `docs/adr/0001-approved-g0.md` | `b8518c5c49cdefea3dbf0bf2a79ab40459dba2b565e71a6c534a555cbafa20df` |
 | `CONTRIBUTING.md` | `b805939c170ddf7036212bd9c880597f6172076216996d36cb742833e992eaa0` |
 | `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
-| `docs/development/CODE_REVIEW.md` | `2ae652fb3491e5820c577f02254f1777a4c99a97126b3f4b1bda39b1747e75b9` |
+| `docs/development/CODE_REVIEW.md` | `216c330dcd16f1774b408fe8b4af2f3c1de2a06e5ff7c46250839061feace72a` |
 | `docs/architecture/LAB_BOUNDARY.md` | `790709c43d5c2920909a9f5227467bcb77ec4d228024156dd5f69f29a8d92e46` |
 | `docs/development/ENVIRONMENT.md` | `0e5dd946a8810c78e2bbe780a44d7944a07b8ae1d01e1144166dc6bb4d9e54a6` |
 | `docs/development/RESOURCE_PROFILES.md` | `6b3fc67394485c0b13247d564175f3ecfb2b578a115dffbd252a31247e9bb5a1` |
-| `docs/design/BANNER_OPTIONS.md` | `e02818b8effd2f9c91f85ab04a2619c9faf6a6189986df997fb8e240576888de` |
-| `docs/development/packets/P01.md` | `807f220fa288cb2cf6f2336987dcaa1cecbee1e82ec93ac8b88d9bc9054a2a19` |
-| `docs/development/TASK_TRACKING.md` | `58437b3aa215fde90cfb8284c024d49387d180a2d02dce7c9e5b342c01570dbe` |
+| `docs/design/BANNER_OPTIONS.md` | `27d7b336acd60aa3106e6498233f2a33eefd2bc37bf8e26cf12d2c0c0d229724` |
+| `docs/development/packets/P01.md` | `a2e4b450cc0d4fc11694f8bbc7cb818b8f431c510c5831755d48010be2dfedca` |
+| `docs/development/TASK_TRACKING.md` | `40e45a5d1641a3c655d0d19b8593c05bac8e0641019ab8d3bab642d17beafceb` |
+| `docs/development/REPOSITORY_SECURITY.md` | `580fcf9e6a3bbd309b2003c68d0df568ecbc7407eb6fa6f9f6919da528102e66` |
+| `.github/CODEOWNERS` | `95de6cc3de1ba640d0ab9e2b9bfbdea79b7ce6641a8bcdb0bcef1f7607666415` |
 
 ## Полные самостоятельные приложения
 
@@ -1211,7 +1422,9 @@ SHA-256 относится к исходному файлу на момент с
 - [Ресурсный снимок Windows и будущие профили macOS/сервера](#appendix-resource-profiles) — `docs/development/RESOURCE_PROFILES.md`
 - [Концепции баннера и выбранное оформление](#appendix-banner-options) — `docs/design/BANNER_OPTIONS.md`
 - [Первый PR с кодом: задачи, зависимости и критерии приёмки](#appendix-p01) — `docs/development/packets/P01.md`
-- [Предложенный порядок Issues, статусов и переносимых снимков](#appendix-task-tracking) — `docs/development/TASK_TRACKING.md`
+- [GitHub Issues, статусы и переносимые снимки](#appendix-task-tracking) — `docs/development/TASK_TRACKING.md`
+- [Защита main, отдельный исполнитель и состояние подключения](#appendix-repository-security) — `docs/development/REPOSITORY_SECURITY.md`
+- [Подготовленный CODEOWNERS для человеческого ревью](#appendix-codeowners) — `.github/CODEOWNERS`
 
 <a id="appendix-readme-en"></a>
 
@@ -1220,7 +1433,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
 </p>
 
 <p align="center">
@@ -1238,7 +1451,7 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Current state
@@ -1339,7 +1552,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience | Planned |
 | **G4** | Reproducible engineering lab | Planned |
 
-The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
 
 #### Repository map
 
@@ -1394,7 +1607,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
 </p>
 
 <p align="center">
@@ -1412,7 +1625,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Состояние проекта
@@ -1496,7 +1709,7 @@ flowchart LR
 
 **G0 принят.** G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Следующие контрольные точки ещё не достигнуты.
 
-[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/PROJECT_CONTEXT.md) включает полные документы, статусы и согласования: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/PROJECT_CONTEXT.md) включает полные документы, статусы и согласования: его можно передать агенту без доступа к репозиторию.
 
 #### С чего начать
 
@@ -1548,9 +1761,10 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Посмотреть оформление | [Концепции баннера](#appendix-banner-options) — три варианта и выбранное решение |
 | Принять участие в разработке | [CONTRIBUTING](#appendix-contributing) → [Правила ревью](#appendix-code-review) → [Workflow](#appendix-development-process) → [AGENTS](#appendix-agents) |
 | Проверить ближайший PR | [P01](#appendix-p01) — задачи, зависимости, критерии и фактический прогресс |
-| Следить за выполнением | [Учёт задач](#appendix-task-tracking) — предложенный порядок Issues/PR и снимков контекста |
+| Следить за выполнением | [Учёт задач](#appendix-task-tracking) — GitHub Issues/PR и снимки контекста |
+| Проверить права и защиту main | [Безопасность репозитория](#appendix-repository-security) — действующая защита и переход на аккаунт исполнителя |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
@@ -1563,7 +1777,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [Workflow](#appendix-development-process): роли человека и ИИ, состав ревью и контрольные точки G0–G4.
 - [Правила ревью](#appendix-code-review): стандарт Go, блокирующие замечания, проверки и критерии слияния.
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/CONTEXT_STATE.json): текущая работа, проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/CONTEXT_STATE.json): текущая работа, проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -2658,11 +2872,13 @@ Codex — исполнитель разработки: готовит проек
 
 #### Стандарт код-ревью
 
-[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/.github/pull_request_template.md) содержит краткий применимый чек-лист.
 
 После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; владелец проекта рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению владельца проекта или действие самого владельца проекта.
 
-В одном GitHub-аккаунте нельзя получить обычный независимый approval от автора PR. Человеческое решение может быть зафиксировано в чате/комментарии с PR и SHA и затем в контексте. Правила работы не означают автоматически включённую GitHub branch protection. Сейчас выполняется документационный CI; Go-проверки и закреплённая конфигурация инструментов подключаются в P01 с первым модулем.
+По поручению владельца новые PR оформляются от исполнителя AI-Your-Bro, а Includeoyasi проводит ревью и принимает решение. Защита main уже включена; авторизация исполнителя и права write без admin проверены через GitHub API. Новые PR от владельца не создаются; Git author metadata не заменяет проверку API actor. PR #4, созданный до перехода, уже слит (merge 8c392b8); его переоформление не требуется. Подготовленный CODEOWNERS назначает владельца ревьюером всех файлов; он вступит в силу после слияния в main. Точный статус — в [безопасности репозитория](#appendix-repository-security).
+
+Принятие в чате фиксируется в контексте, но не заменяет обязательное GitHub approval на защищённой ветке. Сейчас обязателен Documentation CI; Go-проверки и закреплённая конфигурация инструментов подключаются в P01 с первым модулем и затем добавляются в required checks.
 
 #### Контрольные точки
 
@@ -2841,6 +3057,8 @@ PROJECT_CONTEXT.md — самостоятельный пакет для друг
 
 - The human user is the project owner and code reviewer. Codex implements the project and prepares reviewable changes.
 - Refer to the human as the project owner throughout project materials; use reviewer when describing code review. This terminology does not change decision authority or review gates.
+- All new pull requests must be authenticated as AI-Your-Bro, the separate, human-managed executor GitHub account supplied by the project owner. Its authentication and write access were verified on 2026-10-13; it has no admin permission. Before every API mutation or publication verify the authenticated actor, not just Git author metadata. Do not publish new PRs or approve changes under Includeoyasi. Use owner credentials only for explicitly authorized repository administration. See docs/development/REPOSITORY_SECURITY.md for setup, evidence and the owner's decision not to enable 2FA.
+- main is protected: independent approval, stale review dismissal, approval after the last push, up-to-date successful Documentation CI, resolved conversations and administrator enforcement. Do not weaken protection or use executor credentials to approve AI changes. The prepared CODEOWNERS assigns all files to Includeoyasi; it becomes effective after merging into main.
 - Read PROJECT_CONTEXT.md first for the portable project handoff, current status and approvals. Read docs/development/WORKFLOW.md for review expectations and docs/ROADMAP.md for the project scope when the repository is available.
 - G0 was explicitly approved by the human on 2026-10-13 (Europe/Moscow): "G0 полностью принят." The architecture and business rules in docs/architecture/DESIGN.md and docs/architecture/PROCESSES.md are approved. Do not ask for G0 approval again. G1-G4 remain future review gates; prepare the work for a gate before requesting its approval.
 - Work autonomously within an approved stage. Keep changes small enough for focused code review and include actual validation results and known limitations.
@@ -2906,7 +3124,7 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [current context](https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). AI implementers must also follow [AGENTS.md](#appendix-agents).
+Read the [current context](https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). AI implementers must also follow [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
@@ -2989,7 +3207,7 @@ SOFTWARE.
 5. Слияние требует явного решения человека, успешных применимых проверок и актуального контекста. Не применять auto-merge до такого решения. Если человек поручает ИИ выполнить merge, это отдельное явное поручение.
 6. G0 уже принят. Обычный PR не заменяет приёмку G1–G4; переходы через эти точки регулирует [workflow](#appendix-development-process). Существенная смена принятой архитектуры требует решения владельца проекта и ADR.
 
-Это правила работы, а не заявление о включённой защите ветки GitHub. Если человек и ИИ используют один GitHub-аккаунт, автор не может выдать своему PR обычный GitHub approval ([ограничение GitHub](https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/approving-a-pull-request-with-required-reviews)). Тогда решение человека фиксируется в чате либо комментарии со ссылкой на PR и рассматриваемый SHA и переносится в контекст. Не подменять его одобрением ИИ и не заявлять независимое ревью по факту успешного CI. Настройка branch protection и отдельного аккаунта исполнителя — отдельная задача.
+13 октября 2026 года по прямому поручению владельца включена и повторно проверена защита main: независимое approval, сброс устаревших ревью, одобрение после последнего push, актуальный успешный CI, закрытые обсуждения и применение к администратору; force push и удаление запрещены. Новые PR создаются от исполнителя AI-Your-Bro с подтверждённой авторизацией и правами write без admin; GitHub approval даёт владелец проекта Includeoyasi. Подробности и подготовленный CODEOWNERS — в [безопасности репозитория](#appendix-repository-security). Сообщение в чате сохраняет решение человека, но не заменяет обязательное GitHub approval. ИИ не выдаёт approval от владельца или от второго аккаунта своим изменениям.
 
 #### 2. Как оформлять замечания
 
@@ -3104,7 +3322,7 @@ SOFTWARE.
 - Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
 - Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
 
-Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
 
 <a id="appendix-lab-boundary"></a>
 
@@ -3388,13 +3606,13 @@ Docker рекомендует разделять ответственности 
 
 ### Баннер Faultline Lab
 
-Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/docs/assets/banner.svg). Публикация ожидает следующего коммита и ревью.
+Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/docs/assets/banner.svg). Публикация ожидает следующего коммита и ревью.
 
 #### Задание
 
 Подготовить три альтернативных варианта с акцентом на технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее. Сделаны векторные композиции с читаемым названием, тёмным текстом на светлом фоне и встроенными title/description. Внешних шрифтов, скриптов и удалённых графических зависимостей нет.
 
-![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/docs/assets/banner-concepts/comparison.png)
+![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/docs/assets/banner-concepts/comparison.png)
 
 | Вариант | Образ | Палитра | Статус |
 | :--- | :--- | :--- | :--- |
@@ -3404,15 +3622,15 @@ Docker рекомендует разделять ответственности 
 
 #### Выбранное решение
 
-![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/docs/assets/banner-concepts/02-experiment-flow.png)
+![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/docs/assets/banner-concepts/02-experiment-flow.png)
 
 Абстрактные линии проходят через область наблюдения. Это метафора исследования поведения системы и сравнения изменений; линии не являются графиком измеренных результатов. Композиция не зависит от домена магазина и подходит будущим подключаемым бизнесам.
 
 Размер SVG — 1280 × 420; README задаёт ширину 100%. Исходник масштабируется, PNG служит предварительным просмотром. Основная подпись: **Explore how systems behave.** Нижняя последовательность: **Hypothesis → Experiment → Evidence**.
 
-Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
+Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
 
-Баннеры отрендерены локально и визуально просмотрены на общем листе. Проверены отсутствие обрезанного текста и соответствие композиций заданию. Отдельный preview выбранного варианта используется для проверки основного баннера. Выбранный вариант опубликован в ветке docs/portable-lab-plan и [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4); до его слияния главная страница main сохраняет прежнюю обложку. Проверка отрисовки нового README на GitHub пока не выполнялась.
+Баннеры отрендерены локально и визуально просмотрены на общем листе. Проверены отсутствие обрезанного текста и соответствие композиций заданию. Отдельный preview выбранного варианта используется для проверки основного баннера. Выбранный вариант слит в main через [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4), merge commit 8c392b8. Проверка отрисовки нового README на GitHub пока не выполнялась.
 
 <a id="appendix-p01"></a>
 
@@ -3432,7 +3650,7 @@ Docker рекомендует разделять ответственности 
 
 PostgreSQL/Kafka/Redis и миграции относятся к P02. Доменные protobuf, заказы, складские операции, платежи, адаптеры и runner здесь не реализуются. Использование стандартного gRPC health не означает готовность бизнес-API.
 
-Терминология, план среды, выбранный баннер и этот backlog опубликованы в [документационном PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4) по отдельному поручению владельца проекта. Он ожидает ревью и не является P01: первым PR с кодом остаётся каркас, описанный здесь.
+Терминология, план среды, выбранный баннер и этот backlog слиты в main через [документационный PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4) по отдельному поручению владельца проекта. Он не является P01: первым PR с кодом остаётся каркас, описанный здесь. По последующему поручению новые PR публикуются от исполнителя AI-Your-Bro после проверки его авторизации.
 
 #### Задачи и текущие статусы
 
@@ -3529,7 +3747,7 @@ P01 не достигает всей контрольной точки G1: ба�
 
 <a id="appendix-task-tracking"></a>
 
-## Приложение: Предложенный порядок Issues, статусов и переносимых снимков
+## Приложение: GitHub Issues, статусы и переносимые снимки
 
 Полный исходный документ: `docs/development/TASK_TRACKING.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
@@ -3545,7 +3763,7 @@ P01 не достигает всей контрольной точки G1: ба�
 | `docs/development/packets/<packet>.md` | Версионируемые границы пакета, задачи и критерии приёмки |
 | GitHub Issues | Основной трекер выполнения, блокеров и ссылок на PR |
 | GitHub PR | Код, diff, результаты проверок, замечания и решение владельца проекта |
-| [CONTEXT_STATE.json](https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/CONTEXT_STATE.json) и [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/docs/portable-lab-plan/PROJECT_CONTEXT.md) | Датированный переносимый снимок для агентов без доступа к GitHub/компьютеру |
+| [CONTEXT_STATE.json](https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/CONTEXT_STATE.json) и [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/chore/executor-security/PROJECT_CONTEXT.md) | Датированный переносимый снимок для агентов без доступа к GitHub/компьютеру |
 
 [GitHub Issues](https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/about-issues) поддерживает задачи и связь с PR. [Projects](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects) даёт таблицы и доски поверх Issues/PR; доску можно подключить при росте backlog, но для первого пакета достаточно одной карточки с чеклистом.
 
@@ -3582,5 +3800,68 @@ BLOCKED — отдельный признак с причиной и требу�
 
 - Декомпозиция P01 сохранена; код NOT_STARTED, проверки сервиса NOT_RUN.
 - Карточка [P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта: TODO, восемь пустых чекбоксов. Доска Projects пока не создана.
-- PR с Go-кодом не создан. План, терминология, среда и выбранный баннер опубликованы в [документационном PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4), ожидающем ревью; он не закрывает P01.
+- PR с Go-кодом не создан. План, терминология, среда и выбранный баннер слиты в main через [документационный PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4); он не закрывает P01. Новые PR создаются от исполнителя AI-Your-Bro после подтверждения его авторизации.
 - Следующее действие по реализации — P01-01, Go-модуль и контейнерный toolchain. При начале работы статус карточки меняется на IN_PROGRESS; G1 остаётся будущей приёмкой.
+
+<a id="appendix-repository-security"></a>
+
+## Приложение: Защита main, отдельный исполнитель и состояние подключения
+
+Полный исходный документ: `docs/development/REPOSITORY_SECURITY.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Защита main и аккаунт исполнителя
+
+Снимок на 13 октября 2026 года. Владелец проекта прямо поручил перейти на отдельный аккаунт исполнителя и настроить защиту main, затем предоставил логин AI-Your-Bro. Защита применена через GitHub API и проверена отдельным GET. Авторизация исполнителя проверена через GET /user: AI-Your-Bro, GitHub ID 342030453. Его права на репозиторий — write, push=true, admin=false; приглашение принято. Git Credential Manager сохранил OAuth-авторизацию в защищённом хранилище Windows. Владелец прямо отказался включать 2FA; этот выбор записан, а статус 2FA не выдан за подтверждённый API.
+
+#### Действующие настройки main
+
+| Правило | Проверенное значение |
+| :--- | :--- |
+| Изменения через PR | Включено через обязательное независимое ревью |
+| Число обязательных approval | 1 |
+| Сброс approval после новых изменений | Включён |
+| Approval после последнего push другим участником | Обязателен |
+| Ревью CODEOWNERS | Включено; файл владельцев ещё не находится в main |
+| Required check | Links and portable context |
+| Источник required check | GitHub Actions, app ID 15368 |
+| Актуальность ветки относительно main | Обязательна перед merge |
+| Закрытие обсуждений | Обязательно |
+| Применение правил к администратору | Включено |
+| Force push / удаление | Запрещены |
+
+Это проверка фактических настроек, а не попытка выполнить запрещённый push или удалить ветку. Подписанные коммиты и обязательная линейная история не вводились. Go checks добавляются после появления проверенного workflow в P01; отсутствующие проверки не объявляются действующими.
+
+Подготовлен [.github/CODEOWNERS](#appendix-codeowners): все файлы, включая workflow и сам CODEOWNERS, назначены @Includeoyasi. Пока он не слит в main, действует требование одного независимого approval без привязки к этому файлу. После merge GitHub использует CODEOWNERS базовой ветки и требует ревью указанного владельца. [Правила CODEOWNERS](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners).
+
+#### Разделение ролей и авторизации
+
+- Владелец: Includeoyasi, управление репозиторием, человеческое ревью и решение о merge.
+- Исполнитель: [AI-Your-Bro](https://github.com/AI-Your-Bro), отдельный machine account под контролем владельца, с подтверждённой авторизацией и правами write без admin. Он публикует ветки и PR; ИИ не использует его для одобрения собственных изменений.
+- Административная авторизация владельца использована только для прямо порученной настройки защиты. Новые PR от аккаунта владельца после этого поручения не создаются.
+
+Git author name/email не меняют автора PR: GitHub определяет его по аутентифицированному аккаунту API/UI. Перед первой публикацией надо проверить реальную identity API и scoped Git credentials; изменение подписи коммита само по себе не завершает переход.
+
+GitHub разрешает machine account, зарегистрированный человеком, но запрещает автоматическую регистрацию. Владелец принимает условия и контролирует email; пароль, recovery codes и токены не помещаются в Git, документы или чат. API текущей OAuth-авторизации не вернул поле two_factor_authentication. На предложение включить 2FA владелец ответил «я не хочу ее включать»; ИИ этот выбор не отменяет и не сообщает о включённой 2FA. [Условия аккаунтов GitHub](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service#3-account-requirements).
+
+#### Завершение подключения
+
+1. Владелец предоставляет логин зарегистрированного вручную machine account. Выполнено: AI-Your-Bro, существование публичного профиля проверено.
+2. Приглашение AI-Your-Bro в faultline-lab с правами write отправлено и принято (invitation ID 337527166). От имени исполнителя проверен GET collaborators/AI-Your-Bro/permission: write, push=true, admin=false.
+3. OAuth через Git Credential Manager device flow выполнен; GET /user подтвердил AI-Your-Bro. Credentials находятся в Windows Credential Manager и не записываются в репозиторий. Администрация владельца и публикация исполнителя используют отдельные credentials; перед мутацией API проверяется фактический actor. Для работы с workflow нужны соответствующие права токена; администрация ради обычных PR не выдаётся.
+4. Локальная Git identity этого репозитория: AI-Your-Bro, 342030453+AI-Your-Bro@users.noreply.github.com. Локальная credential.https://github.com.username выбирает AI-Your-Bro. Глобальная Git identity и авторизация других репозиториев не менялись. На macOS нужно отдельно подключить исполнителя и проверить identity; локальные credentials автоматически туда не переносятся.
+5. [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4) уже слит: merge commit 8c392b8, принятый HEAD 83e0076. Переоформлять его не нужно; переход применяется к новым PR. Новая локальная ветка chore/executor-security обновлена до этого main.
+6. [PR #5](https://github.com/Includeoyasi/faultline-lab/pull/5) с CODEOWNERS и документами безопасности открыт от проверенного AI-Your-Bro; у Includeoyasi запрошено ревью. GitHub также подтвердил авторство и committer первого коммита fbbaef0 как AI-Your-Bro. Владелец ревьюирует конкретный HEAD и выполняет approval. Merge — только по его решению; ИИ сам не принимает свои изменения.
+7. После merge проверить CODEOWNERS в main, реальные required checks, автора нового PR и обновить контекст. Основная реализация P01 пока TODO, 0/8; G1–G4 не приняты.
+
+#### Текущее ограничение
+
+Защита main действует уже сейчас. CODEOWNERS и документы опубликованы в chore/executor-security и [PR #5](https://github.com/Includeoyasi/faultline-lab/pull/5) от проверенного AI-Your-Bro, на основе main 8c392b8. Новый PR и push от владельца не выполнялись. CODEOWNERS станет действующим в main после человеческого ревью и merge; текущие commit/PR и проверенные результаты находятся в CONTEXT_STATE.json. Основная реализация P01 ещё не начата.
+
+<a id="appendix-codeowners"></a>
+
+## Приложение: Подготовленный CODEOWNERS для человеческого ревью
+
+Полный исходный документ: `.github/CODEOWNERS`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### The project owner reviews all changes, including CI and this policy.
+* @Includeoyasi
