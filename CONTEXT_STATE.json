@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 16,
+  "context_revision": 17,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-13",
   "user_timezone": "Europe/Moscow",
@@ -10,7 +10,7 @@
   "current_task": {
     "id": "REPO-SECURITY-001",
     "description": "Разделить GitHub identity владельца и исполнителя и включить защиту main",
-    "status": "EXECUTOR_AUTHENTICATED_PREPARING_SECURITY_PR",
+    "status": "MAIN_PROTECTED_EXECUTOR_CONNECTED_SECURITY_PR_AWAITING_OWNER_REVIEW",
     "authorization": "Владелец поручил отдельный аккаунт исполнителя для всех новых PR и защиту main; затем предоставил логин AI-Your-Bro",
     "result": {
       "main_protection": "APPLIED_AND_READ_BACK",
@@ -22,15 +22,31 @@
       "branch": "chore/executor-security",
       "base_commit": "8c392b8ed4145d8b2b9efa93c5be14d9fdf113d1",
       "local_docs": "PREPARED",
-      "codeowners": "LOCAL_ONLY_NOT_IN_MAIN",
+      "codeowners": "PUBLISHED_IN_OPEN_PR_NOT_IN_MAIN",
       "local_validation": "PASS",
-      "new_commit_created": false,
-      "pushed": false,
-      "pull_request_url": null,
-      "publication_dependency": "LOCAL_CHECKS_AND_EXECUTOR_PR_PUBLICATION",
+      "new_commit_created": true,
+      "pushed": true,
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
+      "publication_dependency": null,
       "business_implementation": "NOT_STARTED",
       "go_checks": "NOT_RUN_NO_GO_MODULE",
-      "git_identity": "CONFIGURED_LOCALLY_FOR_AI_YOUR_BRO"
+      "git_identity": "CONFIGURED_LOCALLY_FOR_AI_YOUR_BRO",
+      "observed_published_commit": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
+      "pull_request_number": 5,
+      "pull_request_author": "AI-Your-Bro",
+      "review_requested_from": "Includeoyasi",
+      "human_review": "PENDING",
+      "merged": false,
+      "documentation_ci": {
+        "workflow": "Documentation",
+        "head_sha": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
+        "status": "COMPLETED",
+        "conclusion": "SUCCESS",
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38413156014",
+        "event": "pull_request",
+        "scope": "Документационный CI исходного security PR; после коммита handoff проверять актуальный HEAD PR #5"
+      },
+      "handoff_note": "Наблюдённый HEAD и CI относятся к исходному коммиту security PR. Финальный hash собственного handoff не может находиться внутри снимка; текущий HEAD/checks проверяются в PR."
     }
   },
   "roles": {
@@ -84,7 +100,7 @@
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "8c392b8ed4145d8b2b9efa93c5be14d9fdf113d1",
+    "git_commit": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -125,6 +141,21 @@
         "head_at_merge": "83e00760c67f5aa79940bda05444c2c6838e84a0",
         "merge_commit": "8c392b8ed4145d8b2b9efa93c5be14d9fdf113d1",
         "merged_at_utc": "2026-10-13T13:50:50Z"
+      },
+      {
+        "number": 5,
+        "url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
+        "state": "OPEN",
+        "author": "AI-Your-Bro",
+        "head_ref": "chore/executor-security",
+        "base_ref": "main",
+        "scope": "Защита main, CODEOWNERS, разделение GitHub identity и обновление контекста",
+        "code_packet": false,
+        "human_review": "PENDING",
+        "requested_reviewer": "Includeoyasi",
+        "merged": false,
+        "observed_head": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
+        "observation_note": "HEAD при создании PR; финальный handoff commit добавляется позже, текущий HEAD доступен на GitHub."
       }
     ]
   },
@@ -158,7 +189,8 @@
     "Коммит 2c28d12 опубликован в docs/portable-lab-plan; открыт документационный PR #4 и прикреплён к чату. Его исходный Documentation CI прошёл; человеческое ревью и merge ожидаются. Issue #3 остаётся TODO, 0/8.",
     "Включена и повторно проверена защита main, включая администратора. Профиль исполнителя AI-Your-Bro проверен; приглашение write отправлено и OAuth вход запущен. CODEOWNERS и документы подготовлены локально; приглашение/авторизация ещё ожидаются.",
     "Наблюдено слияние PR #4 в main 8c392b8 с принятым HEAD 83e0076; выбранный баннер и P01 backlog находятся в основной ветке. ИИ не выполнял merge.",
-    "OAuth исполнителя AI-Your-Bro завершён через GCM device flow; API подтвердил actor и write/push без admin. Приглашение принято, локальная Git identity/credential username переключены только в этом репозитории. Владелец отказался включать 2FA; API статус 2FA не вернул."
+    "OAuth исполнителя AI-Your-Bro завершён через GCM device flow; API подтвердил actor и write/push без admin. Приглашение принято, локальная Git identity/credential username переключены только в этом репозитории. Владелец отказался включать 2FA; API статус 2FA не вернул.",
+    "От AI-Your-Bro опубликован первый security commit fbbaef0 и PR #5; у Includeoyasi запрошено ревью. GitHub подтвердил автора/коммиттера исполнителя; исходный Documentation CI прошёл. CODEOWNERS в открытом PR, активация в main ожидает решения владельца."
   ],
   "next_implementation_packet": {
     "id": "P01",
@@ -572,6 +604,25 @@
         "git diff --cached --check"
       ],
       "detail": "23 Markdown-файла, 244 локальные ссылки, структура 56 Mermaid-блоков; ревизия 16, 21 встроенный документ и 24 fingerprints. CODEOWNERS назначает все файлы Includeoyasi; авторизация исполнителя и write без admin наблюдены. 2FA не включена этим заданием по решению владельца. Go/runtime tests не запускались."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Executor-authored security PR publication",
+      "result": "PASS",
+      "head_sha": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
+      "url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
+      "detail": "PR #5 user.login=AI-Your-Bro, requested_reviewers содержит Includeoyasi. GitHub commit author и committer AI-Your-Bro. Исходный Documentation pull_request run SUCCESS. ИИ не approve/merge; проверка финального handoff HEAD отдельно в PR."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Published executor PR portable handoff",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly",
+        "git diff --check"
+      ],
+      "detail": "23 Markdown-файла, 244 локальные ссылки, структура 56 Mermaid-блоков; ревизия 17, 21 встроенный документ и 24 fingerprints. Публикация PR #5 и авторство исполнителя отражены, CODEOWNERS в main не заявлен до merge, решение владельца о 2FA сохранено. Текущий HEAD/CI проверяются в PR; Go/runtime N/A."
     }
   ],
   "source_documents": [
@@ -777,6 +828,12 @@
       "date": "2026-10-13",
       "summary": "Подтверждены OAuth, принятие приглашения и write без admin у AI-Your-Bro. Настроена локальная Git identity, учтён прямой отказ владельца от 2FA. Защита main сохранена; подготовка первого security PR от исполнителя.",
       "trigger": "Владелец завершил device flow и сообщил готово; отдельным ответом отказался включать 2FA"
+    },
+    {
+      "revision": 17,
+      "date": "2026-10-13",
+      "summary": "Первый PR нового порядка #5 создан от AI-Your-Bro к владельцу Includeoyasi. Сохранены реальная публикация, автор/коммиттер, requested review и исходный успешный CI. Main защищён; CODEOWNERS ещё не слит.",
+      "trigger": "Завершение поручения по подключению исполнителя и защите main; handoff для человеческого ревью"
     }
   ],
   "repository": {
@@ -801,22 +858,22 @@
       "event": "push",
       "scope": "Документационный CI main после принятия правил; не является проверкой последующего handoff PR или Go-кода."
     },
-    "snapshot_ref": "main",
+    "snapshot_ref": "chore/executor-security",
     "current_publication": {
-      "branch": "docs/portable-lab-plan",
-      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
-      "observed_commit": "2c28d127764210f1019c114a4b3d5b1cd59b529c",
-      "merged": true,
+      "branch": "chore/executor-security",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
+      "author": "AI-Your-Bro",
+      "observed_commit": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
+      "merged": false,
       "observed_ci": {
         "workflow": "Documentation",
-        "head_sha": "2c28d127764210f1019c114a4b3d5b1cd59b529c",
+        "head_sha": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
         "status": "COMPLETED",
         "conclusion": "SUCCESS",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38402553170",
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38413156014",
         "event": "pull_request",
-        "scope": "CI документационного коммита на момент снимка; после обновления контекста проверять актуальный HEAD PR #4"
-      },
-      "merge_commit": "8c392b8ed4145d8b2b9efa93c5be14d9fdf113d1"
+        "scope": "Документационный CI исходного security PR; после коммита handoff проверять актуальный HEAD PR #5"
+      }
     }
   },
   "review_policy": {
@@ -841,7 +898,8 @@
     "pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/1",
     "pull_request_author": "AI-Your-Bro",
     "github_approval_required": true,
-    "chat_approval_does_not_bypass_github": true
+    "chat_approval_does_not_bypass_github": true,
+    "current_identity_transition_pr": "https://github.com/Includeoyasi/faultline-lab/pull/5"
   },
   "environment_strategy": {
     "status": "USER_APPROVED_APPROACH_NOT_IMPLEMENTED",
@@ -989,9 +1047,10 @@
     "codeowners": {
       "path": ".github/CODEOWNERS",
       "owner": "Includeoyasi",
-      "status": "PREPARED_LOCALLY_NOT_IN_MAIN",
+      "status": "PUBLISHED_IN_OPEN_PR_NOT_IN_MAIN",
       "effective_after": "HUMAN_REVIEW_AND_MERGE_INTO_MAIN",
-      "interim_review": "One independent approval required; owner-specific CODEOWNERS rule has no file in main yet"
+      "interim_review": "One independent approval required; owner-specific CODEOWNERS rule has no file in main yet",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/5"
     },
     "go_checks": "ADD_REQUIRED_CHECKS_AFTER_P01_WORKFLOW_EXISTS",
     "bypasses_added": false,
@@ -1037,6 +1096,19 @@
       "admin": false,
       "source": "GET repo collaborator permission authenticated as AI-Your-Bro"
     },
-    "api_write_transport": "Executor credential requested by username; GET /user actor checked before every API mutation. Owner-connected GitHub integration not used to create new PRs."
+    "api_write_transport": "Executor credential requested by username; GET /user actor checked before every API mutation. Owner-connected GitHub integration not used to create new PRs.",
+    "first_pull_request": {
+      "number": 5,
+      "url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
+      "author": "AI-Your-Bro",
+      "review_requested_from": "Includeoyasi",
+      "verification": "Creation response user.login and requested_reviewers checked"
+    },
+    "first_commit": {
+      "sha": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
+      "github_author": "AI-Your-Bro",
+      "github_committer": "AI-Your-Bro",
+      "verified": true
+    }
   }
 }
