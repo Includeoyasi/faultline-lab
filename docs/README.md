@@ -8,7 +8,13 @@
 | :--- | :--- |
 | Быстро оценить проект | [README](../README.ru.md) → [Дизайн](architecture/DESIGN.md) → [Roadmap](ROADMAP.md) |
 | Проверить распределённый процесс | [Атлас G0](architecture/PROCESSES.md) → [Принятие G0](adr/0001-approved-g0.md) |
+| Разобрать подключение другого бизнеса | [Граница лаборатории](architecture/LAB_BOUNDARY.md) — согласованное направление и детализация для ревью |
+| Подготовить среду Windows/macOS | [Контейнерная среда](development/ENVIRONMENT.md) — состав, профили и статус проверок |
+| Проверить исходные ресурсы | [Профили сред](development/RESOURCE_PROFILES.md) — Windows, macOS и возможный будущий сервер |
+| Посмотреть оформление | [Концепции баннера](design/BANNER_OPTIONS.md) — три варианта и выбранное решение |
 | Принять участие в разработке | [CONTRIBUTING](../CONTRIBUTING.md) → [Правила ревью](development/CODE_REVIEW.md) → [Workflow](development/WORKFLOW.md) → [AGENTS](../AGENTS.md) |
+| Проверить ближайший PR | [P01](development/packets/P01.md) — задачи, зависимости, критерии и фактический прогресс |
+| Следить за выполнением | [Учёт задач](development/TASK_TRACKING.md) — предложенный порядок Issues/PR и снимков контекста |
 | Подготовить эксперимент | [Roadmap](ROADMAP.md) → [Шаблон отчёта](experiments/REPORT_TEMPLATE.md) |
 | Ввести другого ИИ в задачу | [Переносимый контекст](../PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
@@ -16,6 +22,9 @@
 
 - [Дизайн](architecture/DESIGN.md): принятые границы сервисов, контракты, состояния и инварианты.
 - [Процессы](architecture/PROCESSES.md): 15 подробных схем транзакций, отказов, гонок и восстановления.
+- [Граница лаборатории](architecture/LAB_BOUNDARY.md): общий механизм, адаптеры, кандидат второго бизнеса и доказательство переносимости.
+- [Среда](development/ENVIRONMENT.md): Docker для Windows/macOS, распределение контейнеров и ограничения измерений.
+- [Ресурсные профили](development/RESOURCE_PROFILES.md): снимок Windows-хоста и отдельно ещё не измеренные среды/лимиты.
 - [Roadmap](ROADMAP.md): этапы 0–7, критерии готовности, риски и 12 сценариев экспериментов.
 - [Workflow](development/WORKFLOW.md): роли человека и ИИ, состав ревью и контрольные точки G0–G4.
 - [Правила ревью](development/CODE_REVIEW.md): стандарт Go, блокирующие замечания, проверки и критерии слияния.

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-labelledby="title desc">
+  <title id="title">Faultline Lab — Research Horizon</title>
+  <desc id="desc">A pale blue horizon with soft orbital geometry and three research nodes. A forward-looking visual metaphor for understanding resilient systems.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#f0f6fc"/>
+      <stop offset=".6" stop-color="#f4f3fb"/>
+      <stop offset="1" stop-color="#f9eee8"/>
+    </linearGradient>
+    <linearGradient id="disc" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#d5dff2"/>
+      <stop offset=".53" stop-color="#e2d9ee"/>
+      <stop offset="1" stop-color="#f3d9cc"/>
+    </linearGradient>
+    <clipPath id="clip"><rect width="1280" height="420" rx="24"/></clipPath>
+  </defs>
+  <rect width="1280" height="420" rx="24" fill="url(#sky)"/>
+  <g clip-path="url(#clip)">
+    <circle cx="993" cy="189" r="129" fill="url(#disc)"/>
+    <circle cx="993" cy="189" r="108" fill="none" stroke="#ffffff" stroke-opacity=".65"/>
+    <ellipse cx="993" cy="189" rx="217" ry="68" transform="rotate(-24 993 189)" fill="none" stroke="#8e9dbc" stroke-width="1.7"/>
+    <ellipse cx="993" cy="189" rx="163" ry="117" transform="rotate(29 993 189)" fill="none" stroke="#aa9cb9" stroke-width="1.4"/>
+    <path d="M738 358C860 314 1104 314 1342 353V430H738Z" fill="#e0e9f1"/>
+    <path d="M730 385C897 323 1119 339 1342 378V430H730Z" fill="#e9e6f2"/>
+    <path d="M737 407C901 357 1153 364 1324 400" fill="none" stroke="#bdc5d7" stroke-width="1.3"/>
+    <g fill="none" stroke="#a9b6cd" stroke-width="1.2">
+      <path d="M795 70H821M808 57V83"/>
+      <path d="M1194 69H1212M1203 60V78"/>
+      <path d="M754 223H772M763 214V232"/>
+    </g>
+    <g stroke="#f7f7fc" stroke-width="4">
+      <circle cx="849" cy="262" r="12" fill="#8ca6b2"/>
+      <circle cx="1055" cy="81" r="12" fill="#9b8ead"/>
+      <circle cx="1165" cy="213" r="12" fill="#c3917d"/>
+    </g>
+    <circle cx="993" cy="189" r="17" fill="#f6f6fb" stroke="#9c9ab7" stroke-width="1.5"/>
+    <path d="M987 189H999M993 183V195" stroke="#6e718d" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <g transform="translate(64 61)" fill="none" stroke="#657b98" stroke-width="1.5">
+      <circle cx="16" cy="16" r="12"/>
+      <ellipse cx="16" cy="16" rx="18" ry="6" transform="rotate(-35 16 16)"/>
+    </g>
+    <text x="112" y="83" font-size="15" font-weight="600" letter-spacing="2.3" fill="#516984">ENGINEER THE NEXT IDEA</text>
+    <text x="59" y="207" font-size="77" font-weight="650" letter-spacing="-3.2" fill="#2e4058">Faultline<tspan dx="16" fill="#697c9a">Lab</tspan></text>
+    <text x="64" y="256" font-size="25" fill="#536982">Resilient systems start with curiosity.</text>
+    <text x="64" y="352" font-size="16" font-weight="600" letter-spacing="1.1" fill="#526883">SYSTEMS / EXPERIMENTS / EVIDENCE</text>
+  </g>
+</svg>

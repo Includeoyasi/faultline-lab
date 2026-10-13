@@ -2,13 +2,13 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **7**. Состояние на: **2026-10-13**, Europe/Moscow. Фаза: **G0_APPROVED_PRE_IMPLEMENTATION**.
+Ревизия: **13**. Состояние на: **2026-10-13**, Europe/Moscow. Фаза: **G0_APPROVED_PRE_IMPLEMENTATION**.
 
 ## Краткое текущее состояние
 
 | Поле | Фактический статус |
 |---|---|
-| Текущая задача | DEV-REVIEW-001: COMPLETED |
+| Текущая задача | REPO-TRACKING-001: ISSUE_CREATED_PREPARING_DOCUMENTATION_PR |
 | G0 | APPROVED |
 | G1 | NOT_READY |
 | G2 | NOT_READY |
@@ -17,7 +17,7 @@
 | Код бизнес-сервисов | NOT_CREATED |
 | Инфраструктура Compose | NOT_CREATED |
 | Эксперименты | NOT_RUN |
-| Следующий пакет | G1-P01: NOT_STARTED |
+| Следующий пакет | P01: NOT_STARTED |
 
 ## Как использовать этот файл в другом чате
 
@@ -34,7 +34,7 @@
 
 ### Идентичность проекта и публичный репозиторий
 
-Публичное имя проекта — **Faultline Lab**, репозиторий — `Includeoyasi/faultline-lab`. В прежних материалах проект назывался Microservices Lab; это тот же проект с теми же принятыми бизнес-правилами G0. Тимлид выбрал лицензию MIT прямым сообщением «возьми MIT» 13 октября 2026 года.
+Публичное имя проекта — **Faultline Lab**, репозиторий — `Includeoyasi/faultline-lab`. В прежних материалах проект назывался Microservices Lab; это тот же проект с теми же принятыми бизнес-правилами G0. Владелец проекта выбрал лицензию MIT прямым сообщением «возьми MIT» 13 октября 2026 года.
 
 Публичное введение находится в README.md и README.ru.md. Канонические спецификации перенесены в docs/: docs/ROADMAP.md, docs/architecture/DESIGN.md, docs/architecture/PROCESSES.md, docs/development/WORKFLOW.md и docs/experiments/REPORT_TEMPLATE.md. Правила исполнителя и структурированное состояние остаются в корне. Путь на исходном компьютере не требуется и в публичный снимок не включается.
 
@@ -44,15 +44,15 @@ README объясняет проект посетителю; это не сви�
 
 ### Правила код-ревью
 
-По запросу тимлида подготовлен docs/development/CODE_REVIEW.md; его полный текст включается в этот переносимый снимок. Он охватывает Go-стиль, ошибки/context, конкурентность, данные, идемпотентность, тесты и доказательства, наблюдаемость, замечания и критерии слияния. После bootstrap изменения готовятся в отдельных ветках и через PR; ИИ не одобряет и не сливает собственную работу. Для merge нужны решение человека по предъявленному изменению и явное поручение на само действие либо действие тимлида.
+По запросу владельца проекта подготовлен docs/development/CODE_REVIEW.md; его полный текст включается в этот переносимый снимок. Он охватывает Go-стиль, ошибки/context, конкурентность, данные, идемпотентность, тесты и доказательства, наблюдаемость, замечания и критерии слияния. После bootstrap изменения готовятся в отдельных ветках и через PR; ИИ не одобряет и не сливает собственную работу. Для merge нужны решение человека по предъявленному изменению и явное поручение на само действие либо действие владельца проекта.
 
-Статус пакета правил, PR и принятие тимлидом указаны в структурированном состоянии ниже. PR #1 с HEAD 214eb34 слит аккаунтом тимлида Includeoyasi; это наблюдаемое действие в репозитории, а не придуманное текстовое approval. Подготовленный документ и зелёный CI сами по себе не означают человеческое одобрение. G0 остаётся принятым; G1–G4 не меняют статусы из-за добавления правил. Сейчас Go-модуль отсутствует: Go CI, конфигурация golangci-lint и версии инструментов будут подключены в G1-P01. GitHub branch protection отдельно не настроена этим документом. При общей GitHub-учётной записи решение человека фиксируется в чате/комментарии с PR и SHA либо подтверждается его наблюдаемым действием слияния; не изображать approval другим участником.
+Статус пакета правил, PR и принятие владельцем проекта указаны в структурированном состоянии ниже. PR #1 с HEAD 214eb34 слит аккаунтом владельца проекта Includeoyasi; это наблюдаемое действие в репозитории, а не придуманное текстовое approval. Подготовленный документ и зелёный CI сами по себе не означают человеческое одобрение. G0 остаётся принятым; G1–G4 не меняют статусы из-за добавления правил. Сейчас Go-модуль отсутствует: Go CI, конфигурация golangci-lint и версии инструментов будут подключены в P01. GitHub branch protection отдельно не настроена этим документом. При общей GitHub-учётной записи решение человека фиксируется в чате/комментарии с PR и SHA либо подтверждается его наблюдаемым действием слияния; не изображать approval другим участником.
 
 Готовый текст для первого сообщения другому агенту:
 
 ```text
 Прочитай приложенный PROJECT_CONTEXT.md как контекст моего проекта Faultline Lab.
-Я — тимлид и ревьюер; ты выполняешь следующую конкретную задачу: <задача>.
+Я — владелец проекта и ревьюер; ты выполняешь следующую конкретную задачу: <задача>.
 Сначала кратко укажи, на какой ревизии контекста работаешь, как задача связана с roadmap
 и какие файлы или сведения необходимы именно для неё. Затем выполни задачу.
 Учитывай принятые решения и статусы контрольных точек; G0 уже полностью принят.
@@ -64,7 +64,7 @@ README объясняет проект посетителю; это не сви�
 
 ### Как читать авторитет и статус информации
 
-Системные правила конкретного ИИ и его реальные разрешения остаются действующими. Внутри проектных решений приоритет имеет последнее явное указание тимлида, затем зафиксированные согласования/ADR, затем текущее состояние и принятые спецификации. Гипотезы, примеры и будущие этапы не превращаются в выполненную работу только потому, что подробно описаны.
+Системные правила конкретного ИИ и его реальные разрешения остаются действующими. Внутри проектных решений приоритет имеет последнее явное указание владельца проекта, затем зафиксированные согласования/ADR, затем текущее состояние и принятые спецификации. Гипотезы, примеры и будущие этапы не превращаются в выполненную работу только потому, что подробно описаны.
 
 Если новая задача пользователя меняет старое решение, зафиксируй изменение. Если документы или копии контекста противоречат друг другу, назови конкретное противоречие и доступные даты/ревизии. Не делай вид, что обе несовместимые версии одновременно верны.
 
@@ -84,7 +84,17 @@ G0 полностью принят пользователем; это согла
 
 Воркеры, outbox publishers и управление процессом остаются внутри этих сервисов. Генератор нагрузки, verifier, labctl и инфраструктура — инструменты стенда, а не дополнительные бизнес-сервисы.
 
-Работу выполняет ИИ; пользователь выступает тимлидом, задаёт приоритеты, проводит код-ревью и согласует ключевые этапы. Не менять эту модель на самостоятельное принятие собственных решений от лица ревьюера. Работа других агентов используется по конкретному поручению; сам факт существования этого контекста не запускает делегирование.
+Работу выполняет ИИ; пользователь выступает владельцем проекта, задаёт приоритеты, проводит код-ревью и согласует ключевые этапы. Единое обозначение человека — «владелец проекта», в контексте проверки кода — «ревьюер»; по-английски project owner и reviewer. Полномочия и контрольные точки не меняются. Не менять эту модель на самостоятельное принятие собственных решений от лица ревьюера. Работа других агентов используется по конкретному поручению; сам факт существования этого контекста не запускает делегирование.
+
+В голосовом обсуждении владелец проекта подтвердил направление развития: общая лаборатория отделена от адаптера и тестируемой системы; эталонный магазин использует ту же границу через встроенный адаптер бизнес-операций и проверок. По прямому поручению обсуждение сохранено в docs/architecture/LAB_BOUNDARY.md: обязанности частей, цикл эксперимента, предлагаемый контракт адаптера, профиль и доказательство переносимости. Обработка изображений — кандидат второго бизнеса, а мастер автоматической настройки — перспектива. Точные интерфейсы и новые критерии G4 ещё не приняты; согласованные границы трёх сервисов G0 сохраняются.
+
+Владелец проекта явно согласовал Docker как общую среду разработки и запуска на Windows и macOS. План docs/development/ENVIRONMENT.md предусматривает отдельные контейнеры трёх сервисов, общий контейнерный toolchain и Compose с инфраструктурой по этапам. Адаптер — модуль внутри инструментов, без обязательного отдельного контейнера; инструменты запускаются временно. Распределение и число контейнеров — рекомендации по текущему составу, а не измеренные ресурсы. Характеристики Windows-хоста прочитаны и сохранены в docs/development/RESOURCE_PROFILES.md; бюджет Docker и потребление приложения ещё не измерены. macOS — второй основной компьютер, арендуемый сервер — возможный вариант позже, без поручения на аренду. Go-модуль, Dockerfiles, Compose и runtime ещё отсутствуют; Docker в текущем окружении не подтверждён. Детали и доказательства находятся в environment_strategy и environment_facts ниже.
+
+По отдельному поручению подготовлены три пастельные SVG-концепции оформления. Владелец проекта выбрал вариант 2 — «Поток эксперимента»; он применён к общему баннеру README. Название Faultline Lab и бизнес-правила не менялись. Выбор, смысл композиции и ссылки на исходники сохранены в docs/design/BANNER_OPTIONS.md и branding_notes. Кривые баннера декоративные и не изображают фактические измерения. Публикация ветки и документационного PR отражается в структурированном состоянии; до merge новый баннер не появляется на главной странице main.
+
+После сверки roadmap подготовлена явная декомпозиция ближайшего PR с кодом: docs/development/packets/P01.md. Восемь задач имеют зависимости и проверяемые критерии; код NOT_STARTED, завершённых задач 0/8. По прямому поручению владельца проекта GitHub Issues принят как трекер и создан Issue #3: https://github.com/Includeoyasi/faultline-lab/issues/3. Он содержит чеклист восьми задач, зависимости и полные критерии. Стадия TODO, PR с кодом ещё не открыт. docs/development/TASK_TRACKING.md описывает стадии, доказательства и сверку снимков; Projects пока не настроен. Эти документы полностью включены в переносимый снимок. G0 остаётся принятым; P01 — первый PR с каркасом, не вся контрольная точка G1. Документационный PR с планом и баннером не является P01 и не закрывает его карточку.
+
+По уточнению владельца проекта обозначения разделены: G0–G4 — контрольные точки приёмки, P01–P05 — кодовые пакеты. Первый PR P01 выполняется между G0 и G1; после него следуют PR основы данных/заказа/склада, затем приёмка G1. Ранее первый пакет имел неоднозначный префикс контрольной точки; старое название сохраняется только в истории и таблице соответствия review_sequence. Восемь задач и критерии первого PR от переименования не изменились.
 
 ## Архитектурные опорные правила
 
@@ -158,7 +168,7 @@ MVP — этапы 0–2: работающие три сервиса, весь �
 
 ### С репозиторием
 
-1. Прочитать текущую ревизию и последнее поручение тимлида.
+1. Прочитать текущую ревизию и последнее поручение владельца проекта.
 2. Сверить файловое состояние, Git diff и действующие инструкции; контекст не заменяет чтение кода, который меняется.
 3. Ограничить задачу одним понятным пакетом и перечислить затрагиваемые инварианты/API.
 4. Выполнить работу в рамках принятого этапа. Технические детали внутри архитектуры выбирать самостоятельно; существенную смену границ, семантики или инфраструктуры представить конкретным предложением для согласования.
@@ -183,7 +193,7 @@ MVP — этапы 0–2: работающие три сервиса, весь �
 Проверки: команда, среда, наблюдаемый результат; отдельно NOT_RUN.
 Новые предположения, ограничения и вопросы: список.
 Дельта контекста: что нужно добавить/исправить в статусе, документах и следующем шаге.
-Нужное решение тимлида: только если затронута контрольная точка или существенная смена G0.
+Нужное решение владельца проекта: только если затронута контрольная точка или существенная смена G0.
 ```
 
 ## Методика экспериментов: что нельзя потерять
@@ -222,13 +232,13 @@ MVP — этапы 0–2: работающие три сервиса, весь �
 
 Инструмент не требует Go, Docker, сети, Python или зависимостей Node.js. Он использует стандартный PowerShell, собирает полные документы и записывает UTF-8. CheckOnly ничего не изменяет и сообщает несовпадение снимка с текущими источниками. Он не подтверждает истинность человеческих утверждений, не запускает сервисные тесты и не проверяет новую кодовую реализацию.
 
-Удалённый порядок: другой агент получает ревизию N, выполняет свою задачу и возвращает результат с basis_revision=N и предложением обновления. Если локально уже существует ревизия N+1, сравнить изменения, объединить совместимые результаты и проверить конфликтующие решения. Не заменять более свежий контекст старой копией. Принятие архитектурной смены или следующей точки подтверждает тимлид.
+Удалённый порядок: другой агент получает ревизию N, выполняет свою задачу и возвращает результат с basis_revision=N и предложением обновления. Если локально уже существует ревизия N+1, сравнить изменения, объединить совместимые результаты и проверить конфликтующие решения. Не заменять более свежий контекст старой копией. Принятие архитектурной смены или следующей точки подтверждает владелец проекта.
 
 История изменений должна сохранять факт принятия G0 и важные дальнейшие решения. Старые сведения о реализации заменяются текущим статусом, но история и основания решений остаются доступными. Закрытые блокеры/замечания отмечаются решёнными либо переносятся в историю, а не продолжают выглядеть активными.
 
 ## Что агент обязан отличать
 
-- **APPROVED** — прямое согласование тимлида с зафиксированным основанием.
+- **APPROVED** — прямое согласование владельца проекта с зафиксированным основанием.
 - **PLANNED / PROPOSED** — намеченное поведение или предложение, ещё не реализация.
 - **IMPLEMENTED / APPLIED** — изменения действительно существуют в указанном рабочем состоянии.
 - **VERIFIED / PASS** — приведённая проверка реально выполнена и имеет наблюдаемый результат.
@@ -248,32 +258,44 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 7,
+  "context_revision": 13,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-13",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "current_phase": "G0_APPROVED_PRE_IMPLEMENTATION",
   "current_task": {
-    "id": "DEV-REVIEW-001",
-    "description": "Установить классические правила Go code review с учётом инвариантов Faultline Lab",
-    "status": "COMPLETED",
+    "id": "REPO-TRACKING-001",
+    "description": "Зафиксировать согласованные документы и оформить задачи P01 в GitHub",
+    "status": "ISSUE_CREATED_PREPARING_DOCUMENTATION_PR",
+    "authorization": "Прямое поручение владельца проекта: молодец, фиксируй изменения и заводи задачи",
     "result": {
-      "policy_file": "docs/development/CODE_REVIEW.md",
-      "human_acceptance": "VERIFIED_TEAM_LEAD_ACCOUNT_MERGE_OF_PR_1",
-      "branch": "docs/review-policy-handoff",
-      "pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/1",
+      "issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/3",
+      "issue_number": 3,
+      "packet": "P01",
+      "interval": "AFTER_G0_BEFORE_G1",
+      "task_count": 8,
+      "implementation_completed": 0,
+      "branch": "docs/portable-lab-plan",
+      "target_branch": "main",
+      "base_commit": "1a0b3f356529e262fe902a1e419e16169e8c6b08",
+      "commit_created": false,
+      "pushed": false,
+      "pull_request_url": null,
+      "delivery": "DOCUMENTATION_PR_SEPARATE_FROM_FIRST_CODE_PR",
       "business_implementation": "NOT_STARTED",
       "go_checks": "NOT_RUN_NO_GO_MODULE",
-      "repository_protection": "NOT_CONFIGURED_BY_THIS_TASK",
       "local_validation": "PASS",
-      "documentation_ci": "PASS_ON_ACCEPTED_MAIN_COMMIT_c1e55fd",
-      "context_update_pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/2"
+      "documentation_ci": "NOT_RUN_FOR_UNCOMMITTED_CHANGES",
+      "human_review": "PENDING",
+      "merged": false
     }
   },
   "roles": {
-    "human": "Тимлид, владелец решений, код-ревьюер",
-    "ai": "Исполнитель разработки, проверок, экспериментов и документации"
+    "human": "Владелец проекта; ревьюер при проверке кода",
+    "ai": "Исполнитель разработки, проверок, экспериментов и документации",
+    "terminology_confirmed_on": "2026-10-13",
+    "authority_changed": false
   },
   "gates": [
     {
@@ -317,7 +339,7 @@ JSON ниже является частью этого файла и доста�
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "1774df8ec7eaf5a43d59fb12b868abad3f3da1f9",
+    "git_commit": "1a0b3f356529e262fe902a1e419e16169e8c6b08",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -327,19 +349,21 @@ JSON ниже является частью этого файла и доста�
         "head_ref": "docs/go-review-policy",
         "base_ref": "main",
         "head_at_merge": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
-        "human_review": "ACCEPTED_BY_TEAM_LEAD_ACCOUNT_MERGE",
+        "human_review": "ACCEPTED_BY_PROJECT_OWNER_ACCOUNT_MERGE",
         "merged": true,
         "merge_commit": "c1e55fdfca98e12e518f722300bd85ed85c1d85e"
       },
       {
         "number": 2,
         "url": "https://github.com/Includeoyasi/faultline-lab/pull/2",
-        "state": "OPEN",
+        "state": "MERGED",
         "head_ref": "docs/review-policy-handoff",
         "base_ref": "main",
         "scope": "Отражение принятия PR #1 и обновление переносимого контекста",
-        "human_review": "PENDING",
-        "merged": false
+        "human_review": "MERGED_REPOSITORY_STATE_OBSERVED",
+        "merged": true,
+        "head_at_merge": "681660a2a659d68c0336d05c0ac11db70d0c76d2",
+        "merge_commit": "1a0b3f356529e262fe902a1e419e16169e8c6b08"
       }
     ]
   },
@@ -347,41 +371,166 @@ JSON ниже является частью этого файла и доста�
     "Подготовлен практический roadmap с этапами, критериями, рисками и оценками объёма",
     "Подготовлен шаблон отчёта об инженерном эксперименте",
     "Описаны архитектура, API на уровне методов, события, состояния, компенсации и инварианты",
-    "Определены роли тимлида и ИИ-исполнителя и контрольные точки G0–G4",
+    "Определены роли владельца проекта и ИИ-исполнителя и контрольные точки G0–G4",
     "Добавлены 15 подробных схем процессов G0 и 3 обзорные схемы в архитектурном пакете",
     "G0 полностью принят пользователем 2026-10-13; принятие зафиксировано в ADR 0001",
     "Создан самостоятельный PROJECT_CONTEXT.md с быстрым вводным разделом, текущим состоянием и полными проектными приложениями",
     "Добавлены CONTEXT_STATE.json, инструменты генерации/проверки свежести и обязательные правила обновления контекста",
     "Проверены сборка, соответствие источникам, структура приложений/ссылок, кодировка и отсутствие устаревшего ожидания принятия G0",
     "Создан публичный GitHub-репозиторий Includeoyasi/faultline-lab с описанием и темами; локальный Git и origin инициализированы",
-    "Документы разложены по docs; добавлены двуязычный README, SVG-обложка, карта документации, MIT по выбору тимлида и шаблоны ревью",
+    "Документы разложены по docs; добавлены двуязычный README, SVG-обложка, карта документации, MIT по выбору владельца проекта и шаблоны ревью",
     "Добавлены переносимая проверка документации и CI workflow; CI первого опубликованного коммита прошёл на Ubuntu runner",
     "Первый коммит 6897f4a опубликован в main, ветка отслеживает origin/main; GitHub README и структура проверены после публикации",
     "Публичное оформление и актуализация переносимого контекста завершены; реализация G1-P01 остаётся следующим шагом",
     "Подготовлен Go code review standard: стиль, errors/context, concurrency, SQL/контракты/идемпотентность, тесты, наблюдаемость и критерии приёмки",
-    "Правила связаны с AGENTS, workflow, CONTRIBUTING, README, шаблоном PR и полным переносимым контекстом; отдельное одобрение тимлида пока не получено",
+    "Правила связаны с AGENTS, workflow, CONTRIBUTING, README, шаблоном PR и полным переносимым контекстом; отдельное одобрение владельца проекта пока не получено",
     "Правила опубликованы в ветке docs/go-review-policy и PR #1; локальные проверки и документационный CI исходного коммита прошли; слияние и человеческое принятие ожидаются",
-    "PR #1 с правилами Go code review слит аккаунтом тимлида Includeoyasi; CI main на merge commit c1e55fd прошёл. Правила действуют; реализация G1 ещё не начата.",
-    "Создан отдельный PR #2 для обновления сведений о принятии правил и переносимого контекста; PR #1 уже принят и слит тимлидом"
+    "PR #1 с правилами Go code review слит аккаунтом владельца проекта Includeoyasi; CI main на merge commit c1e55fd прошёл. Правила действуют; реализация G1 ещё не начата.",
+    "Создан отдельный PR #2 для обновления сведений о принятии правил и переносимого контекста; PR #1 уже принят и слит владельцем проекта",
+    "Проверено слияние PR #2; актуальная основная ветка получена перед подготовкой изменения терминологии",
+    "Роль человека унифицирована в документации, схемах, правилах исполнителя и шаблоне задачи; обновлённый переносимый контекст подготовлен к следующему коммиту",
+    "Сохранены детализация общей лаборатории/адаптеров, согласованная контейнерная среда Windows/macOS и наблюдаемый ресурсный снимок Windows; runtime ещё отсутствует",
+    "Подготовлены и визуально просмотрены три пастельных SVG-концепции; выбранный владельцем вариант 2 применён к общему баннеру README локально",
+    "Подготовлена явная декомпозиция первого PR G1-P01 на восемь задач с зависимостями и критериями; код 0/8. Предложен GitHub Issues, внешние карточки/доска не создавались",
+    "Маркеры контрольных точек и пакетов разделены: первый кодовый PR P01 находится после G0 и до G1; переименованы активные задачи и ссылки, критерии сохранены",
+    "Создан GitHub Issue #3 для P01 с восемью задачами, зависимостями и полными критериями; стадия TODO, код 0/8. Ссылки добавлены в README, roadmap, workflow, спецификацию и переносимый контекст."
   ],
   "next_implementation_packet": {
-    "id": "G1-P01",
+    "id": "P01",
     "status": "NOT_STARTED",
-    "goal": "Проверяемая основа проекта: три Go entrypoints, конфигурация, health, graceful shutdown и JSON-логи",
+    "goal": "Контейнерная основа трёх Go-сервисов: entrypoints, конфигурация, gRPC health, graceful shutdown, JSON-логи, toolchain, образы, минимальный Compose и Go CI",
     "approval_dependency": "G0 уже принят; повторное согласование G0 не требуется",
     "following_packets": [
-      "G1-P02: Compose core, отдельные базы/роли, миграции и seed",
-      "G1-P03: protobuf, ключи операций, состояния и классификация ошибок",
-      "G1-P04: Create/Get/GetByRequestKey и долговечная задача Orders",
-      "G1-P05: Reserve/Commit/Release/GetReservation, ledger и cancellation barrier"
-    ]
+      "P02: Compose core, отдельные базы/роли, миграции и seed",
+      "P03: protobuf, ключи операций, состояния и классификация ошибок",
+      "P04: Create/Get/GetByRequestKey и долговечная задача Orders",
+      "P05: Reserve/Commit/Release/GetReservation, ledger и cancellation barrier"
+    ],
+    "decomposition_status": "DOCUMENTED_READY_FOR_IMPLEMENTATION",
+    "specification": "docs/development/packets/P01.md",
+    "acceptance_status": "DOCUMENTED_NOT_EXECUTED",
+    "progress": {
+      "completed": 0,
+      "total": 8
+    },
+    "tasks": [
+      {
+        "id": "P01-01",
+        "title": "Go-модуль и закреплённый toolchain",
+        "depends_on": [],
+        "status": "NOT_STARTED",
+        "evidence": "NOT_RUN",
+        "acceptance_source": "docs/development/packets/P01.md"
+      },
+      {
+        "id": "P01-02",
+        "title": "Конфигурация с проверкой",
+        "depends_on": [
+          "P01-01"
+        ],
+        "status": "NOT_STARTED",
+        "evidence": "NOT_RUN",
+        "acceptance_source": "docs/development/packets/P01.md"
+      },
+      {
+        "id": "P01-03",
+        "title": "Структурированные логи",
+        "depends_on": [
+          "P01-01"
+        ],
+        "status": "NOT_STARTED",
+        "evidence": "NOT_RUN",
+        "acceptance_source": "docs/development/packets/P01.md"
+      },
+      {
+        "id": "P01-04",
+        "title": "Три entrypoints и gRPC health",
+        "depends_on": [
+          "P01-02",
+          "P01-03"
+        ],
+        "status": "NOT_STARTED",
+        "evidence": "NOT_RUN",
+        "acceptance_source": "docs/development/packets/P01.md"
+      },
+      {
+        "id": "P01-05",
+        "title": "Graceful shutdown с пределом ожидания",
+        "depends_on": [
+          "P01-04"
+        ],
+        "status": "NOT_STARTED",
+        "evidence": "NOT_RUN",
+        "acceptance_source": "docs/development/packets/P01.md"
+      },
+      {
+        "id": "P01-06",
+        "title": "Образы и минимальный Compose",
+        "depends_on": [
+          "P01-01",
+          "P01-02",
+          "P01-03",
+          "P01-04",
+          "P01-05"
+        ],
+        "status": "NOT_STARTED",
+        "evidence": "NOT_RUN",
+        "acceptance_source": "docs/development/packets/P01.md"
+      },
+      {
+        "id": "P01-07",
+        "title": "Go-проверки и CI",
+        "depends_on": [
+          "P01-01",
+          "P01-02",
+          "P01-03",
+          "P01-04",
+          "P01-05"
+        ],
+        "status": "NOT_STARTED",
+        "evidence": "NOT_RUN",
+        "acceptance_source": "docs/development/packets/P01.md"
+      },
+      {
+        "id": "P01-08",
+        "title": "Smoke-проверка, инструкция и review packet",
+        "depends_on": [
+          "P01-06",
+          "P01-07"
+        ],
+        "status": "NOT_STARTED",
+        "evidence": "NOT_RUN",
+        "acceptance_source": "docs/development/packets/P01.md"
+      }
+    ],
+    "interval": "AFTER_G0_BEFORE_G1",
+    "target_review_gate": "G1",
+    "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/3",
+    "tracker_stage": "TODO"
   },
   "active_blockers": [],
   "open_review_comments": [],
+  "lab_evolution_notes": {
+    "status": "USER_CONFIRMED_DIRECTION_WITH_REVIEWABLE_DETAIL",
+    "discussed_on": "2026-10-13",
+    "confirmed_direction": [
+      "Лаборатория должна иметь границу с тестируемой бизнес-системой для последующего подключения других проектов",
+      "Эталонный магазин подключается через заранее настроенный адаптер с бизнес-операциями и проверками, используя ту же границу, что и будущие проекты"
+    ],
+    "confirmation_evidence": "Владелец проекта подтвердил границу лаборатории, встроенный адаптер магазина, затем попросил детализацию и сохранение обсуждения",
+    "proposals_pending_design": [
+      "Точные Go-интерфейсы, capabilities, типы исходов, доказательства и формат профиля по первому работающему срезу",
+      "Обработка изображений через HTTP как кандидат второго бизнеса; конкретный проект не выбран",
+      "Полный эксперимент на втором бизнесе как предлагаемое доказательство переносимости; дополнение к G4 ещё не принято",
+      "Мастер подготовки операций, данных и проверок с подтверждением владельцем целевой системы; перспектива после проверенного профиля"
+    ],
+    "scope_note": "Детализация сохранена для ревью, не является работающей реализацией или одобрением точных интерфейсов. Три бизнес-сервиса магазина и инварианты G0 сохраняются; второй бизнес подключается как другая тестируемая система.",
+    "detail_document": "docs/architecture/LAB_BOUNDARY.md"
+  },
   "pending_implementation_choices": [
-    "Проверить наличие и версии Go, Docker/Compose и фактические ресурсы среды",
+    "Обеспечить доступные Docker Desktop/Compose и снять фактические лимиты backend; контейнерный toolchain заменяет обязательную установку host Go. Windows-хост измерен, macOS пока нет.",
     "Выбрать и закрепить версии Go, библиотек и контейнерных образов",
-    "Создать Go-модуль github.com/Includeoyasi/faultline-lab в G1-P01; Git main/origin уже настроены",
+    "Создать Go-модуль github.com/Includeoyasi/faultline-lab в P01; Git main/origin уже настроены",
     "Подготовить точные protobuf-схемы, error codes и SQL-модели в рамках G0",
     "Определить конкретную реализацию lease/version fencing, outbox ordering и durable job dispatch",
     "Откалибровать гипотетические SLO и ресурсные лимиты после работающего MVP"
@@ -392,10 +541,32 @@ JSON ниже является частью этого файла и доста�
     "user_timezone": "Europe/Moscow",
     "project_path_at_snapshot": null,
     "path_required_to_read_context": false,
-    "go_available": "NOT_CHECKED",
-    "docker_available": "NOT_CHECKED",
-    "cpu_ram_disk_budget": "NOT_CHECKED",
-    "local_directory_name": "faultline-lab"
+    "go_available": "NOT_FOUND_IN_CURRENT_SHELL_PATH",
+    "docker_available": "NOT_FOUND_IN_CURRENT_SHELL_PATH",
+    "tool_commands_checked_on": "2026-10-13",
+    "tool_check_scope": "Go/Docker не обнаружены в текущем PATH и проверенных стандартных расположениях. Команда WSL обнаружена, её работоспособность и конфигурация не проверялись. Другие установки Go/Docker не исключены.",
+    "powershell_version": "7.6.5",
+    "cpu_ram_disk_budget": "HOST_SNAPSHOT_COLLECTED_DOCKER_BUDGET_NOT_MEASURED",
+    "local_directory_name": "faultline-lab",
+    "cpu_architecture": "X64",
+    "wsl_command_available": true,
+    "resource_snapshot": {
+      "observed_on": "2026-10-13",
+      "source": "Windows CIM: CPU/OS; PowerShell volume capacity/free space",
+      "os": "Windows 11 Pro, build 26200, x64",
+      "cpu_model": "Intel Core i5-12400F",
+      "physical_cores": 6,
+      "logical_processors": 12,
+      "os_visible_memory_gib": 15.72,
+      "available_memory_gib_at_observation": 3.38,
+      "workspace_volume_capacity_gib": 930.51,
+      "workspace_volume_free_gib_at_observation": 134.32,
+      "docker_budget": "NOT_MEASURED",
+      "application_consumption": "NOT_MEASURED_NO_RUNTIME",
+      "macos_resources": "NOT_MEASURED",
+      "future_server_resources": "NOT_SELECTED",
+      "note": "Свободные ресурсы изменяются; снимок хоста не равен бюджету Docker и не подтверждает capacity приложения"
+    }
   },
   "validation_evidence": [
     {
@@ -471,17 +642,117 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-13",
       "check": "Publish Go review policy branch and PR",
       "result": "PASS",
-      "detail": "Ветка docs/go-review-policy опубликована, GitHub PR #1 открыт в main с HEAD 214eb34. Documentation push run 38318256118 завершился success. PR не одобрен ИИ и не слит; решение тимлида не получено.",
+      "detail": "Ветка docs/go-review-policy опубликована, GitHub PR #1 открыт в main с HEAD 214eb34. Documentation push run 38318256118 завершился success. PR не одобрен ИИ и не слит; решение владельца проекта не получено.",
       "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/1",
       "ci_url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38318256118"
     },
     {
       "date": "2026-10-13",
-      "check": "Observe team lead merge and reconcile current main",
+      "check": "Observe project owner merge and reconcile current main",
       "result": "PASS",
       "detail": "GitHub API подтвердил PR #1 merged=true, merged_by=Includeoyasi, accepted HEAD 214eb34, merge c1e55fd. Main CI run 38318650575 success. Origin/main получен; последующее обновление контекста перенесено на актуальный main без конфликтов. ИИ не выполнял слияние.",
       "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/1",
       "ci_url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38318650575"
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Verify the merged context handoff before preparing local terminology changes",
+      "result": "PASS",
+      "detail": "GitHub metadata подтвердили слияние PR #2 с HEAD 681660a и merge commit 1a0b3f3. Git fetch получил origin/main; новые правки подготовлены на этой основе. Слияние не выполнялось в этой задаче.",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/2"
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Project owner terminology and refreshed portable context",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly",
+        "powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/update_context.ps1 -CheckOnly",
+        "git diff --check",
+        "Search canonical documents, templates and generated context for obsolete role terminology"
+      ],
+      "detail": "Проверены 16 Markdown-файлов, 144 локальные ссылки и структура 50 Mermaid-блоков; снимок ревизии 8 содержит 13 документов и 16 fingerprints. CheckOnly прошёл в PowerShell 7 и Windows PowerShell 5.1. Прежнее название роли и дублированные фразы не обнаружены. Коммит и push ещё не выполнены; CI нового изменения и Go-проверки не запускались."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Initial local tool availability check before G1-P01",
+      "result": "OBSERVED",
+      "detail": "Get-Command не обнаружил go и docker в текущем PATH; PowerShell 7.6.5 доступен. Go/Docker версии и Docker daemon не проверены, поскольку команды не найдены. Ничего не устанавливалось; ресурсы и другие расположения инструментов ещё не исследованы."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Read Windows host resource snapshot",
+      "result": "PASS",
+      "detail": "CPU/OS CIM чтение сначала ограничено песочницей; разрешённый повтор дал CPU 6/12, 15.72 GiB видимой памяти, 3.38 GiB свободной и 134.32 GiB свободного места. Нулевые значения неудачного чтения не используются. Лимиты Docker и потребление приложения не измерены."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Render and visually inspect three banner concepts",
+      "result": "PASS",
+      "detail": "Три SVG отрендерены в PNG через локальный sharp, просмотрен общий лист. Текст не обрезан; владелец выбрал вариант 2. Исходник применён к общему баннеру README. Публикация и просмотр изменённого GitHub README ещё не выполнялись."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Validate saved lab/environment decisions, chosen banner and portable context revision 10",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly",
+        "powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/update_context.ps1 -CheckOnly",
+        "git diff --check",
+        "git diff --cached --check",
+        "Compare selected SVG with common README banner; render SVG previews"
+      ],
+      "detail": "Проверены 20 Markdown-файлов, 194 локальные ссылки, UTF-8/LF/fences и структура 56 Mermaid-блоков. Контекст ревизии 10 содержит 17 встроенных документов и 20 fingerprints; CheckOnly проходит в PowerShell 7 и Windows PowerShell 5.1. PNG previews созданы, баннер совпадает с выбранным SVG. Полный Mermaid-render и сервисные проверки не выполнялись; runtime отсутствует. Изменения не закоммичены и не опубликованы."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Inspect existing task tracking",
+      "result": "OBSERVED",
+      "detail": "GitHub search repo:Includeoyasi/faultline-lab is:issue вернул пустой список. До этой задачи G1-P01 имел общий объём в design/context без явной декомпозиции и отдельных критериев."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "G1-P01 decomposition and tracking proposal documentation",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly",
+        "git diff --check"
+      ],
+      "detail": "Проверены 22 Markdown-файла, 230 локальных ссылок и структура 56 Mermaid-блоков. Снимок ревизии 11 содержит 19 документов и 22 fingerprints. Критерии описаны, но не исполнены: код 0/8 и Go/Docker проверки NOT_RUN. Внешние Issues/Projects не создавались."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Separate gate and packet naming; first code PR P01 between G0 and G1",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly",
+        "git diff --check",
+        "Search active documents for obsolete packet labels"
+      ],
+      "detail": "Активные документы, пути и ID задач используют P01–P05. Старое обозначение сохранено только в истории/таблице соответствия; восемь задач и критерии не изменены. Проверены 22 Markdown-файла, 230 локальных ссылок и актуальность контекста ревизии 12 с 19 документами и 22 fingerprints. Код 0/8, runtime/Go проверки не выполнялись."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "GitHub P01 issue creation and body completeness",
+      "result": "PASS",
+      "detail": "GitHub REST вернул открытый Issue #3; в сохранённом ответе проверены 8 пустых task checkboxes и 8 разделов критериев, текст не усечён. Это создание backlog, а не выполнение задач.",
+      "url": "https://github.com/Includeoyasi/faultline-lab/issues/3"
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Documentation and context for created P01 backlog",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly",
+        "git diff --check",
+        "git diff --cached --check"
+      ],
+      "detail": "Проверены 22 Markdown-файла, 234 локальные ссылки, структура 56 Mermaid-блоков и актуальность ревизии 13 с 19 документами/22 fingerprints. Активные документы не содержат старых имён пакетов или роли тимлида. Проверки Go/runtime не выполнялись: реализации нет."
     }
   ],
   "source_documents": [
@@ -549,6 +820,36 @@ JSON ниже является частью этого файла и доста�
       "path": "docs/development/CODE_REVIEW.md",
       "anchor": "appendix-code-review",
       "title": "Правила Go code review и критерии принятия изменений"
+    },
+    {
+      "path": "docs/architecture/LAB_BOUNDARY.md",
+      "anchor": "appendix-lab-boundary",
+      "title": "Общая лаборатория, адаптеры и кандидат второго бизнеса"
+    },
+    {
+      "path": "docs/development/ENVIRONMENT.md",
+      "anchor": "appendix-environment",
+      "title": "Переносимая Docker-среда и распределение контейнеров"
+    },
+    {
+      "path": "docs/development/RESOURCE_PROFILES.md",
+      "anchor": "appendix-resource-profiles",
+      "title": "Ресурсный снимок Windows и будущие профили macOS/сервера"
+    },
+    {
+      "path": "docs/design/BANNER_OPTIONS.md",
+      "anchor": "appendix-banner-options",
+      "title": "Концепции баннера и выбранное оформление"
+    },
+    {
+      "path": "docs/development/packets/P01.md",
+      "anchor": "appendix-p01",
+      "title": "Первый PR с кодом: задачи, зависимости и критерии приёмки"
+    },
+    {
+      "path": "docs/development/TASK_TRACKING.md",
+      "anchor": "appendix-task-tracking",
+      "title": "Предложенный порядок Issues, статусов и переносимых снимков"
     }
   ],
   "change_history": [
@@ -574,25 +875,61 @@ JSON ниже является частью этого файла и доста�
       "revision": 4,
       "date": "2026-10-13",
       "summary": "Подготовлен стандарт Go code review и обновлены инструкции/шаблон PR; создана ветка docs/go-review-policy. Go CI включается с первым модулем; человеческое одобрение не заявляется.",
-      "trigger": "Прямое поручение тимлида установить современные правила Go code review."
+      "trigger": "Прямое поручение владельца проекта установить современные правила Go code review."
     },
     {
       "revision": 5,
       "date": "2026-10-13",
-      "summary": "Зафиксированы PR #1, опубликованная ветка, успешные локальные проверки и CI 214eb34; правила готовы к ревью тимлида, слияние не выполнялось.",
+      "summary": "Зафиксированы PR #1, опубликованная ветка, успешные локальные проверки и CI 214eb34; правила готовы к ревью владельца проекта, слияние не выполнялось.",
       "trigger": "Фактические результаты Git push, GitHub PR creation и Actions."
     },
     {
       "revision": 6,
       "date": "2026-10-13",
-      "summary": "Замечено и проверено слияние PR #1 аккаунтом тимлида. Правила действуют в main; статусы reconciled с merge c1e55fd и успешным CI. Handoff обновляется отдельной веткой.",
+      "summary": "Замечено и проверено слияние PR #1 аккаунтом владельца проекта. Правила действуют в main; статусы reconciled с merge c1e55fd и успешным CI. Handoff обновляется отдельной веткой.",
       "trigger": "GitHub PR metadata и фактическое обновление origin/main во время текущей задачи."
     },
     {
       "revision": 7,
       "date": "2026-10-13",
       "summary": "В переносимый снимок добавлен PR #2 для отражения принятия Go review standard; правила уже действуют через PR #1 в main.",
-      "trigger": "Создание отдельного handoff PR после наблюдаемого слияния тимлидом."
+      "trigger": "Создание отдельного handoff PR после наблюдаемого слияния владельцем проекта."
+    },
+    {
+      "revision": 8,
+      "date": "2026-10-13",
+      "summary": "Унифицировано название роли человека, обновлены исходные документы и переносимый контекст для следующего коммита; отражено слияние PR #2 и сохранено согласованное направление развития лаборатории.",
+      "trigger": "Прямое поручение владельца проекта подготовить изменения терминологии к следующему коммиту; предшествующее голосовое обсуждение границы лаборатории и бизнес-системы."
+    },
+    {
+      "revision": 9,
+      "date": "2026-10-13",
+      "summary": "Зафиксирована первая проверка среды перед G1-P01: Go и Docker не обнаружены как команды текущего терминала; подготовленные документы по-прежнему ожидают следующего коммита.",
+      "trigger": "Владелец проекта спросил о необходимых приготовлениях перед следующим пакетом реализации."
+    },
+    {
+      "revision": 10,
+      "date": "2026-10-13",
+      "summary": "Сохранены граница лаборатории и кандидат второго бизнеса, согласованный Docker-подход, анализ контейнеров и ресурсы Windows; применён выбранный пастельный баннер. Все изменения подготовлены к следующему коммиту, без runtime и публикации.",
+      "trigger": "Голосовое обсуждение и прямые поручения сохранить решения/измерить ресурсы/подготовить три обложки; затем выбор владельцем варианта 2"
+    },
+    {
+      "revision": 11,
+      "date": "2026-10-13",
+      "summary": "Первый кодовый PR G1-P01 декомпозирован на 8 задач с критериями и зависимостями; предложен GitHub Issues и уточнены статусы. Реализация 0/8, внешние карточки и PR с Go-кодом не созданы.",
+      "trigger": "Владелец проекта запросил список задач ближайшего MR, статус декомпозиции, критерии приёмки и место учёта выполнения"
+    },
+    {
+      "revision": 12,
+      "date": "2026-10-13",
+      "summary": "Первый кодовый пакет переименован из G1-P01 в P01. В документах и контексте явно зафиксирован порядок G0 → кодовые PR с ревью → G1; состав первого PR и статусы не изменились.",
+      "trigger": "Владелец проекта указал на неоднозначность обозначения и подтвердил место первого PR между G0 и G1"
+    },
+    {
+      "revision": 13,
+      "date": "2026-10-13",
+      "summary": "Принят GitHub Issues и создан P01 #3. Согласованные документы, новая обложка и разделение G0/P01/G1 подготовлены к документационному PR; первый PR с кодом остаётся будущим P01.",
+      "trigger": "Прямое поручение владельца проекта: молодец, фиксируй изменения и заводи задачи"
     }
   ],
   "repository": {
@@ -605,7 +942,7 @@ JSON ниже является частью этого файла и доста�
     "status": "PUBLISHED",
     "description": "A Go microservices lab for testing scale, failure and recovery — built through human-led AI collaboration.",
     "license": "MIT",
-    "license_approval": "Прямое сообщение тимлида 2026-10-13: возьми MIT",
+    "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "context_commit_semantics": "git_commit фиксирует HEAD на момент подготовки снимка; финальный HEAD проверяется через git rev-parse HEAD, поскольку снимок не может содержать hash собственного коммита.",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
     "verified_ci": {
@@ -617,13 +954,13 @@ JSON ниже является частью этого файла и доста�
       "event": "push",
       "scope": "Документационный CI main после принятия правил; не является проверкой последующего handoff PR или Go-кода."
     },
-    "snapshot_ref": "docs/review-policy-handoff"
+    "snapshot_ref": "main"
   },
   "review_policy": {
     "document": "docs/development/CODE_REVIEW.md",
-    "status": "ACCEPTED_VIA_TEAM_LEAD_REPOSITORY_MERGE",
+    "status": "ACCEPTED_VIA_PROJECT_OWNER_REPOSITORY_MERGE",
     "requested_on": "2026-10-13",
-    "request_evidence": "Прямое сообщение тимлида: Давай теперь установим классические для современной разработки на Go правила код-ревью",
+    "request_evidence": "Прямое сообщение владельца проекта: Давай теперь установим классические для современной разработки на Go правила код-ревью",
     "human_approval": {
       "kind": "OBSERVED_REPOSITORY_MERGE",
       "actor": "Includeoyasi",
@@ -632,13 +969,125 @@ JSON ниже является частью этого файла и доста�
       "accepted_head": "214eb34a160a2e331ecb45bca3f5f11fdeb5a73b",
       "merge_commit": "c1e55fdfca98e12e518f722300bd85ed85c1d85e",
       "pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/1",
-      "detail": "GitHub API подтвердил слияние аккаунтом тимлида. ИИ не вызывал merge/approve; текстовое approval не приписывается пользователю."
+      "detail": "GitHub API подтвердил слияние аккаунтом владельца проекта. ИИ не вызывал merge/approve; текстовое approval не приписывается пользователю."
     },
     "normal_change_delivery": "FOCUSED_BRANCH_AND_PR",
     "merge": "EXPLICIT_HUMAN_DECISION_AND_ACTION_AUTHORIZATION",
-    "go_checks_activation": "G1-P01_WITH_FIRST_GO_MODULE",
+    "go_checks_activation": "P01_WITH_FIRST_GO_MODULE",
     "github_branch_protection": "NOT_CONFIGURED_BY_THIS_TASK",
     "pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/1"
+  },
+  "environment_strategy": {
+    "status": "USER_APPROVED_APPROACH_NOT_IMPLEMENTED",
+    "approved_on": "2026-10-13",
+    "confirmation_evidence": "Владелец проекта описал работу на Windows и macOS, согласовал Docker-подход сообщением Да, давай так и сделаем",
+    "documents": [
+      "docs/development/ENVIRONMENT.md",
+      "docs/development/RESOURCE_PROFILES.md"
+    ],
+    "primary_hosts": [
+      "Windows desktop",
+      "macOS laptop"
+    ],
+    "runtime": "Docker Desktop, Linux containers, Docker Compose",
+    "toolchain": "Контейнерная сборка Go, тесты и закреплённые инструменты; host Go необязателен",
+    "planned_image_platforms": [
+      "linux/amd64",
+      "linux/arm64"
+    ],
+    "container_layout_recommendation": {
+      "base": "3 бизнес-сервиса + 1 PostgreSQL с 3 базами + 1 Kafka + 1 Redis",
+      "observability": "Prometheus, Grafana, Loki, Alloy — 4 дополнительных компонента",
+      "tools": "Временные запуски toolchain/lab; адаптер — модуль без отдельного обязательного контейнера",
+      "count_scope": "6 постоянных core, 10 с базовой наблюдаемостью при одной реплике; дополнительные exporters/реплики увеличат состав",
+      "measured_resource_cost": "NOT_MEASURED"
+    },
+    "comparison_rule": "По умолчанию A/B на одной машине с одинаковыми лимитами и нативной архитектурой; разные хосты/ресурсы — отдельный фактор",
+    "future_server": {
+      "status": "FUTURE_OPTION",
+      "user_intent": "Владелец проекта может арендовать сервер позже, если понадобятся дополнительные ресурсы и масштабирование",
+      "server_selected": false,
+      "rental_or_deployment_authorized": false
+    },
+    "runtime_created": false,
+    "windows_container_start_verified": false,
+    "macos_container_start_verified": false
+  },
+  "branding_notes": {
+    "status": "USER_SELECTED_AND_LOCALLY_APPLIED",
+    "selected_on": "2026-10-13",
+    "brief": "Три варианта: технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее",
+    "document": "docs/design/BANNER_OPTIONS.md",
+    "alternatives": [
+      "01-system-map",
+      "02-experiment-flow",
+      "03-research-horizon"
+    ],
+    "selected": "02-experiment-flow",
+    "selection_evidence": "Прямое сообщение владельца проекта: Мне нравится вариант 2",
+    "primary_asset": "docs/assets/banner.svg",
+    "source_asset": "docs/assets/banner-concepts/02-experiment-flow.svg",
+    "preview": "docs/assets/banner-concepts/02-experiment-flow.png",
+    "comparison": "docs/assets/banner-concepts/comparison.png",
+    "svg_sha256": "7eb3a6e1ec1176769be56d05c959dd75893d17e7dd27fea0d9767701d6a7d119",
+    "published": false,
+    "note": "Линии декоративные, не изображают измерения; оба README используют общий SVG"
+  },
+  "task_tracking": {
+    "status": "ACTIVE_GITHUB_ISSUE_CREATED",
+    "document": "docs/development/TASK_TRACKING.md",
+    "current_task_list": "docs/development/packets/P01.md",
+    "blocked": "Отдельная причина/требуемое действие; подготовка исходников не запрещена отсутствием Docker",
+    "github_issues_url": "https://github.com/Includeoyasi/faultline-lab/issues",
+    "current_packet_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/3",
+    "project_board_url": null,
+    "github_issue_search": {
+      "checked_on": "2026-10-13",
+      "returned_issues": 0,
+      "query": "repo:Includeoyasi/faultline-lab is:issue",
+      "scope_note": "Поиск выполнен до создания Issue #3; пустой ответ не является текущим числом задач"
+    },
+    "automatic_snapshot_sync": false,
+    "completion_rule": "DONE только после выполненных критериев, принятия владельцем конкретного HEAD и merge; draft/зелёный CI не равны приёмке",
+    "snapshot_rule": "GitHub Issue — источник текущего выполнения; спецификация и контекст сохраняют датированный снимок с URL, результатами и ограничениями",
+    "tracker": "GitHub Issues, один Issue на review packet, чеклист подзадач",
+    "stages": [
+      "TODO",
+      "IN_PROGRESS",
+      "IN_REVIEW",
+      "DONE"
+    ],
+    "approved_on": "2026-10-13",
+    "approval_evidence": "Прямое поручение владельца проекта: молодец, фиксируй изменения и заводи задачи",
+    "current_packet_issue_number": 3,
+    "current_packet_stage": "TODO",
+    "progress": {
+      "completed": 0,
+      "total": 8
+    },
+    "last_issue_observation": {
+      "date": "2026-10-13",
+      "number": 3,
+      "state": "OPEN",
+      "unchecked_tasks": 8,
+      "acceptance_sections": 8,
+      "source": "GitHub REST create response"
+    }
+  },
+  "review_sequence": {
+    "confirmed_on": "2026-10-13",
+    "confirmation_evidence": "Владелец проекта уточнил, что первый PR должен идти между G0 и G1",
+    "gates": "G0–G4 обозначают контрольные точки приёмки, не отдельные PR и не номера пакетов",
+    "packets": "P01–P05 обозначают небольшие пакеты кода с отдельным ревью до приёмки G1",
+    "sequence": [
+      "G0: архитектура принята",
+      "P01: первый кодовый PR, каркас и ревью",
+      "P02–P05: следующие PR основы данных/API/заказа/склада с ревью",
+      "G1: приёмка работающей основы заказа и склада"
+    ],
+    "previous_packet_label": "G1-P01",
+    "current_packet_label": "P01",
+    "note": "Переименование устраняет неоднозначность; объём кода, восемь задач и критерии не меняются. Старые метки в истории относятся к тому же пакету."
   }
 }
 ```
@@ -649,22 +1098,28 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `d6c27957d4e413bb69a4ecf2c5164300b3e379a9f77c1f0320ca96aeb420272d` |
-| `tools/context_intro.md` | `4aea668cdcc08e5d2beacbbbc869493a88862adfefc19e115684ce66a02fe78f` |
+| `CONTEXT_STATE.json` | `c4baaaaf03c80a0eed100aaa688eab30e2e24b4f74b52d3e3bb90f8e272e358b` |
+| `tools/context_intro.md` | `476d17df50215f17d9efd574fd70b959194885e4be933607df421208f7c8cfad` |
 | `tools/update_context.ps1` | `a0c3c6d4a2f84cc143bd670600218ca6cfa7ce30b7a770608f9aa06be8934b26` |
-| `README.md` | `0720f80a667c94917a534fe05ec547bdff8bcb853913d18440310b987c5ee16a` |
-| `README.ru.md` | `5bb9f4229ddb1ceab2de38c40a44b0f4eee19219554b58f37c07ae7e89865cd9` |
-| `docs/README.md` | `c84025b4edf4b6ded7b4ee5f06b05bb8ad36029ef397cd33fca384e403a8c24a` |
-| `docs/ROADMAP.md` | `44abbd4c97ab735bfd1ab3332c79b74c320452d52b8bfa3714fdeadded60df87` |
-| `docs/architecture/DESIGN.md` | `cd150f15b8a676453f77197687d2f8df4e68944ac77c63d2d867c2779d6fd750` |
-| `docs/architecture/PROCESSES.md` | `fb6ef989e7773a353c216f60029f25444accc363a9ee06cac58845c02087b8e1` |
-| `docs/development/WORKFLOW.md` | `e62d8f11c1d49cc5e4d6ccd0359600e52ae160e11fe99dec2d2b8f2aa1eabfb8` |
+| `README.md` | `b7d60eb7a0712d74d6b707fb44cb315d529494feba63c75b27d083930e1e9aa5` |
+| `README.ru.md` | `2dde0bace4cf95289e5f4ca21a3dca4c8f153fd4a5e866a09f7dc2a699ea49d5` |
+| `docs/README.md` | `781ad8125712d5d230132b44151273a3cd02ff0eb1789398568a019b206a45f6` |
+| `docs/ROADMAP.md` | `06fae590b2859ade4f9a0d6705f9fb482ab38d45a3a4125ac4da38b4d907e915` |
+| `docs/architecture/DESIGN.md` | `6db3d3ff87a24520ff2c7205051db0056251e2c867ee0d093fe8e4fc78aa14dd` |
+| `docs/architecture/PROCESSES.md` | `dd6d00ee9d169236fe0f0d14de4b6f54d778a7cf79489f6b6a3354357e2e9ec6` |
+| `docs/development/WORKFLOW.md` | `46b4f9b8058aa3210f500dfa38284fc72bba057e3e06ab30cb306d805d5fd21a` |
 | `docs/experiments/REPORT_TEMPLATE.md` | `4f569aab52ba34a68bb2e8b4551c6a3bf4932277c26c3b4206dbb505781a2cab` |
-| `AGENTS.md` | `01b13be8165a4219c754174d41d58fd31f4d2daa11493238f1c3b6e74e078468` |
-| `docs/adr/0001-approved-g0.md` | `700f9e578e681c7902f619143a24d92c68df9401a2de54a03d416507502ac748` |
-| `CONTRIBUTING.md` | `079ad6fef1d464c5e9eac849cddb381b2805d198c15a13bf0404dea8dd46a4bd` |
+| `AGENTS.md` | `b350fee476a1d4e799b486c51eb9336078580a47b2d4507526e098feb1b10acc` |
+| `docs/adr/0001-approved-g0.md` | `b8518c5c49cdefea3dbf0bf2a79ab40459dba2b565e71a6c534a555cbafa20df` |
+| `CONTRIBUTING.md` | `b805939c170ddf7036212bd9c880597f6172076216996d36cb742833e992eaa0` |
 | `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
-| `docs/development/CODE_REVIEW.md` | `38a5e040f20ab385792a676546ad69d99a6647e68a2c4426f64107c415c14ddd` |
+| `docs/development/CODE_REVIEW.md` | `2ae652fb3491e5820c577f02254f1777a4c99a97126b3f4b1bda39b1747e75b9` |
+| `docs/architecture/LAB_BOUNDARY.md` | `790709c43d5c2920909a9f5227467bcb77ec4d228024156dd5f69f29a8d92e46` |
+| `docs/development/ENVIRONMENT.md` | `0e5dd946a8810c78e2bbe780a44d7944a07b8ae1d01e1144166dc6bb4d9e54a6` |
+| `docs/development/RESOURCE_PROFILES.md` | `6b3fc67394485c0b13247d564175f3ecfb2b578a115dffbd252a31247e9bb5a1` |
+| `docs/design/BANNER_OPTIONS.md` | `42b00c64ff097e248f1e1464731e6e7a5731a3d80aa4669fe3f41245788c8b8c` |
+| `docs/development/packets/P01.md` | `5e6386894ae77d2f1f9326b4db4b7455788c594f946d705212eb1e7830ff5b3b` |
+| `docs/development/TASK_TRACKING.md` | `7c627cd73769bcb5da97515ae3bfcf28941034b7fea8a689805fbc3e8656f249` |
 
 ## Полные самостоятельные приложения
 
@@ -681,6 +1136,12 @@ SHA-256 относится к исходному файлу на момент с
 - [Участие, ревью и проверки](#appendix-contributing) — `CONTRIBUTING.md`
 - [MIT License](#appendix-license) — `LICENSE`
 - [Правила Go code review и критерии принятия изменений](#appendix-code-review) — `docs/development/CODE_REVIEW.md`
+- [Общая лаборатория, адаптеры и кандидат второго бизнеса](#appendix-lab-boundary) — `docs/architecture/LAB_BOUNDARY.md`
+- [Переносимая Docker-среда и распределение контейнеров](#appendix-environment) — `docs/development/ENVIRONMENT.md`
+- [Ресурсный снимок Windows и будущие профили macOS/сервера](#appendix-resource-profiles) — `docs/development/RESOURCE_PROFILES.md`
+- [Концепции баннера и выбранное оформление](#appendix-banner-options) — `docs/design/BANNER_OPTIONS.md`
+- [Первый PR с кодом: задачи, зависимости и критерии приёмки](#appendix-p01) — `docs/development/packets/P01.md`
+- [Предложенный порядок Issues, статусов и переносимых снимков](#appendix-task-tracking) — `docs/development/TASK_TRACKING.md`
 
 <a id="appendix-readme-en"></a>
 
@@ -689,7 +1150,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/docs/assets/banner.svg" alt="Faultline Lab — three services, real failure modes, measurable decisions" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/main/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
 </p>
 
 <p align="center">
@@ -707,12 +1168,12 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Current state
 
-**Architecture approved · implementation next.** The team lead accepted G0 on **13 October 2026**. The initial repository snapshot contains the design, visual process atlas, development workflow and portable agent context. Service code, runtime infrastructure and measured experiment results are still to come.
+**Architecture approved · implementation next.** The project owner accepted G0 on **13 October 2026**. The initial repository snapshot contains the design, visual process atlas, development workflow and portable agent context. Service code, runtime infrastructure and measured experiment results are still to come.
 
 | Ready | Next | Later |
 | :--- | :--- | :--- |
@@ -720,7 +1181,11 @@ SHA-256 относится к исходному файлу на момент с
 | Detailed process diagrams and review gates | PostgreSQL ownership, migrations and gRPC contracts | Grafana dashboards, alerts and experiment reports |
 | Portable context with a freshness check | Durable workflows, Kafka and compensation | Scaling comparisons under equal resource budgets |
 
+The first code PR is **P01**, after G0 and before G1. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) tracks its eight tasks; [the packet specification](#appendix-p01) defines acceptance criteria. Implementation is TODO, 0/8.
+
 No capacity numbers or performance improvements are claimed before measurement. The [roadmap](#appendix-roadmap) distinguishes design hypotheses from acceptance criteria and observed results.
+
+The owner has agreed on container-based development for Windows and macOS and a reusable lab boundary with business adapters. The [environment plan](#appendix-environment) and [boundary proposal](#appendix-lab-boundary) record this direction; runnable containers and a second business integration are still to come.
 
 #### What this project investigates
 
@@ -785,7 +1250,7 @@ Reports retain offered versus actual load, unresolved outcomes, resource limits 
 
 #### Human-led AI development
 
-The maintainer acts as **team lead and code reviewer**. The AI acts as **implementer**: it prepares focused changes, runs available checks, documents evidence and addresses review comments. The human approves architecture and milestone transitions.
+The **project owner** directs development and reviews changes. The AI acts as **implementer**: it prepares focused changes, runs available checks, documents evidence and addresses review comments. The human approves architecture and milestone transitions.
 
 ```mermaid
 flowchart LR
@@ -804,7 +1269,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience | Planned |
 | **G4** | Reproducible engineering lab | Planned |
 
-The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
 
 #### Repository map
 
@@ -859,7 +1324,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/docs/assets/banner.svg" alt="Faultline Lab — три сервиса, реальные сценарии сбоев, измеримые решения" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/main/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
 </p>
 
 <p align="center">
@@ -877,14 +1342,16 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Состояние проекта
 
-**Архитектура принята, реализация впереди.** Тимлид полностью согласовал G0 **13 октября 2026 года**. Сейчас репозиторий содержит архитектуру, подробные схемы, roadmap, порядок ревью и переносимый контекст. Код сервисов, запускаемая инфраструктура и результаты экспериментов ещё не созданы.
+**Архитектура принята, реализация впереди.** Владелец проекта полностью согласовал G0 **13 октября 2026 года**. Сейчас репозиторий содержит архитектуру, подробные схемы, roadmap, порядок ревью и переносимый контекст. Код сервисов, запускаемая инфраструктура и результаты экспериментов ещё не созданы.
 
-Ближайший пакет **G1-P01**: три Go entrypoints, конфигурация, health, graceful shutdown и JSON-логи. Проверки документации не являются тестами будущих сервисов. Производительность стенда пока не измерялась.
+Ближайший пакет **P01**: три Go entrypoints, конфигурация, health, graceful shutdown и JSON-логи, контейнерный toolchain и Compose-запуск для Windows/macOS. [План среды](#appendix-environment) объясняет состав контейнеров; [граница лаборатории](#appendix-lab-boundary) сохраняет направление подключения других бизнесов. Проверки документации не являются тестами будущих сервисов. Производительность стенда пока не измерялась.
+
+Задачи ближайшего PR с кодом ведутся в [P01 — Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3): TODO, 0/8. [Спецификация пакета](#appendix-p01) содержит критерии приёмки. P01 идёт после G0 и до G1.
 
 #### Идея
 
@@ -946,12 +1413,12 @@ flowchart LR
 
 #### Человек и ИИ
 
-Владелец проекта — **тимлид и ревьюер**. ИИ — **исполнитель**: готовит изменения, выполняет проверки, фиксирует доказательства и исправляет замечания. Человек принимает архитектуру и ключевые этапы.
+**Владелец проекта** задаёт направление разработки и проводит код-ревью. ИИ — **исполнитель**: готовит изменения, выполняет проверки, фиксирует доказательства и исправляет замечания. Человек принимает архитектуру и ключевые этапы.
 
 ```mermaid
 flowchart LR
     T["Конкретная задача"] --> AI["ИИ: реализация<br/>проверки и доказательства"]
-    AI --> R["Ревью тимлида"]
+    AI --> R["Ревью владельца проекта"]
     R -->|замечания| AI
     R -->|принято| C["Обновление контекста"]
     C --> N["Следующая задача / этап"]
@@ -959,7 +1426,7 @@ flowchart LR
 
 **G0 принят.** G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Следующие контрольные точки ещё не достигнуты.
 
-[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/PROJECT_CONTEXT.md) включает полные документы, статусы и согласования: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md) включает полные документы, статусы и согласования: его можно передать агенту без доступа к репозиторию.
 
 #### С чего начать
 
@@ -1005,19 +1472,28 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | :--- | :--- |
 | Быстро оценить проект | [README](#appendix-readme-ru) → [Дизайн](#appendix-design-review) → [Roadmap](#appendix-roadmap) |
 | Проверить распределённый процесс | [Атлас G0](#appendix-g0-processes) → [Принятие G0](#appendix-adr-0001) |
+| Разобрать подключение другого бизнеса | [Граница лаборатории](#appendix-lab-boundary) — согласованное направление и детализация для ревью |
+| Подготовить среду Windows/macOS | [Контейнерная среда](#appendix-environment) — состав, профили и статус проверок |
+| Проверить исходные ресурсы | [Профили сред](#appendix-resource-profiles) — Windows, macOS и возможный будущий сервер |
+| Посмотреть оформление | [Концепции баннера](#appendix-banner-options) — три варианта и выбранное решение |
 | Принять участие в разработке | [CONTRIBUTING](#appendix-contributing) → [Правила ревью](#appendix-code-review) → [Workflow](#appendix-development-process) → [AGENTS](#appendix-agents) |
+| Проверить ближайший PR | [P01](#appendix-p01) — задачи, зависимости, критерии и фактический прогресс |
+| Следить за выполнением | [Учёт задач](#appendix-task-tracking) — предложенный порядок Issues/PR и снимков контекста |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
 - [Дизайн](#appendix-design-review): принятые границы сервисов, контракты, состояния и инварианты.
 - [Процессы](#appendix-g0-processes): 15 подробных схем транзакций, отказов, гонок и восстановления.
+- [Граница лаборатории](#appendix-lab-boundary): общий механизм, адаптеры, кандидат второго бизнеса и доказательство переносимости.
+- [Среда](#appendix-environment): Docker для Windows/macOS, распределение контейнеров и ограничения измерений.
+- [Ресурсные профили](#appendix-resource-profiles): снимок Windows-хоста и отдельно ещё не измеренные среды/лимиты.
 - [Roadmap](#appendix-roadmap): этапы 0–7, критерии готовности, риски и 12 сценариев экспериментов.
 - [Workflow](#appendix-development-process): роли человека и ИИ, состав ревью и контрольные точки G0–G4.
 - [Правила ревью](#appendix-code-review): стандарт Go, блокирующие замечания, проверки и критерии слияния.
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/CONTEXT_STATE.json): текущая работа, проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/main/CONTEXT_STATE.json): текущая работа, проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -1033,12 +1509,14 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 
 Это план разработки, а не результаты уже проведённых испытаний. Все численные пороги ниже — начальные гипотезы, которые нужно откалибровать на своём компьютере.
 
-Разработку выполняет Codex; пользователь выступает тимлидом, проводит код-ревью и согласует ключевые переходы. Порядок работы зафиксирован в `docs/development/WORKFLOW.md`. Архитектурный пакет `docs/architecture/DESIGN.md` и схемы `docs/architecture/PROCESSES.md` полностью приняты пользователем 2026-10-13. Реализация сервисов ещё не начата. Переносимый актуальный контекст находится в `PROJECT_CONTEXT.md`; следующая контрольная точка — G1.
+Разработку выполняет Codex; пользователь выступает владельцем проекта, проводит код-ревью и согласует ключевые переходы. Порядок работы зафиксирован в `docs/development/WORKFLOW.md`. Архитектурный пакет `docs/architecture/DESIGN.md` и схемы `docs/architecture/PROCESSES.md` полностью приняты пользователем 2026-10-13. Реализация сервисов ещё не начата. Переносимый актуальный контекст находится в `PROJECT_CONTEXT.md`; следующая контрольная точка — G1.
 
 #### 1. Допущения и границы
 
-- Один исполнитель разработки — Codex, тимлид и ревьюер — пользователь. Первоначальные оценки объёма рассчитаны для ручной работы разработчика, знакомого с Go, SQL и Docker: один день равен примерно шести продуктивным часам. Эти оценки не являются сроками выполнения Codex; прогресс оценивается по готовности результатов и согласованным контрольным точкам.
-- Первая среда — Linux-контейнеры в Docker Compose; на Windows предполагается Docker Desktop с Linux backend. Реально доступные CPU, память, диск и ограничения Docker фиксируются в каждом эксперименте.
+Обозначения G0–G4 относятся к контрольным точкам приёмки; P01–P05 — к небольшим пакетам кода с отдельным ревью. Первый PR с каркасом — P01, между G0 и G1. G1 принимается позже, после готовности основы заказа и склада; следующий PR не обозначает прохождения этой точки.
+
+- Один исполнитель разработки — Codex, владелец проекта и ревьюер — пользователь. Первоначальные оценки объёма рассчитаны для ручной работы разработчика, знакомого с Go, SQL и Docker: один день равен примерно шести продуктивным часам. Эти оценки не являются сроками выполнения Codex; прогресс оценивается по готовности результатов и согласованным контрольным точкам.
+- Первая среда — Linux-контейнеры в Docker Desktop/Compose на Windows и macOS; Go и инструменты сборки/проверок выполняются в контейнерной среде. Этот подход подтверждён владельцем проекта. Планируются нативные образы для x64 и ARM64; ресурсы и ограничения Docker фиксируются в каждом эксперименте. [Состав среды и статус проверок](#appendix-environment).
 - Ровно три бизнес-сервиса: Orders, Inventory и Payments. Воркеры, оркестратор процесса и outbox publisher работают внутри соответствующего сервиса. Утилиты лаборатории и инфраструктура не становятся дополнительными бизнес-сервисами.
 - Одна валюта, целые суммы в минимальных денежных единицах, один склад, небольшой фиксированный каталог и заранее загруженные остатки.
 - В MVP нет авторизации, доставки, налогов, скидок, UI магазина и возвратов уже доставленных товаров. Возврат платежа нужен для компенсации отменённого заказа.
@@ -1302,7 +1780,7 @@ Open-loop нужен, чтобы рост latency не снижал автома
 
 Этапы 0–2 дают MVP. Он содержит весь обязательный стек, сквозной процесс и первый отчёт, собранный вручную. Этапы 3–7 делают лабораторию удобной для более глубоких экспериментов.
 
-Контрольные точки тимлида: G0 — архитектура перед кодом; G1 — базовая работа с заказом и складом после этапа 1; G2 — сквозной MVP после этапа 2; G3 — устойчивость после этапа 4; G4 — итоговая лаборатория после этапа 7. G0 полностью принят 2026-10-13; G1–G4 ещё не достигнуты. Внутри этапов изменения готовятся небольшими пакетами для код-ревью. Переход через контрольную точку выполняется после явного согласования пользователя. Существенные изменения ранее согласованной архитектуры выносятся на отдельное согласование.
+Контрольные точки владельца проекта: G0 — архитектура перед кодом; G1 — базовая работа с заказом и складом после этапа 1; G2 — сквозной MVP после этапа 2; G3 — устойчивость после этапа 4; G4 — итоговая лаборатория после этапа 7. G0 полностью принят 2026-10-13; G1–G4 ещё не достигнуты. Внутри этапов изменения готовятся небольшими пакетами для код-ревью. Переход через контрольную точку выполняется после явного согласования пользователя. Существенные изменения ранее согласованной архитектуры выносятся на отдельное согласование.
 
 | Этап | Цель и задачи | Зависит от | Результат и критерий готовности | Демонстрация | Дни | Основной риск |
 |---|---|---|---|---|---|---|
@@ -1396,16 +1874,25 @@ cmd/payments/
 cmd/loadgen/
 cmd/labctl/
 internal/orders/  internal/inventory/  internal/payments/
+internal/lab/                  # Общие контракты и механизм экспериментов
+internal/adapters/shop/        # Операции, данные и проверки магазина
 api/proto/
 migrations/orders/  migrations/inventory/  migrations/payments/
 deploy/compose/
 observability/dashboards/  observability/alerts/
 experiments/scenarios/
+experiments/targets/           # Профили подключаемых систем
 reports/<experiment>/<run>/
 docs/adr/
 ```
 
 Это предлагаемая структура реализации; текущие файлы содержат только план и шаблон отчёта.
+
+Владелец проекта подтвердил разделение общей лаборатории, адаптера и тестируемой системы; магазин проходит через ту же границу. Детализация контрактов и кандидат второго бизнеса описаны в [границе лаборатории](#appendix-lab-boundary). Обработка изображений пока предложение; подключение второго бизнеса не объявляется выполненным или принятым критерием G4.
+
+P01 включает контейнерный toolchain, образы трёх сервисов и минимальный Compose-запуск вместе с Go entrypoints/config/health/shutdown/JSON-логами и Go CI. Основная инфраструктура подключается в P02, наблюдаемость — на соответствующем этапе. Инструменты запускаются по задаче; адаптер не требует отдельного контейнера.
+
+[Спецификация первого PR P01](#appendix-p01) содержит восемь задач, зависимости, критерии приёмки и снимок статуса. Текущее выполнение ведётся в [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3), порядок — в [учёте задач](#appendix-task-tracking). Создание списка и карточки не означает начало реализации.
 
 Этап 2: запуск Compose и loadgen вручную, экспорт JSON/CSV, Markdown отчёт по шаблону. Этап 4: hooks и crash scripts. Этап 7: `labctl` объединяет уже проверенные действия.
 
@@ -1476,7 +1963,7 @@ Regression suite: короткий успешный процесс, конкур
 
 ### G0: принятый архитектурный пакет
 
-Статус: **G0 полностью принят тимлидом 2026-10-13, Europe/Moscow**. Прямое решение пользователя: «G0 полностью принят». Этот документ фиксирует принятую архитектуру из docs/ROADMAP.md и docs/architecture/PROCESSES.md. Код сервисов ещё не создан; начало согласованной реализации для G1 разрешено.
+Статус: **G0 полностью принят владельцем проекта 2026-10-13, Europe/Moscow**. Прямое решение пользователя: «G0 полностью принят». Этот документ фиксирует принятую архитектуру из docs/ROADMAP.md и docs/architecture/PROCESSES.md. Код сервисов ещё не создан; начало согласованной реализации для G1 разрешено.
 
 #### Визуальное описание G0
 
@@ -1584,11 +2071,13 @@ flowchart LR
 
 Порядок небольших пакетов для код-ревью:
 
-1. Три Go entrypoints, конфигурация, health, shutdown и JSON-логи.
-2. Compose для PostgreSQL/Kafka/Redis, отдельные БД/роли, миграции и seed.
-3. Protobuf-контракты с operation keys, состояниями и классификацией ошибок.
-4. Create/Get/GetByRequestKey и долговечная задача Orders.
-5. Reserve/Commit/Release/GetReservation с ledger, блокировками и cancellation barrier.
+1. **P01 — первый PR после G0, до G1.** Три Go entrypoints, конфигурация, health, shutdown и JSON-логи; контейнерный toolchain, образы сервисов, минимальный Compose и Go CI. Дополнение среды согласовано после G0 для Windows/macOS; детали и статус — в [описании среды](#appendix-environment).
+2. **P02:** Compose для PostgreSQL/Kafka/Redis, отдельные БД/роли, миграции и seed.
+3. **P03:** Protobuf-контракты с operation keys, состояниями и классификацией ошибок.
+4. **P04:** Create/Get/GetByRequestKey и долговечная задача Orders.
+5. **P05:** Reserve/Commit/Release/GetReservation с ledger, блокировками и cancellation barrier.
+
+Каждый пакет проходит своё код-ревью. После подготовки и принятия этой основы проводится отдельная приёмка контрольной точки G1; первый PR не называется G1 и не требует предварительного прохождения G1.
 
 К G1 предъявляются код, точные команды запуска, результаты повторного запроса, конкурентной покупки ограниченного остатка и перезапуска на сохранённом шаге. Остальная часть сквозного процесса развивается после G1.
 
@@ -1596,7 +2085,9 @@ flowchart LR
 
 G0 принят полностью, без дополнительных условий в сообщении пользователя от 2026-10-13. Решение сохранено также в docs/adr/0001-approved-g0.md и PROJECT_CONTEXT.md. Следующая контрольная точка — G1 после подготовки основы заказа и склада.
 
-Существенные изменения принятой архитектуры по-прежнему согласуются с тимлидом отдельно. Обычные детали реализации внутри G0 выбираются самостоятельно и предъявляются в небольших пакетах для код-ревью. Принятие архитектуры не означает, что реализация, испытания или следующие контрольные точки уже завершены.
+Существенные изменения принятой архитектуры по-прежнему согласуются с владельцем проекта отдельно. Обычные детали реализации внутри G0 выбираются самостоятельно и предъявляются в небольших пакетах для код-ревью. Принятие архитектуры не означает, что реализация, испытания или следующие контрольные точки уже завершены.
+
+После G0 подтверждено направление развития общей лаборатории с адаптерами: [детализация границы](#appendix-lab-boundary). Три сервиса и их бизнес-правила сохраняются; второй бизнес и расширение приёмки пока находятся на стадии предложения.
 
 <a id="appendix-g0-processes"></a>
 
@@ -1606,7 +2097,7 @@ G0 принят полностью, без дополнительных усло
 
 ### G0: визуальное описание процессов
 
-Статус: **G0 полностью принят тимлидом 2026-10-13, Europe/Moscow**. Схемы раскрывают принятые решения из docs/architecture/DESIGN.md и docs/ROADMAP.md. Они описывают согласованное планируемое поведение; реализация и измерения ещё не выполнены.
+Статус: **G0 полностью принят владельцем проекта 2026-10-13, Europe/Moscow**. Схемы раскрывают принятые решения из docs/architecture/DESIGN.md и docs/ROADMAP.md. Они описывают согласованное планируемое поведение; реализация и измерения ещё не выполнены.
 
 Порядок чтения: общий процесс → успешный заказ → состояния → отказы и отмена → восстановление → кеш → цикл эксперимента.
 
@@ -2036,7 +2527,7 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    P["Предложение G0: архитектура и схемы"] --> R["Ревью тимлида"]
+    P["Предложение G0: архитектура и схемы"] --> R["Ревью владельца проекта"]
     R --> D{"Решение"}
     D -->|Изменить| C["Уточнить решения и обновить схемы"]
     C --> R
@@ -2047,7 +2538,7 @@ flowchart LR
 
 G0 прошёл ветку согласования: пользователь полностью принял его 2026-10-13. Схема остаётся описанием процесса ревью и для последующих изменений. После замечаний схемы, контракты и бизнес-правила обновляются вместе; существенные изменения согласуются отдельно.
 
-#### Контрольные вопросы тимлиду
+#### Контрольные вопросы владельцу проекта
 
 | Область | Что должно быть однозначно после ревью |
 |---|---|
@@ -2070,15 +2561,17 @@ G0 прошёл ветку согласования: пользователь п
 
 #### Роли
 
-Пользователь — тимлид: определяет приоритеты, утверждает ключевые решения, проводит код-ревью и согласует переходы между основными этапами.
+Пользователь — владелец проекта: определяет приоритеты, утверждает ключевые решения, проводит код-ревью и согласует переходы между основными этапами.
+
+Единое название роли человека во всех материалах — «владелец проекта»; при описании проверки кода используется «ревьюер». Эти обозначения сохраняют прежние полномочия и порядок согласования.
 
 Codex — исполнитель разработки: готовит проектные решения, реализует согласованный объём, выполняет необходимые проверки, собирает доказательства корректности и эффективности, документирует результат и исправляет замечания.
 
-Это распределение ролей задано пользователем. Архитектура и процесс G0 полностью приняты тимлидом 13 октября 2026 года; контрольные точки ниже входят в текущий согласованный порядок работы и могут быть изменены тимлидом.
+Это распределение ролей задано пользователем. Архитектура и процесс G0 полностью приняты владельцем проекта 13 октября 2026 года; контрольные точки ниже входят в текущий согласованный порядок работы и могут быть изменены владельцем проекта.
 
 #### Пакет изменений
 
-Каждый пакет имеет одну понятную цель: например, атомарный Reserve, durable payment job или приём конкретного Kafka-события. Работа внутри согласованного этапа выполняется самостоятельно. Размер пакета выбирается так, чтобы тимлид мог проверить бизнес-поведение и существенный diff за одно ревью.
+Каждый пакет имеет одну понятную цель: например, атомарный Reserve, durable payment job или приём конкретного Kafka-события. Работа внутри согласованного этапа выполняется самостоятельно. Размер пакета выбирается так, чтобы владелец проекта мог проверить бизнес-поведение и существенный diff за одно ревью.
 
 Для каждого пакета Codex представляет:
 
@@ -2091,27 +2584,31 @@ Codex — исполнитель разработки: готовит проек
 
 Обычные исправления по ревью выполняются в рамках того же пакета. После исправлений повторяются проверки, затронутые изменением. Невыполненные проверки явно обозначаются как невыполненные; объясняется причина и что необходимо для их запуска.
 
+Ближайший PR с кодом — [P01](#appendix-p01); его критерии и снимок статуса сохраняются в спецификации пакета. Текущее выполнение ведётся в [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3), порядок обновления — в [учёте задач](#appendix-task-tracking). Создание карточки не означает начало реализации или принятие G1.
+
 #### Стандарт код-ревью
 
-[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/main/.github/pull_request_template.md) содержит краткий применимый чек-лист.
 
-После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; тимлид рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению тимлида или действие самого тимлида.
+После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; владелец проекта рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению владельца проекта или действие самого владельца проекта.
 
-В одном GitHub-аккаунте нельзя получить обычный независимый approval от автора PR. Человеческое решение может быть зафиксировано в чате/комментарии с PR и SHA и затем в контексте. Правила работы не означают автоматически включённую GitHub branch protection. Сейчас выполняется документационный CI; Go-проверки и закреплённая конфигурация инструментов подключаются в G1-P01 с первым модулем.
+В одном GitHub-аккаунте нельзя получить обычный независимый approval от автора PR. Человеческое решение может быть зафиксировано в чате/комментарии с PR и SHA и затем в контексте. Правила работы не означают автоматически включённую GitHub branch protection. Сейчас выполняется документационный CI; Go-проверки и закреплённая конфигурация инструментов подключаются в P01 с первым модулем.
 
 #### Контрольные точки
 
+G0–G4 — контрольные точки приёмки. P01–P05 — небольшие пакеты реализации с отдельными PR и код-ревью. **Первый PR P01 находится между принятым G0 и будущей приёмкой G1.** Последовательность: G0 → P01 и его ревью → следующие PR P02–P05 и их ревью → G1. Приёмка отдельного PR не означает прохождения G1.
+
 | Точка | Когда | Материалы для согласования | Критерий перехода |
 |---|---|---|---|
-| G0: архитектура | Перед реализацией | docs/architecture/DESIGN.md, схемы docs/architecture/PROCESSES.md, архитектура и состояния из docs/ROADMAP.md, границы MVP, порядок реализации | Тимлид согласовал предложенные решения или сформулировал необходимые изменения |
+| G0: архитектура | Перед реализацией | docs/architecture/DESIGN.md, схемы docs/architecture/PROCESSES.md, архитектура и состояния из docs/ROADMAP.md, границы MVP, порядок реализации | Владелец проекта согласовал предложенные решения или сформулировал необходимые изменения |
 | G1: основа данных и операций | После этапа 1 | Код и миграции; API заказа и склада; повторный запрос; конкуренция за остатки; сохранённый шаг после рестарта | Ревью принято, обязательные проверки проходят, нет нерешённых нарушений складских инвариантов |
 | G2: сквозной MVP | После этапа 2 | Сквозной процесс трёх сервисов, Kafka/outbox/inbox, платежи и компенсации, Redis и наблюдаемость, первый эксперимент и отчёт | Подтверждены успешный процесс, отказ оплаты, идемпотентность и контрольный перезапуск; каждый тестовый заказ учтён |
 | G3: устойчивость | После этапа 4 | Сценарии неизвестного результата, поздних событий, отмены, replay; объяснение политики ошибок и recovery | Ревью и сценарии приняты; нерешённые процессы явно учитываются; отсутствуют ложные terminal states |
-| G4: готовая лаборатория | После этапа 7 | Каталог экспериментов, результаты сравнения решений, масштабирование, автоматический запуск/сверка/отчёты, инструкции | Тимлид воспроизвёл или проверил заявленный цикл; отчёты отражают корректность, ресурсы и ограничения |
+| G4: готовая лаборатория | После этапа 7 | Каталог экспериментов, результаты сравнения решений, масштабирование, автоматический запуск/сверка/отчёты, инструкции | Владелец проекта воспроизвёл или проверил заявленный цикл; отчёты отражают корректность, ресурсы и ограничения |
 
 Статус G0: **полностью принят 2026-10-13, Europe/Moscow**. Прямое решение пользователя: «G0 полностью принят». G1–G4 ещё не достигнуты. Реализация сервисов в текущих файлах отсутствует. Работа над согласованной основой для G1 разрешена; повторное согласование G0 не требуется.
 
-На контрольной точке Codex сначала доводит текущий пакет до проверяемого результата, затем предоставляет его тимлиду. Следующий этап, зависящий от согласования, начинается после явного решения. Замечания тимлида вносятся в пакет до повторного рассмотрения.
+На контрольной точке Codex сначала доводит текущий пакет до проверяемого результата, затем предоставляет его владельцу проекта. Следующий этап, зависящий от согласования, начинается после явного решения. Замечания владельца проекта вносятся в пакет до повторного рассмотрения.
 
 #### Изменения, требующие отдельного согласования
 
@@ -2124,7 +2621,7 @@ Codex — исполнитель разработки: готовит проек
 
 #### Порядок принятия решений
 
-План или гипотеза помечаются как предложенные. Согласование тимлидом фиксируется отдельно от фактической реализации и результатов проверки. Успешные тесты подтверждают проверенные свойства, а не заменяют решение ревьюера.
+План или гипотеза помечаются как предложенные. Согласование владельцем проекта фиксируется отдельно от фактической реализации и результатов проверки. Успешные тесты подтверждают проверенные свойства, а не заменяют решение ревьюера.
 
 Решения, меняющие проект, сохраняются в ADR с причиной и последствиями. Итог пакета содержит текущий статус контрольной точки, оставшиеся замечания и ссылку на воспроизводимый результат.
 
@@ -2272,12 +2769,14 @@ PROJECT_CONTEXT.md — самостоятельный пакет для друг
 
 ### Instructions for this project
 
-- The human user is the team lead and code reviewer. Codex implements the project and prepares reviewable changes.
+- The human user is the project owner and code reviewer. Codex implements the project and prepares reviewable changes.
+- Refer to the human as the project owner throughout project materials; use reviewer when describing code review. This terminology does not change decision authority or review gates.
 - Read PROJECT_CONTEXT.md first for the portable project handoff, current status and approvals. Read docs/development/WORKFLOW.md for review expectations and docs/ROADMAP.md for the project scope when the repository is available.
 - G0 was explicitly approved by the human on 2026-10-13 (Europe/Moscow): "G0 полностью принят." The architecture and business rules in docs/architecture/DESIGN.md and docs/architecture/PROCESSES.md are approved. Do not ask for G0 approval again. G1-G4 remain future review gates; prepare the work for a gate before requesting its approval.
 - Work autonomously within an approved stage. Keep changes small enough for focused code review and include actual validation results and known limitations.
-- Follow docs/development/CODE_REVIEW.md for Go style, correctness, concurrency, data, tests and review evidence. After repository bootstrap, prepare changes on a focused branch and present a PR when GitHub is available. Do not approve or merge your own changes; merging requires an explicit human decision and authorization for the action. Go checks become executable with G1-P01, not before a Go module exists.
-- Stop before progressing through an unapproved review gate. Present a concrete, complete review packet and identify the decision needed from the team lead.
+- G0-G4 are acceptance gates; P01-P05 are code review packets. The first code PR is P01, after approved G0 and before G1. Do not describe P01 as G1 acceptance or work after G1.
+- Follow docs/development/CODE_REVIEW.md for Go style, correctness, concurrency, data, tests and review evidence. After repository bootstrap, prepare changes on a focused branch and present a PR when GitHub is available. Do not approve or merge your own changes; merging requires an explicit human decision and authorization for the action. Go checks become executable with P01, not before a Go module exists.
+- Stop before progressing through an unapproved review gate. Present a concrete, complete review packet and identify the decision needed from the project owner.
 - Significant changes to approved service boundaries, invariants, incompatible contracts or infrastructure scope require a concrete proposal and human approval.
 - Keep exactly three business services: Orders, Inventory and Payments. Do not add another business service to host workflow orchestration.
 - Never report measurements, tests or approvals that have not actually occurred. Keep proposed decisions, implemented behavior and observed results distinct.
@@ -2295,7 +2794,7 @@ PROJECT_CONTEXT.md — самостоятельный пакет для друг
 
 - Дата решения: 2026-10-13, Europe/Moscow.
 - Статус: accepted.
-- Кто принял: пользователь, тимлид проекта.
+- Кто принял: пользователь, владелец проекта.
 - Прямое основание: сообщение пользователя «G0 полностью принят».
 
 #### Контекст
@@ -2337,11 +2836,11 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [current context](https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). AI implementers must also follow [AGENTS.md](#appendix-agents).
+Read the [current context](https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). AI implementers must also follow [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
-G0 is approved. G1–G4 remain future review gates. Significant changes to approved service boundaries, invariants or incompatible contracts require a concrete proposal and the team lead's decision.
+G0 is approved. G1–G4 remain future review gates. Significant changes to approved service boundaries, invariants or incompatible contracts require a concrete proposal and the project owner's decision.
 
 #### A reviewable change
 
@@ -2407,18 +2906,18 @@ SOFTWARE.
 
 ### Правила код-ревью Faultline Lab
 
-Приняты через слияние [PR #1](https://github.com/Includeoyasi/faultline-lab/pull/1) аккаунтом тимлида `Includeoyasi` 13 октября 2026 года, Europe/Moscow. Принятый HEAD: `214eb34`; merge commit: `c1e55fd`. Документ задаёт рабочий стандарт для Go-кода и распределённых процессов проекта. Принятие правил не является приёмкой G1.
+Приняты через слияние [PR #1](https://github.com/Includeoyasi/faultline-lab/pull/1) аккаунтом владельца проекта `Includeoyasi` 13 октября 2026 года, Europe/Moscow. Принятый HEAD: `214eb34`; merge commit: `c1e55fd`. Документ задаёт рабочий стандарт для Go-кода и распределённых процессов проекта. Принятие правил не является приёмкой G1.
 
 **Цель ревью:** понятное, корректное и сопровождаемое изменение с проверяемыми доказательствами. Сначала проверяем бизнес-поведение и отказные сценарии, затем устройство кода. Форматирование выполняют инструменты.
 
 #### 1. Порядок ревью и слияния
 
 1. Одна ветка и один PR решают одну понятную задачу. Связанный рефакторинг допустим; посторонние изменения выносятся отдельно. Для крупной работы сначала показать границы и порядок небольших пакетов, сохраняя работоспособность каждого.
-2. После первоначального bootstrap изменения готовятся в ветках от `main`. Обычный путь — PR, проверки, ревью тимлида, затем squash merge. ИИ самостоятельно не одобряет и не сливает собственные изменения.
+2. После первоначального bootstrap изменения готовятся в ветках от `main`. Обычный путь — PR, проверки, ревью владельца проекта, затем squash merge. ИИ самостоятельно не одобряет и не сливает собственные изменения.
 3. До ревью исполнитель проверяет diff, удаляет отладочные фрагменты и предоставляет проблему, результат, решения, команды проверок и ограничения. Исходники, миграции, контракты и соответствующие тесты рассматриваются вместе.
-4. Блокирующие замечания устраняются либо явно разрешаются тимлидом с причиной. Новые изменения после ревью предъявляются повторно; существенная правка делает прежнее согласование недостаточным. Одобрение и успешные проверки должны относиться к предъявленному HEAD.
+4. Блокирующие замечания устраняются либо явно разрешаются владельцем проекта с причиной. Новые изменения после ревью предъявляются повторно; существенная правка делает прежнее согласование недостаточным. Одобрение и успешные проверки должны относиться к предъявленному HEAD.
 5. Слияние требует явного решения человека, успешных применимых проверок и актуального контекста. Не применять auto-merge до такого решения. Если человек поручает ИИ выполнить merge, это отдельное явное поручение.
-6. G0 уже принят. Обычный PR не заменяет приёмку G1–G4; переходы через эти точки регулирует [workflow](#appendix-development-process). Существенная смена принятой архитектуры требует решения тимлида и ADR.
+6. G0 уже принят. Обычный PR не заменяет приёмку G1–G4; переходы через эти точки регулирует [workflow](#appendix-development-process). Существенная смена принятой архитектуры требует решения владельца проекта и ADR.
 
 Это правила работы, а не заявление о включённой защите ветки GitHub. Если человек и ИИ используют один GitHub-аккаунт, автор не может выдать своему PR обычный GitHub approval ([ограничение GitHub](https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/approving-a-pull-request-with-required-reviews)). Тогда решение человека фиксируется в чате либо комментарии со ссылкой на PR и рассматриваемый SHA и переносится в контекст. Не подменять его одобрением ИИ и не заявлять независимое ревью по факту успешного CI. Настройка branch protection и отдельного аккаунта исполнителя — отдельная задача.
 
@@ -2426,7 +2925,7 @@ SOFTWARE.
 
 | Метка | Смысл | Влияние на слияние |
 | :--- | :--- | :--- |
-| `blocking` | Дефект, риск потери данных, нарушение контракта/инварианта, существенный пробел проверок | Исправить либо получить конкретное решение тимлида |
+| `blocking` | Дефект, риск потери данных, нарушение контракта/инварианта, существенный пробел проверок | Исправить либо получить конкретное решение владельца проекта |
 | `question` | Нужно понять поведение или основание решения | Ответить; если обнаружен риск, явно сделать замечание блокирующим |
 | `suggestion` | Улучшение с обоснованным эффектом | Обсудить; само по себе не блокирует |
 | `nit` | Необязательная косметика или личное предпочтение | Не блокирует |
@@ -2504,13 +3003,13 @@ SOFTWARE.
 
 Логи структурированы и позволяют связать заказ, событие, шаг и попытку. `order_id`, `trace_id`, `event_id` и `run_id` остаются полями логов, а не labels с неограниченной кардинальностью. Метрики различают технический ответ и бизнес-исход, Kafka lag и durable job backlog. При появлении алерта ревью проверяет условие, ожидаемое действие и ссылку на диагностику.
 
-Новая зависимость обоснована задачей; `go.mod` и `go.sum` согласованы. Версии Go, инструментов, генераторов и CI actions закрепляются воспроизводимо. Для найденной вызываемой уязвимости показываем исправление либо решение тимлида о конкретном риске; техническая ошибка сканера не считается чистым результатом.
+Новая зависимость обоснована задачей; `go.mod` и `go.sum` согласованы. Версии Go, инструментов, генераторов и CI actions закрепляются воспроизводимо. Для найденной вызываемой уязвимости показываем исправление либо решение владельца проекта о конкретном риске; техническая ошибка сканера не считается чистым результатом.
 
 Основа проверки зависимостей: [Go security best practices](https://go.dev/doc/security/best-practices) и [govulncheck](https://go.dev/doc/tutorial/govulncheck).
 
 #### 9. Автоматические проверки и момент подключения
 
-**Сейчас:** существует только документационный CI `Links and portable context`. Go-модуль, Go CI, конфигурация линтера и зависимости инструментов ещё не созданы. Команды ниже задают требования для первого работающего Go-пакета G1-P01; они не запускались в текущем документальном пакете.
+**Сейчас:** существует только документационный CI `Links and portable context`. Go-модуль, Go CI, конфигурация линтера и зависимости инструментов ещё не созданы. Команды ниже задают требования для первого работающего Go-пакета P01; они не запускались в текущем документальном пакете.
 
 | Проверка | Требование после появления Go-модуля |
 | :--- | :--- |
@@ -2530,9 +3029,488 @@ SOFTWARE.
 #### 10. Когда изменение готово к принятию
 
 - Цель и поведение ясны, изменение входит в согласованный объём и сохраняет принятую архитектуру.
-- Блокирующие дефекты исправлены; существенные отклонения и риски имеют явное решение тимлида.
+- Блокирующие дефекты исправлены; существенные отклонения и риски имеют явное решение владельца проекта.
 - Применимые проверки прошли на предъявленном изменении; непроведённые проверки и их причины видны ревьюеру.
 - Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
 - Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
 
-Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/docs/review-policy-handoff/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/main/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+
+<a id="appendix-lab-boundary"></a>
+
+## Приложение: Общая лаборатория, адаптеры и кандидат второго бизнеса
+
+Полный исходный документ: `docs/architecture/LAB_BOUNDARY.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Лаборатория и подключаемые бизнес-системы
+
+Статус на 13 октября 2026 года: **направление подтверждено владельцем проекта; ниже — детализация для ревью**. Реализации интерфейсов и второго подключения пока нет. Документ сохраняет обсуждение, чтобы следующий исполнитель мог продолжить проектирование по готовой основе.
+
+#### Что уже согласовано
+
+Лаборатория должна подключаться к разным бизнес-системам. Эталонный мини-магазин использует ту же границу через встроенный, заранее настроенный адаптер. Владелец проекта подтвердил этот подход в голосовом обсуждении и поручил его зафиксировать.
+
+Принятые правила [G0](#appendix-design-review) сохраняются: у магазина ровно три бизнес-сервиса — Orders, Inventory и Payments. Другой бизнес будет отдельной тестируемой системой. Он не добавляет четвёртый сервис к магазину.
+
+[Общая среда Docker](#appendix-environment) для Windows и macOS согласована отдельно. Обработка изображений пока кандидат для второго подключения. Точные Go-интерфейсы, формат профиля и расширение критериев G4 требуют ревью; подробность этого документа не означает их принятия или реализации.
+
+#### Три части системы
+
+```mermaid
+flowchart TB
+    Profile["Профиль эксперимента<br/>нагрузка · данные · ресурсы · критерии"] --> Core
+    Core["Общая лаборатория<br/>расписание · цикл запуска · сбор данных · сравнение"] --> ShopAdapter
+    Core --> FileAdapter
+    ShopAdapter["Адаптер магазина<br/>операции · данные · проверки"] --> Shop
+    FileAdapter["Адаптер обработки изображений<br/>кандидат для второго подключения"] --> Files
+    Shop["Мини-магазин<br/>Orders · Inventory · Payments"] --> Evidence
+    Files["Другой бизнес<br/>свой API и свои правила"] --> Evidence
+    Evidence["Наблюдения<br/>исходы операций · метрики · логи"] --> Core
+    Core --> Report["Общий отчёт<br/>корректность · скорость · ресурсы · ограничения"]
+```
+
+Адаптер здесь — модуль клиентского кода внутри инструментов лаборатории, а не обязательный сетевой сервис или постоянно работающий контейнер. Магазин не импортирует лабораторию и не знает, какой генератор вызывает его API.
+
+| Часть | Ответственность | Пример для магазина | Пример для обработки изображений |
+| :--- | :--- | :--- | :--- |
+| Общая лаборатория | Расписание нагрузки, лимиты генератора, seed, окна измерения и drain | Подать заданный поток бизнес-операций | Подать заданный поток бизнес-операций |
+| Общая лаборатория | Запись фактических запусков, воздействий, исходов и полноты телеметрии | Сохранить наблюдения и manifest | Сохранить наблюдения и manifest |
+| Общая лаборатория | Сравнение вариантов и оформление доказательств | Отчёт A/B по общему формату | Отчёт A/B по тому же формату |
+| Адаптер | Клиенты API и последовательность бизнес-действий | Создать заказ, получить итог, при необходимости отменить | Отправить изображение, дождаться обработки, скачать результат |
+| Адаптер | Подготовка данных и сверка неизвестных исходов | SKU, остатки, request keys и авторитетный итог заказа | Синтетические файлы, ключи задания и авторитетный итог обработки |
+| Адаптер | Семантические проверки и бизнес-метрики | Складской и платёжный ledger, завершённые заказы | Доступность результата, формат, размеры, завершённые задания |
+| Тестируемая система | Собственная бизнес-логика и долговечные данные | Сервисы и базы магазина | Сервисы и хранилища другого проекта |
+
+В общем механизме не должно быть условий по названиям Orders, SKU, оплате или таблицам магазина. Сборщик знает источник телеметрии и окно времени; значение бизнес-показателя описывает профиль адаптера. Неподдерживаемые метрики не заполняются придуманными нулями.
+
+#### Один цикл эксперимента
+
+```mermaid
+flowchart LR
+    Prepare["Подготовка<br/>профиль · данные · доступные возможности"] --> Warmup["Прогрев"]
+    Warmup --> Run["Измерение<br/>нагрузка + запланированные воздействия"]
+    Run --> Drain["Drain<br/>остановить новые операции · дождаться исходов"]
+    Drain --> Verify["Проверка<br/>сверить все операции и бизнес-правила"]
+    Verify --> Export["Экспорт<br/>manifest · исходные данные · отчёт"]
+    Export --> Compare["Сравнение A/B<br/>одни условия · одно изменение"]
+```
+
+Runner управляет этапами. Адаптер выполняет предметные действия на этих этапах. Драйвер среды выполняет допустимые воздействия на указанные компоненты: например, остановку контейнера или изменение числа реплик. Сопоставление логического компонента с Compose-сервисом находится в профиле среды; в ядре нет жёсткого списка сервисов магазина.
+
+Перед стартом проверяются необходимые возможности. Сценарий с перезапуском воркера не запускается, если профиль даёт только публичный HTTP API. Дополнительные воздействия на сеть и ресурсы проектируются отдельно, когда появится соответствующий эксперимент.
+
+Прогрев и измеряемая когорта различаются. После остановки новых операций система продолжает обработку до установленного deadline. Оставшиеся операции отражаются как незавершённые или с неизвестным исходом. Cleanup выполняется после сохранения доказательств и затрагивает только данные выделенного тестового запуска.
+
+#### Предлагаемый контракт адаптера
+
+Это описание обязанностей, а не готовые имена Go-методов. Конкретные типы выбираются при реализации первого вертикального среза.
+
+| Обязанность | Что получает лаборатория |
+| :--- | :--- |
+| Описать возможности | Доступные операции, виды наблюдений, необходимые права, проверки и воздействия |
+| Подготовить данные | Изолированный набор данных по seed и параметры, необходимые для операций |
+| Выполнить операцию | Ключ логической операции, наблюдения API, подтверждённый отказ или идентификатор принятой работы |
+| Наблюдать и сверить итог | Завершённый бизнес-исход либо явное отсутствие достаточных сведений |
+| Проверить бизнес-правила | Результаты проверок, нарушения и доказательства по измеряемой когорте |
+| Очистить тестовые данные | Результат очистки собственного namespace без уничтожения чужих данных |
+
+Одна бизнес-операция может включать несколько запросов API, повторов и опросов статуса. Их счётчики ведутся отдельно. Быстрый ответ о принятии задачи не считается завершённым бизнесом. Timeout не превращается автоматически в отказ: адаптер сверяет авторитетный результат, если API позволяет это сделать.
+
+Повтор допускается по известному контракту идемпотентности конкретной системы. Лаборатория не добавляет автоматически повторные изменения данных к неизвестному API. Плановая нагрузка, фактическая отправка, пропущенные старты и насыщение генератора сохраняются отдельно; ожидание ответов не должно незаметно менять заданный arrival rate.
+
+Для проверки предлагаются статусы `PASS`, `FAIL`, `NOT_RUN`, `INCONCLUSIVE`. Отсутствующий обязательный способ сверки делает соответствующий вывод неполным. Успех проверки формата ответа не является доказательством корректности бизнеса.
+
+#### Воспроизводимый профиль
+
+Профиль тестируемой системы описывает адаптер и его версию, endpoints, доступные возможности, параметры данных, бизнес-проверки и источники телеметрии. Секреты передаются отдельно; в отчёте сохраняются только ссылки на настройки и обезличенные сведения.
+
+Профиль эксперимента задаёт смесь операций, arrival schedule, seed, warmup/measure/drain, timeline воздействий, ресурсы, критерии достаточности данных и ожидаемый полезный эффект. Это проектируемый собственный формат, не существующий стандарт стороннего инструмента.
+
+Manifest сохраняет фактические версии, image digests, конфигурацию, оборудование, ограничения Docker, workload и выполненные воздействия. Сравнения проводятся при одинаковых исходных условиях. Общий формат отчёта сохраняется, но бизнес-метрики разных доменов не становятся взаимозаменяемыми: заказы в секунду не равны обработанным изображениям в секунду.
+
+Мастер автоматической настройки остаётся перспективой: импорт API, документации и тестов → предложение операций, данных и проверок → подтверждение смысловых правил владельцем системы → пробный запуск → сохранение проверенного профиля. Во время измерения выполняется фиксированный профиль; генерация новых гипотез ИИ не вмешивается в измеряемый цикл.
+
+#### Кандидат второго бизнеса: обработка изображений
+
+Предлагаемый процесс: клиент отправляет синтетическое изображение через HTTP, система принимает фоновое задание, воркер преобразует изображение, клиент получает статус и скачивает результат. Такой процесс отличается от заказа, резерва и оплаты; он проверяет смену протокола, данных и критериев корректности.
+
+Источник второго бизнеса ещё не выбран: это может быть существующий демонстрационный проект или отдельный небольшой пример. Его API и правила нужно изучить перед написанием адаптера. Утверждённый стек магазина не навязывается чужой системе.
+
+| Проверка | Требуемое основание |
+| :--- | :--- |
+| Каждое принятое задание учтено | Доступный авторитетный статус или экспорт; unresolved перечисляются явно |
+| Успешный результат можно скачать и декодировать | Контракт статуса завершения и доступа к результату |
+| Размеры и формат соответствуют запросу | Зафиксированные правила преобразования; эталонные синтетические входы |
+| Повтор не создаёт лишний эффект | Только если целевая система обещает идемпотентность по ключу |
+| После сбоя принятая работа восстанавливается | Только если долговечность и восстановление входят в требования системы |
+
+Первый эксперимент-кандидат: одинаковый набор изображений и профиль поступления; baseline с малым числом воркеров → наблюдаемый backlog → изменение числа воркеров → повтор и проверка результатов. Если вместе с воркерами растёт ресурсный бюджет, это отдельный фактор, а не бесплатное улучшение. Перезапуск воркера и медленное хранилище — следующие сценарии, когда профиль предоставит нужные возможности.
+
+#### Как проверить переносимость
+
+Предлагаемое доказательство: подключить выбранный второй бизнес новым адаптером и профилем, провести полный цикл с нагрузкой, хотя бы одним доступным воздействием, сверкой исходов и сравнением вариантов. При этом общий scheduler, runner, экспорт и структура отчёта сохраняются. Допустимые исправления общего механизма объясняются общей потребностью, а не скрытым условием для конкретного бизнеса.
+
+В review packet входят diff, оба профиля, manifest, исходные наблюдения, результаты предметных проверок и ограничения сравнения. Проверка на mock полезна для разработки runner, но полный запуск второго бизнеса остаётся отдельным свидетельством переносимости. Это предлагаемый будущий критерий, ещё не дополнение к принятой контрольной точке G4.
+
+#### Предлагаемое размещение кода
+
+Основная [структура roadmap](#appendix-roadmap) сохраняется. К ней по мере появления кода предлагаются:
+
+```text
+internal/lab/                  # Контракты, scheduler, runner, результаты
+internal/adapters/shop/        # Клиенты, данные и проверки магазина
+internal/adapters/images/      # Будущий адаптер выбранного второго бизнеса
+experiments/targets/           # Профили систем и привязка компонентов к среде
+experiments/scenarios/         # Воспроизводимые условия эксперимента
+```
+
+Адаптер зависит от контрактов лаборатории и внешних API системы. Ядро зависит от общих контрактов; оно не импортирует бизнес-реализацию или адаптер магазина. Точки запуска `cmd/loadgen` и `cmd/labctl` выбирают нужный адаптер. Пустые каталоги и универсальный framework заранее не создаются.
+
+#### Следующие шаги
+
+1. В P01 подготовить контейнерный каркас трёх сервисов; бизнес-правила и контрольные точки G0 не меняются.
+2. При появлении loadgen/verifier реализовать первый срез через адаптер магазина: подготовка → операция → наблюдение → сверка.
+3. Уточнить контракт по работающему срезу и сохранить общий цикл без зависимости от магазина.
+4. Выбрать второй бизнес и его требования; подготовить конкретный review packet подключения.
+5. Доказать переносимость полным экспериментом и затем оценить необходимость мастера настройки.
+
+Открытые вопросы: выбор второго проекта, минимальный набор capabilities, точные типы исходов и доказательств, формат профилей и место проверки второго бизнеса в приёмке. Они не блокируют каркас трёх Go-сервисов.
+
+<a id="appendix-environment"></a>
+
+## Приложение: Переносимая Docker-среда и распределение контейнеров
+
+Полный исходный документ: `docs/development/ENVIRONMENT.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Переносимая среда разработки и экспериментов
+
+Статус на 13 октября 2026 года: **контейнерный подход для Windows и macOS согласован владельцем проекта**. Dockerfiles, Compose-конфигурация, Go-модуль и runtime-контейнеры ещё не созданы. Ниже описаны план реализации и анализ распределения компонентов; работоспособность не заявляется до проверки.
+
+#### Что согласовано
+
+На Windows и macOS используется Docker Desktop с Linux-контейнерами. Docker Compose объединяет отдельные контейнеры сервисов и инфраструктуры. Сборка Go, тесты и инструменты проверок выполняются в контейнерной среде; установленный на хосте Go не обязателен для основного пути разработки.
+
+Для x64 и Apple Silicon планируются нативные варианты образов `linux/amd64` и `linux/arm64`. Архитектура личного Mac пока не уточнялась. Эмуляция другой архитектуры не используется как основание для сопоставимых замеров производительности. Docker описывает варианты образов и ограничения эмуляции в [руководстве по multi-platform builds](https://docs.docker.com/build/building/multi-platform/).
+
+#### Распределение контейнеров
+
+```mermaid
+flowchart TB
+    Host["Windows / macOS<br/>Docker Desktop + Compose"] --> Shop
+    Host --> Infra
+    Host --> Obs
+    Host --> Tools
+    Shop["3 постоянных контейнера<br/>Orders · Inventory · Payments"]
+    Infra["3 постоянных контейнера<br/>PostgreSQL · Kafka · Redis"]
+    Obs["4 контейнера по необходимости<br/>Prometheus · Grafana · Loki · Alloy"]
+    Tools["Временные контейнеры<br/>сборка / проверки / эксперимент"]
+    Tools --> Adapter["Адаптер — модуль в инструменте<br/>отдельный контейнер ему не нужен"]
+    Adapter --> Shop
+```
+
+Числа относятся к планируемому составу с одной репликой каждого сервиса. Экспортеры, дополнительные реплики и диагностические инструменты могут потребовать дополнительных контейнеров и будут отражены в manifest.
+
+| Компонент | Размещение | Причина |
+| :--- | :--- | :--- |
+| Orders, Inventory, Payments | По одному контейнеру на сервис и на его реплику | Независимые рестарты, health, логи, ограничения ресурсов и масштабирование |
+| Воркеры, outbox, управление заказом | Внутри своего бизнес-сервиса | Это части принятого сервиса G0; отдельный контейнер на каждый внутренний механизм не требуется |
+| PostgreSQL | Один контейнер, три базы и отдельные роли | Уже принятый компромисс малого стенда; владение данными сохраняется |
+| Kafka | Один брокер в отдельном контейнере на старте | Независимый backlog, рестарт и ресурсный предел; отказоустойчивость кластера этим составом не моделируется |
+| Redis | Отдельный контейнер | Можно независимо проверить отказ кеша и нагрузку fallback на SQL |
+| Prometheus, Grafana, Loki, Alloy | По одному контейнеру на компонент | Разные задачи, конфигурация, хранение и жизненный цикл; запускаются нужным набором |
+| Toolchain | Общий образ с Go и закреплёнными инструментами, временные запуски | Не держать компилятор и линтер работающими всё время |
+| Loadgen, verifier, экспорт и отчёт | Общий образ инструментов лаборатории, запуск по задаче | Не требуется отдельный постоянный контейнер для каждой CLI-команды |
+| Адаптер бизнеса | Модуль внутри инструментов лаборатории | Обозначение на схеме не означает дополнительный сервис |
+
+Docker рекомендует разделять ответственности по сервисам; несколько процессов внутри контейнера допустимы. Поэтому правило здесь — независимый жизненный цикл и измеряемая ответственность, а не формальное «один процесс». [Docker: несколько процессов в контейнере](https://docs.docker.com/engine/containers/multi-service_container/).
+
+Объединить три бизнес-сервиса в один контейнер технически возможно, но для этого проекта невыгодно: обычные остановка и лимит ресурсов контейнера затронут все три, а масштабирование скопирует весь набор. Раздельные условия придётся воссоздавать дополнительным управлением процессами. Это затруднит эксперименты по поиску узкого места.
+
+Объединение PostgreSQL, Kafka и Redis также не устраняет потребление памяти их процессами и кешами, но усложняет независимые сбои, health и обслуживание данных. Фактический расход ресурсов нужно измерить на готовом стенде; число контейнеров само по себе не определяет требуемую RAM.
+
+Рекомендуемый состав: **6 постоянных контейнеров основного стенда**, **10 с полной базовой наблюдаемостью**, плюс временные инструменты во время выполнения задач. На этапе P01 достаточно каркаса трёх сервисов и toolchain; инфраструктура добавляется в следующих пакетах. Полная наблюдаемость обязательна для соответствующих экспериментов, а не для каждой сборки кода.
+
+#### Профили и запуск по этапам
+
+В roadmap уже предусмотрены `core` и `obs`. Предлагается сохранить их смысл: основной стенд и дополнительная наблюдаемость; конкретное устройство Compose и команды будут предъявлены вместе с реализацией. Toolchain и lab-инструменты запускаются явно по задаче. Не добавляются обязательные admin UI, reverse proxy или постоянный сервис адаптера без потребности эксперимента.
+
+[Профили Compose](https://docs.docker.com/compose/how-tos/profiles/) позволяют включать нужные наборы компонентов. Компоненты без профиля запускаются по умолчанию; при реализации нужно проверить также явный запуск отдельного сервиса и его зависимости.
+
+Дорогие линтеры, сборка и формирование отчёта не выполняются одновременно с измеряемой нагрузкой без специально оговорённого эксперимента. Сам генератор и наблюдаемость потребляют ресурсы: их лимиты, насыщение и влияние отражаются в отчёте. Разделение контейнеров на одном компьютере не создаёт физически независимые машины.
+
+#### Требования к будущей реализации
+
+- Multi-stage сборка: toolchain готовит бинарник, runtime-образ запускает сервис. Go, библиотеки, инструменты и образы закрепляются при реализации; выбранные версии записываются в manifest.
+- Относительные пути и переносимые Docker/Compose-команды. Обязательный путь запуска не зависит от Bash, Homebrew или установленного на хосте Go. Внешняя проверка переносимого контекста пока остаётся PowerShell-инструментом.
+- Для данных PostgreSQL и других компонентов используются явно описанные volumes; очистка тестового стенда — отдельное действие. В Compose нет абсолютных путей исходного компьютера.
+- Каждый сервис корректно обрабатывает остановку, имеет health и пишет структурированные логи. Готовность зависимостей подтверждается проверкой; порядок старта сам по себе не доказывает готовности.
+- Контейнеры обращаются друг к другу через имена сервисов Compose. На хост публикуются только нужные точки доступа. [Docker: сеть Compose](https://docs.docker.com/compose/how-tos/networking/).
+- Профиль определяет, где выполняется генератор: внутри Compose или вне тестируемой среды. При подключении другого бизнеса это не должно требовать изменения его исходного кода.
+
+В [P01](#appendix-design-review) к трём entrypoints, конфигурации, gRPC health, shutdown, JSON-логам и Go CI добавляются образы сервисов, контейнерный toolchain и минимальный Compose-запуск. PostgreSQL/Kafka/Redis, базы, роли, миграции и seed остаются P02. Сначала готовится рабочий набор файлов, затем выполняются доступные проверки и предъявляются ограничения.
+
+#### Что известно о текущем компьютере
+
+Текущий хост — Windows x64, PowerShell 7.6.5. Команды Go и Docker не обнаружены в текущем PATH; стандартные проверенные расположения установки также отсутствуют. Это не доказывает отсутствия любых иных установок. Docker daemon, WSL, версии Docker/Compose и запуск контейнеров не проверены. Ничего не устанавливалось.
+
+Характеристики Windows-хоста прочитаны и сохранены в [ресурсных профилях](#appendix-resource-profiles). Бюджет Docker, потребление стенда и macOS-окружение ещё не проверены. Возможный арендуемый сервер рассматривается позже при необходимости; он не выбран. Запуск на Windows и macOS будет подтверждён отдельно. Docker делает сборку и конфигурацию переносимыми, но одинаковой производительности разных компьютеров не обещает.
+
+Для A/B по умолчанию используется одна машина с одинаковым бюджетом и нативной архитектурой. Сравнение между Windows и macOS возможно как отдельный эксперимент с явными ограничениями. В manifest сохраняются архитектура CPU, аппаратные ресурсы, OS, Docker, volumes, image digests и фактические лимиты.
+
+Для перехода от плана к проверенному запуску нужны доступные Docker Desktop/Compose и проверка ресурсов машины. Выбор версий и точные команды относятся к пакету реализации, а не к уже выполненной работе.
+
+<a id="appendix-resource-profiles"></a>
+
+## Приложение: Ресурсный снимок Windows и будущие профили macOS/сервера
+
+Полный исходный документ: `docs/development/RESOURCE_PROFILES.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Ресурсные профили сред
+
+Статус на 13 октября 2026 года: характеристики текущего Windows-хоста прочитаны; Docker-бюджет и потребление приложения ещё не измерены. Владелец проекта подтвердил два основных компьютера и возможный арендуемый сервер позже, когда появится потребность в ресурсах.
+
+#### Три уровня данных
+
+1. **Хост:** CPU, доступная ОС память и свободное место. Это исходные условия; свободные ресурсы меняются с фоновой нагрузкой.
+2. **Бюджет:** ресурсы, выделенные Docker и отдельным компонентам. Бюджет задаётся и фиксируется, а не выводится из общего объёма памяти компьютера.
+3. **Потребление:** фактические CPU, память, диск, очереди и насыщение во время прогона. Измеряется на работающем стенде вместе с бизнес-результатами.
+
+Профили не обещают одинаковую производительность разных машин. По умолчанию сравнение A/B выполняется на одной машине с одинаковыми лимитами. Изменение ресурсов или перенос на другой хост учитывается как отдельный фактор.
+
+#### Windows: наблюдаемый снимок
+
+| Параметр | Значение |
+| :--- | :--- |
+| ОС | Windows 11 Pro, build 26200, x64 |
+| CPU | Intel Core i5-12400F, 6 физических ядер / 12 логических процессоров |
+| Память, видимая ОС | 15.72 GiB |
+| Свободная память в момент чтения | 3.38 GiB |
+| Ёмкость тома рабочего каталога | 930.51 GiB |
+| Свободное место в момент чтения | 134.32 GiB |
+| Go / Docker в текущем PATH | Не обнаружены |
+| Команда WSL | Обнаружена; работоспособность и конфигурация не проверены |
+| Docker daemon и лимиты | Не проверены |
+| Потребление стенда | Не измерено; runtime ещё не создан |
+
+Основание: чтение Windows CIM классов процессора/ОС и сведений о томе через PowerShell. Первое чтение CIM было ограничено песочницей; повтор с разрешённым расширенным доступом выполнен успешно. Имена компьютера, серийные номера, идентификаторы оборудования и персональные пути не сохранялись.
+
+Свободная память — снимок, а не постоянный лимит. Нельзя выделять стенду весь объём хоста, предполагая, что он свободен. После появления Docker нужно отдельно зафиксировать его backend, доступный бюджет, лимиты компонентов и потребление при простое/нагрузке. Для WSL2 ограничения виртуальной среды задаются отдельно от настроек других backend Docker Desktop. [Docker: настройки ресурсов](https://docs.docker.com/desktop/settings-and-maintenance/settings/).
+
+#### macOS: основной второй компьютер
+
+Профиль пока `NOT_MEASURED`. Нужны архитектура CPU, число доступных ядер, память, свободный диск, версия macOS, Docker/Compose, backend и лимиты Docker. Нативный вариант образа выбирается по фактической архитектуре ноутбука. Проверка на Windows не подтверждает запуск на macOS.
+
+#### Сервер: возможное последующее расширение
+
+Статус `FUTURE_OPTION`: сервер не выбран и не арендован; характеристики, стоимость и deployment не определены. Владелец проекта рассматривает его при необходимости масштабирования. Покупка, аренда и подключение не поручались.
+
+Предполагается использовать те же образы и профили с конфигурацией среды. Когда появится конкретный сервер, нужно зафиксировать архитектуру, vCPU, RAM, диск, сеть, версии Docker/Compose и лимиты. Перенос на сервер не равен автоматически распределённому кластеру; необходимость нескольких узлов рассматривается отдельным предложением.
+
+#### Следующее измерение
+
+После подготовки каркаса и доступности Docker: проверить daemon/Compose → снять фактический бюджет → запустить минимальный профиль → измерить простой → добавить инфраструктуру → проверить ресурсы под контролируемой нагрузкой. Каждый прогон сохраняет свой снимок условий в manifest; текущая таблица не заменяет данные будущих запусков.
+
+<a id="appendix-banner-options"></a>
+
+## Приложение: Концепции баннера и выбранное оформление
+
+Полный исходный документ: `docs/design/BANNER_OPTIONS.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Баннер Faultline Lab
+
+Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/main/docs/assets/banner.svg). Публикация ожидает следующего коммита и ревью.
+
+#### Задание
+
+Подготовить три альтернативных варианта с акцентом на технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее. Сделаны векторные композиции с читаемым названием, тёмным текстом на светлом фоне и встроенными title/description. Внешних шрифтов, скриптов и удалённых графических зависимостей нет.
+
+![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/main/docs/assets/banner-concepts/comparison.png)
+
+| Вариант | Образ | Палитра | Статус |
+| :--- | :--- | :--- | :--- |
+| 1. Карта системы | Сервисы, связи и инженерный стенд | Голубой, мятный, лавандовый | Сохранён как альтернатива |
+| 2. Поток эксперимента | Гипотеза → эксперимент → доказательства | Слоновая кость, лаванда, персик, мята | Выбран владельцем проекта |
+| 3. Исследовательский горизонт | Любопытство, исследование и будущее | Голубой, лавандовый, мягкий персик | Сохранён как альтернатива |
+
+#### Выбранное решение
+
+![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/main/docs/assets/banner-concepts/02-experiment-flow.png)
+
+Абстрактные линии проходят через область наблюдения. Это метафора исследования поведения системы и сравнения изменений; линии не являются графиком измеренных результатов. Композиция не зависит от домена магазина и подходит будущим подключаемым бизнесам.
+
+Размер SVG — 1280 × 420; README задаёт ширину 100%. Исходник масштабируется, PNG служит предварительным просмотром. Основная подпись: **Explore how systems behave.** Нижняя последовательность: **Hypothesis → Experiment → Evidence**.
+
+Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/main/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/main/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/main/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
+
+Баннеры отрендерены локально и визуально просмотрены на общем листе. Проверены отсутствие обрезанного текста и соответствие композиций заданию. Отдельный preview выбранного варианта используется для проверки основного баннера. Выбранный вариант входит в документационный PR; до его слияния главная страница main сохраняет прежнюю обложку. Проверка отрисовки нового README на GitHub пока не выполнялась.
+
+<a id="appendix-p01"></a>
+
+## Приложение: Первый PR с кодом: задачи, зависимости и критерии приёмки
+
+Полный исходный документ: `docs/development/packets/P01.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### P01 — первый PR с Go-каркасом между G0 и G1
+
+Состояние на 13 октября 2026 года: **декомпозиция подготовлена; реализация NOT_STARTED, проверено 0 из 8 задач**. G0 принят; дополнительной контрольной точки перед первыми строками кода нет. **P01 — первый PR после G0 и до G1.** Он заканчивается проверяемым каркасом и код-ревью; G1 — отдельная более поздняя приёмка основы заказа и склада.
+
+Основа: [первый пакет реализации](#appendix-design-review), [roadmap](#appendix-roadmap), [порядок ревью](#appendix-development-process), [стандарт Go](#appendix-code-review) и согласованный [Docker-подход](#appendix-environment).
+
+#### Цель и границы PR
+
+Три Go-сервиса Orders, Inventory и Payments запускаются в отдельных контейнерах, валидируют конфигурацию, публикуют gRPC health, пишут JSON-логи и корректно завершаются. Сборка и проверки доступны через закреплённый контейнерный toolchain и CI.
+
+PostgreSQL/Kafka/Redis и миграции относятся к P02. Доменные protobuf, заказы, складские операции, платежи, адаптеры и runner здесь не реализуются. Использование стандартного gRPC health не означает готовность бизнес-API.
+
+Терминология, план среды, выбранный баннер и этот backlog фиксируются документационным коммитом и PR по отдельному поручению владельца проекта. Документационный PR не является P01: первым PR с кодом остаётся каркас, описанный здесь.
+
+#### Задачи и текущие статусы
+
+Все статусы ниже — датированный локальный снимок. Текущее выполнение ведётся в [GitHub Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3): TODO, реализация 0/8.
+
+| ID | Задача | Зависит от | Статус | Доказательство приёмки |
+| :--- | :--- | :--- | :--- | :--- |
+| P01-01 | Go-модуль и закреплённый toolchain | — | NOT_STARTED | Сборка трёх бинарников, dependency checks, записанные версии |
+| P01-02 | Конфигурация с проверкой | 01 | NOT_STARTED | Успешный старт с допустимой конфигурацией; отказ на некорректной |
+| P01-03 | Структурированные логи | 01 | NOT_STARTED | Разбор стартовых/финальных записей как JSON с ожидаемыми полями |
+| P01-04 | Три entrypoints и gRPC health | 02, 03 | NOT_STARTED | Проверки всех трёх endpoints; ошибка занятого адреса |
+| P01-05 | Graceful shutdown с пределом ожидания | 04 | NOT_STARTED | Завершение активной работы и принудительное прекращение по deadline |
+| P01-06 | Образы и минимальный Compose | 01–05 | NOT_STARTED | Сборка образов, health и остановка трёх контейнеров |
+| P01-07 | Go-проверки и CI | 01–05 | NOT_STARTED | Успешные обязательные проверки на предъявленном HEAD |
+| P01-08 | Smoke-проверка, инструкция и review packet | 06, 07 | NOT_STARTED | Воспроизводимые команды, результаты, ограничения и открытый PR |
+
+#### Проверяемые критерии по задачам
+
+##### P01-01: модуль и инструменты
+
+- Есть Go-модуль `github.com/Includeoyasi/faultline-lab`, `go.sum` и три точки запуска `cmd/orders`, `cmd/inventory`, `cmd/payments`.
+- Создано описание контейнерного toolchain и команды сборки/проверок. Сборка всех трёх бинарников проходит; нет ручной установки Go на хосте в основном документированном пути.
+- Версии Go, библиотек, линтера, goimports, govulncheck и образов закреплены; команды сообщают фактически используемые версии. Выбор конкретных версий выполняется при реализации.
+- `go mod tidy` не оставляет diff, `go mod verify` проходит. Общая основа запуска не импортирует бизнес-логику одного сервиса в другой и не создаёт пустой framework будущей лаборатории.
+
+##### P01-02: конфигурация
+
+- Настройки слушающего адреса, уровня логирования и shutdown timeout имеют описанные defaults и переопределяются через окружение.
+- Некорректный адрес/порт, неизвестный уровень логирования и неположительный timeout отклоняются до объявления готовности; процесс выходит с ненулевым кодом и понятной диагностикой.
+- Проверки охватывают defaults, допустимое переопределение и каждый перечисленный ошибочный вход. Чувствительные значения конфигурации не попадают в диагностические записи.
+
+##### P01-03: JSON-логи
+
+- При штатном запуске и остановке прикладные записи разбираются как JSON; есть время, уровень, сообщение и имя сервиса.
+- Стартовая запись содержит доступную build/version информацию; неизвестное значение обозначается явно и не подменяется придуманным commit.
+- Ошибки конфигурации, bind и завершения позволяют определить сервис и причину. Секреты не выводятся. Реальные записи приводятся в review packet.
+
+##### P01-04: запуск и здоровье
+
+- Каждый из трёх сервисов слушает свой endpoint и отвечает через стандартный `grpc.health.v1.Health/Check`.
+- Общая проверка здоровья возвращает `SERVING` после успешной инициализации; не публикуется готовность до открытия listener.
+- Занятый адрес приводит к понятной ошибке и ненулевому коду завершения, а не к зависшему процессу.
+- Сервисы запускаются независимо; отключение одного не останавливает два других. На этом этапе health подтверждает работоспособность каркаса, без заявлений о готовности БД или бизнеса.
+
+##### P01-05: завершение
+
+- SIGTERM и SIGINT инициируют остановку, убирают готовность и прекращают приём новой работы. Health переход проверяется до закрытия server, когда endpoint ещё доступен.
+- Уже выполняемый RPC получает возможность завершиться в пределах shutdown timeout. Проверка использует управляемый тестовый handler, а не выдуманную бизнес-операцию.
+- Если RPC не заканчивается, по deadline выполняется принудительная остановка; нет бесконечного ожидания. Проверка ограничена timeout с явно указанным запасом тестового harness.
+- Штатная остановка заканчивается без принудительного убийства контейнера; итог и ошибки завершения отражаются в логах. Синхронизация тестов не зависит от случайного Sleep.
+
+##### P01-06: контейнеры и Compose
+
+- Есть воспроизводимая multi-stage сборка образов трёх сервисов с использованием toolchain из задачи 01. Runtime запускает бинарник сервиса, а не держит компилятор работающим.
+- Минимальный Compose поднимает только необходимый для каркаса состав; сервисы имеют отдельные healthchecks, настройки и жизненный цикл.
+- Сборка образов для `linux/amd64` и `linux/arm64` проходит либо соответствующий обязательный критерий обозначен невыполненным. Один успешный build не объявляется проверкой второй архитектуры.
+- На доступном Windows-хосте проверены старт, health и остановка. Сборка ARM64 не выдаётся за запуск на macOS; native smoke на личном Mac отдельно остаётся `NOT_RUN` до доступа к этой машине.
+- Конфигурация не содержит абсолютных путей компьютера и обязательных Bash-скриптов на хосте. Точные переносимые команды фиксируются после появления файлов.
+
+##### P01-07: проверки качества
+
+- Проверки соответствуют принятому [стандарту](#appendix-code-review): gofmt/goimports, build, golangci-lint с согласованным набором, unit tests, race detector, tidy/verify и govulncheck.
+- Тесты проверяют риски конфигурации, bind/health и остановки; не требуется бизнес-регрессия ещё не реализованных заказов или Kafka.
+- CI запускает Go-проверки вместе с существующей проверкой документов/контекста. Результаты относятся к предъявленному HEAD; старый успешный документационный CI не считается доказательством нового кода.
+- Версии инструментов и фактические команды воспроизводимы. Невыполненное не отмечается успешным.
+
+##### P01-08: доказательства и ревью
+
+- Инструкция позволяет собрать, проверить, запустить, запросить health и остановить каркас с описанными prerequisites. Проверенный путь не требует установленного на хосте Go.
+- Smoke фиксирует исходы каждого сервиса; при ошибке завершает проверку ненулевым кодом и сохраняет диагностические сведения.
+- Review packet содержит цель P01, diff, команды и фактические результаты, версии, ограничения Windows/macOS/архитектур, состояние задач и обновлённый переносимый контекст.
+- Открыт PR в `main`, выполняется self-review; AI не одобряет и не сливает собственную работу. Принятие пакета фиксирует владелец проекта после ревью конкретного HEAD.
+
+#### Приёмка пакета
+
+**Готово к ревью:** перечисленный код и образы существуют; обязательные проверки выполнены и проходят; PR и инструкции доступны; существенные ограничения перечислены. При отсутствии Docker код можно подготовить и показать draft PR, но запуск/health/stop не получают статус PASS, а пакет не объявляется полностью проверенным.
+
+**Принято:** владелец проекта принял предъявленный HEAD, блокирующие замечания устранены, применимые проверки успешны, PR слит по решению человека. Только тогда пакет получает DONE. Готовность PR к ревью и его приёмка — отдельные состояния.
+
+Тест на личном Mac отражается отдельным результатом совместимости. Его отсутствие не скрывается и не превращает сборку multi-platform в утверждение «запуск на обеих ОС подтверждён». Если владелец требует native smoke на Mac до merge, это фиксируется как дополнительное условие именно этого пакета.
+
+P01 не достигает всей контрольной точки G1: базы, миграции и проверяемые операции заказа/склада остаются следующими пакетами P02–P05.
+
+#### Известные ограничения выполнения
+
+- На текущем хосте Go/Docker не найдены в PATH; runtime ещё не создан. Docker Desktop/Compose, backend и бюджет надо подтвердить для контейнерных проверок. Это prerequisite внутри подготовки первого PR, без нового архитектурного gate.
+- Характеристики Windows сохранены в [ресурсном профиле](#appendix-resource-profiles). Ни Docker-лимиты, ни потребление приложения по этим сведениям не измерены.
+- Среда macOS и возможный будущий сервер недоступны для проверки; их результаты не придумываются.
+- Точные команды пока не приводятся как работающие: они будут записаны после создания Go-модуля, Dockerfiles и Compose.
+
+#### Где следить за задачами
+
+Принятый порядок описан в [учёте задач](#appendix-task-tracking): один GitHub Issue на пакет, чеклист этих восьми задач, связь с PR. [Карточка P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) создана; Projects пока не настроен. Этот файл хранит критерии и датированный снимок. Реализация 0/8, а завершённое проектирование списка не повышает прогресс кода.
+
+<a id="appendix-task-tracking"></a>
+
+## Приложение: Предложенный порядок Issues, статусов и переносимых снимков
+
+Полный исходный документ: `docs/development/TASK_TRACKING.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Учёт задач и статусов
+
+Статус на 13 октября 2026 года: **GitHub Issues принят как трекер; карточка P01 создана**. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) содержит восемь задач, зависимости и полные критерии приёмки. Стадия TODO, реализация NOT_STARTED, прогресс 0/8. [Спецификация P01](#appendix-p01) сохраняет версионируемые требования.
+
+#### Разделение назначений
+
+| Место | Назначение |
+| :--- | :--- |
+| [Roadmap](#appendix-roadmap) | Этапы, очередность пакетов и контрольные точки |
+| `docs/development/packets/<packet>.md` | Версионируемые границы пакета, задачи и критерии приёмки |
+| GitHub Issues | Основной трекер выполнения, блокеров и ссылок на PR |
+| GitHub PR | Код, diff, результаты проверок, замечания и решение владельца проекта |
+| [CONTEXT_STATE.json](https://github.com/Includeoyasi/faultline-lab/blob/main/CONTEXT_STATE.json) и [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/main/PROJECT_CONTEXT.md) | Датированный переносимый снимок для агентов без доступа к GitHub/компьютеру |
+
+[GitHub Issues](https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/about-issues) поддерживает задачи и связь с PR. [Projects](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects) даёт таблицы и доски поверх Issues/PR; доску можно подключить при росте backlog, но для первого пакета достаточно одной карточки с чеклистом.
+
+#### Первый пакет в трекере
+
+Создана карточка [P01: Go service skeleton and container development](https://github.com/Includeoyasi/faultline-lab/issues/3) с целью, границами, чеклистом восьми задач, зависимостями, критериями и местом для результатов и PR. Подзадачи внутри одного небольшого PR отдельно в Issues не размножаются; при увеличении самостоятельного объёма их можно выделить.
+
+Исполнитель в описании — Codex; ревьюер и принимающий решение — владелец проекта. Это не означает отдельный GitHub-аккаунт AI и не создаёт фиктивное независимое approval. Каждая следующая единица ревью, например P02, получает собственную карточку.
+
+GitHub — основной источник текущего выполнения; в репозиторий переносится датированный снимок с URL и проверенными результатами. Автоматической синхронизации сейчас нет. Порядок принят прямым поручением владельца проекта «фиксируй изменения и заводи задачи».
+
+#### Статусы
+
+| Статус | Основание перехода |
+| :--- | :--- |
+| TODO | Задача описана, код не начат |
+| IN_PROGRESS | Есть фактически выполняемая реализация или проверка |
+| IN_REVIEW | PR готов, доказательства представлены; ждёт ревью человека |
+| DONE | Критерии выполнены, ревью принято, PR слит по решению человека |
+
+BLOCKED — отдельный признак с причиной и требуемым действием, а не исчезнувшая задача. Общее ограничение Docker не означает, что запрещено готовить исходники или draft PR. При изменении причины блокера запись обновляется.
+
+Пока Projects не настроен, стадия указывается в описании Issue; при необходимости добавляются метки. Это наш рабочий порядок, а не новые встроенные состояния GitHub Issues. Чекбокс подзадачи означает, что её реализация и применимая проверка закончены; весь пакет закрывается только после человеческого принятия и merge.
+
+#### Обновление и доказательства
+
+Исполнитель обновляет карточку при начале работы, завершении подзадачи, появлении/снятии блокера и перед ревью. В конце содержательной работы обновляются также спецификация пакета и переносимый контекст. При работе без GitHub агент возвращает предложенную дельту; локальные и внешние статусы сверяются явно.
+
+Результат проверки записывается как PASS/FAIL/NOT_RUN вместе с командой, средой и рассматриваемым commit. Готовая декомпозиция не считается завершённой реализацией, успешный CI не заменяет ревью человека, опубликованный draft не равен IN_REVIEW.
+
+Изменение критериев или объёма фиксируется в diff/обсуждении; существенная смена принятой архитектуры требует решения владельца проекта. Нельзя незаметно удалить проваленную проверку и закрыть задачу. При расхождении GitHub и контекста более новая проверенная запись отражается в следующем снимке с основанием.
+
+#### Фактический статус сейчас
+
+- Декомпозиция P01 сохранена; код NOT_STARTED, проверки сервиса NOT_RUN.
+- Карточка [P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта: TODO, восемь пустых чекбоксов. Доска Projects пока не создана.
+- PR с Go-кодом не создан. План, терминология, среда и выбранный баннер оформляются документационным PR; он не закрывает P01.
+- Следующее действие по реализации — P01-01, Go-модуль и контейнерный toolchain. При начале работы статус карточки меняется на IN_PROGRESS; G1 остаётся будущей приёмкой.
