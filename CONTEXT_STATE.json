@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 13,
+  "context_revision": 14,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-13",
   "user_timezone": "Europe/Moscow",
@@ -10,7 +10,7 @@
   "current_task": {
     "id": "REPO-TRACKING-001",
     "description": "Зафиксировать согласованные документы и оформить задачи P01 в GitHub",
-    "status": "ISSUE_CREATED_PREPARING_DOCUMENTATION_PR",
+    "status": "PUBLICATION_COMPLETED_PENDING_HUMAN_REVIEW",
     "authorization": "Прямое поручение владельца проекта: молодец, фиксируй изменения и заводи задачи",
     "result": {
       "issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/3",
@@ -22,16 +22,27 @@
       "branch": "docs/portable-lab-plan",
       "target_branch": "main",
       "base_commit": "1a0b3f356529e262fe902a1e419e16169e8c6b08",
-      "commit_created": false,
-      "pushed": false,
-      "pull_request_url": null,
-      "delivery": "DOCUMENTATION_PR_SEPARATE_FROM_FIRST_CODE_PR",
+      "commit_created": true,
+      "pushed": true,
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
+      "delivery": "PUBLISHED_DOCUMENTATION_PR",
       "business_implementation": "NOT_STARTED",
       "go_checks": "NOT_RUN_NO_GO_MODULE",
       "local_validation": "PASS",
-      "documentation_ci": "NOT_RUN_FOR_UNCOMMITTED_CHANGES",
+      "documentation_ci": {
+        "workflow": "Documentation",
+        "head_sha": "2c28d127764210f1019c114a4b3d5b1cd59b529c",
+        "status": "COMPLETED",
+        "conclusion": "SUCCESS",
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38402553170",
+        "event": "pull_request",
+        "scope": "CI документационного коммита на момент снимка; после обновления контекста проверять актуальный HEAD PR #4"
+      },
       "human_review": "PENDING",
-      "merged": false
+      "merged": false,
+      "observed_published_commit": "2c28d127764210f1019c114a4b3d5b1cd59b529c",
+      "pull_request_number": 4,
+      "publication_note": "Наблюдённый commit/CI относятся к HEAD до коммита этого handoff; финальный HEAD и проверки доступны в PR. Снимок не может содержать собственный hash."
     }
   },
   "roles": {
@@ -82,7 +93,7 @@
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "1a0b3f356529e262fe902a1e419e16169e8c6b08",
+    "git_commit": "2c28d127764210f1019c114a4b3d5b1cd59b529c",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -107,6 +118,19 @@
         "merged": true,
         "head_at_merge": "681660a2a659d68c0336d05c0ac11db70d0c76d2",
         "merge_commit": "1a0b3f356529e262fe902a1e419e16169e8c6b08"
+      },
+      {
+        "number": 4,
+        "url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
+        "state": "OPEN",
+        "head_ref": "docs/portable-lab-plan",
+        "base_ref": "main",
+        "scope": "Согласованные документы, граница лаборатории, Docker-план, ресурсные профили, выбранный баннер и P01 backlog",
+        "code_packet": false,
+        "human_review": "PENDING",
+        "merged": false,
+        "observed_head": "2c28d127764210f1019c114a4b3d5b1cd59b529c",
+        "observation_note": "HEAD при создании PR; коммит актуализации снимка выполняется позже. Проверять текущий HEAD на GitHub."
       }
     ]
   },
@@ -136,7 +160,8 @@
     "Подготовлены и визуально просмотрены три пастельных SVG-концепции; выбранный владельцем вариант 2 применён к общему баннеру README локально",
     "Подготовлена явная декомпозиция первого PR G1-P01 на восемь задач с зависимостями и критериями; код 0/8. Предложен GitHub Issues, внешние карточки/доска не создавались",
     "Маркеры контрольных точек и пакетов разделены: первый кодовый PR P01 находится после G0 и до G1; переименованы активные задачи и ссылки, критерии сохранены",
-    "Создан GitHub Issue #3 для P01 с восемью задачами, зависимостями и полными критериями; стадия TODO, код 0/8. Ссылки добавлены в README, roadmap, workflow, спецификацию и переносимый контекст."
+    "Создан GitHub Issue #3 для P01 с восемью задачами, зависимостями и полными критериями; стадия TODO, код 0/8. Ссылки добавлены в README, roadmap, workflow, спецификацию и переносимый контекст.",
+    "Коммит 2c28d12 опубликован в docs/portable-lab-plan; открыт документационный PR #4 и прикреплён к чату. Его исходный Documentation CI прошёл; человеческое ревью и merge ожидаются. Issue #3 остаётся TODO, 0/8."
   ],
   "next_implementation_packet": {
     "id": "P01",
@@ -496,6 +521,25 @@
         "git diff --cached --check"
       ],
       "detail": "Проверены 22 Markdown-файла, 234 локальные ссылки, структура 56 Mermaid-блоков и актуальность ревизии 13 с 19 документами/22 fingerprints. Активные документы не содержат старых имён пакетов или роли тимлида. Проверки Go/runtime не выполнялись: реализации нет."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Initial documentation PR CI",
+      "result": "PASS",
+      "head_sha": "2c28d127764210f1019c114a4b3d5b1cd59b529c",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38402553170",
+      "detail": "GitHub Actions Documentation pull_request run завершён успешно на 2c28d12. Результат не распространяется автоматически на последующий handoff commit и не является тестом Go/runtime."
+    },
+    {
+      "date": "2026-10-13",
+      "check": "Published PR and issue handoff documentation",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly",
+        "git diff --check"
+      ],
+      "detail": "Проверены 22 Markdown-файла, 234 локальные ссылки, структура 56 Mermaid-блоков и актуальность ревизии 14 с 19 документами/22 fingerprints. Снимок содержит созданные Issue #3 и PR #4; code/runtime checks NOT_RUN. Наблюдённый CI указан с точным SHA; новый handoff HEAD проверяется отдельно в PR."
     }
   ],
   "source_documents": [
@@ -673,6 +717,12 @@
       "date": "2026-10-13",
       "summary": "Принят GitHub Issues и создан P01 #3. Согласованные документы, новая обложка и разделение G0/P01/G1 подготовлены к документационному PR; первый PR с кодом остаётся будущим P01.",
       "trigger": "Прямое поручение владельца проекта: молодец, фиксируй изменения и заводи задачи"
+    },
+    {
+      "revision": 14,
+      "date": "2026-10-13",
+      "summary": "Сохранены фактические публикация коммита, PR #4 и успешный CI его исходного HEAD. Переносимый контекст и документы теперь содержат реальные ссылки на tracker и review. Main не изменён; код P01 не начат.",
+      "trigger": "Завершение поручения владельца: фиксация изменений и создание задач"
     }
   ],
   "repository": {
@@ -697,7 +747,22 @@
       "event": "push",
       "scope": "Документационный CI main после принятия правил; не является проверкой последующего handoff PR или Go-кода."
     },
-    "snapshot_ref": "main"
+    "snapshot_ref": "docs/portable-lab-plan",
+    "current_publication": {
+      "branch": "docs/portable-lab-plan",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
+      "observed_commit": "2c28d127764210f1019c114a4b3d5b1cd59b529c",
+      "merged": false,
+      "observed_ci": {
+        "workflow": "Documentation",
+        "head_sha": "2c28d127764210f1019c114a4b3d5b1cd59b529c",
+        "status": "COMPLETED",
+        "conclusion": "SUCCESS",
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38402553170",
+        "event": "pull_request",
+        "scope": "CI документационного коммита на момент снимка; после обновления контекста проверять актуальный HEAD PR #4"
+      }
+    }
   },
   "review_policy": {
     "document": "docs/development/CODE_REVIEW.md",
@@ -757,7 +822,7 @@
     "macos_container_start_verified": false
   },
   "branding_notes": {
-    "status": "USER_SELECTED_AND_LOCALLY_APPLIED",
+    "status": "USER_SELECTED_PUBLISHED_IN_REVIEW_BRANCH",
     "selected_on": "2026-10-13",
     "brief": "Три варианта: технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее",
     "document": "docs/design/BANNER_OPTIONS.md",
@@ -773,8 +838,11 @@
     "preview": "docs/assets/banner-concepts/02-experiment-flow.png",
     "comparison": "docs/assets/banner-concepts/comparison.png",
     "svg_sha256": "7eb3a6e1ec1176769be56d05c959dd75893d17e7dd27fea0d9767701d6a7d119",
-    "published": false,
-    "note": "Линии декоративные, не изображают измерения; оба README используют общий SVG"
+    "published": true,
+    "note": "Линии декоративные, не изображают измерения; оба README используют общий SVG",
+    "published_branch": "docs/portable-lab-plan",
+    "published_to_main": false,
+    "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/4"
   },
   "task_tracking": {
     "status": "ACTIVE_GITHUB_ISSUE_CREATED",
@@ -815,7 +883,9 @@
       "unchecked_tasks": 8,
       "acceptance_sections": 8,
       "source": "GitHub REST create response"
-    }
+    },
+    "documentation_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
+    "documentation_pr_closes_packet": false
   },
   "review_sequence": {
     "confirmed_on": "2026-10-13",
