@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-labelledby="title desc">
+  <title id="title">Faultline Lab — System Map</title>
+  <desc id="desc">A soft blue and mint research canvas with three connected microservices. A proposed banner for a lab studying systems through experiments.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#f5f8fc"/>
+      <stop offset="1" stop-color="#edf6f2"/>
+    </linearGradient>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="12" r="1" fill="#b4c2cf" opacity=".38"/>
+    </pattern>
+  </defs>
+  <rect width="1280" height="420" rx="24" fill="url(#paper)"/>
+  <rect x="704" y="30" width="548" height="360" rx="24" fill="url(#dots)"/>
+  <path d="M687 66V354" stroke="#d2dce4"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <g transform="translate(64 62)">
+      <rect width="32" height="32" rx="10" fill="#d9e9e2"/>
+      <path d="M9 22L16 10L23 22M12 17H20" fill="none" stroke="#315b51" stroke-width="2" stroke-linejoin="round"/>
+      <text x="46" y="22" font-size="15" font-weight="600" letter-spacing="2.3" fill="#4e6675">SYSTEMS RESEARCH</text>
+    </g>
+    <text x="59" y="207" font-size="77" font-weight="650" letter-spacing="-3.2" fill="#24384c">Faultline<tspan dx="16" fill="#386e63">Lab</tspan></text>
+    <text x="64" y="256" font-size="25" fill="#4d6274">A small system. A better question.</text>
+    <path d="M64 294H116" stroke="#6c9a8b" stroke-width="3" stroke-linecap="round"/>
+    <text x="64" y="352" font-size="16" font-weight="600" fill="#536879" letter-spacing="1.1">BUILD / OBSERVE / UNDERSTAND</text>
+    <g fill="none" stroke-width="3" stroke-linecap="round">
+      <path d="M979 177C979 226 852 215 852 266" stroke="#84a99c"/>
+      <path d="M979 177C979 226 1109 215 1109 266" stroke="#9c9cc0"/>
+    </g>
+    <g fill="#fbfcfe" stroke="#c5d3df" stroke-width="1.4">
+      <rect x="875" y="85" width="208" height="92" rx="18"/>
+      <rect x="747" y="266" width="211" height="92" rx="18"/>
+      <rect x="1003" y="266" width="211" height="92" rx="18"/>
+    </g>
+    <g>
+      <rect x="893" y="102" width="28" height="28" rx="9" fill="#dae5f6"/>
+      <path d="M901 113H913M901 118H910" stroke="#5a729b" stroke-width="2" stroke-linecap="round"/>
+      <text x="936" y="123" font-size="20" font-weight="600" fill="#304a63">Orders</text>
+      <text x="897" y="153" font-size="14" fill="#566c80">durable workflow</text>
+      <rect x="765" y="283" width="28" height="28" rx="9" fill="#d8ece2"/>
+      <path d="M773 292H785V302H773ZM779 292V302" stroke="#50796a" stroke-width="1.6" fill="none"/>
+      <text x="808" y="304" font-size="20" font-weight="600" fill="#304a63">Inventory</text>
+      <text x="769" y="334" font-size="14" fill="#566c80">stock &amp; reservations</text>
+      <rect x="1021" y="283" width="28" height="28" rx="9" fill="#e8e1f2"/>
+      <path d="M1029 292H1041V302H1029ZM1029 295H1041" stroke="#7c6a98" stroke-width="1.6" fill="none"/>
+      <text x="1064" y="304" font-size="20" font-weight="600" fill="#304a63">Payments</text>
+      <text x="1025" y="334" font-size="14" fill="#566c80">simulated payments</text>
+    </g>
+    <rect x="905" y="205" width="148" height="30" rx="15" fill="#e7edf5"/>
+    <text x="979" y="225" text-anchor="middle" font-size="14" font-weight="600" fill="#536879">gRPC + Kafka</text>
+  </g>
+</svg>

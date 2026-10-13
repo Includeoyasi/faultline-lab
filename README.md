@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/banner.svg" alt="Faultline Lab — three services, real failure modes, measurable decisions" width="100%">
+  <img src="docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
 </p>
 
 <p align="center">
@@ -22,7 +22,7 @@
 
 ## Current state
 
-**Architecture approved · implementation next.** The team lead accepted G0 on **13 October 2026**. The initial repository snapshot contains the design, visual process atlas, development workflow and portable agent context. Service code, runtime infrastructure and measured experiment results are still to come.
+**Architecture approved · implementation next.** The project owner accepted G0 on **13 October 2026**. The initial repository snapshot contains the design, visual process atlas, development workflow and portable agent context. Service code, runtime infrastructure and measured experiment results are still to come.
 
 | Ready | Next | Later |
 | :--- | :--- | :--- |
@@ -30,7 +30,11 @@
 | Detailed process diagrams and review gates | PostgreSQL ownership, migrations and gRPC contracts | Grafana dashboards, alerts and experiment reports |
 | Portable context with a freshness check | Durable workflows, Kafka and compensation | Scaling comparisons under equal resource budgets |
 
+The first code PR is **P01**, after G0 and before G1. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) tracks its eight tasks; [the packet specification](docs/development/packets/P01.md) defines acceptance criteria. Implementation is TODO, 0/8.
+
 No capacity numbers or performance improvements are claimed before measurement. The [roadmap](docs/ROADMAP.md) distinguishes design hypotheses from acceptance criteria and observed results.
+
+The owner has agreed on container-based development for Windows and macOS and a reusable lab boundary with business adapters. The [environment plan](docs/development/ENVIRONMENT.md) and [boundary proposal](docs/architecture/LAB_BOUNDARY.md) record this direction; runnable containers and a second business integration are still to come.
 
 ## What this project investigates
 
@@ -95,7 +99,7 @@ Reports retain offered versus actual load, unresolved outcomes, resource limits 
 
 ## Human-led AI development
 
-The maintainer acts as **team lead and code reviewer**. The AI acts as **implementer**: it prepares focused changes, runs available checks, documents evidence and addresses review comments. The human approves architecture and milestone transitions.
+The **project owner** directs development and reviews changes. The AI acts as **implementer**: it prepares focused changes, runs available checks, documents evidence and addresses review comments. The human approves architecture and milestone transitions.
 
 ```mermaid
 flowchart LR

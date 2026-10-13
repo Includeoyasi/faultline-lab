@@ -8,7 +8,7 @@ Read the [current context](PROJECT_CONTEXT.md), [approved design](docs/architect
 
 The [code review standard](docs/development/CODE_REVIEW.md) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
-G0 is approved. G1–G4 remain future review gates. Significant changes to approved service boundaries, invariants or incompatible contracts require a concrete proposal and the team lead's decision.
+G0 is approved. G1–G4 remain future review gates. Significant changes to approved service boundaries, invariants or incompatible contracts require a concrete proposal and the project owner's decision.
 
 ## A reviewable change
 
