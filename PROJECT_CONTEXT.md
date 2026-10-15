@@ -2,13 +2,13 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **19**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
+Ревизия: **20**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
 
 ## Краткое текущее состояние
 
 | Поле | Фактический статус |
 |---|---|
-| Текущая задача | P01-01: DRAFT_PR_CREATED_FIXING_CONTAINER_VCS_OWNERSHIP |
+| Текущая задача | P01-01: GO_QUALITY_PASSED_FIXING_BUILD_OUTPUT_PERMISSIONS |
 | G0 | APPROVED |
 | G1 | NOT_READY |
 | G2 | NOT_READY |
@@ -258,7 +258,7 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 19,
+  "context_revision": 20,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -267,7 +267,7 @@ JSON ниже является частью этого файла и доста�
   "current_task": {
     "id": "P01-01",
     "description": "Первая задача: Go-модуль, три bootstrap entrypoints и закреплённый контейнерный toolchain",
-    "status": "DRAFT_PR_CREATED_FIXING_CONTAINER_VCS_OWNERSHIP",
+    "status": "GO_QUALITY_PASSED_FIXING_BUILD_OUTPUT_PERMISSIONS",
     "authorization": "Владелец сообщил о merge PR #5 и поручил взять первую утверждённую задачу и создать PR для ревью",
     "result": {
       "branch": "feat/p01-01-toolchain",
@@ -276,7 +276,7 @@ JSON ниже является частью этого файла и доста�
       "implementation": "BOOTSTRAP_AND_TOOLCHAIN_CREATED",
       "local_go": "PASS_PORTABLE_WINDOWS_GO_1_27_2",
       "local_docker": "NOT_RUN",
-      "ci": "FIRST_ARM64_CHECK_FAILED_VCS_OWNERSHIP_FIX_PREPARED",
+      "ci": "GO_QUALITY_BOTH_ARCHS_PASS; BOOTSTRAP_OUTPUT_PERMISSION_FIX_PENDING",
       "native_macos": "NOT_RUN",
       "go_tests": "COMMAND_PASS_NO_TEST_FILES",
       "owner_acceptance": "PENDING",
@@ -287,7 +287,7 @@ JSON ниже является частью этого файла и доста�
       "pull_request_number": 6,
       "author": "AI-Your-Bro",
       "draft": true,
-      "observed_commit": "c1e7c7699660fedfb997d5bcaac38514b8723853",
+      "observed_commit": "1cc5d8c63a7263d677f277c989e6e2fcb051020a",
       "local_docs": "PASS_REVISION_18_PS7_AND_WINDOWS_PS51"
     }
   },
@@ -342,7 +342,7 @@ JSON ниже является частью этого файла и доста�
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "c1e7c7699660fedfb997d5bcaac38514b8723853",
+    "git_commit": "1cc5d8c63a7263d677f277c989e6e2fcb051020a",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -906,6 +906,14 @@ JSON ниже является частью этого файла и доста�
       "check": "Portable source embedding and initial documentation",
       "result": "PASS",
       "detail": "24 Markdown-файла, 275 локальных ссылок, структура 56 Mermaid; ревизия 18, 32 документа и 35 fingerprints. CheckOnly прошёл PS7 и Windows PS5.1. Documentation CI исходного коммита успешен."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "Linux AMD64/ARM64 Go checks and build-output permissions",
+      "result": "PARTIAL_PASS",
+      "head_sha": "1cc5d8c63a7263d677f277c989e6e2fcb051020a",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38723121526",
+      "detail": "На обеих архитектурах прошли версии, format/imports, tidy/verify, build, golangci-lint (0 issues), unit/race commands (no test files), govulncheck (no vulnerabilities). Bootstrap build не смог создать bin: cap_drop ALL лишил root возможности писать в bind mount runner с другим UID. Для временной среды сборки восстановлены стандартные Docker capabilities; privileged mode не включён, no-new-privileges сохранён. Повторный CI ожидается."
     }
   ],
   "source_documents": [
@@ -1078,6 +1086,12 @@ JSON ниже является частью этого файла и доста�
       "anchor": "appendix-go-workflow",
       "title": "Проверки Go в нативном Linux CI",
       "language": "yaml"
+    },
+    {
+      "path": ".dockerignore",
+      "anchor": "appendix-dockerignore",
+      "title": "Исключения Docker build context",
+      "language": "text"
     }
   ],
   "change_history": [
@@ -1194,6 +1208,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-15",
       "summary": "Создан draft PR #6 от исполнителя; первый ARM64 CI выявил Git ownership bind mount. Образ доверяет точному /workspace для VCS metadata; повторные Go-проверки ожидаются.",
       "trigger": "Фактическая диагностика контейнерного CI первой задачи"
+    },
+    {
+      "revision": 20,
+      "date": "2026-10-15",
+      "summary": "Go quality checks прошли на AMD64/ARM64. Исправлена запись bootstrap-бинарников в bind mount: toolchain использует стандартные capabilities Docker. Добавлен полный .dockerignore в переносимый снимок.",
+      "trigger": "Фактическая проверка bootstrap build после исправления VCS"
     }
   ],
   "repository": {
@@ -1502,7 +1522,7 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `79d47063fd60d977389a9c15868ac4520c5774bd17e9d110f4f59db4f41a1bfe` |
+| `CONTEXT_STATE.json` | `151d5eadb5eb814a7def3b3665e22ab950615cbb028b0ba989ef187cdf57794e` |
 | `tools/context_intro.md` | `5dcee0e3835066aac2cfe604ecd4678119626a4714493cbf96a741689d0cf163` |
 | `tools/update_context.ps1` | `f830ed3538ae98ef5129b2ab5ae1d1ad564b0482d8ed2978a7ec2b96bcf5e731` |
 | `README.md` | `ee605f8ae927cf3d74baec53aba139b2b6d202faa4f8afb7a64625109a86f16c` |
@@ -1526,17 +1546,18 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/TASK_TRACKING.md` | `9fe24ca7cab0124e6a221b23157fe946def389b8eebf04da2b6e0169f38538de` |
 | `docs/development/REPOSITORY_SECURITY.md` | `0d9a23b90f16dc1b54ad4ff26c79cd71c34dab9e4932eff7a67bec0b92385cb5` |
 | `.github/CODEOWNERS` | `95de6cc3de1ba640d0ab9e2b9bfbdea79b7ce6641a8bcdb0bcef1f7607666415` |
-| `docs/development/TOOLCHAIN.md` | `80ee20c2a49db75dd0cf89afc1c10b7e9239efd5b801aaf2429f709fa0c7fe47` |
+| `docs/development/TOOLCHAIN.md` | `56ea3124c6cfeb3962e9cd93c0c296ff6addd3eb42d498ca46744bb0661ae034` |
 | `go.mod` | `42367a4526e5e710282c98d7e1b54744d316cd3d14cf931908cc58f92bf37f24` |
 | `go.sum` | `6944553c37dc15f498c34d4b2a6df7e68b04c2c0dafd031775a1d76cb8b8cdfa` |
 | `cmd/orders/main.go` | `b92118d23ed781e7814447ba75c2aaf8b8f13faabaf9107451fa38ce241726ad` |
 | `cmd/inventory/main.go` | `5fc0345eb20a61fd7c66b66c8d0d511a1fcdbde013697723f8af92bda04415f6` |
 | `cmd/payments/main.go` | `0f80f213e40d6c412ffd54e3aff5ad2d4d1cc85a1fdf249fdbf2d4d94f2ace0f` |
 | `build/toolchain.Dockerfile` | `d0d0eb2b9560f7cab27b61c1f42ed98b6b3c133efa16021c3bd3bcb9c1e9db69` |
-| `compose.yaml` | `b1b9413399dad7e5a2482fb65677ef5c04df8a0e17cf2eacca5480aeec26bbc6` |
+| `compose.yaml` | `2fbd418a578851fbcec5b6bd34b55f9c287c5857c90f36c972fd9cbf7af256a2` |
 | `tools/go.sh` | `c77feafacb2b89058ff02b10f0d6a2f19d5f79944afcb0fb6c6fdf2b7ca3cda4` |
 | `.golangci.yml` | `44651a36c889767cd425bc12b46e07c8bffc924024de23af1176057f78f3a74a` |
 | `.github/workflows/go.yml` | `ed62dbd5f85d29699b03f5f9dc83a7dba6c24e6c35be14e57a2f78e6d188681b` |
+| `.dockerignore` | `b84f44484e186b48ca4f1676d442b6cc3879739264e06dfb2105bdbaf568590e` |
 
 ## Полные самостоятельные приложения
 
@@ -1572,6 +1593,7 @@ SHA-256 относится к исходному файлу на момент с
 - [Команды внутри Linux-контейнера](#appendix-go-commands) — `tools/go.sh`
 - [Согласованные Go-линтеры](#appendix-golangci-config) — `.golangci.yml`
 - [Проверки Go в нативном Linux CI](#appendix-go-workflow) — `.github/workflows/go.yml`
+- [Исключения Docker build context](#appendix-dockerignore) — `.dockerignore`
 
 <a id="appendix-readme-en"></a>
 
@@ -4060,7 +4082,7 @@ docker compose run --rm toolchain bootstrap-smoke
 
 Для осознанного исправления форматирования: `docker compose run --rm toolchain format`. Эта команда меняет Go-исходники в рабочей копии; check их не меняет. Неподдерживаемая команда и лишние аргументы дают exit code 2.
 
-Toolchain — временный сервис профиля tools. Явный `compose run toolchain` активирует его; команды не поднимают PostgreSQL/Kafka/Redis или runtime сервисов. Shell-скрипт выполняется внутри Linux-контейнера. Исходники подключаются из относительного пути, кеши модулей и сборки — в отдельных named volumes. Контейнер не получает Docker socket и привилегии; Linux capabilities удалены.
+Toolchain — временный сервис профиля tools. Явный `compose run toolchain` активирует его; команды не поднимают PostgreSQL/Kafka/Redis или runtime сервисов. Shell-скрипт выполняется внутри Linux-контейнера. Исходники подключаются из относительного пути, кеши модулей и сборки — в отдельных named volumes. Используются стандартные capabilities Docker для записи в bind mount; privileged mode и Docker socket не включены, no-new-privileges включён. Ограничения runtime-контейнеров сервисов проектируются в P01-06 отдельно от среды сборки.
 
 Внутри образа Git доверяет только рабочему каталогу /workspace: bind mount может иметь другого владельца, а Go читает Git для настоящих VCS build metadata. Настройка действует в образе инструментов и не меняет Git-конфигурацию хоста.
 
@@ -4218,7 +4240,6 @@ services:
       - .:/workspace
       - go-modules:/go/pkg/mod
       - go-build:/root/.cache/go-build
-    cap_drop: [ALL]
     security_opt:
       - no-new-privileges:true
 
@@ -4382,4 +4403,27 @@ jobs:
           test "$status" -eq 2
       - name: Ensure checks did not change source files
         run: git diff --exit-code
+```
+
+<a id="appendix-dockerignore"></a>
+
+## Приложение: Исключения Docker build context
+
+Полный исходный документ: `.dockerignore`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```text
+.git
+.local
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+bin
+dist
+coverage
+data
+artifacts
+tmp
+node_modules
 ```

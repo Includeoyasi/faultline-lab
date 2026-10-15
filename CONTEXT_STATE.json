@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 19,
+  "context_revision": 20,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -10,7 +10,7 @@
   "current_task": {
     "id": "P01-01",
     "description": "Первая задача: Go-модуль, три bootstrap entrypoints и закреплённый контейнерный toolchain",
-    "status": "DRAFT_PR_CREATED_FIXING_CONTAINER_VCS_OWNERSHIP",
+    "status": "GO_QUALITY_PASSED_FIXING_BUILD_OUTPUT_PERMISSIONS",
     "authorization": "Владелец сообщил о merge PR #5 и поручил взять первую утверждённую задачу и создать PR для ревью",
     "result": {
       "branch": "feat/p01-01-toolchain",
@@ -19,7 +19,7 @@
       "implementation": "BOOTSTRAP_AND_TOOLCHAIN_CREATED",
       "local_go": "PASS_PORTABLE_WINDOWS_GO_1_27_2",
       "local_docker": "NOT_RUN",
-      "ci": "FIRST_ARM64_CHECK_FAILED_VCS_OWNERSHIP_FIX_PREPARED",
+      "ci": "GO_QUALITY_BOTH_ARCHS_PASS; BOOTSTRAP_OUTPUT_PERMISSION_FIX_PENDING",
       "native_macos": "NOT_RUN",
       "go_tests": "COMMAND_PASS_NO_TEST_FILES",
       "owner_acceptance": "PENDING",
@@ -30,7 +30,7 @@
       "pull_request_number": 6,
       "author": "AI-Your-Bro",
       "draft": true,
-      "observed_commit": "c1e7c7699660fedfb997d5bcaac38514b8723853",
+      "observed_commit": "1cc5d8c63a7263d677f277c989e6e2fcb051020a",
       "local_docs": "PASS_REVISION_18_PS7_AND_WINDOWS_PS51"
     }
   },
@@ -85,7 +85,7 @@
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "c1e7c7699660fedfb997d5bcaac38514b8723853",
+    "git_commit": "1cc5d8c63a7263d677f277c989e6e2fcb051020a",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -649,6 +649,14 @@
       "check": "Portable source embedding and initial documentation",
       "result": "PASS",
       "detail": "24 Markdown-файла, 275 локальных ссылок, структура 56 Mermaid; ревизия 18, 32 документа и 35 fingerprints. CheckOnly прошёл PS7 и Windows PS5.1. Documentation CI исходного коммита успешен."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "Linux AMD64/ARM64 Go checks and build-output permissions",
+      "result": "PARTIAL_PASS",
+      "head_sha": "1cc5d8c63a7263d677f277c989e6e2fcb051020a",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38723121526",
+      "detail": "На обеих архитектурах прошли версии, format/imports, tidy/verify, build, golangci-lint (0 issues), unit/race commands (no test files), govulncheck (no vulnerabilities). Bootstrap build не смог создать bin: cap_drop ALL лишил root возможности писать в bind mount runner с другим UID. Для временной среды сборки восстановлены стандартные Docker capabilities; privileged mode не включён, no-new-privileges сохранён. Повторный CI ожидается."
     }
   ],
   "source_documents": [
@@ -821,6 +829,12 @@
       "anchor": "appendix-go-workflow",
       "title": "Проверки Go в нативном Linux CI",
       "language": "yaml"
+    },
+    {
+      "path": ".dockerignore",
+      "anchor": "appendix-dockerignore",
+      "title": "Исключения Docker build context",
+      "language": "text"
     }
   ],
   "change_history": [
@@ -937,6 +951,12 @@
       "date": "2026-10-15",
       "summary": "Создан draft PR #6 от исполнителя; первый ARM64 CI выявил Git ownership bind mount. Образ доверяет точному /workspace для VCS metadata; повторные Go-проверки ожидаются.",
       "trigger": "Фактическая диагностика контейнерного CI первой задачи"
+    },
+    {
+      "revision": 20,
+      "date": "2026-10-15",
+      "summary": "Go quality checks прошли на AMD64/ARM64. Исправлена запись bootstrap-бинарников в bind mount: toolchain использует стандартные capabilities Docker. Добавлен полный .dockerignore в переносимый снимок.",
+      "trigger": "Фактическая проверка bootstrap build после исправления VCS"
     }
   ],
   "repository": {

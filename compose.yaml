@@ -9,7 +9,6 @@ services:
       - .:/workspace
       - go-modules:/go/pkg/mod
       - go-build:/root/.cache/go-build
-    cap_drop: [ALL]
     security_opt:
       - no-new-privileges:true
 
