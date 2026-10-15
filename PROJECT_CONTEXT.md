@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **23**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
+Ревизия: **24**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
 
 ## Краткое текущее состояние
 
@@ -258,7 +258,7 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 23,
+  "context_revision": 24,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -280,14 +280,17 @@ JSON ниже является частью этого файла и доста�
       "native_macos": "NOT_RUN",
       "go_tests": "PASS_UNIT_AND_REAL_PROCESS_SMOKE",
       "govulncheck": "PASS_NO_VULNERABILITIES",
-      "ci": "PENDING",
+      "ci": "FIRST_RUN_STATICCHECK_QF1001_FAILED; VALIDATION_EXPRESSION_FIXED; RERUN_PENDING",
       "owner_acceptance": "PENDING",
-      "pull_request_url": null,
-      "commit_created": false,
-      "pushed": false,
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7",
+      "commit_created": true,
+      "pushed": true,
       "author": "AI-Your-Bro",
       "remaining_tasks": "P01-05..P01-08_NOT_STARTED",
-      "shutdown": "IMMEDIATE_STOP_ONLY; DRAIN_AND_TIMEOUT_P01_05_NOT_IMPLEMENTED"
+      "shutdown": "IMMEDIATE_STOP_ONLY; DRAIN_AND_TIMEOUT_P01_05_NOT_IMPLEMENTED",
+      "pull_request_number": 7,
+      "draft": true,
+      "observed_commit": "e8d9102acca633883d3b01ae3488b113111c0c92"
     }
   },
   "roles": {
@@ -419,6 +422,26 @@ JSON ниже является частью этого файла и доста�
         "observation_note": "Пользователь сообщил о merge; GitHub GET /pulls/6 подтвердил merged=true. ИИ не выполнял approve/merge.",
         "head_at_merge": "001d333132613f642b9f2415865bcd1255cb397a",
         "merge_commit": "e4a9b0b80f97b2fb20ca973ef57030d32f8ba878"
+      },
+      {
+        "number": 7,
+        "url": "https://github.com/Includeoyasi/faultline-lab/pull/7",
+        "state": "OPEN",
+        "author": "AI-Your-Bro",
+        "head_ref": "feat/p01-02-04-service-runtime",
+        "base_ref": "main",
+        "scope": "P01-02..P01-04: config, JSON logs, gRPC health",
+        "code_packet": true,
+        "parent_packet": "P01",
+        "tasks": [
+          "P01-02",
+          "P01-03",
+          "P01-04"
+        ],
+        "human_review": "PENDING",
+        "merged": false,
+        "draft": true,
+        "observed_head": "e8d9102acca633883d3b01ae3488b113111c0c92"
       }
     ],
     "toolchain_container": "VERIFIED_NATIVE_LINUX_AMD64_AND_ARM64_IN_CI",
@@ -503,7 +526,8 @@ JSON ниже является частью этого файла и доста�
         "evidence": "PASS_LOCAL_WINDOWS_GO_UNIT_PROCESS_SMOKE; NATIVE_LINUX_CI_PENDING",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "CREATED",
-        "owner_acceptance": "PENDING"
+        "owner_acceptance": "PENDING",
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
       },
       {
         "id": "P01-03",
@@ -515,7 +539,8 @@ JSON ниже является частью этого файла и доста�
         "evidence": "PASS_LOCAL_WINDOWS_GO_UNIT_PROCESS_SMOKE; NATIVE_LINUX_CI_PENDING",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "CREATED",
-        "owner_acceptance": "PENDING"
+        "owner_acceptance": "PENDING",
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
       },
       {
         "id": "P01-04",
@@ -528,7 +553,8 @@ JSON ниже является частью этого файла и доста�
         "evidence": "PASS_LOCAL_WINDOWS_GO_UNIT_PROCESS_SMOKE; NATIVE_LINUX_CI_PENDING",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "CREATED",
-        "owner_acceptance": "PENDING"
+        "owner_acceptance": "PENDING",
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
       },
       {
         "id": "P01-05",
@@ -1002,6 +1028,14 @@ JSON ниже является частью этого файла и доста�
         "go tool govulncheck ./..."
       ],
       "detail": "Go 1.27.2 portable, gRPC v1.84.0. Unit tests: defaults/overrides/invalid inputs, safe JSON/levels/build data, bind errors, context cancellation and real TCP health; process tests: all 3 health endpoints, error exit 1, isolation. Sandbox initially blocked loopback; rerun with permission passed. Windows child processes use Kill, not Unix signals; graceful signal exit remains Linux CI. No vulnerabilities found. Local Docker/macOS/race NOT_RUN; Linux container CI pending."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "P01-02–04 first native Linux CI",
+      "result": "FAIL_FIXED_AWAITING_RERUN",
+      "head_sha": "e8d9102acca633883d3b01ae3488b113111c0c92",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38734508988",
+      "detail": "Оба image build и module verify прошли; staticcheck QF1001 потребовал упростить инвертированную проверку символа DNS. Переписано в явный switch допустимых символов, без подавления анализатора. Tests/race/smoke этой попытки ещё не выполнялись. Documentation CI PASS."
     }
   ],
   "source_documents": [
@@ -1367,6 +1401,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-15",
       "summary": "Наблюдено принятие PR #6. По прямому поручению владельца P01-02–04 реализуются одним PR: config, JSON, health, unit/process tests и документация. Локальные Windows Go проверки прошли; Linux CI ожидается, приёмка новых задач не заявляется.",
       "trigger": "Merge P01-01 и поручение следующей группы задач"
+    },
+    {
+      "revision": 24,
+      "date": "2026-10-15",
+      "summary": "Создан draft PR #7 от AI-Your-Bro, прикреплён к чату. Первый Linux CI остановлен staticcheck QF1001; проверка допустимых символов переписана без подавления линтера, ожидается повторный полный прогон. Новые задачи ещё не IN_REVIEW.",
+      "trigger": "CI feedback и исправление перед готовностью к ревью"
     }
   ],
   "repository": {
@@ -1558,7 +1598,7 @@ JSON ниже является частью этого файла и доста�
       "rule": "P01-01 была отдельным PR #6; по новому прямому поручению владельца P01-02, P01-03 и P01-04 объединены следующим PR. Общая карточка P01 сохраняет восемь задач и ссылки на последовательные PR.",
       "whole_packet_acceptance": "NOT_COMPLETE_AFTER_P01_01_OR_P01_02_04"
     },
-    "current_task_pr_url": null,
+    "current_task_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/7",
     "current_subtask_stage": "IN_PROGRESS"
   },
   "review_sequence": {
@@ -1707,7 +1747,7 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `49766b717396867d0aa2024dc3ff44a543088b41227f619865b36fe0f3db6ff5` |
+| `CONTEXT_STATE.json` | `9e3b7439dc6c6dedcbfaf1e63a58d6980ad6f0bc32272a0fa0d6bb3c0bbb91e3` |
 | `tools/context_intro.md` | `c5bbaf98b105e173c26d2e0075ab68b1498607dda50a3077695e6f825fdb415f` |
 | `tools/update_context.ps1` | `f830ed3538ae98ef5129b2ab5ae1d1ad564b0482d8ed2978a7ec2b96bcf5e731` |
 | `README.md` | `b1dbfc5795477e992966888a19c90de6a004a7bb3ea6f55de4b51a5bff77ea80` |
@@ -1727,7 +1767,7 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/ENVIRONMENT.md` | `4fa05b25a390838e4c683fcd1a77ba1421e911bf39bdc026d201b8e5913e4c62` |
 | `docs/development/RESOURCE_PROFILES.md` | `6b3fc67394485c0b13247d564175f3ecfb2b578a115dffbd252a31247e9bb5a1` |
 | `docs/design/BANNER_OPTIONS.md` | `27d7b336acd60aa3106e6498233f2a33eefd2bc37bf8e26cf12d2c0c0d229724` |
-| `docs/development/packets/P01.md` | `5bf338cfbde8a7afc5876aef59252d047c253f8c52148b42c0395f91c68c00a5` |
+| `docs/development/packets/P01.md` | `3a490ecd220060251431a9897b78bade749e9f776444edfe2d224a6875f00bd2` |
 | `docs/development/TASK_TRACKING.md` | `996aef591e99dfaa2dbd73316c175cf96b7f6a9b154cb314bb6250e6a9ee7ea6` |
 | `docs/development/REPOSITORY_SECURITY.md` | `b10363e3417429cc06376dff0277f257a92912dae03af12d7d9ff8252a80cb6e` |
 | `.github/CODEOWNERS` | `95de6cc3de1ba640d0ab9e2b9bfbdea79b7ce6641a8bcdb0bcef1f7607666415` |
@@ -1743,8 +1783,8 @@ SHA-256 относится к исходному файлу на момент с
 | `.golangci.yml` | `44651a36c889767cd425bc12b46e07c8bffc924024de23af1176057f78f3a74a` |
 | `.github/workflows/go.yml` | `afdf01b6e54190015633c922a939a85e472f5a97cbd71cd1540275a2fab509b1` |
 | `.dockerignore` | `b84f44484e186b48ca4f1676d442b6cc3879739264e06dfb2105bdbaf568590e` |
-| `docs/development/SERVICE_RUNTIME.md` | `bfc7a3f85ede44ed968e3a0106efd5b92025601ee29ab75f1804d47c0d5c6d32` |
-| `internal/service/config.go` | `d97e361733d46d76b917504099622399e63e45f27e16020756245e66e053e879` |
+| `docs/development/SERVICE_RUNTIME.md` | `863e980d1b8daf5c2cb18d669ff069546efe092e2266e4db1a344066ca6a7f0b` |
+| `internal/service/config.go` | `4277f812f2dcc7547b1c4155a650b592a77d75c5587a96722e865678b9fd3b9e` |
 | `internal/service/log.go` | `034f82245011a1a905514e9f21d16953dd4ce325cdfc720d8832d1d924a5773f` |
 | `internal/service/run.go` | `634dc54b0ab05dbb40a035100adea007f2b44ee73efcb47a683b6209be7e533d` |
 | `internal/service/config_test.go` | `0919fa2a659c198b924f1c47fe6f77f80401b649b3e6a7296236dddca6cf8977` |
@@ -4018,7 +4058,7 @@ Docker рекомендует разделять ответственности 
 
 ### P01 — Go-каркас между G0 и G1
 
-Состояние на 15 октября 2026 года: **P01-01 DONE, принята и слита в [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6); P01-02–04 реализованы, проверяются для следующего PR; P01-05–08 NOT_STARTED**. Принято владельцем 1/8; текущая проверка задач 02–04 ещё не означает их приёмку. G0 принят; дополнительной контрольной точки перед первыми строками кода нет. P01 находится после G0 и до G1. По прямому поручению владельца первая задача шла отдельным PR, а задачи 02–04 объединены следующим PR; это не готовность всего пакета. G1 — отдельная более поздняя приёмка основы заказа и склада.
+Состояние на 15 октября 2026 года: **P01-01 DONE, принята и слита в [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6); P01-02–04 реализованы, проверяются для [draft PR #7](https://github.com/Includeoyasi/faultline-lab/pull/7); P01-05–08 NOT_STARTED**. Принято владельцем 1/8; текущая проверка задач 02–04 ещё не означает их приёмку. G0 принят; дополнительной контрольной точки перед первыми строками кода нет. P01 находится после G0 и до G1. По прямому поручению владельца первая задача шла отдельным PR, а задачи 02–04 объединены следующим PR; это не готовность всего пакета. G1 — отдельная более поздняя приёмка основы заказа и склада.
 
 Основа: [первый пакет реализации](#appendix-design-review), [roadmap](#appendix-roadmap), [порядок ревью](#appendix-development-process), [стандарт Go](#appendix-code-review) и согласованный [Docker-подход](#appendix-environment).
 
@@ -4699,7 +4739,7 @@ node_modules
 
 Три независимых процесса Orders, Inventory и Payments проверяют настройки, пишут JSON в stderr и обслуживают стандартный `grpc.health.v1.Health/Check`. Health пока подтверждает только работу gRPC-каркаса. Бизнес-методов, PostgreSQL/Kafka/Redis и доменных protobuf здесь нет.
 
-P01-01 принят владельцем и слит через [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6). Следующий PR объединяет задачи 02–04 по прямому поручению владельца. Статус проверок и ссылка на текущий PR находятся в [P01](#appendix-p01) и [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3).
+P01-01 принят владельцем и слит через [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6). [Draft PR #7](https://github.com/Includeoyasi/faultline-lab/pull/7) объединяет задачи 02–04 по прямому поручению владельца. Статус проверок и ссылка на текущий PR находятся в [P01](#appendix-p01) и [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3).
 
 #### Как устроен запуск
 
@@ -4866,7 +4906,9 @@ func validAddress(address string) bool {
 			return false
 		}
 		for _, char := range label {
-			if !(char >= 'a' && char <= 'z' || char >= 'A' && char <= 'Z' || char >= '0' && char <= '9' || char == '-') {
+			switch {
+			case char >= 'a' && char <= 'z', char >= 'A' && char <= 'Z', char >= '0' && char <= '9', char == '-':
+			default:
 				return false
 			}
 		}

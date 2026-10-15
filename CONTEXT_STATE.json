@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 23,
+  "context_revision": 24,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -23,14 +23,17 @@
       "native_macos": "NOT_RUN",
       "go_tests": "PASS_UNIT_AND_REAL_PROCESS_SMOKE",
       "govulncheck": "PASS_NO_VULNERABILITIES",
-      "ci": "PENDING",
+      "ci": "FIRST_RUN_STATICCHECK_QF1001_FAILED; VALIDATION_EXPRESSION_FIXED; RERUN_PENDING",
       "owner_acceptance": "PENDING",
-      "pull_request_url": null,
-      "commit_created": false,
-      "pushed": false,
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7",
+      "commit_created": true,
+      "pushed": true,
       "author": "AI-Your-Bro",
       "remaining_tasks": "P01-05..P01-08_NOT_STARTED",
-      "shutdown": "IMMEDIATE_STOP_ONLY; DRAIN_AND_TIMEOUT_P01_05_NOT_IMPLEMENTED"
+      "shutdown": "IMMEDIATE_STOP_ONLY; DRAIN_AND_TIMEOUT_P01_05_NOT_IMPLEMENTED",
+      "pull_request_number": 7,
+      "draft": true,
+      "observed_commit": "e8d9102acca633883d3b01ae3488b113111c0c92"
     }
   },
   "roles": {
@@ -162,6 +165,26 @@
         "observation_note": "Пользователь сообщил о merge; GitHub GET /pulls/6 подтвердил merged=true. ИИ не выполнял approve/merge.",
         "head_at_merge": "001d333132613f642b9f2415865bcd1255cb397a",
         "merge_commit": "e4a9b0b80f97b2fb20ca973ef57030d32f8ba878"
+      },
+      {
+        "number": 7,
+        "url": "https://github.com/Includeoyasi/faultline-lab/pull/7",
+        "state": "OPEN",
+        "author": "AI-Your-Bro",
+        "head_ref": "feat/p01-02-04-service-runtime",
+        "base_ref": "main",
+        "scope": "P01-02..P01-04: config, JSON logs, gRPC health",
+        "code_packet": true,
+        "parent_packet": "P01",
+        "tasks": [
+          "P01-02",
+          "P01-03",
+          "P01-04"
+        ],
+        "human_review": "PENDING",
+        "merged": false,
+        "draft": true,
+        "observed_head": "e8d9102acca633883d3b01ae3488b113111c0c92"
       }
     ],
     "toolchain_container": "VERIFIED_NATIVE_LINUX_AMD64_AND_ARM64_IN_CI",
@@ -246,7 +269,8 @@
         "evidence": "PASS_LOCAL_WINDOWS_GO_UNIT_PROCESS_SMOKE; NATIVE_LINUX_CI_PENDING",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "CREATED",
-        "owner_acceptance": "PENDING"
+        "owner_acceptance": "PENDING",
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
       },
       {
         "id": "P01-03",
@@ -258,7 +282,8 @@
         "evidence": "PASS_LOCAL_WINDOWS_GO_UNIT_PROCESS_SMOKE; NATIVE_LINUX_CI_PENDING",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "CREATED",
-        "owner_acceptance": "PENDING"
+        "owner_acceptance": "PENDING",
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
       },
       {
         "id": "P01-04",
@@ -271,7 +296,8 @@
         "evidence": "PASS_LOCAL_WINDOWS_GO_UNIT_PROCESS_SMOKE; NATIVE_LINUX_CI_PENDING",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "CREATED",
-        "owner_acceptance": "PENDING"
+        "owner_acceptance": "PENDING",
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
       },
       {
         "id": "P01-05",
@@ -745,6 +771,14 @@
         "go tool govulncheck ./..."
       ],
       "detail": "Go 1.27.2 portable, gRPC v1.84.0. Unit tests: defaults/overrides/invalid inputs, safe JSON/levels/build data, bind errors, context cancellation and real TCP health; process tests: all 3 health endpoints, error exit 1, isolation. Sandbox initially blocked loopback; rerun with permission passed. Windows child processes use Kill, not Unix signals; graceful signal exit remains Linux CI. No vulnerabilities found. Local Docker/macOS/race NOT_RUN; Linux container CI pending."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "P01-02–04 first native Linux CI",
+      "result": "FAIL_FIXED_AWAITING_RERUN",
+      "head_sha": "e8d9102acca633883d3b01ae3488b113111c0c92",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38734508988",
+      "detail": "Оба image build и module verify прошли; staticcheck QF1001 потребовал упростить инвертированную проверку символа DNS. Переписано в явный switch допустимых символов, без подавления анализатора. Tests/race/smoke этой попытки ещё не выполнялись. Documentation CI PASS."
     }
   ],
   "source_documents": [
@@ -1110,6 +1144,12 @@
       "date": "2026-10-15",
       "summary": "Наблюдено принятие PR #6. По прямому поручению владельца P01-02–04 реализуются одним PR: config, JSON, health, unit/process tests и документация. Локальные Windows Go проверки прошли; Linux CI ожидается, приёмка новых задач не заявляется.",
       "trigger": "Merge P01-01 и поручение следующей группы задач"
+    },
+    {
+      "revision": 24,
+      "date": "2026-10-15",
+      "summary": "Создан draft PR #7 от AI-Your-Bro, прикреплён к чату. Первый Linux CI остановлен staticcheck QF1001; проверка допустимых символов переписана без подавления линтера, ожидается повторный полный прогон. Новые задачи ещё не IN_REVIEW.",
+      "trigger": "CI feedback и исправление перед готовностью к ревью"
     }
   ],
   "repository": {
@@ -1301,7 +1341,7 @@
       "rule": "P01-01 была отдельным PR #6; по новому прямому поручению владельца P01-02, P01-03 и P01-04 объединены следующим PR. Общая карточка P01 сохраняет восемь задач и ссылки на последовательные PR.",
       "whole_packet_acceptance": "NOT_COMPLETE_AFTER_P01_01_OR_P01_02_04"
     },
-    "current_task_pr_url": null,
+    "current_task_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/7",
     "current_subtask_stage": "IN_PROGRESS"
   },
   "review_sequence": {
