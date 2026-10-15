@@ -19,7 +19,7 @@ import (
 func TestRunRejectsConfigurationBeforeListening(t *testing.T) {
 	t.Parallel()
 	var output bytes.Buffer
-	err := Run(context.Background(), "payments", "127.0.0.1:50053", environment(map[string]string{"FL_LOG_LEVEL": "super-secret-value"}), &output)
+	err := Run(context.Background(), "payments", environment(map[string]string{"FL_GRPC_ADDR": "localhost:50053", "FL_LOG_LEVEL": "super-secret-value"}), &output)
 	if err == nil || strings.Contains(output.String(), "super-secret-value") {
 		t.Fatalf("expected sanitized configuration failure, got %v / %s", err, &output)
 	}
@@ -44,7 +44,7 @@ func TestRunRejectsOccupiedAddress(t *testing.T) {
 		}
 	})
 	var output bytes.Buffer
-	err = Run(context.Background(), "orders", listener.Addr().String(), environment(nil), &output)
+	err = Run(context.Background(), "orders", environment(map[string]string{"FL_GRPC_ADDR": listener.Addr().String()}), &output)
 	var operationError *net.OpError
 	if !errors.As(err, &operationError) || operationError.Op != "listen" {
 		t.Fatalf("expected wrapped listen error, got %v", err)

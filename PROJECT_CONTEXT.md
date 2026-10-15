@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **26**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
+Ревизия: **27**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
 
 ## Краткое текущее состояние
 
@@ -97,6 +97,8 @@ G0 полностью принят пользователем; это согла
 По уточнению владельца проекта обозначения разделены: G0–G4 — контрольные точки приёмки, P01–P05 — кодовые пакеты. Первый PR P01 выполняется между G0 и G1; после него следуют PR основы данных/заказа/склада, затем приёмка G1. Ранее первый пакет имел неоднозначный префикс контрольной точки; старое название сохраняется только в истории и таблице соответствия review_sequence. Восемь задач и критерии первого PR от переименования не изменились.
 
 ## Архитектурные опорные правила
+
+В ревью PR #7 владелец попросил убрать локальные IP/порты из прикладного кода и оформить конфигурацию с учётом бизнес-разработки и безопасности. FL_GRPC_ADDR теперь обязателен: нет скрытого fallback, отсутствие или пустое значение приводит к безопасной диагностике и exit 1 до bind. Образцы local/container в configs/env явно задают сеть; listener, DNS endpoint клиента и публикация порта на хосте разделены. Пример публикации ограничен loopback, личные *.env игнорируются Git и исключены из Docker build context. Loopback в тестах и фактических логах не является настройкой production-кода. TLS/mTLS и runtime-контейнеры не объявляются реализованными этим исправлением. Актуальные проверки после замечания указаны в структурированном состоянии.
 
 ### Владение данными
 
@@ -258,7 +260,7 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 26,
+  "context_revision": 27,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -266,7 +268,7 @@ JSON ниже является частью этого файла и доста�
   "current_phase": "G0_APPROVED_IMPLEMENTATION_IN_PROGRESS",
   "current_task": {
     "id": "P01-02..P01-04",
-    "description": "Один PR: конфигурация, JSON-логи и три независимых gRPC health-процесса",
+    "description": "P01-02–04, PR #7: устранение замечания владельца о сетевых адресах в коде",
     "status": "IN_REVIEW",
     "authorization": "Владелец сообщил о merge PR #6 и поручил объединить P01-02, P01-03 и P01-04 следующим PR; подготовить комментарий «Что я найду внутри?»",
     "result": {
@@ -274,13 +276,13 @@ JSON ниже является частью этого файла и доста�
       "base_commit": "e4a9b0b80f97b2fb20ca973ef57030d32f8ba878",
       "scope": "P01-02_P01-03_P01-04_ONLY",
       "implementation": "CONFIG_JSON_GRPC_HEALTH_CREATED",
-      "local_go": "PASS_PORTABLE_WINDOWS_GO_1_27_2",
+      "local_go": "PASS_WINDOWS_BUILD_VET_UNIT_PROCESS_SMOKE_AFTER_ADDRESS_FIX",
       "local_tcp": "PASS_AFTER_SANDBOX_LOOPBACK_PERMISSION",
       "local_docker": "NOT_RUN",
       "native_macos": "NOT_RUN",
       "go_tests": "PASS_UNIT_AND_REAL_PROCESS_SMOKE",
-      "govulncheck": "PASS_NO_VULNERABILITIES",
-      "ci": "PASS_NATIVE_LINUX_AMD64_AND_ARM64",
+      "govulncheck": "PREVIOUS_HEAD_PASS; CURRENT_CI_PENDING",
+      "ci": "PENDING_CURRENT_NETWORK_REVIEW_FIX",
       "owner_acceptance": "PENDING",
       "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7",
       "commit_created": true,
@@ -290,7 +292,7 @@ JSON ниже является частью этого файла и доста�
       "shutdown": "IMMEDIATE_STOP_ONLY; DRAIN_AND_TIMEOUT_P01_05_NOT_IMPLEMENTED",
       "pull_request_number": 7,
       "draft": false,
-      "observed_commit": "4d3b2356b472f275063efb576d8226de4a35f594",
+      "observed_commit": "a38c6e1361481a9d55c81e907e90a49ba14614a5",
       "go_ci": {
         "name": "Go toolchain",
         "head_sha": "4d3b2356b472f275063efb576d8226de4a35f594",
@@ -308,7 +310,9 @@ JSON ниже является частью этого файла и доста�
       "review_requested_from": "Includeoyasi",
       "local_validation": "PASS",
       "source_scope": "P01-02_P01-03_P01-04_ONLY; NO_GRACEFUL_DRAIN_RUNTIME_IMAGES_OR_BUSINESS_API",
-      "handoff_note": "CI evidence refers to the source HEAD before this documentation/context commit. Final HEAD and required checks are available in PR #7. The snapshot cannot embed its own commit hash."
+      "handoff_note": "CI evidence refers to the source HEAD before this documentation/context commit. Final HEAD and required checks are available in PR #7. The snapshot cannot embed its own commit hash.",
+      "network_configuration": "FL_GRPC_ADDR_REQUIRED_NO_RUNTIME_DEFAULT_ADDRESS_OR_PORT",
+      "review_fix_status": "IMPLEMENTED_LOCAL_VERIFIED_LINUX_CI_PENDING"
     }
   },
   "roles": {
@@ -504,7 +508,8 @@ JSON ниже является частью этого файла и доста�
     "P01-01 реализована и прошла полный Docker CI на нативных AMD64/ARM64. PR #6 от AI-Your-Bro переведён в ready, ревью запрошено у Includeoyasi. Issue #3 обновлён: проверено 1/8, принято владельцем 0/8; остальные задачи не начаты.",
     "Владелец принял и смержил PR #6; main e4a9b0b содержит P01-01, приёмка 1/8. Новым поручением объединены P01-02–04 и запрошен комментарий «Что я найду внутри?» к следующему PR.",
     "Реализованы конфигурация с безопасной диагностикой, JSON slog/build metadata, три gRPC health-сервера, unit и process smoke. Windows Go проверки, build/vet/tidy/verify и govulncheck прошли; Linux container CI ожидается. Graceful shutdown/runtime-образы и бизнес-логика не реализованы.",
-    "P01-02–04 прошли полный контейнерный CI на нативных Linux AMD64/ARM64: format/imports/tidy/verify/build, lint (0 issues), unit/race, govulncheck (no vulnerabilities), реальный process health/JSON/error/exit/isolation smoke. PR #7 ready от AI-Your-Bro, ревью запрошено у Includeoyasi; Issue #3: проверено 4/8, принято 1/8. Последующие 05–08 и G1 не объявляются готовыми."
+    "P01-02–04 прошли полный контейнерный CI на нативных Linux AMD64/ARM64: format/imports/tidy/verify/build, lint (0 issues), unit/race, govulncheck (no vulnerabilities), реальный process health/JSON/error/exit/isolation smoke. PR #7 ready от AI-Your-Bro, ревью запрошено у Includeoyasi; Issue #3: проверено 4/8, принято 1/8. Последующие 05–08 и G1 не объявляются готовыми.",
+    "По замечанию владельца в PR #7 удалены IP/порты и параметр defaultAddress из Go entrypoints/общего запуска. FL_GRPC_ADDR обязателен. Добавлены local/container env examples, игнорирование личных *.env и корректная loopback-публикация в инструкции. Локальные Windows Go/TCP проверки прошли; Linux CI после правки ожидается."
   ],
   "next_implementation_packet": {
     "id": "P01",
@@ -634,7 +639,15 @@ JSON ниже является частью этого файла и доста�
     "current_task": "P01-02..P01-04"
   },
   "active_blockers": [],
-  "open_review_comments": [],
+  "open_review_comments": [
+    {
+      "id": "PR7-NETWORK-CONFIG",
+      "source": "Project owner chat",
+      "status": "IMPLEMENTED_LOCAL_VERIFIED_AWAITING_CI",
+      "comment": "Remove environment-specific listen addresses from application code; configure deployment and publication explicitly.",
+      "human_acceptance": "PENDING"
+    }
+  ],
   "lab_evolution_notes": {
     "status": "USER_CONFIRMED_DIRECTION_WITH_REVIEWABLE_DETAIL",
     "discussed_on": "2026-10-13",
@@ -1084,6 +1097,19 @@ JSON ниже является частью этого файла и доста�
       "result": "PASS",
       "url": "https://github.com/Includeoyasi/faultline-lab/pull/7",
       "detail": "Executor GraphQL confirmed draft=false and author AI-Your-Bro; review requested from Includeoyasi. Issue PATCH verified 4 completed implementation checkboxes; 1 owner-accepted task, 3 in review, 4 not started. Issue remains open. AI did not approve or merge."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "PR #7 network configuration review fix, local Windows",
+      "result": "PASS",
+      "commands": [
+        "go build ./...",
+        "go vet ./...",
+        "go test -count=1 -timeout=3m ./...",
+        "git check-ignore configs/env/local.env configs/env/container.env",
+        "rg runtime Go sources excluding *_test.go: no literal loopback/wildcard IP or service ports"
+      ],
+      "detail": "FL_GRPC_ADDR required; missing/empty address rejected for each real binary. Unit defaults are only log level and timeout; valid explicit listen addresses still work. All three real health endpoints and process isolation pass. Linux CI for this change is pending; previous green CI is historical evidence only."
     }
   ],
   "source_documents": [
@@ -1309,6 +1335,24 @@ JSON ниже является частью этого файла и доста�
       "anchor": "appendix-service-process-tests",
       "title": "Проверки трёх реальных процессов",
       "language": "go"
+    },
+    {
+      "path": "configs/env/local.env.example",
+      "anchor": "appendix-local-env-example",
+      "title": "Явное локальное окружение: образец",
+      "language": "dotenv"
+    },
+    {
+      "path": "configs/env/container.env.example",
+      "anchor": "appendix-container-env-example",
+      "title": "Явное контейнерное окружение: образец",
+      "language": "dotenv"
+    },
+    {
+      "path": ".gitignore",
+      "anchor": "appendix-gitignore",
+      "title": "Исключение личных настроек и артефактов из Git",
+      "language": "text"
     }
   ],
   "change_history": [
@@ -1467,6 +1511,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-15",
       "summary": "Финальная сверка переносимого контекста: repository.snapshot_ref и current_publication переключены с уже слитого PR #6 на текущий ready PR #7. Код и критерии не менялись; доказательства слияния #6 сохраняются в истории.",
       "trigger": "Проверка согласованности активных полей перед передачей владельцу"
+    },
+    {
+      "revision": 27,
+      "date": "2026-10-15",
+      "summary": "Замечание владельца о сетевых адресах в коде реализовано в текущем PR #7: явный обязательный FL_GRPC_ADDR, образцы окружения, отказ без настройки, разделение listener/DNS/publication, игнорирование личных env. Локальные проверки PASS; новый Linux CI ожидается. Приёмка человеком не заявляется.",
+      "trigger": "Прямое замечание владельца во время ревью PR #7"
     }
   ],
   "repository": {
@@ -1801,6 +1851,24 @@ JSON ниже является частью этого файла и доста�
     "bootstrap_behavior": "THREE_GRPC_HEALTH_SERVERS_UNTIL_SIGNAL; IMMEDIATE_STOP_ONLY",
     "smoke_command": "docker compose run --rm toolchain service-smoke",
     "service_runtime_document": "docs/development/SERVICE_RUNTIME.md"
+  },
+  "network_configuration_review": {
+    "requested_on": "2026-10-15",
+    "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7",
+    "source": "Direct project owner review in chat",
+    "request": "Мне не нравится, что в коде присутствуют локальные IP адреса типа 127.0.0.1:50053. Давай сразу оформим красиво и правильно (с точки зрения бизнес разработки и безопасности).",
+    "status": "IMPLEMENTED_AWAITING_NATIVE_CI",
+    "decisions": [
+      "FL_GRPC_ADDR is mandatory: no IP/port literals or implicit network fallback in application Go source. Missing/empty address fails before bind with sanitized JSON and exit 1.",
+      "Local and container profiles are explicit nonsecret configs/env/*.env.example files; application itself does not load dotenv.",
+      "Separate listener configuration, future peer DNS targets and host publication. Container wildcard is explicit, not an automatic fallback or authentication policy.",
+      "Default toolchain has no published ports. Manual development instructions publish only on host loopback; unqualified host publication removed.",
+      "Personal *.env files are ignored by Git and excluded from Docker build context, including nested dotenv files.",
+      "Loopback in isolated test fixtures and observed logs is intentional and not a deployment default. TLS/mTLS, runtime images and client service discovery remain future work."
+    ],
+    "local_checks": "PASS: build/vet/unit/real process TCP smoke; three missing and three empty address process cases; Git ignore verified; runtime source IP/port search returned no matches",
+    "native_ci": "PENDING",
+    "owner_acceptance": "PENDING"
   }
 }
 ```
@@ -1811,10 +1879,10 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `93161849d3087fecbd39dad0a8923f497bd370fdc5c85d887588ed6c6e202358` |
-| `tools/context_intro.md` | `adf4816c33d869282fda497f1d966793872f06f433866b7a0ebfebc3ff50841d` |
+| `CONTEXT_STATE.json` | `96617b1a5956adca36091c94c003f4c699bd6a4a9f696a236390ed791433700e` |
+| `tools/context_intro.md` | `45c1a4c06c7989f2c3dbc0e92ebaf5dff72c0e425f3fd15c92a3a592752aa51b` |
 | `tools/update_context.ps1` | `f830ed3538ae98ef5129b2ab5ae1d1ad564b0482d8ed2978a7ec2b96bcf5e731` |
-| `README.md` | `b3f26632e197519497bbf73d91db7d74c27a7efbf211e8b076a44022381130bd` |
+| `README.md` | `54f3af93c0d0358ef2f2fc953c4780ee6ff404df590e7863b79adc4d80e178fe` |
 | `README.ru.md` | `30d24313c0feb39140b3d6ca2689d79b47e3fd6fff189adc76771b5444bb9f63` |
 | `docs/README.md` | `3a558f6d9eebd95c918d9c4ed9337979100822b21b6c5b729197d82cffc49971` |
 | `docs/ROADMAP.md` | `179385f10cb667948b7c71cdb81994e717e868f894ba35661ae44c3e23c6a102` |
@@ -1822,7 +1890,7 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/architecture/PROCESSES.md` | `dd6d00ee9d169236fe0f0d14de4b6f54d778a7cf79489f6b6a3354357e2e9ec6` |
 | `docs/development/WORKFLOW.md` | `d7620ce2e3871d436eb389946aa13610a4ef2283b4b128fbcb54929fac30d84b` |
 | `docs/experiments/REPORT_TEMPLATE.md` | `4f569aab52ba34a68bb2e8b4551c6a3bf4932277c26c3b4206dbb505781a2cab` |
-| `AGENTS.md` | `6ee5a588c7a28cfeabae8155f8236dc9560b7c441560f2d8505fd965e6281942` |
+| `AGENTS.md` | `ec1afbfb075307d37c15d875836db37bd030fa267db8339bdec9d0457686a0f3` |
 | `docs/adr/0001-approved-g0.md` | `b8518c5c49cdefea3dbf0bf2a79ab40459dba2b565e71a6c534a555cbafa20df` |
 | `CONTRIBUTING.md` | `b805939c170ddf7036212bd9c880597f6172076216996d36cb742833e992eaa0` |
 | `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
@@ -1831,30 +1899,33 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/ENVIRONMENT.md` | `4fa05b25a390838e4c683fcd1a77ba1421e911bf39bdc026d201b8e5913e4c62` |
 | `docs/development/RESOURCE_PROFILES.md` | `6b3fc67394485c0b13247d564175f3ecfb2b578a115dffbd252a31247e9bb5a1` |
 | `docs/design/BANNER_OPTIONS.md` | `27d7b336acd60aa3106e6498233f2a33eefd2bc37bf8e26cf12d2c0c0d229724` |
-| `docs/development/packets/P01.md` | `e3a5ed788a9fd77881ad2c5f83701bf9333eb714a494a9aad2d32c2d8fd41498` |
+| `docs/development/packets/P01.md` | `f64f238176c51d2680bc1115b2e255626e083c1a82462df520c6f6b83900b88a` |
 | `docs/development/TASK_TRACKING.md` | `28609ddde14748df359e89dfb084643259b80e5467067536bbf9f21315e1f52e` |
 | `docs/development/REPOSITORY_SECURITY.md` | `b10363e3417429cc06376dff0277f257a92912dae03af12d7d9ff8252a80cb6e` |
 | `.github/CODEOWNERS` | `95de6cc3de1ba640d0ab9e2b9bfbdea79b7ce6641a8bcdb0bcef1f7607666415` |
 | `docs/development/TOOLCHAIN.md` | `e000485b8f06922465cb7c51fd6d945da944ef569d63108e3d942ab917c60eba` |
 | `go.mod` | `6b5e4488754d547057e6b8ddd0963cde3d86100430adf16fdb7060107517fa62` |
 | `go.sum` | `9f863b08d769d3d2d631ac9534db6bbd7f8d8fa5c59ee9f5bfa762763d310cc7` |
-| `cmd/orders/main.go` | `b43bc69cbc1a819a5c2c6b4542a455a3ac6479b6f325ceb6298570504882853c` |
-| `cmd/inventory/main.go` | `0122195f3e135fe024d5136fdf813bd3ab080144f473b014a513ee2d7532fe02` |
-| `cmd/payments/main.go` | `209c352a78d609c1a0e7f20abff1bc8a672c210877f27058b679b3c92a349492` |
+| `cmd/orders/main.go` | `b858dd6959ebfe676e6142be1502506c672b3d87cc4d0f70a8ccfb90780799e6` |
+| `cmd/inventory/main.go` | `eca5b1676c8200b018d94551f64af35ab85f4ef7905e975b9911fff119577318` |
+| `cmd/payments/main.go` | `7f59565dfd173b9245b4cd54c4ca470ffa70f666932a3382f501cf59e7efc1fa` |
 | `build/toolchain.Dockerfile` | `d0d0eb2b9560f7cab27b61c1f42ed98b6b3c133efa16021c3bd3bcb9c1e9db69` |
 | `compose.yaml` | `2fbd418a578851fbcec5b6bd34b55f9c287c5857c90f36c972fd9cbf7af256a2` |
 | `tools/go.sh` | `4271c7210cc4ed6f3901b2b091a97d91d158cd63fd02bb4d3fd60f5353abd62f` |
 | `.golangci.yml` | `44651a36c889767cd425bc12b46e07c8bffc924024de23af1176057f78f3a74a` |
 | `.github/workflows/go.yml` | `afdf01b6e54190015633c922a939a85e472f5a97cbd71cd1540275a2fab509b1` |
-| `.dockerignore` | `b84f44484e186b48ca4f1676d442b6cc3879739264e06dfb2105bdbaf568590e` |
-| `docs/development/SERVICE_RUNTIME.md` | `6124b2b1b4fbeb51aae37f92cd53c8e2ffc5aa3caeebccb2e59f504dae3b9ba9` |
-| `internal/service/config.go` | `4277f812f2dcc7547b1c4155a650b592a77d75c5587a96722e865678b9fd3b9e` |
+| `.dockerignore` | `e75b314d79f67eec6dafc763b1e4c118597186f106f91a73749750d4ab0cf045` |
+| `docs/development/SERVICE_RUNTIME.md` | `87f858d8c99a24e8feeb929e8d4dcc5855ff692e7bb06305ebd7db2b99085e41` |
+| `internal/service/config.go` | `9efe4d82007b839733d07bbd2b84655fd6a72151339946c4ccb8897d24ca64c4` |
 | `internal/service/log.go` | `034f82245011a1a905514e9f21d16953dd4ce325cdfc720d8832d1d924a5773f` |
-| `internal/service/run.go` | `634dc54b0ab05dbb40a035100adea007f2b44ee73efcb47a683b6209be7e533d` |
-| `internal/service/config_test.go` | `0919fa2a659c198b924f1c47fe6f77f80401b649b3e6a7296236dddca6cf8977` |
+| `internal/service/run.go` | `6b7598dc55c6593ddc2398157021685443587f7a15d855e66219a7505dde27fe` |
+| `internal/service/config_test.go` | `c628504d6e9ad8432832b6ceb98796589ef86140dc9cf76b8dd6b2018250014f` |
 | `internal/service/log_test.go` | `1b8f3fc837128930d5ef7a99d75a183bc7037035d5e756ea2faabe800d61f732` |
-| `internal/service/run_test.go` | `d85782d579950add06ffae6fba56808dc8a170dfc6c0fb72dd2eb3a499e46b76` |
-| `tests/smoke/services_test.go` | `8a6d4c30fc12b21f83118f6df66e0d739dd9dde2281bc400a3da2b8ccb8f2e0e` |
+| `internal/service/run_test.go` | `6693541b167f68252440934a87818fff7d7c0de451adfb7ee85fb147b691700e` |
+| `tests/smoke/services_test.go` | `630097d42ec113b2561ee9a892c429058839ed1f7df899c782a60a08b5604d2a` |
+| `configs/env/local.env.example` | `296d4e3667c6a8967dbb61c4b6ece0ecb63d9b2d7470ae89e1c0b38551f0c316` |
+| `configs/env/container.env.example` | `5157912a83207935854a31ffe087685291160f1f5744246b5e215af911e60e6f` |
+| `.gitignore` | `f2b608989f7ce4e52f1dd1bed1015febf699d7593df371b99ee957b308a03546` |
 
 ## Полные самостоятельные приложения
 
@@ -1899,6 +1970,9 @@ SHA-256 относится к исходному файлу на момент с
 - [Проверки JSON и build metadata](#appendix-service-log-tests) — `internal/service/log_test.go`
 - [Проверки bind, TCP health и отмены контекста](#appendix-service-run-tests) — `internal/service/run_test.go`
 - [Проверки трёх реальных процессов](#appendix-service-process-tests) — `tests/smoke/services_test.go`
+- [Явное локальное окружение: образец](#appendix-local-env-example) — `configs/env/local.env.example`
+- [Явное контейнерное окружение: образец](#appendix-container-env-example) — `configs/env/container.env.example`
+- [Исключение личных настроек и артефактов из Git](#appendix-gitignore) — `.gitignore`
 
 <a id="appendix-readme-en"></a>
 
@@ -2048,6 +2122,7 @@ faultline-lab/
 │   └── assets/                 # Repository visuals
 ├── cmd/                        # Orders, Inventory and Payments entrypoints
 ├── internal/service/           # Shared configuration, logging and gRPC startup
+├── configs/env/                # Explicit local/container environment examples
 ├── tests/smoke/                # Real process health and isolation checks
 ├── build/                      # Pinned toolchain image
 ├── compose.yaml                # Temporary toolchain service
@@ -3545,6 +3620,7 @@ PROJECT_CONTEXT.md — самостоятельный пакет для друг
 - Work autonomously within an approved stage. Keep changes small enough for focused code review and include actual validation results and known limitations.
 - G0-G4 are acceptance gates; P01-P05 are code review packets. The first code PR is P01, after approved G0 and before G1. Do not describe P01 as G1 acceptance or work after G1.
 - P01-01 was accepted and merged by the owner in PR #6 (main e4a9b0b). On 2026-10-15 the owner authorized P01-02, P01-03 and P01-04 together in the next PR: configuration, JSON logging and three gRPC health servers. Include a reviewer guide titled "Что я найду внутри?". P01-05 through P01-08 remain future tasks; immediate signal stop does not mean graceful shutdown is implemented. Task PRs do not complete the whole P01 packet.
+- The owner requested removal of environment-specific network addresses from application code during PR #7 review. FL_GRPC_ADDR is required with no implicit address/port fallback. Keep listen addresses, peer DNS targets and host port publication separate in deployment configuration; use configs/env examples. Local host publication must explicitly bind loopback. Test loopback fixtures and observed runtime addresses are not deployment defaults.
 - Follow docs/development/CODE_REVIEW.md for Go style, correctness, concurrency, data, tests and review evidence. After repository bootstrap, prepare changes on a focused branch and present a PR when GitHub is available. Do not approve or merge your own changes; merging requires an explicit human decision and authorization for the action. Go checks become executable with P01, not before a Go module exists.
 - Stop before progressing through an unapproved review gate. Present a concrete, complete review packet and identify the decision needed from the project owner.
 - Significant changes to approved service boundaries, invariants, incompatible contracts or infrastructure scope require a concrete proposal and human approval.
@@ -4162,9 +4238,9 @@ PostgreSQL/Kafka/Redis и миграции относятся к P02. Домен
 
 ##### P01-02: конфигурация
 
-- Настройки слушающего адреса, уровня логирования и shutdown timeout имеют описанные defaults и переопределяются через окружение.
+- Слушающий адрес задаётся явно через обязательный `FL_GRPC_ADDR`, без IP/портов и fallback в Go-коде. По замечанию владельца 15 октября эта настройка заменяет прежний default. Уровень логирования и shutdown timeout имеют описанные defaults; настройки поступают из окружения. Есть несекретные образцы локального и контейнерного окружения.
 - Некорректный адрес/порт, неизвестный уровень логирования и неположительный timeout отклоняются до объявления готовности; процесс выходит с ненулевым кодом и понятной диагностикой.
-- Проверки охватывают defaults, допустимое переопределение и каждый перечисленный ошибочный вход. Чувствительные значения конфигурации не попадают в диагностические записи.
+- Проверки охватывают отсутствие/пустое значение обязательного адреса, defaults остальных полей, допустимые настройки и каждый перечисленный ошибочный вход. Чувствительные значения конфигурации не попадают в диагностические записи.
 
 ##### P01-03: JSON-логи
 
@@ -4502,7 +4578,7 @@ import (
 
 func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
-	err := service.Run(ctx, "orders", "127.0.0.1:50051", os.LookupEnv, os.Stderr)
+	err := service.Run(ctx, "orders", os.LookupEnv, os.Stderr)
 	stop()
 	if err != nil {
 		os.Exit(1)
@@ -4530,7 +4606,7 @@ import (
 
 func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
-	err := service.Run(ctx, "inventory", "127.0.0.1:50052", os.LookupEnv, os.Stderr)
+	err := service.Run(ctx, "inventory", os.LookupEnv, os.Stderr)
 	stop()
 	if err != nil {
 		os.Exit(1)
@@ -4558,7 +4634,7 @@ import (
 
 func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
-	err := service.Run(ctx, "payments", "127.0.0.1:50053", os.LookupEnv, os.Stderr)
+	err := service.Run(ctx, "payments", os.LookupEnv, os.Stderr)
 	stop()
 	if err != nil {
 		os.Exit(1)
@@ -4781,6 +4857,9 @@ jobs:
 .local
 .env
 .env.*
+**/.env
+**/.env.*
+**/*.env
 *.pem
 *.key
 credentials.json
@@ -4818,7 +4897,7 @@ flowchart LR
     Serve -->|SIGINT / SIGTERM| Stop["Немедленная остановка<br/>JSON: service stopped"]
 ```
 
-[cmd/orders](#appendix-orders-main), [cmd/inventory](#appendix-inventory-main) и [cmd/payments](#appendix-payments-main) задают имя и адрес сервиса и владеют обработкой сигналов/кодом выхода. [internal/service](#appendix-service-run) содержит только общие механизмы запуска; бизнес-логика одного сервиса не импортируется другим. Лаборатория и адаптеры ещё не реализованы.
+[cmd/orders](#appendix-orders-main), [cmd/inventory](#appendix-inventory-main) и [cmd/payments](#appendix-payments-main) задают имя сервиса и владеют обработкой сигналов/кодом выхода. Адресов и портов в прикладном Go-коде нет: они поступают из окружения. [internal/service](#appendix-service-run) содержит только общие механизмы запуска; бизнес-логика одного сервиса не импортируется другим. Лаборатория и адаптеры ещё не реализованы.
 
 #### Настройки
 
@@ -4826,15 +4905,26 @@ flowchart LR
 
 | Переменная | Default | Допустимые значения |
 | :--- | :--- | :--- |
-| `FL_GRPC_ADDR` | Orders `127.0.0.1:50051`, Inventory `127.0.0.1:50052`, Payments `127.0.0.1:50053` | `host:port`, порт 1–65535; IPv6 в квадратных скобках; пустой host разрешён |
+| `FL_GRPC_ADDR` | Нет; обязательная настройка окружения | `host:port`, порт 1–65535; IPv6 в квадратных скобках; пустой host разрешён только как явно выбранный wildcard |
 | `FL_LOG_LEVEL` | `INFO` | `DEBUG`, `INFO`, `WARN`, `ERROR`, регистр не важен |
 | `FL_SHUTDOWN_TIMEOUT` | `10s` | Положительная Go duration, например `500ms` или `15s` |
 
-Отсутствующее значение использует default; явно пустое отклоняется. Адрес проверяется синтаксически без DNS-запроса. Имя host должно быть IP или DNS-именем; IPv6 zone ID пока не поддерживается. Возможность разрешить имя/открыть адрес проверяется фактическим bind. URI, имена портов и произвольный текст отклоняются. Ошибка называет переменную и правило, не повторяя введённое значение; весь конфиг в логи не выводится.
+Отсутствующий или пустой `FL_GRPC_ADDR` приводит к JSON-ошибке и exit 1 до открытия listener. Приложение не выбирает сеть за оператора и не имеет скрытого адреса по умолчанию. Для уровня логов и timeout действуют defaults; явно пустое значение отклоняется. Адрес проверяется синтаксически без DNS-запроса. Имя host должно быть IP или DNS-именем; IPv6 zone ID пока не поддерживается. Возможность разрешить имя/открыть адрес проверяется фактическим bind. URI, имена портов и произвольный текст отклоняются. Ошибка называет переменную и правило, не повторяя введённое значение; весь конфиг в логи не выводится.
 
 **Shutdown timeout пока только разбирается и валидируется.** В этом PR отмена контекста немедленно вызывает `grpc.Server.Stop()`. Ожидание активных RPC, наблюдаемый переход readiness и принудительное завершение по deadline относятся к P01-05 и ещё не реализованы. Наличие настройки не означает готовность graceful shutdown.
 
-По умолчанию порты доступны только через loopback. Для контейнерной сети адрес явно меняется на `0.0.0.0:<port>`. На этом этапе gRPC работает без TLS/аутентификации для локального стенда; публичное размещение этим PR не подготавливается.
+Адрес прослушивания, адрес подключения клиента и публикация порта на хосте — разные настройки:
+
+| Назначение | Где задаётся | Пример / правило |
+| :--- | :--- | :--- |
+| Listener локального процесса | [local.env.example](#appendix-local-env-example) | `localhost:50051`; для нескольких процессов на одном хосте задаются разные порты |
+| Listener в контейнере | [container.env.example](#appendix-container-env-example) | `:50051` — явный wildcard внутри сетевого пространства контейнера; разные контейнеры могут использовать один внутренний порт |
+| Endpoint другого сервиса | Будущая deployment-конфигурация, когда появятся клиенты | Имена Compose DNS, например `inventory:50051`; IP контейнеров не закрепляются |
+| Доступ с хоста | Явная публикация при запуске | Для локальной разработки привязка только к loopback; без `-p` порт не публикуется на интерфейсах хоста |
+
+Образцы содержат только несекретные настройки. Личные копии `*.env` игнорируются Git и исключены из Docker build context; окружение передаёт launcher, приложение не загружает dotenv самостоятельно. Loopback в тестах — изолированный fixture с динамическим портом, а в наблюдённых логах — фактический адрес запущенного тестового процесса.
+
+Использование DNS и настройка адреса не заменяют разграничение сетевого доступа и аутентификацию. Сейчас это локальный gRPC-стенд без TLS/аутентификации; production-размещение потребует отдельной политики TLS/mTLS и доступа. Привязка wildcard в контейнере не является такой политикой. Правила публикации и разрешения имён основаны на [Docker port publishing](https://docs.docker.com/engine/network/port-publishing/) и [Compose networking](https://docs.docker.com/compose/how-tos/networking/).
 
 #### Логи
 
@@ -4849,7 +4939,7 @@ flowchart LR
 
 #### Наблюдённые записи CI
 
-Ниже реальные записи из [прошедшего AMD64 job](https://github.com/Includeoyasi/faultline-lab/actions/runs/38734815221), source HEAD `4d3b235`. Порядок JSON-ключей нормализован тестом. В pull_request CI checkout собирает временный merge ref: поэтому build revision `108fabc` отличается от HEAD ветки. Это сведения о фактически собранном коде, а не подстановка SHA задачи.
+Ниже реальные записи предыдущей версии из [прошедшего AMD64 job](https://github.com/Includeoyasi/faultline-lab/actions/runs/38734815221), source HEAD `4d3b235`, до удаления адреса по умолчанию. Loopback здесь — адрес тестового listener, не настройка приложения в исходнике. Порядок JSON-ключей нормализован тестом. В pull_request CI checkout собирает временный merge ref: поэтому build revision `108fabc` отличается от HEAD ветки. Это сведения о фактически собранном коде, а не подстановка SHA задачи.
 
 ```json
 {"go_version":"go1.27.2","grpc_address":"127.0.0.1:34189","level":"INFO","msg":"service started","revision":"108fabc9d038d1a49f0f5025c8190d900de72ba2","service":"orders","time":"2026-10-15T12:29:40.759977921Z","vcs_modified":"false","version":"v0.0.0-20261015122747-108fabc9d038"}
@@ -4875,7 +4965,7 @@ docker compose run --rm toolchain service-smoke
 - запуск всех трёх процессов и `SERVING` для общего health (`service=""`);
 - `NotFound` для неизвестного имени health-сервиса;
 - обязательные поля JSON и build metadata;
-- для каждого бинарника — ошибки адреса, уровня, timeout и занятого порта: одна JSON-диагностика, exit 1, отсутствие готовности;
+- для каждого бинарника — отсутствующий/пустой адрес, ошибки адреса, уровня, timeout и занятого порта: одна JSON-диагностика, exit 1, отсутствие готовности;
 - после остановки Orders — доступность Inventory и Payments;
 - на Linux — нормальный SIGINT exit и финальную JSON-запись.
 
@@ -4885,10 +4975,12 @@ docker compose run --rm toolchain service-smoke
 
 ```text
 docker compose run --rm toolchain build
-docker compose run --rm -p 50051:50051 -e FL_GRPC_ADDR=0.0.0.0:50051 --entrypoint /workspace/bin/orders toolchain
+docker compose run --rm --env-from-file configs/env/container.env.example --entrypoint /workspace/bin/orders toolchain
 ```
 
-Inventory и Payments аналогично используют свои бинарники и порты 50052/50053 в отдельных терминалах. Это временный путь разработки; отдельные минимальные runtime-образы и Compose-сервисы остаются P01-06. Стандартный health API описан в [документации gRPC](https://grpc.io/docs/guides/health-checking/); grpcurl/reflection в проект не добавлены.
+Это запускает Orders без публикации порта на хост. Для явного локального доступа добавьте `-p 127.0.0.1:50051:50051` к команде. Привязка `127.0.0.1` здесь — политика локального доступа в конфигурации запуска, а не встроенный адрес Go-программы. Не используйте сокращённое `-p 50051:50051`: оно публикует порт на всех интерфейсах хоста. Для этой изоляции используйте актуальный Docker Engine 28+; более старые версии имели документированное ограничение публикации на localhost.
+
+Inventory и Payments аналогично используют свои бинарники с тем же container.env.example в отдельных контейнерах. При необходимости доступа с хоста задайте разные host ports (50052/50053) при том же container port 50051. Это временный путь разработки; отдельные минимальные runtime-образы и Compose-сервисы остаются P01-06. Параметр `--env-from-file` описан в [справке Compose run](https://docs.docker.com/reference/cli/docker/compose/run/). Стандартный health API описан в [документации gRPC](https://grpc.io/docs/guides/health-checking/); grpcurl/reflection в проект не добавлены.
 
 #### Границы доказательств
 
@@ -4920,15 +5012,13 @@ type Config struct {
 	ShutdownTimeout time.Duration
 }
 
-// LoadConfig applies defaults and validates environment overrides without
-// including the supplied values in errors. An explicitly empty value is invalid.
-func LoadConfig(defaultAddress string, lookup func(string) (string, bool)) (Config, error) {
-	cfg := Config{GRPCAddress: defaultAddress, LogLevel: slog.LevelInfo, ShutdownTimeout: 10 * time.Second}
-	if value, ok := lookup("FL_GRPC_ADDR"); ok {
-		cfg.GRPCAddress = value
-	}
+// LoadConfig requires an explicit listen address and applies defaults for the
+// remaining settings. Supplied values are not included in validation errors.
+func LoadConfig(lookup func(string) (string, bool)) (Config, error) {
+	cfg := Config{LogLevel: slog.LevelInfo, ShutdownTimeout: 10 * time.Second}
+	cfg.GRPCAddress, _ = lookup("FL_GRPC_ADDR")
 	if !validAddress(cfg.GRPCAddress) {
-		return Config{}, errors.New("FL_GRPC_ADDR must be host:port with a port from 1 to 65535")
+		return Config{}, errors.New("FL_GRPC_ADDR is required and must be host:port with a port from 1 to 65535")
 	}
 	if value, ok := lookup("FL_LOG_LEVEL"); ok {
 		switch strings.ToUpper(value) {
@@ -5062,9 +5152,9 @@ import (
 // Run validates configuration, serves standard gRPC health and blocks until
 // cancellation or a serving error. Cancellation currently stops RPCs immediately;
 // draining active work with a deadline is the separate P01-05 task.
-func Run(ctx context.Context, name, defaultAddress string, lookup func(string) (string, bool), output io.Writer) error {
+func Run(ctx context.Context, name string, lookup func(string) (string, bool), output io.Writer) error {
 	logger := newLogger(output, name, slog.LevelInfo)
-	cfg, err := LoadConfig(defaultAddress, lookup)
+	cfg, err := LoadConfig(lookup)
 	if err != nil {
 		logger.ErrorContext(ctx, "configuration rejected", "error", err.Error())
 		return err
@@ -5139,7 +5229,7 @@ func TestLoadConfig(t *testing.T) {
 		env  map[string]string
 		want Config
 	}{
-		{"defaults", nil, Config{"127.0.0.1:50051", slog.LevelInfo, 10 * time.Second}},
+		{"non-network defaults", map[string]string{"FL_GRPC_ADDR": "localhost:50051"}, Config{"localhost:50051", slog.LevelInfo, 10 * time.Second}},
 		{"overrides", map[string]string{"FL_GRPC_ADDR": "0.0.0.0:8080", "FL_LOG_LEVEL": "debug", "FL_SHUTDOWN_TIMEOUT": "250ms"}, Config{"0.0.0.0:8080", slog.LevelDebug, 250 * time.Millisecond}},
 		{"ipv6", map[string]string{"FL_GRPC_ADDR": "[::1]:8080", "FL_LOG_LEVEL": "WARN"}, Config{"[::1]:8080", slog.LevelWarn, 10 * time.Second}},
 		{"dns", map[string]string{"FL_GRPC_ADDR": "orders.local:50051", "FL_LOG_LEVEL": "ERROR"}, Config{"orders.local:50051", slog.LevelError, 10 * time.Second}},
@@ -5148,7 +5238,7 @@ func TestLoadConfig(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := LoadConfig("127.0.0.1:50051", environment(tt.env))
+			got, err := LoadConfig(environment(tt.env))
 			if err != nil || got != tt.want {
 				t.Fatalf("LoadConfig() = %+v, %v; want %+v", got, err, tt.want)
 			}
@@ -5167,7 +5257,9 @@ func TestLoadConfigRejectsInvalidValues(t *testing.T) {
 		for _, value := range values {
 			t.Run(key+"/"+value, func(t *testing.T) {
 				t.Parallel()
-				_, err := LoadConfig("127.0.0.1:50051", environment(map[string]string{key: value}))
+				values := map[string]string{"FL_GRPC_ADDR": "localhost:50051"}
+				values[key] = value
+				_, err := LoadConfig(environment(values))
 				if err == nil || !strings.Contains(err.Error(), key) {
 					t.Fatalf("expected diagnostic naming %s, got %v", key, err)
 				}
@@ -5177,8 +5269,8 @@ func TestLoadConfigRejectsInvalidValues(t *testing.T) {
 			})
 		}
 	}
-	if _, err := LoadConfig("invalid-default", environment(nil)); err == nil {
-		t.Fatal("invalid default address was accepted")
+	if _, err := LoadConfig(environment(nil)); err == nil || !strings.Contains(err.Error(), "FL_GRPC_ADDR is required") {
+		t.Fatalf("missing listen address must fail closed, got %v", err)
 	}
 }
 ```
@@ -5277,7 +5369,7 @@ import (
 func TestRunRejectsConfigurationBeforeListening(t *testing.T) {
 	t.Parallel()
 	var output bytes.Buffer
-	err := Run(context.Background(), "payments", "127.0.0.1:50053", environment(map[string]string{"FL_LOG_LEVEL": "super-secret-value"}), &output)
+	err := Run(context.Background(), "payments", environment(map[string]string{"FL_GRPC_ADDR": "localhost:50053", "FL_LOG_LEVEL": "super-secret-value"}), &output)
 	if err == nil || strings.Contains(output.String(), "super-secret-value") {
 		t.Fatalf("expected sanitized configuration failure, got %v / %s", err, &output)
 	}
@@ -5302,7 +5394,7 @@ func TestRunRejectsOccupiedAddress(t *testing.T) {
 		}
 	})
 	var output bytes.Buffer
-	err = Run(context.Background(), "orders", listener.Addr().String(), environment(nil), &output)
+	err = Run(context.Background(), "orders", environment(map[string]string{"FL_GRPC_ADDR": listener.Addr().String()}), &output)
 	var operationError *net.OpError
 	if !errors.As(err, &operationError) || operationError.Op != "listen" {
 		t.Fatalf("expected wrapped listen error, got %v", err)
@@ -5661,9 +5753,17 @@ func TestServiceProcesses(t *testing.T) {
 		logJSON(t, records[0])
 		for key, value := range map[string]string{"FL_GRPC_ADDR": "secret://user:password@host:80", "FL_LOG_LEVEL": "super-secret-value", "FL_SHUTDOWN_TIMEOUT": "0s"} {
 			t.Run(name+"/reject/"+key, func(t *testing.T) {
-				assertFailure(t, binary, name, map[string]string{key: value}, key, value)
+				values := map[string]string{"FL_GRPC_ADDR": processes[i].address}
+				values[key] = value
+				assertFailure(t, binary, name, values, key, value)
 			})
 		}
+		t.Run(name+"/missing-address", func(t *testing.T) {
+			assertFailure(t, binary, name, nil, "FL_GRPC_ADDR is required", "")
+		})
+		t.Run(name+"/empty-address", func(t *testing.T) {
+			assertFailure(t, binary, name, map[string]string{"FL_GRPC_ADDR": ""}, "FL_GRPC_ADDR is required", "")
+		})
 		t.Run(name+"/occupied", func(t *testing.T) {
 			assertFailure(t, binary, name, map[string]string{"FL_GRPC_ADDR": processes[i].address}, "listen for gRPC", "")
 		})
@@ -5707,4 +5807,79 @@ func logJSON(t *testing.T, record map[string]any) {
 	}
 	t.Logf("observed JSON: %s", data)
 }
+```
+
+<a id="appendix-local-env-example"></a>
+
+## Приложение: Явное локальное окружение: образец
+
+Полный исходный документ: `configs/env/local.env.example`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```dotenv
+# Example for one process on the development host; inject via the launcher.
+# Use distinct ports for simultaneous processes (e.g. 50051, 50052, 50053).
+# Copy to an ignored *.env file when customizing; never add secrets to examples.
+FL_GRPC_ADDR=localhost:50051
+FL_LOG_LEVEL=INFO
+FL_SHUTDOWN_TIMEOUT=10s
+```
+
+<a id="appendix-container-env-example"></a>
+
+## Приложение: Явное контейнерное окружение: образец
+
+Полный исходный документ: `configs/env/container.env.example`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```dotenv
+# Explicit wildcard listener inside the container's network namespace.
+# Each service can use the same internal port in its own container.
+# Host port publication and peer DNS endpoints belong to deployment config.
+FL_GRPC_ADDR=:50051
+FL_LOG_LEVEL=INFO
+FL_SHUTDOWN_TIMEOUT=10s
+```
+
+<a id="appendix-gitignore"></a>
+
+## Приложение: Исключение личных настроек и артефактов из Git
+
+Полный исходный документ: `.gitignore`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```text
+# Local configuration and credentials
+.env
+.env.*
+*.env
+!.env.example
+*.pem
+*.key
+credentials.json
+
+# Go build and test output
+/bin/
+/dist/
+/coverage/
+*.test
+coverage.out
+coverage.html
+
+# Local lab data; intentional reports belong in docs/experiments/
+/.local/
+/data/
+/artifacts/
+/tmp/
+
+# Editor and operating system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+
+# Dependency caches
+node_modules/
+__pycache__/
+.venv/
 ```

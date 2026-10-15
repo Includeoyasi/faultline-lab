@@ -17,9 +17,9 @@ import (
 // Run validates configuration, serves standard gRPC health and blocks until
 // cancellation or a serving error. Cancellation currently stops RPCs immediately;
 // draining active work with a deadline is the separate P01-05 task.
-func Run(ctx context.Context, name, defaultAddress string, lookup func(string) (string, bool), output io.Writer) error {
+func Run(ctx context.Context, name string, lookup func(string) (string, bool), output io.Writer) error {
 	logger := newLogger(output, name, slog.LevelInfo)
-	cfg, err := LoadConfig(defaultAddress, lookup)
+	cfg, err := LoadConfig(lookup)
 	if err != nil {
 		logger.ErrorContext(ctx, "configuration rejected", "error", err.Error())
 		return err

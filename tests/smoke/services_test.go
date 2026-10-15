@@ -231,9 +231,17 @@ func TestServiceProcesses(t *testing.T) {
 		logJSON(t, records[0])
 		for key, value := range map[string]string{"FL_GRPC_ADDR": "secret://user:password@host:80", "FL_LOG_LEVEL": "super-secret-value", "FL_SHUTDOWN_TIMEOUT": "0s"} {
 			t.Run(name+"/reject/"+key, func(t *testing.T) {
-				assertFailure(t, binary, name, map[string]string{key: value}, key, value)
+				values := map[string]string{"FL_GRPC_ADDR": processes[i].address}
+				values[key] = value
+				assertFailure(t, binary, name, values, key, value)
 			})
 		}
+		t.Run(name+"/missing-address", func(t *testing.T) {
+			assertFailure(t, binary, name, nil, "FL_GRPC_ADDR is required", "")
+		})
+		t.Run(name+"/empty-address", func(t *testing.T) {
+			assertFailure(t, binary, name, map[string]string{"FL_GRPC_ADDR": ""}, "FL_GRPC_ADDR is required", "")
+		})
 		t.Run(name+"/occupied", func(t *testing.T) {
 			assertFailure(t, binary, name, map[string]string{"FL_GRPC_ADDR": processes[i].address}, "listen for gRPC", "")
 		})

@@ -17,15 +17,13 @@ type Config struct {
 	ShutdownTimeout time.Duration
 }
 
-// LoadConfig applies defaults and validates environment overrides without
-// including the supplied values in errors. An explicitly empty value is invalid.
-func LoadConfig(defaultAddress string, lookup func(string) (string, bool)) (Config, error) {
-	cfg := Config{GRPCAddress: defaultAddress, LogLevel: slog.LevelInfo, ShutdownTimeout: 10 * time.Second}
-	if value, ok := lookup("FL_GRPC_ADDR"); ok {
-		cfg.GRPCAddress = value
-	}
+// LoadConfig requires an explicit listen address and applies defaults for the
+// remaining settings. Supplied values are not included in validation errors.
+func LoadConfig(lookup func(string) (string, bool)) (Config, error) {
+	cfg := Config{LogLevel: slog.LevelInfo, ShutdownTimeout: 10 * time.Second}
+	cfg.GRPCAddress, _ = lookup("FL_GRPC_ADDR")
 	if !validAddress(cfg.GRPCAddress) {
-		return Config{}, errors.New("FL_GRPC_ADDR must be host:port with a port from 1 to 65535")
+		return Config{}, errors.New("FL_GRPC_ADDR is required and must be host:port with a port from 1 to 65535")
 	}
 	if value, ok := lookup("FL_LOG_LEVEL"); ok {
 		switch strings.ToUpper(value) {

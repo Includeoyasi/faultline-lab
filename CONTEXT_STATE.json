@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 26,
+  "context_revision": 27,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -9,7 +9,7 @@
   "current_phase": "G0_APPROVED_IMPLEMENTATION_IN_PROGRESS",
   "current_task": {
     "id": "P01-02..P01-04",
-    "description": "Один PR: конфигурация, JSON-логи и три независимых gRPC health-процесса",
+    "description": "P01-02–04, PR #7: устранение замечания владельца о сетевых адресах в коде",
     "status": "IN_REVIEW",
     "authorization": "Владелец сообщил о merge PR #6 и поручил объединить P01-02, P01-03 и P01-04 следующим PR; подготовить комментарий «Что я найду внутри?»",
     "result": {
@@ -17,13 +17,13 @@
       "base_commit": "e4a9b0b80f97b2fb20ca973ef57030d32f8ba878",
       "scope": "P01-02_P01-03_P01-04_ONLY",
       "implementation": "CONFIG_JSON_GRPC_HEALTH_CREATED",
-      "local_go": "PASS_PORTABLE_WINDOWS_GO_1_27_2",
+      "local_go": "PASS_WINDOWS_BUILD_VET_UNIT_PROCESS_SMOKE_AFTER_ADDRESS_FIX",
       "local_tcp": "PASS_AFTER_SANDBOX_LOOPBACK_PERMISSION",
       "local_docker": "NOT_RUN",
       "native_macos": "NOT_RUN",
       "go_tests": "PASS_UNIT_AND_REAL_PROCESS_SMOKE",
-      "govulncheck": "PASS_NO_VULNERABILITIES",
-      "ci": "PASS_NATIVE_LINUX_AMD64_AND_ARM64",
+      "govulncheck": "PREVIOUS_HEAD_PASS; CURRENT_CI_PENDING",
+      "ci": "PENDING_CURRENT_NETWORK_REVIEW_FIX",
       "owner_acceptance": "PENDING",
       "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7",
       "commit_created": true,
@@ -33,7 +33,7 @@
       "shutdown": "IMMEDIATE_STOP_ONLY; DRAIN_AND_TIMEOUT_P01_05_NOT_IMPLEMENTED",
       "pull_request_number": 7,
       "draft": false,
-      "observed_commit": "4d3b2356b472f275063efb576d8226de4a35f594",
+      "observed_commit": "a38c6e1361481a9d55c81e907e90a49ba14614a5",
       "go_ci": {
         "name": "Go toolchain",
         "head_sha": "4d3b2356b472f275063efb576d8226de4a35f594",
@@ -51,7 +51,9 @@
       "review_requested_from": "Includeoyasi",
       "local_validation": "PASS",
       "source_scope": "P01-02_P01-03_P01-04_ONLY; NO_GRACEFUL_DRAIN_RUNTIME_IMAGES_OR_BUSINESS_API",
-      "handoff_note": "CI evidence refers to the source HEAD before this documentation/context commit. Final HEAD and required checks are available in PR #7. The snapshot cannot embed its own commit hash."
+      "handoff_note": "CI evidence refers to the source HEAD before this documentation/context commit. Final HEAD and required checks are available in PR #7. The snapshot cannot embed its own commit hash.",
+      "network_configuration": "FL_GRPC_ADDR_REQUIRED_NO_RUNTIME_DEFAULT_ADDRESS_OR_PORT",
+      "review_fix_status": "IMPLEMENTED_LOCAL_VERIFIED_LINUX_CI_PENDING"
     }
   },
   "roles": {
@@ -247,7 +249,8 @@
     "P01-01 реализована и прошла полный Docker CI на нативных AMD64/ARM64. PR #6 от AI-Your-Bro переведён в ready, ревью запрошено у Includeoyasi. Issue #3 обновлён: проверено 1/8, принято владельцем 0/8; остальные задачи не начаты.",
     "Владелец принял и смержил PR #6; main e4a9b0b содержит P01-01, приёмка 1/8. Новым поручением объединены P01-02–04 и запрошен комментарий «Что я найду внутри?» к следующему PR.",
     "Реализованы конфигурация с безопасной диагностикой, JSON slog/build metadata, три gRPC health-сервера, unit и process smoke. Windows Go проверки, build/vet/tidy/verify и govulncheck прошли; Linux container CI ожидается. Graceful shutdown/runtime-образы и бизнес-логика не реализованы.",
-    "P01-02–04 прошли полный контейнерный CI на нативных Linux AMD64/ARM64: format/imports/tidy/verify/build, lint (0 issues), unit/race, govulncheck (no vulnerabilities), реальный process health/JSON/error/exit/isolation smoke. PR #7 ready от AI-Your-Bro, ревью запрошено у Includeoyasi; Issue #3: проверено 4/8, принято 1/8. Последующие 05–08 и G1 не объявляются готовыми."
+    "P01-02–04 прошли полный контейнерный CI на нативных Linux AMD64/ARM64: format/imports/tidy/verify/build, lint (0 issues), unit/race, govulncheck (no vulnerabilities), реальный process health/JSON/error/exit/isolation smoke. PR #7 ready от AI-Your-Bro, ревью запрошено у Includeoyasi; Issue #3: проверено 4/8, принято 1/8. Последующие 05–08 и G1 не объявляются готовыми.",
+    "По замечанию владельца в PR #7 удалены IP/порты и параметр defaultAddress из Go entrypoints/общего запуска. FL_GRPC_ADDR обязателен. Добавлены local/container env examples, игнорирование личных *.env и корректная loopback-публикация в инструкции. Локальные Windows Go/TCP проверки прошли; Linux CI после правки ожидается."
   ],
   "next_implementation_packet": {
     "id": "P01",
@@ -377,7 +380,15 @@
     "current_task": "P01-02..P01-04"
   },
   "active_blockers": [],
-  "open_review_comments": [],
+  "open_review_comments": [
+    {
+      "id": "PR7-NETWORK-CONFIG",
+      "source": "Project owner chat",
+      "status": "IMPLEMENTED_LOCAL_VERIFIED_AWAITING_CI",
+      "comment": "Remove environment-specific listen addresses from application code; configure deployment and publication explicitly.",
+      "human_acceptance": "PENDING"
+    }
+  ],
   "lab_evolution_notes": {
     "status": "USER_CONFIRMED_DIRECTION_WITH_REVIEWABLE_DETAIL",
     "discussed_on": "2026-10-13",
@@ -827,6 +838,19 @@
       "result": "PASS",
       "url": "https://github.com/Includeoyasi/faultline-lab/pull/7",
       "detail": "Executor GraphQL confirmed draft=false and author AI-Your-Bro; review requested from Includeoyasi. Issue PATCH verified 4 completed implementation checkboxes; 1 owner-accepted task, 3 in review, 4 not started. Issue remains open. AI did not approve or merge."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "PR #7 network configuration review fix, local Windows",
+      "result": "PASS",
+      "commands": [
+        "go build ./...",
+        "go vet ./...",
+        "go test -count=1 -timeout=3m ./...",
+        "git check-ignore configs/env/local.env configs/env/container.env",
+        "rg runtime Go sources excluding *_test.go: no literal loopback/wildcard IP or service ports"
+      ],
+      "detail": "FL_GRPC_ADDR required; missing/empty address rejected for each real binary. Unit defaults are only log level and timeout; valid explicit listen addresses still work. All three real health endpoints and process isolation pass. Linux CI for this change is pending; previous green CI is historical evidence only."
     }
   ],
   "source_documents": [
@@ -1052,6 +1076,24 @@
       "anchor": "appendix-service-process-tests",
       "title": "Проверки трёх реальных процессов",
       "language": "go"
+    },
+    {
+      "path": "configs/env/local.env.example",
+      "anchor": "appendix-local-env-example",
+      "title": "Явное локальное окружение: образец",
+      "language": "dotenv"
+    },
+    {
+      "path": "configs/env/container.env.example",
+      "anchor": "appendix-container-env-example",
+      "title": "Явное контейнерное окружение: образец",
+      "language": "dotenv"
+    },
+    {
+      "path": ".gitignore",
+      "anchor": "appendix-gitignore",
+      "title": "Исключение личных настроек и артефактов из Git",
+      "language": "text"
     }
   ],
   "change_history": [
@@ -1210,6 +1252,12 @@
       "date": "2026-10-15",
       "summary": "Финальная сверка переносимого контекста: repository.snapshot_ref и current_publication переключены с уже слитого PR #6 на текущий ready PR #7. Код и критерии не менялись; доказательства слияния #6 сохраняются в истории.",
       "trigger": "Проверка согласованности активных полей перед передачей владельцу"
+    },
+    {
+      "revision": 27,
+      "date": "2026-10-15",
+      "summary": "Замечание владельца о сетевых адресах в коде реализовано в текущем PR #7: явный обязательный FL_GRPC_ADDR, образцы окружения, отказ без настройки, разделение listener/DNS/publication, игнорирование личных env. Локальные проверки PASS; новый Linux CI ожидается. Приёмка человеком не заявляется.",
+      "trigger": "Прямое замечание владельца во время ревью PR #7"
     }
   ],
   "repository": {
@@ -1544,5 +1592,23 @@
     "bootstrap_behavior": "THREE_GRPC_HEALTH_SERVERS_UNTIL_SIGNAL; IMMEDIATE_STOP_ONLY",
     "smoke_command": "docker compose run --rm toolchain service-smoke",
     "service_runtime_document": "docs/development/SERVICE_RUNTIME.md"
+  },
+  "network_configuration_review": {
+    "requested_on": "2026-10-15",
+    "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7",
+    "source": "Direct project owner review in chat",
+    "request": "Мне не нравится, что в коде присутствуют локальные IP адреса типа 127.0.0.1:50053. Давай сразу оформим красиво и правильно (с точки зрения бизнес разработки и безопасности).",
+    "status": "IMPLEMENTED_AWAITING_NATIVE_CI",
+    "decisions": [
+      "FL_GRPC_ADDR is mandatory: no IP/port literals or implicit network fallback in application Go source. Missing/empty address fails before bind with sanitized JSON and exit 1.",
+      "Local and container profiles are explicit nonsecret configs/env/*.env.example files; application itself does not load dotenv.",
+      "Separate listener configuration, future peer DNS targets and host publication. Container wildcard is explicit, not an automatic fallback or authentication policy.",
+      "Default toolchain has no published ports. Manual development instructions publish only on host loopback; unqualified host publication removed.",
+      "Personal *.env files are ignored by Git and excluded from Docker build context, including nested dotenv files.",
+      "Loopback in isolated test fixtures and observed logs is intentional and not a deployment default. TLS/mTLS, runtime images and client service discovery remain future work."
+    ],
+    "local_checks": "PASS: build/vet/unit/real process TCP smoke; three missing and three empty address process cases; Git ignore verified; runtime source IP/port search returned no matches",
+    "native_ci": "PENDING",
+    "owner_acceptance": "PENDING"
   }
 }

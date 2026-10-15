@@ -11,7 +11,7 @@ import (
 
 func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
-	err := service.Run(ctx, "inventory", "127.0.0.1:50052", os.LookupEnv, os.Stderr)
+	err := service.Run(ctx, "inventory", os.LookupEnv, os.Stderr)
 	stop()
 	if err != nil {
 		os.Exit(1)

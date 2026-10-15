@@ -18,7 +18,7 @@ func TestLoadConfig(t *testing.T) {
 		env  map[string]string
 		want Config
 	}{
-		{"defaults", nil, Config{"127.0.0.1:50051", slog.LevelInfo, 10 * time.Second}},
+		{"non-network defaults", map[string]string{"FL_GRPC_ADDR": "localhost:50051"}, Config{"localhost:50051", slog.LevelInfo, 10 * time.Second}},
 		{"overrides", map[string]string{"FL_GRPC_ADDR": "0.0.0.0:8080", "FL_LOG_LEVEL": "debug", "FL_SHUTDOWN_TIMEOUT": "250ms"}, Config{"0.0.0.0:8080", slog.LevelDebug, 250 * time.Millisecond}},
 		{"ipv6", map[string]string{"FL_GRPC_ADDR": "[::1]:8080", "FL_LOG_LEVEL": "WARN"}, Config{"[::1]:8080", slog.LevelWarn, 10 * time.Second}},
 		{"dns", map[string]string{"FL_GRPC_ADDR": "orders.local:50051", "FL_LOG_LEVEL": "ERROR"}, Config{"orders.local:50051", slog.LevelError, 10 * time.Second}},
@@ -27,7 +27,7 @@ func TestLoadConfig(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := LoadConfig("127.0.0.1:50051", environment(tt.env))
+			got, err := LoadConfig(environment(tt.env))
 			if err != nil || got != tt.want {
 				t.Fatalf("LoadConfig() = %+v, %v; want %+v", got, err, tt.want)
 			}
@@ -46,7 +46,9 @@ func TestLoadConfigRejectsInvalidValues(t *testing.T) {
 		for _, value := range values {
 			t.Run(key+"/"+value, func(t *testing.T) {
 				t.Parallel()
-				_, err := LoadConfig("127.0.0.1:50051", environment(map[string]string{key: value}))
+				values := map[string]string{"FL_GRPC_ADDR": "localhost:50051"}
+				values[key] = value
+				_, err := LoadConfig(environment(values))
 				if err == nil || !strings.Contains(err.Error(), key) {
 					t.Fatalf("expected diagnostic naming %s, got %v", key, err)
 				}
@@ -56,7 +58,7 @@ func TestLoadConfigRejectsInvalidValues(t *testing.T) {
 			})
 		}
 	}
-	if _, err := LoadConfig("invalid-default", environment(nil)); err == nil {
-		t.Fatal("invalid default address was accepted")
+	if _, err := LoadConfig(environment(nil)); err == nil || !strings.Contains(err.Error(), "FL_GRPC_ADDR is required") {
+		t.Fatalf("missing listen address must fail closed, got %v", err)
 	}
 }

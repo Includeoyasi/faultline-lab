@@ -140,6 +140,7 @@ faultline-lab/
 │   └── assets/                 # Repository visuals
 ├── cmd/                        # Orders, Inventory and Payments entrypoints
 ├── internal/service/           # Shared configuration, logging and gRPC startup
+├── configs/env/                # Explicit local/container environment examples
 ├── tests/smoke/                # Real process health and isolation checks
 ├── build/                      # Pinned toolchain image
 ├── compose.yaml                # Temporary toolchain service
