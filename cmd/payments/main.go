@@ -1,7 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"context"
+	"os"
+	"os/signal"
+	"syscall"
+
+	"github.com/Includeoyasi/faultline-lab/internal/service"
+)
 
 func main() {
-	fmt.Println("payments bootstrap: service runtime is not implemented yet")
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	err := service.Run(ctx, "payments", "127.0.0.1:50053", os.LookupEnv, os.Stderr)
+	stop()
+	if err != nil {
+		os.Exit(1)
+	}
 }

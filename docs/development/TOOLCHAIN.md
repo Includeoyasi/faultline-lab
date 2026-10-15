@@ -1,6 +1,6 @@
-# Go-модуль и контейнерный toolchain — P01-01
+# Go-модуль и контейнерный toolchain
 
-Состояние на 15 октября 2026 года: созданы Go-модуль, три bootstrap entrypoints и контейнер инструментов. Локальная сборка временным Go на Windows прошла. На нативных Linux AMD64/ARM64 прошли Docker build, Go checks, сборка/запуск всех трёх бинарников и отказ на неизвестную команду: [проверенный прогон](https://github.com/Includeoyasi/faultline-lab/actions/runs/38723552125), исходный HEAD 7ea4b89. [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) предъявляет только P01-01; runtime сервисов и бизнес-API ещё не реализованы. Текущий HEAD и его проверки доступны в PR.
+Состояние на 15 октября 2026 года: созданы Go-модуль, три bootstrap entrypoints и контейнер инструментов. Локальная сборка временным Go на Windows прошла. На нативных Linux AMD64/ARM64 прошли Docker build, Go checks, сборка/запуск всех трёх бинарников и отказ на неизвестную команду: [проверенный прогон](https://github.com/Includeoyasi/faultline-lab/actions/runs/38723552125), исходный HEAD 7ea4b89. [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) принят и слит; он покрывал только P01-01. В следующем PR задачи 02–04 добавляют [gRPC health-процессы](SERVICE_RUNTIME.md), конфигурацию и JSON-логи. Runtime-образы и бизнес-API ещё не реализованы. Текущий HEAD и его проверки доступны в соответствующем PR.
 
 ## Состав и версии
 
@@ -15,7 +15,7 @@
 
 Версии проверены по официальным источникам 15 октября 2026 года: [Go releases](https://go.dev/dl/), [golangci-lint releases](https://github.com/golangci/golangci-lint/releases/tag/v2.14.0), Go module proxy и Docker Registry. Оба закреплённых digest относятся к multi-platform индексам, а не к одному варианту CPU.
 
-Текущий код приложений использует стандартную библиотеку. Внешние модули в go.mod нужны для реально используемых инструментов, закреплённых современными [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools); ради go.sum в бизнес-код не добавлена фиктивная библиотека. Зависимости будущего gRPC/SQL/Kafka добавляются при их первом использовании.
+gRPC v1.84.0 добавлен для реального health API в P01-04; версия проверена через официальный Go proxy. JSON-логи использует стандартный log/slog. Инструменты закреплены через [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools). SQL/Kafka/Redis библиотеки добавляются при первом использовании.
 
 ## Основной путь Windows и macOS
 
@@ -26,12 +26,12 @@ docker compose build toolchain
 docker compose run --rm toolchain versions
 docker compose run --rm toolchain check
 docker compose run --rm toolchain build
-docker compose run --rm toolchain bootstrap-smoke
+docker compose run --rm toolchain service-smoke
 ```
 
 `versions` выводит фактические Go, golangci-lint, build metadata goimports и версию govulncheck. `check` проверяет gofmt/goimports без перезаписи исходников, tidy без diff, verify, build, согласованные линтеры, unit/race commands и govulncheck. Ошибка любого шага завершает команду с ненулевым кодом. Набор линтеров — govet, staticcheck, errcheck, ineffassign, unused.
 
-`build` создаёт Linux-бинарники bin/orders, bin/inventory, bin/payments для архитектуры toolchain-контейнера и выводит build metadata. Они игнорируются Git. На Windows эти Linux-бинарники не запускаются напрямую. `bootstrap-smoke` собирает и запускает их внутри контейнера: каждый выводит сообщение об отсутствии service runtime и завершается. Это не проверка health или бизнес-процесса. Тестовых Go-файлов в этой задаче нет: вывод `[no test files]` не является доказательством покрытия будущих рисков.
+`build` создаёт Linux-бинарники bin/orders, bin/inventory, bin/payments для архитектуры toolchain-контейнера и выводит build metadata. Они игнорируются Git. На Windows эти Linux-бинарники не запускаются напрямую. `service-smoke` собирает и проверяет три отдельных процесса: health, JSON-диагностику ошибок, выход и независимость. Unit/process tests теперь существуют; graceful drain, runtime-контейнеры и бизнес-процессы остаются будущими задачами. Прежний bootstrap-smoke удалён: сервисы больше не завершаются сразу после запуска.
 
 Для осознанного исправления форматирования: `docker compose run --rm toolchain format`. Эта команда меняет Go-исходники в рабочей копии; check их не меняет. Неподдерживаемая команда и лишние аргументы дают exit code 2.
 
@@ -41,7 +41,7 @@ Toolchain — временный сервис профиля tools. Явный `
 
 ## CI и границы доказательств
 
-[Go workflow](../../.github/workflows/go.yml) использует нативные ubuntu-24.04 (AMD64) и ubuntu-24.04-arm (ARM64). На каждой архитектуре он собирает один и тот же Dockerfile, выполняет check, bootstrap-smoke и проверяет отказ на неизвестную команду. Затем проверяет отсутствие изменений отслеживаемых исходников. Успешная сборка ARM64 в CI не доказывает запуск Docker Desktop на личном Mac.
+[Go workflow](../../.github/workflows/go.yml) использует нативные ubuntu-24.04 (AMD64) и ubuntu-24.04-arm (ARM64). На каждой архитектуре он собирает один и тот же Dockerfile, выполняет check, service-smoke и проверяет отказ на неизвестную команду. Затем проверяет отсутствие изменений отслеживаемых исходников. Успешная сборка ARM64 в CI не доказывает запуск Docker Desktop на личном Mac.
 
 На Windows Docker пока не найден; локальный container smoke — NOT_RUN. Для дополнительной проверки скачан официальный переносимый Go 1.27.2 с проверкой SHA-256 в игнорируемую папку .local, без установки в PATH. Это вспомогательная проверка, а не основной путь разработки. Личная macOS-среда ещё не проверялась; измерений потребления и производительности нет.
 

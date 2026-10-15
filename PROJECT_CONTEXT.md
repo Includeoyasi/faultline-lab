@@ -2,19 +2,19 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **22**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
+Ревизия: **23**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
 
 ## Краткое текущее состояние
 
 | Поле | Фактический статус |
 |---|---|
-| Текущая задача | P01-01: IN_REVIEW |
+| Текущая задача | P01-02..P01-04: IN_PROGRESS |
 | G0 | APPROVED |
 | G1 | NOT_READY |
 | G2 | NOT_READY |
 | G3 | NOT_READY |
 | G4 | NOT_READY |
-| Код бизнес-сервисов | BOOTSTRAP_ENTRYPOINTS_ONLY_NO_BUSINESS_RUNTIME |
+| Код бизнес-сервисов | GRPC_HEALTH_SKELETON_WITH_CONFIG_JSON_NO_BUSINESS_OPERATIONS |
 | Инфраструктура Compose | TOOLCHAIN_ONLY_NO_RUNTIME_SERVICES |
 | Эксперименты | NOT_RUN |
 | Следующий пакет | P01: IN_PROGRESS |
@@ -88,11 +88,11 @@ G0 полностью принят пользователем; это согла
 
 В голосовом обсуждении владелец проекта подтвердил направление развития: общая лаборатория отделена от адаптера и тестируемой системы; эталонный магазин использует ту же границу через встроенный адаптер бизнес-операций и проверок. По прямому поручению обсуждение сохранено в docs/architecture/LAB_BOUNDARY.md: обязанности частей, цикл эксперимента, предлагаемый контракт адаптера, профиль и доказательство переносимости. Обработка изображений — кандидат второго бизнеса, а мастер автоматической настройки — перспектива. Точные интерфейсы и новые критерии G4 ещё не приняты; согласованные границы трёх сервисов G0 сохраняются.
 
-Владелец проекта явно согласовал Docker как общую среду разработки и запуска на Windows и macOS. План docs/development/ENVIRONMENT.md предусматривает отдельные контейнеры трёх сервисов, общий контейнерный toolchain и Compose с инфраструктурой по этапам. Адаптер — модуль внутри инструментов, без обязательного отдельного контейнера; инструменты запускаются временно. Распределение и число контейнеров — рекомендации по текущему составу, а не измеренные ресурсы. Характеристики Windows-хоста прочитаны и сохранены в docs/development/RESOURCE_PROFILES.md; бюджет Docker и потребление приложения ещё не измерены. macOS — второй основной компьютер, арендуемый сервер — возможный вариант позже, без поручения на аренду. Go-модуль, Dockerfile инструментов и Compose toolchain созданы в P01-01; runtime сервисов ещё отсутствует. Локальный Docker не подтверждён, контейнерный toolchain проверен в нативном Linux CI AMD64/ARM64. Детали и доказательства находятся в environment_strategy и environment_facts ниже.
+Владелец проекта явно согласовал Docker как общую среду разработки и запуска на Windows и macOS. План docs/development/ENVIRONMENT.md предусматривает отдельные контейнеры трёх сервисов, общий контейнерный toolchain и Compose с инфраструктурой по этапам. Адаптер — модуль внутри инструментов, без обязательного отдельного контейнера; инструменты запускаются временно. Распределение и число контейнеров — рекомендации по текущему составу, а не измеренные ресурсы. Характеристики Windows-хоста прочитаны и сохранены в docs/development/RESOURCE_PROFILES.md; бюджет Docker и потребление приложения ещё не измерены. macOS — второй основной компьютер, арендуемый сервер — возможный вариант позже, без поручения на аренду. Go-модуль, Dockerfile инструментов и Compose toolchain созданы в P01-01; P01-02–04 добавляют health-процессы, JSON-логи и конфигурацию. Runtime-образы и полноценный graceful shutdown остаются будущими задачами. Локальный Docker не подтверждён, контейнерный toolchain проверен в нативном Linux CI AMD64/ARM64. Детали и доказательства находятся в environment_strategy и environment_facts ниже.
 
 По отдельному поручению подготовлены три пастельные SVG-концепции оформления. Владелец проекта выбрал вариант 2 — «Поток эксперимента»; он применён к общему баннеру README. Название Faultline Lab и бизнес-правила не менялись. Выбор, смысл композиции и ссылки на исходники сохранены в docs/design/BANNER_OPTIONS.md и branding_notes. Кривые баннера декоративные и не изображают фактические измерения. Публикация ветки и документационного PR отражается в структурированном состоянии; до merge новый баннер не появляется на главной странице main.
 
-После сверки roadmap подготовлена явная декомпозиция ближайшего PR с кодом: docs/development/packets/P01.md. Восемь задач имеют зависимости и проверяемые критерии; первая задача P01-01 реализована и прошла нативный Docker CI AMD64/ARM64, IN_REVIEW в PR #6; проверено 1/8, принято владельцем 0/8, остальные семь не начаты. По прямому поручению владельца проекта GitHub Issues принят как трекер и создан Issue #3: https://github.com/Includeoyasi/faultline-lab/issues/3. Он содержит чеклист восьми задач, зависимости и полные критерии. Стадия IN_PROGRESS; первая задача по поручению 15 октября идёт отдельным PR, ссылка и CI отражаются в текущем состоянии. docs/development/TASK_TRACKING.md описывает стадии, доказательства и сверку снимков; Projects пока не настроен. Эти документы полностью включены в переносимый снимок. G0 остаётся принятым; P01 — первый PR с каркасом, не вся контрольная точка G1. Документационный PR с планом и баннером не является P01 и не закрывает его карточку.
+После сверки roadmap подготовлена явная декомпозиция ближайшего PR с кодом: docs/development/packets/P01.md. Восемь задач имеют зависимости и проверяемые критерии; P01-01 принята и слита владельцем через PR #6 (main e4a9b0b); принято 1/8. По новому поручению владельца P01-02, P01-03 и P01-04 реализуются вместе в следующем PR, с комментарием «Что я найду внутри?». P01-05–08 не начаты. Итоги новых проверок и PR указаны в структурированном состоянии; зелёный CI не заменяет приёмку. По прямому поручению владельца проекта GitHub Issues принят как трекер и создан Issue #3: https://github.com/Includeoyasi/faultline-lab/issues/3. Он содержит чеклист восьми задач, зависимости и полные критерии. Стадия IN_PROGRESS; первая задача по поручению 15 октября идёт отдельным PR, ссылка и CI отражаются в текущем состоянии. docs/development/TASK_TRACKING.md описывает стадии, доказательства и сверку снимков; Projects пока не настроен. Эти документы полностью включены в переносимый снимок. G0 остаётся принятым; P01 — первый PR с каркасом, не вся контрольная точка G1. Документационный PR с планом и баннером не является P01 и не закрывает его карточку.
 
 По уточнению владельца проекта обозначения разделены: G0–G4 — контрольные точки приёмки, P01–P05 — кодовые пакеты. Первый PR P01 выполняется между G0 и G1; после него следуют PR основы данных/заказа/склада, затем приёмка G1. Ранее первый пакет имел неоднозначный префикс контрольной точки; старое название сохраняется только в истории и таблице соответствия review_sequence. Восемь задач и критерии первого PR от переименования не изменились.
 
@@ -258,55 +258,36 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 22,
+  "context_revision": 23,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "current_phase": "G0_APPROVED_IMPLEMENTATION_IN_PROGRESS",
   "current_task": {
-    "id": "P01-01",
-    "description": "Первая задача: Go-модуль, три bootstrap entrypoints и закреплённый контейнерный toolchain",
-    "status": "IN_REVIEW",
-    "authorization": "Владелец сообщил о merge PR #5 и поручил взять первую утверждённую задачу и создать PR для ревью",
+    "id": "P01-02..P01-04",
+    "description": "Один PR: конфигурация, JSON-логи и три независимых gRPC health-процесса",
+    "status": "IN_PROGRESS",
+    "authorization": "Владелец сообщил о merge PR #6 и поручил объединить P01-02, P01-03 и P01-04 следующим PR; подготовить комментарий «Что я найду внутри?»",
     "result": {
-      "branch": "feat/p01-01-toolchain",
-      "base_commit": "d616a221566be4f7f7be89f6f3223501a539c45c",
-      "scope": "P01-01_ONLY",
-      "implementation": "BOOTSTRAP_AND_TOOLCHAIN_CREATED",
+      "branch": "feat/p01-02-04-service-runtime",
+      "base_commit": "e4a9b0b80f97b2fb20ca973ef57030d32f8ba878",
+      "scope": "P01-02_P01-03_P01-04_ONLY",
+      "implementation": "CONFIG_JSON_GRPC_HEALTH_CREATED",
       "local_go": "PASS_PORTABLE_WINDOWS_GO_1_27_2",
+      "local_tcp": "PASS_AFTER_SANDBOX_LOOPBACK_PERMISSION",
       "local_docker": "NOT_RUN",
-      "ci": "PASS_NATIVE_LINUX_AMD64_AND_ARM64",
       "native_macos": "NOT_RUN",
-      "go_tests": "COMMAND_PASS_NO_TEST_FILES",
+      "go_tests": "PASS_UNIT_AND_REAL_PROCESS_SMOKE",
+      "govulncheck": "PASS_NO_VULNERABILITIES",
+      "ci": "PENDING",
       "owner_acceptance": "PENDING",
-      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/6",
-      "commit_created": true,
-      "pushed": true,
-      "remaining_tasks": "P01-02..P01-08_NOT_STARTED",
-      "pull_request_number": 6,
+      "pull_request_url": null,
+      "commit_created": false,
+      "pushed": false,
       "author": "AI-Your-Bro",
-      "draft": false,
-      "observed_commit": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
-      "local_docs": "PASS_REVISION_18_PS7_AND_WINDOWS_PS51",
-      "review_requested_from": "Includeoyasi",
-      "local_validation": "PASS",
-      "documentation_ci": {
-        "name": "Documentation",
-        "head_sha": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
-        "status": "completed",
-        "conclusion": "success",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38723552133"
-      },
-      "go_ci": {
-        "name": "Go toolchain",
-        "head_sha": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
-        "status": "completed",
-        "conclusion": "success",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38723552125"
-      },
-      "source_scope": "P01-01_ONLY; NO_CONFIG_HEALTH_SHUTDOWN_OR_BUSINESS_RUNTIME",
-      "handoff_note": "CI указан с точным SHA до коммита снимка. Финальные HEAD/checks доступны в PR; snapshot не содержит hash собственного коммита."
+      "remaining_tasks": "P01-05..P01-08_NOT_STARTED",
+      "shutdown": "IMMEDIATE_STOP_ONLY; DRAIN_AND_TIMEOUT_P01_05_NOT_IMPLEMENTED"
     }
   },
   "roles": {
@@ -348,7 +329,7 @@ JSON ниже является частью этого файла и доста�
     }
   ],
   "implementation_status": {
-    "business_service_code": "BOOTSTRAP_ENTRYPOINTS_ONLY_NO_BUSINESS_RUNTIME",
+    "business_service_code": "GRPC_HEALTH_SKELETON_WITH_CONFIG_JSON_NO_BUSINESS_OPERATIONS",
     "go_module": "CREATED_WITH_TOOL_DIRECTIVES_AND_SUMS",
     "protobuf_files": "NOT_CREATED",
     "sql_migrations": "NOT_CREATED",
@@ -360,7 +341,7 @@ JSON ниже является частью этого файла и доста�
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
+    "git_commit": "e4a9b0b80f97b2fb20ca973ef57030d32f8ba878",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -422,7 +403,7 @@ JSON ниже является частью этого файла и доста�
       {
         "number": 6,
         "url": "https://github.com/Includeoyasi/faultline-lab/pull/6",
-        "state": "OPEN",
+        "state": "MERGED",
         "author": "AI-Your-Bro",
         "head_ref": "feat/p01-01-toolchain",
         "base_ref": "main",
@@ -430,12 +411,14 @@ JSON ниже является частью этого файла и доста�
         "code_packet": true,
         "parent_packet": "P01",
         "task": "P01-01",
-        "human_review": "PENDING",
+        "human_review": "USER_CONFIRMED_AND_GITHUB_MERGE_OBSERVED",
         "requested_reviewer": "Includeoyasi",
-        "merged": false,
+        "merged": true,
         "draft": false,
         "observed_head": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
-        "observation_note": "HEAD до коммита финального снимка; актуальный HEAD и результаты в PR."
+        "observation_note": "Пользователь сообщил о merge; GitHub GET /pulls/6 подтвердил merged=true. ИИ не выполнял approve/merge.",
+        "head_at_merge": "001d333132613f642b9f2415865bcd1255cb397a",
+        "merge_commit": "e4a9b0b80f97b2fb20ca973ef57030d32f8ba878"
       }
     ],
     "toolchain_container": "VERIFIED_NATIVE_LINUX_AMD64_AND_ARM64_IN_CI",
@@ -475,7 +458,9 @@ JSON ниже является частью этого файла и доста�
     "От AI-Your-Bro опубликован первый security commit fbbaef0 и PR #5; у Includeoyasi запрошено ревью. GitHub подтвердил автора/коммиттера исполнителя; исходный Documentation CI прошёл. CODEOWNERS в открытом PR, активация в main ожидает решения владельца.",
     "PR #5 принят и слит владельцем; main d616a22 содержит действующий CODEOWNERS. Начата первая задача P01-01 отдельным PR по прямому поручению владельца.",
     "Созданы модуль с tool directives/go.sum, три минимальные точки запуска, закреплённый Docker toolchain и Compose для инструментов. Локальные build/tidy/verify/goimports/govulncheck прошли временным Go; Go tests завершились с no test files. Контейнерные проверки ожидают CI.",
-    "P01-01 реализована и прошла полный Docker CI на нативных AMD64/ARM64. PR #6 от AI-Your-Bro переведён в ready, ревью запрошено у Includeoyasi. Issue #3 обновлён: проверено 1/8, принято владельцем 0/8; остальные задачи не начаты."
+    "P01-01 реализована и прошла полный Docker CI на нативных AMD64/ARM64. PR #6 от AI-Your-Bro переведён в ready, ревью запрошено у Includeoyasi. Issue #3 обновлён: проверено 1/8, принято владельцем 0/8; остальные задачи не начаты.",
+    "Владелец принял и смержил PR #6; main e4a9b0b содержит P01-01, приёмка 1/8. Новым поручением объединены P01-02–04 и запрошен комментарий «Что я найду внутри?» к следующему PR.",
+    "Реализованы конфигурация с безопасной диагностикой, JSON slog/build metadata, три gRPC health-сервера, unit и process smoke. Windows Go проверки, build/vet/tidy/verify и govulncheck прошли; Linux container CI ожидается. Graceful shutdown/runtime-образы и бизнес-логика не реализованы."
   ],
   "next_implementation_packet": {
     "id": "P01",
@@ -490,22 +475,22 @@ JSON ниже является частью этого файла и доста�
     ],
     "decomposition_status": "DOCUMENTED_READY_FOR_IMPLEMENTATION",
     "specification": "docs/development/packets/P01.md",
-    "acceptance_status": "P01_01_IN_REVIEW_OTHER_TASKS_NOT_STARTED",
+    "acceptance_status": "P01_01_ACCEPTED_P01_02_04_IN_PROGRESS",
     "progress": {
       "completed": 1,
       "total": 8,
-      "owner_accepted": 0
+      "owner_accepted": 1
     },
     "tasks": [
       {
         "id": "P01-01",
         "title": "Go-модуль и закреплённый toolchain",
         "depends_on": [],
-        "status": "IN_REVIEW",
+        "status": "DONE",
         "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CONTAINER_BUILD_CHECK_BOOTSTRAP; LOCAL_WINDOWS_GO_PASS",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "VERIFIED",
-        "owner_acceptance": "PENDING",
+        "owner_acceptance": "ACCEPTED_USER_AND_MERGE_PR6",
         "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/6"
       },
       {
@@ -514,9 +499,11 @@ JSON ниже является частью этого файла и доста�
         "depends_on": [
           "P01-01"
         ],
-        "status": "NOT_STARTED",
-        "evidence": "NOT_RUN",
-        "acceptance_source": "docs/development/packets/P01.md"
+        "status": "IN_PROGRESS",
+        "evidence": "PASS_LOCAL_WINDOWS_GO_UNIT_PROCESS_SMOKE; NATIVE_LINUX_CI_PENDING",
+        "acceptance_source": "docs/development/packets/P01.md",
+        "implementation": "CREATED",
+        "owner_acceptance": "PENDING"
       },
       {
         "id": "P01-03",
@@ -524,9 +511,11 @@ JSON ниже является частью этого файла и доста�
         "depends_on": [
           "P01-01"
         ],
-        "status": "NOT_STARTED",
-        "evidence": "NOT_RUN",
-        "acceptance_source": "docs/development/packets/P01.md"
+        "status": "IN_PROGRESS",
+        "evidence": "PASS_LOCAL_WINDOWS_GO_UNIT_PROCESS_SMOKE; NATIVE_LINUX_CI_PENDING",
+        "acceptance_source": "docs/development/packets/P01.md",
+        "implementation": "CREATED",
+        "owner_acceptance": "PENDING"
       },
       {
         "id": "P01-04",
@@ -535,9 +524,11 @@ JSON ниже является частью этого файла и доста�
           "P01-02",
           "P01-03"
         ],
-        "status": "NOT_STARTED",
-        "evidence": "NOT_RUN",
-        "acceptance_source": "docs/development/packets/P01.md"
+        "status": "IN_PROGRESS",
+        "evidence": "PASS_LOCAL_WINDOWS_GO_UNIT_PROCESS_SMOKE; NATIVE_LINUX_CI_PENDING",
+        "acceptance_source": "docs/development/packets/P01.md",
+        "implementation": "CREATED",
+        "owner_acceptance": "PENDING"
       },
       {
         "id": "P01-05",
@@ -593,7 +584,7 @@ JSON ниже является частью этого файла и доста�
     "target_review_gate": "G1",
     "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/3",
     "tracker_stage": "IN_PROGRESS",
-    "current_task": "P01-01"
+    "current_task": "P01-02..P01-04"
   },
   "active_blockers": [],
   "open_review_comments": [],
@@ -616,7 +607,7 @@ JSON ниже является частью этого файла и доста�
   },
   "pending_implementation_choices": [
     "Обеспечить доступные Docker Desktop/Compose и снять фактические лимиты backend; контейнерный toolchain заменяет обязательную установку host Go. Windows-хост измерен, macOS пока нет.",
-    "Go/tools и образы toolchain закреплены в P01-01. Закреплять gRPC/SQL/Kafka/Redis библиотеки при их первом использовании; runtime-образы остаются P01-06.",
+    "Go/tools и образы toolchain закреплены в P01-01. gRPC v1.84.0 закреплён в P01-04. Закреплять SQL/Kafka/Redis библиотеки при их первом использовании; runtime-образы остаются P01-06.",
     "Подготовить точные protobuf-схемы, error codes и SQL-модели в рамках G0",
     "Определить конкретную реализацию lease/version fencing, outbox ordering и durable job dispatch",
     "Откалибровать гипотетические SLO и ресурсные лимиты после работающего MVP"
@@ -652,7 +643,8 @@ JSON ниже является частью этого файла и доста�
       "macos_resources": "NOT_MEASURED",
       "future_server_resources": "NOT_SELECTED",
       "note": "Свободные ресурсы изменяются; снимок хоста не равен бюджету Docker и не подтверждает capacity приложения"
-    }
+    },
+    "local_go_health_check": "PASS_WINDOWS_NATIVE_TCP_UNIT_AND_PROCESS_TESTS; CONTAINER_TESTS_NOT_RUN"
   },
   "validation_evidence": [
     {
@@ -987,6 +979,29 @@ JSON ниже является частью этого файла и доста�
         "git diff --check"
       ],
       "detail": "24 Markdown-файла, 276 локальных ссылок, структура 56 Mermaid-блоков; ревизия 21, 33 встроенных источника и 36 fingerprints. Исходники P01-01 включены с language-tagged fences. Проверено 1/8, принято владельцем 0/8; оставшиеся семь задач не начаты."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "PR #6 owner merge",
+      "result": "PASS",
+      "url": "https://github.com/Includeoyasi/faultline-lab/pull/6",
+      "head_sha": "001d333132613f642b9f2415865bcd1255cb397a",
+      "merge_commit": "e4a9b0b80f97b2fb20ca973ef57030d32f8ba878",
+      "detail": "Владелец сообщил о слиянии; API merged=true. ИИ не approve/merge."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "P01-02–04 local Windows native Go",
+      "result": "PASS",
+      "commands": [
+        "go mod tidy -diff",
+        "go mod verify",
+        "go build ./...",
+        "go vet ./...",
+        "go test -count=1 -v -timeout=3m ./...",
+        "go tool govulncheck ./..."
+      ],
+      "detail": "Go 1.27.2 portable, gRPC v1.84.0. Unit tests: defaults/overrides/invalid inputs, safe JSON/levels/build data, bind errors, context cancellation and real TCP health; process tests: all 3 health endpoints, error exit 1, isolation. Sandbox initially blocked loopback; rerun with permission passed. Windows child processes use Kill, not Unix signals; graceful signal exit remains Linux CI. No vulnerabilities found. Local Docker/macOS/race NOT_RUN; Linux container CI pending."
     }
   ],
   "source_documents": [
@@ -1115,19 +1130,19 @@ JSON ниже является частью этого файла и доста�
     {
       "path": "cmd/orders/main.go",
       "anchor": "appendix-orders-main",
-      "title": "Orders bootstrap entrypoint",
+      "title": "Orders gRPC health entrypoint",
       "language": "go"
     },
     {
       "path": "cmd/inventory/main.go",
       "anchor": "appendix-inventory-main",
-      "title": "Inventory bootstrap entrypoint",
+      "title": "Inventory gRPC health entrypoint",
       "language": "go"
     },
     {
       "path": "cmd/payments/main.go",
       "anchor": "appendix-payments-main",
-      "title": "Payments bootstrap entrypoint",
+      "title": "Payments gRPC health entrypoint",
       "language": "go"
     },
     {
@@ -1165,6 +1180,53 @@ JSON ниже является частью этого файла и доста�
       "anchor": "appendix-dockerignore",
       "title": "Исключения Docker build context",
       "language": "text"
+    },
+    {
+      "path": "docs/development/SERVICE_RUNTIME.md",
+      "anchor": "appendix-service-runtime",
+      "title": "Конфигурация, JSON-логи и gRPC health: поведение и проверки"
+    },
+    {
+      "path": "internal/service/config.go",
+      "anchor": "appendix-service-config",
+      "title": "Валидация конфигурации",
+      "language": "go"
+    },
+    {
+      "path": "internal/service/log.go",
+      "anchor": "appendix-service-logging",
+      "title": "JSON-логи и build metadata",
+      "language": "go"
+    },
+    {
+      "path": "internal/service/run.go",
+      "anchor": "appendix-service-run",
+      "title": "Запуск gRPC health и немедленная остановка",
+      "language": "go"
+    },
+    {
+      "path": "internal/service/config_test.go",
+      "anchor": "appendix-service-config-tests",
+      "title": "Проверки конфигурации",
+      "language": "go"
+    },
+    {
+      "path": "internal/service/log_test.go",
+      "anchor": "appendix-service-log-tests",
+      "title": "Проверки JSON и build metadata",
+      "language": "go"
+    },
+    {
+      "path": "internal/service/run_test.go",
+      "anchor": "appendix-service-run-tests",
+      "title": "Проверки bind, TCP health и отмены контекста",
+      "language": "go"
+    },
+    {
+      "path": "tests/smoke/services_test.go",
+      "anchor": "appendix-service-process-tests",
+      "title": "Проверки трёх реальных процессов",
+      "language": "go"
     }
   ],
   "change_history": [
@@ -1299,6 +1361,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-15",
       "summary": "В итоговом self-review устранена устаревшая строка 0/8 реализации в конце спецификации; все активные сводки различают 1/8 проверено и 0/8 принято. Уточнены локальный runtime prerequisite и дата security snapshot. Go-код, инструменты и критерии не менялись.",
       "trigger": "Сверка итоговых статусов перед передачей PR #6 владельцу"
+    },
+    {
+      "revision": 23,
+      "date": "2026-10-15",
+      "summary": "Наблюдено принятие PR #6. По прямому поручению владельца P01-02–04 реализуются одним PR: config, JSON, health, unit/process tests и документация. Локальные Windows Go проверки прошли; Linux CI ожидается, приёмка новых задач не заявляется.",
+      "trigger": "Merge P01-01 и поручение следующей группы задач"
     }
   ],
   "repository": {
@@ -1375,7 +1443,7 @@ JSON ниже является частью этого файла и доста�
     "current_identity_transition_pr": "https://github.com/Includeoyasi/faultline-lab/pull/5"
   },
   "environment_strategy": {
-    "status": "PARTIALLY_IMPLEMENTED_TOOLCHAIN_VERIFIED; BUSINESS_RUNTIME_NOT_CREATED",
+    "status": "TOOLCHAIN_VERIFIED; GRPC_HEALTH_PROCESSES_CREATED; RUNTIME_CONTAINERS_NOT_CREATED",
     "approved_on": "2026-10-13",
     "confirmation_evidence": "Владелец проекта описал работу на Windows и macOS, согласовал Docker-подход сообщением Да, давай так и сделаем",
     "documents": [
@@ -1406,10 +1474,12 @@ JSON ниже является частью этого файла и доста�
       "server_selected": false,
       "rental_or_deployment_authorized": false
     },
-    "runtime_created": false,
+    "runtime_created": true,
     "windows_container_start_verified": false,
     "macos_container_start_verified": false,
-    "toolchain_status": "VERIFIED_NATIVE_LINUX_AMD64_ARM64_IN_CI; HOST_DOCKER_WINDOWS_MAC_NOT_RUN"
+    "toolchain_status": "VERIFIED_NATIVE_LINUX_AMD64_ARM64_IN_CI; HOST_DOCKER_WINDOWS_MAC_NOT_RUN",
+    "runtime_scope": "GRPC_HEALTH_PROCESSES_ONLY",
+    "runtime_containers_created": false
   },
   "branding_notes": {
     "status": "USER_SELECTED_MERGED_TO_MAIN",
@@ -1466,7 +1536,7 @@ JSON ниже является частью этого файла и доста�
     "progress": {
       "completed": 1,
       "total": 8,
-      "owner_accepted": 0
+      "owner_accepted": 1
     },
     "last_issue_observation": {
       "date": "2026-10-15",
@@ -1475,21 +1545,21 @@ JSON ниже является частью этого файла и доста�
       "checked_tasks": 1,
       "unchecked_tasks": 7,
       "stage": "IN_PROGRESS",
-      "current_task": "P01-01",
-      "task_stage": "IN_REVIEW",
+      "current_task": "P01-02..P01-04",
+      "task_stage": "IN_PROGRESS",
       "source": "Executor PATCH response verified"
     },
     "documentation_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
     "documentation_pr_closes_packet": false,
     "documentation_pr_merged": true,
-    "current_subtask": "P01-01",
+    "current_subtask": "P01-02..P01-04",
     "task_pr_granularity": {
       "confirmed_on": "2026-10-15",
-      "rule": "По прямому поручению владельца первая задача P01-01 идёт отдельным PR; общая карточка P01 сохраняет восемь задач и ссылки на последовательные PR",
-      "whole_packet_acceptance": "NOT_COMPLETE_AFTER_ONLY_P01_01"
+      "rule": "P01-01 была отдельным PR #6; по новому прямому поручению владельца P01-02, P01-03 и P01-04 объединены следующим PR. Общая карточка P01 сохраняет восемь задач и ссылки на последовательные PR.",
+      "whole_packet_acceptance": "NOT_COMPLETE_AFTER_P01_01_OR_P01_02_04"
     },
-    "current_task_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/6",
-    "current_subtask_stage": "IN_REVIEW"
+    "current_task_pr_url": null,
+    "current_subtask_stage": "IN_PROGRESS"
   },
   "review_sequence": {
     "confirmed_on": "2026-10-13",
@@ -1507,8 +1577,8 @@ JSON ниже является частью этого файла и доста�
     "note": "Переименование устраняет неоднозначность; объём кода, восемь задач и критерии не меняются. Старые метки в истории относятся к тому же пакету.",
     "task_pr_granularity": {
       "confirmed_on": "2026-10-15",
-      "rule": "По прямому поручению владельца первая задача P01-01 идёт отдельным PR; общая карточка P01 сохраняет восемь задач и ссылки на последовательные PR",
-      "whole_packet_acceptance": "NOT_COMPLETE_AFTER_ONLY_P01_01"
+      "rule": "P01-01 была отдельным PR #6; по новому прямому поручению владельца P01-02, P01-03 и P01-04 объединены следующим PR. Общая карточка P01 сохраняет восемь задач и ссылки на последовательные PR.",
+      "whole_packet_acceptance": "NOT_COMPLETE_AFTER_P01_01_OR_P01_02_04"
     }
   },
   "repository_security": {
@@ -1620,12 +1690,13 @@ JSON ниже является частью этого файла и доста�
     "go_image": "golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e",
     "lint_image": "golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f",
     "image_indexes": "VERIFIED_LINUX_AMD64_AND_ARM64",
-    "application_dependencies": "STANDARD_LIBRARY_ONLY; TOOL_MODULES_PINNED_IN_ROOT_GO_MOD",
+    "application_dependencies": "google.golang.org/grpc v1.84.0; STANDARD_LOG_SLOG; TOOL_DIRECTIVES_PINNED",
     "native_ci_runners": [
       "ubuntu-24.04",
       "ubuntu-24.04-arm"
     ],
-    "bootstrap_behavior": "PRINT_MESSAGE_AND_EXIT; NO_HEALTH_OR_BUSINESS_SERVER"
+    "bootstrap_behavior": "THREE_GRPC_HEALTH_SERVERS_UNTIL_SIGNAL; IMMEDIATE_STOP_ONLY",
+    "smoke_command": "docker compose run --rm toolchain service-smoke"
   }
 }
 ```
@@ -1636,42 +1707,50 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `53ee2104c642ad513e7ff1aaf867258222ff01e5f5e6208167c6be80fa58c014` |
-| `tools/context_intro.md` | `9d32c8fa03722c49f5122f927d8fc8bf4c7c4f05400ac1407e2cdf85ee514349` |
+| `CONTEXT_STATE.json` | `49766b717396867d0aa2024dc3ff44a543088b41227f619865b36fe0f3db6ff5` |
+| `tools/context_intro.md` | `c5bbaf98b105e173c26d2e0075ab68b1498607dda50a3077695e6f825fdb415f` |
 | `tools/update_context.ps1` | `f830ed3538ae98ef5129b2ab5ae1d1ad564b0482d8ed2978a7ec2b96bcf5e731` |
-| `README.md` | `e31f015845283bd0ccec21c8867d3f9e9ea1cd7bacb1c8a992c076ec79051a78` |
-| `README.ru.md` | `e0532bc73f2886dea6ff569bb9cfb2605dd516ceb2f1609ce1a55756a4e62847` |
-| `docs/README.md` | `ed958717b6106da2f78cff91c8f7ef47c76f42e5a50d6e6525d8b727d024f310` |
-| `docs/ROADMAP.md` | `06fae590b2859ade4f9a0d6705f9fb482ab38d45a3a4125ac4da38b4d907e915` |
+| `README.md` | `b1dbfc5795477e992966888a19c90de6a004a7bb3ea6f55de4b51a5bff77ea80` |
+| `README.ru.md` | `34b5472e0434fa629466268e37a10b30eb552fb47c4d7f213b61a8440ab12cab` |
+| `docs/README.md` | `3a558f6d9eebd95c918d9c4ed9337979100822b21b6c5b729197d82cffc49971` |
+| `docs/ROADMAP.md` | `179385f10cb667948b7c71cdb81994e717e868f894ba35661ae44c3e23c6a102` |
 | `docs/architecture/DESIGN.md` | `6db3d3ff87a24520ff2c7205051db0056251e2c867ee0d093fe8e4fc78aa14dd` |
 | `docs/architecture/PROCESSES.md` | `dd6d00ee9d169236fe0f0d14de4b6f54d778a7cf79489f6b6a3354357e2e9ec6` |
 | `docs/development/WORKFLOW.md` | `d7620ce2e3871d436eb389946aa13610a4ef2283b4b128fbcb54929fac30d84b` |
 | `docs/experiments/REPORT_TEMPLATE.md` | `4f569aab52ba34a68bb2e8b4551c6a3bf4932277c26c3b4206dbb505781a2cab` |
-| `AGENTS.md` | `d34bce8893e7db11b515ef5d3286cce458f02c16260db709ec9af57747348199` |
+| `AGENTS.md` | `6ee5a588c7a28cfeabae8155f8236dc9560b7c441560f2d8505fd965e6281942` |
 | `docs/adr/0001-approved-g0.md` | `b8518c5c49cdefea3dbf0bf2a79ab40459dba2b565e71a6c534a555cbafa20df` |
 | `CONTRIBUTING.md` | `b805939c170ddf7036212bd9c880597f6172076216996d36cb742833e992eaa0` |
 | `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
-| `docs/development/CODE_REVIEW.md` | `216c330dcd16f1774b408fe8b4af2f3c1de2a06e5ff7c46250839061feace72a` |
+| `docs/development/CODE_REVIEW.md` | `6ecdc7767d4bba3ccf24f10e1369f53d673d825c3e3b252b086e179c79387d04` |
 | `docs/architecture/LAB_BOUNDARY.md` | `790709c43d5c2920909a9f5227467bcb77ec4d228024156dd5f69f29a8d92e46` |
-| `docs/development/ENVIRONMENT.md` | `e96d1de9d5bee662e110c207757422eef53e8898403ee33485b6844da75e50b2` |
+| `docs/development/ENVIRONMENT.md` | `4fa05b25a390838e4c683fcd1a77ba1421e911bf39bdc026d201b8e5913e4c62` |
 | `docs/development/RESOURCE_PROFILES.md` | `6b3fc67394485c0b13247d564175f3ecfb2b578a115dffbd252a31247e9bb5a1` |
 | `docs/design/BANNER_OPTIONS.md` | `27d7b336acd60aa3106e6498233f2a33eefd2bc37bf8e26cf12d2c0c0d229724` |
-| `docs/development/packets/P01.md` | `df7056ff0c05070a22ed70914c8083dd45ac8ef0dd1c9d1f561fbd9d868ee922` |
-| `docs/development/TASK_TRACKING.md` | `e0dfa8d3974f6154fd90e54a5469cba04459533101453bd9721142e3fce1ee1a` |
+| `docs/development/packets/P01.md` | `5bf338cfbde8a7afc5876aef59252d047c253f8c52148b42c0395f91c68c00a5` |
+| `docs/development/TASK_TRACKING.md` | `996aef591e99dfaa2dbd73316c175cf96b7f6a9b154cb314bb6250e6a9ee7ea6` |
 | `docs/development/REPOSITORY_SECURITY.md` | `b10363e3417429cc06376dff0277f257a92912dae03af12d7d9ff8252a80cb6e` |
 | `.github/CODEOWNERS` | `95de6cc3de1ba640d0ab9e2b9bfbdea79b7ce6641a8bcdb0bcef1f7607666415` |
-| `docs/development/TOOLCHAIN.md` | `aa96b2bf01d51f5611b8ce61ff69ce1ce955d5238e17316a9af8defe11a0c993` |
-| `go.mod` | `42367a4526e5e710282c98d7e1b54744d316cd3d14cf931908cc58f92bf37f24` |
-| `go.sum` | `6944553c37dc15f498c34d4b2a6df7e68b04c2c0dafd031775a1d76cb8b8cdfa` |
-| `cmd/orders/main.go` | `b92118d23ed781e7814447ba75c2aaf8b8f13faabaf9107451fa38ce241726ad` |
-| `cmd/inventory/main.go` | `5fc0345eb20a61fd7c66b66c8d0d511a1fcdbde013697723f8af92bda04415f6` |
-| `cmd/payments/main.go` | `0f80f213e40d6c412ffd54e3aff5ad2d4d1cc85a1fdf249fdbf2d4d94f2ace0f` |
+| `docs/development/TOOLCHAIN.md` | `e000485b8f06922465cb7c51fd6d945da944ef569d63108e3d942ab917c60eba` |
+| `go.mod` | `6b5e4488754d547057e6b8ddd0963cde3d86100430adf16fdb7060107517fa62` |
+| `go.sum` | `9f863b08d769d3d2d631ac9534db6bbd7f8d8fa5c59ee9f5bfa762763d310cc7` |
+| `cmd/orders/main.go` | `b43bc69cbc1a819a5c2c6b4542a455a3ac6479b6f325ceb6298570504882853c` |
+| `cmd/inventory/main.go` | `0122195f3e135fe024d5136fdf813bd3ab080144f473b014a513ee2d7532fe02` |
+| `cmd/payments/main.go` | `209c352a78d609c1a0e7f20abff1bc8a672c210877f27058b679b3c92a349492` |
 | `build/toolchain.Dockerfile` | `d0d0eb2b9560f7cab27b61c1f42ed98b6b3c133efa16021c3bd3bcb9c1e9db69` |
 | `compose.yaml` | `2fbd418a578851fbcec5b6bd34b55f9c287c5857c90f36c972fd9cbf7af256a2` |
-| `tools/go.sh` | `c77feafacb2b89058ff02b10f0d6a2f19d5f79944afcb0fb6c6fdf2b7ca3cda4` |
+| `tools/go.sh` | `4271c7210cc4ed6f3901b2b091a97d91d158cd63fd02bb4d3fd60f5353abd62f` |
 | `.golangci.yml` | `44651a36c889767cd425bc12b46e07c8bffc924024de23af1176057f78f3a74a` |
-| `.github/workflows/go.yml` | `ed62dbd5f85d29699b03f5f9dc83a7dba6c24e6c35be14e57a2f78e6d188681b` |
+| `.github/workflows/go.yml` | `afdf01b6e54190015633c922a939a85e472f5a97cbd71cd1540275a2fab509b1` |
 | `.dockerignore` | `b84f44484e186b48ca4f1676d442b6cc3879739264e06dfb2105bdbaf568590e` |
+| `docs/development/SERVICE_RUNTIME.md` | `bfc7a3f85ede44ed968e3a0106efd5b92025601ee29ab75f1804d47c0d5c6d32` |
+| `internal/service/config.go` | `d97e361733d46d76b917504099622399e63e45f27e16020756245e66e053e879` |
+| `internal/service/log.go` | `034f82245011a1a905514e9f21d16953dd4ce325cdfc720d8832d1d924a5773f` |
+| `internal/service/run.go` | `634dc54b0ab05dbb40a035100adea007f2b44ee73efcb47a683b6209be7e533d` |
+| `internal/service/config_test.go` | `0919fa2a659c198b924f1c47fe6f77f80401b649b3e6a7296236dddca6cf8977` |
+| `internal/service/log_test.go` | `1b8f3fc837128930d5ef7a99d75a183bc7037035d5e756ea2faabe800d61f732` |
+| `internal/service/run_test.go` | `d85782d579950add06ffae6fba56808dc8a170dfc6c0fb72dd2eb3a499e46b76` |
+| `tests/smoke/services_test.go` | `8a6d4c30fc12b21f83118f6df66e0d739dd9dde2281bc400a3da2b8ccb8f2e0e` |
 
 ## Полные самостоятельные приложения
 
@@ -1699,15 +1778,23 @@ SHA-256 относится к исходному файлу на момент с
 - [Контейнерный toolchain и команды](#appendix-toolchain) — `docs/development/TOOLCHAIN.md`
 - [Go-модуль и версии инструментов](#appendix-go-mod) — `go.mod`
 - [Контрольные суммы модулей](#appendix-go-sum) — `go.sum`
-- [Orders bootstrap entrypoint](#appendix-orders-main) — `cmd/orders/main.go`
-- [Inventory bootstrap entrypoint](#appendix-inventory-main) — `cmd/inventory/main.go`
-- [Payments bootstrap entrypoint](#appendix-payments-main) — `cmd/payments/main.go`
+- [Orders gRPC health entrypoint](#appendix-orders-main) — `cmd/orders/main.go`
+- [Inventory gRPC health entrypoint](#appendix-inventory-main) — `cmd/inventory/main.go`
+- [Payments gRPC health entrypoint](#appendix-payments-main) — `cmd/payments/main.go`
 - [Закреплённый образ инструментов](#appendix-toolchain-dockerfile) — `build/toolchain.Dockerfile`
 - [Compose для временных инструментов](#appendix-compose-toolchain) — `compose.yaml`
 - [Команды внутри Linux-контейнера](#appendix-go-commands) — `tools/go.sh`
 - [Согласованные Go-линтеры](#appendix-golangci-config) — `.golangci.yml`
 - [Проверки Go в нативном Linux CI](#appendix-go-workflow) — `.github/workflows/go.yml`
 - [Исключения Docker build context](#appendix-dockerignore) — `.dockerignore`
+- [Конфигурация, JSON-логи и gRPC health: поведение и проверки](#appendix-service-runtime) — `docs/development/SERVICE_RUNTIME.md`
+- [Валидация конфигурации](#appendix-service-config) — `internal/service/config.go`
+- [JSON-логи и build metadata](#appendix-service-logging) — `internal/service/log.go`
+- [Запуск gRPC health и немедленная остановка](#appendix-service-run) — `internal/service/run.go`
+- [Проверки конфигурации](#appendix-service-config-tests) — `internal/service/config_test.go`
+- [Проверки JSON и build metadata](#appendix-service-log-tests) — `internal/service/log_test.go`
+- [Проверки bind, TCP health и отмены контекста](#appendix-service-run-tests) — `internal/service/run_test.go`
+- [Проверки трёх реальных процессов](#appendix-service-process-tests) — `tests/smoke/services_test.go`
 
 <a id="appendix-readme-en"></a>
 
@@ -1739,15 +1826,15 @@ SHA-256 относится к исходному файлу на момент с
 
 #### Current state
 
-**Architecture approved · Go bootstrap in progress.** The project owner accepted G0 on **13 October 2026**. P01-01 adds a Go module, three bootstrap entrypoints and a pinned container toolchain. The entrypoints print a bootstrap message and exit; service runtimes, business operations and experiment results are still to come. [Build and check commands](#appendix-toolchain).
+**Architecture approved · gRPC skeleton under development.** The project owner accepted G0 on **13 October 2026** and merged P01-01. P01-02–04 add validated configuration, JSON logging and three independent gRPC health servers. Business operations and experiment results are still to come. [Build commands](#appendix-toolchain) · [Service runtime](#appendix-service-runtime).
 
 | Ready | Next | Later |
 | :--- | :--- | :--- |
-| Approved architecture and business invariants | Service configuration, gRPC health and bounded shutdown | Repeatable load and failure experiments |
+| Approved architecture and business invariants | Review configuration/JSON/health; add bounded shutdown | Repeatable load and failure experiments |
 | Detailed process diagrams and review gates | PostgreSQL ownership, migrations and gRPC contracts | Grafana dashboards, alerts and experiment reports |
 | Portable context with a freshness check | Durable workflows, Kafka and compensation | Scaling comparisons under equal resource budgets |
 
-The first code [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) covers **P01-01**, after G0 and before G1. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) tracks all eight tasks; [the packet specification](#appendix-p01) defines acceptance criteria. P01-01 is implemented and verified on native Linux AMD64/ARM64; the other seven tasks have not started. Owner review is pending.
+The first code [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) covers **P01-01**, after G0 and before G1. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) tracks all eight tasks; [the packet specification](#appendix-p01) defines acceptance criteria. P01-01 is accepted and merged; P01-02–04 are being prepared together in the next PR at the owner's request. P01-05–08 have not started; the full packet is still incomplete.
 
 No capacity numbers or performance improvements are claimed before measurement. The [roadmap](#appendix-roadmap) distinguishes design hypotheses from acceptance criteria and observed results.
 
@@ -1855,11 +1942,16 @@ faultline-lab/
 │   ├── experiments/            # Experiment report template
 │   ├── adr/                    # Recorded decisions and approvals
 │   └── assets/                 # Repository visuals
-├── tools/                      # Context generation and documentation checks
+├── cmd/                        # Orders, Inventory and Payments entrypoints
+├── internal/service/           # Shared configuration, logging and gRPC startup
+├── tests/smoke/                # Real process health and isolation checks
+├── build/                      # Pinned toolchain image
+├── compose.yaml                # Temporary toolchain service
+├── tools/                      # Go commands, context and documentation checks
 └── .github/                    # Documentation CI and review templates
 ```
 
-Runtime directories will be added with their first working implementation. The [roadmap](#appendix-roadmap) contains the planned code layout.
+Runtime service images will be added in P01-06; the current Compose service is the development toolchain. The [roadmap](#appendix-roadmap) contains the planned code layout.
 
 #### Working with this snapshot
 
@@ -1877,7 +1969,7 @@ node tools/check_docs.mjs
 pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 ```
 
-After changing canonical documents, update `CONTEXT_STATE.json` and its revision, regenerate with `pwsh -NoProfile -File tools/update_context.ps1`, then run the checks again. These commands validate documentation and snapshot freshness. Runtime setup instructions will accompany the implementation.
+After changing canonical documents, update `CONTEXT_STATE.json` and its revision, regenerate with `pwsh -NoProfile -File tools/update_context.ps1`, then run the checks again. These commands validate documentation and snapshot freshness. Service settings and process checks are described in the [runtime guide](#appendix-service-runtime).
 
 #### License
 
@@ -1913,11 +2005,11 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 
 #### Состояние проекта
 
-**Архитектура принята, начата Go-основа.** Владелец проекта полностью согласовал G0 **13 октября 2026 года**. P01-01 добавляет модуль, три bootstrap-точки входа и закреплённый контейнер инструментов. Программы печатают bootstrap-сообщение и завершаются; runtime сервисов, бизнес-операций и результатов экспериментов ещё нет. [Команды сборки и проверок](#appendix-toolchain).
+**Архитектура принята, начата Go-основа.** Владелец проекта полностью согласовал G0 **13 октября 2026 года**. P01-01 с модулем и контейнером инструментов принята и слита. P01-02–04 добавляют конфигурацию, JSON-логи и три независимых gRPC health-процесса. [Устройство и запуск](#appendix-service-runtime). Бизнес-операций и результатов экспериментов ещё нет. [Команды сборки и проверок](#appendix-toolchain).
 
 Ближайший пакет **P01**: три Go entrypoints, конфигурация, health, graceful shutdown и JSON-логи, контейнерный toolchain и Compose-запуск для Windows/macOS. [План среды](#appendix-environment) объясняет состав контейнеров; [граница лаборатории](#appendix-lab-boundary) сохраняет направление подключения других бизнесов. Проверки документации не являются тестами будущих сервисов. Производительность стенда пока не измерялась.
 
-Задачи ведутся в [P01 — Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3): P01-01 реализована и проверена в нативном Linux CI AMD64/ARM64, IN_REVIEW в [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6). Остальные семь не начаты. Проверено 1/8, принятие владельцем ещё ожидается. [Спецификация пакета](#appendix-p01) содержит критерии. P01 идёт после G0 и до G1.
+Задачи ведутся в [P01 — Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3): P01-01 принята и слита в [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6); P01-02–04 готовятся в следующем PR по прямому поручению владельца. P01-05–08 не начаты. Принято владельцем 1/8. [Спецификация пакета](#appendix-p01) содержит критерии. P01 идёт после G0 и до G1.
 
 #### Идея
 
@@ -2016,7 +2108,7 @@ node tools/check_docs.mjs
 pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 ```
 
-После изменения источников обнови `CONTEXT_STATE.json`, увеличь ревизию и выполни `pwsh -NoProfile -File tools/update_context.ps1`, затем проверки. Инструкции запуска сервисов появятся с реализацией.
+После изменения источников обнови `CONTEXT_STATE.json`, увеличь ревизию и выполни `pwsh -NoProfile -File tools/update_context.ps1`, затем проверки. Настройки сервисов и process smoke описаны в [инструкции запуска](#appendix-service-runtime).
 
 #### Лицензия
 
@@ -2030,7 +2122,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 
 ### Карта документации
 
-**Faultline Lab** · G0 принят 13 октября 2026 года · Начата P01-01: Go-модуль и контейнерные инструменты.
+**Faultline Lab** · G0 принят 13 октября 2026 года · P01-01 принята; P01-02–04: конфигурация, JSON-логи и gRPC health.
 
 #### Маршруты чтения
 
@@ -2041,6 +2133,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Разобрать подключение другого бизнеса | [Граница лаборатории](#appendix-lab-boundary) — согласованное направление и детализация для ревью |
 | Подготовить среду Windows/macOS | [Контейнерная среда](#appendix-environment) — состав, профили и статус проверок |
 | Собрать и проверить первые Go-бинарники | [Toolchain P01-01](#appendix-toolchain) — версии, Docker-команды и границы проверок |
+| Запустить и проверить три процесса | [Запуск сервисов](#appendix-service-runtime) — настройки, JSON, health и границы shutdown |
 | Проверить исходные ресурсы | [Профили сред](#appendix-resource-profiles) — Windows, macOS и возможный будущий сервер |
 | Посмотреть оформление | [Концепции баннера](#appendix-banner-options) — три варианта и выбранное решение |
 | Принять участие в разработке | [CONTRIBUTING](#appendix-contributing) → [Правила ревью](#appendix-code-review) → [Workflow](#appendix-development-process) → [AGENTS](#appendix-agents) |
@@ -2077,7 +2170,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 
 Это план разработки, а не результаты уже проведённых испытаний. Все численные пороги ниже — начальные гипотезы, которые нужно откалибровать на своём компьютере.
 
-Разработку выполняет Codex; пользователь выступает владельцем проекта, проводит код-ревью и согласует ключевые переходы. Порядок работы зафиксирован в `docs/development/WORKFLOW.md`. Архитектурный пакет `docs/architecture/DESIGN.md` и схемы `docs/architecture/PROCESSES.md` полностью приняты пользователем 2026-10-13. Реализация сервисов ещё не начата. Переносимый актуальный контекст находится в `PROJECT_CONTEXT.md`; следующая контрольная точка — G1.
+Разработку выполняет Codex; пользователь выступает владельцем проекта, проводит код-ревью и согласует ключевые переходы. Порядок работы зафиксирован в `docs/development/WORKFLOW.md`. Архитектурный пакет `docs/architecture/DESIGN.md` и схемы `docs/architecture/PROCESSES.md` полностью приняты пользователем 2026-10-13. P01-01 принята и слита; P01-02–04 реализуют конфигурацию, JSON-логи и gRPC health-каркас. Бизнес-операции ещё не реализованы. Переносимый актуальный контекст находится в `PROJECT_CONTEXT.md`; следующая контрольная точка — G1.
 
 #### 1. Допущения и границы
 
@@ -3347,7 +3440,7 @@ PROJECT_CONTEXT.md — самостоятельный пакет для друг
 - G0 was explicitly approved by the human on 2026-10-13 (Europe/Moscow): "G0 полностью принят." The architecture and business rules in docs/architecture/DESIGN.md and docs/architecture/PROCESSES.md are approved. Do not ask for G0 approval again. G1-G4 remain future review gates; prepare the work for a gate before requesting its approval.
 - Work autonomously within an approved stage. Keep changes small enough for focused code review and include actual validation results and known limitations.
 - G0-G4 are acceptance gates; P01-P05 are code review packets. The first code PR is P01, after approved G0 and before G1. Do not describe P01 as G1 acceptance or work after G1.
-- On 2026-10-15 the owner requested implementation and a PR for the first task, P01-01, separately. This PR covers the module, bootstrap entrypoints and container toolchain; P01-02 through P01-08 remain future tasks. A reviewed task PR does not complete the whole P01 packet.
+- P01-01 was accepted and merged by the owner in PR #6 (main e4a9b0b). On 2026-10-15 the owner authorized P01-02, P01-03 and P01-04 together in the next PR: configuration, JSON logging and three gRPC health servers. Include a reviewer guide titled "Что я найду внутри?". P01-05 through P01-08 remain future tasks; immediate signal stop does not mean graceful shutdown is implemented. Task PRs do not complete the whole P01 packet.
 - Follow docs/development/CODE_REVIEW.md for Go style, correctness, concurrency, data, tests and review evidence. After repository bootstrap, prepare changes on a focused branch and present a PR when GitHub is available. Do not approve or merge your own changes; merging requires an explicit human decision and authorization for the action. Go checks become executable with P01, not before a Go module exists.
 - Stop before progressing through an unapproved review gate. Present a concrete, complete review packet and identify the decision needed from the project owner.
 - Significant changes to approved service boundaries, invariants, incompatible contracts or infrastructure scope require a concrete proposal and human approval.
@@ -3582,7 +3675,7 @@ SOFTWARE.
 
 #### 9. Автоматические проверки и момент подключения
 
-**Сейчас:** существует только документационный CI `Links and portable context`. Go-модуль, Go CI, конфигурация линтера и зависимости инструментов ещё не созданы. Команды ниже задают требования для первого работающего Go-пакета P01; они не запускались в текущем документальном пакете.
+**Сейчас:** Go-модуль, закреплённые инструменты, конфигурация линтера и нативный Docker CI AMD64/ARM64 созданы и приняты в P01-01. `Links and portable context` и оба `Go toolchain` job обязательны для main. В P01-02–04 появляются проверки конфигурации, логов и health; graceful shutdown и завершение полного P01 остаются следующими задачами. Фактические результаты конкретного HEAD приводятся в PR и контексте.
 
 | Проверка | Требование после появления Go-модуля |
 | :--- | :--- |
@@ -3757,7 +3850,7 @@ experiments/scenarios/         # Воспроизводимые условия �
 
 ### Переносимая среда разработки и экспериментов
 
-Статус на 15 октября 2026 года: контейнерный подход Windows/macOS согласован. В P01-01 созданы Go-модуль, Dockerfile инструментов и Compose с временным toolchain; [команды и закреплённые версии](#appendix-toolchain). Runtime-образы сервисов, health и бизнес-операции ещё не реализованы. Проверенные результаты CI указаны в контексте/PR; Docker на локальном Windows и личный Mac пока не проверены.
+Статус на 15 октября 2026 года: контейнерный подход Windows/macOS согласован. В P01-01 созданы Go-модуль, Dockerfile инструментов и Compose с временным toolchain; [команды и закреплённые версии](#appendix-toolchain). P01-02–04 добавляют конфигурацию, JSON-логи и gRPC health-процессы ([инструкция](#appendix-service-runtime)). Runtime-образы сервисов, полноценный graceful shutdown и бизнес-операции ещё не реализованы. Проверенные результаты CI указаны в контексте/PR; Docker на локальном Windows и личный Mac пока не проверены.
 
 #### Что согласовано
 
@@ -3925,7 +4018,7 @@ Docker рекомендует разделять ответственности 
 
 ### P01 — Go-каркас между G0 и G1
 
-Состояние на 15 октября 2026 года: **P01-01 реализована и проверена, IN_REVIEW в [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6); остальные семь задач NOT_STARTED**. Проверено 1/8, принято владельцем 0/8. G0 принят; дополнительной контрольной точки перед первыми строками кода нет. P01 находится после G0 и до G1. По прямому поручению владельца первая задача предъявляется отдельным PR; это не готовность всего пакета. G1 — отдельная более поздняя приёмка основы заказа и склада.
+Состояние на 15 октября 2026 года: **P01-01 DONE, принята и слита в [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6); P01-02–04 реализованы, проверяются для следующего PR; P01-05–08 NOT_STARTED**. Принято владельцем 1/8; текущая проверка задач 02–04 ещё не означает их приёмку. G0 принят; дополнительной контрольной точки перед первыми строками кода нет. P01 находится после G0 и до G1. По прямому поручению владельца первая задача шла отдельным PR, а задачи 02–04 объединены следующим PR; это не готовность всего пакета. G1 — отдельная более поздняя приёмка основы заказа и склада.
 
 Основа: [первый пакет реализации](#appendix-design-review), [roadmap](#appendix-roadmap), [порядок ревью](#appendix-development-process), [стандарт Go](#appendix-code-review) и согласованный [Docker-подход](#appendix-environment).
 
@@ -3933,7 +4026,7 @@ Docker рекомендует разделять ответственности 
 
 Результат всего P01: три Go-сервиса Orders, Inventory и Payments запускаются в отдельных контейнерах, валидируют конфигурацию, публикуют gRPC health, пишут JSON-логи и корректно завершаются. Сборка и проверки доступны через закреплённый контейнерный toolchain и CI.
 
-Текущий PR только P01-01: Go-модуль, три минимальные bootstrap-точки входа, закреплённые инструменты, Compose для toolchain и CI его проверки. Программы печатают bootstrap-сообщение и завершаются; не имитируют запущенные сервисы. [Toolchain](#appendix-toolchain) содержит команды и ограничения. Проверки Go включаются с первым модулем; сценарии конфигурации/health/shutdown добавятся с соответствующими задачами. P01-07 не объявляется завершённой только из-за появления первого workflow.
+Текущий PR — P01-02, P01-03 и P01-04: валидируемая конфигурация, JSON-логи и три независимых gRPC health-процесса. P01-01 с модулем и закреплённым toolchain уже принята в main. Программы теперь обслуживают health до остановки; немедленный Stop не означает готовность graceful shutdown P01-05. [Устройство и команды](#appendix-service-runtime). [Toolchain](#appendix-toolchain) содержит команды и ограничения. Проверки Go включаются с первым модулем; сценарии конфигурации/health/shutdown добавятся с соответствующими задачами. P01-07 не объявляется завершённой только из-за появления первого workflow.
 
 PostgreSQL/Kafka/Redis и миграции относятся к P02. Доменные protobuf, заказы, складские операции, платежи, адаптеры и runner здесь не реализуются. Использование стандартного gRPC health не означает готовность бизнес-API.
 
@@ -3941,14 +4034,14 @@ PostgreSQL/Kafka/Redis и миграции относятся к P02. Домен
 
 #### Задачи и текущие статусы
 
-Все статусы ниже — датированный локальный снимок. Текущее выполнение ведётся в [GitHub Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3): IN_PROGRESS. Приёмка владельцем пока 0/8; фактически проверенные результаты первой задачи отражаются в PR и контексте.
+Все статусы ниже — датированный локальный снимок. Текущее выполнение ведётся в [GitHub Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3): IN_PROGRESS. Приёмка владельцем 1/8; проверенные результаты задач 02–04 отражаются в следующем PR и контексте.
 
 | ID | Задача | Зависит от | Статус | Доказательство приёмки |
 | :--- | :--- | :--- | :--- | :--- |
-| P01-01 | Go-модуль и закреплённый toolchain | — | IN_REVIEW | Сборка/запуск трёх бинарников, format/lint/tidy/verify/govulncheck в нативном CI AMD64/ARM64 PASS; PR #6 |
-| P01-02 | Конфигурация с проверкой | 01 | NOT_STARTED | Успешный старт с допустимой конфигурацией; отказ на некорректной |
-| P01-03 | Структурированные логи | 01 | NOT_STARTED | Разбор стартовых/финальных записей как JSON с ожидаемыми полями |
-| P01-04 | Три entrypoints и gRPC health | 02, 03 | NOT_STARTED | Проверки всех трёх endpoints; ошибка занятого адреса |
+| P01-01 | Go-модуль и закреплённый toolchain | — | DONE | Сборка/запуск трёх бинарников, format/lint/tidy/verify/govulncheck в нативном CI AMD64/ARM64 PASS; PR #6 |
+| P01-02 | Конфигурация с проверкой | 01 | IN_PROGRESS | Успешный старт с допустимой конфигурацией; отказ на некорректной |
+| P01-03 | Структурированные логи | 01 | IN_PROGRESS | Разбор стартовых/финальных записей как JSON с ожидаемыми полями |
+| P01-04 | Три entrypoints и gRPC health | 02, 03 | IN_PROGRESS | Проверки всех трёх endpoints; ошибка занятого адреса |
 | P01-05 | Graceful shutdown с пределом ожидания | 04 | NOT_STARTED | Завершение активной работы и принудительное прекращение по deadline |
 | P01-06 | Образы и минимальный Compose | 01–05 | NOT_STARTED | Сборка образов, health и остановка трёх контейнеров |
 | P01-07 | Go-проверки и CI | 01–05 | NOT_STARTED | Успешные обязательные проверки на предъявленном HEAD |
@@ -4026,11 +4119,11 @@ P01 не достигает всей контрольной точки G1: ба�
 - На текущем хосте Go/Docker не найдены в PATH. Для вспомогательной проверки P01-01 используется официальный временный Go в игнорируемой папке, основной путь — Docker. Контейнерный toolchain проверяется в Linux CI; Docker Desktop/Compose и бюджет Windows надо подтвердить до runtime smoke P01-06. Нового архитектурного gate это не создаёт.
 - Характеристики Windows сохранены в [ресурсном профиле](#appendix-resource-profiles). Ни Docker-лимиты, ни потребление приложения по этим сведениям не измерены.
 - Среда macOS и возможный будущий сервер недоступны для проверки; их результаты не придумываются.
-- Команды toolchain приведены в [инструкции P01-01](#appendix-toolchain). Команды запуска runtime/health появятся в последующих задачах и не объявляются выполненными заранее.
+- Команды toolchain приведены в [инструкции P01-01](#appendix-toolchain). Запуск и process smoke описаны в [инструкции сервисов](#appendix-service-runtime); runtime-образы остаются P01-06.
 
 #### Где следить за задачами
 
-Принятый порядок описан в [учёте задач](#appendix-task-tracking): один GitHub Issue на пакет, чеклист восьми задач и ссылки на их PR. [Карточка P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта; Projects пока не настроен. Этот файл хранит критерии и датированный снимок: P01-01 реализована и проверена, 1/8, принятие владельцем 0/8. Остальные семь задач не начаты.
+Принятый порядок описан в [учёте задач](#appendix-task-tracking): один GitHub Issue на пакет, чеклист восьми задач и ссылки на их PR. [Карточка P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта; Projects пока не настроен. Этот файл хранит критерии и датированный снимок: P01-01 DONE (принята 1/8), P01-02–04 IN_PROGRESS, P01-05–08 NOT_STARTED.
 
 <a id="appendix-task-tracking"></a>
 
@@ -4040,7 +4133,7 @@ P01 не достигает всей контрольной точки G1: ба�
 
 ### Учёт задач и статусов
 
-Статус на 15 октября 2026 года: [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) содержит восемь задач. Пакет IN_PROGRESS; P01-01 реализована и проверена, IN_REVIEW в [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6). Остальные семь не начаты. Проверено 1/8, приёмка владельцем 0/8. [Спецификация P01](#appendix-p01) сохраняет версионируемые требования.
+Статус на 15 октября 2026 года: [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) содержит восемь задач. Пакет IN_PROGRESS; P01-01 принята и слита в [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6). P01-02–04 IN_PROGRESS, объединены в следующий PR по поручению владельца; P01-05–08 не начаты. Приёмка владельцем 1/8; проверки следующего PR фиксируются отдельно. [Спецификация P01](#appendix-p01) сохраняет версионируемые требования.
 
 #### Разделение назначений
 
@@ -4058,7 +4151,7 @@ P01 не достигает всей контрольной точки G1: ба�
 
 Создана карточка [P01: Go service skeleton and container development](https://github.com/Includeoyasi/faultline-lab/issues/3) с целью, границами, чеклистом восьми задач, зависимостями, критериями и местом для результатов и PR. Подзадачи внутри одного небольшого PR отдельно в Issues не размножаются; при увеличении самостоятельного объёма их можно выделить.
 
-Исполнитель — AI-Your-Bro (Codex); ревьюер и принимающий решение — владелец Includeoyasi. По поручению 15 октября первая задача P01-01 идёт отдельным PR. Карточка P01 остаётся общей для восьми задач, ссылки на последовательные PR добавляются к ней. Наличие отдельного аккаунта не разрешает ИИ выдавать approval собственным изменениям.
+Исполнитель — AI-Your-Bro (Codex); ревьюер и принимающий решение — владелец Includeoyasi. По поручениям 15 октября P01-01 шла отдельным PR, а P01-02–04 объединены следующим PR. Карточка P01 остаётся общей для восьми задач, ссылки на последовательные PR добавляются к ней. Наличие отдельного аккаунта не разрешает ИИ выдавать approval собственным изменениям.
 
 GitHub — основной источник текущего выполнения; в репозиторий переносится датированный снимок с URL и проверенными результатами. Автоматической синхронизации сейчас нет. Порядок принят прямым поручением владельца проекта «фиксируй изменения и заводи задачи».
 
@@ -4085,10 +4178,10 @@ BLOCKED — отдельный признак с причиной и требу�
 
 #### Фактический статус сейчас
 
-- P01-01 в ревью: созданы и проверены модуль, bootstrap entrypoints и контейнер инструментов. Остальные задачи не начаты; бизнес-проверки сервиса NOT_RUN.
-- Карточка [P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта: IN_PROGRESS, первый чекбокс отмечен после реализации и проверок. Принятие человеком отдельно фиксируется после ревью и merge. Projects не создан.
+- P01-01 DONE; P01-02–04 IN_PROGRESS: конфигурация, JSON и health. P01-05–08 не начаты; бизнес-проверки NOT_RUN.
+- Карточка [P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта: IN_PROGRESS, первый чекбокс отмечен после реализации и проверок. Первая задача принята после ревью и merge PR #6; текущие задачи потребуют отдельного ревью. Projects не создан.
 - Документационные PR #4 и [#5](https://github.com/Includeoyasi/faultline-lab/pull/5) слиты. CODEOWNERS и защита main действуют; PR первой задачи публикуется от AI-Your-Bro с ревью Includeoyasi.
-- Следующая зависимая задача — P01-02 после ревью текущего результата; весь P01 и G1 ещё не приняты.
+- Текущий PR объединяет P01-02–04; после их принятия следующая задача — P01-05. Весь P01 и G1 ещё не приняты.
 
 <a id="appendix-repository-security"></a>
 
@@ -4159,9 +4252,9 @@ GitHub разрешает machine account, зарегистрированный 
 
 Полный исходный документ: `docs/development/TOOLCHAIN.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
-### Go-модуль и контейнерный toolchain — P01-01
+### Go-модуль и контейнерный toolchain
 
-Состояние на 15 октября 2026 года: созданы Go-модуль, три bootstrap entrypoints и контейнер инструментов. Локальная сборка временным Go на Windows прошла. На нативных Linux AMD64/ARM64 прошли Docker build, Go checks, сборка/запуск всех трёх бинарников и отказ на неизвестную команду: [проверенный прогон](https://github.com/Includeoyasi/faultline-lab/actions/runs/38723552125), исходный HEAD 7ea4b89. [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) предъявляет только P01-01; runtime сервисов и бизнес-API ещё не реализованы. Текущий HEAD и его проверки доступны в PR.
+Состояние на 15 октября 2026 года: созданы Go-модуль, три bootstrap entrypoints и контейнер инструментов. Локальная сборка временным Go на Windows прошла. На нативных Linux AMD64/ARM64 прошли Docker build, Go checks, сборка/запуск всех трёх бинарников и отказ на неизвестную команду: [проверенный прогон](https://github.com/Includeoyasi/faultline-lab/actions/runs/38723552125), исходный HEAD 7ea4b89. [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) принят и слит; он покрывал только P01-01. В следующем PR задачи 02–04 добавляют [gRPC health-процессы](#appendix-service-runtime), конфигурацию и JSON-логи. Runtime-образы и бизнес-API ещё не реализованы. Текущий HEAD и его проверки доступны в соответствующем PR.
 
 #### Состав и версии
 
@@ -4176,7 +4269,7 @@ GitHub разрешает machine account, зарегистрированный 
 
 Версии проверены по официальным источникам 15 октября 2026 года: [Go releases](https://go.dev/dl/), [golangci-lint releases](https://github.com/golangci/golangci-lint/releases/tag/v2.14.0), Go module proxy и Docker Registry. Оба закреплённых digest относятся к multi-platform индексам, а не к одному варианту CPU.
 
-Текущий код приложений использует стандартную библиотеку. Внешние модули в go.mod нужны для реально используемых инструментов, закреплённых современными [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools); ради go.sum в бизнес-код не добавлена фиктивная библиотека. Зависимости будущего gRPC/SQL/Kafka добавляются при их первом использовании.
+gRPC v1.84.0 добавлен для реального health API в P01-04; версия проверена через официальный Go proxy. JSON-логи использует стандартный log/slog. Инструменты закреплены через [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools). SQL/Kafka/Redis библиотеки добавляются при первом использовании.
 
 #### Основной путь Windows и macOS
 
@@ -4187,12 +4280,12 @@ docker compose build toolchain
 docker compose run --rm toolchain versions
 docker compose run --rm toolchain check
 docker compose run --rm toolchain build
-docker compose run --rm toolchain bootstrap-smoke
+docker compose run --rm toolchain service-smoke
 ```
 
 `versions` выводит фактические Go, golangci-lint, build metadata goimports и версию govulncheck. `check` проверяет gofmt/goimports без перезаписи исходников, tidy без diff, verify, build, согласованные линтеры, unit/race commands и govulncheck. Ошибка любого шага завершает команду с ненулевым кодом. Набор линтеров — govet, staticcheck, errcheck, ineffassign, unused.
 
-`build` создаёт Linux-бинарники bin/orders, bin/inventory, bin/payments для архитектуры toolchain-контейнера и выводит build metadata. Они игнорируются Git. На Windows эти Linux-бинарники не запускаются напрямую. `bootstrap-smoke` собирает и запускает их внутри контейнера: каждый выводит сообщение об отсутствии service runtime и завершается. Это не проверка health или бизнес-процесса. Тестовых Go-файлов в этой задаче нет: вывод `[no test files]` не является доказательством покрытия будущих рисков.
+`build` создаёт Linux-бинарники bin/orders, bin/inventory, bin/payments для архитектуры toolchain-контейнера и выводит build metadata. Они игнорируются Git. На Windows эти Linux-бинарники не запускаются напрямую. `service-smoke` собирает и проверяет три отдельных процесса: health, JSON-диагностику ошибок, выход и независимость. Unit/process tests теперь существуют; graceful drain, runtime-контейнеры и бизнес-процессы остаются будущими задачами. Прежний bootstrap-smoke удалён: сервисы больше не завершаются сразу после запуска.
 
 Для осознанного исправления форматирования: `docker compose run --rm toolchain format`. Эта команда меняет Go-исходники в рабочей копии; check их не меняет. Неподдерживаемая команда и лишние аргументы дают exit code 2.
 
@@ -4202,7 +4295,7 @@ Toolchain — временный сервис профиля tools. Явный `
 
 #### CI и границы доказательств
 
-[Go workflow](#appendix-go-workflow) использует нативные ubuntu-24.04 (AMD64) и ubuntu-24.04-arm (ARM64). На каждой архитектуре он собирает один и тот же Dockerfile, выполняет check, bootstrap-smoke и проверяет отказ на неизвестную команду. Затем проверяет отсутствие изменений отслеживаемых исходников. Успешная сборка ARM64 в CI не доказывает запуск Docker Desktop на личном Mac.
+[Go workflow](#appendix-go-workflow) использует нативные ubuntu-24.04 (AMD64) и ubuntu-24.04-arm (ARM64). На каждой архитектуре он собирает один и тот же Dockerfile, выполняет check, service-smoke и проверяет отказ на неизвестную команду. Затем проверяет отсутствие изменений отслеживаемых исходников. Успешная сборка ARM64 в CI не доказывает запуск Docker Desktop на личном Mac.
 
 На Windows Docker пока не найден; локальный container smoke — NOT_RUN. Для дополнительной проверки скачан официальный переносимый Go 1.27.2 с проверкой SHA-256 в игнорируемую папку .local, без установки в PATH. Это вспомогательная проверка, а не основной путь разработки. Личная macOS-среда ещё не проверялась; измерений потребления и производительности нет.
 
@@ -4224,13 +4317,19 @@ tool (
 	golang.org/x/vuln/cmd/govulncheck
 )
 
+require google.golang.org/grpc v1.84.0
+
 require (
 	golang.org/x/mod v0.42.0 // indirect
+	golang.org/x/net v0.61.0 // indirect
 	golang.org/x/sync v0.24.0 // indirect
 	golang.org/x/sys v0.49.0 // indirect
 	golang.org/x/telemetry v0.0.0-20261010193011-f71dc92da45e // indirect
+	golang.org/x/text v0.43.0 // indirect
 	golang.org/x/tools v0.52.0 // indirect
 	golang.org/x/vuln v1.9.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260706201446-f0a921348800 // indirect
+	google.golang.org/protobuf v1.36.11 // indirect
 )
 ```
 
@@ -4241,20 +4340,26 @@ require (
 Полный исходный документ: `go.sum`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```text
+github.com/golang/protobuf v1.5.4 h1:i7eJL8qZTpSEXOPTxNKhASYpMn+8e5Q6AdndVa1dWek=
+github.com/golang/protobuf v1.5.4/go.mod h1:lnTiLA8Wa4RWRcIUkrtSVa5nRhsEGBg48fD6rSs7xps=
 github.com/google/go-cmdtest v0.4.1-0.20220921163831-55ab3332a786 h1:rcv+Ippz6RAtvaGgKxc+8FQIpxHgsF+HBzPyYL2cyVU=
 github.com/google/go-cmdtest v0.4.1-0.20220921163831-55ab3332a786/go.mod h1:apVn/GCasLZUVpAJ6oWAuyP7Ne7CEsQbTnc0plM3m+o=
-github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
-github.com/google/go-cmp v0.6.0/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
+github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
+github.com/google/go-cmp v0.7.0/go.mod h1:pXiqmnSA92OHEEa9HXL2W4E7lf9JzCmGVUdgjX3N/iU=
 github.com/google/renameio v0.1.0 h1:GOZbcHa3HfsPKPlmyPyN2KEohoMXOhdMbHrvbpl2QaA=
 github.com/google/renameio v0.1.0/go.mod h1:KWCgfxg9yswjAJkECMjeO8J8rahYeXnNhOm40UhjYkI=
 golang.org/x/mod v0.42.0 h1:ICeL3t2L30ljSPHHxDnR4fqVcBt/zR2zJAb9juavmQg=
 golang.org/x/mod v0.42.0/go.mod h1:u5fzIrRInkL8MaO1cbRkUHT64v303YIT5KEqpNr7jRs=
+golang.org/x/net v0.61.0 h1:RR+6j/BTBCrggOLugxa+66R8FvoN6MHlzDlZIbN9YFw=
+golang.org/x/net v0.61.0/go.mod h1:WgDCOTH8iwtB66T4/GfI94AHo/hhdb7Hah9NDseQfiI=
 golang.org/x/sync v0.24.0 h1:iqiDrGoDgyuvAKrhLQthUEzU/R378N78gXbBjxed7oA=
 golang.org/x/sync v0.24.0/go.mod h1:sUUOizhqBxiL6pEWpqNLUiaJn1ShEbZ6BBqskPbjZm0=
 golang.org/x/sys v0.49.0 h1:XbzkgYJHdqh/8m2Uu0W/dQv8nktxx4BFHp1M0gROTXA=
 golang.org/x/sys v0.49.0/go.mod h1:hNLxWAXmnKAxqDtdwIYC4bM9oQPEecfsnNMuSxOs3og=
 golang.org/x/telemetry v0.0.0-20261010193011-f71dc92da45e h1:P6NGsugec4oASJ+yKMNgTndeo0h2CbixZLvQIe9h5R4=
 golang.org/x/telemetry v0.0.0-20261010193011-f71dc92da45e/go.mod h1:GNu+nb+E5axfGmP+Uu3ZVQu5lE/Xk42MjZOHWUD94/o=
+golang.org/x/text v0.43.0 h1:1QivrlhwAsnMOcqgOdl9my7s9OyZl8O5/UGUTJVXoWc=
+golang.org/x/text v0.43.0/go.mod h1:hbSIYA/amXcRXTFSZqh8tWHEoqRvvbKPJ2uz/KU+a+s=
 golang.org/x/tools v0.52.0 h1:ryxg4U63oaUYk7uOLTF37n43f4qgtGvqV4Ioit1BaEs=
 golang.org/x/tools v0.52.0/go.mod h1:ItcP5UNaVGG+Yc4eIYmaFLNJ4soEopkx5Y2d4lcEurs=
 golang.org/x/tools/go/expect v0.1.1-deprecated h1:jpBZDwmgPhXsKZC6WhL20P4b/wmnpsEAGHaNy0n/rJM=
@@ -4263,53 +4368,97 @@ golang.org/x/tools/go/packages/packagestest v0.1.1-deprecated h1:1h2MnaIAIXISqTF
 golang.org/x/tools/go/packages/packagestest v0.1.1-deprecated/go.mod h1:RVAQXBGNv1ib0J382/DPCRS/BPnsGebyM1Gj5VSDpG8=
 golang.org/x/vuln v1.9.0 h1:12VaqnI9kJfqwRoPptxoqsUhQtdfrSbdksT7X/KY/sc=
 golang.org/x/vuln v1.9.0/go.mod h1:E/Frwm0xp49fTyBW+6CQHdkvobknbwUM49yEpMGUauw=
+gonum.org/v1/gonum v0.17.0 h1:VbpOemQlsSMrYmn7T2OUvQ4dqxQXU+ouZFQsZOx50z4=
+gonum.org/v1/gonum v0.17.0/go.mod h1:El3tOrEuMpv2UdMrbNlKEh9vd86bmQ6vqIcDwxEOc1E=
+google.golang.org/genproto/googleapis/rpc v0.0.0-20260706201446-f0a921348800 h1:qEHAMpSaUhtD0p3NbEEI83HwNGFxEwaSJ1G9PLnCBZE=
+google.golang.org/genproto/googleapis/rpc v0.0.0-20260706201446-f0a921348800/go.mod h1:4Hqkh8ycfw05ld/3BWL7rJOSfebL2Q+DVDeRgYgxUU8=
+google.golang.org/grpc v1.84.0 h1:soMyaPJ8pAak5PIQ0DGBUir0XRo2fRoMqhNWMLlLxO0=
+google.golang.org/grpc v1.84.0/go.mod h1:ljCht0DrxQrXBDRTZp52Qxh3Ffk8CdYm2sj4O2QN2C0=
+google.golang.org/protobuf v1.36.11 h1:fV6ZwhNocDyBLK0dj+fg8ektcVegBBuEolpbTQyBNVE=
+google.golang.org/protobuf v1.36.11/go.mod h1:HTf+CrKn2C3g5S8VImy6tdcUvCska2kB7j23XfzDpco=
 ```
 
 <a id="appendix-orders-main"></a>
 
-## Приложение: Orders bootstrap entrypoint
+## Приложение: Orders gRPC health entrypoint
 
 Полный исходный документ: `cmd/orders/main.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```go
 package main
 
-import "fmt"
+import (
+	"context"
+	"os"
+	"os/signal"
+	"syscall"
+
+	"github.com/Includeoyasi/faultline-lab/internal/service"
+)
 
 func main() {
-	fmt.Println("orders bootstrap: service runtime is not implemented yet")
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	err := service.Run(ctx, "orders", "127.0.0.1:50051", os.LookupEnv, os.Stderr)
+	stop()
+	if err != nil {
+		os.Exit(1)
+	}
 }
 ```
 
 <a id="appendix-inventory-main"></a>
 
-## Приложение: Inventory bootstrap entrypoint
+## Приложение: Inventory gRPC health entrypoint
 
 Полный исходный документ: `cmd/inventory/main.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```go
 package main
 
-import "fmt"
+import (
+	"context"
+	"os"
+	"os/signal"
+	"syscall"
+
+	"github.com/Includeoyasi/faultline-lab/internal/service"
+)
 
 func main() {
-	fmt.Println("inventory bootstrap: service runtime is not implemented yet")
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	err := service.Run(ctx, "inventory", "127.0.0.1:50052", os.LookupEnv, os.Stderr)
+	stop()
+	if err != nil {
+		os.Exit(1)
+	}
 }
 ```
 
 <a id="appendix-payments-main"></a>
 
-## Приложение: Payments bootstrap entrypoint
+## Приложение: Payments gRPC health entrypoint
 
 Полный исходный документ: `cmd/payments/main.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```go
 package main
 
-import "fmt"
+import (
+	"context"
+	"os"
+	"os/signal"
+	"syscall"
+
+	"github.com/Includeoyasi/faultline-lab/internal/service"
+)
 
 func main() {
-	fmt.Println("payments bootstrap: service runtime is not implemented yet")
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	err := service.Run(ctx, "payments", "127.0.0.1:50053", os.LookupEnv, os.Stderr)
+	stop()
+	if err != nil {
+		os.Exit(1)
+	}
 }
 ```
 
@@ -4374,7 +4523,7 @@ volumes:
 set -eu
 
 if [ "$#" -gt 1 ]; then
-  echo "usage: lab-go {versions|build|check|format|bootstrap-smoke}" >&2
+  echo "usage: lab-go {versions|build|check|format|service-smoke}" >&2
   exit 2
 fi
 
@@ -4420,22 +4569,20 @@ case "${1:-versions}" in
     go mod verify
     go build ./...
     golangci-lint run --timeout=5m
-    go test -count=1 ./...
-    go test -race -count=1 ./...
+    go test -count=1 -timeout=3m ./...
+    go test -race -count=1 -timeout=5m ./...
     govulncheck ./...
     ;;
   format)
     source_files
     xargs -0 -r goimports -w < "$file_list"
     ;;
-  bootstrap-smoke)
+  service-smoke)
     build
-    for service in orders inventory payments; do
-      "bin/$service"
-    done
+    LAB_BIN_DIR=/workspace/bin go test -count=1 -v -timeout=2m ./tests/smoke
     ;;
   *)
-    echo "usage: lab-go {versions|build|check|format|bootstrap-smoke}" >&2
+    echo "usage: lab-go {versions|build|check|format|service-smoke}" >&2
     exit 2
     ;;
 esac
@@ -4505,8 +4652,8 @@ jobs:
         run: docker compose build toolchain
       - name: Run Go quality checks
         run: docker compose run --rm toolchain check
-      - name: Build and run bootstrap entrypoints
-        run: docker compose run --rm toolchain bootstrap-smoke
+      - name: Verify service processes, health and isolation
+        run: docker compose run --rm toolchain service-smoke
       - name: Reject invalid toolchain command
         run: |
           if docker compose run --rm toolchain invalid-command; then
@@ -4540,4 +4687,907 @@ data
 artifacts
 tmp
 node_modules
+```
+
+<a id="appendix-service-runtime"></a>
+
+## Приложение: Конфигурация, JSON-логи и gRPC health: поведение и проверки
+
+Полный исходный документ: `docs/development/SERVICE_RUNTIME.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Запуск сервисов — P01-02, P01-03, P01-04
+
+Три независимых процесса Orders, Inventory и Payments проверяют настройки, пишут JSON в stderr и обслуживают стандартный `grpc.health.v1.Health/Check`. Health пока подтверждает только работу gRPC-каркаса. Бизнес-методов, PostgreSQL/Kafka/Redis и доменных protobuf здесь нет.
+
+P01-01 принят владельцем и слит через [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6). Следующий PR объединяет задачи 02–04 по прямому поручению владельца. Статус проверок и ссылка на текущий PR находятся в [P01](#appendix-p01) и [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3).
+
+#### Как устроен запуск
+
+```mermaid
+flowchart LR
+    Env["Окружение + defaults"] --> Validate["Проверка конфигурации"]
+    Validate -->|ошибка| Error["JSON ERROR → exit 1"]
+    Validate --> Bind["Открыть TCP listener"]
+    Bind -->|ошибка| Error
+    Bind --> Ready["Health SERVING<br/>JSON: service started"]
+    Ready --> Serve["Обслуживать gRPC health"]
+    Serve -->|SIGINT / SIGTERM| Stop["Немедленная остановка<br/>JSON: service stopped"]
+```
+
+[cmd/orders](#appendix-orders-main), [cmd/inventory](#appendix-inventory-main) и [cmd/payments](#appendix-payments-main) задают имя и адрес сервиса и владеют обработкой сигналов/кодом выхода. [internal/service](#appendix-service-run) содержит только общие механизмы запуска; бизнес-логика одного сервиса не импортируется другим. Лаборатория и адаптеры ещё не реализованы.
+
+#### Настройки
+
+Одинаковые имена переменных действуют в окружении каждого отдельного процесса. Файлы `.env` приложение самостоятельно не читает.
+
+| Переменная | Default | Допустимые значения |
+| :--- | :--- | :--- |
+| `FL_GRPC_ADDR` | Orders `127.0.0.1:50051`, Inventory `127.0.0.1:50052`, Payments `127.0.0.1:50053` | `host:port`, порт 1–65535; IPv6 в квадратных скобках; пустой host разрешён |
+| `FL_LOG_LEVEL` | `INFO` | `DEBUG`, `INFO`, `WARN`, `ERROR`, регистр не важен |
+| `FL_SHUTDOWN_TIMEOUT` | `10s` | Положительная Go duration, например `500ms` или `15s` |
+
+Отсутствующее значение использует default; явно пустое отклоняется. Адрес проверяется синтаксически без DNS-запроса. Имя host должно быть IP или DNS-именем; IPv6 zone ID пока не поддерживается. Возможность разрешить имя/открыть адрес проверяется фактическим bind. URI, имена портов и произвольный текст отклоняются. Ошибка называет переменную и правило, не повторяя введённое значение; весь конфиг в логи не выводится.
+
+**Shutdown timeout пока только разбирается и валидируется.** В этом PR отмена контекста немедленно вызывает `grpc.Server.Stop()`. Ожидание активных RPC, наблюдаемый переход readiness и принудительное завершение по deadline относятся к P01-05 и ещё не реализованы. Наличие настройки не означает готовность graceful shutdown.
+
+По умолчанию порты доступны только через loopback. Для контейнерной сети адрес явно меняется на `0.0.0.0:<port>`. На этом этапе gRPC работает без TLS/аутентификации для локального стенда; публичное размещение этим PR не подготавливается.
+
+#### Логи
+
+Используется стандартный [log/slog](https://pkg.go.dev/log/slog), отдельный logger каждого сервиса. Каждая прикладная запись — одна JSON-строка с `time`, `level`, `msg`, `service`.
+
+- `service started` (INFO): фактический `grpc_address`, `version`, `revision`, `vcs_modified`, `go_version` из Go build metadata. Неизвестное значение — `unknown`; локальный модуль может иметь версию `(devel)`. Commit не задаётся придуманной константой.
+- `service stopped` (INFO): `stop_mode=immediate` после завершения Serve.
+- `configuration rejected` (ERROR): безопасная причина ошибки настроек; до создания рабочего logger используется INFO logger, поэтому ошибочный уровень не скрывает диагностику.
+- `service failed` (ERROR): ошибка bind или обслуживания/остановки.
+
+Уровень фильтрует записи: при WARN/ERROR штатные старт/стоп INFO не выводятся. По умолчанию INFO они доступны. Секреты и payload не добавляются. Идентификаторы запросов/заказов появятся вместе с соответствующими операциями.
+
+#### Сборка и проверки
+
+Основной путь требует Docker с Linux-контейнерами и Compose v2; Go/Bash на хосте не нужны. Из корня:
+
+```text
+docker compose build toolchain
+docker compose run --rm toolchain check
+docker compose run --rm toolchain service-smoke
+```
+
+`check` проверяет формат, модули, сборку, линтеры, unit/process tests, race detector и govulncheck. `service-smoke` собирает все три бинарника и проверяет их как отдельные процессы внутри одного временного контейнера инструментов. Это проверка изоляции процессов, а не готовых runtime-контейнеров. Прежняя команда `bootstrap-smoke` удалена: теперь программы продолжают обслуживать запросы.
+
+[Process smoke](#appendix-service-process-tests) проверяет:
+
+- запуск всех трёх процессов и `SERVING` для общего health (`service=""`);
+- `NotFound` для неизвестного имени health-сервиса;
+- обязательные поля JSON и build metadata;
+- для каждого бинарника — ошибки адреса, уровня, timeout и занятого порта: одна JSON-диагностика, exit 1, отсутствие готовности;
+- после остановки Orders — доступность Inventory и Payments;
+- на Linux — нормальный SIGINT exit и финальную JSON-запись.
+
+Тесты синхронизируются по стартовой записи и реальному RPC с deadline, без случайных Sleep. Порты тестов выделяются динамически; unit fixture использует порт 0, публичная конфигурация его отклоняет. Под Windows smoke завершает дочерние процессы через Kill: это проверка изоляции, а не доставки Unix-сигнала. Завершение по отмене контекста и JSON stop отдельно проверяются unit-тестом на доступных ОС; Linux CI дополнительно проверяет сигнал реальному процессу. Race detector охватывает также сам сервер в unit-тесте; дочерние бинарники smoke собираются обычной сборкой.
+
+Для ручного исследования после `toolchain build` можно запустить Orders в контейнере инструментов:
+
+```text
+docker compose run --rm toolchain build
+docker compose run --rm -p 50051:50051 -e FL_GRPC_ADDR=0.0.0.0:50051 --entrypoint /workspace/bin/orders toolchain
+```
+
+Inventory и Payments аналогично используют свои бинарники и порты 50052/50053 в отдельных терминалах. Это временный путь разработки; отдельные минимальные runtime-образы и Compose-сервисы остаются P01-06. Стандартный health API описан в [документации gRPC](https://grpc.io/docs/guides/health-checking/); grpcurl/reflection в проект не добавлены.
+
+#### Границы доказательств
+
+Нативный Windows Go smoke может подтвердить TCP/health процессов, но не Docker Desktop. Linux AMD64/ARM64 CI проверяет toolchain-контейнер и процессы на каждой архитектуре; он не доказывает запуск на личном Mac. Runtime-контейнеры, graceful drain, работа БД, бизнес-инварианты, нагрузка и потребление ресурсов ещё не проверяются. Итоговые PASS/NOT_RUN фиксируются после реального прогона, отдельно от этого описания поведения.
+
+<a id="appendix-service-config"></a>
+
+## Приложение: Валидация конфигурации
+
+Полный исходный документ: `internal/service/config.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+// Package service contains the shared startup mechanics of the three services.
+package service
+
+import (
+	"errors"
+	"log/slog"
+	"net"
+	"strconv"
+	"strings"
+	"time"
+)
+
+// Config holds process settings. ShutdownTimeout is reserved for P01-05.
+type Config struct {
+	GRPCAddress     string
+	LogLevel        slog.Level
+	ShutdownTimeout time.Duration
+}
+
+// LoadConfig applies defaults and validates environment overrides without
+// including the supplied values in errors. An explicitly empty value is invalid.
+func LoadConfig(defaultAddress string, lookup func(string) (string, bool)) (Config, error) {
+	cfg := Config{GRPCAddress: defaultAddress, LogLevel: slog.LevelInfo, ShutdownTimeout: 10 * time.Second}
+	if value, ok := lookup("FL_GRPC_ADDR"); ok {
+		cfg.GRPCAddress = value
+	}
+	if !validAddress(cfg.GRPCAddress) {
+		return Config{}, errors.New("FL_GRPC_ADDR must be host:port with a port from 1 to 65535")
+	}
+	if value, ok := lookup("FL_LOG_LEVEL"); ok {
+		switch strings.ToUpper(value) {
+		case "DEBUG":
+			cfg.LogLevel = slog.LevelDebug
+		case "INFO":
+			cfg.LogLevel = slog.LevelInfo
+		case "WARN":
+			cfg.LogLevel = slog.LevelWarn
+		case "ERROR":
+			cfg.LogLevel = slog.LevelError
+		default:
+			return Config{}, errors.New("FL_LOG_LEVEL must be DEBUG, INFO, WARN or ERROR")
+		}
+	}
+	if value, ok := lookup("FL_SHUTDOWN_TIMEOUT"); ok {
+		timeout, err := time.ParseDuration(value)
+		if err != nil || timeout <= 0 {
+			return Config{}, errors.New("FL_SHUTDOWN_TIMEOUT must be a positive Go duration")
+		}
+		cfg.ShutdownTimeout = timeout
+	}
+	return cfg, nil
+}
+
+func validAddress(address string) bool {
+	host, port, err := net.SplitHostPort(address)
+	if err != nil || port == "" {
+		return false
+	}
+	for _, char := range port {
+		if char < '0' || char > '9' {
+			return false
+		}
+	}
+	number, err := strconv.Atoi(port)
+	if err != nil || number < 1 || number > 65535 {
+		return false
+	}
+	if host == "" || net.ParseIP(host) != nil {
+		return true
+	}
+	// Validate DNS syntax locally; startup must not require a DNS lookup.
+	host = strings.TrimSuffix(host, ".")
+	if len(host) == 0 || len(host) > 253 {
+		return false
+	}
+	for _, label := range strings.Split(host, ".") {
+		if len(label) == 0 || len(label) > 63 || label[0] == '-' || label[len(label)-1] == '-' {
+			return false
+		}
+		for _, char := range label {
+			if !(char >= 'a' && char <= 'z' || char >= 'A' && char <= 'Z' || char >= '0' && char <= '9' || char == '-') {
+				return false
+			}
+		}
+	}
+	return true
+}
+```
+
+<a id="appendix-service-logging"></a>
+
+## Приложение: JSON-логи и build metadata
+
+Полный исходный документ: `internal/service/log.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package service
+
+import (
+	"io"
+	"log/slog"
+	"runtime/debug"
+)
+
+func newLogger(output io.Writer, name string, level slog.Level) *slog.Logger {
+	return slog.New(slog.NewJSONHandler(output, &slog.HandlerOptions{Level: level})).With("service", name)
+}
+
+func buildAttributes(info *debug.BuildInfo, ok bool) []slog.Attr {
+	version, revision, modified, goVersion := "unknown", "unknown", "unknown", "unknown"
+	if ok && info != nil {
+		if info.Main.Version != "" {
+			version = info.Main.Version
+		}
+		if info.GoVersion != "" {
+			goVersion = info.GoVersion
+		}
+		for _, setting := range info.Settings {
+			switch setting.Key {
+			case "vcs.revision":
+				revision = setting.Value
+			case "vcs.modified":
+				modified = setting.Value
+			}
+		}
+	}
+	return []slog.Attr{
+		slog.String("version", version), slog.String("revision", revision),
+		slog.String("vcs_modified", modified), slog.String("go_version", goVersion),
+	}
+}
+```
+
+<a id="appendix-service-run"></a>
+
+## Приложение: Запуск gRPC health и немедленная остановка
+
+Полный исходный документ: `internal/service/run.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package service
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"io"
+	"log/slog"
+	"net"
+	"runtime/debug"
+
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/health"
+	healthpb "google.golang.org/grpc/health/grpc_health_v1"
+)
+
+// Run validates configuration, serves standard gRPC health and blocks until
+// cancellation or a serving error. Cancellation currently stops RPCs immediately;
+// draining active work with a deadline is the separate P01-05 task.
+func Run(ctx context.Context, name, defaultAddress string, lookup func(string) (string, bool), output io.Writer) error {
+	logger := newLogger(output, name, slog.LevelInfo)
+	cfg, err := LoadConfig(defaultAddress, lookup)
+	if err != nil {
+		logger.ErrorContext(ctx, "configuration rejected", "error", err.Error())
+		return err
+	}
+	logger = newLogger(output, name, cfg.LogLevel)
+	if err := serve(ctx, cfg, logger); err != nil {
+		logger.ErrorContext(ctx, "service failed", "error", err.Error())
+		return err
+	}
+	return nil
+}
+
+func serve(ctx context.Context, cfg Config, logger *slog.Logger) error {
+	if err := ctx.Err(); err != nil {
+		return err
+	}
+	listener, err := net.Listen("tcp", cfg.GRPCAddress)
+	if err != nil {
+		return fmt.Errorf("listen for gRPC: %w", err)
+	}
+	// grpc.Server.Serve owns and closes the listener, including on Stop.
+	server := grpc.NewServer()
+	healthServer := health.NewServer()
+	healthServer.SetServingStatus("", healthpb.HealthCheckResponse_NOT_SERVING)
+	healthpb.RegisterHealthServer(server, healthServer)
+	healthServer.SetServingStatus("", healthpb.HealthCheckResponse_SERVING)
+	info, ok := debug.ReadBuildInfo()
+	attrs := append(buildAttributes(info, ok), slog.String("grpc_address", listener.Addr().String()))
+	logger.LogAttrs(ctx, slog.LevelInfo, "service started", attrs...)
+	serveResult := make(chan error, 1)
+	go func() { serveResult <- server.Serve(listener) }()
+	select {
+	case err := <-serveResult:
+		server.Stop()
+		return fmt.Errorf("serve gRPC: %w", err)
+	case <-ctx.Done():
+		healthServer.Shutdown()
+		server.Stop()
+		if err := <-serveResult; err != nil && !errors.Is(err, grpc.ErrServerStopped) {
+			return fmt.Errorf("stop gRPC: %w", err)
+		}
+		logger.InfoContext(ctx, "service stopped", "stop_mode", "immediate")
+		return nil
+	}
+}
+```
+
+<a id="appendix-service-config-tests"></a>
+
+## Приложение: Проверки конфигурации
+
+Полный исходный документ: `internal/service/config_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package service
+
+import (
+	"log/slog"
+	"strings"
+	"testing"
+	"time"
+)
+
+func environment(values map[string]string) func(string) (string, bool) {
+	return func(key string) (string, bool) { value, ok := values[key]; return value, ok }
+}
+
+func TestLoadConfig(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name string
+		env  map[string]string
+		want Config
+	}{
+		{"defaults", nil, Config{"127.0.0.1:50051", slog.LevelInfo, 10 * time.Second}},
+		{"overrides", map[string]string{"FL_GRPC_ADDR": "0.0.0.0:8080", "FL_LOG_LEVEL": "debug", "FL_SHUTDOWN_TIMEOUT": "250ms"}, Config{"0.0.0.0:8080", slog.LevelDebug, 250 * time.Millisecond}},
+		{"ipv6", map[string]string{"FL_GRPC_ADDR": "[::1]:8080", "FL_LOG_LEVEL": "WARN"}, Config{"[::1]:8080", slog.LevelWarn, 10 * time.Second}},
+		{"dns", map[string]string{"FL_GRPC_ADDR": "orders.local:50051", "FL_LOG_LEVEL": "ERROR"}, Config{"orders.local:50051", slog.LevelError, 10 * time.Second}},
+		{"wildcard", map[string]string{"FL_GRPC_ADDR": ":50051"}, Config{":50051", slog.LevelInfo, 10 * time.Second}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got, err := LoadConfig("127.0.0.1:50051", environment(tt.env))
+			if err != nil || got != tt.want {
+				t.Fatalf("LoadConfig() = %+v, %v; want %+v", got, err, tt.want)
+			}
+		})
+	}
+}
+
+func TestLoadConfigRejectsInvalidValues(t *testing.T) {
+	t.Parallel()
+	inputs := map[string][]string{
+		"FL_GRPC_ADDR":        {"", "localhost", "::1:8080", "localhost:http", ":0", ":65536", ":-1", ":+80", "bad host:80", "-host:80", "host..local:80", "host_:80", "secret://user:password@host:80"},
+		"FL_LOG_LEVEL":        {"", "TRACE", "INFO+1", "super-secret-value"},
+		"FL_SHUTDOWN_TIMEOUT": {"", "0s", "-1s", "10", "999999999999999999999h", "super-secret-value"},
+	}
+	for key, values := range inputs {
+		for _, value := range values {
+			t.Run(key+"/"+value, func(t *testing.T) {
+				t.Parallel()
+				_, err := LoadConfig("127.0.0.1:50051", environment(map[string]string{key: value}))
+				if err == nil || !strings.Contains(err.Error(), key) {
+					t.Fatalf("expected diagnostic naming %s, got %v", key, err)
+				}
+				if value != "" && strings.Contains(err.Error(), value) {
+					t.Fatalf("diagnostic echoed the supplied value: %v", err)
+				}
+			})
+		}
+	}
+	if _, err := LoadConfig("invalid-default", environment(nil)); err == nil {
+		t.Fatal("invalid default address was accepted")
+	}
+}
+```
+
+<a id="appendix-service-log-tests"></a>
+
+## Приложение: Проверки JSON и build metadata
+
+Полный исходный документ: `internal/service/log_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package service
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"log/slog"
+	"runtime/debug"
+	"testing"
+	"time"
+)
+
+func TestJSONLoggingAndLevel(t *testing.T) {
+	t.Parallel()
+	var output bytes.Buffer
+	logger := newLogger(&output, "orders", slog.LevelWarn)
+	logger.Info("hidden")
+	if output.Len() != 0 {
+		t.Fatal("INFO was not filtered at WARN")
+	}
+	logger.Error("bind failed", "error", "address already in use")
+	var record map[string]any
+	if err := json.Unmarshal(output.Bytes(), &record); err != nil {
+		t.Fatalf("invalid JSON: %v", err)
+	}
+	if record["service"] != "orders" || record["level"] != "ERROR" || record["msg"] != "bind failed" || record["error"] == "" {
+		t.Fatalf("unexpected record: %v", record)
+	}
+	if _, err := time.Parse(time.RFC3339Nano, record["time"].(string)); err != nil {
+		t.Fatalf("invalid log timestamp: %v", err)
+	}
+}
+
+func TestBuildAttributes(t *testing.T) {
+	t.Parallel()
+	for _, available := range []bool{false, true} {
+		t.Run(map[bool]string{false: "unknown", true: "available"}[available], func(t *testing.T) {
+			info := &debug.BuildInfo{GoVersion: "go1.test", Main: debug.Module{Version: "v0.test"}, Settings: []debug.BuildSetting{
+				{Key: "vcs.revision", Value: "actual-revision"}, {Key: "vcs.modified", Value: "true"},
+			}}
+			var output bytes.Buffer
+			newLogger(&output, "inventory", slog.LevelInfo).LogAttrs(context.Background(), slog.LevelInfo, "service started", buildAttributes(info, available)...)
+			var record map[string]any
+			if err := json.Unmarshal(output.Bytes(), &record); err != nil {
+				t.Fatal(err)
+			}
+			for key, value := range map[string]string{"version": "v0.test", "revision": "actual-revision", "vcs_modified": "true", "go_version": "go1.test"} {
+				if !available {
+					value = "unknown"
+				}
+				if record[key] != value {
+					t.Errorf("%s = %v, want %s", key, record[key], value)
+				}
+			}
+		})
+	}
+}
+```
+
+<a id="appendix-service-run-tests"></a>
+
+## Приложение: Проверки bind, TCP health и отмены контекста
+
+Полный исходный документ: `internal/service/run_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package service
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"errors"
+	"log/slog"
+	"net"
+	"strings"
+	"testing"
+	"time"
+
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
+	healthpb "google.golang.org/grpc/health/grpc_health_v1"
+)
+
+func TestRunRejectsConfigurationBeforeListening(t *testing.T) {
+	t.Parallel()
+	var output bytes.Buffer
+	err := Run(context.Background(), "payments", "127.0.0.1:50053", environment(map[string]string{"FL_LOG_LEVEL": "super-secret-value"}), &output)
+	if err == nil || strings.Contains(output.String(), "super-secret-value") {
+		t.Fatalf("expected sanitized configuration failure, got %v / %s", err, &output)
+	}
+	var record map[string]any
+	if err := json.Unmarshal(output.Bytes(), &record); err != nil {
+		t.Fatal(err)
+	}
+	if record["service"] != "payments" || record["level"] != "ERROR" || record["msg"] != "configuration rejected" {
+		t.Fatalf("unexpected diagnostic: %v", record)
+	}
+}
+
+func TestRunRejectsOccupiedAddress(t *testing.T) {
+	t.Parallel()
+	listener, err := net.Listen("tcp", "127.0.0.1:0")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() {
+		if err := listener.Close(); err != nil {
+			t.Error(err)
+		}
+	})
+	var output bytes.Buffer
+	err = Run(context.Background(), "orders", listener.Addr().String(), environment(nil), &output)
+	var operationError *net.OpError
+	if !errors.As(err, &operationError) || operationError.Op != "listen" {
+		t.Fatalf("expected wrapped listen error, got %v", err)
+	}
+	var record map[string]any
+	if err := json.Unmarshal(output.Bytes(), &record); err != nil {
+		t.Fatal(err)
+	}
+	if record["service"] != "orders" || record["msg"] != "service failed" || record["level"] != "ERROR" {
+		t.Fatalf("unexpected bind diagnostic: %v", record)
+	}
+}
+
+func TestServeWithCancelledContextDoesNotAnnounceReadiness(t *testing.T) {
+	t.Parallel()
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+	var output bytes.Buffer
+	err := serve(ctx, Config{GRPCAddress: "127.0.0.1:0"}, newLogger(&output, "orders", slog.LevelInfo))
+	if !errors.Is(err, context.Canceled) || output.Len() != 0 {
+		t.Fatalf("expected cancellation without startup, got %v / %s", err, &output)
+	}
+}
+
+type recordWriter chan []byte
+
+func (records recordWriter) Write(data []byte) (int, error) {
+	records <- append([]byte(nil), data...)
+	return len(data), nil
+}
+
+type writerFunc func([]byte) (int, error)
+
+func (write writerFunc) Write(data []byte) (int, error) { return write(data) }
+
+func TestServeCancellationDuringStartup(t *testing.T) {
+	t.Parallel()
+	ctx, cancel := context.WithCancel(t.Context())
+	defer cancel()
+	var output bytes.Buffer
+	writer := writerFunc(func(data []byte) (int, error) {
+		// Cancel before the Serve goroutine is started. Stop may win that race;
+		// grpc.ErrServerStopped is then an expected shutdown result.
+		cancel()
+		return output.Write(data)
+	})
+	if err := serve(ctx, Config{GRPCAddress: "127.0.0.1:0"}, newLogger(writer, "orders", slog.LevelInfo)); err != nil {
+		t.Fatalf("cancellation during startup failed: %v", err)
+	}
+	if !strings.Contains(output.String(), `"msg":"service stopped"`) {
+		t.Fatalf("missing final log: %s", &output)
+	}
+}
+
+func TestServeHealthAndCancellation(t *testing.T) {
+	t.Parallel()
+	ctx, cancel := context.WithTimeout(t.Context(), 10*time.Second)
+	defer cancel()
+	records := make(recordWriter, 4)
+	result := make(chan error, 1)
+	go func() {
+		// Port zero is only a test fixture; public configuration rejects it.
+		result <- serve(ctx, Config{GRPCAddress: "127.0.0.1:0"}, newLogger(records, "orders", slog.LevelInfo))
+	}()
+	t.Cleanup(func() {
+		cancel()
+		select {
+		case err := <-result:
+			if err != nil {
+				t.Errorf("serve: %v", err)
+			}
+		case <-time.After(10 * time.Second):
+			t.Error("server did not exit after cancellation")
+		}
+	})
+	var started map[string]any
+	select {
+	case record := <-records:
+		if err := json.Unmarshal(record, &started); err != nil {
+			t.Fatal(err)
+		}
+	case <-ctx.Done():
+		t.Fatal("missing startup record")
+	}
+	address, ok := started["grpc_address"].(string)
+	if !ok || started["msg"] != "service started" {
+		t.Fatalf("invalid startup record: %v", started)
+	}
+	conn, err := grpc.NewClient("passthrough:///"+address, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := conn.Close(); err != nil {
+			t.Error(err)
+		}
+	}()
+	response, err := healthpb.NewHealthClient(conn).Check(ctx, &healthpb.HealthCheckRequest{}, grpc.WaitForReady(true))
+	if err != nil || response.GetStatus() != healthpb.HealthCheckResponse_SERVING {
+		t.Fatalf("health = %v, %v", response, err)
+	}
+	cancel()
+	select {
+	case record := <-records:
+		var stopped map[string]any
+		if err := json.Unmarshal(record, &stopped); err != nil {
+			t.Fatal(err)
+		}
+		if stopped["msg"] != "service stopped" || stopped["service"] != "orders" || stopped["stop_mode"] != "immediate" {
+			t.Fatalf("invalid stop record: %v", stopped)
+		}
+	case <-time.After(10 * time.Second):
+		t.Fatal("missing stop record")
+	}
+	// Cleanup owns the single receive from result, so it always joins the server.
+}
+```
+
+<a id="appendix-service-process-tests"></a>
+
+## Приложение: Проверки трёх реальных процессов
+
+Полный исходный документ: `tests/smoke/services_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+// Package smoke tests the actual service binaries over TCP, without databases.
+package smoke
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"net"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"runtime"
+	"strings"
+	"sync"
+	"testing"
+	"time"
+
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/credentials/insecure"
+	healthpb "google.golang.org/grpc/health/grpc_health_v1"
+	"google.golang.org/grpc/status"
+)
+
+type logCapture struct {
+	mu      sync.Mutex
+	pending string
+	records []map[string]any
+	err     error
+	started chan string
+}
+
+func (capture *logCapture) Write(data []byte) (int, error) {
+	capture.mu.Lock()
+	defer capture.mu.Unlock()
+	capture.pending += string(data)
+	for {
+		line, rest, found := strings.Cut(capture.pending, "\n")
+		if !found {
+			break
+		}
+		capture.pending = rest
+		var record map[string]any
+		if err := json.Unmarshal([]byte(line), &record); err != nil {
+			capture.err = fmt.Errorf("non-JSON process output: %w", err)
+			continue
+		}
+		capture.records = append(capture.records, record)
+		if record["msg"] == "service started" {
+			address, _ := record["grpc_address"].(string)
+			select {
+			case capture.started <- address:
+			default:
+			}
+		}
+	}
+	return len(data), nil
+}
+
+func (capture *logCapture) check(t *testing.T, service string) []map[string]any {
+	t.Helper()
+	capture.mu.Lock()
+	defer capture.mu.Unlock()
+	if capture.err != nil || capture.pending != "" {
+		t.Fatalf("invalid process logs: %v; unfinished line %q", capture.err, capture.pending)
+	}
+	for _, record := range capture.records {
+		if record["service"] != service || record["level"] == "" || record["msg"] == "" {
+			t.Fatalf("missing common log fields: %v", record)
+		}
+		timestamp, ok := record["time"].(string)
+		if !ok {
+			t.Fatalf("missing timestamp: %v", record)
+		}
+		if _, err := time.Parse(time.RFC3339Nano, timestamp); err != nil {
+			t.Fatalf("invalid timestamp: %v", err)
+		}
+	}
+	return append([]map[string]any(nil), capture.records...)
+}
+
+type process struct {
+	cmd     *exec.Cmd
+	logs    *logCapture
+	done    chan struct{}
+	waitErr error // Read only after done closes.
+	address string
+}
+
+func childEnvironment(overrides map[string]string) []string {
+	var result []string
+	for _, entry := range os.Environ() {
+		key, _, _ := strings.Cut(entry, "=")
+		if !strings.HasPrefix(strings.ToUpper(key), "FL_") {
+			result = append(result, entry)
+		}
+	}
+	for key, value := range overrides {
+		result = append(result, key+"="+value)
+	}
+	return result
+}
+
+func freeAddress(t *testing.T) string {
+	t.Helper()
+	listener, err := net.Listen("tcp", "127.0.0.1:0")
+	if err != nil {
+		t.Fatal(err)
+	}
+	address := listener.Addr().String()
+	if err := listener.Close(); err != nil {
+		t.Fatal(err)
+	}
+	return address
+}
+
+func start(t *testing.T, binary string) *process {
+	t.Helper()
+	p := &process{cmd: exec.Command(binary), logs: &logCapture{started: make(chan string, 1)}, done: make(chan struct{})}
+	p.cmd.Env = childEnvironment(map[string]string{"FL_GRPC_ADDR": freeAddress(t)})
+	p.cmd.Stdout, p.cmd.Stderr = p.logs, p.logs
+	if err := p.cmd.Start(); err != nil {
+		t.Fatal(err)
+	}
+	go func() { p.waitErr = p.cmd.Wait(); close(p.done) }()
+	t.Cleanup(func() {
+		select {
+		case <-p.done:
+			return
+		default:
+		}
+		if err := p.cmd.Process.Kill(); err != nil && !errors.Is(err, os.ErrProcessDone) {
+			t.Error(err)
+		}
+		select {
+		case <-p.done:
+		case <-time.After(10 * time.Second):
+			t.Error("child did not exit after cleanup")
+		}
+	})
+	select {
+	case p.address = <-p.logs.started:
+	case <-p.done:
+		t.Fatalf("service exited before startup: %v; logs: %v", p.waitErr, p.logs.check(t, filepath.Base(binary)))
+	case <-time.After(10 * time.Second):
+		t.Fatal("service did not announce startup")
+	}
+	return p
+}
+
+func checkHealth(t *testing.T, address, service string) {
+	t.Helper()
+	conn, err := grpc.NewClient("passthrough:///"+address, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := conn.Close(); err != nil {
+			t.Error(err)
+		}
+	}()
+	ctx, cancel := context.WithTimeout(t.Context(), 5*time.Second)
+	defer cancel()
+	response, err := healthpb.NewHealthClient(conn).Check(ctx, &healthpb.HealthCheckRequest{Service: service}, grpc.WaitForReady(true))
+	if service == "unknown-business-api" {
+		if status.Code(err) != codes.NotFound {
+			t.Fatalf("unknown health service: got %v, want NotFound", err)
+		}
+		return
+	}
+	if err != nil || response.GetStatus() != healthpb.HealthCheckResponse_SERVING {
+		t.Fatalf("health %s = %v, %v", address, response, err)
+	}
+}
+
+func stop(t *testing.T, p *process, service string) {
+	t.Helper()
+	// Windows cannot send os.Interrupt to an arbitrary child. Its forced cleanup
+	// verifies isolation; normal signal exit/logs are verified on both Linux CIs.
+	var err error
+	if runtime.GOOS == "windows" {
+		err = p.cmd.Process.Kill()
+	} else {
+		err = p.cmd.Process.Signal(os.Interrupt)
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	select {
+	case <-p.done:
+	case <-time.After(10 * time.Second):
+		t.Fatal("service did not stop")
+	}
+	records := p.logs.check(t, service)
+	if runtime.GOOS != "windows" {
+		if p.waitErr != nil || len(records) != 2 || records[1]["msg"] != "service stopped" || records[1]["stop_mode"] != "immediate" {
+			t.Fatalf("unexpected normal exit: %v; logs: %v", p.waitErr, records)
+		}
+		logJSON(t, records[1])
+	}
+}
+
+func TestServiceProcesses(t *testing.T) {
+	binaries := os.Getenv("LAB_BIN_DIR")
+	if binaries == "" {
+		binaries = t.TempDir()
+		build := exec.CommandContext(t.Context(), "go", "build", "-o", binaries+string(os.PathSeparator), "./cmd/...")
+		build.Dir = "../.."
+		if output, err := build.CombinedOutput(); err != nil {
+			t.Fatalf("build service binaries: %v\n%s", err, output)
+		}
+	}
+	services := []string{"orders", "inventory", "payments"}
+	processes := make([]*process, len(services))
+	for i, name := range services {
+		binary := filepath.Join(binaries, name)
+		if runtime.GOOS == "windows" {
+			binary += ".exe"
+		}
+		processes[i] = start(t, binary)
+		checkHealth(t, processes[i].address, "")
+		checkHealth(t, processes[i].address, "unknown-business-api")
+		records := processes[i].logs.check(t, name)
+		for _, key := range []string{"version", "revision", "vcs_modified", "go_version"} {
+			if records[0][key] == nil || records[0][key] == "" {
+				t.Errorf("%s startup lacks %s", name, key)
+			}
+		}
+		t.Logf("%s health SERVING", name)
+		logJSON(t, records[0])
+		for key, value := range map[string]string{"FL_GRPC_ADDR": "secret://user:password@host:80", "FL_LOG_LEVEL": "super-secret-value", "FL_SHUTDOWN_TIMEOUT": "0s"} {
+			t.Run(name+"/reject/"+key, func(t *testing.T) {
+				assertFailure(t, binary, name, map[string]string{key: value}, key, value)
+			})
+		}
+		t.Run(name+"/occupied", func(t *testing.T) {
+			assertFailure(t, binary, name, map[string]string{"FL_GRPC_ADDR": processes[i].address}, "listen for gRPC", "")
+		})
+	}
+	stop(t, processes[0], "orders")
+	for i := 1; i < len(services); i++ {
+		checkHealth(t, processes[i].address, "")
+		t.Logf("%s remains SERVING after orders stopped", services[i])
+	}
+	for i := 1; i < len(services); i++ {
+		stop(t, processes[i], services[i])
+	}
+}
+
+func assertFailure(t *testing.T, binary, service string, overrides map[string]string, reason, secret string) {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(t.Context(), 10*time.Second)
+	defer cancel()
+	cmd := exec.CommandContext(ctx, binary)
+	cmd.Env = childEnvironment(overrides)
+	output, err := cmd.CombinedOutput()
+	var exitError *exec.ExitError
+	if ctx.Err() != nil || !errors.As(err, &exitError) || exitError.ExitCode() != 1 {
+		t.Fatalf("expected prompt exit 1, got %v; output %s", err, output)
+	}
+	var record map[string]any
+	if err := json.Unmarshal(output, &record); err != nil {
+		t.Fatalf("failure was not one JSON record: %v; %s", err, output)
+	}
+	if record["service"] != service || record["level"] != "ERROR" || !strings.Contains(fmt.Sprint(record["error"]), reason) || (secret != "" && strings.Contains(string(output), secret)) {
+		t.Fatalf("unexpected failure record: %v", record)
+	}
+	logJSON(t, record)
+}
+
+func logJSON(t *testing.T, record map[string]any) {
+	t.Helper()
+	data, err := json.Marshal(record)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("observed JSON: %s", data)
+}
 ```
