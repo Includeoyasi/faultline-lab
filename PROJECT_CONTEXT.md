@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **31**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
+Ревизия: **32**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
 
 ## Краткое текущее состояние
 
@@ -254,6 +254,8 @@ MVP — этапы 0–2: работающие три сервиса, весь �
 
 Ни один перечень будущих файлов, CLI-команд или метрик в приложениях не доказывает, что они уже созданы. Источником фактического прогресса служит следующий раздел со структурированным состоянием и доказательствами.
 
+15 октября владелец разрешил установку Docker Desktop и WSL2. Официальный установщик Docker проверен по SHA256 и цифровой подписи, но его precheck требует VirtualMachinePlatform. WSL требует admin; запрос UAC завершился отменой до запуска script. Установка пока не выполнена, перезагрузки не было. Не спрашивать разрешение на саму установку повторно; для продолжения нужен интерактивный административный допуск, а для перезагрузки — отдельное согласие. Windows container smoke остаётся NOT_RUN, PR #8 draft.
+
 ## Структурированное состояние, проверки и история
 
 JSON ниже является частью этого файла и достаточен для чтения без отдельного CONTEXT_STATE.json. Null/NOT_CHECKED/NOT_CREATED означают отсутствие подтверждённых сведений, а не нулевые значения или успешное завершение.
@@ -262,7 +264,7 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 31,
+  "context_revision": 32,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -294,21 +296,22 @@ JSON ниже является частью этого файла и доста�
       "draft": true,
       "go_workflow": {
         "name": "Go toolchain",
-        "head_sha": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+        "head_sha": "59684070fa85a0aea8561b48828088e574a06436",
         "status": "completed",
         "conclusion": "success",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340"
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38747476656"
       },
       "documentation_ci": {
         "name": "Documentation",
-        "head_sha": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+        "head_sha": "59684070fa85a0aea8561b48828088e574a06436",
         "status": "completed",
         "conclusion": "success",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910192"
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38747476687"
       },
-      "observed_commit": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+      "observed_commit": "59684070fa85a0aea8561b48828088e574a06436",
       "review_status": "DRAFT_AWAITING_REQUIRED_WINDOWS_CONTAINER_SMOKE",
-      "handoff_note": "Evidence refers to the source HEAD before final context changes. Final HEAD and checks are available in PR #8; the snapshot cannot embed its own commit hash."
+      "handoff_note": "Evidence refers to the source HEAD before final context changes. Final HEAD and checks are available in PR #8; the snapshot cannot embed its own commit hash.",
+      "environment_installation": "OWNER_AUTHORIZED_UAC_CANCELLED_BEFORE_WSL_INSTALLATION"
     }
   },
   "roles": {
@@ -370,7 +373,7 @@ JSON ниже является частью этого файла и доста�
       "smoke_node": "v22.23.3"
     },
     "git_repository": "INITIALIZED",
-    "git_commit": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+    "git_commit": "59684070fa85a0aea8561b48828088e574a06436",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -490,8 +493,8 @@ JSON ниже является частью этого файла и доста�
           "P01-08"
         ],
         "human_review": "PENDING",
-        "draft_reason": "Linux CI passed; mandatory Windows container smoke NOT_RUN. Owner installation decision requested.",
-        "observed_head": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1"
+        "draft_reason": "Required Windows container smoke NOT_RUN. Installation authorized; WSL elevation cancelled and Docker prerequisite VirtualMachinePlatform disabled.",
+        "observed_head": "59684070fa85a0aea8561b48828088e574a06436"
       }
     ],
     "toolchain_container": "VERIFIED_NATIVE_LINUX_AMD64_ARM64_WITH_RUNTIME_IMAGES",
@@ -539,7 +542,8 @@ JSON ниже является частью этого файла и доста�
     "Сетевое замечание PR #7 проверено в полном нативном Linux AMD64/ARM64 CI на 2922b4a: в том числе missing/empty address exit 1 для всех трёх бинарников, health/JSON/ошибки/изоляция/race/vuln. Правка предъявляется на повторное ревью владельцу; приёмка не приписывается человеку.",
     "PR #7 принят и смержен владельцем в main bc09d08; P01-01–04 приняты (4/8). Оставшиеся 05–08 поручены одним PR. Зафиксировано новое правило понятных описательных заголовков для комментариев/PR.",
     "Реализованы GracefulStop/deadline/fatal force, собственный healthcheck CLI, scratch runtime для трёх сервисов, internal Compose network и host-side Docker smoke с JSON/JSONL-отчётом. Unit/process tests прошли на Windows; runtime Docker/WSL локально отсутствуют, smoke NOT_RUN; Linux CI нового кода ожидается.",
-    "P01-05/07/08 реализованы и проверены Linux CI AMD64/ARM64: linters 0 issues, unit/race, govulncheck, process signals/forced exit 1, три scratch-образа и полный runtime smoke PASS. Оба артефакта report.json/JSONL прочитаны: реальные image IDs, health, права, изоляция, graceful exit 0 и cleanup подтверждены. Реализация проверена 7/8; P01-06 не закрыта из-за Windows container smoke NOT_RUN; принято владельцем 4/8."
+    "P01-05/07/08 реализованы и проверены Linux CI AMD64/ARM64: linters 0 issues, unit/race, govulncheck, process signals/forced exit 1, три scratch-образа и полный runtime smoke PASS. Оба артефакта report.json/JSONL прочитаны: реальные image IDs, health, права, изоляция, graceful exit 0 и cleanup подтверждены. Реализация проверена 7/8; P01-06 не закрыта из-за Windows container smoke NOT_RUN; принято владельцем 4/8.",
+    "Владелец разрешил установку Docker Desktop/WSL2. Официальный Docker Desktop 4.95.0 скачан, SHA256 и Authenticode Docker Inc подтверждены; установка остановлена precheck VirtualMachinePlatform. WSL winget требует admin, последующий UAC завершился отменой до запуска script. Ничего не объявляется установленным, перезагрузки не было; необходим интерактивный административный допуск. Linux CI HEAD5968407 и оба артефакта PASS."
   ],
   "next_implementation_packet": {
     "id": "P01",
@@ -686,10 +690,10 @@ JSON ниже является частью этого файла и доста�
       "id": "WINDOWS_CONTAINER_SMOKE",
       "status": "OPEN",
       "scope": "P01-06 acceptance criterion",
-      "reason": "Docker CLI/Desktop/service absent; WSL bootstrap reports subsystem not installed. Native Windows container smoke NOT_RUN.",
+      "reason": "Windows container smoke NOT_RUN. Installation authorized, but WSL needs administrator elevation; UAC request was cancelled. Docker per-user precheck rejects disabled VirtualMachinePlatform.",
       "effect": "Prepare and validate code/images in Linux CI; keep final PR draft until the required local check is performed or the owner explicitly changes that criterion.",
-      "next_action": "Provide a Windows Linux-container Docker backend, then run node tools/smoke.mjs and retain report.json/JSONL.",
-      "installation_approval": "REQUESTED_AWAITING_OWNER_RESPONSE"
+      "next_action": "Obtain interactive administrator UAC confirmation, install WSL/enable VirtualMachinePlatform, determine if a reboot is required (request consent separately), retry verified Docker per-user installer, start Linux backend, run smoke and retain report.",
+      "installation_approval": "GRANTED_BY_OWNER"
     }
   ],
   "open_review_comments": [],
@@ -758,7 +762,12 @@ JSON ниже является частью этого файла и доста�
       "exit_code": 2,
       "failed_phase": "prerequisites",
       "detail": "node tools/smoke.mjs wrote a report; Docker executable unavailable (ENOENT). No containers were started."
-    }
+    },
+    "os_verified_on": "2026-10-15",
+    "os_verified": "Windows 11 Pro 10.0.26200 x64",
+    "hypervisor_present": true,
+    "lanmanserver": "RUNNING_AUTOMATIC",
+    "installation_status": "AUTHORIZED_INSTALLATION_ATTEMPTED_UAC_CANCELLED"
   },
   "validation_evidence": [
     {
@@ -1242,6 +1251,15 @@ JSON ниже является частью этого файла и доста�
         "git diff --exit-code"
       ],
       "detail": "Both jobs SUCCESS. Format/tidy/verify/build/lint (0 issues), unit/race, govulncheck (No vulnerabilities found). Controlled RPC drain/deadline checks pass. All 3 real processes verify SIGTERM/SIGINT normal exit and held Watch forced exit 1. Both architectures build scratch runtime images, start 3 containers, verify health/security/internal network/no host ports or mounts, stop orders without stopping peers, verify all normal exits/log order and cleanup. Artifacts retained 14 days and independently read; image IDs and runtime outcomes recorded in runtime_smoke_evidence. Windows/macOS Docker are NOT_RUN; no capacity claim."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "P01 final implementation CI and retained reports",
+      "result": "PASS_LINUX; WINDOWS_CONTAINER_NOT_RUN",
+      "head_sha": "59684070fa85a0aea8561b48828088e574a06436",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38747476656",
+      "documentation_ci": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38747476687",
+      "detail": "Both native architecture jobs passed all Go/process/runtime checks. Both retained JSON/JSONL artifacts independently read, merge checkout cf9462c321e939279bd926f367ef4fde3015ef71, clean tree, all 3 containers healthy, unprivileged/readonly/internal/no host ports or mounts, normal exit0, peer isolation and cleanup PASS. No source edits after this proof; later snapshot publication requires its own HEAD checks."
     }
   ],
   "source_documents": [
@@ -1702,6 +1720,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-15",
       "summary": "Полный P01-05–08 CI и runtime smoke PASS на AMD64/ARM64, оба отчёта/логи прочитаны. P01-05/07/08 завершили реализацию и проверки; P01-06 остаётся с невыполненным Windows container-критерием. Draft PR #8 сохранён; установка Docker/WSL запрошена у владельца, автоматическая перезагрузка не разрешена.",
       "trigger": "Нативные контейнерные доказательства и подготовка итогового draft review packet"
+    },
+    {
+      "revision": 32,
+      "date": "2026-10-15",
+      "summary": "Зафиксировано разрешение владельца на Docker/WSL и реальные результаты установки: WSL требует admin, UAC отменён, Docker prerequisite VirtualMachinePlatform отсутствует. Windows smoke остаётся NOT_RUN, PR #8 draft. Повторный полный CI HEAD5968407 и оба отчёта PASS; понятное описание PR подготовлено.",
+      "trigger": "Ответ владельца об установке среды и проверка финального кода"
     }
   ],
   "repository": {
@@ -1735,21 +1759,21 @@ JSON ниже является частью этого файла и доста�
       "merged": false,
       "author": "AI-Your-Bro",
       "scope": "P01-05..P01-08",
-      "observed_commit": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+      "observed_commit": "59684070fa85a0aea8561b48828088e574a06436",
       "observed_ci": [
         {
           "name": "Documentation",
-          "head_sha": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+          "head_sha": "59684070fa85a0aea8561b48828088e574a06436",
           "status": "completed",
           "conclusion": "success",
-          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910192"
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38747476687"
         },
         {
           "name": "Go toolchain",
-          "head_sha": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+          "head_sha": "59684070fa85a0aea8561b48828088e574a06436",
           "status": "completed",
           "conclusion": "success",
-          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340"
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38747476656"
         }
       ]
     }
@@ -2087,33 +2111,64 @@ JSON ниже является частью этого файла и доста�
   },
   "environment_installation_request": {
     "asked_on": "2026-10-15",
-    "status": "AWAITING_OWNER_RESPONSE",
-    "reason": "P01-06 explicitly requires local Windows start/health/stop; Docker Desktop and WSL2 are absent.",
+    "authorized_on": "2026-10-15",
+    "status": "AUTHORIZED_INSTALLATION_ATTEMPTED_UAC_CANCELLED",
+    "owner_reply": "Разрешаю установку Docker Desktop и WSL2",
     "requested_actions": [
       "Install Docker Desktop",
       "Install WSL2 prerequisites"
     ],
-    "reboot": "Requires separate explicit owner consent; no automatic reboot authorized",
-    "source": "Async user-input question after both native Linux CI jobs and reports passed"
+    "reason": "P01-06 requires local Windows container start/health/stop.",
+    "reboot": "No reboot performed; separate explicit owner consent required.",
+    "attempts": [
+      {
+        "component": "Microsoft.WSL 2.7.13",
+        "method": "Official winget package; installer hash verified by winget",
+        "result": "FAILED_REQUIRES_ADMINISTRATOR",
+        "code": "0x80073d28"
+      },
+      {
+        "component": "WSL elevated installation",
+        "method": "Start-Process RunAs of local installation script; no reboot command",
+        "result": "NOT_STARTED_UAC_CANCELLED",
+        "detail": "Windows returned operation cancelled by user. Script did not start; no completion report exists."
+      },
+      {
+        "component": "Docker Desktop 4.95.0 (242831)",
+        "method": "Official signed installer; per-user WSL2 backend; no Windows containers",
+        "sha256": "73431db38491f770543880366228a23c993f84d1e8e045f56d83b8a98940cf76",
+        "signature": "VALID_DOCKER_INC",
+        "result": "FAILED_PREREQUISITE",
+        "exit_code": 1,
+        "detail": "Installer log: VirtualMachinePlatform Windows feature is not enabled; per-user installer cannot enable it."
+      }
+    ],
+    "installed": false,
+    "next_action": "Obtain interactive administrator UAC confirmation, install WSL/enable VirtualMachinePlatform, determine if a reboot is required (request consent separately), retry verified Docker per-user installer, start Linux backend, run smoke and retain report.",
+    "instructions": [
+      "https://learn.microsoft.com/en-us/windows/wsl/basic-commands",
+      "https://docs.docker.com/desktop/setup/install/windows-install/"
+    ],
+    "checksum_source": "https://desktop.docker.com/win/main/amd64/242831/checksums.txt"
   },
   "runtime_smoke_evidence": {
-    "source_head": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
-    "workflow": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340",
+    "source_head": "59684070fa85a0aea8561b48828088e574a06436",
+    "workflow": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38747476656",
     "artifacts": [
       {
         "architecture": "amd64",
-        "artifact_id": 11977328529,
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340/artifacts/11977328529",
+        "artifact_id": 11979987375,
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38747476656/artifacts/11979987375",
         "retention_days": 14,
         "result": "PASS",
-        "built_merge_revision": "6b672533738f984428e4b7016fdefd1896288296",
+        "built_merge_revision": "cf9462c321e939279bd926f367ef4fde3015ef71",
         "source_dirty": false,
         "docker_platform": "linux/x86_64",
         "cleanup": "PASS",
         "isolation_after_orders_stop": "PASS",
         "services": {
           "orders": {
-            "image_id": "sha256:44047c82841ec5dd6b4ba1f67e7b24e71e3f953ad4f51b72db3988373e6ef89e",
+            "image_id": "sha256:618542af6f61d5dafabc413a5ff5f814c6bf1a5768adb01e60398401b85d5621",
             "healthy": true,
             "exit_code": 0,
             "stop_mode": "graceful",
@@ -2128,7 +2183,7 @@ JSON ниже является частью этого файла и доста�
             }
           },
           "inventory": {
-            "image_id": "sha256:92774134576c36348ff18e29cc04b02fb36d6dfb02c110f6fc46f46353ef9856",
+            "image_id": "sha256:968ea2314c56405c938ed9d5835d5ebb7015711aa4960856531e65e6289449c8",
             "healthy": true,
             "exit_code": 0,
             "stop_mode": "graceful",
@@ -2143,7 +2198,7 @@ JSON ниже является частью этого файла и доста�
             }
           },
           "payments": {
-            "image_id": "sha256:4f4613c5df2377de6a1907b33b00880ae637adbb3b38d7504e62bc25b2d69c18",
+            "image_id": "sha256:ca8d88c079db4033b6c2a85c084433f09e1b19accbff7fdeb3478d755a08d2bc",
             "healthy": true,
             "exit_code": 0,
             "stop_mode": "graceful",
@@ -2161,18 +2216,18 @@ JSON ниже является частью этого файла и доста�
       },
       {
         "architecture": "arm64",
-        "artifact_id": 11977248425,
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340/artifacts/11977248425",
+        "artifact_id": 11979852311,
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38747476656/artifacts/11979852311",
         "retention_days": 14,
         "result": "PASS",
-        "built_merge_revision": "6b672533738f984428e4b7016fdefd1896288296",
+        "built_merge_revision": "cf9462c321e939279bd926f367ef4fde3015ef71",
         "source_dirty": false,
         "docker_platform": "linux/aarch64",
         "cleanup": "PASS",
         "isolation_after_orders_stop": "PASS",
         "services": {
           "orders": {
-            "image_id": "sha256:850c07550fa10d86021fe299054a6e20ec1d3f78923d78eaaf788dea57c031f9",
+            "image_id": "sha256:9c5d84c9c9ed97e51ad63a76ad3e4ab89497f17fce29b814a9441b27968d2f2b",
             "healthy": true,
             "exit_code": 0,
             "stop_mode": "graceful",
@@ -2187,7 +2242,7 @@ JSON ниже является частью этого файла и доста�
             }
           },
           "inventory": {
-            "image_id": "sha256:da54231eea1ef58e878b3dc09882af067ca1ba46d4461292ecdcdf7184ee023a",
+            "image_id": "sha256:a997c2b03757626902f16851d3a8661784c3af348f1ab97c564966297fd72d32",
             "healthy": true,
             "exit_code": 0,
             "stop_mode": "graceful",
@@ -2202,7 +2257,7 @@ JSON ниже является частью этого файла и доста�
             }
           },
           "payments": {
-            "image_id": "sha256:f78fd03489bbcf16538c9efa797f4e473349353d203a4764141efc171f792038",
+            "image_id": "sha256:efa7621e0f31b72adf6d7dd2ef61a7d97e01ef20a0ca4834e37afc6bd61b9aef",
             "healthy": true,
             "exit_code": 0,
             "stop_mode": "graceful",
@@ -2219,7 +2274,7 @@ JSON ниже является частью этого файла и доста�
         }
       }
     ],
-    "local_windows": "NOT_RUN_DOCKER_WSL_NOT_INSTALLED",
+    "local_windows": "NOT_RUN_INSTALLATION_REQUIRES_INTERACTIVE_ADMIN_UAC",
     "macos": "NOT_RUN",
     "performance_capacity": "NOT_MEASURED"
   }
@@ -2232,8 +2287,8 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `cbca436a3c827dbf833bf3295e4c4470aeaaa1ab9fdcf054d494ab996e0375f7` |
-| `tools/context_intro.md` | `ddcf85e81b7826c57ae2a8a7777f6bdf70436265d669bc4de790a6d00298ea3e` |
+| `CONTEXT_STATE.json` | `73e2b7f824ee1d74b1fa6f6c110a178c582d91f5641792dd50aadd2894157aae` |
+| `tools/context_intro.md` | `8a07708404b56320fc95da90059b4bbdd1e5313ea50e5be4498fe10e9c0a4a0e` |
 | `tools/update_context.ps1` | `f830ed3538ae98ef5129b2ab5ae1d1ad564b0482d8ed2978a7ec2b96bcf5e731` |
 | `README.md` | `e95a49d6d4ee46c0bf94f2eca9f5784449a6487af03d852581ef0b1057c90e76` |
 | `README.ru.md` | `a0f2c97eaaf38b817bfbeecc56bf4f62bae85aac63660bf585651b74e3492ee7` |
@@ -2249,8 +2304,8 @@ SHA-256 относится к исходному файлу на момент с
 | `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
 | `docs/development/CODE_REVIEW.md` | `824f73048b3e20bf77b78809c23574a0235d2735052b5b670efe512ea0cae35b` |
 | `docs/architecture/LAB_BOUNDARY.md` | `790709c43d5c2920909a9f5227467bcb77ec4d228024156dd5f69f29a8d92e46` |
-| `docs/development/ENVIRONMENT.md` | `866fa5915ebea6129fd9d0b6833d85176fc0c0d3c71f650b8be378acb05644c4` |
-| `docs/development/RESOURCE_PROFILES.md` | `7d40665b2226f08542b94c8286c97d17847ca4c42038c0d44086a4addc9031e4` |
+| `docs/development/ENVIRONMENT.md` | `b88aec36682943a0b53a4d948934e39f4b62d8f01bc2ba87b58e8107ccf6f261` |
+| `docs/development/RESOURCE_PROFILES.md` | `d8b1940515fccff72c2af270abfeabef60d648cd5ec546ece33a30362d87b4d0` |
 | `docs/design/BANNER_OPTIONS.md` | `27d7b336acd60aa3106e6498233f2a33eefd2bc37bf8e26cf12d2c0c0d229724` |
 | `docs/development/packets/P01.md` | `f4e3f3b3b2589cbddf68ce6a6b9eb9a3b379556ac08be7b558ec4b89a5e68863` |
 | `docs/development/TASK_TRACKING.md` | `1aa776a1db2fbcb5d8353d5190c893aafde52f8715c4f2a838ff0c58fa7e08ac` |
@@ -2283,7 +2338,7 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/service/command_test.go` | `56eb2c958131551d61097e00fd66a34068332c141b81c3eaa5ec8358072a7051` |
 | `internal/service/shutdown_test.go` | `9387689f5183003faabddb0c5f6d6d5fd5c89e410fec66cf76aa94eebf25be58` |
 | `tools/smoke.mjs` | `2f0983a9e373ddb9bcd0cf343a4f02c8fb84bca996dbbcd5d9ae281caf06f5ce` |
-| `docs/development/CONTAINER_RUNTIME.md` | `2bb8d4250c91f737f2c2331e1fd06a8eb1e21bf945aa6cbf06a3b313a4a78965` |
+| `docs/development/CONTAINER_RUNTIME.md` | `8d556cf22140e3aefa8ec614d58e071f39c0e17ca7397e61c2e31454053513b0` |
 
 ## Полные самостоятельные приложения
 
@@ -4470,6 +4525,10 @@ Docker рекомендует разделять ответственности 
 
 Для локального runtime-запуска ещё нужны доступные Docker Desktop/Compose и проверка ресурсов машины. Версии и команды toolchain уже закреплены и проверены в Linux CI; runtime-образы сервисов и их smoke относятся к P01-06.
 
+##### Попытка локальной установки, 15 октября
+
+Установка среды согласована владельцем 15 октября. Официальный Docker Desktop 4.95.0 загружен, SHA256 и подпись Docker Inc проверены. WSL 2.7.13 через winget потребовал admin; запрос UAC завершился отменой до запуска установки. Docker per-user installer завершился precheck: VirtualMachinePlatform выключен. Ни WSL, ни Docker пока не установлены, перезагрузки не было. Для продолжения нужен интерактивный административный допуск; после установки/при необходимости отдельно согласованной перезагрузки выполняется `node tools/smoke.mjs`.
+
 <a id="appendix-resource-profiles"></a>
 
 ## Приложение: Ресурсный снимок Windows и будущие профили macOS/сервера
@@ -4522,6 +4581,8 @@ Docker рекомендует разделять ответственности 
 #### Следующее измерение
 
 После подготовки каркаса и доступности Docker: проверить daemon/Compose → снять фактический бюджет → запустить минимальный профиль → измерить простой → добавить инфраструктуру → проверить ресурсы под контролируемой нагрузкой. Каждый прогон сохраняет свой снимок условий в manifest; текущая таблица не заменяет данные будущих запусков.
+
+15 октября повторно подтверждены Windows 11 Pro build 26200 x64, работающий гипервизор и LanmanServer. Установка WSL/Docker разрешена, но не завершена: UAC отменён, компонент VirtualMachinePlatform выключен. Это проверка prerequisites, а не измерение бюджета Docker или потребления приложения.
 
 <a id="appendix-banner-options"></a>
 
@@ -7033,3 +7094,5 @@ CI на нативных Linux AMD64/ARM64 выполняет этот smoke п�
 15 октября проверено: Docker CLI, стандартная установка Docker Desktop и Docker-служба отсутствуют; WSL сообщает, что подсистема не установлена. Локальный запуск `node tools/smoke.mjs` сохранил NOT_RUN на prerequisites и exit 2. Native Windows Go unit/process tests проходят; Unix-сигналы проверяются отдельно на Linux. Личная macOS недоступна, её container smoke NOT_RUN.
 
 P01-06 требует Windows container smoke. Пока он не выполнен, итоговый PR остаётся draft с конкретным невыполненным критерием; успешный Linux CI не заменяет эту проверку. После установки Docker с Linux backend запускается та же команда smoke, её отчёт добавляется в review evidence. По результату владелец принимает конкретный HEAD; ИИ не выполняет approve/merge.
+
+Установка среды согласована владельцем 15 октября. Официальный Docker Desktop 4.95.0 загружен, SHA256 и подпись Docker Inc проверены. WSL 2.7.13 через winget потребовал admin; запрос UAC завершился отменой до запуска установки. Docker per-user installer завершился precheck: VirtualMachinePlatform выключен. Ни WSL, ни Docker пока не установлены, перезагрузки не было. Для продолжения нужен интерактивный административный допуск; после установки/при необходимости отдельно согласованной перезагрузки выполняется `node tools/smoke.mjs`.
