@@ -1,0 +1,18 @@
+services:
+  toolchain:
+    profiles: [tools]
+    build:
+      context: .
+      dockerfile: build/toolchain.Dockerfile
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - go-modules:/go/pkg/mod
+      - go-build:/root/.cache/go-build
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  go-modules:
+  go-build:

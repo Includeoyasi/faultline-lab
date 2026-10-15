@@ -79,7 +79,11 @@ foreach ($document in $documents) {
     }
     if (-not (Test-Path -LiteralPath $sourcePath -PathType Leaf)) { throw ('Missing source: ' + $document.path) }
     $sourceRecords.Add([pscustomobject]@{ Path = $document.path; FullPath = $sourcePath; Hash = (Get-FileHash -LiteralPath $sourcePath -Algorithm SHA256).Hash.ToLowerInvariant() })
-    $portableDocuments.Add([pscustomobject]@{ Document = $document; Content = (Add-PortableDocument (Get-NormalizedText $sourcePath) $document.path $documents) })
+    $sourceContent = Get-NormalizedText $sourcePath
+    if ($document.PSObject.Properties['language']) {
+        $sourceContent = '```' + $document.language + "`n" + $sourceContent.TrimEnd() + "`n" + '```'
+    }
+    $portableDocuments.Add([pscustomobject]@{ Document = $document; Content = (Add-PortableDocument $sourceContent $document.path $documents) })
 }
 
 $parts = [System.Collections.Generic.List[string]]::new()

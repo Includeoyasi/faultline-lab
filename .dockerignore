@@ -1,0 +1,14 @@
+.git
+.local
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+bin
+dist
+coverage
+data
+artifacts
+tmp
+node_modules

@@ -10,7 +10,7 @@
 | Число обязательных approval | 1 |
 | Сброс approval после новых изменений | Включён |
 | Approval после последнего push другим участником | Обязателен |
-| Ревью CODEOWNERS | Включено; файл владельцев ещё не находится в main |
+| Ревью CODEOWNERS | Включено; CODEOWNERS действует в main после PR #5 |
 | Required check | Links and portable context |
 | Источник required check | GitHub Actions, app ID 15368 |
 | Актуальность ветки относительно main | Обязательна перед merge |
@@ -20,7 +20,7 @@
 
 Это проверка фактических настроек, а не попытка выполнить запрещённый push или удалить ветку. Подписанные коммиты и обязательная линейная история не вводились. Go checks добавляются после появления проверенного workflow в P01; отсутствующие проверки не объявляются действующими.
 
-Подготовлен [.github/CODEOWNERS](../../.github/CODEOWNERS): все файлы, включая workflow и сам CODEOWNERS, назначены @Includeoyasi. Пока он не слит в main, действует требование одного независимого approval без привязки к этому файлу. После merge GitHub использует CODEOWNERS базовой ветки и требует ревью указанного владельца. [Правила CODEOWNERS](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners).
+[.github/CODEOWNERS](../../.github/CODEOWNERS) находится в main после слияния PR #5, подтверждённого 15 октября 2026 года (merge d616a22). Все файлы, включая workflow и сам CODEOWNERS, назначены @Includeoyasi. GitHub использует CODEOWNERS базовой ветки и требует ревью указанного владельца. [Правила CODEOWNERS](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners).
 
 ## Разделение ролей и авторизации
 
@@ -39,9 +39,9 @@ GitHub разрешает machine account, зарегистрированный 
 3. OAuth через Git Credential Manager device flow выполнен; GET /user подтвердил AI-Your-Bro. Credentials находятся в Windows Credential Manager и не записываются в репозиторий. Администрация владельца и публикация исполнителя используют отдельные credentials; перед мутацией API проверяется фактический actor. Для работы с workflow нужны соответствующие права токена; администрация ради обычных PR не выдаётся.
 4. Локальная Git identity этого репозитория: AI-Your-Bro, 342030453+AI-Your-Bro@users.noreply.github.com. Локальная credential.https://github.com.username выбирает AI-Your-Bro. Глобальная Git identity и авторизация других репозиториев не менялись. На macOS нужно отдельно подключить исполнителя и проверить identity; локальные credentials автоматически туда не переносятся.
 5. [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4) уже слит: merge commit 8c392b8, принятый HEAD 83e0076. Переоформлять его не нужно; переход применяется к новым PR. Новая локальная ветка chore/executor-security обновлена до этого main.
-6. [PR #5](https://github.com/Includeoyasi/faultline-lab/pull/5) с CODEOWNERS и документами безопасности открыт от проверенного AI-Your-Bro; у Includeoyasi запрошено ревью. GitHub также подтвердил авторство и committer первого коммита fbbaef0 как AI-Your-Bro. Владелец ревьюирует конкретный HEAD и выполняет approval. Merge — только по его решению; ИИ сам не принимает свои изменения.
-7. После merge проверить CODEOWNERS в main, реальные required checks, автора нового PR и обновить контекст. Основная реализация P01 пока TODO, 0/8; G1–G4 не приняты.
+6. [PR #5](https://github.com/Includeoyasi/faultline-lab/pull/5) слит владельцем: принятый HEAD 704a7ec, merge d616a22. ИИ не выполнял approve/merge. GitHub ранее подтвердил автора PR и коммиттера как AI-Your-Bro.
+7. CODEOWNERS подтверждён в main, переносимый контекст обновлён. На 15 октября начата P01-01; G1–G4 не приняты. Required checks по-прежнему перечислены выше; наличие нового Go workflow само по себе не означает обновления серверных правил.
 
 ## Текущее ограничение
 
-Защита main действует уже сейчас. CODEOWNERS и документы опубликованы в chore/executor-security и [PR #5](https://github.com/Includeoyasi/faultline-lab/pull/5) от проверенного AI-Your-Bro, на основе main 8c392b8. Новый PR и push от владельца не выполнялись. CODEOWNERS станет действующим в main после человеческого ревью и merge; текущие commit/PR и проверенные результаты находятся в CONTEXT_STATE.json. Основная реализация P01 ещё не начата.
+Защита main и CODEOWNERS действуют. Авторизация новой Windows-копии или macOS требует проверки исполнителя; credentials не переносятся через Git. Включение 2FA не заявляется: действует зафиксированное решение владельца. Текущий PR реализации и фактические Go-проверки находятся в CONTEXT_STATE.json.

@@ -1,52 +1,32 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 17,
+  "context_revision": 18,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-13",
+  "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
-  "current_phase": "G0_APPROVED_PRE_IMPLEMENTATION",
+  "current_phase": "G0_APPROVED_IMPLEMENTATION_IN_PROGRESS",
   "current_task": {
-    "id": "REPO-SECURITY-001",
-    "description": "Разделить GitHub identity владельца и исполнителя и включить защиту main",
-    "status": "MAIN_PROTECTED_EXECUTOR_CONNECTED_SECURITY_PR_AWAITING_OWNER_REVIEW",
-    "authorization": "Владелец поручил отдельный аккаунт исполнителя для всех новых PR и защиту main; затем предоставил логин AI-Your-Bro",
+    "id": "P01-01",
+    "description": "Первая задача: Go-модуль, три bootstrap entrypoints и закреплённый контейнерный toolchain",
+    "status": "IMPLEMENTED_LOCAL_CHECKS_PASSED_CI_PENDING",
+    "authorization": "Владелец сообщил о merge PR #5 и поручил взять первую утверждённую задачу и создать PR для ревью",
     "result": {
-      "main_protection": "APPLIED_AND_READ_BACK",
-      "executor_login": "AI-Your-Bro",
-      "profile": "VERIFIED_EXISTS",
-      "invitation": "ACCEPTED_WRITE_ACCESS_VERIFIED",
-      "authentication": "VERIFIED_AI_YOUR_BRO_GCM_OAUTH_DEVICE_FLOW",
-      "two_factor_authentication": "USER_DECLINED_ENABLEMENT_API_STATUS_NOT_RETURNED",
-      "branch": "chore/executor-security",
-      "base_commit": "8c392b8ed4145d8b2b9efa93c5be14d9fdf113d1",
-      "local_docs": "PREPARED",
-      "codeowners": "PUBLISHED_IN_OPEN_PR_NOT_IN_MAIN",
-      "local_validation": "PASS",
-      "new_commit_created": true,
-      "pushed": true,
-      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
-      "publication_dependency": null,
-      "business_implementation": "NOT_STARTED",
-      "go_checks": "NOT_RUN_NO_GO_MODULE",
-      "git_identity": "CONFIGURED_LOCALLY_FOR_AI_YOUR_BRO",
-      "observed_published_commit": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
-      "pull_request_number": 5,
-      "pull_request_author": "AI-Your-Bro",
-      "review_requested_from": "Includeoyasi",
-      "human_review": "PENDING",
-      "merged": false,
-      "documentation_ci": {
-        "workflow": "Documentation",
-        "head_sha": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
-        "status": "COMPLETED",
-        "conclusion": "SUCCESS",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38413156014",
-        "event": "pull_request",
-        "scope": "Документационный CI исходного security PR; после коммита handoff проверять актуальный HEAD PR #5"
-      },
-      "handoff_note": "Наблюдённый HEAD и CI относятся к исходному коммиту security PR. Финальный hash собственного handoff не может находиться внутри снимка; текущий HEAD/checks проверяются в PR."
+      "branch": "feat/p01-01-toolchain",
+      "base_commit": "d616a221566be4f7f7be89f6f3223501a539c45c",
+      "scope": "P01-01_ONLY",
+      "implementation": "BOOTSTRAP_AND_TOOLCHAIN_CREATED",
+      "local_go": "PASS_PORTABLE_WINDOWS_GO_1_27_2",
+      "local_docker": "NOT_RUN_DOCKER_NOT_FOUND",
+      "ci": "NOT_RUN_BEFORE_PUSH",
+      "native_macos": "NOT_RUN",
+      "go_tests": "COMMAND_PASS_NO_TEST_FILES",
+      "owner_acceptance": "PENDING",
+      "pull_request_url": null,
+      "commit_created": false,
+      "pushed": false,
+      "remaining_tasks": "P01-02..P01-08_NOT_STARTED"
     }
   },
   "roles": {
@@ -88,11 +68,11 @@
     }
   ],
   "implementation_status": {
-    "business_service_code": "NOT_CREATED",
-    "go_module": "NOT_CREATED",
+    "business_service_code": "BOOTSTRAP_ENTRYPOINTS_ONLY_NO_BUSINESS_RUNTIME",
+    "go_module": "CREATED_WITH_TOOL_DIRECTIVES_AND_SUMS",
     "protobuf_files": "NOT_CREATED",
     "sql_migrations": "NOT_CREATED",
-    "docker_compose": "NOT_CREATED",
+    "docker_compose": "TOOLCHAIN_ONLY_NO_RUNTIME_SERVICES",
     "load_generator": "NOT_CREATED",
     "business_verifier": "NOT_CREATED",
     "dashboards_alerts": "NOT_CREATED",
@@ -100,7 +80,7 @@
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
+    "git_commit": "d616a221566be4f7f7be89f6f3223501a539c45c",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -145,19 +125,23 @@
       {
         "number": 5,
         "url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
-        "state": "OPEN",
+        "state": "MERGED",
         "author": "AI-Your-Bro",
         "head_ref": "chore/executor-security",
         "base_ref": "main",
         "scope": "Защита main, CODEOWNERS, разделение GitHub identity и обновление контекста",
         "code_packet": false,
-        "human_review": "PENDING",
+        "human_review": "USER_CONFIRMED_AND_GITHUB_MERGE_OBSERVED",
         "requested_reviewer": "Includeoyasi",
-        "merged": false,
+        "merged": true,
         "observed_head": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
-        "observation_note": "HEAD при создании PR; финальный handoff commit добавляется позже, текущий HEAD доступен на GitHub."
+        "observation_note": "Владелец сообщил о merge; API подтвердил. ИИ не approve/merge.",
+        "head_at_merge": "704a7ecae42372dbbe89de1d20fa7afcfd274491",
+        "merge_commit": "d616a221566be4f7f7be89f6f3223501a539c45c"
       }
-    ]
+    ],
+    "toolchain_container": "CREATED_CI_PENDING",
+    "go_quality_workflow": "CREATED_AMD64_AND_ARM64_CI_PENDING"
   },
   "completed_work": [
     "Подготовлен практический roadmap с этапами, критериями, рисками и оценками объёма",
@@ -190,11 +174,13 @@
     "Включена и повторно проверена защита main, включая администратора. Профиль исполнителя AI-Your-Bro проверен; приглашение write отправлено и OAuth вход запущен. CODEOWNERS и документы подготовлены локально; приглашение/авторизация ещё ожидаются.",
     "Наблюдено слияние PR #4 в main 8c392b8 с принятым HEAD 83e0076; выбранный баннер и P01 backlog находятся в основной ветке. ИИ не выполнял merge.",
     "OAuth исполнителя AI-Your-Bro завершён через GCM device flow; API подтвердил actor и write/push без admin. Приглашение принято, локальная Git identity/credential username переключены только в этом репозитории. Владелец отказался включать 2FA; API статус 2FA не вернул.",
-    "От AI-Your-Bro опубликован первый security commit fbbaef0 и PR #5; у Includeoyasi запрошено ревью. GitHub подтвердил автора/коммиттера исполнителя; исходный Documentation CI прошёл. CODEOWNERS в открытом PR, активация в main ожидает решения владельца."
+    "От AI-Your-Bro опубликован первый security commit fbbaef0 и PR #5; у Includeoyasi запрошено ревью. GitHub подтвердил автора/коммиттера исполнителя; исходный Documentation CI прошёл. CODEOWNERS в открытом PR, активация в main ожидает решения владельца.",
+    "PR #5 принят и слит владельцем; main d616a22 содержит действующий CODEOWNERS. Начата первая задача P01-01 отдельным PR по прямому поручению владельца.",
+    "Созданы модуль с tool directives/go.sum, три минимальные точки запуска, закреплённый Docker toolchain и Compose для инструментов. Локальные build/tidy/verify/goimports/govulncheck прошли временным Go; Go tests завершились с no test files. Контейнерные проверки ожидают CI."
   ],
   "next_implementation_packet": {
     "id": "P01",
-    "status": "NOT_STARTED",
+    "status": "IN_PROGRESS",
     "goal": "Контейнерная основа трёх Go-сервисов: entrypoints, конфигурация, gRPC health, graceful shutdown, JSON-логи, toolchain, образы, минимальный Compose и Go CI",
     "approval_dependency": "G0 уже принят; повторное согласование G0 не требуется",
     "following_packets": [
@@ -208,16 +194,19 @@
     "acceptance_status": "DOCUMENTED_NOT_EXECUTED",
     "progress": {
       "completed": 0,
-      "total": 8
+      "total": 8,
+      "owner_accepted": 0
     },
     "tasks": [
       {
         "id": "P01-01",
         "title": "Go-модуль и закреплённый toolchain",
         "depends_on": [],
-        "status": "NOT_STARTED",
-        "evidence": "NOT_RUN",
-        "acceptance_source": "docs/development/packets/P01.md"
+        "status": "IN_PROGRESS",
+        "evidence": "LOCAL_GO_BUILD_TIDY_VERIFY_GOIMPORTS_GOVULNCHECK_PASS; LINUX_CONTAINER_CI_PENDING",
+        "acceptance_source": "docs/development/packets/P01.md",
+        "implementation": "CREATED",
+        "owner_acceptance": "PENDING"
       },
       {
         "id": "P01-02",
@@ -303,7 +292,8 @@
     "interval": "AFTER_G0_BEFORE_G1",
     "target_review_gate": "G1",
     "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/3",
-    "tracker_stage": "TODO"
+    "tracker_stage": "IN_PROGRESS",
+    "current_task": "P01-01"
   },
   "active_blockers": [],
   "open_review_comments": [],
@@ -338,10 +328,10 @@
     "user_timezone": "Europe/Moscow",
     "project_path_at_snapshot": null,
     "path_required_to_read_context": false,
-    "go_available": "NOT_FOUND_IN_CURRENT_SHELL_PATH",
-    "docker_available": "NOT_FOUND_IN_CURRENT_SHELL_PATH",
-    "tool_commands_checked_on": "2026-10-13",
-    "tool_check_scope": "Go/Docker не обнаружены в текущем PATH и проверенных стандартных расположениях. Команда WSL обнаружена, её работоспособность и конфигурация не проверялись. Другие установки Go/Docker не исключены.",
+    "go_available": "NOT_IN_HOST_PATH_PORTABLE_GO_USED_IN_IGNORED_LOCAL_DIRECTORY",
+    "docker_available": "NOT_FOUND_IN_CURRENT_PATH_OR_STANDARD_WINDOWS_LOCATION",
+    "tool_commands_checked_on": "2026-10-15",
+    "tool_check_scope": "Go/Docker отсутствуют в текущем PATH и стандартных проверенных Windows-путях. Вспомогательный официальный Go 1.27.2 скачан в .local и проверен по SHA256; не установлен в систему. Docker проверяется в Linux CI, не на Windows-хосте.",
     "powershell_version": "7.6.5",
     "cpu_ram_disk_budget": "HOST_SNAPSHOT_COLLECTED_DOCKER_BUDGET_NOT_MEASURED",
     "local_directory_name": "faultline-lab",
@@ -623,6 +613,22 @@
         "git diff --check"
       ],
       "detail": "23 Markdown-файла, 244 локальные ссылки, структура 56 Mermaid-блоков; ревизия 17, 21 встроенный документ и 24 fingerprints. Публикация PR #5 и авторство исполнителя отражены, CODEOWNERS в main не заявлен до merge, решение владельца о 2FA сохранено. Текущий HEAD/CI проверяются в PR; Go/runtime N/A."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "Local P01-01 Go checks",
+      "result": "PASS",
+      "commands": [
+        "go version",
+        "go mod tidy -diff",
+        "go mod verify",
+        "go build ./...",
+        "go test -count=1 ./...",
+        "go tool goimports -l cmd",
+        "go tool govulncheck ./..."
+      ],
+      "environment": "Temporary checksum-verified Go 1.27.2 windows/amd64; caches in ignored .local; no system Go installation",
+      "detail": "Сборка трёх пакетов проходит; tidy не требует изменений, verify PASS, goimports не вывел файлов, govulncheck: No vulnerabilities found. Go tests: no test files. Docker, Linux race/lint и bootstrap execution ожидают CI; macOS NOT_RUN."
     }
   ],
   "source_documents": [
@@ -730,6 +736,71 @@
       "path": ".github/CODEOWNERS",
       "anchor": "appendix-codeowners",
       "title": "Подготовленный CODEOWNERS для человеческого ревью"
+    },
+    {
+      "path": "docs/development/TOOLCHAIN.md",
+      "anchor": "appendix-toolchain",
+      "title": "Контейнерный toolchain и команды"
+    },
+    {
+      "path": "go.mod",
+      "anchor": "appendix-go-mod",
+      "title": "Go-модуль и версии инструментов",
+      "language": "go"
+    },
+    {
+      "path": "go.sum",
+      "anchor": "appendix-go-sum",
+      "title": "Контрольные суммы модулей",
+      "language": "text"
+    },
+    {
+      "path": "cmd/orders/main.go",
+      "anchor": "appendix-orders-main",
+      "title": "Orders bootstrap entrypoint",
+      "language": "go"
+    },
+    {
+      "path": "cmd/inventory/main.go",
+      "anchor": "appendix-inventory-main",
+      "title": "Inventory bootstrap entrypoint",
+      "language": "go"
+    },
+    {
+      "path": "cmd/payments/main.go",
+      "anchor": "appendix-payments-main",
+      "title": "Payments bootstrap entrypoint",
+      "language": "go"
+    },
+    {
+      "path": "build/toolchain.Dockerfile",
+      "anchor": "appendix-toolchain-dockerfile",
+      "title": "Закреплённый образ инструментов",
+      "language": "dockerfile"
+    },
+    {
+      "path": "compose.yaml",
+      "anchor": "appendix-compose-toolchain",
+      "title": "Compose для временных инструментов",
+      "language": "yaml"
+    },
+    {
+      "path": "tools/go.sh",
+      "anchor": "appendix-go-commands",
+      "title": "Команды внутри Linux-контейнера",
+      "language": "sh"
+    },
+    {
+      "path": ".golangci.yml",
+      "anchor": "appendix-golangci-config",
+      "title": "Согласованные Go-линтеры",
+      "language": "yaml"
+    },
+    {
+      "path": ".github/workflows/go.yml",
+      "anchor": "appendix-go-workflow",
+      "title": "Проверки Go в нативном Linux CI",
+      "language": "yaml"
     }
   ],
   "change_history": [
@@ -834,6 +905,12 @@
       "date": "2026-10-13",
       "summary": "Первый PR нового порядка #5 создан от AI-Your-Bro к владельцу Includeoyasi. Сохранены реальная публикация, автор/коммиттер, requested review и исходный успешный CI. Main защищён; CODEOWNERS ещё не слит.",
       "trigger": "Завершение поручения по подключению исполнителя и защите main; handoff для человеческого ревью"
+    },
+    {
+      "revision": 18,
+      "date": "2026-10-15",
+      "summary": "Слияние security PR #5 учтено. Реализуется первая задача P01-01: модуль, bootstrap entrypoints, toolchain, Go CI и команды; остальные семь задач не начаты. Контекст расширен полными исходниками первой задачи.",
+      "trigger": "Владелец сообщил о merge PR #5 и поручил взять первую утверждённую задачу и создать PR для ревью"
     }
   ],
   "repository": {
@@ -858,13 +935,13 @@
       "event": "push",
       "scope": "Документационный CI main после принятия правил; не является проверкой последующего handoff PR или Go-кода."
     },
-    "snapshot_ref": "chore/executor-security",
+    "snapshot_ref": "main",
     "current_publication": {
       "branch": "chore/executor-security",
       "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
       "author": "AI-Your-Bro",
       "observed_commit": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
-      "merged": false,
+      "merged": true,
       "observed_ci": {
         "workflow": "Documentation",
         "head_sha": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
@@ -873,7 +950,8 @@
         "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38413156014",
         "event": "pull_request",
         "scope": "Документационный CI исходного security PR; после коммита handoff проверять актуальный HEAD PR #5"
-      }
+      },
+      "merge_commit": "d616a221566be4f7f7be89f6f3223501a539c45c"
     }
   },
   "review_policy": {
@@ -988,10 +1066,11 @@
     "approved_on": "2026-10-13",
     "approval_evidence": "Прямое поручение владельца проекта: молодец, фиксируй изменения и заводи задачи",
     "current_packet_issue_number": 3,
-    "current_packet_stage": "TODO",
+    "current_packet_stage": "IN_PROGRESS",
     "progress": {
       "completed": 0,
-      "total": 8
+      "total": 8,
+      "owner_accepted": 0
     },
     "last_issue_observation": {
       "date": "2026-10-13",
@@ -1003,7 +1082,13 @@
     },
     "documentation_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
     "documentation_pr_closes_packet": false,
-    "documentation_pr_merged": true
+    "documentation_pr_merged": true,
+    "current_subtask": "P01-01",
+    "task_pr_granularity": {
+      "confirmed_on": "2026-10-15",
+      "rule": "По прямому поручению владельца первая задача P01-01 идёт отдельным PR; общая карточка P01 сохраняет восемь задач и ссылки на последовательные PR",
+      "whole_packet_acceptance": "NOT_COMPLETE_AFTER_ONLY_P01_01"
+    }
   },
   "review_sequence": {
     "confirmed_on": "2026-10-13",
@@ -1018,7 +1103,12 @@
     ],
     "previous_packet_label": "G1-P01",
     "current_packet_label": "P01",
-    "note": "Переименование устраняет неоднозначность; объём кода, восемь задач и критерии не меняются. Старые метки в истории относятся к тому же пакету."
+    "note": "Переименование устраняет неоднозначность; объём кода, восемь задач и критерии не меняются. Старые метки в истории относятся к тому же пакету.",
+    "task_pr_granularity": {
+      "confirmed_on": "2026-10-15",
+      "rule": "По прямому поручению владельца первая задача P01-01 идёт отдельным PR; общая карточка P01 сохраняет восемь задач и ссылки на последовательные PR",
+      "whole_packet_acceptance": "NOT_COMPLETE_AFTER_ONLY_P01_01"
+    }
   },
   "repository_security": {
     "observed_on": "2026-10-13",
@@ -1047,10 +1137,11 @@
     "codeowners": {
       "path": ".github/CODEOWNERS",
       "owner": "Includeoyasi",
-      "status": "PUBLISHED_IN_OPEN_PR_NOT_IN_MAIN",
+      "status": "ACTIVE_IN_MAIN",
       "effective_after": "HUMAN_REVIEW_AND_MERGE_INTO_MAIN",
-      "interim_review": "One independent approval required; owner-specific CODEOWNERS rule has no file in main yet",
-      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/5"
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
+      "merge_commit": "d616a221566be4f7f7be89f6f3223501a539c45c",
+      "verified_on": "2026-10-15"
     },
     "go_checks": "ADD_REQUIRED_CHECKS_AFTER_P01_WORKFLOW_EXISTS",
     "bypasses_added": false,
@@ -1110,5 +1201,21 @@
       "github_committer": "AI-Your-Bro",
       "verified": true
     }
+  },
+  "toolchain": {
+    "document": "docs/development/TOOLCHAIN.md",
+    "go": "1.27.2",
+    "goimports": "golang.org/x/tools v0.52.0",
+    "govulncheck": "golang.org/x/vuln v1.9.0",
+    "golangci_lint": "v2.14.0",
+    "go_image": "golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e",
+    "lint_image": "golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f",
+    "image_indexes": "VERIFIED_LINUX_AMD64_AND_ARM64",
+    "application_dependencies": "STANDARD_LIBRARY_ONLY; TOOL_MODULES_PINNED_IN_ROOT_GO_MOD",
+    "native_ci_runners": [
+      "ubuntu-24.04",
+      "ubuntu-24.04-arm"
+    ],
+    "bootstrap_behavior": "PRINT_MESSAGE_AND_EXIT; NO_HEALTH_OR_BUSINESS_SERVER"
   }
 }

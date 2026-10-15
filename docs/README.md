@@ -1,6 +1,6 @@
 # Карта документации
 
-**Faultline Lab** · G0 принят 13 октября 2026 года · Реализация ещё не начата.
+**Faultline Lab** · G0 принят 13 октября 2026 года · Начата P01-01: Go-модуль и контейнерные инструменты.
 
 ## Маршруты чтения
 
@@ -10,6 +10,7 @@
 | Проверить распределённый процесс | [Атлас G0](architecture/PROCESSES.md) → [Принятие G0](adr/0001-approved-g0.md) |
 | Разобрать подключение другого бизнеса | [Граница лаборатории](architecture/LAB_BOUNDARY.md) — согласованное направление и детализация для ревью |
 | Подготовить среду Windows/macOS | [Контейнерная среда](development/ENVIRONMENT.md) — состав, профили и статус проверок |
+| Собрать и проверить первые Go-бинарники | [Toolchain P01-01](development/TOOLCHAIN.md) — версии, Docker-команды и границы проверок |
 | Проверить исходные ресурсы | [Профили сред](development/RESOURCE_PROFILES.md) — Windows, macOS и возможный будущий сервер |
 | Посмотреть оформление | [Концепции баннера](design/BANNER_OPTIONS.md) — три варианта и выбранное решение |
 | Принять участие в разработке | [CONTRIBUTING](../CONTRIBUTING.md) → [Правила ревью](development/CODE_REVIEW.md) → [Workflow](development/WORKFLOW.md) → [AGENTS](../AGENTS.md) |
