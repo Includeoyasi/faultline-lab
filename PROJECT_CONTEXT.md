@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **21**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
+Ревизия: **22**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
 
 ## Краткое текущее состояние
 
@@ -258,7 +258,7 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 21,
+  "context_revision": 22,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -1293,6 +1293,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-15",
       "summary": "P01-01 проверена на обеих Linux-архитектурах и предъявлена в ready PR #6. Оба Go checks стали обязательными в main. Issue отражает 1/8 проверено, 0/8 принято. Контекст содержит точные источники и CI evidence; следующие задачи не выполнялись.",
       "trigger": "Завершение первой задачи и передача владельцу на ревью"
+    },
+    {
+      "revision": 22,
+      "date": "2026-10-15",
+      "summary": "В итоговом self-review устранена устаревшая строка 0/8 реализации в конце спецификации; все активные сводки различают 1/8 проверено и 0/8 принято. Уточнены локальный runtime prerequisite и дата security snapshot. Go-код, инструменты и критерии не менялись.",
+      "trigger": "Сверка итоговых статусов перед передачей PR #6 владельцу"
     }
   ],
   "repository": {
@@ -1630,7 +1636,7 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `e3d3699a671b1330672c8e3957a6f5f87b0517ed3cbb6c01e445edc8dc5c71cc` |
+| `CONTEXT_STATE.json` | `53ee2104c642ad513e7ff1aaf867258222ff01e5f5e6208167c6be80fa58c014` |
 | `tools/context_intro.md` | `9d32c8fa03722c49f5122f927d8fc8bf4c7c4f05400ac1407e2cdf85ee514349` |
 | `tools/update_context.ps1` | `f830ed3538ae98ef5129b2ab5ae1d1ad564b0482d8ed2978a7ec2b96bcf5e731` |
 | `README.md` | `e31f015845283bd0ccec21c8867d3f9e9ea1cd7bacb1c8a992c076ec79051a78` |
@@ -1647,12 +1653,12 @@ SHA-256 относится к исходному файлу на момент с
 | `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
 | `docs/development/CODE_REVIEW.md` | `216c330dcd16f1774b408fe8b4af2f3c1de2a06e5ff7c46250839061feace72a` |
 | `docs/architecture/LAB_BOUNDARY.md` | `790709c43d5c2920909a9f5227467bcb77ec4d228024156dd5f69f29a8d92e46` |
-| `docs/development/ENVIRONMENT.md` | `e936dee2368bdd1afeb982b9e87aa137e896bb79d80102138cfcace103662923` |
+| `docs/development/ENVIRONMENT.md` | `e96d1de9d5bee662e110c207757422eef53e8898403ee33485b6844da75e50b2` |
 | `docs/development/RESOURCE_PROFILES.md` | `6b3fc67394485c0b13247d564175f3ecfb2b578a115dffbd252a31247e9bb5a1` |
 | `docs/design/BANNER_OPTIONS.md` | `27d7b336acd60aa3106e6498233f2a33eefd2bc37bf8e26cf12d2c0c0d229724` |
-| `docs/development/packets/P01.md` | `4233fb573a176c3be7d642e94f0780069845d49111636bd30ab8f653151737ba` |
-| `docs/development/TASK_TRACKING.md` | `d8c5297b1cb3c7f21110af76ff1e2728c6a8007b0c954cd2c0498ebfea5939fc` |
-| `docs/development/REPOSITORY_SECURITY.md` | `81b976da7a8baec68bd4afbdec984e2626eeec4c41ba793604a78abe110408a3` |
+| `docs/development/packets/P01.md` | `df7056ff0c05070a22ed70914c8083dd45ac8ef0dd1c9d1f561fbd9d868ee922` |
+| `docs/development/TASK_TRACKING.md` | `e0dfa8d3974f6154fd90e54a5469cba04459533101453bd9721142e3fce1ee1a` |
+| `docs/development/REPOSITORY_SECURITY.md` | `b10363e3417429cc06376dff0277f257a92912dae03af12d7d9ff8252a80cb6e` |
 | `.github/CODEOWNERS` | `95de6cc3de1ba640d0ab9e2b9bfbdea79b7ce6641a8bcdb0bcef1f7607666415` |
 | `docs/development/TOOLCHAIN.md` | `aa96b2bf01d51f5611b8ce61ff69ce1ce955d5238e17316a9af8defe11a0c993` |
 | `go.mod` | `42367a4526e5e710282c98d7e1b54744d316cd3d14cf931908cc58f92bf37f24` |
@@ -3824,7 +3830,7 @@ Docker рекомендует разделять ответственности 
 
 Для A/B по умолчанию используется одна машина с одинаковым бюджетом и нативной архитектурой. Сравнение между Windows и macOS возможно как отдельный эксперимент с явными ограничениями. В manifest сохраняются архитектура CPU, аппаратные ресурсы, OS, Docker, volumes, image digests и фактические лимиты.
 
-Для перехода от плана к проверенному запуску нужны доступные Docker Desktop/Compose и проверка ресурсов машины. Выбор версий и точные команды относятся к пакету реализации, а не к уже выполненной работе.
+Для локального runtime-запуска ещё нужны доступные Docker Desktop/Compose и проверка ресурсов машины. Версии и команды toolchain уже закреплены и проверены в Linux CI; runtime-образы сервисов и их smoke относятся к P01-06.
 
 <a id="appendix-resource-profiles"></a>
 
@@ -4024,7 +4030,7 @@ P01 не достигает всей контрольной точки G1: ба�
 
 #### Где следить за задачами
 
-Принятый порядок описан в [учёте задач](#appendix-task-tracking): один GitHub Issue на пакет, чеклист этих восьми задач, связь с PR. [Карточка P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) создана; Projects пока не настроен. Этот файл хранит критерии и датированный снимок. Реализация 0/8, а завершённое проектирование списка не повышает прогресс кода.
+Принятый порядок описан в [учёте задач](#appendix-task-tracking): один GitHub Issue на пакет, чеклист восьми задач и ссылки на их PR. [Карточка P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта; Projects пока не настроен. Этот файл хранит критерии и датированный снимок: P01-01 реализована и проверена, 1/8, принятие владельцем 0/8. Остальные семь задач не начаты.
 
 <a id="appendix-task-tracking"></a>
 
@@ -4080,7 +4086,7 @@ BLOCKED — отдельный признак с причиной и требу�
 #### Фактический статус сейчас
 
 - P01-01 в ревью: созданы и проверены модуль, bootstrap entrypoints и контейнер инструментов. Остальные задачи не начаты; бизнес-проверки сервиса NOT_RUN.
-- Карточка [P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта: IN_PROGRESS. Чекбокс первой задачи отмечается после применимых проверок; принятие человеком отдельно фиксируется после ревью и merge. Projects не создан.
+- Карточка [P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта: IN_PROGRESS, первый чекбокс отмечен после реализации и проверок. Принятие человеком отдельно фиксируется после ревью и merge. Projects не создан.
 - Документационные PR #4 и [#5](https://github.com/Includeoyasi/faultline-lab/pull/5) слиты. CODEOWNERS и защита main действуют; PR первой задачи публикуется от AI-Your-Bro с ревью Includeoyasi.
 - Следующая зависимая задача — P01-02 после ревью текущего результата; весь P01 и G1 ещё не приняты.
 
@@ -4092,7 +4098,7 @@ BLOCKED — отдельный признак с причиной и требу�
 
 ### Защита main и аккаунт исполнителя
 
-Снимок на 13 октября 2026 года. Владелец проекта прямо поручил перейти на отдельный аккаунт исполнителя и настроить защиту main, затем предоставил логин AI-Your-Bro. Защита применена через GitHub API и проверена отдельным GET. Авторизация исполнителя проверена через GET /user: AI-Your-Bro, GitHub ID 342030453. Его права на репозиторий — write, push=true, admin=false; приглашение принято. Git Credential Manager сохранил OAuth-авторизацию в защищённом хранилище Windows. Владелец прямо отказался включать 2FA; этот выбор записан, а статус 2FA не выдан за подтверждённый API.
+Снимок на 15 октября 2026 года; исходная настройка выполнена 13 октября. Владелец проекта прямо поручил перейти на отдельный аккаунт исполнителя и настроить защиту main, затем предоставил логин AI-Your-Bro. Защита применена через GitHub API и проверена отдельным GET. Авторизация исполнителя проверена через GET /user: AI-Your-Bro, GitHub ID 342030453. Его права на репозиторий — write, push=true, admin=false; приглашение принято. Git Credential Manager сохранил OAuth-авторизацию в защищённом хранилище Windows. Владелец прямо отказался включать 2FA; этот выбор записан, а статус 2FA не выдан за подтверждённый API.
 
 #### Действующие настройки main
 
