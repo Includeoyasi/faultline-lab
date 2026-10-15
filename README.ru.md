@@ -26,7 +26,7 @@
 
 Ближайший пакет **P01**: три Go entrypoints, конфигурация, health, graceful shutdown и JSON-логи, контейнерный toolchain и Compose-запуск для Windows/macOS. [План среды](docs/development/ENVIRONMENT.md) объясняет состав контейнеров; [граница лаборатории](docs/architecture/LAB_BOUNDARY.md) сохраняет направление подключения других бизнесов. Проверки документации не являются тестами будущих сервисов. Производительность стенда пока не измерялась.
 
-Задачи ведутся в [P01 — Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3): P01-01 в работе, остальные семь не начаты. Первая задача предъявляется отдельным PR; принятие владельцем ещё ожидается. [Спецификация пакета](docs/development/packets/P01.md) содержит критерии. P01 идёт после G0 и до G1.
+Задачи ведутся в [P01 — Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3): P01-01 реализована и проверена в нативном Linux CI AMD64/ARM64, IN_REVIEW в [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6). Остальные семь не начаты. Проверено 1/8, принятие владельцем ещё ожидается. [Спецификация пакета](docs/development/packets/P01.md) содержит критерии. P01 идёт после G0 и до G1.
 
 ## Идея
 

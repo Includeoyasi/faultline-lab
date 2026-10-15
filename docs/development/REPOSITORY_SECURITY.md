@@ -11,14 +11,14 @@
 | Сброс approval после новых изменений | Включён |
 | Approval после последнего push другим участником | Обязателен |
 | Ревью CODEOWNERS | Включено; CODEOWNERS действует в main после PR #5 |
-| Required check | Links and portable context |
+| Required checks | Links and portable context; Go toolchain (amd64); Go toolchain (arm64) |
 | Источник required check | GitHub Actions, app ID 15368 |
 | Актуальность ветки относительно main | Обязательна перед merge |
 | Закрытие обсуждений | Обязательно |
 | Применение правил к администратору | Включено |
 | Force push / удаление | Запрещены |
 
-Это проверка фактических настроек, а не попытка выполнить запрещённый push или удалить ветку. Подписанные коммиты и обязательная линейная история не вводились. Go checks добавляются после появления проверенного workflow в P01; отсутствующие проверки не объявляются действующими.
+Это проверка фактических настроек, а не попытка выполнить запрещённый push или удалить ветку. Подписанные коммиты и обязательная линейная история не вводились. Оба Go checks добавлены в required checks 15 октября после успешного нативного CI P01-01. PATCH изменил только список проверок; отдельный GET подтвердил сохранение reviewer/CODEOWNERS/admin enforcement и запретов force push/deletion.
 
 [.github/CODEOWNERS](../../.github/CODEOWNERS) находится в main после слияния PR #5, подтверждённого 15 октября 2026 года (merge d616a22). Все файлы, включая workflow и сам CODEOWNERS, назначены @Includeoyasi. GitHub использует CODEOWNERS базовой ветки и требует ревью указанного владельца. [Правила CODEOWNERS](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners).
 
@@ -40,7 +40,7 @@ GitHub разрешает machine account, зарегистрированный 
 4. Локальная Git identity этого репозитория: AI-Your-Bro, 342030453+AI-Your-Bro@users.noreply.github.com. Локальная credential.https://github.com.username выбирает AI-Your-Bro. Глобальная Git identity и авторизация других репозиториев не менялись. На macOS нужно отдельно подключить исполнителя и проверить identity; локальные credentials автоматически туда не переносятся.
 5. [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4) уже слит: merge commit 8c392b8, принятый HEAD 83e0076. Переоформлять его не нужно; переход применяется к новым PR. Новая локальная ветка chore/executor-security обновлена до этого main.
 6. [PR #5](https://github.com/Includeoyasi/faultline-lab/pull/5) слит владельцем: принятый HEAD 704a7ec, merge d616a22. ИИ не выполнял approve/merge. GitHub ранее подтвердил автора PR и коммиттера как AI-Your-Bro.
-7. CODEOWNERS подтверждён в main, переносимый контекст обновлён. На 15 октября начата P01-01; G1–G4 не приняты. Required checks по-прежнему перечислены выше; наличие нового Go workflow само по себе не означает обновления серверных правил.
+7. CODEOWNERS подтверждён в main, переносимый контекст обновлён. На 15 октября P01-01 в ревью; G1–G4 не приняты. Required checks перечислены выше и подтверждены серверным GET; одно наличие workflow не считается доказательством настройки.
 
 ## Текущее ограничение
 
