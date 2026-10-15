@@ -22,11 +22,11 @@
 
 ## Состояние проекта
 
-**Архитектура принята, начата Go-основа.** Владелец проекта полностью согласовал G0 **13 октября 2026 года**. P01-01 с модулем и контейнером инструментов принята и слита. P01-02–04 добавляют конфигурацию, JSON-логи и три независимых gRPC health-процесса. [Устройство и запуск](docs/development/SERVICE_RUNTIME.md). Бизнес-операций и результатов экспериментов ещё нет. [Команды сборки и проверок](docs/development/TOOLCHAIN.md).
+**Архитектура принята, начата Go-основа.** Владелец проекта полностью согласовал G0 **13 октября 2026 года**. P01-01 с модулем и контейнером инструментов принята и слита. P01-02–04 с конфигурацией, JSON-логами и gRPC health приняты в PR #7. P01-05–08 добавляют graceful shutdown и [runtime-контейнеры](docs/development/CONTAINER_RUNTIME.md). [Устройство и запуск](docs/development/SERVICE_RUNTIME.md). Бизнес-операций и результатов экспериментов ещё нет. [Команды сборки и проверок](docs/development/TOOLCHAIN.md).
 
 Ближайший пакет **P01**: три Go entrypoints, конфигурация, health, graceful shutdown и JSON-логи, контейнерный toolchain и Compose-запуск для Windows/macOS. [План среды](docs/development/ENVIRONMENT.md) объясняет состав контейнеров; [граница лаборатории](docs/architecture/LAB_BOUNDARY.md) сохраняет направление подключения других бизнесов. Проверки документации не являются тестами будущих сервисов. Производительность стенда пока не измерялась.
 
-Задачи ведутся в [P01 — Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3): P01-01 принята и слита в [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6); P01-02–04 проверены на Linux AMD64/ARM64 и предъявлены вместе в [PR #7](https://github.com/Includeoyasi/faultline-lab/pull/7) по прямому поручению владельца. P01-05–08 не начаты. Проверено 4/8, принято владельцем 1/8. [Спецификация пакета](docs/development/packets/P01.md) содержит критерии. P01 идёт после G0 и до G1.
+Задачи ведутся в [P01 — Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3): P01-01 принята и слита в [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6); P01-02–04 приняты и слиты в PR #7. P01-05–08 разрабатываются одним PR. Принято владельцем 4/8; Windows container smoke NOT_RUN, пока Docker/WSL не установлены. [Спецификация пакета](docs/development/packets/P01.md) содержит критерии. P01 идёт после G0 и до G1.
 
 ## Идея
 

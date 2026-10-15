@@ -91,7 +91,7 @@ func TestServeCancellationDuringStartup(t *testing.T) {
 		cancel()
 		return output.Write(data)
 	})
-	if err := serve(ctx, Config{GRPCAddress: "127.0.0.1:0"}, newLogger(writer, "orders", slog.LevelInfo)); err != nil {
+	if err := serve(ctx, Config{GRPCAddress: "127.0.0.1:0", ShutdownTimeout: time.Second}, newLogger(writer, "orders", slog.LevelInfo)); err != nil {
 		t.Fatalf("cancellation during startup failed: %v", err)
 	}
 	if !strings.Contains(output.String(), `"msg":"service stopped"`) {
@@ -107,7 +107,7 @@ func TestServeHealthAndCancellation(t *testing.T) {
 	result := make(chan error, 1)
 	go func() {
 		// Port zero is only a test fixture; public configuration rejects it.
-		result <- serve(ctx, Config{GRPCAddress: "127.0.0.1:0"}, newLogger(records, "orders", slog.LevelInfo))
+		result <- serve(ctx, Config{GRPCAddress: "127.0.0.1:0", ShutdownTimeout: time.Second}, newLogger(records, "orders", slog.LevelInfo))
 	}()
 	t.Cleanup(func() {
 		cancel()
@@ -149,11 +149,19 @@ func TestServeHealthAndCancellation(t *testing.T) {
 	cancel()
 	select {
 	case record := <-records:
+		if !strings.Contains(string(record), `"health":"NOT_SERVING"`) {
+			t.Fatalf("missing readiness transition: %s", record)
+		}
+	case <-time.After(10 * time.Second):
+		t.Fatal("missing stopping record")
+	}
+	select {
+	case record := <-records:
 		var stopped map[string]any
 		if err := json.Unmarshal(record, &stopped); err != nil {
 			t.Fatal(err)
 		}
-		if stopped["msg"] != "service stopped" || stopped["service"] != "orders" || stopped["stop_mode"] != "immediate" {
+		if stopped["msg"] != "service stopped" || stopped["service"] != "orders" || stopped["stop_mode"] != "graceful" {
 			t.Fatalf("invalid stop record: %v", stopped)
 		}
 	case <-time.After(10 * time.Second):

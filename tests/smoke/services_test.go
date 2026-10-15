@@ -13,6 +13,7 @@ import (
 	"runtime"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -66,7 +67,9 @@ func (capture *logCapture) check(t *testing.T, service string) []map[string]any 
 		t.Fatalf("invalid process logs: %v; unfinished line %q", capture.err, capture.pending)
 	}
 	for _, record := range capture.records {
-		if record["service"] != service || record["level"] == "" || record["msg"] == "" {
+		level, hasLevel := record["level"].(string)
+		message, hasMessage := record["msg"].(string)
+		if record["service"] != service || !hasLevel || level == "" || !hasMessage || message == "" {
 			t.Fatalf("missing common log fields: %v", record)
 		}
 		timestamp, ok := record["time"].(string)
@@ -115,10 +118,14 @@ func freeAddress(t *testing.T) string {
 	return address
 }
 
-func start(t *testing.T, binary string) *process {
+func start(t *testing.T, binary string, overrides map[string]string) *process {
 	t.Helper()
 	p := &process{cmd: exec.Command(binary), logs: &logCapture{started: make(chan string, 1)}, done: make(chan struct{})}
-	p.cmd.Env = childEnvironment(map[string]string{"FL_GRPC_ADDR": freeAddress(t)})
+	values := map[string]string{"FL_GRPC_ADDR": freeAddress(t)}
+	for key, value := range overrides {
+		values[key] = value
+	}
+	p.cmd.Env = childEnvironment(values)
 	p.cmd.Stdout, p.cmd.Stderr = p.logs, p.logs
 	if err := p.cmd.Start(); err != nil {
 		t.Fatal(err)
@@ -174,7 +181,7 @@ func checkHealth(t *testing.T, address, service string) {
 	}
 }
 
-func stop(t *testing.T, p *process, service string) {
+func stop(t *testing.T, p *process, service string, signal os.Signal) {
 	t.Helper()
 	// Windows cannot send os.Interrupt to an arbitrary child. Its forced cleanup
 	// verifies isolation; normal signal exit/logs are verified on both Linux CIs.
@@ -182,7 +189,7 @@ func stop(t *testing.T, p *process, service string) {
 	if runtime.GOOS == "windows" {
 		err = p.cmd.Process.Kill()
 	} else {
-		err = p.cmd.Process.Signal(os.Interrupt)
+		err = p.cmd.Process.Signal(signal)
 	}
 	if err != nil {
 		t.Fatal(err)
@@ -194,10 +201,11 @@ func stop(t *testing.T, p *process, service string) {
 	}
 	records := p.logs.check(t, service)
 	if runtime.GOOS != "windows" {
-		if p.waitErr != nil || len(records) != 2 || records[1]["msg"] != "service stopped" || records[1]["stop_mode"] != "immediate" {
+		if p.waitErr != nil || len(records) != 3 || records[1]["msg"] != "service stopping" || records[1]["health"] != "NOT_SERVING" || records[2]["msg"] != "service stopped" || records[2]["stop_mode"] != "graceful" {
 			t.Fatalf("unexpected normal exit: %v; logs: %v", p.waitErr, records)
 		}
 		logJSON(t, records[1])
+		logJSON(t, records[2])
 	}
 }
 
@@ -218,7 +226,7 @@ func TestServiceProcesses(t *testing.T) {
 		if runtime.GOOS == "windows" {
 			binary += ".exe"
 		}
-		processes[i] = start(t, binary)
+		processes[i] = start(t, binary, nil)
 		checkHealth(t, processes[i].address, "")
 		checkHealth(t, processes[i].address, "unknown-business-api")
 		records := processes[i].logs.check(t, name)
@@ -229,6 +237,15 @@ func TestServiceProcesses(t *testing.T) {
 		}
 		t.Logf("%s health SERVING", name)
 		logJSON(t, records[0])
+		t.Run(name+"/healthcheck-command", func(t *testing.T) {
+			ctx, cancel := context.WithTimeout(t.Context(), 5*time.Second)
+			defer cancel()
+			probe := exec.CommandContext(ctx, binary, "healthcheck")
+			probe.Env = childEnvironment(map[string]string{"FL_HEALTH_TARGET": processes[i].address})
+			if output, err := probe.CombinedOutput(); err != nil || len(output) != 0 {
+				t.Fatalf("probe = %v; output %s", err, output)
+			}
+		})
 		for key, value := range map[string]string{"FL_GRPC_ADDR": "secret://user:password@host:80", "FL_LOG_LEVEL": "super-secret-value", "FL_SHUTDOWN_TIMEOUT": "0s"} {
 			t.Run(name+"/reject/"+key, func(t *testing.T) {
 				values := map[string]string{"FL_GRPC_ADDR": processes[i].address}
@@ -245,15 +262,67 @@ func TestServiceProcesses(t *testing.T) {
 		t.Run(name+"/occupied", func(t *testing.T) {
 			assertFailure(t, binary, name, map[string]string{"FL_GRPC_ADDR": processes[i].address}, "listen for gRPC", "")
 		})
+		if runtime.GOOS != "windows" {
+			t.Run(name+"/shutdown-deadline", func(t *testing.T) {
+				assertProcessDeadline(t, binary, name)
+			})
+		}
 	}
-	stop(t, processes[0], "orders")
+	stop(t, processes[0], "orders", syscall.SIGTERM)
 	for i := 1; i < len(services); i++ {
 		checkHealth(t, processes[i].address, "")
 		t.Logf("%s remains SERVING after orders stopped", services[i])
 	}
 	for i := 1; i < len(services); i++ {
-		stop(t, processes[i], services[i])
+		stop(t, processes[i], services[i], os.Interrupt)
 	}
+}
+
+func assertProcessDeadline(t *testing.T, binary, service string) {
+	t.Helper()
+	p := start(t, binary, map[string]string{"FL_SHUTDOWN_TIMEOUT": "500ms"})
+	conn, err := grpc.NewClient("passthrough:///"+p.address, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := conn.Close(); err != nil {
+			t.Error(err)
+		}
+	}()
+	ctx, cancel := context.WithTimeout(t.Context(), 5*time.Second)
+	defer cancel()
+	watch, err := healthpb.NewHealthClient(conn).Watch(ctx, &healthpb.HealthCheckRequest{}, grpc.WaitForReady(true))
+	if err != nil {
+		t.Fatal(err)
+	}
+	response, err := watch.Recv()
+	if err != nil || response.GetStatus() != healthpb.HealthCheckResponse_SERVING {
+		t.Fatalf("initial Watch = %v, %v", response, err)
+	}
+	if err := p.cmd.Process.Signal(syscall.SIGTERM); err != nil {
+		t.Fatal(err)
+	}
+	// Keep the stream open after NOT_SERVING to exercise the real process's
+	// deadline, error logging and exit code without inventing a business RPC.
+	response, err = watch.Recv()
+	if err != nil || response.GetStatus() != healthpb.HealthCheckResponse_NOT_SERVING {
+		t.Fatalf("shutdown Watch = %v, %v", response, err)
+	}
+	select {
+	case <-p.done:
+	case <-ctx.Done():
+		t.Fatal("process did not enforce its shutdown deadline")
+	}
+	var exitError *exec.ExitError
+	if !errors.As(p.waitErr, &exitError) || exitError.ExitCode() != 1 {
+		t.Fatalf("forced process exit = %v, want 1", p.waitErr)
+	}
+	records := p.logs.check(t, service)
+	if len(records) != 4 || records[2]["stop_mode"] != "forced" || records[3]["msg"] != "service failed" {
+		t.Fatalf("missing forced shutdown diagnostics: %v", records)
+	}
+	t.Logf("%s: open Watch forced shutdown and exit 1 verified", service)
 }
 
 func assertFailure(t *testing.T, binary, service string, overrides map[string]string, reason, secret string) {

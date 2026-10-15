@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-// Config holds process settings. ShutdownTimeout is reserved for P01-05.
+// Config holds process settings, including the active RPC drain budget.
 type Config struct {
 	GRPCAddress     string
 	LogLevel        slog.Level

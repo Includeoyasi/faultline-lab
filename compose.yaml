@@ -1,4 +1,44 @@
+x-runtime: &runtime
+  env_file:
+    - ${FL_RUNTIME_ENV_FILE:-configs/env/container.env.example}
+  read_only: true
+  cap_drop: [ALL]
+  security_opt:
+    - no-new-privileges:true
+  stop_grace_period: 15s
+  networks: [runtime]
+  healthcheck:
+    test: [CMD, /app/service, healthcheck]
+    interval: 5s
+    timeout: 3s
+    retries: 3
+    start_period: 5s
+
+x-service-build: &service-build
+  context: .
+  dockerfile: build/service.Dockerfile
+  additional_contexts:
+    toolchain: service:toolchain
+
 services:
+  orders:
+    <<: *runtime
+    build:
+      <<: *service-build
+      args:
+        SERVICE: orders
+  inventory:
+    <<: *runtime
+    build:
+      <<: *service-build
+      args:
+        SERVICE: inventory
+  payments:
+    <<: *runtime
+    build:
+      <<: *service-build
+      args:
+        SERVICE: payments
   toolchain:
     profiles: [tools]
     build:
@@ -15,3 +55,7 @@ services:
 volumes:
   go-modules:
   go-build:
+
+networks:
+  runtime:
+    internal: true

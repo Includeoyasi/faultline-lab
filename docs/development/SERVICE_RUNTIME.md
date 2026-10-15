@@ -1,8 +1,8 @@
-# Запуск сервисов — P01-02, P01-03, P01-04
+# Сервисы: конфигурация, логи и жизненный цикл
 
 Три независимых процесса Orders, Inventory и Payments проверяют настройки, пишут JSON в stderr и обслуживают стандартный `grpc.health.v1.Health/Check`. Health пока подтверждает только работу gRPC-каркаса. Бизнес-методов, PostgreSQL/Kafka/Redis и доменных protobuf здесь нет.
 
-P01-01 принят владельцем и слит через [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6). [PR #7](https://github.com/Includeoyasi/faultline-lab/pull/7) объединяет задачи 02–04 по прямому поручению владельца. Статус проверок и ссылка на текущий PR находятся в [P01](packets/P01.md) и [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3).
+P01-01 принят владельцем и слит через [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6). [PR #7](https://github.com/Includeoyasi/faultline-lab/pull/7) принят и слит владельцем; задачи 02–04 DONE. Следующий пакет 05–08 реализует ограниченное завершение, отдельные runtime-образы и smoke. Статус проверок и ссылка на текущий PR находятся в [P01](packets/P01.md) и [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3).
 
 ## Как устроен запуск
 
@@ -14,7 +14,10 @@ flowchart LR
     Bind -->|ошибка| Error
     Bind --> Ready["Health SERVING<br/>JSON: service started"]
     Ready --> Serve["Обслуживать gRPC health"]
-    Serve -->|SIGINT / SIGTERM| Stop["Немедленная остановка<br/>JSON: service stopped"]
+    Serve -->|SIGINT / SIGTERM| Unready["Health NOT_SERVING"]
+    Unready --> Drain["GracefulStop<br/>ожидание активных RPC"]
+    Drain -->|завершены| Stop["JSON: stop_mode=graceful<br/>exit 0"]
+    Drain -->|истёк timeout| Force["Stop + завершение процесса<br/>stop_mode=forced / exit 1"]
 ```
 
 [cmd/orders](../../cmd/orders/main.go), [cmd/inventory](../../cmd/inventory/main.go) и [cmd/payments](../../cmd/payments/main.go) задают имя сервиса и владеют обработкой сигналов/кодом выхода. Адресов и портов в прикладном Go-коде нет: они поступают из окружения. [internal/service](../../internal/service/run.go) содержит только общие механизмы запуска; бизнес-логика одного сервиса не импортируется другим. Лаборатория и адаптеры ещё не реализованы.
@@ -28,10 +31,11 @@ flowchart LR
 | `FL_GRPC_ADDR` | Нет; обязательная настройка окружения | `host:port`, порт 1–65535; IPv6 в квадратных скобках; пустой host разрешён только как явно выбранный wildcard |
 | `FL_LOG_LEVEL` | `INFO` | `DEBUG`, `INFO`, `WARN`, `ERROR`, регистр не важен |
 | `FL_SHUTDOWN_TIMEOUT` | `10s` | Положительная Go duration, например `500ms` или `15s` |
+| `FL_HEALTH_TARGET` | Нет; обязателен только для команды `healthcheck` | Конкретный host:port, не wildcard; задаётся отдельно от listener |
 
 Отсутствующий или пустой `FL_GRPC_ADDR` приводит к JSON-ошибке и exit 1 до открытия listener. Приложение не выбирает сеть за оператора и не имеет скрытого адреса по умолчанию. Для уровня логов и timeout действуют defaults; явно пустое значение отклоняется. Адрес проверяется синтаксически без DNS-запроса. Имя host должно быть IP или DNS-именем; IPv6 zone ID пока не поддерживается. Возможность разрешить имя/открыть адрес проверяется фактическим bind. URI, имена портов и произвольный текст отклоняются. Ошибка называет переменную и правило, не повторяя введённое значение; весь конфиг в логи не выводится.
 
-**Shutdown timeout пока только разбирается и валидируется.** В этом PR отмена контекста немедленно вызывает `grpc.Server.Stop()`. Ожидание активных RPC, наблюдаемый переход readiness и принудительное завершение по deadline относятся к P01-05 и ещё не реализованы. Наличие настройки не означает готовность graceful shutdown.
+`FL_SHUTDOWN_TIMEOUT` ограничивает ожидание активных RPC после удаления готовности. Graceful stop даёт завершиться начатой работе; по deadline запрашивается принудительный Stop и процесс завершается с кодом 1. Оставшаяся goroutine некооперативного handler прекращается вместе с процессом. Реализация и управляемые тесты описаны в [контейнерном пакете](CONTAINER_RUNTIME.md).
 
 Адрес прослушивания, адрес подключения клиента и публикация порта на хосте — разные настройки:
 
@@ -51,22 +55,16 @@ flowchart LR
 Используется стандартный [log/slog](https://pkg.go.dev/log/slog), отдельный logger каждого сервиса. Каждая прикладная запись — одна JSON-строка с `time`, `level`, `msg`, `service`.
 
 - `service started` (INFO): фактический `grpc_address`, `version`, `revision`, `vcs_modified`, `go_version` из Go build metadata. Неизвестное значение — `unknown`; локальный модуль может иметь версию `(devel)`. Commit не задаётся придуманной константой.
-- `service stopped` (INFO): `stop_mode=immediate` после завершения Serve.
+- `service stopping` (INFO): health=NOT_SERVING и shutdown_timeout перед началом drain.
+- `service stopped` (INFO): stop_mode=graceful; при deadline — WARN с stop_mode=forced и последующая ERROR-диагностика, exit 1.
 - `configuration rejected` (ERROR): безопасная причина ошибки настроек; до создания рабочего logger используется INFO logger, поэтому ошибочный уровень не скрывает диагностику.
 - `service failed` (ERROR): ошибка bind или обслуживания/остановки.
 
 Уровень фильтрует записи: при WARN/ERROR штатные старт/стоп INFO не выводятся. По умолчанию INFO они доступны. Секреты и payload не добавляются. Идентификаторы запросов/заказов появятся вместе с соответствующими операциями.
 
-## Наблюдённые записи CI
+## Наблюдаемые записи
 
-Ниже реальные записи предыдущей версии из [прошедшего AMD64 job](https://github.com/Includeoyasi/faultline-lab/actions/runs/38734815221), source HEAD `4d3b235`, до удаления адреса по умолчанию. Loopback здесь — адрес тестового listener, не настройка приложения в исходнике. Порядок JSON-ключей нормализован тестом. В pull_request CI checkout собирает временный merge ref: поэтому build revision `108fabc` отличается от HEAD ветки. Это сведения о фактически собранном коде, а не подстановка SHA задачи.
-
-```json
-{"go_version":"go1.27.2","grpc_address":"127.0.0.1:34189","level":"INFO","msg":"service started","revision":"108fabc9d038d1a49f0f5025c8190d900de72ba2","service":"orders","time":"2026-10-15T12:29:40.759977921Z","vcs_modified":"false","version":"v0.0.0-20261015122747-108fabc9d038"}
-{"error":"FL_LOG_LEVEL must be DEBUG, INFO, WARN or ERROR","level":"ERROR","msg":"configuration rejected","service":"orders","time":"2026-10-15T12:29:40.763519761Z"}
-{"error":"listen for gRPC: listen tcp 127.0.0.1:34189: bind: address already in use","level":"ERROR","msg":"service failed","service":"orders","time":"2026-10-15T12:29:40.769974111Z"}
-{"level":"INFO","msg":"service stopped","service":"orders","stop_mode":"immediate","time":"2026-10-15T12:29:40.796337143Z"}
-```
+Каждый runtime smoke сохраняет реальные JSONL-записи старта, удаления готовности и остановки. В review packet приводятся ссылка на соответствующий CI и его артефакты; [контейнерная инструкция](CONTAINER_RUNTIME.md) описывает состав отчёта. Process smoke также печатает наблюдённые JSON в лог job. Временный merge ref GitHub может отличаться от HEAD ветки; metadata не подменяются придуманным SHA.
 
 ## Сборка и проверки
 
@@ -87,21 +85,12 @@ docker compose run --rm toolchain service-smoke
 - обязательные поля JSON и build metadata;
 - для каждого бинарника — отсутствующий/пустой адрес, ошибки адреса, уровня, timeout и занятого порта: одна JSON-диагностика, exit 1, отсутствие готовности;
 - после остановки Orders — доступность Inventory и Payments;
-- на Linux — нормальный SIGINT exit и финальную JSON-запись.
+- на Linux — нормальные SIGINT/SIGTERM exit и forced exit 1 по deadline при удерживаемом health Watch.
 
 Тесты синхронизируются по стартовой записи и реальному RPC с deadline, без случайных Sleep. Порты тестов выделяются динамически; unit fixture использует порт 0, публичная конфигурация его отклоняет. Под Windows smoke завершает дочерние процессы через Kill: это проверка изоляции, а не доставки Unix-сигнала. Завершение по отмене контекста и JSON stop отдельно проверяются unit-тестом на доступных ОС; Linux CI дополнительно проверяет сигнал реальному процессу. Race detector охватывает также сам сервер в unit-тесте; дочерние бинарники smoke собираются обычной сборкой.
 
-Для ручного исследования после `toolchain build` можно запустить Orders в контейнере инструментов:
-
-```text
-docker compose run --rm toolchain build
-docker compose run --rm --env-from-file configs/env/container.env.example --entrypoint /workspace/bin/orders toolchain
-```
-
-Это запускает Orders без публикации порта на хост. Для явного локального доступа добавьте `-p 127.0.0.1:50051:50051` к команде. Привязка `127.0.0.1` здесь — политика локального доступа в конфигурации запуска, а не встроенный адрес Go-программы. Не используйте сокращённое `-p 50051:50051`: оно публикует порт на всех интерфейсах хоста. Для этой изоляции используйте актуальный Docker Engine 28+; более старые версии имели документированное ограничение публикации на localhost.
-
-Inventory и Payments аналогично используют свои бинарники с тем же container.env.example в отдельных контейнерах. При необходимости доступа с хоста задайте разные host ports (50052/50053) при том же container port 50051. Это временный путь разработки; отдельные минимальные runtime-образы и Compose-сервисы остаются P01-06. Параметр `--env-from-file` описан в [справке Compose run](https://docs.docker.com/reference/cli/docker/compose/run/). Стандартный health API описан в [документации gRPC](https://grpc.io/docs/guides/health-checking/); grpcurl/reflection в проект не добавлены.
+Для отдельных минимальных runtime-контейнеров используйте [контейнерную инструкцию](CONTAINER_RUNTIME.md): сборка, запуск, health, остановка и автоматический smoke без host Go. Она заменяет прежний запуск серверов внутри образа компилятора.
 
 ## Границы доказательств
 
-Нативный Windows Go smoke может подтвердить TCP/health процессов, но не Docker Desktop. Linux AMD64/ARM64 CI проверяет toolchain-контейнер и процессы на каждой архитектуре; он не доказывает запуск на личном Mac. Runtime-контейнеры, graceful drain, работа БД, бизнес-инварианты, нагрузка и потребление ресурсов ещё не проверяются. Итоговые PASS/NOT_RUN фиксируются после реального прогона, отдельно от этого описания поведения.
+Нативный Windows Go smoke может подтвердить TCP/health процессов, но не Docker Desktop. Linux AMD64/ARM64 CI проверяет toolchain-контейнер и процессы на каждой архитектуре; он не доказывает запуск на личном Mac. Graceful drain проверяется управляемыми unit/process tests; runtime-контейнеры — отдельным Docker smoke. Работа БД, бизнес-инварианты, нагрузка и потребление ресурсов ещё не проверяются. Итоговые PASS/NOT_RUN фиксируются после реального прогона, отдельно от этого описания поведения.

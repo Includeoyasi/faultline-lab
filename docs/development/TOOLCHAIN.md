@@ -1,6 +1,6 @@
 # Go-модуль и контейнерный toolchain
 
-Состояние на 15 октября 2026 года: созданы Go-модуль, три bootstrap entrypoints и контейнер инструментов. Локальная сборка временным Go на Windows прошла. На нативных Linux AMD64/ARM64 прошли Docker build, Go checks, сборка/запуск всех трёх бинарников и отказ на неизвестную команду: [проверенный прогон](https://github.com/Includeoyasi/faultline-lab/actions/runs/38723552125), исходный HEAD 7ea4b89. [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) принят и слит; он покрывал только P01-01. В следующем PR задачи 02–04 добавляют [gRPC health-процессы](SERVICE_RUNTIME.md), конфигурацию и JSON-логи. Runtime-образы и бизнес-API ещё не реализованы. Текущий HEAD и его проверки доступны в соответствующем PR.
+Состояние на 15 октября 2026 года: P01-01–04 приняты и слиты через PR #6/#7. Закреплённый toolchain используется Go CI и как named build context трёх [runtime-образов](CONTAINER_RUNTIME.md). В следующем PR P01-05–08 реализованы graceful shutdown, runtime Compose и smoke с отчётом; фактические результаты нового CI и локальные ограничения находятся в контексте/PR.
 
 ## Состав и версии
 

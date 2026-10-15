@@ -1,6 +1,6 @@
 # Карта документации
 
-**Faultline Lab** · G0 принят 13 октября 2026 года · P01-01 принята; P01-02–04: конфигурация, JSON-логи и gRPC health.
+**Faultline Lab** · G0 принят 13 октября 2026 года · P01-01–04 приняты; P01-05–08: graceful shutdown, runtime-контейнеры и итоговый smoke.
 
 ## Маршруты чтения
 
@@ -12,6 +12,7 @@
 | Подготовить среду Windows/macOS | [Контейнерная среда](development/ENVIRONMENT.md) — состав, профили и статус проверок |
 | Собрать и проверить первые Go-бинарники | [Toolchain P01-01](development/TOOLCHAIN.md) — версии, Docker-команды и границы проверок |
 | Запустить и проверить три процесса | [Запуск сервисов](development/SERVICE_RUNTIME.md) — настройки, JSON, health и границы shutdown |
+| Поднять три runtime-контейнера | [Контейнерный каркас](development/CONTAINER_RUNTIME.md) — сборка, health, остановка и smoke с отчётом |
 | Проверить исходные ресурсы | [Профили сред](development/RESOURCE_PROFILES.md) — Windows, macOS и возможный будущий сервер |
 | Посмотреть оформление | [Концепции баннера](design/BANNER_OPTIONS.md) — три варианта и выбранное решение |
 | Принять участие в разработке | [CONTRIBUTING](../CONTRIBUTING.md) → [Правила ревью](development/CODE_REVIEW.md) → [Workflow](development/WORKFLOW.md) → [AGENTS](../AGENTS.md) |

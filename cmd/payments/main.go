@@ -11,9 +11,7 @@ import (
 
 func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
-	err := service.Run(ctx, "payments", os.LookupEnv, os.Stderr)
+	exitCode := service.Execute(ctx, "payments", os.Args[1:], os.LookupEnv, os.Stderr)
 	stop()
-	if err != nil {
-		os.Exit(1)
-	}
+	os.Exit(exitCode)
 }
