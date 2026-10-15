@@ -22,15 +22,15 @@
 
 ## Current state
 
-**Architecture approved · container skeleton in progress.** G0 was accepted on **13 October 2026**; P01-01–04 are merged. P01-05–08 add bounded graceful shutdown, three minimal runtime images, Compose and smoke reports. [Build tools](docs/development/TOOLCHAIN.md) · [Runtime guide](docs/development/CONTAINER_RUNTIME.md). Business operations and experiment results are still to come.
+**Architecture approved · container skeleton accepted.** P01 is complete after owner-merged PR #8 on **16 October 2026** (Europe/Moscow). Three services have bounded shutdown, minimal runtime images, Compose and smoke reports. [Build tools](docs/development/TOOLCHAIN.md) · [Runtime guide](docs/development/CONTAINER_RUNTIME.md). The [P02 infrastructure/data plan](docs/development/packets/P02.md) is proposed; implementation has not started. G1, business operations and experiment results are still to come.
 
 | Ready | Next | Later |
 | :--- | :--- | :--- |
-| Approved architecture and business invariants | Review runtime images and bounded shutdown | Repeatable load and failure experiments |
-| Detailed process diagrams and review gates | PostgreSQL ownership, migrations and gRPC contracts | Grafana dashboards, alerts and experiment reports |
+| Approved architecture, runtime images and bounded shutdown | PostgreSQL ownership, migrations and seed | Repeatable load and failure experiments |
+| Detailed process diagrams and review gates | Kafka/Redis infrastructure, then gRPC contracts | Grafana dashboards, alerts and experiment reports |
 | Portable context with a freshness check | Durable workflows, Kafka and compensation | Scaling comparisons under equal resource budgets |
 
-The first code [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) covers **P01-01**, after G0 and before G1. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) tracks all eight tasks; [the packet specification](docs/development/packets/P01.md) defines acceptance criteria. P01-01–04 are accepted and merged in PR #6/#7. P01-05–08 are ready for owner review in [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). All eight implementation checks are complete; four tasks are owner-accepted. [Windows container smoke](docs/development/evidence/p01/WINDOWS_SMOKE.md) and native Linux AMD64/ARM64 CI pass. The personal Mac remains untested.
+All eight P01 tasks are accepted in PR #6/#7/[#8](https://github.com/Includeoyasi/faultline-lab/pull/8); [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) is closed. [Windows container smoke](docs/development/evidence/p01/WINDOWS_SMOKE.md) and native Linux AMD64/ARM64 CI pass. The personal Mac remains untested. [Issue #10](https://github.com/Includeoyasi/faultline-lab/issues/10) holds the proposed P02 decomposition in BACKLOG; [the plan](docs/development/packets/P02.md) gives dependencies and acceptance criteria.
 
 No capacity numbers or performance improvements are claimed before measurement. The [roadmap](docs/ROADMAP.md) distinguishes design hypotheses from acceptance criteria and observed results.
 

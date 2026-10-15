@@ -2,13 +2,13 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **36**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
+Ревизия: **37**. Состояние на: **2026-10-16**, Europe/Moscow. Фаза: **G0_APPROVED_P01_DONE_P02_PLANNING**.
 
 ## Краткое текущее состояние
 
 | Поле | Фактический статус |
 |---|---|
-| Текущая задача | P01-05..P01-08: IN_REVIEW |
+| Текущая задача | P02-PLANNING: PREPARED_FOR_OWNER_DISCUSSION |
 | G0 | APPROVED |
 | G1 | NOT_READY |
 | G2 | NOT_READY |
@@ -17,7 +17,7 @@
 | Код бизнес-сервисов | GRPC_HEALTH_CONFIG_JSON_BOUNDED_SHUTDOWN_AND_PROBE_CREATED |
 | Инфраструктура Compose | THREE_RUNTIME_SERVICES_INTERNAL_NETWORK_EPHEMERAL_TOOLCHAIN |
 | Эксперименты | NOT_RUN |
-| Следующий пакет | P01: IN_REVIEW |
+| Следующий пакет | P02: PROPOSED |
 
 ## Как использовать этот файл в другом чате
 
@@ -88,15 +88,15 @@ G0 полностью принят пользователем; это согла
 
 В голосовом обсуждении владелец проекта подтвердил направление развития: общая лаборатория отделена от адаптера и тестируемой системы; эталонный магазин использует ту же границу через встроенный адаптер бизнес-операций и проверок. По прямому поручению обсуждение сохранено в docs/architecture/LAB_BOUNDARY.md: обязанности частей, цикл эксперимента, предлагаемый контракт адаптера, профиль и доказательство переносимости. Обработка изображений — кандидат второго бизнеса, а мастер автоматической настройки — перспектива. Точные интерфейсы и новые критерии G4 ещё не приняты; согласованные границы трёх сервисов G0 сохраняются.
 
-Владелец проекта явно согласовал Docker как общую среду разработки и запуска на Windows и macOS. План docs/development/ENVIRONMENT.md предусматривает отдельные контейнеры трёх сервисов, общий контейнерный toolchain и Compose с инфраструктурой по этапам. Адаптер — модуль внутри инструментов, без обязательного отдельного контейнера; инструменты запускаются временно. Распределение и число контейнеров — рекомендации по текущему составу, а не измеренные ресурсы. Характеристики Windows-хоста прочитаны и сохранены в docs/development/RESOURCE_PROFILES.md; WSL-бюджет ограничен 2 CPU, memory=2GB, swap=1GB; потребление бизнеса под нагрузкой ещё не измерено. macOS — второй основной компьютер, арендуемый сервер — возможный вариант позже, без поручения на аренду. Go-модуль, Dockerfile инструментов и Compose toolchain созданы в P01-01; P01-02–04 добавляют health-процессы, JSON-логи и конфигурацию. В P01-05–08 созданы runtime-образы и bounded graceful shutdown; полный Linux CI с контейнерным smoke прошёл на AMD64/ARM64. Go1.27.2, Docker Desktop4.95 и WSL2.7.13 установлены; Windows container smoke PASS, PR #8 готов к ревью. Детали и доказательства находятся в environment_strategy и environment_facts ниже.
+Владелец проекта явно согласовал Docker как общую среду разработки и запуска на Windows и macOS. План docs/development/ENVIRONMENT.md предусматривает отдельные контейнеры трёх сервисов, общий контейнерный toolchain и Compose с инфраструктурой по этапам. Адаптер — модуль внутри инструментов, без обязательного отдельного контейнера; инструменты запускаются временно. Распределение и число контейнеров — рекомендации по текущему составу, а не измеренные ресурсы. Характеристики Windows-хоста прочитаны и сохранены в docs/development/RESOURCE_PROFILES.md; WSL-бюджет ограничен 2 CPU, memory=2GB, swap=1GB; потребление бизнеса под нагрузкой ещё не измерено. macOS — второй основной компьютер, арендуемый сервер — возможный вариант позже, без поручения на аренду. Go-модуль, Dockerfile инструментов и Compose toolchain созданы в P01-01; P01-02–04 добавляют health-процессы, JSON-логи и конфигурацию. В P01-05–08 созданы runtime-образы и bounded graceful shutdown; полный Linux CI с контейнерным smoke прошёл на AMD64/ARM64. Go1.27.2, Docker Desktop4.95 и WSL2.7.13 установлены; Windows container smoke PASS; PR #8 принят владельцем через merge 16 октября, P01 DONE. Детали и доказательства находятся в environment_strategy и environment_facts ниже.
 
 По отдельному поручению подготовлены три пастельные SVG-концепции оформления. Владелец проекта выбрал вариант 2 — «Поток эксперимента»; он применён к общему баннеру README. Название Faultline Lab и бизнес-правила не менялись. Выбор, смысл композиции и ссылки на исходники сохранены в docs/design/BANNER_OPTIONS.md и branding_notes. Кривые баннера декоративные и не изображают фактические измерения. Публикация ветки и документационного PR отражается в структурированном состоянии; до merge новый баннер не появляется на главной странице main.
 
-В docs/development/packets/P01.md сохранены восемь задач с зависимостями и критериями. P01-01–04 приняты владельцем через PR #6/#7 (main bc09d08), 4/8. Оставшиеся P01-05–08 реализуются одним PR: bounded graceful shutdown, минимальные runtime-образы/Compose, итоговый CI и smoke с отчётом. GitHub Issue #3 — текущий трекер; Projects не настроен. Windows container smoke P01-06 выполнен; реализация проверена 8/8, владелец принял 4/8, PR #8 готов к ревью. Данные и код включены в полный снимок, зелёный CI не заменяет принятие владельцем. G0 принят, G1–G4 ещё не готовы.
+P01 завершён: все 8/8 задач приняты владельцем через PR #6/#7/#8, последний merge 3ca290d, Issue #3 закрыт. На 16 октября следующий P02 декомпозирован в docs/development/packets/P02.md и Issue #10: BACKLOG / NOT_STARTED. Общий объём следует G0; порядок восьми задач и группировка PR пока предложены владельцу, реализация не начата. Перенос Go smoke #9 остаётся отдельным backlog, его приоритет не выбран. P03/P04/P05 и приёмка G1 идут далее.
 
 По уточнению владельца проекта обозначения разделены: G0–G4 — контрольные точки приёмки, P01–P05 — кодовые пакеты. Первый PR P01 выполняется между G0 и G1; после него следуют PR основы данных/заказа/склада, затем приёмка G1. Ранее первый пакет имел неоднозначный префикс контрольной точки; старое название сохраняется только в истории и таблице соответствия review_sequence. Восемь задач и критерии первого PR от переименования не изменились.
 
-15 октября владелец принял PR #7; GitHub подтвердил merge main bc09d08. P01-01–04 приняты (4/8). Оставшиеся P01-05–08 поручены одним PR: graceful shutdown, runtime-образы/Compose, итоговые проверки и smoke. Для новых PR нужны простые описательные заголовки: «Что было сделано», «Проверки», «На что обратить внимание»; прежняя вопросительная формулировка отвергнута. Windows Docker/WSL теперь установлены, обязательный локальный smoke PASS; PR #8 готов к ревью, приёмка остаётся за владельцем.
+15 октября владелец принял PR #7 и поручил P01-05–08 одним PR. Затем принят PR #8: на 16 октября P01 завершён, принято 8/8. Для новых PR нужны простые описательные заголовки: «Что было сделано», «Проверки», «На что обратить внимание»; прежняя вопросительная формулировка отвергнута. Windows Docker/WSL установлены, обязательный локальный smoke PASS; новое измерение при подготовке плана P02 не проводилось.
 
 ## Архитектурные опорные правила
 
@@ -258,7 +258,7 @@ MVP — этапы 0–2: работающие три сервиса, весь �
 
 Ни один перечень будущих файлов, CLI-команд или метрик в приложениях не доказывает, что они уже созданы. Источником фактического прогресса служит следующий раздел со структурированным состоянием и доказательствами.
 
-15 октября установка host Go1.27.2, WSL2.7.13 и Docker Desktop4.95 завершена без перезагрузки. Windows container smoke PASS на чистом d81b51c; исходные JSON/JSONL, бюджет и подтверждение остановки включены в приложения. По прямому поручению владельца после проверок контейнеры удаляются, Docker Desktop и его WSL VM выключаются, автозапуск Docker отключён; программы и полезные кеши остаются. Фактически после этого прогона контейнеров и процессов Docker/vmmemWSL нет. PR #8 ready, P01 проверен 8/8, принято владельцем 4/8; G1 не принят.
+15 октября установка host Go1.27.2, WSL2.7.13 и Docker Desktop4.95 завершена без перезагрузки. Windows container smoke PASS на чистом d81b51c; исходные JSON/JSONL, бюджет и подтверждение остановки включены в приложения. По прямому поручению владельца после проверок контейнеры удаляются, Docker Desktop и его WSL VM выключаются, автозапуск Docker отключён; программы и полезные кеши остаются. Фактически после этого прогона контейнеров и процессов Docker/vmmemWSL нет. PR #8 слит Includeoyasi 16 октября, P01 принято 8/8; G1 не принят. Новый runtime-прогон при подготовке P02 не выполнялся.
 
 ## Структурированное состояние, проверки и история
 
@@ -268,56 +268,27 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 36,
+  "context_revision": 37,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-15",
+  "context_updated_on": "2026-10-16",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
-  "current_phase": "G0_APPROVED_IMPLEMENTATION_IN_PROGRESS",
+  "current_phase": "G0_APPROVED_P01_DONE_P02_PLANNING",
   "current_task": {
-    "id": "P01-05..P01-08",
-    "description": "Один итоговый PR: bounded graceful shutdown, runtime-контейнеры/Compose, итоговый CI и smoke с отчётом",
-    "status": "IN_REVIEW",
-    "authorization": "Владелец принял PR #7 и поручил оставшиеся задачи одним PR; попросил понятные описательные заголовки вместо прежней вопросительной формулы.",
+    "id": "P02-PLANNING",
+    "description": "Task decomposition, proposed priority and PR grouping for P02",
+    "status": "PREPARED_FOR_OWNER_DISCUSSION",
+    "authorization": "Собери список ближайших задач, давай определим их очередность и соберем в P02. Что ты планировала добавить?",
     "result": {
-      "branch": "feat/p01-05-08-runtime",
-      "base_commit": "bc09d08ce7867f3109d996f71015e3ce73986452",
-      "scope": "P01_05_THROUGH_08_ONLY",
-      "implementation": "ALL_P01_05_THROUGH_08_IMPLEMENTED_AND_VERIFIED",
-      "local_go": "HOST_MSI_GO_1_27_2_VERSION_VERIFIED; EARLIER_NATIVE_WINDOWS_UNIT_PROCESS_TESTS_PASS",
-      "local_docker": "PASS_WINDOWS_LINUX_CONTAINERS",
-      "native_macos": "NOT_RUN",
-      "go_ci": "PASS_NATIVE_LINUX_AMD64_AND_ARM64",
-      "runtime_smoke_ci": "PASS_NATIVE_LINUX_AMD64_AND_ARM64",
-      "owner_acceptance": "PENDING",
-      "author": "AI-Your-Bro",
-      "draft_required": false,
-      "draft_reason": null,
-      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
-      "commit_created": true,
-      "pushed": true,
-      "pull_request_number": 8,
-      "draft": false,
-      "go_workflow": {
-        "name": "Go toolchain",
-        "head_sha": "445d324ea48419133fa37b15d44242bd6bbf5b08",
-        "status": "completed",
-        "conclusion": "success",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38798549009"
-      },
-      "documentation_ci": {
-        "name": "Documentation",
-        "head_sha": "445d324ea48419133fa37b15d44242bd6bbf5b08",
-        "status": "completed",
-        "conclusion": "success",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38798549034"
-      },
-      "observed_commit": "445d324ea48419133fa37b15d44242bd6bbf5b08",
-      "review_status": "READY_FOR_OWNER_REVIEW",
-      "handoff_note": "Evidence refers to the source HEAD before final context changes. Final HEAD and checks are available in PR #8; the snapshot cannot embed its own commit hash.",
-      "environment_installation": "COMPLETED_RUNTIME_STOPPED_AFTER_CHECKS",
-      "windows_evidence": "docs/development/evidence/p01/WINDOWS_SMOKE.md",
-      "documentation_additions": "Engineering decisions overview, ADR 0002/0003, separate Issue #9 BACKLOG specification; no Go smoke migration implementation"
+      "specification": "docs/development/packets/P02.md",
+      "issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/10",
+      "implementation": "NOT_STARTED",
+      "priority": "PROPOSED_NOT_ACCEPTED",
+      "code_changes": false,
+      "local_runtime_started": false,
+      "documentation_pr": "https://github.com/Includeoyasi/faultline-lab/pull/11",
+      "draft": true,
+      "owner_decision": "PENDING_TASK_ORDER_AND_PR_GROUPING"
     }
   },
   "roles": {
@@ -379,7 +350,7 @@ JSON ниже является частью этого файла и доста�
       "smoke_node": "v22.23.3"
     },
     "git_repository": "INITIALIZED",
-    "git_commit": "445d324ea48419133fa37b15d44242bd6bbf5b08",
+    "git_commit": "322374f0e648ebafba395b0ac88272141e731680",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -485,9 +456,9 @@ JSON ниже является частью этого файла и доста�
       {
         "number": 8,
         "url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
-        "state": "OPEN",
+        "state": "MERGED",
         "draft": false,
-        "merged": false,
+        "merged": true,
         "author": "AI-Your-Bro",
         "head_ref": "feat/p01-05-08-runtime",
         "base_ref": "main",
@@ -498,10 +469,27 @@ JSON ниже является частью этого файла и доста�
           "P01-07",
           "P01-08"
         ],
-        "human_review": "PENDING",
+        "human_review": "ACCEPTED_BY_OWNER_ACCOUNT_MERGE",
         "draft_reason": null,
-        "observed_head": "445d324ea48419133fa37b15d44242bd6bbf5b08",
-        "windows_smoke": "PASS"
+        "observed_head": "56f367278a0fabdd621425b38e13fcec323fb5c9",
+        "windows_smoke": "PASS",
+        "head_at_merge": "56f367278a0fabdd621425b38e13fcec323fb5c9",
+        "merge_commit": "3ca290d818a98fc986fe42ae51dcfc0546673fb8",
+        "merged_at_utc": "2026-10-15T21:10:58Z"
+      },
+      {
+        "number": 11,
+        "url": "https://github.com/Includeoyasi/faultline-lab/pull/11",
+        "state": "OPEN",
+        "draft": true,
+        "merged": false,
+        "author": "AI-Your-Bro",
+        "head_ref": "docs/p02-plan",
+        "base_ref": "main",
+        "scope": "P02 planning and observed P01 acceptance only",
+        "code_packet": false,
+        "human_review": "PENDING",
+        "observed_head": "322374f0e648ebafba395b0ac88272141e731680"
       }
     ],
     "toolchain_container": "VERIFIED_NATIVE_LINUX_AMD64_ARM64_WITH_RUNTIME_IMAGES",
@@ -552,146 +540,132 @@ JSON ниже является частью этого файла и доста�
     "P01-05/07/08 реализованы и проверены Linux CI AMD64/ARM64: linters 0 issues, unit/race, govulncheck, process signals/forced exit 1, три scratch-образа и полный runtime smoke PASS. Оба артефакта report.json/JSONL прочитаны: реальные image IDs, health, права, изоляция, graceful exit 0 и cleanup подтверждены. Реализация проверена 7/8; P01-06 не закрыта из-за Windows container smoke NOT_RUN; принято владельцем 4/8.",
     "Владелец разрешил установку Docker Desktop/WSL2. Официальный Docker Desktop 4.95.0 скачан, SHA256 и Authenticode Docker Inc подтверждены; установка остановлена precheck VirtualMachinePlatform. WSL winget требует admin, последующий UAC завершился отменой до запуска script. Ничего не объявляется установленным, перезагрузки не было; необходим интерактивный административный допуск. Linux CI HEAD5968407 и оба артефакта PASS.",
     "15 октября завершена установка host Go1.27.2, WSL2.7.13 и DockerDesktop4.95. Windows container smoke на чистом d81b51c PASS, проверены все 8/8 задач реализации P01. Runtime после работы выключен, автозапуск Docker отключён; программы/образы/кеши сохранены. PR #8 переведён из draft, owner review/merge ещё не выполнены; принято 4/8, G1 не принят.",
-    "Создана отдельная backlog-задача #9 (AI-Your-Bro), код переноса smoke на Go не начат. Подготовлены обзор инженерных решений, ADR 0002 о процессе фиксации, proposed ADR 0003 и переносимая спецификация #9. Документация представляется в PR #8; приёмка P01/G1 не меняется."
+    "Создана отдельная backlog-задача #9 (AI-Your-Bro), код переноса smoke на Go не начат. Подготовлены обзор инженерных решений, ADR 0002 о процессе фиксации, proposed ADR 0003 и переносимая спецификация #9. Документация представляется в PR #8; приёмка P01/G1 не меняется.",
+    "16 октября наблюдён owner merge PR8 (HEAD56f3672, merge3ca290d): P01 принят 8/8, Issue3 закрыт. По запросу подготовлен предложенный план P02 с восемью задачами и критериями, создан Issue10 BACKLOG и draft документационный PR11. Реализация P02 и Go smoke9 не начата; приоритет/группировка PR обсуждаются."
   ],
   "next_implementation_packet": {
-    "id": "P01",
-    "status": "IN_REVIEW",
-    "goal": "Контейнерная основа трёх Go-сервисов: entrypoints, конфигурация, gRPC health, graceful shutdown, JSON-логи, toolchain, образы, минимальный Compose и Go CI",
-    "approval_dependency": "G0 уже принят; повторное согласование G0 не требуется",
-    "following_packets": [
-      "P02: Compose core, отдельные базы/роли, миграции и seed",
-      "P03: protobuf, ключи операций, состояния и классификация ошибок",
-      "P04: Create/Get/GetByRequestKey и долговечная задача Orders",
-      "P05: Reserve/Commit/Release/GetReservation, ledger и cancellation barrier"
-    ],
-    "decomposition_status": "DOCUMENTED_READY_FOR_IMPLEMENTATION",
-    "specification": "docs/development/packets/P01.md",
-    "acceptance_status": "8_OF_8_IMPLEMENTATION_CHECKS_COMPLETE; OWNER_ACCEPTED_4_OF_8; FINAL_PR_REVIEW_PENDING",
+    "id": "P02",
+    "status": "PROPOSED",
+    "goal": "Infrastructure and data foundation: PostgreSQL/Kafka/Redis, ownership, migrations, seed",
+    "specification": "docs/development/packets/P02.md",
+    "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/10",
+    "tracker_stage": "BACKLOG",
+    "decomposition_status": "PREPARED_FOR_OWNER_DISCUSSION",
+    "authorization": "Owner requested task list, priority discussion and P02 assembly; implementation not started or newly authorized",
+    "approval_dependency": "G0 accepted; detailed task priority/PR grouping pending owner decision",
+    "acceptance_status": "NOT_IMPLEMENTED_OR_ACCEPTED",
     "progress": {
-      "completed": 8,
+      "completed": 0,
       "total": 8,
-      "owner_accepted": 4
+      "owner_accepted": 0
     },
     "tasks": [
       {
-        "id": "P01-01",
-        "title": "Go-модуль и закреплённый toolchain",
-        "depends_on": [],
-        "status": "DONE",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CONTAINER_BUILD_CHECK_BOOTSTRAP; LOCAL_WINDOWS_GO_PASS",
-        "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "VERIFIED",
-        "owner_acceptance": "ACCEPTED_USER_AND_MERGE_PR6",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/6"
+        "id": "P02-01",
+        "title": "Состав Compose, конфигурация и бюджет",
+        "depends_on": [
+          "P01"
+        ],
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "owner_acceptance": "NOT_REQUESTED_AS_IMPLEMENTED",
+        "acceptance_source": "docs/development/packets/P02.md"
       },
       {
-        "id": "P01-02",
-        "title": "Конфигурация с проверкой",
+        "id": "P02-02",
+        "title": "PostgreSQL: три базы и права",
         "depends_on": [
-          "P01-01"
+          "P02-01"
         ],
-        "status": "DONE",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_FORMAT_LINT_UNIT_RACE_VULN_REAL_PROCESS_HEALTH_JSON_BIND_ISOLATION",
-        "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "VERIFIED",
-        "owner_acceptance": "ACCEPTED_AND_MERGED_PR7",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "owner_acceptance": "NOT_REQUESTED_AS_IMPLEMENTED",
+        "acceptance_source": "docs/development/packets/P02.md"
       },
       {
-        "id": "P01-03",
-        "title": "Структурированные логи",
+        "id": "P02-03",
+        "title": "Версионируемые миграции",
         "depends_on": [
-          "P01-01"
+          "P02-02"
         ],
-        "status": "DONE",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_FORMAT_LINT_UNIT_RACE_VULN_REAL_PROCESS_HEALTH_JSON_BIND_ISOLATION",
-        "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "VERIFIED",
-        "owner_acceptance": "ACCEPTED_AND_MERGED_PR7",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "owner_acceptance": "NOT_REQUESTED_AS_IMPLEMENTED",
+        "acceptance_source": "docs/development/packets/P02.md"
       },
       {
-        "id": "P01-04",
-        "title": "Три entrypoints и gRPC health",
+        "id": "P02-04",
+        "title": "Минимальная схема Inventory и seed",
         "depends_on": [
-          "P01-02",
-          "P01-03"
+          "P02-03"
         ],
-        "status": "DONE",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_FORMAT_LINT_UNIT_RACE_VULN_REAL_PROCESS_HEALTH_JSON_BIND_ISOLATION",
-        "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "VERIFIED",
-        "owner_acceptance": "ACCEPTED_AND_MERGED_PR7",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "owner_acceptance": "NOT_REQUESTED_AS_IMPLEMENTED",
+        "acceptance_source": "docs/development/packets/P02.md"
       },
       {
-        "id": "P01-05",
-        "title": "Graceful shutdown с пределом ожидания",
+        "id": "P02-05",
+        "title": "Kafka: один брокер и техническая доставка",
         "depends_on": [
-          "P01-04"
+          "P02-01"
         ],
-        "status": "IN_REVIEW",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
-        "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
-        "owner_acceptance": "PENDING",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "owner_acceptance": "NOT_REQUESTED_AS_IMPLEMENTED",
+        "acceptance_source": "docs/development/packets/P02.md"
       },
       {
-        "id": "P01-06",
-        "title": "Образы и минимальный Compose",
+        "id": "P02-06",
+        "title": "Redis: изолированный кеш",
         "depends_on": [
-          "P01-01",
-          "P01-02",
-          "P01-03",
-          "P01-04",
-          "P01-05"
+          "P02-01"
         ],
-        "status": "IN_REVIEW",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
-        "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
-        "owner_acceptance": "PENDING",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "owner_acceptance": "NOT_REQUESTED_AS_IMPLEMENTED",
+        "acceptance_source": "docs/development/packets/P02.md"
       },
       {
-        "id": "P01-07",
-        "title": "Go-проверки и CI",
+        "id": "P02-07",
+        "title": "Интеграционные проверки и CI",
         "depends_on": [
-          "P01-01",
-          "P01-02",
-          "P01-03",
-          "P01-04",
-          "P01-05"
+          "P02-02",
+          "P02-03",
+          "P02-04",
+          "P02-05",
+          "P02-06"
         ],
-        "status": "IN_REVIEW",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
-        "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
-        "owner_acceptance": "PENDING",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "owner_acceptance": "NOT_REQUESTED_AS_IMPLEMENTED",
+        "acceptance_source": "docs/development/packets/P02.md"
       },
       {
-        "id": "P01-08",
-        "title": "Smoke-проверка, инструкция и review packet",
+        "id": "P02-08",
+        "title": "Документация, доказательства и ревью",
         "depends_on": [
-          "P01-06",
-          "P01-07"
+          "P02-07"
         ],
-        "status": "IN_REVIEW",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
-        "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
-        "owner_acceptance": "PENDING",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "owner_acceptance": "NOT_REQUESTED_AS_IMPLEMENTED",
+        "acceptance_source": "docs/development/packets/P02.md"
       }
     ],
-    "interval": "AFTER_G0_BEFORE_G1",
-    "target_review_gate": "G1",
-    "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/3",
-    "tracker_stage": "IN_REVIEW",
-    "current_task": "P01-05..P01-08"
+    "interval": "AFTER_P01_BEFORE_G1",
+    "target_review_gate": "G1_LATER_AFTER_P03_P04_P05",
+    "following_packets": [
+      "P03 protobuf contracts",
+      "P04 durable Orders operations",
+      "P05 Inventory operations and ledger"
+    ],
+    "proposed_pr_groups": [
+      "P02-01..04 PostgreSQL/migrations/seed with own tests",
+      "P02-05..06 Kafka/Redis with own tests",
+      "P02-07..08 final integration/evidence only separate if meaningful diff"
+    ],
+    "smoke_migration": "Issue9 remains separate BACKLOG; priority relative to P03 pending owner"
   },
   "active_blockers": [],
   "open_review_comments": [],
@@ -1313,6 +1287,27 @@ JSON ниже является частью этого файла и доста�
         "git diff --check"
       ],
       "detail": "31 Markdown files, 437 local links, 62 Mermaid blocks checked structurally; context revision36, 60 embedded documents, 63 fingerprints. Executor GET confirms Issue9 OPEN/backlog/enhancement, AI-Your-Bro author, unassigned. No implementation or local runtime started; P01 owner acceptance4/8, G1 NOT_READY. Final publication HEAD CI is checked in PR8, not inferred from baseline CI."
+    },
+    {
+      "date": "2026-10-16",
+      "check": "P01 owner merge and next-packet tracker",
+      "result": "PASS",
+      "url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
+      "head_sha": "56f367278a0fabdd621425b38e13fcec323fb5c9",
+      "merge_commit": "3ca290d818a98fc986fe42ae51dcfc0546673fb8",
+      "detail": "GitHub GET merged=true, merged_by Includeoyasi, merged_at UTC2026-10-15T21:10:58Z = 2026-10-16 Europe/Moscow. Executor PATCH closed Issue3 after all criteria/owner merge; Issue10 created BACKLOG unassigned with 8 unchecked tasks. No code/runtime checks or implementation performed while planning."
+    },
+    {
+      "date": "2026-10-16",
+      "check": "P02 planning documentation and portable context",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly (PowerShell7)",
+        "tools/update_context.ps1 -CheckOnly (Windows PowerShell5.1)",
+        "git diff --check"
+      ],
+      "detail": "32 Markdown files; 464 local links; 62 Mermaid blocks structure only. Revision37 embeds61 documents with64 source fingerprints. Changes only documentation/state; P02 and Go smoke9 NOT_STARTED, priority/PR grouping PROPOSED. No Go/service/container tests or runtime startup needed for the planning change; automatic final HEAD CI tracked in draftPR11."
     }
   ],
   "source_documents": [
@@ -1646,6 +1641,11 @@ JSON ниже является частью этого файла и доста�
       "path": "docs/development/backlog/GO_SMOKE.md",
       "anchor": "appendix-go-smoke-backlog",
       "title": "Backlog #9: перенос smoke на Go, объём и критерии"
+    },
+    {
+      "path": "docs/development/packets/P02.md",
+      "anchor": "appendix-p02",
+      "title": "Предложенный P02: задачи, зависимости, критерии и порядок PR"
     }
   ],
   "change_history": [
@@ -1864,6 +1864,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-15",
       "summary": "Зафиксирован согласованный порядок PR/ADR/обзор с явным авторством замечаний из чата. По прямому поручению создана отдельная Issue #9 BACKLOG для Go smoke с критериями, без начала реализации; все четыре новых документа включены в переносимый контекст. P01 остаётся IN_REVIEW, принято 4/8, G1 NOT_READY; runtime не запускался.",
       "trigger": "Ответ владельца Хорошо на предложение фиксации инженерных решений; затем поручение оформить Go smoke отдельной backlog-задачей"
+    },
+    {
+      "revision": 37,
+      "date": "2026-10-16",
+      "summary": "P01 принят 8/8 через наблюдаемый owner merge PR8, карточка3 закрыта. Предложены восемь задач P02 в Issue10/draftPR11: PostgreSQL и права, миграции/seed, Kafka/Redis, проверки и доказательства. Приоритет и группы PR ещё не приняты; P02/Go smoke9 NOT_STARTED, G1 NOT_READY, Docker не запускался.",
+      "trigger": "Владелец попросил собрать ближайшие задачи, определить очередность и состав P02"
     }
   ],
   "repository": {
@@ -1888,32 +1894,18 @@ JSON ниже является частью этого файла и доста�
       "event": "push",
       "scope": "Документационный CI main после принятия правил; не является проверкой последующего handoff PR или Go-кода."
     },
-    "snapshot_ref": "feat/p01-05-08-runtime",
+    "snapshot_ref": "docs/p02-plan",
     "current_publication": {
-      "branch": "feat/p01-05-08-runtime",
-      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
-      "status": "IN_REVIEW",
-      "draft": false,
+      "branch": "docs/p02-plan",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/11",
+      "status": "DRAFT_PLAN_FOR_DISCUSSION",
+      "draft": true,
       "merged": false,
       "author": "AI-Your-Bro",
-      "scope": "P01-05..P01-08",
-      "observed_commit": "445d324ea48419133fa37b15d44242bd6bbf5b08",
-      "observed_ci": [
-        {
-          "name": "Documentation",
-          "head_sha": "445d324ea48419133fa37b15d44242bd6bbf5b08",
-          "status": "completed",
-          "conclusion": "success",
-          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38798549034"
-        },
-        {
-          "name": "Go toolchain",
-          "head_sha": "445d324ea48419133fa37b15d44242bd6bbf5b08",
-          "status": "completed",
-          "conclusion": "success",
-          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38798549009"
-        }
-      ]
+      "scope": "P02 planning and P01 owner merge snapshot; no implementation",
+      "observed_commit": "322374f0e648ebafba395b0ac88272141e731680",
+      "observed_ci": [],
+      "ci_note": "Local documentation checks recorded after execution; final HEAD status available in PR; no new service tests inferred"
     }
   },
   "review_policy": {
@@ -2009,10 +2001,10 @@ JSON ниже является частью этого файла и доста�
   "task_tracking": {
     "status": "ACTIVE_GITHUB_ISSUE_CREATED",
     "document": "docs/development/TASK_TRACKING.md",
-    "current_task_list": "docs/development/packets/P01.md",
+    "current_task_list": "docs/development/packets/P02.md",
     "blocked": "Отдельная причина/требуемое действие; подготовка исходников не запрещена отсутствием Docker",
     "github_issues_url": "https://github.com/Includeoyasi/faultline-lab/issues",
-    "current_packet_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/3",
+    "current_packet_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/10",
     "project_board_url": null,
     "github_issue_search": {
       "checked_on": "2026-10-13",
@@ -2033,35 +2025,35 @@ JSON ниже является частью этого файла и доста�
     ],
     "approved_on": "2026-10-13",
     "approval_evidence": "Прямое поручение владельца проекта: молодец, фиксируй изменения и заводи задачи",
-    "current_packet_issue_number": 3,
-    "current_packet_stage": "IN_REVIEW",
+    "current_packet_issue_number": 10,
+    "current_packet_stage": "BACKLOG",
     "progress": {
-      "completed": 8,
+      "completed": 0,
       "total": 8,
-      "owner_accepted": 4
+      "owner_accepted": 0
     },
     "last_issue_observation": {
-      "date": "2026-10-15",
-      "number": 3,
+      "date": "2026-10-16",
+      "number": 10,
       "state": "OPEN",
-      "checked_tasks": 8,
-      "unchecked_tasks": 0,
-      "stage": "IN_REVIEW",
-      "current_task": "P01-05..P01-08",
-      "source": "Executor PATCH response verified; Windows container smoke PASS",
-      "note": "8 implementation checks complete; owner accepted 4/8. PR #8 ready, no approval or merge performed."
+      "checked_tasks": 0,
+      "unchecked_tasks": 8,
+      "stage": "BACKLOG",
+      "current_task": "P02-PLANNING",
+      "source": "Executor create response, checked after duplicate search",
+      "note": "Task priority and PR grouping proposed; implementation not started"
     },
     "documentation_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
     "documentation_pr_closes_packet": false,
     "documentation_pr_merged": true,
-    "current_subtask": "P01-05..P01-08",
+    "current_subtask": "P02-PLANNING",
     "task_pr_granularity": {
       "confirmed_on": "2026-10-15",
       "rule": "P01-01 in PR #6, P01-02–04 in accepted PR #7; owner authorized P01-05–08 together in one final PR. All eight tasks remain in parent Issue #3.",
       "whole_packet_acceptance": "PENDING_FINAL_PR_AND_ALL_APPLICABLE_CRITERIA"
     },
-    "current_task_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
-    "current_subtask_stage": "IN_REVIEW",
+    "current_task_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/11",
+    "current_subtask_stage": "PROPOSED",
     "backlog": [
       {
         "number": 9,
@@ -2087,7 +2079,14 @@ JSON ниже является частью этого файла и доста�
         "scope": "Replace tools/smoke.mjs orchestration with a small Go CLI while preserving health/security/isolation/stop/JSON/JSONL/exit codes/scoped cleanup; document pinned container build and ready binary path without mandatory host Go or Node; docs checker remains Node.js",
         "evidence": "Executor-authenticated GET /issues/9 confirms OPEN, author AI-Your-Bro and backlog/enhancement labels; no assignee or implementation PR"
       }
-    ]
+    ],
+    "previous_packet": {
+      "id": "P01",
+      "issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/3",
+      "state": "CLOSED_COMPLETED",
+      "progress": "8/8 owner accepted",
+      "evidence": "PR8 merged by Includeoyasi, merge3ca290d"
+    }
   },
   "review_sequence": {
     "confirmed_on": "2026-10-13",
@@ -2101,7 +2100,7 @@ JSON ниже является частью этого файла и доста�
       "G1: приёмка работающей основы заказа и склада"
     ],
     "previous_packet_label": "G1-P01",
-    "current_packet_label": "P01",
+    "current_packet_label": "P02",
     "note": "Переименование устраняет неоднозначность; объём кода, восемь задач и критерии не меняются. Старые метки в истории относятся к тому же пакету.",
     "task_pr_granularity": {
       "confirmed_on": "2026-10-15",
@@ -2595,7 +2594,7 @@ JSON ниже является частью этого файла и доста�
     "overview": "docs/development/ENGINEERING_DECISIONS.md",
     "policy_adr": "docs/adr/0002-record-review-decisions.md",
     "publication_pr": "https://github.com/Includeoyasi/faultline-lab/pull/8",
-    "publication_review": "PENDING_OWNER_REVIEW; policy acceptance does not approve PR #8",
+    "publication_review": "ACCEPTED_BY_INCLUDEOYASI_MERGE_PR8_ON_2026_10_16_LOCAL",
     "record_fields": [
       "Question and source",
       "Alternatives and rationale",
@@ -2620,12 +2619,162 @@ JSON ниже является частью этого файла и доста�
       },
       {
         "topic": "Personal PC runtime shutdown and bounded VM resources",
-        "status": "IMPLEMENTED_VERIFIED_PR8_REVIEW_PENDING",
+        "status": "ACCEPTED_PR8_OWNER_MERGE",
         "source": "Owner personal-computer instruction in chat; executor selected VM limits",
         "evidence": "docs/development/evidence/p01/WINDOWS_SMOKE.md"
       }
     ]
-  }
+  },
+  "completed_packets": [
+    {
+      "id": "P01",
+      "status": "DONE",
+      "goal": "Контейнерная основа трёх Go-сервисов: entrypoints, конфигурация, gRPC health, graceful shutdown, JSON-логи, toolchain, образы, минимальный Compose и Go CI",
+      "approval_dependency": "G0 уже принят; повторное согласование G0 не требуется",
+      "following_packets": [
+        "P02: Compose core, отдельные базы/роли, миграции и seed",
+        "P03: protobuf, ключи операций, состояния и классификация ошибок",
+        "P04: Create/Get/GetByRequestKey и долговечная задача Orders",
+        "P05: Reserve/Commit/Release/GetReservation, ledger и cancellation barrier"
+      ],
+      "decomposition_status": "DOCUMENTED_READY_FOR_IMPLEMENTATION",
+      "specification": "docs/development/packets/P01.md",
+      "acceptance_status": "ALL_8_TASKS_OWNER_ACCEPTED_AND_MERGED",
+      "progress": {
+        "completed": 8,
+        "total": 8,
+        "owner_accepted": 8
+      },
+      "tasks": [
+        {
+          "id": "P01-01",
+          "title": "Go-модуль и закреплённый toolchain",
+          "depends_on": [],
+          "status": "DONE",
+          "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CONTAINER_BUILD_CHECK_BOOTSTRAP; LOCAL_WINDOWS_GO_PASS",
+          "acceptance_source": "docs/development/packets/P01.md",
+          "implementation": "VERIFIED",
+          "owner_acceptance": "ACCEPTED_USER_AND_MERGE_PR6",
+          "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/6"
+        },
+        {
+          "id": "P01-02",
+          "title": "Конфигурация с проверкой",
+          "depends_on": [
+            "P01-01"
+          ],
+          "status": "DONE",
+          "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_FORMAT_LINT_UNIT_RACE_VULN_REAL_PROCESS_HEALTH_JSON_BIND_ISOLATION",
+          "acceptance_source": "docs/development/packets/P01.md",
+          "implementation": "VERIFIED",
+          "owner_acceptance": "ACCEPTED_AND_MERGED_PR7",
+          "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
+        },
+        {
+          "id": "P01-03",
+          "title": "Структурированные логи",
+          "depends_on": [
+            "P01-01"
+          ],
+          "status": "DONE",
+          "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_FORMAT_LINT_UNIT_RACE_VULN_REAL_PROCESS_HEALTH_JSON_BIND_ISOLATION",
+          "acceptance_source": "docs/development/packets/P01.md",
+          "implementation": "VERIFIED",
+          "owner_acceptance": "ACCEPTED_AND_MERGED_PR7",
+          "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
+        },
+        {
+          "id": "P01-04",
+          "title": "Три entrypoints и gRPC health",
+          "depends_on": [
+            "P01-02",
+            "P01-03"
+          ],
+          "status": "DONE",
+          "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_FORMAT_LINT_UNIT_RACE_VULN_REAL_PROCESS_HEALTH_JSON_BIND_ISOLATION",
+          "acceptance_source": "docs/development/packets/P01.md",
+          "implementation": "VERIFIED",
+          "owner_acceptance": "ACCEPTED_AND_MERGED_PR7",
+          "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
+        },
+        {
+          "id": "P01-05",
+          "title": "Graceful shutdown с пределом ожидания",
+          "depends_on": [
+            "P01-04"
+          ],
+          "status": "DONE",
+          "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
+          "acceptance_source": "docs/development/packets/P01.md",
+          "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
+          "owner_acceptance": "ACCEPTED_BY_INCLUDEOYASI_MERGE_PR8",
+          "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        },
+        {
+          "id": "P01-06",
+          "title": "Образы и минимальный Compose",
+          "depends_on": [
+            "P01-01",
+            "P01-02",
+            "P01-03",
+            "P01-04",
+            "P01-05"
+          ],
+          "status": "DONE",
+          "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
+          "acceptance_source": "docs/development/packets/P01.md",
+          "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
+          "owner_acceptance": "ACCEPTED_BY_INCLUDEOYASI_MERGE_PR8",
+          "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        },
+        {
+          "id": "P01-07",
+          "title": "Go-проверки и CI",
+          "depends_on": [
+            "P01-01",
+            "P01-02",
+            "P01-03",
+            "P01-04",
+            "P01-05"
+          ],
+          "status": "DONE",
+          "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
+          "acceptance_source": "docs/development/packets/P01.md",
+          "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
+          "owner_acceptance": "ACCEPTED_BY_INCLUDEOYASI_MERGE_PR8",
+          "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        },
+        {
+          "id": "P01-08",
+          "title": "Smoke-проверка, инструкция и review packet",
+          "depends_on": [
+            "P01-06",
+            "P01-07"
+          ],
+          "status": "DONE",
+          "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
+          "acceptance_source": "docs/development/packets/P01.md",
+          "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
+          "owner_acceptance": "ACCEPTED_BY_INCLUDEOYASI_MERGE_PR8",
+          "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        }
+      ],
+      "interval": "AFTER_G0_BEFORE_G1",
+      "target_review_gate": "G1",
+      "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/3",
+      "tracker_stage": "DONE",
+      "current_task": "P01-05..P01-08",
+      "acceptance_evidence": {
+        "pull_request": 8,
+        "accepted_head": "56f367278a0fabdd621425b38e13fcec323fb5c9",
+        "merged_by": "Includeoyasi",
+        "merged_at_utc": "2026-10-15T21:10:58Z",
+        "date_local": "2026-10-16",
+        "merge_commit": "3ca290d818a98fc986fe42ae51dcfc0546673fb8",
+        "issue_state": "CLOSED_COMPLETED"
+      }
+    }
+  ]
 }
 ```
 
@@ -2635,28 +2784,28 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `a0c7de6a18c8f4b9f61b86fe932d582c7533baf4771b732eb68c12fc0f56ee4f` |
-| `tools/context_intro.md` | `636189e5a362e3b50913c52fa305e21d917525e288a262808cb910fa799ba1c7` |
+| `CONTEXT_STATE.json` | `d94f6510c84465e7ceeeac0f4289bdcff5135a5acaab284dc2a9060a7160cffc` |
+| `tools/context_intro.md` | `1d40f231e85d76a9a91b3c7614dd4926f42b840849eef9da6a9374cd3f2069f1` |
 | `tools/update_context.ps1` | `f830ed3538ae98ef5129b2ab5ae1d1ad564b0482d8ed2978a7ec2b96bcf5e731` |
-| `README.md` | `1e250ea01853d8d6dc62c270923a34fd2bcf25504e0da1a32cdc53a48c95b28d` |
-| `README.ru.md` | `0566419c177b29d2c2fb679eff838a6a6859993a21713219b60d190df4c9dbf9` |
-| `docs/README.md` | `3abda30d787100aa04f83b1125dc75ef91a8abb228712645c9f2f69176191ca4` |
-| `docs/ROADMAP.md` | `1711f0126f2a10341d5c3464e145275610c7cf5a430389059f057a1092ca7660` |
-| `docs/architecture/DESIGN.md` | `6db3d3ff87a24520ff2c7205051db0056251e2c867ee0d093fe8e4fc78aa14dd` |
+| `README.md` | `86e0a0a5f15a26b8c958bb34a84880b56acef9240955c59eb8d59634bf63980c` |
+| `README.ru.md` | `ff9d9e645afb03f97f4f701398cb5307c5b2c7f1f1c3edfb918d905811e1ae91` |
+| `docs/README.md` | `3c60a96a8e1c542a97fb56e83f851f84394c327ea58e5b8f2fad714721d569ea` |
+| `docs/ROADMAP.md` | `15798606e68c9839043d6db0a2d1d24651a484ba3aae8e15fa7cc69dfb30ac9d` |
+| `docs/architecture/DESIGN.md` | `a910a55526a3828bfef2f39e8343a6a74960b2fd818dd78f0e08f99edbf73e2e` |
 | `docs/architecture/PROCESSES.md` | `dd6d00ee9d169236fe0f0d14de4b6f54d778a7cf79489f6b6a3354357e2e9ec6` |
-| `docs/development/WORKFLOW.md` | `e75051643643726a8454acbc07fd408e58689102f3b0f9cb783221d1b491ceb4` |
+| `docs/development/WORKFLOW.md` | `0fbb9adfa1170b3f1562b0e86de7bc177191e9471c1c3e2a19a278be6f4cb580` |
 | `docs/experiments/REPORT_TEMPLATE.md` | `4f569aab52ba34a68bb2e8b4551c6a3bf4932277c26c3b4206dbb505781a2cab` |
-| `AGENTS.md` | `bc99a50320c9bc84bc80c8be61ddae818aafff6643150a5c31c8e623d96ae24b` |
+| `AGENTS.md` | `7eae5c436e873ba33a18ef556e4b619fa21526d8e7a7fcfe14cb8edb1040e6fc` |
 | `docs/adr/0001-approved-g0.md` | `b8518c5c49cdefea3dbf0bf2a79ab40459dba2b565e71a6c534a555cbafa20df` |
 | `CONTRIBUTING.md` | `b805939c170ddf7036212bd9c880597f6172076216996d36cb742833e992eaa0` |
 | `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
 | `docs/development/CODE_REVIEW.md` | `824f73048b3e20bf77b78809c23574a0235d2735052b5b670efe512ea0cae35b` |
 | `docs/architecture/LAB_BOUNDARY.md` | `790709c43d5c2920909a9f5227467bcb77ec4d228024156dd5f69f29a8d92e46` |
-| `docs/development/ENVIRONMENT.md` | `b0c77977872904c72096ca38e6161528d68f645e6a2814b6527b90f76757b3fe` |
+| `docs/development/ENVIRONMENT.md` | `7668e565719f4d0164090d60dfc586c9317086356968555f005777c7fc969554` |
 | `docs/development/RESOURCE_PROFILES.md` | `60212954c54085f2c8b74c4d3cf5c50f8ccf90192e8e9a502da357208645d44f` |
 | `docs/design/BANNER_OPTIONS.md` | `27d7b336acd60aa3106e6498233f2a33eefd2bc37bf8e26cf12d2c0c0d229724` |
-| `docs/development/packets/P01.md` | `9963cf254f0ba229817d64fb5477ddea4e5967929304462b3062a584357d0d78` |
-| `docs/development/TASK_TRACKING.md` | `0a1f000ee2175ce64f6ed5778d7f345830467b3ff89c59f5bc671a3ac13e0458` |
+| `docs/development/packets/P01.md` | `04c8af2d6c78dc4c301820ae51019dd221a6deeaaabd8edb53022d174d0c8ae8` |
+| `docs/development/TASK_TRACKING.md` | `b399649896c58062834908c716c3f9792f60f9aaaddbd2279d038b5f93d1b36c` |
 | `docs/development/REPOSITORY_SECURITY.md` | `b10363e3417429cc06376dff0277f257a92912dae03af12d7d9ff8252a80cb6e` |
 | `.github/CODEOWNERS` | `95de6cc3de1ba640d0ab9e2b9bfbdea79b7ce6641a8bcdb0bcef1f7607666415` |
 | `docs/development/TOOLCHAIN.md` | `5fbb316168a84bd2ca039d1bde1fda56850356fa9b9ec1e8dde413e0d8360e32` |
@@ -2694,10 +2843,11 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/evidence/p01/windows-2026-10-15/payments.jsonl` | `d3466907750bc5c137738ba0045f8d37f6c83e7fb4e3690a56896cbf9ad83c58` |
 | `docs/development/evidence/p01/windows-2026-10-15/environment.json` | `e32d9a5c383c6fcc426179fc716ab8ad39bece710670215b208405ee099bc90b` |
 | `docs/development/evidence/p01/windows-2026-10-15/cleanup.json` | `6c78a1ca41714a3ccb50e4777a2532ffeaca7d1cfb5fb561127e76e91fe0ad79` |
-| `docs/development/ENGINEERING_DECISIONS.md` | `dc4c8af1736dc4cc7acf65d8cb5c60bace32011994714b4499c2266eb9da792a` |
-| `docs/adr/0002-record-review-decisions.md` | `1bd22b477ad009890fc825bba2962804d4865982a046902497c6ed2fefd7952a` |
-| `docs/adr/0003-go-container-smoke.md` | `cadf546c37267a8ea6f845738e07808e8de7b3e1e86628110a5a8aa18c20b6ff` |
-| `docs/development/backlog/GO_SMOKE.md` | `0b18838f8e6620a66845ad5faa92bf7c7b0ff13888040766655979de6cdb4451` |
+| `docs/development/ENGINEERING_DECISIONS.md` | `fe8e4e08a15af76867a7a78a2aa4addd79a08c8a11ad33626a2a9cf10254b42e` |
+| `docs/adr/0002-record-review-decisions.md` | `aa70f1c5024f4511ed70cb0978608d1ebd0e42f5dcfbe7300c92aa2bead1de02` |
+| `docs/adr/0003-go-container-smoke.md` | `c184c48a9b0db086285d1474a65c45b931ad9335e397cca4cf07b4c8031e7b0c` |
+| `docs/development/backlog/GO_SMOKE.md` | `8ee7f4cb83822dbb6c992aa75f56a6c707b37a12e9e752ec15e20be081886251` |
+| `docs/development/packets/P02.md` | `04837d685291e528b3f3f99c98923eee89f4e95406b7c06af16cfe9aab456ab5` |
 
 ## Полные самостоятельные приложения
 
@@ -2761,6 +2911,7 @@ SHA-256 относится к исходному файлу на момент с
 - [ADR 0002: согласованный порядок фиксации решений](#appendix-adr-0002) — `docs/adr/0002-record-review-decisions.md`
 - [ADR 0003: proposed Go container smoke](#appendix-adr-0003) — `docs/adr/0003-go-container-smoke.md`
 - [Backlog #9: перенос smoke на Go, объём и критерии](#appendix-go-smoke-backlog) — `docs/development/backlog/GO_SMOKE.md`
+- [Предложенный P02: задачи, зависимости, критерии и порядок PR](#appendix-p02) — `docs/development/packets/P02.md`
 
 <a id="appendix-readme-en"></a>
 
@@ -2769,7 +2920,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
 </p>
 
 <p align="center">
@@ -2787,20 +2938,20 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Current state
 
-**Architecture approved · container skeleton in progress.** G0 was accepted on **13 October 2026**; P01-01–04 are merged. P01-05–08 add bounded graceful shutdown, three minimal runtime images, Compose and smoke reports. [Build tools](#appendix-toolchain) · [Runtime guide](#appendix-container-runtime). Business operations and experiment results are still to come.
+**Architecture approved · container skeleton accepted.** P01 is complete after owner-merged PR #8 on **16 October 2026** (Europe/Moscow). Three services have bounded shutdown, minimal runtime images, Compose and smoke reports. [Build tools](#appendix-toolchain) · [Runtime guide](#appendix-container-runtime). The [P02 infrastructure/data plan](#appendix-p02) is proposed; implementation has not started. G1, business operations and experiment results are still to come.
 
 | Ready | Next | Later |
 | :--- | :--- | :--- |
-| Approved architecture and business invariants | Review runtime images and bounded shutdown | Repeatable load and failure experiments |
-| Detailed process diagrams and review gates | PostgreSQL ownership, migrations and gRPC contracts | Grafana dashboards, alerts and experiment reports |
+| Approved architecture, runtime images and bounded shutdown | PostgreSQL ownership, migrations and seed | Repeatable load and failure experiments |
+| Detailed process diagrams and review gates | Kafka/Redis infrastructure, then gRPC contracts | Grafana dashboards, alerts and experiment reports |
 | Portable context with a freshness check | Durable workflows, Kafka and compensation | Scaling comparisons under equal resource budgets |
 
-The first code [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) covers **P01-01**, after G0 and before G1. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) tracks all eight tasks; [the packet specification](#appendix-p01) defines acceptance criteria. P01-01–04 are accepted and merged in PR #6/#7. P01-05–08 are ready for owner review in [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). All eight implementation checks are complete; four tasks are owner-accepted. [Windows container smoke](#windows-smoke-proof) and native Linux AMD64/ARM64 CI pass. The personal Mac remains untested.
+All eight P01 tasks are accepted in PR #6/#7/[#8](https://github.com/Includeoyasi/faultline-lab/pull/8); [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) is closed. [Windows container smoke](#windows-smoke-proof) and native Linux AMD64/ARM64 CI pass. The personal Mac remains untested. [Issue #10](https://github.com/Includeoyasi/faultline-lab/issues/10) holds the proposed P02 decomposition in BACKLOG; [the plan](#appendix-p02) gives dependencies and acceptance criteria.
 
 No capacity numbers or performance improvements are claimed before measurement. The [roadmap](#appendix-roadmap) distinguishes design hypotheses from acceptance criteria and observed results.
 
@@ -2888,7 +3039,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience | Planned |
 | **G4** | Reproducible engineering lab | Planned |
 
-The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
 
 [Engineering decisions and review](#appendix-engineering-decisions) traces owner feedback through the rationale, changes and verification. It also links the separate [Go smoke backlog task](https://github.com/Includeoyasi/faultline-lab/issues/9); that migration has not started.
 
@@ -2951,7 +3102,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
 </p>
 
 <p align="center">
@@ -2969,16 +3120,16 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Состояние проекта
 
-**Архитектура принята, начата Go-основа.** Владелец проекта полностью согласовал G0 **13 октября 2026 года**. P01-01 с модулем и контейнером инструментов принята и слита. P01-02–04 с конфигурацией, JSON-логами и gRPC health приняты в PR #7. P01-05–08 добавляют graceful shutdown и [runtime-контейнеры](#appendix-container-runtime). [Устройство и запуск](#appendix-service-runtime). Бизнес-операций и результатов экспериментов ещё нет. [Команды сборки и проверок](#appendix-toolchain).
+**Архитектура и контейнерный каркас приняты.** P01 завершён после merge PR #8 владельцем **16 октября 2026 года**, Europe/Moscow. Три сервиса имеют конфигурацию, health, JSON-логи, bounded shutdown и [runtime-контейнеры](#appendix-container-runtime). [Устройство и запуск](#appendix-service-runtime) · [Команды проверок](#appendix-toolchain). G1, бизнес-операции и результаты экспериментов ещё впереди.
 
-Ближайший пакет **P01**: три Go entrypoints, конфигурация, health, graceful shutdown и JSON-логи, контейнерный toolchain и Compose-запуск для Windows/macOS. [План среды](#appendix-environment) объясняет состав контейнеров; [граница лаборатории](#appendix-lab-boundary) сохраняет направление подключения других бизнесов. Проверки документации не являются тестами будущих сервисов. Производительность стенда пока не измерялась.
+Ближайший пакет **P02**: PostgreSQL/Kafka/Redis, базы и роли, миграции и seed. [Декомпозиция](#appendix-p02) предложена для выбора очередности; разработка ещё не начата. [План среды](#appendix-environment) объясняет состав контейнеров; [граница лаборатории](#appendix-lab-boundary) сохраняет направление подключения других бизнесов. Производительность стенда пока не измерялась.
 
-Задачи ведутся в [P01 — Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3): P01-01 принята и слита в [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6); P01-02–04 приняты и слиты в PR #7. P01-05–08 готовы к ревью в [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). Реализация и проверки — 8/8, принято владельцем 4/8; [Windows container smoke](#windows-smoke-proof) и Linux AMD64/ARM64 CI PASS. Личный Mac пока не проверен. [Спецификация пакета](#appendix-p01) содержит критерии. P01 идёт после G0 и до G1.
+Все 8/8 задач P01 приняты в PR #6/#7/[#8](https://github.com/Includeoyasi/faultline-lab/pull/8); [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) закрыт. [Windows container smoke](#windows-smoke-proof) и Linux AMD64/ARM64 CI PASS; личный Mac пока не проверен. Предлагаемый P02 ведётся в [Issue #10](https://github.com/Includeoyasi/faultline-lab/issues/10), стадия BACKLOG. P01–P05 предшествуют отдельной приёмке G1.
 
 #### Идея
 
@@ -3053,7 +3204,7 @@ flowchart LR
 
 **G0 принят.** G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Следующие контрольные точки ещё не достигнуты.
 
-[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/PROJECT_CONTEXT.md) включает полные документы, статусы и согласования: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/PROJECT_CONTEXT.md) включает полные документы, статусы и согласования: его можно передать агенту без доступа к репозиторию.
 
 [Инженерные решения и ревью](#appendix-engineering-decisions) связывают замечания владельца с обоснованием, изменениями и проверками. Перенос контейнерного smoke на Go заведён отдельной [backlog-задачей #9](https://github.com/Includeoyasi/faultline-lab/issues/9); разработка ещё не начата.
 
@@ -3093,7 +3244,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 
 ### Карта документации
 
-**Faultline Lab** · G0 принят 13 октября 2026 года · P01-01–04 приняты; P01-05–08: graceful shutdown, runtime-контейнеры и итоговый smoke.
+**Faultline Lab** · G0 принят · P01 завершён 16 октября 2026 года · P02: предложенная декомпозиция инфраструктуры и основы данных, реализация не начата.
 
 #### Маршруты чтения
 
@@ -3110,13 +3261,14 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Проверить исходные ресурсы | [Профили сред](#appendix-resource-profiles) — Windows, macOS и возможный будущий сервер |
 | Посмотреть оформление | [Концепции баннера](#appendix-banner-options) — три варианта и выбранное решение |
 | Принять участие в разработке | [CONTRIBUTING](#appendix-contributing) → [Правила ревью](#appendix-code-review) → [Workflow](#appendix-development-process) → [AGENTS](#appendix-agents) |
-| Проверить ближайший PR | [P01](#appendix-p01) — задачи, зависимости, критерии и фактический прогресс |
+| Разобрать принятый каркас | [P01](#appendix-p01) — задачи, зависимости, критерии и фактический прогресс |
+| Выбрать следующий объём | [P02](#appendix-p02) — восемь предложенных задач, порядок, границы PR и критерии |
 | Следить за выполнением | [Учёт задач](#appendix-task-tracking) — GitHub Issues/PR и снимки контекста |
 | Проследить инженерные решения | [Решения и ревью](#appendix-engineering-decisions) — вопросы владельца, обоснования, изменения и доказательства |
 | Проверить отдельный backlog | [Перенос smoke на Go](#appendix-go-smoke-backlog) — задача #9, границы и критерии; реализация не начата |
 | Проверить права и защиту main | [Безопасность репозитория](#appendix-repository-security) — действующая защита и переход на аккаунт исполнителя |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
@@ -3131,7 +3283,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
 - [ADR 0002](#appendix-adr-0002): согласованный порядок фиксации решений в PR, ADR и обзорной странице.
 - [ADR 0003](#appendix-adr-0003): предложение перенести контейнерный smoke на Go; задача в backlog.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/CONTEXT_STATE.json): текущая работа, проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/CONTEXT_STATE.json): текущая работа, проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -3147,7 +3299,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 
 Это план разработки, а не результаты уже проведённых испытаний. Все численные пороги ниже — начальные гипотезы, которые нужно откалибровать на своём компьютере.
 
-Разработку выполняет Codex; пользователь выступает владельцем проекта, проводит код-ревью и согласует ключевые переходы. Порядок работы зафиксирован в `docs/development/WORKFLOW.md`. Архитектурный пакет `docs/architecture/DESIGN.md` и схемы `docs/architecture/PROCESSES.md` полностью приняты пользователем 2026-10-13. P01-01–04 приняты и слиты; P01-05–08 завершают реализацию lifecycle и контейнерного каркаса с smoke. Бизнес-операции ещё не реализованы. Переносимый актуальный контекст находится в `PROJECT_CONTEXT.md`; следующая контрольная точка — G1.
+Разработку выполняет Codex; пользователь — владелец проекта и ревьюер. [Workflow](#appendix-development-process) определяет приёмку. G0 принят 13 октября; P01 принят 8/8 после owner merge PR #8 16 октября 2026 года. Ближайший [P02](#appendix-p02) детализирован как предложение: PostgreSQL/Kafka/Redis, базы/права, миграции и seed; код не начат. Бизнес-операций пока нет, G1 NOT_READY. Актуальный переносимый снимок — PROJECT_CONTEXT.md.
 
 #### 1. Допущения и границы
 
@@ -3530,7 +3682,7 @@ docs/adr/
 
 P01 включает контейнерный toolchain, образы трёх сервисов и минимальный Compose-запуск вместе с Go entrypoints/config/health/shutdown/JSON-логами и Go CI. Основная инфраструктура подключается в P02, наблюдаемость — на соответствующем этапе. Инструменты запускаются по задаче; адаптер не требует отдельного контейнера.
 
-[Спецификация первого PR P01](#appendix-p01) содержит восемь задач, зависимости, критерии приёмки и снимок статуса. Текущее выполнение ведётся в [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3), порядок — в [учёте задач](#appendix-task-tracking). Создание списка и карточки не означает начало реализации.
+[P01](#appendix-p01) завершён, [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) закрыт. [Предлагаемый P02](#appendix-p02) содержит восемь задач, зависимости, критерии и нарезку PR; [Issue #10](https://github.com/Includeoyasi/faultline-lab/issues/10) — BACKLOG / NOT_STARTED. [Учёт задач](#appendix-task-tracking) определяет переходы статусов. Декомпозиция не означает начало реализации или приёмку G1.
 
 Этап 2: запуск Compose и loadgen вручную, экспорт JSON/CSV, Markdown отчёт по шаблону. Этап 4: hooks и crash scripts. Этап 7: `labctl` объединяет уже проверенные действия.
 
@@ -3601,7 +3753,7 @@ Regression suite: короткий успешный процесс, конкур
 
 ### G0: принятый архитектурный пакет
 
-Статус: **G0 полностью принят владельцем проекта 2026-10-13, Europe/Moscow**. Прямое решение пользователя: «G0 полностью принят». Этот документ фиксирует принятую архитектуру из docs/ROADMAP.md и docs/architecture/PROCESSES.md. Код сервисов ещё не создан; начало согласованной реализации для G1 разрешено.
+Статус: **G0 полностью принят владельцем проекта 2026-10-13, Europe/Moscow**. Прямое решение пользователя: «G0 полностью принят». Этот документ фиксирует принятую архитектуру из docs/ROADMAP.md и docs/architecture/PROCESSES.md. На 16 октября каркас P01 принят; [P02](#appendix-p02) детализирован как предложение. Бизнес-операции ещё не реализованы; G1 NOT_READY.
 
 #### Визуальное описание G0
 
@@ -3710,7 +3862,7 @@ flowchart LR
 Порядок небольших пакетов для код-ревью:
 
 1. **P01 — первый PR после G0, до G1.** Три Go entrypoints, конфигурация, health, shutdown и JSON-логи; контейнерный toolchain, образы сервисов, минимальный Compose и Go CI. Дополнение среды согласовано после G0 для Windows/macOS; детали и статус — в [описании среды](#appendix-environment).
-2. **P02:** Compose для PostgreSQL/Kafka/Redis, отдельные БД/роли, миграции и seed.
+2. **P02:** Compose для PostgreSQL/Kafka/Redis, отдельные БД/роли, миграции и seed. [Предложенная декомпозиция](#appendix-p02) сохраняет этот объём; очередность и группировка PR ещё обсуждаются.
 3. **P03:** Protobuf-контракты с operation keys, состояниями и классификацией ошибок.
 4. **P04:** Create/Get/GetByRequestKey и долговечная задача Orders.
 5. **P05:** Reserve/Commit/Release/GetReservation с ledger, блокировками и cancellation barrier.
@@ -4222,17 +4374,17 @@ Codex — исполнитель разработки: готовит проек
 
 Обычные исправления по ревью выполняются в рамках того же пакета. После исправлений повторяются проверки, затронутые изменением. Невыполненные проверки явно обозначаются как невыполненные; объясняется причина и что необходимо для их запуска.
 
-Ближайший PR с кодом — [P01](#appendix-p01); его критерии и снимок статуса сохраняются в спецификации пакета. Текущее выполнение ведётся в [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3), порядок обновления — в [учёте задач](#appendix-task-tracking). Создание карточки не означает начало реализации или принятие G1.
+P01 принят и завершён через PR #6/#7/#8. Следующий [P02](#appendix-p02) предложен в [Issue #10](https://github.com/Includeoyasi/faultline-lab/issues/10): BACKLOG, код не начат, приоритет и группировка PR обсуждаются. История P01 остаётся в [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3), порядок — в [учёте задач](#appendix-task-tracking). Планирование не означает приёмку G1.
 
 #### Стандарт код-ревью
 
-[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/.github/pull_request_template.md) содержит краткий применимый чек-лист.
 
 После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; владелец проекта рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению владельца проекта или действие самого владельца проекта.
 
-По поручению владельца новые PR оформляются от исполнителя AI-Your-Bro, а Includeoyasi проводит ревью и принимает решение. Защита main уже включена; авторизация исполнителя и права write без admin проверены через GitHub API. Новые PR от владельца не создаются; Git author metadata не заменяет проверку API actor. PR #4, созданный до перехода, уже слит (merge 8c392b8); его переоформление не требуется. Подготовленный CODEOWNERS назначает владельца ревьюером всех файлов; он вступит в силу после слияния в main. Точный статус — в [безопасности репозитория](#appendix-repository-security).
+По поручению владельца новые PR оформляются от исполнителя AI-Your-Bro, а Includeoyasi проводит ревью и принимает решение. Защита main уже включена; авторизация исполнителя и права write без admin проверены через GitHub API. Новые PR от владельца не создаются; Git author metadata не заменяет проверку API actor. PR #4, созданный до перехода, уже слит (merge 8c392b8); его переоформление не требуется. CODEOWNERS действует в main после owner merge PR #5 и назначает владельца ревьюером всех файлов. Точный статус — в [безопасности репозитория](#appendix-repository-security).
 
-Принятие в чате фиксируется в контексте, но не заменяет обязательное GitHub approval на защищённой ветке. Сейчас обязателен Documentation CI; Go-проверки и закреплённая конфигурация инструментов подключаются в P01 с первым модулем и затем добавляются в required checks.
+Принятие в чате фиксируется в контексте, но не заменяет GitHub approval защищённой ветки. Обязательны актуальные Documentation и Go toolchain (AMD64/ARM64) checks, независимое owner review и остальные требования защиты main.
 
 #### Контрольные точки
 
@@ -4246,7 +4398,7 @@ G0–G4 — контрольные точки приёмки. P01–P05 — не
 | G3: устойчивость | После этапа 4 | Сценарии неизвестного результата, поздних событий, отмены, replay; объяснение политики ошибок и recovery | Ревью и сценарии приняты; нерешённые процессы явно учитываются; отсутствуют ложные terminal states |
 | G4: готовая лаборатория | После этапа 7 | Каталог экспериментов, результаты сравнения решений, масштабирование, автоматический запуск/сверка/отчёты, инструкции | Владелец проекта воспроизвёл или проверил заявленный цикл; отчёты отражают корректность, ресурсы и ограничения |
 
-Статус G0: **полностью принят 2026-10-13, Europe/Moscow**. Прямое решение пользователя: «G0 полностью принят». G1–G4 ещё не достигнуты. P01-01–04 приняты; в PR #8 подготовлены bounded graceful shutdown, runtime-контейнеры и smoke. Полный Linux CI прошёл на AMD64/ARM64; обязательная локальная Windows-проверка контейнеров выполнена (PASS); PR #8 ждёт ревью владельца. Бизнес-операции пока не реализованы. Работа над согласованной основой для G1 разрешена; повторное согласование G0 не требуется.
+Статус G0: **полностью принят 2026-10-13, Europe/Moscow**. P01 принят 8/8 после merge PR #8 владельцем 16 октября; Linux AMD64/ARM64 CI и Windows container smoke PASS. P02 декомпозирован как предложение, код не начат. G1–G4 ещё не достигнуты, бизнес-операции не реализованы. Повторное согласование G0 не требуется.
 
 На контрольной точке Codex сначала доводит текущий пакет до проверяемого результата, затем предоставляет его владельцу проекта. Следующий этап, зависящий от согласования, начинается после явного решения. Замечания владельца проекта вносятся в пакет до повторного рассмотрения.
 
@@ -4423,7 +4575,7 @@ PROJECT_CONTEXT.md — самостоятельный пакет для друг
 - G0 was explicitly approved by the human on 2026-10-13 (Europe/Moscow): "G0 полностью принят." The architecture and business rules in docs/architecture/DESIGN.md and docs/architecture/PROCESSES.md are approved. Do not ask for G0 approval again. G1-G4 remain future review gates; prepare the work for a gate before requesting its approval.
 - Work autonomously within an approved stage. Keep changes small enough for focused code review and include actual validation results and known limitations.
 - G0-G4 are acceptance gates; P01-P05 are code review packets. The first code PR is P01, after approved G0 and before G1. Do not describe P01 as G1 acceptance or work after G1.
-- P01-01 was accepted in PR #6; P01-02 through P01-04 were accepted and merged by the owner in PR #7 (main bc09d08). On 2026-10-15 the owner authorized P01-05 through P01-08 together in one PR: bounded graceful shutdown, runtime images/Compose, final checks and smoke instructions. P01 is still between G0 and G1; owner acceptance of this final PR is required before marking the packet DONE.
+- P01 is DONE: PR #6/#7 accepted its first four tasks, and Includeoyasi merged PR #8 (HEAD 56f3672, merge 3ca290d) on 2026-10-16 Europe/Moscow, accepting P01-05–08. All eight P01 tasks are accepted; G1 remains NOT_READY. P02 infrastructure/data decomposition is proposed in docs/development/packets/P02.md and Issue #10 (BACKLOG, NOT_STARTED). The owner is choosing priority/PR grouping; planning does not authorize starting this implementation or Issue #9.
 - Use clear descriptive headings in PR descriptions and comments, such as "Что было сделано", "Проверки" and "На что обратить внимание". The owner rejected the previous question-style reviewer-guide heading. Explain observable behavior, validation and limitations in plain language; do not repeat a fixed conversational formula.
 - The owner requested removal of environment-specific network addresses from application code during PR #7 review. FL_GRPC_ADDR is required with no implicit address/port fallback. Keep listen addresses, peer DNS targets and host port publication separate in deployment configuration; use configs/env examples. Local host publication must explicitly bind loopback. Test loopback fixtures and observed runtime addresses are not deployment defaults.
 - Follow docs/development/CODE_REVIEW.md for Go style, correctness, concurrency, data, tests and review evidence. After repository bootstrap, prepare changes on a focused branch and present a PR when GitHub is available. Do not approve or merge your own changes; merging requires an explicit human decision and authorization for the action. Go checks become executable with P01, not before a Go module exists.
@@ -4491,7 +4643,7 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [current context](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). AI implementers must also follow [AGENTS.md](#appendix-agents).
+Read the [current context](https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). AI implementers must also follow [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
@@ -4689,7 +4841,7 @@ SOFTWARE.
 - Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
 - Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
 
-Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
 
 <a id="appendix-lab-boundary"></a>
 
@@ -4906,9 +5058,9 @@ Docker рекомендует разделять ответственности 
 
 #### Что известно о текущем компьютере
 
-Текущий хост — Windows x64, PowerShell 7.6.5. Команды Go и Docker не обнаружены в текущем PATH; стандартные проверенные расположения установки также отсутствуют. Это не доказывает отсутствия любых иных установок. Docker daemon, WSL, версии Docker/Compose и запуск контейнеров не проверены. Ничего не устанавливалось.
+Последняя проверка 15 октября: Windows x64, PowerShell 7.6.5; Go1.27.2, Docker Desktop4.95/Engine29.8.2/Compose5.6 и WSL2.7.13 установлены. Windows container smoke P01 PASS; после него Docker/WSL выключены. Подготовка плана P02 не запускает runtime.
 
-Характеристики Windows-хоста прочитаны и сохранены в [ресурсных профилях](#appendix-resource-profiles). Бюджет Docker, потребление стенда и macOS-окружение ещё не проверены. Возможный арендуемый сервер рассматривается позже при необходимости; он не выбран. Запуск на Windows и macOS будет подтверждён отдельно. Docker делает сборку и конфигурацию переносимыми, но одинаковой производительности разных компьютеров не обещает.
+Характеристики Windows-хоста и подтверждённый WSL-бюджет 2 CPU / memory=2GB / swap=1GB сохранены в [ресурсных профилях](#appendix-resource-profiles). Достаточность этого бюджета для P02 ещё не измерена; macOS-окружение также не проверено. Возможный арендуемый сервер рассматривается позже при необходимости; он не выбран. Docker делает сборку и конфигурацию переносимыми, но одинаковой производительности разных компьютеров не обещает.
 
 Для A/B по умолчанию используется одна машина с одинаковым бюджетом и нативной архитектурой. Сравнение между Windows и macOS возможно как отдельный эксперимент с явными ограничениями. В manifest сохраняются архитектура CPU, аппаратные ресурсы, OS, Docker, volumes, image digests и фактические лимиты.
 
@@ -4981,13 +5133,13 @@ Docker рекомендует разделять ответственности 
 
 ### Баннер Faultline Lab
 
-Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/docs/assets/banner.svg). Публикация ожидает следующего коммита и ревью.
+Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/docs/assets/banner.svg). Публикация ожидает следующего коммита и ревью.
 
 #### Задание
 
 Подготовить три альтернативных варианта с акцентом на технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее. Сделаны векторные композиции с читаемым названием, тёмным текстом на светлом фоне и встроенными title/description. Внешних шрифтов, скриптов и удалённых графических зависимостей нет.
 
-![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/docs/assets/banner-concepts/comparison.png)
+![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/docs/assets/banner-concepts/comparison.png)
 
 | Вариант | Образ | Палитра | Статус |
 | :--- | :--- | :--- | :--- |
@@ -4997,13 +5149,13 @@ Docker рекомендует разделять ответственности 
 
 #### Выбранное решение
 
-![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/docs/assets/banner-concepts/02-experiment-flow.png)
+![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/docs/assets/banner-concepts/02-experiment-flow.png)
 
 Абстрактные линии проходят через область наблюдения. Это метафора исследования поведения системы и сравнения изменений; линии не являются графиком измеренных результатов. Композиция не зависит от домена магазина и подходит будущим подключаемым бизнесам.
 
 Размер SVG — 1280 × 420; README задаёт ширину 100%. Исходник масштабируется, PNG служит предварительным просмотром. Основная подпись: **Explore how systems behave.** Нижняя последовательность: **Hypothesis → Experiment → Evidence**.
 
-Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
+Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
 
 Баннеры отрендерены локально и визуально просмотрены на общем листе. Проверены отсутствие обрезанного текста и соответствие композиций заданию. Отдельный preview выбранного варианта используется для проверки основного баннера. Выбранный вариант слит в main через [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4), merge commit 8c392b8. Проверка отрисовки нового README на GitHub пока не выполнялась.
 
@@ -5015,7 +5167,7 @@ Docker рекомендует разделять ответственности 
 
 ### P01 — Go-каркас между G0 и G1
 
-Статус на 15 октября 2026 года: P01-01–04 приняты и слиты. Реализация и проверки P01 — 8/8; владельцем принято 4/8. P01-05–08 находятся на ревью в [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). Linux AMD64/ARM64 CI и Windows container smoke PASS; личная macOS NOT_RUN. Установлены Go 1.27.2, WSL 2.7.13 и Docker Desktop 4.95. Среда после проверки остановлена, автозапуск Docker выключен.
+Статус на 16 октября 2026 года: **DONE, принято 8/8**. Заключительный [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8) слит Includeoyasi, принятый HEAD `56f3672`, merge `3ca290d`. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) закрыт. Windows и Linux AMD64/ARM64 smoke PASS; личный Mac NOT_RUN. G1 ещё не принят.
 
 Основа: [первый пакет реализации](#appendix-design-review), [roadmap](#appendix-roadmap), [порядок ревью](#appendix-development-process), [стандарт Go](#appendix-code-review) и согласованный [Docker-подход](#appendix-environment).
 
@@ -5023,7 +5175,7 @@ Docker рекомендует разделять ответственности 
 
 Результат всего P01: три Go-сервиса Orders, Inventory и Payments запускаются в отдельных контейнерах, валидируют конфигурацию, публикуют gRPC health, пишут JSON-логи и корректно завершаются. Сборка и проверки доступны через закреплённый контейнерный toolchain и CI.
 
-Текущий PR объединяет P01-05–08: bounded graceful shutdown, runtime-образы/Compose, итоговые Go/CI проверки и smoke с отчётом. P01-01–04 уже приняты. [Устройство сервисов](#appendix-service-runtime), [контейнерная инструкция](#appendix-container-runtime) и [toolchain](#appendix-toolchain) описывают воспроизводимые команды и ограничения.
+Заключительный PR #8 объединил P01-05–08: bounded graceful shutdown, runtime-образы/Compose, итоговые Go/CI проверки и smoke. Все восемь задач приняты. [Устройство сервисов](#appendix-service-runtime), [контейнерная инструкция](#appendix-container-runtime) и [toolchain](#appendix-toolchain) сохраняют команды воспроизведения.
 
 PostgreSQL/Kafka/Redis и миграции относятся к P02. Доменные protobuf, заказы, складские операции, платежи, адаптеры и runner здесь не реализуются. Использование стандартного gRPC health не означает готовность бизнес-API.
 
@@ -5031,7 +5183,7 @@ PostgreSQL/Kafka/Redis и миграции относятся к P02. Домен
 
 #### Задачи и текущие статусы
 
-Все статусы ниже — датированный локальный снимок. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) остаётся IN_PROGRESS. Владелец принял первые четыре задачи через PR #6/#7; новый код и его проверки не означают принятия всего P01 или G1.
+Все статусы ниже — снимок после наблюдаемого merge PR #8 владельцем. P01 завершён; [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) закрыт. Это не приёмка G1.
 
 | ID | Задача | Зависит от | Статус | Доказательство приёмки |
 | :--- | :--- | :--- | :--- | :--- |
@@ -5039,10 +5191,10 @@ PostgreSQL/Kafka/Redis и миграции относятся к P02. Домен
 | P01-02 | Конфигурация с проверкой | 01 | DONE | Успешный старт с допустимой конфигурацией; отказ на некорректной |
 | P01-03 | Структурированные логи | 01 | DONE | Разбор стартовых/финальных записей как JSON с ожидаемыми полями |
 | P01-04 | Три entrypoints и gRPC health | 02, 03 | DONE | Проверки всех трёх endpoints; ошибка занятого адреса |
-| P01-05 | Graceful shutdown с пределом ожидания | 04 | IN_REVIEW | Завершение активной работы и принудительное прекращение по deadline |
-| P01-06 | Образы и минимальный Compose | 01–05 | IN_REVIEW | Сборка образов, health и остановка трёх контейнеров |
-| P01-07 | Go-проверки и CI | 01–05 | IN_REVIEW | Успешные обязательные проверки на предъявленном HEAD |
-| P01-08 | Smoke-проверка, инструкция и review packet | 06, 07 | IN_REVIEW | Воспроизводимые команды, результаты, ограничения и открытый PR |
+| P01-05 | Graceful shutdown с пределом ожидания | 04 | DONE | Завершение активной работы и принудительное прекращение по deadline |
+| P01-06 | Образы и минимальный Compose | 01–05 | DONE | Сборка образов, health и остановка трёх контейнеров |
+| P01-07 | Go-проверки и CI | 01–05 | DONE | Успешные обязательные проверки на предъявленном HEAD |
+| P01-08 | Smoke-проверка, инструкция и review packet | 06, 07 | DONE | Воспроизводимые команды, результаты, ограничения и открытый PR |
 
 #### Проверяемые критерии по задачам
 
@@ -5120,7 +5272,7 @@ P01 не достигает всей контрольной точки G1: ба�
 
 #### Где следить за задачами
 
-Принятый порядок описан в [учёте задач](#appendix-task-tracking): один GitHub Issue на пакет, чеклист восьми задач и ссылки на их PR. [Карточка P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта; Projects пока не настроен. Этот файл хранит критерии и датированный снимок: P01-01–04 приняты, 4/8; P01-05–08 реализуются одним PR. Windows container smoke P01-06 выполнен: [отчёт и исходные данные](#windows-smoke-proof).
+Принятый порядок описан в [учёте задач](#appendix-task-tracking): один Issue на пакет с чеклистом и ссылками на PR. [P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) закрыт, принято 8/8. Следующая [декомпозиция P02](#appendix-p02) предложена в Issue #10; реализация не начата. Windows smoke и исходные данные сохранены в [отчёте](#windows-smoke-proof).
 
 <a id="appendix-task-tracking"></a>
 
@@ -5130,7 +5282,7 @@ P01 не достигает всей контрольной точки G1: ба�
 
 ### Учёт задач и статусов
 
-Статус на 15 октября 2026 года: P01-01–04 приняты и слиты. Реализация и проверки P01 — 8/8; владельцем принято 4/8. P01-05–08 находятся на ревью в [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). Linux AMD64/ARM64 CI и Windows container smoke PASS; личная macOS NOT_RUN. Установлены Go 1.27.2, WSL 2.7.13 и Docker Desktop 4.95. Среда после проверки остановлена, автозапуск Docker выключен.
+Статус на 16 октября 2026 года: P01 **DONE**, принято 8/8, [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8) слит владельцем, Issue #3 закрыт. [P02 — Issue #10](https://github.com/Includeoyasi/faultline-lab/issues/10) в **BACKLOG**: восемь предложенных задач, приоритет/группировка PR обсуждаются, разработка NOT_STARTED. Go smoke #9 остаётся отдельным backlog. G1 NOT_READY; runtime при планировании не запускался.
 
 #### Разделение назначений
 
@@ -5140,7 +5292,7 @@ P01 не достигает всей контрольной точки G1: ба�
 | `docs/development/packets/<packet>.md` | Версионируемые границы пакета, задачи и критерии приёмки |
 | GitHub Issues | Основной трекер выполнения, блокеров и ссылок на PR |
 | GitHub PR | Код, diff, результаты проверок, замечания и решение владельца проекта |
-| [CONTEXT_STATE.json](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/CONTEXT_STATE.json) и [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/PROJECT_CONTEXT.md) | Датированный переносимый снимок для агентов без доступа к GitHub/компьютеру |
+| [CONTEXT_STATE.json](https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/CONTEXT_STATE.json) и [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/docs/p02-plan/PROJECT_CONTEXT.md) | Датированный переносимый снимок для агентов без доступа к GitHub/компьютеру |
 
 [GitHub Issues](https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/about-issues) поддерживает задачи и связь с PR. [Projects](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects) даёт таблицы и доски поверх Issues/PR; доску можно подключить при росте backlog, но для первого пакета достаточно одной карточки с чеклистом.
 
@@ -5152,6 +5304,11 @@ P01 не достигает всей контрольной точки G1: ба�
 
 GitHub — основной источник текущего выполнения; в репозиторий переносится датированный снимок с URL и проверенными результатами. Автоматической синхронизации сейчас нет. Порядок принят прямым поручением владельца проекта «фиксируй изменения и заводи задачи».
 
+#### Следующий пакет: предложение P02
+
+[Issue #10](https://github.com/Includeoyasi/faultline-lab/issues/10) содержит восемь задач [P02](#appendix-p02): среда → PostgreSQL/права → миграции → seed → Kafka → Redis → общие проверки → доказательства/ревью. Стадия BACKLOG, implementation NOT_STARTED; декомпозиция и порядок PR представлены владельцу для обсуждения. Это план в пределах G0, а не свидетельство готовой инфраструктуры.
+
+Предлагаются два основных PR (PostgreSQL/миграции/seed, затем Kafka/Redis) и отдельная итоговая часть только при содержательном diff. Проверки каждой части обязательны в её PR. Перенос Go smoke #9 в P02 не включается; его приоритет относительно P03 остаётся решением владельца.
 #### Статусы
 
 | Статус | Основание перехода |
@@ -5180,10 +5337,10 @@ BLOCKED — отдельный признак с причиной и требу�
 
 #### Фактический статус сейчас
 
-- P01-01–04 DONE; P01-05–08 IN_REVIEW. Код/проверки нового PR не заменяют ревью владельца.
-- Карточка [P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта: IN_REVIEW, первые четыре задачи приняты. Оставшиеся предъявлены в PR #8; Projects не создан.
-- Документационные PR #4 и [#5](https://github.com/Includeoyasi/faultline-lab/pull/5) слиты. CODEOWNERS и защита main действуют; PR первой задачи публикуется от AI-Your-Bro с ревью Includeoyasi.
-- Текущий PR объединяет P01-05–08 и готов к ревью: обязательный Windows container smoke PASS. Весь P01 и G1 ещё не приняты владельцем.
+- P01-01–08 DONE; [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) закрыт после owner merge PR #8, принято 8/8.
+- P02-01–08 BACKLOG / NOT_STARTED; [Issue #10](https://github.com/Includeoyasi/faultline-lab/issues/10) открыт. Критерии описаны, приоритет и группировка PR ещё не приняты.
+- [Issue #9](https://github.com/Includeoyasi/faultline-lab/issues/9) остаётся BACKLOG / NOT_STARTED, отдельный будущий PR.
+- CODEOWNERS и защита main действуют. Исполнитель AI-Your-Bro ведёт задачи; Includeoyasi принимает изменения. G1 NOT_READY; Projects не создан.
 
 <a id="appendix-repository-security"></a>
 
@@ -8404,7 +8561,7 @@ wsl --shutdown
 
 ### Инженерные решения и ревью
 
-Короткая подборка обсуждений: какой вопрос поднял владелец, какое решение подготовил исполнитель и чем подтверждён результат. Подробности остаются в PR, ADR и отчётах. Состояние на 15 октября 2026 года; GitHub хранит актуальные обсуждения и приёмку конкретного HEAD.
+Короткая подборка обсуждений: какой вопрос поднял владелец, какое решение подготовил исполнитель и чем подтверждён результат. Подробности остаются в PR, ADR и отчётах. Состояние на 16 октября 2026 года; GitHub хранит актуальные обсуждения и приёмку конкретного HEAD.
 
 #### Примеры из проекта
 
@@ -8412,9 +8569,9 @@ wsl --shutdown
 | :--- | :--- | :--- | :--- |
 | Владелец заметил сетевые IP/порты в прикладном коде | FL_GRPC_ADDR стал обязательным; окружение, listener и публикация портов разделены. Ошибочная конфигурация проверяется до bind | Принято владельцем в PR #7 | [Сводка исправления](https://github.com/Includeoyasi/faultline-lab/pull/7#issuecomment-6192239609), [конфигурация](#appendix-service-config), [описание](#appendix-service-runtime) |
 | Владелец поставил вопрос о Node.js в Go-проекте и поручил вынести перенос в backlog | Предложен Go CLI с сохранением smoke-проверок и отчёта; проверка документации остаётся отдельным Node.js-инструментом | BACKLOG, код переноса не начат; детали решения proposed | [Задача #9](https://github.com/Includeoyasi/faultline-lab/issues/9), [ADR 0003](#appendix-adr-0003), [критерии](#appendix-go-smoke-backlog) |
-| Владелец потребовал освобождать ресурсы личного ПК после работы | Исполнитель ограничил WSL до 2 CPU / memory=2GB / swap=1GB; после smoke выключил Docker Desktop/WSL VM и автозапуск, сохранив программы и кеши | Реализовано и проверено; PR #8 на ревью | [Windows evidence](#windows-smoke-proof), [cleanup.json](#windows-smoke-cleanup), [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8) |
+| Владелец потребовал освобождать ресурсы личного ПК после работы | Исполнитель ограничил WSL до 2 CPU / memory=2GB / swap=1GB; после smoke выключил Docker Desktop/WSL VM и автозапуск, сохранив программы и кеши | Принято владельцем в PR #8 | [Windows evidence](#windows-smoke-proof), [cleanup.json](#windows-smoke-cleanup), [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8) |
 
-Замечания в этих примерах получены в чате с владельцем. Их пересказ и ссылки подготовлены исполнителем AI-Your-Bro. Авторство GitHub-комментариев видно в самих PR; пересказ не выдаётся за комментарий, написанный владельцем на GitHub. Принятие PR #7 подтверждено merge аккаунтом Includeoyasi; PR #8 ещё не принят.
+Замечания в этих примерах получены в чате с владельцем. Их пересказ и ссылки подготовлены исполнителем AI-Your-Bro. Авторство GitHub-комментариев видно в самих PR; пересказ не выдаётся за комментарий, написанный владельцем на GitHub. Принятие PR #7 подтверждено merge аккаунтом Includeoyasi; PR #8 также принят через merge Includeoyasi 16 октября, Europe/Moscow.
 
 #### Как сохраняем следующие обсуждения
 
@@ -8444,7 +8601,7 @@ flowchart LR
 | Запись | Предмет | Статус решения |
 | :--- | :--- | :--- |
 | [0001](#appendix-adr-0001) | Архитектура G0 | accepted |
-| [0002](#appendix-adr-0002) | PR, ADR и обзорная страница для фиксации решений | accepted: порядок согласован в чате; публикация на ревью |
+| [0002](#appendix-adr-0002) | PR, ADR и обзорная страница для фиксации решений | accepted: порядок согласован в чате, публикация принята в PR #8 |
 | [0003](#appendix-adr-0003) | Go вместо Node.js для контейнерного smoke | proposed; задача #9 в BACKLOG |
 
 <a id="appendix-adr-0002"></a>
@@ -8459,7 +8616,7 @@ flowchart LR
 - Статус решения: **accepted**.
 - Решение принял владелец проекта; запись подготовил исполнитель AI-Your-Bro.
 - Основание: после предложения использовать PR для обсуждений, ADR для существенных решений и обзорную страницу владелец ответил в чате: «Хорошо».
-- Документ публикуется в PR #8; согласие с порядком работы не заменяет approval этого PR.
+- Публикация принята: Includeoyasi слил PR #8 16 октября 2026 года (Europe/Moscow), merge `3ca290d`. Согласие с порядком работы и фактическая приёмка PR зафиксированы отдельно.
 
 #### Контекст
 
@@ -8519,7 +8676,7 @@ flowchart LR
 
 #### Текущее состояние
 
-В работе остаётся существующий Node.js smoke из PR #8. Реализация переноса — **NOT_STARTED**, проверки новой Go-версии — **NOT_RUN**. Владелец отдельно выбирает момент начала; явный выбор интерфейса и оценка результата появятся в задаче #9 и её PR. После принятия реального решения этот ADR обновляется с основанием.
+Действует существующий Node.js smoke, принятый в main через PR #8. Реализация переноса — **NOT_STARTED**, проверки новой Go-версии — **NOT_RUN**. Владелец отдельно выбирает момент начала; явный выбор интерфейса и оценка результата появятся в задаче #9 и её PR. Предложенный P02 не включает этот перенос. После принятия реального решения этот ADR обновляется с основанием.
 
 <a id="appendix-go-smoke-backlog"></a>
 
@@ -8529,7 +8686,7 @@ flowchart LR
 
 ### Backlog: перенос контейнерного smoke на Go
 
-Источник текущего статуса — [GitHub Issue #9](https://github.com/Includeoyasi/faultline-lab/issues/9), метка backlog. Снимок от 15 октября 2026 года: BACKLOG, код не начат, срок старта не назначен. Предложение и компромиссы: [ADR 0003](#appendix-adr-0003).
+Источник текущего статуса — [GitHub Issue #9](https://github.com/Includeoyasi/faultline-lab/issues/9), метка backlog. Снимок от 16 октября 2026 года: BACKLOG, код не начат, срок старта не назначен. Предложение и компромиссы: [ADR 0003](#appendix-adr-0003).
 
 #### Цель
 
@@ -8539,7 +8696,7 @@ flowchart LR
 
 **BACKLOG — разработка не начата.** Владелец 15 октября 2026 года поручил завести отдельную задачу. Это согласование постановки в backlog; очередь и начало реализации выбираются отдельно.
 
-Задача следует за текущим P01/PR #8 и будет оформлена отдельным PR. Она не расширяет P01-05–08 и не означает приёмку P01 или G1. Действующий smoke остаётся Node.js до реализации и ревью замены.
+P01 завершён через PR #8. Перенос будет оформлен отдельным PR; предлагаемый P02 его не включает, приоритет относительно P03 ещё не выбран. Она не расширяет P01-05–08 и не означает приёмку P01 или G1. Действующий smoke остаётся Node.js до реализации и ревью замены.
 
 #### Объём
 
@@ -8569,3 +8726,111 @@ flowchart LR
 - [Windows baseline и исходные данные](https://github.com/Includeoyasi/faultline-lab/blob/445d324ea48419133fa37b15d44242bd6bbf5b08/docs/development/evidence/p01/WINDOWS_SMOKE.md).
 
 Основание — обсуждение владельцем и исполнителем выбора Node.js/Go в чате. Постановку документирует AI-Your-Bro; GitHub approval от имени владельца не создаётся. Требования бизнес-сервисов G0 и их ровно три границы не меняются.
+
+<a id="appendix-p02"></a>
+
+## Приложение: Предложенный P02: задачи, зависимости, критерии и порядок PR
+
+Полный исходный документ: `docs/development/packets/P02.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### P02 — инфраструктура и основа данных
+
+Состояние на 16 октября 2026 года: **план предложен, разработка NOT_STARTED**. Общий объём P02 уже задан принятой архитектурой G0; эта декомпозиция и порядок PR представлены владельцу для выбора. Приоритет задач ещё не принят. P01 завершён: [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8) слит Includeoyasi 16 октября по Europe/Moscow, merge `3ca290d`.
+
+Трекер: [Issue #10](https://github.com/Includeoyasi/faultline-lab/issues/10), стадия **BACKLOG**, без назначенного исполнителя и срока старта. Этот файл хранит критерии и датированный снимок; текущие решения о приоритете фиксируются в Issue и контексте.
+
+Основа: [очередь пакетов](#appendix-design-review), [roadmap](#appendix-roadmap), [контейнерная среда](#appendix-environment) и [порядок ревью](#appendix-development-process).
+
+#### Результат пакета
+
+Воспроизводимая среда PostgreSQL/Kafka/Redis, раздельное владение данными, миграции и небольшой исходный каталог. Можно доказать, что данные сохраняются после рестарта, чужая БД недоступна, а повтор подготовки не портит состояние стенда. Это основа для последующих контрактов и бизнес-операций, а не сквозной процесс заказа и не приёмка G1.
+
+#### Предлагаемый порядок
+
+| ID | Задача | Зависимости | Критерий приёмки |
+| :--- | :--- | :--- | :--- |
+| P02-01 | Состав Compose, конфигурация и бюджет | P01 | Закреплённые образы AMD64/ARM64, адреса/настройки вне Go-кода, явно включаемые компоненты, volumes и переносимые команды; Docker не запускается автоматически |
+| P02-02 | PostgreSQL: три базы и разграничение прав | 01 | Orders/Inventory/Payments имеют свои БД и роли; отрицательные проверки запрещают доступ к чужим данным и DDL под runtime-ролью |
+| P02-03 | Версионируемые миграции | 02 | Применение с нуля и повторный запуск корректны; ошибка/параллельный запуск не дают ложного успеха или незаметно частичной схемы |
+| P02-04 | Минимальная схема Inventory и seed | 03 | Детерминированные SKU/цены/остатки; повтор seed не удваивает и не перезаписывает изменённые остатки |
+| P02-05 | Kafka: один брокер и техническая проверка доставки | 01 | Produce/consume в изолированном тестовом топике, сохранение записи после рестарта, корректные advertised listeners; без заявлений о HA |
+| P02-06 | Redis: изолированный кеш | 01 | PING/SET/GET/TTL и недоступность проверяются с ограниченным ожиданием; кеш не становится источником истины |
+| P02-07 | Интеграционные проверки и CI | 02–06 | Реальные зависимости проверены в Linux AMD64/ARM64 и на доступном Windows; ошибки сохраняют диагностику, cleanup ограничен собственным запуском |
+| P02-08 | Инструкция, доказательства и ревью | 07 | Из чистого checkout воспроизводятся подготовка/start/check/stop; указаны версии, ресурсы, результаты и ограничения; контекст актуален |
+
+Все восемь задач пока **BACKLOG / NOT_STARTED**. Рекомендуемая последовательность: PostgreSQL и миграции → seed → Kafka → Redis → общие проверки и ревью. У Kafka и Redis нет зависимости от seed; последовательность выбрана для небольших PR и ограничения одновременно работающих компонентов на личном ПК.
+
+#### Детали приёмки
+
+##### P02-01: среда и конфигурация
+
+- Один PostgreSQL, один Kafka broker и один Redis добавляются к трём независимым бизнес-сервисам. Четвёртого бизнес-сервиса нет. Bootstrap, миграции, seed и проверки выполняются временными инструментами.
+- Есть запуск только нужной зависимости и полный запуск инфраструктуры. Точное устройство Compose-профилей выбирается при реализации; обычные проверки кода не требуют постоянно работающих Kafka/Redis.
+- Версии и digests образов закреплены при реализации после проверки поддержки обеих архитектур. Конкретные версии в этом плане ещё не выбраны.
+- Имена сервисов/DNS, порты, credentials и объёмы ресурсов задаются в конфигурации. Секреты не коммитятся и не выводятся в логи. Host ports закрыты по умолчанию; необходимый debug-доступ задаётся отдельно с loopback binding.
+- PostgreSQL и Kafka имеют описанные volumes. Обычный stop сохраняет данные. Удаление данных — отдельная явная команда только для выделенного проекта; cleanup теста удаляет лишь созданные им ресурсы.
+- Проверяется текущий бюджет WSL: 2 CPU, memory=2GB, swap=1GB. Это исходное ограничение, а не доказательство достаточности для полного состава. При нехватке ресурсов фиксируется результат и предложение владельцу; лимит автоматически не увеличивается. Сборка и измеряемый запуск разделены.
+
+##### P02-02: PostgreSQL и права
+
+- Один экземпляр содержит `orders_db`, `inventory_db`, `payments_db`. У каждой БД своё владение, runtime-учётная запись и выделенные права миграции.
+- Bootstrap-права не используются бизнес-сервисами; runtime-роль не superuser и не владелец схемы с неограниченным DDL.
+- Тесты выполняют успешные разрешённые операции и реальные запрещённые подключения/SQL: к чужой БД, чужим данным и изменению схемы. Проверяется поведение, а не только текст GRANT/REVOKE.
+- Подготовка работает на чистом volume; повторный обычный старт не пересоздаёт базы и не уничтожает данные. Учтено, что init-скрипты образа и последующие миграции имеют разный жизненный цикл.
+
+##### P02-03: миграции
+
+- Миграции и история версий разделены по владельцам данных. Версии/команды инструмента закреплены; основной путь не требует host Go SDK, Bash или ручной установки SQL-клиента.
+- Есть однозначный результат для чистого запуска, повторного запуска, ошибки и конкурирующих запусков. Некорректная миграция не маркируется успешно применённой; порядок дальнейшего восстановления описан.
+- Миграции запускаются явно, без автоматического удаления/пересоздания схем при старте сервиса. Применимые DDL-транзакции и ограничения выбранного инструмента проверяются на реальном PostgreSQL.
+- Доменная схема развивается вместе с операциями P04/P05. P02 не создаёт заранее весь ledger, outbox/inbox и state machine будущих пакетов. Для ещё пустой БД достаточно инфраструктуры миграций; бессодержательные бизнес-таблицы не добавляются.
+
+##### P02-04: исходные данные
+
+- В Inventory появляется минимальный каталог и складской baseline, необходимые для дальнейшего Reserve: стабильные SKU, целые суммы в минимальных денежных единицах, одна валюта, неотрицательные исходные остатки.
+- Seed имеет фиксированную версию/параметры; одинаковый запуск на чистом стенде даёт одинаковые данные.
+- Повтор seed безопасен и не сбрасывает уже изменённые остатки. Сброс эксперимента выполняется отдельно для явно выделенного стенда. Создание/резервирование заказа остаётся последующим бизнес-кодом.
+
+##### P02-05: Kafka
+
+- Один брокер имеет явную конфигурацию, health/readiness-проверку, volume и корректные адреса для фактических клиентов в Compose.
+- Реальный producer/consumer проверяет доставку в техническом топике собственного запуска. После штатного рестарта брокера сохранённая запись доступна; ошибки имеют предел ожидания и диагностику.
+- Проверка не вводит бизнес-события или consumer workflow вместо P03 и дальнейшего MVP. Репликация, failover кластера и exactly-once для бизнеса одним брокером не заявляются.
+
+##### P02-06: Redis
+
+- Redis доступен только из нужной сети стенда с явной конфигурацией доступа. Проверяется как успешный доступ, так и отказ при неверной конфигурации.
+- Временные ключи своего запуска проверяют запись, чтение и истечение TTL; после проверки удаляются только эти ключи.
+- Потеря содержимого кеша допустима: авторитетные остатки находятся в PostgreSQL. Cache-aside, invalidation, stampede и бизнес-fallback будут реализованы вместе с потребителем кеша; P02 не объявляет их проверенными.
+
+##### P02-07: проверки
+
+- Новые интеграционные проверки пишутся на Go; существующий `tools/smoke.mjs` не переносится в рамках P02. К тестам не добавляется отдельный постоянный сервис.
+- У каждого прогона собственные namespace/Compose project и ограниченные сроки команд. Неуспех сохраняет диагностику; cleanup не затрагивает чужие контейнеры, volumes или данные обычного стенда.
+- Проверены права БД, миграции, seed, сохранность PostgreSQL/Kafka после рестарта, реальная доставка Kafka и Redis TTL/ошибки доступа. Остановка одной зависимости не должна молча удалять данные другой.
+- Существующие Go/lint/race и runtime-проверки P01 сохраняются. Отдельно фиксируются Linux AMD64, Linux ARM64 и Windows/WSL2; macOS остаётся NOT_RUN до реального доступа, сборка ARM64 не подменяет Mac smoke.
+- В отчёте указаны commit, реальные версии/digests, состав, лимиты и наблюдаемое потребление при проверке. Smoke не выдаётся за измерение бизнес-capacity.
+
+##### P02-08: передача на ревью
+
+- Документированы команды подготовки конфигурации, старта зависимостей, миграций, seed, проверок, обычной остановки и явного сброса выделенного стенда.
+- Прикладной health P01 не выдаётся за готовность будущих операций с БД/Kafka. Подключение бизнес-кода и его readiness вводятся вместе с соответствующей реализацией.
+- Доказательства используют PASS/FAIL/NOT_RUN, без секретов и персональных путей. После локальной проверки инструменты останавливаются, Docker Desktop/WSL VM выключаются; установленные программы, полезные кеши и обычные данные сохраняются.
+- Владелец проверяет конкретный HEAD; DONE только после принятия и merge. Приёмка P02 отдельно не означает G1.
+
+#### Предлагаемая нарезка PR
+
+1. **P02-01–04:** PostgreSQL, роли, миграции и seed. Внутри этого PR уже обязательны проверки собственных критериев; тесты не откладываются до последнего PR.
+2. **P02-05–06:** Kafka и Redis, собственные integration smoke и инструкция.
+3. **P02-07–08:** общая проверка состава/рестартов/cleanup, финальный CI, доказательства и итог пакета. Эта часть не переписывает проверки первых двух PR и остаётся отдельной только при содержательном diff.
+
+Предлагается один Issue P02 с восемью пунктами и ссылками на последовательные PR, по модели P01. Количество PR можно сократить по фактическому размеру diff после выбора владельцем; сейчас ни один implementation PR не начат.
+
+#### Очередь после P02
+
+- **P03:** protobuf-контракты, operation keys, состояния и классификация ошибок.
+- **P04:** Create/Get/GetByRequestKey и долговечная задача Orders.
+- **P05:** Reserve/Commit/Release/GetReservation, ledger, конкурентный доступ и cancellation barrier.
+- Затем отдельная приёмка **G1** по поведению заказа/склада и восстановлению.
+
+[Issue #9: перенос smoke на Go](https://github.com/Includeoyasi/faultline-lab/issues/9) остаётся самостоятельным backlog без назначенного старта. Рекомендация — сначала P02, затем отдельно выбрать приоритет #9 относительно P03; ни включение #9 в P02, ни её начало этим планом не согласованы. Grafana/алерты, outbox/inbox, платёжный workflow, нагрузочные эксперименты и второй бизнес также не входят в этот пакет.

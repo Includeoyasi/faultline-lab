@@ -1,6 +1,6 @@
 # Учёт задач и статусов
 
-Статус на 15 октября 2026 года: P01-01–04 приняты и слиты. Реализация и проверки P01 — 8/8; владельцем принято 4/8. P01-05–08 находятся на ревью в [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). Linux AMD64/ARM64 CI и Windows container smoke PASS; личная macOS NOT_RUN. Установлены Go 1.27.2, WSL 2.7.13 и Docker Desktop 4.95. Среда после проверки остановлена, автозапуск Docker выключен.
+Статус на 16 октября 2026 года: P01 **DONE**, принято 8/8, [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8) слит владельцем, Issue #3 закрыт. [P02 — Issue #10](https://github.com/Includeoyasi/faultline-lab/issues/10) в **BACKLOG**: восемь предложенных задач, приоритет/группировка PR обсуждаются, разработка NOT_STARTED. Go smoke #9 остаётся отдельным backlog. G1 NOT_READY; runtime при планировании не запускался.
 
 ## Разделение назначений
 
@@ -22,6 +22,11 @@
 
 GitHub — основной источник текущего выполнения; в репозиторий переносится датированный снимок с URL и проверенными результатами. Автоматической синхронизации сейчас нет. Порядок принят прямым поручением владельца проекта «фиксируй изменения и заводи задачи».
 
+## Следующий пакет: предложение P02
+
+[Issue #10](https://github.com/Includeoyasi/faultline-lab/issues/10) содержит восемь задач [P02](packets/P02.md): среда → PostgreSQL/права → миграции → seed → Kafka → Redis → общие проверки → доказательства/ревью. Стадия BACKLOG, implementation NOT_STARTED; декомпозиция и порядок PR представлены владельцу для обсуждения. Это план в пределах G0, а не свидетельство готовой инфраструктуры.
+
+Предлагаются два основных PR (PostgreSQL/миграции/seed, затем Kafka/Redis) и отдельная итоговая часть только при содержательном diff. Проверки каждой части обязательны в её PR. Перенос Go smoke #9 в P02 не включается; его приоритет относительно P03 остаётся решением владельца.
 ## Статусы
 
 | Статус | Основание перехода |
@@ -50,7 +55,7 @@ BLOCKED — отдельный признак с причиной и требу�
 
 ## Фактический статус сейчас
 
-- P01-01–04 DONE; P01-05–08 IN_REVIEW. Код/проверки нового PR не заменяют ревью владельца.
-- Карточка [P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта: IN_REVIEW, первые четыре задачи приняты. Оставшиеся предъявлены в PR #8; Projects не создан.
-- Документационные PR #4 и [#5](https://github.com/Includeoyasi/faultline-lab/pull/5) слиты. CODEOWNERS и защита main действуют; PR первой задачи публикуется от AI-Your-Bro с ревью Includeoyasi.
-- Текущий PR объединяет P01-05–08 и готов к ревью: обязательный Windows container smoke PASS. Весь P01 и G1 ещё не приняты владельцем.
+- P01-01–08 DONE; [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) закрыт после owner merge PR #8, принято 8/8.
+- P02-01–08 BACKLOG / NOT_STARTED; [Issue #10](https://github.com/Includeoyasi/faultline-lab/issues/10) открыт. Критерии описаны, приоритет и группировка PR ещё не приняты.
+- [Issue #9](https://github.com/Includeoyasi/faultline-lab/issues/9) остаётся BACKLOG / NOT_STARTED, отдельный будущий PR.
+- CODEOWNERS и защита main действуют. Исполнитель AI-Your-Bro ведёт задачи; Includeoyasi принимает изменения. G1 NOT_READY; Projects не создан.

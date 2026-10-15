@@ -1,56 +1,27 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 36,
+  "context_revision": 37,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-15",
+  "context_updated_on": "2026-10-16",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
-  "current_phase": "G0_APPROVED_IMPLEMENTATION_IN_PROGRESS",
+  "current_phase": "G0_APPROVED_P01_DONE_P02_PLANNING",
   "current_task": {
-    "id": "P01-05..P01-08",
-    "description": "Один итоговый PR: bounded graceful shutdown, runtime-контейнеры/Compose, итоговый CI и smoke с отчётом",
-    "status": "IN_REVIEW",
-    "authorization": "Владелец принял PR #7 и поручил оставшиеся задачи одним PR; попросил понятные описательные заголовки вместо прежней вопросительной формулы.",
+    "id": "P02-PLANNING",
+    "description": "Task decomposition, proposed priority and PR grouping for P02",
+    "status": "PREPARED_FOR_OWNER_DISCUSSION",
+    "authorization": "Собери список ближайших задач, давай определим их очередность и соберем в P02. Что ты планировала добавить?",
     "result": {
-      "branch": "feat/p01-05-08-runtime",
-      "base_commit": "bc09d08ce7867f3109d996f71015e3ce73986452",
-      "scope": "P01_05_THROUGH_08_ONLY",
-      "implementation": "ALL_P01_05_THROUGH_08_IMPLEMENTED_AND_VERIFIED",
-      "local_go": "HOST_MSI_GO_1_27_2_VERSION_VERIFIED; EARLIER_NATIVE_WINDOWS_UNIT_PROCESS_TESTS_PASS",
-      "local_docker": "PASS_WINDOWS_LINUX_CONTAINERS",
-      "native_macos": "NOT_RUN",
-      "go_ci": "PASS_NATIVE_LINUX_AMD64_AND_ARM64",
-      "runtime_smoke_ci": "PASS_NATIVE_LINUX_AMD64_AND_ARM64",
-      "owner_acceptance": "PENDING",
-      "author": "AI-Your-Bro",
-      "draft_required": false,
-      "draft_reason": null,
-      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
-      "commit_created": true,
-      "pushed": true,
-      "pull_request_number": 8,
-      "draft": false,
-      "go_workflow": {
-        "name": "Go toolchain",
-        "head_sha": "445d324ea48419133fa37b15d44242bd6bbf5b08",
-        "status": "completed",
-        "conclusion": "success",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38798549009"
-      },
-      "documentation_ci": {
-        "name": "Documentation",
-        "head_sha": "445d324ea48419133fa37b15d44242bd6bbf5b08",
-        "status": "completed",
-        "conclusion": "success",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38798549034"
-      },
-      "observed_commit": "445d324ea48419133fa37b15d44242bd6bbf5b08",
-      "review_status": "READY_FOR_OWNER_REVIEW",
-      "handoff_note": "Evidence refers to the source HEAD before final context changes. Final HEAD and checks are available in PR #8; the snapshot cannot embed its own commit hash.",
-      "environment_installation": "COMPLETED_RUNTIME_STOPPED_AFTER_CHECKS",
-      "windows_evidence": "docs/development/evidence/p01/WINDOWS_SMOKE.md",
-      "documentation_additions": "Engineering decisions overview, ADR 0002/0003, separate Issue #9 BACKLOG specification; no Go smoke migration implementation"
+      "specification": "docs/development/packets/P02.md",
+      "issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/10",
+      "implementation": "NOT_STARTED",
+      "priority": "PROPOSED_NOT_ACCEPTED",
+      "code_changes": false,
+      "local_runtime_started": false,
+      "documentation_pr": "https://github.com/Includeoyasi/faultline-lab/pull/11",
+      "draft": true,
+      "owner_decision": "PENDING_TASK_ORDER_AND_PR_GROUPING"
     }
   },
   "roles": {
@@ -112,7 +83,7 @@
       "smoke_node": "v22.23.3"
     },
     "git_repository": "INITIALIZED",
-    "git_commit": "445d324ea48419133fa37b15d44242bd6bbf5b08",
+    "git_commit": "322374f0e648ebafba395b0ac88272141e731680",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -218,9 +189,9 @@
       {
         "number": 8,
         "url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
-        "state": "OPEN",
+        "state": "MERGED",
         "draft": false,
-        "merged": false,
+        "merged": true,
         "author": "AI-Your-Bro",
         "head_ref": "feat/p01-05-08-runtime",
         "base_ref": "main",
@@ -231,10 +202,27 @@
           "P01-07",
           "P01-08"
         ],
-        "human_review": "PENDING",
+        "human_review": "ACCEPTED_BY_OWNER_ACCOUNT_MERGE",
         "draft_reason": null,
-        "observed_head": "445d324ea48419133fa37b15d44242bd6bbf5b08",
-        "windows_smoke": "PASS"
+        "observed_head": "56f367278a0fabdd621425b38e13fcec323fb5c9",
+        "windows_smoke": "PASS",
+        "head_at_merge": "56f367278a0fabdd621425b38e13fcec323fb5c9",
+        "merge_commit": "3ca290d818a98fc986fe42ae51dcfc0546673fb8",
+        "merged_at_utc": "2026-10-15T21:10:58Z"
+      },
+      {
+        "number": 11,
+        "url": "https://github.com/Includeoyasi/faultline-lab/pull/11",
+        "state": "OPEN",
+        "draft": true,
+        "merged": false,
+        "author": "AI-Your-Bro",
+        "head_ref": "docs/p02-plan",
+        "base_ref": "main",
+        "scope": "P02 planning and observed P01 acceptance only",
+        "code_packet": false,
+        "human_review": "PENDING",
+        "observed_head": "322374f0e648ebafba395b0ac88272141e731680"
       }
     ],
     "toolchain_container": "VERIFIED_NATIVE_LINUX_AMD64_ARM64_WITH_RUNTIME_IMAGES",
@@ -285,146 +273,132 @@
     "P01-05/07/08 реализованы и проверены Linux CI AMD64/ARM64: linters 0 issues, unit/race, govulncheck, process signals/forced exit 1, три scratch-образа и полный runtime smoke PASS. Оба артефакта report.json/JSONL прочитаны: реальные image IDs, health, права, изоляция, graceful exit 0 и cleanup подтверждены. Реализация проверена 7/8; P01-06 не закрыта из-за Windows container smoke NOT_RUN; принято владельцем 4/8.",
     "Владелец разрешил установку Docker Desktop/WSL2. Официальный Docker Desktop 4.95.0 скачан, SHA256 и Authenticode Docker Inc подтверждены; установка остановлена precheck VirtualMachinePlatform. WSL winget требует admin, последующий UAC завершился отменой до запуска script. Ничего не объявляется установленным, перезагрузки не было; необходим интерактивный административный допуск. Linux CI HEAD5968407 и оба артефакта PASS.",
     "15 октября завершена установка host Go1.27.2, WSL2.7.13 и DockerDesktop4.95. Windows container smoke на чистом d81b51c PASS, проверены все 8/8 задач реализации P01. Runtime после работы выключен, автозапуск Docker отключён; программы/образы/кеши сохранены. PR #8 переведён из draft, owner review/merge ещё не выполнены; принято 4/8, G1 не принят.",
-    "Создана отдельная backlog-задача #9 (AI-Your-Bro), код переноса smoke на Go не начат. Подготовлены обзор инженерных решений, ADR 0002 о процессе фиксации, proposed ADR 0003 и переносимая спецификация #9. Документация представляется в PR #8; приёмка P01/G1 не меняется."
+    "Создана отдельная backlog-задача #9 (AI-Your-Bro), код переноса smoke на Go не начат. Подготовлены обзор инженерных решений, ADR 0002 о процессе фиксации, proposed ADR 0003 и переносимая спецификация #9. Документация представляется в PR #8; приёмка P01/G1 не меняется.",
+    "16 октября наблюдён owner merge PR8 (HEAD56f3672, merge3ca290d): P01 принят 8/8, Issue3 закрыт. По запросу подготовлен предложенный план P02 с восемью задачами и критериями, создан Issue10 BACKLOG и draft документационный PR11. Реализация P02 и Go smoke9 не начата; приоритет/группировка PR обсуждаются."
   ],
   "next_implementation_packet": {
-    "id": "P01",
-    "status": "IN_REVIEW",
-    "goal": "Контейнерная основа трёх Go-сервисов: entrypoints, конфигурация, gRPC health, graceful shutdown, JSON-логи, toolchain, образы, минимальный Compose и Go CI",
-    "approval_dependency": "G0 уже принят; повторное согласование G0 не требуется",
-    "following_packets": [
-      "P02: Compose core, отдельные базы/роли, миграции и seed",
-      "P03: protobuf, ключи операций, состояния и классификация ошибок",
-      "P04: Create/Get/GetByRequestKey и долговечная задача Orders",
-      "P05: Reserve/Commit/Release/GetReservation, ledger и cancellation barrier"
-    ],
-    "decomposition_status": "DOCUMENTED_READY_FOR_IMPLEMENTATION",
-    "specification": "docs/development/packets/P01.md",
-    "acceptance_status": "8_OF_8_IMPLEMENTATION_CHECKS_COMPLETE; OWNER_ACCEPTED_4_OF_8; FINAL_PR_REVIEW_PENDING",
+    "id": "P02",
+    "status": "PROPOSED",
+    "goal": "Infrastructure and data foundation: PostgreSQL/Kafka/Redis, ownership, migrations, seed",
+    "specification": "docs/development/packets/P02.md",
+    "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/10",
+    "tracker_stage": "BACKLOG",
+    "decomposition_status": "PREPARED_FOR_OWNER_DISCUSSION",
+    "authorization": "Owner requested task list, priority discussion and P02 assembly; implementation not started or newly authorized",
+    "approval_dependency": "G0 accepted; detailed task priority/PR grouping pending owner decision",
+    "acceptance_status": "NOT_IMPLEMENTED_OR_ACCEPTED",
     "progress": {
-      "completed": 8,
+      "completed": 0,
       "total": 8,
-      "owner_accepted": 4
+      "owner_accepted": 0
     },
     "tasks": [
       {
-        "id": "P01-01",
-        "title": "Go-модуль и закреплённый toolchain",
-        "depends_on": [],
-        "status": "DONE",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CONTAINER_BUILD_CHECK_BOOTSTRAP; LOCAL_WINDOWS_GO_PASS",
-        "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "VERIFIED",
-        "owner_acceptance": "ACCEPTED_USER_AND_MERGE_PR6",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/6"
+        "id": "P02-01",
+        "title": "Состав Compose, конфигурация и бюджет",
+        "depends_on": [
+          "P01"
+        ],
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "owner_acceptance": "NOT_REQUESTED_AS_IMPLEMENTED",
+        "acceptance_source": "docs/development/packets/P02.md"
       },
       {
-        "id": "P01-02",
-        "title": "Конфигурация с проверкой",
+        "id": "P02-02",
+        "title": "PostgreSQL: три базы и права",
         "depends_on": [
-          "P01-01"
+          "P02-01"
         ],
-        "status": "DONE",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_FORMAT_LINT_UNIT_RACE_VULN_REAL_PROCESS_HEALTH_JSON_BIND_ISOLATION",
-        "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "VERIFIED",
-        "owner_acceptance": "ACCEPTED_AND_MERGED_PR7",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "owner_acceptance": "NOT_REQUESTED_AS_IMPLEMENTED",
+        "acceptance_source": "docs/development/packets/P02.md"
       },
       {
-        "id": "P01-03",
-        "title": "Структурированные логи",
+        "id": "P02-03",
+        "title": "Версионируемые миграции",
         "depends_on": [
-          "P01-01"
+          "P02-02"
         ],
-        "status": "DONE",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_FORMAT_LINT_UNIT_RACE_VULN_REAL_PROCESS_HEALTH_JSON_BIND_ISOLATION",
-        "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "VERIFIED",
-        "owner_acceptance": "ACCEPTED_AND_MERGED_PR7",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "owner_acceptance": "NOT_REQUESTED_AS_IMPLEMENTED",
+        "acceptance_source": "docs/development/packets/P02.md"
       },
       {
-        "id": "P01-04",
-        "title": "Три entrypoints и gRPC health",
+        "id": "P02-04",
+        "title": "Минимальная схема Inventory и seed",
         "depends_on": [
-          "P01-02",
-          "P01-03"
+          "P02-03"
         ],
-        "status": "DONE",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_FORMAT_LINT_UNIT_RACE_VULN_REAL_PROCESS_HEALTH_JSON_BIND_ISOLATION",
-        "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "VERIFIED",
-        "owner_acceptance": "ACCEPTED_AND_MERGED_PR7",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "owner_acceptance": "NOT_REQUESTED_AS_IMPLEMENTED",
+        "acceptance_source": "docs/development/packets/P02.md"
       },
       {
-        "id": "P01-05",
-        "title": "Graceful shutdown с пределом ожидания",
+        "id": "P02-05",
+        "title": "Kafka: один брокер и техническая доставка",
         "depends_on": [
-          "P01-04"
+          "P02-01"
         ],
-        "status": "IN_REVIEW",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
-        "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
-        "owner_acceptance": "PENDING",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "owner_acceptance": "NOT_REQUESTED_AS_IMPLEMENTED",
+        "acceptance_source": "docs/development/packets/P02.md"
       },
       {
-        "id": "P01-06",
-        "title": "Образы и минимальный Compose",
+        "id": "P02-06",
+        "title": "Redis: изолированный кеш",
         "depends_on": [
-          "P01-01",
-          "P01-02",
-          "P01-03",
-          "P01-04",
-          "P01-05"
+          "P02-01"
         ],
-        "status": "IN_REVIEW",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
-        "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
-        "owner_acceptance": "PENDING",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "owner_acceptance": "NOT_REQUESTED_AS_IMPLEMENTED",
+        "acceptance_source": "docs/development/packets/P02.md"
       },
       {
-        "id": "P01-07",
-        "title": "Go-проверки и CI",
+        "id": "P02-07",
+        "title": "Интеграционные проверки и CI",
         "depends_on": [
-          "P01-01",
-          "P01-02",
-          "P01-03",
-          "P01-04",
-          "P01-05"
+          "P02-02",
+          "P02-03",
+          "P02-04",
+          "P02-05",
+          "P02-06"
         ],
-        "status": "IN_REVIEW",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
-        "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
-        "owner_acceptance": "PENDING",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "owner_acceptance": "NOT_REQUESTED_AS_IMPLEMENTED",
+        "acceptance_source": "docs/development/packets/P02.md"
       },
       {
-        "id": "P01-08",
-        "title": "Smoke-проверка, инструкция и review packet",
+        "id": "P02-08",
+        "title": "Документация, доказательства и ревью",
         "depends_on": [
-          "P01-06",
-          "P01-07"
+          "P02-07"
         ],
-        "status": "IN_REVIEW",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
-        "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
-        "owner_acceptance": "PENDING",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "owner_acceptance": "NOT_REQUESTED_AS_IMPLEMENTED",
+        "acceptance_source": "docs/development/packets/P02.md"
       }
     ],
-    "interval": "AFTER_G0_BEFORE_G1",
-    "target_review_gate": "G1",
-    "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/3",
-    "tracker_stage": "IN_REVIEW",
-    "current_task": "P01-05..P01-08"
+    "interval": "AFTER_P01_BEFORE_G1",
+    "target_review_gate": "G1_LATER_AFTER_P03_P04_P05",
+    "following_packets": [
+      "P03 protobuf contracts",
+      "P04 durable Orders operations",
+      "P05 Inventory operations and ledger"
+    ],
+    "proposed_pr_groups": [
+      "P02-01..04 PostgreSQL/migrations/seed with own tests",
+      "P02-05..06 Kafka/Redis with own tests",
+      "P02-07..08 final integration/evidence only separate if meaningful diff"
+    ],
+    "smoke_migration": "Issue9 remains separate BACKLOG; priority relative to P03 pending owner"
   },
   "active_blockers": [],
   "open_review_comments": [],
@@ -1046,6 +1020,27 @@
         "git diff --check"
       ],
       "detail": "31 Markdown files, 437 local links, 62 Mermaid blocks checked structurally; context revision36, 60 embedded documents, 63 fingerprints. Executor GET confirms Issue9 OPEN/backlog/enhancement, AI-Your-Bro author, unassigned. No implementation or local runtime started; P01 owner acceptance4/8, G1 NOT_READY. Final publication HEAD CI is checked in PR8, not inferred from baseline CI."
+    },
+    {
+      "date": "2026-10-16",
+      "check": "P01 owner merge and next-packet tracker",
+      "result": "PASS",
+      "url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
+      "head_sha": "56f367278a0fabdd621425b38e13fcec323fb5c9",
+      "merge_commit": "3ca290d818a98fc986fe42ae51dcfc0546673fb8",
+      "detail": "GitHub GET merged=true, merged_by Includeoyasi, merged_at UTC2026-10-15T21:10:58Z = 2026-10-16 Europe/Moscow. Executor PATCH closed Issue3 after all criteria/owner merge; Issue10 created BACKLOG unassigned with 8 unchecked tasks. No code/runtime checks or implementation performed while planning."
+    },
+    {
+      "date": "2026-10-16",
+      "check": "P02 planning documentation and portable context",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly (PowerShell7)",
+        "tools/update_context.ps1 -CheckOnly (Windows PowerShell5.1)",
+        "git diff --check"
+      ],
+      "detail": "32 Markdown files; 464 local links; 62 Mermaid blocks structure only. Revision37 embeds61 documents with64 source fingerprints. Changes only documentation/state; P02 and Go smoke9 NOT_STARTED, priority/PR grouping PROPOSED. No Go/service/container tests or runtime startup needed for the planning change; automatic final HEAD CI tracked in draftPR11."
     }
   ],
   "source_documents": [
@@ -1379,6 +1374,11 @@
       "path": "docs/development/backlog/GO_SMOKE.md",
       "anchor": "appendix-go-smoke-backlog",
       "title": "Backlog #9: перенос smoke на Go, объём и критерии"
+    },
+    {
+      "path": "docs/development/packets/P02.md",
+      "anchor": "appendix-p02",
+      "title": "Предложенный P02: задачи, зависимости, критерии и порядок PR"
     }
   ],
   "change_history": [
@@ -1597,6 +1597,12 @@
       "date": "2026-10-15",
       "summary": "Зафиксирован согласованный порядок PR/ADR/обзор с явным авторством замечаний из чата. По прямому поручению создана отдельная Issue #9 BACKLOG для Go smoke с критериями, без начала реализации; все четыре новых документа включены в переносимый контекст. P01 остаётся IN_REVIEW, принято 4/8, G1 NOT_READY; runtime не запускался.",
       "trigger": "Ответ владельца Хорошо на предложение фиксации инженерных решений; затем поручение оформить Go smoke отдельной backlog-задачей"
+    },
+    {
+      "revision": 37,
+      "date": "2026-10-16",
+      "summary": "P01 принят 8/8 через наблюдаемый owner merge PR8, карточка3 закрыта. Предложены восемь задач P02 в Issue10/draftPR11: PostgreSQL и права, миграции/seed, Kafka/Redis, проверки и доказательства. Приоритет и группы PR ещё не приняты; P02/Go smoke9 NOT_STARTED, G1 NOT_READY, Docker не запускался.",
+      "trigger": "Владелец попросил собрать ближайшие задачи, определить очередность и состав P02"
     }
   ],
   "repository": {
@@ -1621,32 +1627,18 @@
       "event": "push",
       "scope": "Документационный CI main после принятия правил; не является проверкой последующего handoff PR или Go-кода."
     },
-    "snapshot_ref": "feat/p01-05-08-runtime",
+    "snapshot_ref": "docs/p02-plan",
     "current_publication": {
-      "branch": "feat/p01-05-08-runtime",
-      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
-      "status": "IN_REVIEW",
-      "draft": false,
+      "branch": "docs/p02-plan",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/11",
+      "status": "DRAFT_PLAN_FOR_DISCUSSION",
+      "draft": true,
       "merged": false,
       "author": "AI-Your-Bro",
-      "scope": "P01-05..P01-08",
-      "observed_commit": "445d324ea48419133fa37b15d44242bd6bbf5b08",
-      "observed_ci": [
-        {
-          "name": "Documentation",
-          "head_sha": "445d324ea48419133fa37b15d44242bd6bbf5b08",
-          "status": "completed",
-          "conclusion": "success",
-          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38798549034"
-        },
-        {
-          "name": "Go toolchain",
-          "head_sha": "445d324ea48419133fa37b15d44242bd6bbf5b08",
-          "status": "completed",
-          "conclusion": "success",
-          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38798549009"
-        }
-      ]
+      "scope": "P02 planning and P01 owner merge snapshot; no implementation",
+      "observed_commit": "322374f0e648ebafba395b0ac88272141e731680",
+      "observed_ci": [],
+      "ci_note": "Local documentation checks recorded after execution; final HEAD status available in PR; no new service tests inferred"
     }
   },
   "review_policy": {
@@ -1742,10 +1734,10 @@
   "task_tracking": {
     "status": "ACTIVE_GITHUB_ISSUE_CREATED",
     "document": "docs/development/TASK_TRACKING.md",
-    "current_task_list": "docs/development/packets/P01.md",
+    "current_task_list": "docs/development/packets/P02.md",
     "blocked": "Отдельная причина/требуемое действие; подготовка исходников не запрещена отсутствием Docker",
     "github_issues_url": "https://github.com/Includeoyasi/faultline-lab/issues",
-    "current_packet_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/3",
+    "current_packet_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/10",
     "project_board_url": null,
     "github_issue_search": {
       "checked_on": "2026-10-13",
@@ -1766,35 +1758,35 @@
     ],
     "approved_on": "2026-10-13",
     "approval_evidence": "Прямое поручение владельца проекта: молодец, фиксируй изменения и заводи задачи",
-    "current_packet_issue_number": 3,
-    "current_packet_stage": "IN_REVIEW",
+    "current_packet_issue_number": 10,
+    "current_packet_stage": "BACKLOG",
     "progress": {
-      "completed": 8,
+      "completed": 0,
       "total": 8,
-      "owner_accepted": 4
+      "owner_accepted": 0
     },
     "last_issue_observation": {
-      "date": "2026-10-15",
-      "number": 3,
+      "date": "2026-10-16",
+      "number": 10,
       "state": "OPEN",
-      "checked_tasks": 8,
-      "unchecked_tasks": 0,
-      "stage": "IN_REVIEW",
-      "current_task": "P01-05..P01-08",
-      "source": "Executor PATCH response verified; Windows container smoke PASS",
-      "note": "8 implementation checks complete; owner accepted 4/8. PR #8 ready, no approval or merge performed."
+      "checked_tasks": 0,
+      "unchecked_tasks": 8,
+      "stage": "BACKLOG",
+      "current_task": "P02-PLANNING",
+      "source": "Executor create response, checked after duplicate search",
+      "note": "Task priority and PR grouping proposed; implementation not started"
     },
     "documentation_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
     "documentation_pr_closes_packet": false,
     "documentation_pr_merged": true,
-    "current_subtask": "P01-05..P01-08",
+    "current_subtask": "P02-PLANNING",
     "task_pr_granularity": {
       "confirmed_on": "2026-10-15",
       "rule": "P01-01 in PR #6, P01-02–04 in accepted PR #7; owner authorized P01-05–08 together in one final PR. All eight tasks remain in parent Issue #3.",
       "whole_packet_acceptance": "PENDING_FINAL_PR_AND_ALL_APPLICABLE_CRITERIA"
     },
-    "current_task_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
-    "current_subtask_stage": "IN_REVIEW",
+    "current_task_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/11",
+    "current_subtask_stage": "PROPOSED",
     "backlog": [
       {
         "number": 9,
@@ -1820,7 +1812,14 @@
         "scope": "Replace tools/smoke.mjs orchestration with a small Go CLI while preserving health/security/isolation/stop/JSON/JSONL/exit codes/scoped cleanup; document pinned container build and ready binary path without mandatory host Go or Node; docs checker remains Node.js",
         "evidence": "Executor-authenticated GET /issues/9 confirms OPEN, author AI-Your-Bro and backlog/enhancement labels; no assignee or implementation PR"
       }
-    ]
+    ],
+    "previous_packet": {
+      "id": "P01",
+      "issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/3",
+      "state": "CLOSED_COMPLETED",
+      "progress": "8/8 owner accepted",
+      "evidence": "PR8 merged by Includeoyasi, merge3ca290d"
+    }
   },
   "review_sequence": {
     "confirmed_on": "2026-10-13",
@@ -1834,7 +1833,7 @@
       "G1: приёмка работающей основы заказа и склада"
     ],
     "previous_packet_label": "G1-P01",
-    "current_packet_label": "P01",
+    "current_packet_label": "P02",
     "note": "Переименование устраняет неоднозначность; объём кода, восемь задач и критерии не меняются. Старые метки в истории относятся к тому же пакету.",
     "task_pr_granularity": {
       "confirmed_on": "2026-10-15",
@@ -2328,7 +2327,7 @@
     "overview": "docs/development/ENGINEERING_DECISIONS.md",
     "policy_adr": "docs/adr/0002-record-review-decisions.md",
     "publication_pr": "https://github.com/Includeoyasi/faultline-lab/pull/8",
-    "publication_review": "PENDING_OWNER_REVIEW; policy acceptance does not approve PR #8",
+    "publication_review": "ACCEPTED_BY_INCLUDEOYASI_MERGE_PR8_ON_2026_10_16_LOCAL",
     "record_fields": [
       "Question and source",
       "Alternatives and rationale",
@@ -2353,10 +2352,160 @@
       },
       {
         "topic": "Personal PC runtime shutdown and bounded VM resources",
-        "status": "IMPLEMENTED_VERIFIED_PR8_REVIEW_PENDING",
+        "status": "ACCEPTED_PR8_OWNER_MERGE",
         "source": "Owner personal-computer instruction in chat; executor selected VM limits",
         "evidence": "docs/development/evidence/p01/WINDOWS_SMOKE.md"
       }
     ]
-  }
+  },
+  "completed_packets": [
+    {
+      "id": "P01",
+      "status": "DONE",
+      "goal": "Контейнерная основа трёх Go-сервисов: entrypoints, конфигурация, gRPC health, graceful shutdown, JSON-логи, toolchain, образы, минимальный Compose и Go CI",
+      "approval_dependency": "G0 уже принят; повторное согласование G0 не требуется",
+      "following_packets": [
+        "P02: Compose core, отдельные базы/роли, миграции и seed",
+        "P03: protobuf, ключи операций, состояния и классификация ошибок",
+        "P04: Create/Get/GetByRequestKey и долговечная задача Orders",
+        "P05: Reserve/Commit/Release/GetReservation, ledger и cancellation barrier"
+      ],
+      "decomposition_status": "DOCUMENTED_READY_FOR_IMPLEMENTATION",
+      "specification": "docs/development/packets/P01.md",
+      "acceptance_status": "ALL_8_TASKS_OWNER_ACCEPTED_AND_MERGED",
+      "progress": {
+        "completed": 8,
+        "total": 8,
+        "owner_accepted": 8
+      },
+      "tasks": [
+        {
+          "id": "P01-01",
+          "title": "Go-модуль и закреплённый toolchain",
+          "depends_on": [],
+          "status": "DONE",
+          "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CONTAINER_BUILD_CHECK_BOOTSTRAP; LOCAL_WINDOWS_GO_PASS",
+          "acceptance_source": "docs/development/packets/P01.md",
+          "implementation": "VERIFIED",
+          "owner_acceptance": "ACCEPTED_USER_AND_MERGE_PR6",
+          "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/6"
+        },
+        {
+          "id": "P01-02",
+          "title": "Конфигурация с проверкой",
+          "depends_on": [
+            "P01-01"
+          ],
+          "status": "DONE",
+          "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_FORMAT_LINT_UNIT_RACE_VULN_REAL_PROCESS_HEALTH_JSON_BIND_ISOLATION",
+          "acceptance_source": "docs/development/packets/P01.md",
+          "implementation": "VERIFIED",
+          "owner_acceptance": "ACCEPTED_AND_MERGED_PR7",
+          "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
+        },
+        {
+          "id": "P01-03",
+          "title": "Структурированные логи",
+          "depends_on": [
+            "P01-01"
+          ],
+          "status": "DONE",
+          "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_FORMAT_LINT_UNIT_RACE_VULN_REAL_PROCESS_HEALTH_JSON_BIND_ISOLATION",
+          "acceptance_source": "docs/development/packets/P01.md",
+          "implementation": "VERIFIED",
+          "owner_acceptance": "ACCEPTED_AND_MERGED_PR7",
+          "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
+        },
+        {
+          "id": "P01-04",
+          "title": "Три entrypoints и gRPC health",
+          "depends_on": [
+            "P01-02",
+            "P01-03"
+          ],
+          "status": "DONE",
+          "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_FORMAT_LINT_UNIT_RACE_VULN_REAL_PROCESS_HEALTH_JSON_BIND_ISOLATION",
+          "acceptance_source": "docs/development/packets/P01.md",
+          "implementation": "VERIFIED",
+          "owner_acceptance": "ACCEPTED_AND_MERGED_PR7",
+          "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
+        },
+        {
+          "id": "P01-05",
+          "title": "Graceful shutdown с пределом ожидания",
+          "depends_on": [
+            "P01-04"
+          ],
+          "status": "DONE",
+          "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
+          "acceptance_source": "docs/development/packets/P01.md",
+          "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
+          "owner_acceptance": "ACCEPTED_BY_INCLUDEOYASI_MERGE_PR8",
+          "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        },
+        {
+          "id": "P01-06",
+          "title": "Образы и минимальный Compose",
+          "depends_on": [
+            "P01-01",
+            "P01-02",
+            "P01-03",
+            "P01-04",
+            "P01-05"
+          ],
+          "status": "DONE",
+          "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
+          "acceptance_source": "docs/development/packets/P01.md",
+          "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
+          "owner_acceptance": "ACCEPTED_BY_INCLUDEOYASI_MERGE_PR8",
+          "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        },
+        {
+          "id": "P01-07",
+          "title": "Go-проверки и CI",
+          "depends_on": [
+            "P01-01",
+            "P01-02",
+            "P01-03",
+            "P01-04",
+            "P01-05"
+          ],
+          "status": "DONE",
+          "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
+          "acceptance_source": "docs/development/packets/P01.md",
+          "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
+          "owner_acceptance": "ACCEPTED_BY_INCLUDEOYASI_MERGE_PR8",
+          "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        },
+        {
+          "id": "P01-08",
+          "title": "Smoke-проверка, инструкция и review packet",
+          "depends_on": [
+            "P01-06",
+            "P01-07"
+          ],
+          "status": "DONE",
+          "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
+          "acceptance_source": "docs/development/packets/P01.md",
+          "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
+          "owner_acceptance": "ACCEPTED_BY_INCLUDEOYASI_MERGE_PR8",
+          "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        }
+      ],
+      "interval": "AFTER_G0_BEFORE_G1",
+      "target_review_gate": "G1",
+      "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/3",
+      "tracker_stage": "DONE",
+      "current_task": "P01-05..P01-08",
+      "acceptance_evidence": {
+        "pull_request": 8,
+        "accepted_head": "56f367278a0fabdd621425b38e13fcec323fb5c9",
+        "merged_by": "Includeoyasi",
+        "merged_at_utc": "2026-10-15T21:10:58Z",
+        "date_local": "2026-10-16",
+        "merge_commit": "3ca290d818a98fc986fe42ae51dcfc0546673fb8",
+        "issue_state": "CLOSED_COMPLETED"
+      }
+    }
+  ]
 }
