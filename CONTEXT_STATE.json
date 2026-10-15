@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 25,
+  "context_revision": 26,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -1204,6 +1204,12 @@
       "date": "2026-10-15",
       "summary": "Задачи P01-02–04 проверены на обеих нативных Linux-архитектурах и предъявлены в ready PR #7. Issue #3 отражает 4/8 проверено и 1/8 принято владельцем. Добавлены реальные JSON-записи и полный переносимый исходный код. P01-05–08 остаются будущими задачами; immediate stop не выдаётся за graceful shutdown.",
       "trigger": "Завершение согласованной группы задач и передача на ревью"
+    },
+    {
+      "revision": 26,
+      "date": "2026-10-15",
+      "summary": "Финальная сверка переносимого контекста: repository.snapshot_ref и current_publication переключены с уже слитого PR #6 на текущий ready PR #7. Код и критерии не менялись; доказательства слияния #6 сохраняются в истории.",
+      "trigger": "Проверка согласованности активных полей перед передачей владельцу"
     }
   ],
   "repository": {
@@ -1228,30 +1234,33 @@
       "event": "push",
       "scope": "Документационный CI main после принятия правил; не является проверкой последующего handoff PR или Go-кода."
     },
-    "snapshot_ref": "feat/p01-01-toolchain",
+    "snapshot_ref": "feat/p01-02-04-service-runtime",
     "current_publication": {
-      "branch": "feat/p01-01-toolchain",
-      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/6",
+      "branch": "feat/p01-02-04-service-runtime",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7",
       "author": "AI-Your-Bro",
       "draft": false,
       "merged": false,
-      "observed_commit": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
+      "observed_commit": "4d3b2356b472f275063efb576d8226de4a35f594",
       "observed_ci": [
         {
           "name": "Documentation",
-          "head_sha": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
+          "head_sha": "4d3b2356b472f275063efb576d8226de4a35f594",
           "status": "completed",
           "conclusion": "success",
-          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38723552133"
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38734815235"
         },
         {
           "name": "Go toolchain",
-          "head_sha": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
+          "head_sha": "4d3b2356b472f275063efb576d8226de4a35f594",
           "status": "completed",
           "conclusion": "success",
-          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38723552125"
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38734815221"
         }
-      ]
+      ],
+      "review_requested_from": "Includeoyasi",
+      "scope": "P01-02_P01-03_P01-04",
+      "note": "Current publication is PR #7. PR #6 is merged; its evidence is retained in historical entries. Final snapshot commit hash and required checks are available in the PR."
     }
   },
   "review_policy": {

@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **25**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
+Ревизия: **26**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
 
 ## Краткое текущее состояние
 
@@ -258,7 +258,7 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 25,
+  "context_revision": 26,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -1461,6 +1461,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-15",
       "summary": "Задачи P01-02–04 проверены на обеих нативных Linux-архитектурах и предъявлены в ready PR #7. Issue #3 отражает 4/8 проверено и 1/8 принято владельцем. Добавлены реальные JSON-записи и полный переносимый исходный код. P01-05–08 остаются будущими задачами; immediate stop не выдаётся за graceful shutdown.",
       "trigger": "Завершение согласованной группы задач и передача на ревью"
+    },
+    {
+      "revision": 26,
+      "date": "2026-10-15",
+      "summary": "Финальная сверка переносимого контекста: repository.snapshot_ref и current_publication переключены с уже слитого PR #6 на текущий ready PR #7. Код и критерии не менялись; доказательства слияния #6 сохраняются в истории.",
+      "trigger": "Проверка согласованности активных полей перед передачей владельцу"
     }
   ],
   "repository": {
@@ -1485,30 +1491,33 @@ JSON ниже является частью этого файла и доста�
       "event": "push",
       "scope": "Документационный CI main после принятия правил; не является проверкой последующего handoff PR или Go-кода."
     },
-    "snapshot_ref": "feat/p01-01-toolchain",
+    "snapshot_ref": "feat/p01-02-04-service-runtime",
     "current_publication": {
-      "branch": "feat/p01-01-toolchain",
-      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/6",
+      "branch": "feat/p01-02-04-service-runtime",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7",
       "author": "AI-Your-Bro",
       "draft": false,
       "merged": false,
-      "observed_commit": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
+      "observed_commit": "4d3b2356b472f275063efb576d8226de4a35f594",
       "observed_ci": [
         {
           "name": "Documentation",
-          "head_sha": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
+          "head_sha": "4d3b2356b472f275063efb576d8226de4a35f594",
           "status": "completed",
           "conclusion": "success",
-          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38723552133"
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38734815235"
         },
         {
           "name": "Go toolchain",
-          "head_sha": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
+          "head_sha": "4d3b2356b472f275063efb576d8226de4a35f594",
           "status": "completed",
           "conclusion": "success",
-          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38723552125"
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38734815221"
         }
-      ]
+      ],
+      "review_requested_from": "Includeoyasi",
+      "scope": "P01-02_P01-03_P01-04",
+      "note": "Current publication is PR #7. PR #6 is merged; its evidence is retained in historical entries. Final snapshot commit hash and required checks are available in the PR."
     }
   },
   "review_policy": {
@@ -1802,7 +1811,7 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `2ed8ab093d5f9a454d28afaa29a3f0fe60029c32b81de731058c00c5ba290055` |
+| `CONTEXT_STATE.json` | `93161849d3087fecbd39dad0a8923f497bd370fdc5c85d887588ed6c6e202358` |
 | `tools/context_intro.md` | `adf4816c33d869282fda497f1d966793872f06f433866b7a0ebfebc3ff50841d` |
 | `tools/update_context.ps1` | `f830ed3538ae98ef5129b2ab5ae1d1ad564b0482d8ed2978a7ec2b96bcf5e731` |
 | `README.md` | `b3f26632e197519497bbf73d91db7d74c27a7efbf211e8b076a44022381130bd` |
@@ -1898,7 +1907,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
 </p>
 
 <p align="center">
@@ -1916,7 +1925,7 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Current state
@@ -2017,7 +2026,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience | Planned |
 | **G4** | Reproducible engineering lab | Planned |
 
-The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
 
 #### Repository map
 
@@ -2077,7 +2086,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
 </p>
 
 <p align="center">
@@ -2095,7 +2104,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Состояние проекта
@@ -2179,7 +2188,7 @@ flowchart LR
 
 **G0 принят.** G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Следующие контрольные точки ещё не достигнуты.
 
-[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/PROJECT_CONTEXT.md) включает полные документы, статусы и согласования: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/PROJECT_CONTEXT.md) включает полные документы, статусы и согласования: его можно передать агенту без доступа к репозиторию.
 
 #### С чего начать
 
@@ -2236,7 +2245,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Следить за выполнением | [Учёт задач](#appendix-task-tracking) — GitHub Issues/PR и снимки контекста |
 | Проверить права и защиту main | [Безопасность репозитория](#appendix-repository-security) — действующая защита и переход на аккаунт исполнителя |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
@@ -2249,7 +2258,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [Workflow](#appendix-development-process): роли человека и ИИ, состав ревью и контрольные точки G0–G4.
 - [Правила ревью](#appendix-code-review): стандарт Go, блокирующие замечания, проверки и критерии слияния.
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/CONTEXT_STATE.json): текущая работа, проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/CONTEXT_STATE.json): текущая работа, проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -3344,7 +3353,7 @@ Codex — исполнитель разработки: готовит проек
 
 #### Стандарт код-ревью
 
-[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/.github/pull_request_template.md) содержит краткий применимый чек-лист.
 
 После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; владелец проекта рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению владельца проекта или действие самого владельца проекта.
 
@@ -3597,7 +3606,7 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [current context](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). AI implementers must also follow [AGENTS.md](#appendix-agents).
+Read the [current context](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). AI implementers must also follow [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
@@ -3795,7 +3804,7 @@ SOFTWARE.
 - Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
 - Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
 
-Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
 
 <a id="appendix-lab-boundary"></a>
 
@@ -4079,13 +4088,13 @@ Docker рекомендует разделять ответственности 
 
 ### Баннер Faultline Lab
 
-Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/docs/assets/banner.svg). Публикация ожидает следующего коммита и ревью.
+Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/docs/assets/banner.svg). Публикация ожидает следующего коммита и ревью.
 
 #### Задание
 
 Подготовить три альтернативных варианта с акцентом на технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее. Сделаны векторные композиции с читаемым названием, тёмным текстом на светлом фоне и встроенными title/description. Внешних шрифтов, скриптов и удалённых графических зависимостей нет.
 
-![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/docs/assets/banner-concepts/comparison.png)
+![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/docs/assets/banner-concepts/comparison.png)
 
 | Вариант | Образ | Палитра | Статус |
 | :--- | :--- | :--- | :--- |
@@ -4095,13 +4104,13 @@ Docker рекомендует разделять ответственности 
 
 #### Выбранное решение
 
-![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/docs/assets/banner-concepts/02-experiment-flow.png)
+![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/docs/assets/banner-concepts/02-experiment-flow.png)
 
 Абстрактные линии проходят через область наблюдения. Это метафора исследования поведения системы и сравнения изменений; линии не являются графиком измеренных результатов. Композиция не зависит от домена магазина и подходит будущим подключаемым бизнесам.
 
 Размер SVG — 1280 × 420; README задаёт ширину 100%. Исходник масштабируется, PNG служит предварительным просмотром. Основная подпись: **Explore how systems behave.** Нижняя последовательность: **Hypothesis → Experiment → Evidence**.
 
-Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
+Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
 
 Баннеры отрендерены локально и визуально просмотрены на общем листе. Проверены отсутствие обрезанного текста и соответствие композиций заданию. Отдельный preview выбранного варианта используется для проверки основного баннера. Выбранный вариант слит в main через [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4), merge commit 8c392b8. Проверка отрисовки нового README на GitHub пока не выполнялась.
 
@@ -4238,7 +4247,7 @@ P01 не достигает всей контрольной точки G1: ба�
 | `docs/development/packets/<packet>.md` | Версионируемые границы пакета, задачи и критерии приёмки |
 | GitHub Issues | Основной трекер выполнения, блокеров и ссылок на PR |
 | GitHub PR | Код, diff, результаты проверок, замечания и решение владельца проекта |
-| [CONTEXT_STATE.json](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/CONTEXT_STATE.json) и [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-01-toolchain/PROJECT_CONTEXT.md) | Датированный переносимый снимок для агентов без доступа к GitHub/компьютеру |
+| [CONTEXT_STATE.json](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/CONTEXT_STATE.json) и [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-02-04-service-runtime/PROJECT_CONTEXT.md) | Датированный переносимый снимок для агентов без доступа к GitHub/компьютеру |
 
 [GitHub Issues](https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/about-issues) поддерживает задачи и связь с PR. [Projects](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects) даёт таблицы и доски поверх Issues/PR; доску можно подключить при росте backlog, но для первого пакета достаточно одной карточки с чеклистом.
 
