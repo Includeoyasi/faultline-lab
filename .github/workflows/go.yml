@@ -36,8 +36,8 @@ jobs:
         run: docker compose build toolchain
       - name: Run Go quality checks
         run: docker compose run --rm toolchain check
-      - name: Build and run bootstrap entrypoints
-        run: docker compose run --rm toolchain bootstrap-smoke
+      - name: Verify service processes, health and isolation
+        run: docker compose run --rm toolchain service-smoke
       - name: Reject invalid toolchain command
         run: |
           if docker compose run --rm toolchain invalid-command; then

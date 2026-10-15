@@ -3,7 +3,7 @@
 set -eu
 
 if [ "$#" -gt 1 ]; then
-  echo "usage: lab-go {versions|build|check|format|bootstrap-smoke}" >&2
+  echo "usage: lab-go {versions|build|check|format|service-smoke}" >&2
   exit 2
 fi
 
@@ -49,22 +49,20 @@ case "${1:-versions}" in
     go mod verify
     go build ./...
     golangci-lint run --timeout=5m
-    go test -count=1 ./...
-    go test -race -count=1 ./...
+    go test -count=1 -timeout=3m ./...
+    go test -race -count=1 -timeout=5m ./...
     govulncheck ./...
     ;;
   format)
     source_files
     xargs -0 -r goimports -w < "$file_list"
     ;;
-  bootstrap-smoke)
+  service-smoke)
     build
-    for service in orders inventory payments; do
-      "bin/$service"
-    done
+    LAB_BIN_DIR=/workspace/bin go test -count=1 -v -timeout=2m ./tests/smoke
     ;;
   *)
-    echo "usage: lab-go {versions|build|check|format|bootstrap-smoke}" >&2
+    echo "usage: lab-go {versions|build|check|format|service-smoke}" >&2
     exit 2
     ;;
 esac

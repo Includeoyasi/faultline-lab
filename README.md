@@ -22,15 +22,15 @@
 
 ## Current state
 
-**Architecture approved · Go bootstrap in progress.** The project owner accepted G0 on **13 October 2026**. P01-01 adds a Go module, three bootstrap entrypoints and a pinned container toolchain. The entrypoints print a bootstrap message and exit; service runtimes, business operations and experiment results are still to come. [Build and check commands](docs/development/TOOLCHAIN.md).
+**Architecture approved · gRPC skeleton under review.** The project owner accepted G0 on **13 October 2026** and merged P01-01. P01-02–04 add validated configuration, JSON logging and three independent gRPC health servers. Business operations and experiment results are still to come. [Build commands](docs/development/TOOLCHAIN.md) · [Service runtime](docs/development/SERVICE_RUNTIME.md).
 
 | Ready | Next | Later |
 | :--- | :--- | :--- |
-| Approved architecture and business invariants | Service configuration, gRPC health and bounded shutdown | Repeatable load and failure experiments |
+| Approved architecture and business invariants | Review configuration/JSON/health; add bounded shutdown | Repeatable load and failure experiments |
 | Detailed process diagrams and review gates | PostgreSQL ownership, migrations and gRPC contracts | Grafana dashboards, alerts and experiment reports |
 | Portable context with a freshness check | Durable workflows, Kafka and compensation | Scaling comparisons under equal resource budgets |
 
-The first code [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) covers **P01-01**, after G0 and before G1. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) tracks all eight tasks; [the packet specification](docs/development/packets/P01.md) defines acceptance criteria. P01-01 is implemented and verified on native Linux AMD64/ARM64; the other seven tasks have not started. Owner review is pending.
+The first code [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) covers **P01-01**, after G0 and before G1. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) tracks all eight tasks; [the packet specification](docs/development/packets/P01.md) defines acceptance criteria. P01-01 is accepted and merged; P01-02–04 are verified on native Linux AMD64/ARM64 and under review together in [PR #7](https://github.com/Includeoyasi/faultline-lab/pull/7), at the owner's request. P01-05–08 have not started; the full packet is still incomplete.
 
 No capacity numbers or performance improvements are claimed before measurement. The [roadmap](docs/ROADMAP.md) distinguishes design hypotheses from acceptance criteria and observed results.
 
@@ -138,11 +138,17 @@ faultline-lab/
 │   ├── experiments/            # Experiment report template
 │   ├── adr/                    # Recorded decisions and approvals
 │   └── assets/                 # Repository visuals
-├── tools/                      # Context generation and documentation checks
+├── cmd/                        # Orders, Inventory and Payments entrypoints
+├── internal/service/           # Shared configuration, logging and gRPC startup
+├── configs/env/                # Explicit local/container environment examples
+├── tests/smoke/                # Real process health and isolation checks
+├── build/                      # Pinned toolchain image
+├── compose.yaml                # Temporary toolchain service
+├── tools/                      # Go commands, context and documentation checks
 └── .github/                    # Documentation CI and review templates
 ```
 
-Runtime directories will be added with their first working implementation. The [roadmap](docs/ROADMAP.md) contains the planned code layout.
+Runtime service images will be added in P01-06; the current Compose service is the development toolchain. The [roadmap](docs/ROADMAP.md) contains the planned code layout.
 
 ## Working with this snapshot
 
@@ -160,7 +166,7 @@ node tools/check_docs.mjs
 pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 ```
 
-After changing canonical documents, update `CONTEXT_STATE.json` and its revision, regenerate with `pwsh -NoProfile -File tools/update_context.ps1`, then run the checks again. These commands validate documentation and snapshot freshness. Runtime setup instructions will accompany the implementation.
+After changing canonical documents, update `CONTEXT_STATE.json` and its revision, regenerate with `pwsh -NoProfile -File tools/update_context.ps1`, then run the checks again. These commands validate documentation and snapshot freshness. Service settings and process checks are described in the [runtime guide](docs/development/SERVICE_RUNTIME.md).
 
 ## License
 
