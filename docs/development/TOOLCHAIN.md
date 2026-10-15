@@ -6,7 +6,7 @@
 
 | Компонент | Источник закрепления | Версия |
 | :--- | :--- | :--- |
-| Go | [go.mod](../../go.mod), [Dockerfile](../../build/toolchain.Dockerfile) | 1.27.2 |
+| Go | [go.mod](../../go.mod), [Dockerfile](../../build/Dockerfile) | 1.27.2 |
 | goimports | tool directive в go.mod, go.sum | golang.org/x/tools v0.52.0 |
 | govulncheck | tool directive в go.mod, go.sum | golang.org/x/vuln v1.9.0 |
 | golangci-lint | Dockerfile, официальный образ с digest | v2.14.0 |

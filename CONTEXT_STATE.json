@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 29,
+  "context_revision": 30,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -20,15 +20,17 @@
       "local_go": "PASS_WINDOWS_BUILD_VET_UNIT_PROCESS_TESTS",
       "local_docker": "NOT_RUN_DOCKER_AND_WSL_NOT_INSTALLED",
       "native_macos": "NOT_RUN",
-      "go_ci": "PENDING",
+      "go_ci": "FIRST_RUN_PROFILE_DEPENDENCY_FAILED; SINGLE_DOCKERFILE_FIX_AWAITING_CI",
       "runtime_smoke_ci": "PENDING",
       "owner_acceptance": "PENDING",
       "author": "AI-Your-Bro",
       "draft_required": true,
       "draft_reason": "P01-06 Windows container smoke is mandatory and cannot run without Docker/WSL",
-      "pull_request_url": null,
-      "commit_created": false,
-      "pushed": false
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
+      "commit_created": true,
+      "pushed": true,
+      "pull_request_number": 8,
+      "draft": true
     }
   },
   "roles": {
@@ -184,6 +186,25 @@
         "observation_note": "Владелец сообщил о принятии; GitHub API merged=true. ИИ не approve/merge.",
         "head_at_merge": "2e8c7f8149f27c8fd9820401bd1e5d7e476ca0c9",
         "merge_commit": "bc09d08ce7867f3109d996f71015e3ce73986452"
+      },
+      {
+        "number": 8,
+        "url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
+        "state": "OPEN",
+        "draft": true,
+        "merged": false,
+        "author": "AI-Your-Bro",
+        "head_ref": "feat/p01-05-08-runtime",
+        "base_ref": "main",
+        "parent_packet": "P01",
+        "tasks": [
+          "P01-05",
+          "P01-06",
+          "P01-07",
+          "P01-08"
+        ],
+        "human_review": "PENDING",
+        "draft_reason": "Windows container smoke NOT_RUN; new Linux CI pending"
       }
     ],
     "toolchain_container": "PREVIOUS_NATIVE_LINUX_VERIFIED; NEW_RUNTIME_CI_PENDING",
@@ -313,7 +334,8 @@
         "evidence": "LOCAL_GO_PASS_WHERE_APPLICABLE; LINUX_CI_PENDING",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "CREATED",
-        "owner_acceptance": "PENDING"
+        "owner_acceptance": "PENDING",
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
       },
       {
         "id": "P01-06",
@@ -329,7 +351,8 @@
         "evidence": "LINUX_CI_PENDING; WINDOWS_CONTAINER_SMOKE_NOT_RUN",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "CREATED",
-        "owner_acceptance": "PENDING"
+        "owner_acceptance": "PENDING",
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
       },
       {
         "id": "P01-07",
@@ -345,7 +368,8 @@
         "evidence": "LOCAL_GO_PASS_WHERE_APPLICABLE; LINUX_CI_PENDING",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "CREATED",
-        "owner_acceptance": "PENDING"
+        "owner_acceptance": "PENDING",
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
       },
       {
         "id": "P01-08",
@@ -358,7 +382,8 @@
         "evidence": "LOCAL_GO_PASS_WHERE_APPLICABLE; LINUX_CI_PENDING",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "CREATED",
-        "owner_acceptance": "PENDING"
+        "owner_acceptance": "PENDING",
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
       }
     ],
     "interval": "AFTER_G0_BEFORE_G1",
@@ -899,6 +924,14 @@
       "command": "node tools/smoke.mjs",
       "exit_code": 2,
       "detail": "Docker executable ENOENT; report.json written. Standard Docker Desktop path and service absent; wsl --list --verbose reports subsystem not installed. Local host install/configuration not changed. Criterion P01-06 remains unmet; draft required."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "First P01-05–08 container CI",
+      "result": "FAIL_FIXED_AWAITING_RERUN",
+      "head_sha": "afdce9351ed7d9616954526f3e8ac444bdaef9b4",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744565647",
+      "detail": "Both architectures failed Compose model validation before build: inactive profile service toolchain was referenced as an additional context. Replaced cross-service build dependency with one multi-stage build/Dockerfile and explicit toolchain/runtime targets. Checks remain enabled; rerun required."
     }
   ],
   "source_documents": [
@@ -1043,9 +1076,9 @@
       "language": "go"
     },
     {
-      "path": "build/toolchain.Dockerfile",
+      "path": "build/Dockerfile",
       "anchor": "appendix-toolchain-dockerfile",
-      "title": "Закреплённый образ инструментов",
+      "title": "Единый multi-stage Dockerfile: toolchain и runtime",
       "language": "dockerfile"
     },
     {
@@ -1160,12 +1193,6 @@
       "anchor": "appendix-shutdown-tests",
       "title": "Controlled active RPC and deadline tests",
       "language": "go"
-    },
-    {
-      "path": "build/service.Dockerfile",
-      "anchor": "appendix-service-dockerfile",
-      "title": "Minimal runtime image from pinned toolchain",
-      "language": "dockerfile"
     },
     {
       "path": "tools/smoke.mjs",
@@ -1353,6 +1380,12 @@
       "date": "2026-10-15",
       "summary": "Принятие/merge PR #7 подтверждены. По прямому поручению владельца P01-05–08 реализуются одним PR с понятными заголовками. Локальные Go lifecycle tests PASS; runtime/CI подготовлены, Docker/WSL Windows отсутствуют. Новый PR будет draft до обязательного Windows smoke.",
       "trigger": "Принятый предыдущий PR и поручение оставшихся задач"
+    },
+    {
+      "revision": 30,
+      "date": "2026-10-15",
+      "summary": "Создан draft PR #8 от AI-Your-Bro и прикреплён к чату. Первый CI выявил зависимость сборки от неактивного toolchain-профиля; введён единый multi-stage Dockerfile с target toolchain/runtime. Повторный CI ожидается; Windows smoke по-прежнему NOT_RUN.",
+      "trigger": "Публикация и исправление модели Compose по результату CI"
     }
   ],
   "repository": {
@@ -1380,13 +1413,13 @@
     "snapshot_ref": "feat/p01-05-08-runtime",
     "current_publication": {
       "branch": "feat/p01-05-08-runtime",
-      "pull_request_url": null,
-      "status": "NOT_PUBLISHED_YET",
-      "author": "AI-Your-Bro",
-      "draft_required": true,
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
+      "status": "DRAFT",
+      "draft": true,
       "merged": false,
+      "author": "AI-Your-Bro",
       "scope": "P01-05..P01-08",
-      "observed_commit": "bc09d08ce7867f3109d996f71015e3ce73986452"
+      "observed_commit": "afdce9351ed7d9616954526f3e8ac444bdaef9b4"
     }
   },
   "review_policy": {
@@ -1529,7 +1562,7 @@
       "rule": "P01-01 in PR #6, P01-02–04 in accepted PR #7; owner authorized P01-05–08 together in one final PR. All eight tasks remain in parent Issue #3.",
       "whole_packet_acceptance": "PENDING_FINAL_PR_AND_ALL_APPLICABLE_CRITERIA"
     },
-    "current_task_pr_url": null,
+    "current_task_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
     "current_subtask_stage": "IN_PROGRESS"
   },
   "review_sequence": {

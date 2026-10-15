@@ -42,7 +42,7 @@ async function command(program, args, timeout = 60_000) {
 }
 
 const docker = args => command('docker', args);
-const composeArgs = args => ['compose', '-f', 'compose.yaml', '-p', project, '--profile', 'tools', ...args];
+const composeArgs = args => ['compose', '-f', 'compose.yaml', '-p', project, ...args];
 const compose = args => docker(composeArgs(args));
 const requireValue = (condition, message) => { if (!condition) throw new Error(message); };
 

@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **29**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
+Ревизия: **30**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
 
 ## Краткое текущее состояние
 
@@ -262,7 +262,7 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 29,
+  "context_revision": 30,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -281,15 +281,17 @@ JSON ниже является частью этого файла и доста�
       "local_go": "PASS_WINDOWS_BUILD_VET_UNIT_PROCESS_TESTS",
       "local_docker": "NOT_RUN_DOCKER_AND_WSL_NOT_INSTALLED",
       "native_macos": "NOT_RUN",
-      "go_ci": "PENDING",
+      "go_ci": "FIRST_RUN_PROFILE_DEPENDENCY_FAILED; SINGLE_DOCKERFILE_FIX_AWAITING_CI",
       "runtime_smoke_ci": "PENDING",
       "owner_acceptance": "PENDING",
       "author": "AI-Your-Bro",
       "draft_required": true,
       "draft_reason": "P01-06 Windows container smoke is mandatory and cannot run without Docker/WSL",
-      "pull_request_url": null,
-      "commit_created": false,
-      "pushed": false
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
+      "commit_created": true,
+      "pushed": true,
+      "pull_request_number": 8,
+      "draft": true
     }
   },
   "roles": {
@@ -445,6 +447,25 @@ JSON ниже является частью этого файла и доста�
         "observation_note": "Владелец сообщил о принятии; GitHub API merged=true. ИИ не approve/merge.",
         "head_at_merge": "2e8c7f8149f27c8fd9820401bd1e5d7e476ca0c9",
         "merge_commit": "bc09d08ce7867f3109d996f71015e3ce73986452"
+      },
+      {
+        "number": 8,
+        "url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
+        "state": "OPEN",
+        "draft": true,
+        "merged": false,
+        "author": "AI-Your-Bro",
+        "head_ref": "feat/p01-05-08-runtime",
+        "base_ref": "main",
+        "parent_packet": "P01",
+        "tasks": [
+          "P01-05",
+          "P01-06",
+          "P01-07",
+          "P01-08"
+        ],
+        "human_review": "PENDING",
+        "draft_reason": "Windows container smoke NOT_RUN; new Linux CI pending"
       }
     ],
     "toolchain_container": "PREVIOUS_NATIVE_LINUX_VERIFIED; NEW_RUNTIME_CI_PENDING",
@@ -574,7 +595,8 @@ JSON ниже является частью этого файла и доста�
         "evidence": "LOCAL_GO_PASS_WHERE_APPLICABLE; LINUX_CI_PENDING",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "CREATED",
-        "owner_acceptance": "PENDING"
+        "owner_acceptance": "PENDING",
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
       },
       {
         "id": "P01-06",
@@ -590,7 +612,8 @@ JSON ниже является частью этого файла и доста�
         "evidence": "LINUX_CI_PENDING; WINDOWS_CONTAINER_SMOKE_NOT_RUN",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "CREATED",
-        "owner_acceptance": "PENDING"
+        "owner_acceptance": "PENDING",
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
       },
       {
         "id": "P01-07",
@@ -606,7 +629,8 @@ JSON ниже является частью этого файла и доста�
         "evidence": "LOCAL_GO_PASS_WHERE_APPLICABLE; LINUX_CI_PENDING",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "CREATED",
-        "owner_acceptance": "PENDING"
+        "owner_acceptance": "PENDING",
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
       },
       {
         "id": "P01-08",
@@ -619,7 +643,8 @@ JSON ниже является частью этого файла и доста�
         "evidence": "LOCAL_GO_PASS_WHERE_APPLICABLE; LINUX_CI_PENDING",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "CREATED",
-        "owner_acceptance": "PENDING"
+        "owner_acceptance": "PENDING",
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
       }
     ],
     "interval": "AFTER_G0_BEFORE_G1",
@@ -1160,6 +1185,14 @@ JSON ниже является частью этого файла и доста�
       "command": "node tools/smoke.mjs",
       "exit_code": 2,
       "detail": "Docker executable ENOENT; report.json written. Standard Docker Desktop path and service absent; wsl --list --verbose reports subsystem not installed. Local host install/configuration not changed. Criterion P01-06 remains unmet; draft required."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "First P01-05–08 container CI",
+      "result": "FAIL_FIXED_AWAITING_RERUN",
+      "head_sha": "afdce9351ed7d9616954526f3e8ac444bdaef9b4",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744565647",
+      "detail": "Both architectures failed Compose model validation before build: inactive profile service toolchain was referenced as an additional context. Replaced cross-service build dependency with one multi-stage build/Dockerfile and explicit toolchain/runtime targets. Checks remain enabled; rerun required."
     }
   ],
   "source_documents": [
@@ -1304,9 +1337,9 @@ JSON ниже является частью этого файла и доста�
       "language": "go"
     },
     {
-      "path": "build/toolchain.Dockerfile",
+      "path": "build/Dockerfile",
       "anchor": "appendix-toolchain-dockerfile",
-      "title": "Закреплённый образ инструментов",
+      "title": "Единый multi-stage Dockerfile: toolchain и runtime",
       "language": "dockerfile"
     },
     {
@@ -1421,12 +1454,6 @@ JSON ниже является частью этого файла и доста�
       "anchor": "appendix-shutdown-tests",
       "title": "Controlled active RPC and deadline tests",
       "language": "go"
-    },
-    {
-      "path": "build/service.Dockerfile",
-      "anchor": "appendix-service-dockerfile",
-      "title": "Minimal runtime image from pinned toolchain",
-      "language": "dockerfile"
     },
     {
       "path": "tools/smoke.mjs",
@@ -1614,6 +1641,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-15",
       "summary": "Принятие/merge PR #7 подтверждены. По прямому поручению владельца P01-05–08 реализуются одним PR с понятными заголовками. Локальные Go lifecycle tests PASS; runtime/CI подготовлены, Docker/WSL Windows отсутствуют. Новый PR будет draft до обязательного Windows smoke.",
       "trigger": "Принятый предыдущий PR и поручение оставшихся задач"
+    },
+    {
+      "revision": 30,
+      "date": "2026-10-15",
+      "summary": "Создан draft PR #8 от AI-Your-Bro и прикреплён к чату. Первый CI выявил зависимость сборки от неактивного toolchain-профиля; введён единый multi-stage Dockerfile с target toolchain/runtime. Повторный CI ожидается; Windows smoke по-прежнему NOT_RUN.",
+      "trigger": "Публикация и исправление модели Compose по результату CI"
     }
   ],
   "repository": {
@@ -1641,13 +1674,13 @@ JSON ниже является частью этого файла и доста�
     "snapshot_ref": "feat/p01-05-08-runtime",
     "current_publication": {
       "branch": "feat/p01-05-08-runtime",
-      "pull_request_url": null,
-      "status": "NOT_PUBLISHED_YET",
-      "author": "AI-Your-Bro",
-      "draft_required": true,
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
+      "status": "DRAFT",
+      "draft": true,
       "merged": false,
+      "author": "AI-Your-Bro",
       "scope": "P01-05..P01-08",
-      "observed_commit": "bc09d08ce7867f3109d996f71015e3ce73986452"
+      "observed_commit": "afdce9351ed7d9616954526f3e8ac444bdaef9b4"
     }
   },
   "review_policy": {
@@ -1790,7 +1823,7 @@ JSON ниже является частью этого файла и доста�
       "rule": "P01-01 in PR #6, P01-02–04 in accepted PR #7; owner authorized P01-05–08 together in one final PR. All eight tasks remain in parent Issue #3.",
       "whole_packet_acceptance": "PENDING_FINAL_PR_AND_ALL_APPLICABLE_CRITERIA"
     },
-    "current_task_pr_url": null,
+    "current_task_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
     "current_subtask_stage": "IN_PROGRESS"
   },
   "review_sequence": {
@@ -1988,7 +2021,7 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `81c9eaf73a298250f83dce8503795f2253b71351ac29a2e8583b73eb9f06dd8b` |
+| `CONTEXT_STATE.json` | `3de7226ec8278169679c05baeea7adcd6f554756f5a873c5cefbb56dcdb3b50f` |
 | `tools/context_intro.md` | `e071296fead54d852877588c566808e3c124336f61313d0a8a3c52c0e82c3470` |
 | `tools/update_context.ps1` | `f830ed3538ae98ef5129b2ab5ae1d1ad564b0482d8ed2978a7ec2b96bcf5e731` |
 | `README.md` | `e95a49d6d4ee46c0bf94f2eca9f5784449a6487af03d852581ef0b1057c90e76` |
@@ -2012,14 +2045,14 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/TASK_TRACKING.md` | `74de561c382556b7d4e238a42d7bc3fbb75fdb56e4500ce220cf7ec86b5cba76` |
 | `docs/development/REPOSITORY_SECURITY.md` | `b10363e3417429cc06376dff0277f257a92912dae03af12d7d9ff8252a80cb6e` |
 | `.github/CODEOWNERS` | `95de6cc3de1ba640d0ab9e2b9bfbdea79b7ce6641a8bcdb0bcef1f7607666415` |
-| `docs/development/TOOLCHAIN.md` | `0ef3fbfdf8ba40fc55a5fd7f80e856d91c56bd41e7d2dc8c237fa7a9576b2eb7` |
+| `docs/development/TOOLCHAIN.md` | `631ad1727a724c5daca0a651d17380ab3c2e45b2a23ca7fd3d0eab59bebbd105` |
 | `go.mod` | `6b5e4488754d547057e6b8ddd0963cde3d86100430adf16fdb7060107517fa62` |
 | `go.sum` | `9f863b08d769d3d2d631ac9534db6bbd7f8d8fa5c59ee9f5bfa762763d310cc7` |
 | `cmd/orders/main.go` | `131626df0bae0819d49c3d46793809c839cacb6dbd71a93b4bc1740a04ea3e6c` |
 | `cmd/inventory/main.go` | `3a8d1959cf1530e56c786e7e26ac0a0d04c145e9cf5266f95f6a766e57fb5f39` |
 | `cmd/payments/main.go` | `3ceb9fe70d25948079c3682ad409c4970918d30036f74afb6451858725c351c1` |
-| `build/toolchain.Dockerfile` | `d0d0eb2b9560f7cab27b61c1f42ed98b6b3c133efa16021c3bd3bcb9c1e9db69` |
-| `compose.yaml` | `724340170c3e41fab40bec347f48aa905c4430548aa17409d55cf6d215c261b8` |
+| `build/Dockerfile` | `3455ba239b307cc0ae1b0cdc4e3d71edc691fb4bd37249d83d137a440b090593` |
+| `compose.yaml` | `8681694441b9d5579a2b9295fdf7ef9bf91e596d6ebfeb84e249dba1101c219b` |
 | `tools/go.sh` | `4271c7210cc4ed6f3901b2b091a97d91d158cd63fd02bb4d3fd60f5353abd62f` |
 | `.golangci.yml` | `44651a36c889767cd425bc12b46e07c8bffc924024de23af1176057f78f3a74a` |
 | `.github/workflows/go.yml` | `88b14af409edfba0862a2f54f6a6174b8c46e08361e5aca71c6da7d5e46b84e1` |
@@ -2038,9 +2071,8 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/service/command.go` | `e571f49daf1664aa64c3c9db53a8e0b0d7fb5f2be18b6b2ba8b10cdce64d41b4` |
 | `internal/service/command_test.go` | `56eb2c958131551d61097e00fd66a34068332c141b81c3eaa5ec8358072a7051` |
 | `internal/service/shutdown_test.go` | `9387689f5183003faabddb0c5f6d6d5fd5c89e410fec66cf76aa94eebf25be58` |
-| `build/service.Dockerfile` | `942a4a31c279510a65a3b904c3ce4c0505616485d7011c03b8a9a0d568f0db94` |
-| `tools/smoke.mjs` | `6c21383deae6161a3c5ac5b632712d6cfc7e2a92d1bb1b416c25e40954c8aec6` |
-| `docs/development/CONTAINER_RUNTIME.md` | `f59ff6468eb60901a34b2a166508a37848ffa96b717d852e782857c9e08e5bbf` |
+| `tools/smoke.mjs` | `2f0983a9e373ddb9bcd0cf343a4f02c8fb84bca996dbbcd5d9ae281caf06f5ce` |
+| `docs/development/CONTAINER_RUNTIME.md` | `e5569d723c1496c45a8c467ca052fa79af746110a15802fb48172b13d0942514` |
 
 ## Полные самостоятельные приложения
 
@@ -2071,7 +2103,7 @@ SHA-256 относится к исходному файлу на момент с
 - [Orders gRPC health entrypoint](#appendix-orders-main) — `cmd/orders/main.go`
 - [Inventory gRPC health entrypoint](#appendix-inventory-main) — `cmd/inventory/main.go`
 - [Payments gRPC health entrypoint](#appendix-payments-main) — `cmd/payments/main.go`
-- [Закреплённый образ инструментов](#appendix-toolchain-dockerfile) — `build/toolchain.Dockerfile`
+- [Единый multi-stage Dockerfile: toolchain и runtime](#appendix-toolchain-dockerfile) — `build/Dockerfile`
 - [Compose для временных инструментов](#appendix-compose-toolchain) — `compose.yaml`
 - [Команды внутри Linux-контейнера](#appendix-go-commands) — `tools/go.sh`
 - [Согласованные Go-линтеры](#appendix-golangci-config) — `.golangci.yml`
@@ -2091,7 +2123,6 @@ SHA-256 относится к исходному файлу на момент с
 - [Entrypoint command and bounded health probe](#appendix-service-command) — `internal/service/command.go`
 - [Health probe and command tests](#appendix-service-command-tests) — `internal/service/command_test.go`
 - [Controlled active RPC and deadline tests](#appendix-shutdown-tests) — `internal/service/shutdown_test.go`
-- [Minimal runtime image from pinned toolchain](#appendix-service-dockerfile) — `build/service.Dockerfile`
 - [Cross-platform Docker smoke and diagnostics](#appendix-container-smoke) — `tools/smoke.mjs`
 - [Runtime build, health, shutdown, smoke and review limitations](#appendix-container-runtime) — `docs/development/CONTAINER_RUNTIME.md`
 
@@ -4763,9 +4794,9 @@ func main() {
 
 <a id="appendix-toolchain-dockerfile"></a>
 
-## Приложение: Закреплённый образ инструментов
+## Приложение: Единый multi-stage Dockerfile: toolchain и runtime
 
-Полный исходный документ: `build/toolchain.Dockerfile`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+Полный исходный документ: `build/Dockerfile`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```dockerfile
 FROM golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f AS lint
@@ -4782,6 +4813,18 @@ RUN git config --system --add safe.directory /workspace \
 COPY --chmod=0755 tools/go.sh /usr/local/bin/lab-go
 ENTRYPOINT ["/usr/local/bin/lab-go"]
 CMD ["versions"]
+
+FROM toolchain AS service-build
+ARG SERVICE
+COPY . .
+RUN case "$SERVICE" in orders|inventory|payments) ;; *) exit 2 ;; esac \
+    && CGO_ENABLED=0 go build -trimpath -o /out/service "./cmd/$SERVICE"
+
+FROM scratch AS runtime
+COPY --from=service-build /out/service /app/service
+USER 65532:65532
+STOPSIGNAL SIGTERM
+ENTRYPOINT ["/app/service"]
 ```
 
 <a id="appendix-compose-toolchain"></a>
@@ -4809,9 +4852,8 @@ x-runtime: &runtime
 
 x-service-build: &service-build
   context: .
-  dockerfile: build/service.Dockerfile
-  additional_contexts:
-    toolchain: service:toolchain
+  dockerfile: build/Dockerfile
+  target: runtime
 
 services:
   orders:
@@ -4836,7 +4878,8 @@ services:
     profiles: [tools]
     build:
       context: .
-      dockerfile: build/toolchain.Dockerfile
+      dockerfile: build/Dockerfile
+      target: toolchain
     working_dir: /workspace
     volumes:
       - .:/workspace
@@ -6508,27 +6551,6 @@ func TestShutdownDeadlineInterruptsBlockedRPC(t *testing.T) {
 }
 ```
 
-<a id="appendix-service-dockerfile"></a>
-
-## Приложение: Minimal runtime image from pinned toolchain
-
-Полный исходный документ: `build/service.Dockerfile`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
-
-```dockerfile
-# The named context is the pinned toolchain service in compose.yaml.
-FROM toolchain AS build
-ARG SERVICE
-COPY . .
-RUN case "$SERVICE" in orders|inventory|payments) ;; *) exit 2 ;; esac \
-    && CGO_ENABLED=0 go build -trimpath -o /out/service "./cmd/$SERVICE"
-
-FROM scratch AS runtime
-COPY --from=build /out/service /app/service
-USER 65532:65532
-STOPSIGNAL SIGTERM
-ENTRYPOINT ["/app/service"]
-```
-
 <a id="appendix-container-smoke"></a>
 
 ## Приложение: Cross-platform Docker smoke and diagnostics
@@ -6580,7 +6602,7 @@ async function command(program, args, timeout = 60_000) {
 }
 
 const docker = args => command('docker', args);
-const composeArgs = args => ['compose', '-f', 'compose.yaml', '-p', project, '--profile', 'tools', ...args];
+const composeArgs = args => ['compose', '-f', 'compose.yaml', '-p', project, ...args];
 const compose = args => docker(composeArgs(args));
 const requireValue = (condition, message) => { if (!condition) throw new Error(message); };
 
@@ -6728,19 +6750,19 @@ flowchart TB
     P --- Net
 ```
 
-[service.Dockerfile](#appendix-service-dockerfile) использует закреплённый [toolchain](#appendix-toolchain) через именованный build context Compose. Сервис выбирается build argument, разрешены только orders/inventory/payments. Финальный `scratch` содержит один статический бинарник и запускает его напрямую: без компилятора, shell, root и промежуточного процесса вместо PID 1. CA bundle и timezone database сейчас не требуются; перед появлением TLS-клиентов состав образа пересматривается явно.
+[Dockerfile](#appendix-toolchain-dockerfile) использует закреплённый [toolchain](#appendix-toolchain) как stage общего multi-stage Dockerfile. Сервис выбирается build argument, разрешены только orders/inventory/payments. Финальный `scratch` содержит один статический бинарник и запускает его напрямую: без компилятора, shell, root и промежуточного процесса вместо PID 1. CA bundle и timezone database сейчас не требуются; перед появлением TLS-клиентов состав образа пересматривается явно.
 
-[Compose](#appendix-compose-toolchain) задаёт read-only root filesystem, `cap_drop: ALL`, `no-new-privileges`, внутреннюю сеть и отсутствие публикации портов. Runtime не получает host mounts или Docker socket. Toolchain остаётся временным сервисом профиля tools. Профиль включается при сборке зависимого образа; при запуске явно перечисляются только три runtime-сервиса.
+[Compose](#appendix-compose-toolchain) задаёт read-only root filesystem, `cap_drop: ALL`, `no-new-privileges`, внутреннюю сеть и отсутствие публикации портов. Runtime не получает host mounts или Docker socket. Toolchain остаётся временным сервисом профиля tools. Сборка runtime использует stage toolchain напрямую; активация сервиса профиля tools для неё не требуется. Обычный up запускает только три runtime-сервиса.
 
 #### Требования и запуск
 
-Нужны Git, Docker с Linux-контейнерами и Compose v2.22+. Для локальной публикации на loopback используйте Docker Engine 28+. Go и Bash на хосте не нужны. Node.js 20+ требуется только для автоматического smoke и уже используется проверкой документации.
+Нужны Git, Docker с Linux-контейнерами и Compose v2 с поддержкой up --wait. Для локальной публикации на loopback используйте Docker Engine 28+. Go и Bash на хосте не нужны. Node.js 20+ требуется только для автоматического smoke и уже используется проверкой документации.
 
 Из корня репозитория:
 
 ```text
-docker compose --profile tools build orders inventory payments
-docker compose --profile tools up -d --wait orders inventory payments
+docker compose build orders inventory payments
+docker compose up -d --wait orders inventory payments
 docker compose ps
 docker compose exec -T orders /app/service healthcheck
 docker compose exec -T inventory /app/service healthcheck
@@ -6759,7 +6781,7 @@ docker compose down
 FL_RUNTIME_ENV_FILE=configs/env/container.env
 ```
 
-Compose выбирает файл и передаёт окружение процессам; приложение dotenv не читает. Личные env исключены из Git и Docker build context. Не печатайте полный конфиг при работе с секретами; для валидации используйте `docker compose --profile tools config --quiet`.
+Compose выбирает файл и передаёт окружение процессам; приложение dotenv не читает. Личные env исключены из Git и Docker build context. Не печатайте полный конфиг при работе с секретами; для валидации используйте `docker compose config --quiet`.
 
 Порты на хост не публикуются. Если позже понадобится локальный доступ, добавляется отдельная deployment-настройка с явной привязкой к loopback. Endpoint клиента, listener и host port — разные параметры; детали в [описании сервисов](#appendix-service-runtime). Текущий приватный стенд не заявляет готовность production TLS/mTLS.
 

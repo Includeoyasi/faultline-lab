@@ -16,9 +16,8 @@ x-runtime: &runtime
 
 x-service-build: &service-build
   context: .
-  dockerfile: build/service.Dockerfile
-  additional_contexts:
-    toolchain: service:toolchain
+  dockerfile: build/Dockerfile
+  target: runtime
 
 services:
   orders:
@@ -43,7 +42,8 @@ services:
     profiles: [tools]
     build:
       context: .
-      dockerfile: build/toolchain.Dockerfile
+      dockerfile: build/Dockerfile
+      target: toolchain
     working_dir: /workspace
     volumes:
       - .:/workspace

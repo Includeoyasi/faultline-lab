@@ -21,19 +21,19 @@ flowchart TB
     P --- Net
 ```
 
-[service.Dockerfile](../../build/service.Dockerfile) использует закреплённый [toolchain](TOOLCHAIN.md) через именованный build context Compose. Сервис выбирается build argument, разрешены только orders/inventory/payments. Финальный `scratch` содержит один статический бинарник и запускает его напрямую: без компилятора, shell, root и промежуточного процесса вместо PID 1. CA bundle и timezone database сейчас не требуются; перед появлением TLS-клиентов состав образа пересматривается явно.
+[Dockerfile](../../build/Dockerfile) использует закреплённый [toolchain](TOOLCHAIN.md) как stage общего multi-stage Dockerfile. Сервис выбирается build argument, разрешены только orders/inventory/payments. Финальный `scratch` содержит один статический бинарник и запускает его напрямую: без компилятора, shell, root и промежуточного процесса вместо PID 1. CA bundle и timezone database сейчас не требуются; перед появлением TLS-клиентов состав образа пересматривается явно.
 
-[Compose](../../compose.yaml) задаёт read-only root filesystem, `cap_drop: ALL`, `no-new-privileges`, внутреннюю сеть и отсутствие публикации портов. Runtime не получает host mounts или Docker socket. Toolchain остаётся временным сервисом профиля tools. Профиль включается при сборке зависимого образа; при запуске явно перечисляются только три runtime-сервиса.
+[Compose](../../compose.yaml) задаёт read-only root filesystem, `cap_drop: ALL`, `no-new-privileges`, внутреннюю сеть и отсутствие публикации портов. Runtime не получает host mounts или Docker socket. Toolchain остаётся временным сервисом профиля tools. Сборка runtime использует stage toolchain напрямую; активация сервиса профиля tools для неё не требуется. Обычный up запускает только три runtime-сервиса.
 
 ## Требования и запуск
 
-Нужны Git, Docker с Linux-контейнерами и Compose v2.22+. Для локальной публикации на loopback используйте Docker Engine 28+. Go и Bash на хосте не нужны. Node.js 20+ требуется только для автоматического smoke и уже используется проверкой документации.
+Нужны Git, Docker с Linux-контейнерами и Compose v2 с поддержкой up --wait. Для локальной публикации на loopback используйте Docker Engine 28+. Go и Bash на хосте не нужны. Node.js 20+ требуется только для автоматического smoke и уже используется проверкой документации.
 
 Из корня репозитория:
 
 ```text
-docker compose --profile tools build orders inventory payments
-docker compose --profile tools up -d --wait orders inventory payments
+docker compose build orders inventory payments
+docker compose up -d --wait orders inventory payments
 docker compose ps
 docker compose exec -T orders /app/service healthcheck
 docker compose exec -T inventory /app/service healthcheck
@@ -52,7 +52,7 @@ docker compose down
 FL_RUNTIME_ENV_FILE=configs/env/container.env
 ```
 
-Compose выбирает файл и передаёт окружение процессам; приложение dotenv не читает. Личные env исключены из Git и Docker build context. Не печатайте полный конфиг при работе с секретами; для валидации используйте `docker compose --profile tools config --quiet`.
+Compose выбирает файл и передаёт окружение процессам; приложение dotenv не читает. Личные env исключены из Git и Docker build context. Не печатайте полный конфиг при работе с секретами; для валидации используйте `docker compose config --quiet`.
 
 Порты на хост не публикуются. Если позже понадобится локальный доступ, добавляется отдельная deployment-настройка с явной привязкой к loopback. Endpoint клиента, listener и host port — разные параметры; детали в [описании сервисов](SERVICE_RUNTIME.md). Текущий приватный стенд не заявляет готовность production TLS/mTLS.
 
