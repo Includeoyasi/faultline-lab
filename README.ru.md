@@ -24,9 +24,9 @@
 
 **Архитектура и контейнерный каркас приняты.** P01 завершён после merge PR #8 владельцем **16 октября 2026 года**, Europe/Moscow. Три сервиса имеют конфигурацию, health, JSON-логи, bounded shutdown и [runtime-контейнеры](docs/development/CONTAINER_RUNTIME.md). [Устройство и запуск](docs/development/SERVICE_RUNTIME.md) · [Команды проверок](docs/development/TOOLCHAIN.md). G1, бизнес-операции и результаты экспериментов ещё впереди.
 
-Ближайший пакет **P02**: PostgreSQL/Kafka/Redis, базы и роли, миграции и seed. [Декомпозиция](docs/development/packets/P02.md) предложена для выбора очередности; разработка ещё не начата. [План среды](docs/development/ENVIRONMENT.md) объясняет состав контейнеров; [граница лаборатории](docs/architecture/LAB_BOUNDARY.md) сохраняет направление подключения других бизнесов. Производительность стенда пока не измерялась.
+Ближайший пакет **P02**: PostgreSQL/Kafka/Redis, базы и роли, миграции и seed. [Декомпозиция](docs/development/packets/P02.md) согласована и опубликована: восемь задач и два будущих PR; разработка ещё не начата. [План среды](docs/development/ENVIRONMENT.md) объясняет состав контейнеров; [граница лаборатории](docs/architecture/LAB_BOUNDARY.md) сохраняет направление подключения других бизнесов. Производительность стенда пока не измерялась.
 
-Все 8/8 задач P01 приняты в PR #6/#7/[#8](https://github.com/Includeoyasi/faultline-lab/pull/8); [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) закрыт. [Windows container smoke](docs/development/evidence/p01/WINDOWS_SMOKE.md) и Linux AMD64/ARM64 CI PASS; личный Mac пока не проверен. Предлагаемый P02 ведётся в [Issue #10](https://github.com/Includeoyasi/faultline-lab/issues/10), стадия BACKLOG. P01–P05 предшествуют отдельной приёмке G1.
+Все 8/8 задач P01 приняты в PR #6/#7/[#8](https://github.com/Includeoyasi/faultline-lab/pull/8); [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) закрыт. [Windows container smoke](docs/development/evidence/p01/WINDOWS_SMOKE.md) и Linux AMD64/ARM64 CI PASS; личный Mac пока не проверен. P02 ведётся в [milestone P02](https://github.com/Includeoyasi/faultline-lab/milestone/1): отдельные Issues #12–19, стадия TODO / NOT_STARTED.  P01–P05 предшествуют отдельной приёмке G1.
 
 ## Идея
 

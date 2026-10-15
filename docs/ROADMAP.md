@@ -4,7 +4,7 @@
 
 Это план разработки, а не результаты уже проведённых испытаний. Все численные пороги ниже — начальные гипотезы, которые нужно откалибровать на своём компьютере.
 
-Разработку выполняет Codex; пользователь — владелец проекта и ревьюер. [Workflow](development/WORKFLOW.md) определяет приёмку. G0 принят 13 октября; P01 принят 8/8 после owner merge PR #8 16 октября 2026 года. Ближайший [P02](development/packets/P02.md) детализирован как предложение: PostgreSQL/Kafka/Redis, базы/права, миграции и seed; код не начат. Бизнес-операций пока нет, G1 NOT_READY. Актуальный переносимый снимок — PROJECT_CONTEXT.md.
+Разработку выполняет Codex; пользователь — владелец проекта и ревьюер. [Workflow](development/WORKFLOW.md) определяет приёмку. G0 принят 13 октября; P01 принят 8/8 после owner merge PR #8 16 октября 2026 года. Ближайший [P02](development/packets/P02.md) согласован и опубликован: PostgreSQL/Kafka/Redis, базы/права, миграции и seed; код не начат. Бизнес-операций пока нет, G1 NOT_READY. Актуальный переносимый снимок — PROJECT_CONTEXT.md.
 
 ## 1. Допущения и границы
 
@@ -387,7 +387,7 @@ docs/adr/
 
 P01 включает контейнерный toolchain, образы трёх сервисов и минимальный Compose-запуск вместе с Go entrypoints/config/health/shutdown/JSON-логами и Go CI. Основная инфраструктура подключается в P02, наблюдаемость — на соответствующем этапе. Инструменты запускаются по задаче; адаптер не требует отдельного контейнера.
 
-[P01](development/packets/P01.md) завершён, [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) закрыт. [Предлагаемый P02](development/packets/P02.md) содержит восемь задач, зависимости, критерии и нарезку PR; [Issue #10](https://github.com/Includeoyasi/faultline-lab/issues/10) — BACKLOG / NOT_STARTED. [Учёт задач](development/TASK_TRACKING.md) определяет переходы статусов. Декомпозиция не означает начало реализации или приёмку G1.
+[P01](development/packets/P01.md) завершён, Issue #3 закрыт. [P02](development/packets/P02.md) согласован и опубликован: восемь отдельных [Issues #12–19 в milestone P02](https://github.com/Includeoyasi/faultline-lab/milestone/1), два будущих PR, короткие описания и критерии. Задачи TODO / NOT_STARTED; реализация не начата. [Учёт задач](development/TASK_TRACKING.md) определяет переходы статусов; G1 NOT_READY.
 
 Этап 2: запуск Compose и loadgen вручную, экспорт JSON/CSV, Markdown отчёт по шаблону. Этап 4: hooks и crash scripts. Этап 7: `labctl` объединяет уже проверенные действия.
 

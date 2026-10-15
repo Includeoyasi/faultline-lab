@@ -22,7 +22,7 @@
 
 ## Current state
 
-**Architecture approved · container skeleton accepted.** P01 is complete after owner-merged PR #8 on **16 October 2026** (Europe/Moscow). Three services have bounded shutdown, minimal runtime images, Compose and smoke reports. [Build tools](docs/development/TOOLCHAIN.md) · [Runtime guide](docs/development/CONTAINER_RUNTIME.md). The [P02 infrastructure/data plan](docs/development/packets/P02.md) is proposed; implementation has not started. G1, business operations and experiment results are still to come.
+**Architecture approved · container skeleton accepted.** P01 is complete after owner-merged PR #8 on **16 October 2026** (Europe/Moscow). Three services have bounded shutdown, minimal runtime images, Compose and smoke reports. [Build tools](docs/development/TOOLCHAIN.md) · [Runtime guide](docs/development/CONTAINER_RUNTIME.md). The [P02 infrastructure/data plan](docs/development/packets/P02.md) is approved and published; implementation has not started. G1, business operations and experiment results are still to come.
 
 | Ready | Next | Later |
 | :--- | :--- | :--- |
@@ -30,7 +30,7 @@
 | Detailed process diagrams and review gates | Kafka/Redis infrastructure, then gRPC contracts | Grafana dashboards, alerts and experiment reports |
 | Portable context with a freshness check | Durable workflows, Kafka and compensation | Scaling comparisons under equal resource budgets |
 
-All eight P01 tasks are accepted in PR #6/#7/[#8](https://github.com/Includeoyasi/faultline-lab/pull/8); [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) is closed. [Windows container smoke](docs/development/evidence/p01/WINDOWS_SMOKE.md) and native Linux AMD64/ARM64 CI pass. The personal Mac remains untested. [Issue #10](https://github.com/Includeoyasi/faultline-lab/issues/10) holds the proposed P02 decomposition in BACKLOG; [the plan](docs/development/packets/P02.md) gives dependencies and acceptance criteria.
+All eight P01 tasks are accepted in PR #6/#7/[#8](https://github.com/Includeoyasi/faultline-lab/pull/8); [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) is closed. [Windows container smoke](docs/development/evidence/p01/WINDOWS_SMOKE.md) and native Linux AMD64/ARM64 CI pass. The personal Mac remains untested. [Milestone P02](https://github.com/Includeoyasi/faultline-lab/milestone/1) groups eight approved tasks (#12–19), all TODO and not started. [The plan](docs/development/packets/P02.md) gives descriptions, dependencies, acceptance criteria and two future PRs.
 
 No capacity numbers or performance improvements are claimed before measurement. The [roadmap](docs/ROADMAP.md) distinguishes design hypotheses from acceptance criteria and observed results.
 
