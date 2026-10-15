@@ -7,7 +7,8 @@ ENV GOTOOLCHAIN=local \
 WORKDIR /workspace
 COPY --from=lint /usr/bin/golangci-lint /usr/local/bin/golangci-lint
 COPY go.mod go.sum ./
-RUN go mod download && go install tool
+RUN git config --system --add safe.directory /workspace \
+    && go mod download && go install tool
 COPY --chmod=0755 tools/go.sh /usr/local/bin/lab-go
 ENTRYPOINT ["/usr/local/bin/lab-go"]
 CMD ["versions"]

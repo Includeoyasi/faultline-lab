@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 18,
+  "context_revision": 19,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -10,7 +10,7 @@
   "current_task": {
     "id": "P01-01",
     "description": "Первая задача: Go-модуль, три bootstrap entrypoints и закреплённый контейнерный toolchain",
-    "status": "IMPLEMENTED_LOCAL_CHECKS_PASSED_CI_PENDING",
+    "status": "DRAFT_PR_CREATED_FIXING_CONTAINER_VCS_OWNERSHIP",
     "authorization": "Владелец сообщил о merge PR #5 и поручил взять первую утверждённую задачу и создать PR для ревью",
     "result": {
       "branch": "feat/p01-01-toolchain",
@@ -18,15 +18,20 @@
       "scope": "P01-01_ONLY",
       "implementation": "BOOTSTRAP_AND_TOOLCHAIN_CREATED",
       "local_go": "PASS_PORTABLE_WINDOWS_GO_1_27_2",
-      "local_docker": "NOT_RUN_DOCKER_NOT_FOUND",
-      "ci": "NOT_RUN_BEFORE_PUSH",
+      "local_docker": "NOT_RUN",
+      "ci": "FIRST_ARM64_CHECK_FAILED_VCS_OWNERSHIP_FIX_PREPARED",
       "native_macos": "NOT_RUN",
       "go_tests": "COMMAND_PASS_NO_TEST_FILES",
       "owner_acceptance": "PENDING",
-      "pull_request_url": null,
-      "commit_created": false,
-      "pushed": false,
-      "remaining_tasks": "P01-02..P01-08_NOT_STARTED"
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/6",
+      "commit_created": true,
+      "pushed": true,
+      "remaining_tasks": "P01-02..P01-08_NOT_STARTED",
+      "pull_request_number": 6,
+      "author": "AI-Your-Bro",
+      "draft": true,
+      "observed_commit": "c1e7c7699660fedfb997d5bcaac38514b8723853",
+      "local_docs": "PASS_REVISION_18_PS7_AND_WINDOWS_PS51"
     }
   },
   "roles": {
@@ -80,7 +85,7 @@
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "d616a221566be4f7f7be89f6f3223501a539c45c",
+    "git_commit": "c1e7c7699660fedfb997d5bcaac38514b8723853",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -140,7 +145,7 @@
         "merge_commit": "d616a221566be4f7f7be89f6f3223501a539c45c"
       }
     ],
-    "toolchain_container": "CREATED_CI_PENDING",
+    "toolchain_container": "BUILDS_IN_CI; VCS_OWNERSHIP_CHECK_FIX_PENDING",
     "go_quality_workflow": "CREATED_AMD64_AND_ARM64_CI_PENDING"
   },
   "completed_work": [
@@ -206,7 +211,8 @@
         "evidence": "LOCAL_GO_BUILD_TIDY_VERIFY_GOIMPORTS_GOVULNCHECK_PASS; LINUX_CONTAINER_CI_PENDING",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "CREATED",
-        "owner_acceptance": "PENDING"
+        "owner_acceptance": "PENDING",
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/6"
       },
       {
         "id": "P01-02",
@@ -629,6 +635,20 @@
       ],
       "environment": "Temporary checksum-verified Go 1.27.2 windows/amd64; caches in ignored .local; no system Go installation",
       "detail": "Сборка трёх пакетов проходит; tidy не требует изменений, verify PASS, goimports не вывел файлов, govulncheck: No vulnerabilities found. Go tests: no test files. Docker, Linux race/lint и bootstrap execution ожидают CI; macOS NOT_RUN."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "Initial Linux ARM64 container check",
+      "result": "FAIL",
+      "head_sha": "c1e7c7699660fedfb997d5bcaac38514b8723853",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38722835503",
+      "detail": "Образ собрался, версии инструментов/format/tidy/verify прошли. go build не смог получить Git VCS status из-за ownership bind mount. В образ добавлен точный safe.directory /workspace; Git metadata сохраняется. Повторный CI ожидается."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "Portable source embedding and initial documentation",
+      "result": "PASS",
+      "detail": "24 Markdown-файла, 275 локальных ссылок, структура 56 Mermaid; ревизия 18, 32 документа и 35 fingerprints. CheckOnly прошёл PS7 и Windows PS5.1. Documentation CI исходного коммита успешен."
     }
   ],
   "source_documents": [
@@ -911,6 +931,12 @@
       "date": "2026-10-15",
       "summary": "Слияние security PR #5 учтено. Реализуется первая задача P01-01: модуль, bootstrap entrypoints, toolchain, Go CI и команды; остальные семь задач не начаты. Контекст расширен полными исходниками первой задачи.",
       "trigger": "Владелец сообщил о merge PR #5 и поручил взять первую утверждённую задачу и создать PR для ревью"
+    },
+    {
+      "revision": 19,
+      "date": "2026-10-15",
+      "summary": "Создан draft PR #6 от исполнителя; первый ARM64 CI выявил Git ownership bind mount. Образ доверяет точному /workspace для VCS metadata; повторные Go-проверки ожидаются.",
+      "trigger": "Фактическая диагностика контейнерного CI первой задачи"
     }
   ],
   "repository": {
@@ -935,23 +961,14 @@
       "event": "push",
       "scope": "Документационный CI main после принятия правил; не является проверкой последующего handoff PR или Go-кода."
     },
-    "snapshot_ref": "main",
+    "snapshot_ref": "feat/p01-01-toolchain",
     "current_publication": {
-      "branch": "chore/executor-security",
-      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
+      "branch": "feat/p01-01-toolchain",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/6",
       "author": "AI-Your-Bro",
-      "observed_commit": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
-      "merged": true,
-      "observed_ci": {
-        "workflow": "Documentation",
-        "head_sha": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
-        "status": "COMPLETED",
-        "conclusion": "SUCCESS",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38413156014",
-        "event": "pull_request",
-        "scope": "Документационный CI исходного security PR; после коммита handoff проверять актуальный HEAD PR #5"
-      },
-      "merge_commit": "d616a221566be4f7f7be89f6f3223501a539c45c"
+      "draft": true,
+      "merged": false,
+      "observed_commit": "c1e7c7699660fedfb997d5bcaac38514b8723853"
     }
   },
   "review_policy": {
@@ -1088,7 +1105,8 @@
       "confirmed_on": "2026-10-15",
       "rule": "По прямому поручению владельца первая задача P01-01 идёт отдельным PR; общая карточка P01 сохраняет восемь задач и ссылки на последовательные PR",
       "whole_packet_acceptance": "NOT_COMPLETE_AFTER_ONLY_P01_01"
-    }
+    },
+    "current_task_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/6"
   },
   "review_sequence": {
     "confirmed_on": "2026-10-13",
