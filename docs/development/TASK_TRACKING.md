@@ -1,6 +1,6 @@
 # Учёт задач и статусов
 
-Статус на 15 октября 2026 года: P01-01–04 приняты и слиты (4/8) через PR #6/#7. Проверено 7/8; P01-05/07/08 реализованы и проверены в Linux CI, P01-06 ждёт Windows container smoke. P01-05–08 IN_PROGRESS в [draft PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8), объединены одним PR по прямому поручению владельца. Код и smoke подготовлены; новый Linux CI PASS на AMD64/ARM64, Windows Docker smoke NOT_RUN. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыт; [спецификация P01](packets/P01.md) сохраняет критерии.
+Статус на 15 октября 2026 года: P01-01–04 приняты и слиты. Реализация и проверки P01 — 8/8; владельцем принято 4/8. P01-05–08 находятся на ревью в [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). Linux AMD64/ARM64 CI и Windows container smoke PASS; личная macOS NOT_RUN. Установлены Go 1.27.2, WSL 2.7.13 и Docker Desktop 4.95. Среда после проверки остановлена, автозапуск Docker выключен.
 
 ## Разделение назначений
 
@@ -48,4 +48,4 @@ BLOCKED — отдельный признак с причиной и требу�
 - P01-01–04 DONE; P01-05–08 IN_PROGRESS. Код/проверки нового PR не заменяют ревью владельца.
 - Карточка [P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта: IN_PROGRESS, первые четыре задачи приняты. Оставшиеся предъявляются в одном PR; Projects не создан.
 - Документационные PR #4 и [#5](https://github.com/Includeoyasi/faultline-lab/pull/5) слиты. CODEOWNERS и защита main действуют; PR первой задачи публикуется от AI-Your-Bro с ревью Includeoyasi.
-- Текущий PR объединяет P01-05–08. До Windows container smoke он остаётся draft; весь P01 и G1 ещё не приняты.
+- Текущий PR объединяет P01-05–08 и готов к ревью: обязательный Windows container smoke PASS. Весь P01 и G1 ещё не приняты владельцем.

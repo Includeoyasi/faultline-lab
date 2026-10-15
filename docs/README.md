@@ -13,6 +13,7 @@
 | Собрать и проверить первые Go-бинарники | [Toolchain P01-01](development/TOOLCHAIN.md) — версии, Docker-команды и границы проверок |
 | Запустить и проверить три процесса | [Запуск сервисов](development/SERVICE_RUNTIME.md) — настройки, JSON, health и границы shutdown |
 | Поднять три runtime-контейнера | [Контейнерный каркас](development/CONTAINER_RUNTIME.md) — сборка, health, остановка и smoke с отчётом |
+| Проверить Windows smoke | [Отчёт P01](development/evidence/p01/WINDOWS_SMOKE.md) — исходные JSON/JSONL, бюджет и остановка среды |
 | Проверить исходные ресурсы | [Профили сред](development/RESOURCE_PROFILES.md) — Windows, macOS и возможный будущий сервер |
 | Посмотреть оформление | [Концепции баннера](design/BANNER_OPTIONS.md) — три варианта и выбранное решение |
 | Принять участие в разработке | [CONTRIBUTING](../CONTRIBUTING.md) → [Правила ревью](development/CODE_REVIEW.md) → [Workflow](development/WORKFLOW.md) → [AGENTS](../AGENTS.md) |
@@ -28,7 +29,7 @@
 - [Процессы](architecture/PROCESSES.md): 15 подробных схем транзакций, отказов, гонок и восстановления.
 - [Граница лаборатории](architecture/LAB_BOUNDARY.md): общий механизм, адаптеры, кандидат второго бизнеса и доказательство переносимости.
 - [Среда](development/ENVIRONMENT.md): Docker для Windows/macOS, распределение контейнеров и ограничения измерений.
-- [Ресурсные профили](development/RESOURCE_PROFILES.md): снимок Windows-хоста и отдельно ещё не измеренные среды/лимиты.
+- [Ресурсные профили](development/RESOURCE_PROFILES.md): снимок Windows-хоста и текущий WSL-бюджет и отдельно ещё не измеренные среды.
 - [Roadmap](ROADMAP.md): этапы 0–7, критерии готовности, риски и 12 сценариев экспериментов.
 - [Workflow](development/WORKFLOW.md): роли человека и ИИ, состав ревью и контрольные точки G0–G4.
 - [Правила ревью](development/CODE_REVIEW.md): стандарт Go, блокирующие замечания, проверки и критерии слияния.

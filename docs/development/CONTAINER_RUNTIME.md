@@ -2,7 +2,7 @@
 
 Этот пакет завершает реализацию P01-05–08: ограниченное graceful shutdown, отдельные runtime-образы трёх сервисов, Compose, CI и smoke с диагностикой. G0 принят; P01 выполняется до G1. Бизнес-операции и инфраструктура PostgreSQL/Kafka/Redis относятся к следующим пакетам.
 
-PR #7 принят и слит владельцем (main `bc09d08`), задачи 01–04 DONE. [Draft PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8) содержит реализацию оставшихся задач. [Полный CI AMD64/ARM64](https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340) PASS на source HEAD d5e13a9; отчёты [AMD64](https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340/artifacts/11977328529) и [ARM64](https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340/artifacts/11977248425) прочитаны и подтверждают health, ограничения, exit 0, изоляцию и cleanup. Актуальные checks итогового HEAD доступны в PR. Текущее выполнение и результаты находятся в [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3), [спецификации P01](packets/P01.md) и переносимом контексте. Описание нового PR использует разделы «Что было сделано», «Проверки» и «На что обратить внимание».
+PR #7 принят владельцем. P01-05–08 подготовлены в [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8): Linux AMD64/ARM64 CI и [Windows container smoke](evidence/p01/WINDOWS_SMOKE.md) PASS. Реализация и проверки P01 — 8/8, принято владельцем 4/8; G1 ещё не достигнут.
 
 ## Состав и границы
 
@@ -90,10 +90,21 @@ CI на нативных Linux AMD64/ARM64 выполняет этот smoke п�
 
 ## Локальная проверка Windows
 
-15 октября проверено: Docker CLI, стандартная установка Docker Desktop и Docker-служба отсутствуют; WSL сообщает, что подсистема не установлена. Локальный запуск `node tools/smoke.mjs` сохранил NOT_RUN на prerequisites и exit 2. Native Windows Go unit/process tests проходят; Unix-сигналы проверяются отдельно на Linux. Личная macOS недоступна, её container smoke NOT_RUN.
+15 октября установлены host Go 1.27.2 (официальный MSI), WSL 2.7.13.0 и Docker Desktop 4.95.0 в профиль пользователя. Linux engine 29.8.2 / Compose 5.6.0 успешно выполнили smoke на чистом source d81b51c. [Отчёт, JSONL и подтверждение остановки](evidence/p01/WINDOWS_SMOKE.md) включены в репозиторий и переносимый контекст. Перезагрузка не понадобилась.
 
-P01-06 требует Windows container smoke. Пока он не выполнен, итоговый PR остаётся draft с конкретным невыполненным критерием; успешный Linux CI не заменяет эту проверку. После установки Docker с Linux backend запускается та же команда smoke, её отчёт добавляется в review evidence. По результату владелец принимает конкретный HEAD; ИИ не выполняет approve/merge.
+## Личный компьютер: запуск по необходимости
 
-Установка среды согласована владельцем 15 октября. Официальный Docker Desktop 4.95.0 загружен, SHA256 и подпись Docker Inc проверены. WSL 2.7.13 через winget потребовал admin; запрос UAC завершился отменой до запуска установки. Docker per-user installer завершился precheck: VirtualMachinePlatform выключен. Ни WSL, ни Docker пока не установлены, перезагрузки не было. Для продолжения нужен интерактивный административный допуск; после установки/при необходимости отдельно согласованной перезагрузки выполняется `node tools/smoke.mjs`.
+WSL ограничен двумя CPU, memory=2GB и swap=1GB; Engine видит 2 CPU и 1996603392 bytes RAM. Это бюджет smoke, не измерение capacity бизнеса. AutoStart Docker выключен и запись из автозагрузки Windows удалена.
 
-Владелец сообщил, что сейчас не имеет физического доступа к компьютеру. Установка разрешена, но отложена до возможности подтвердить UAC. Повторные системные запросы пока не запускать; согласие на перезагрузку по-прежнему требуется отдельно. Windows container smoke остаётся NOT_RUN, PR #8 — draft.
+После установки откройте новый терминал, чтобы он получил обновлённый PATH. Запуск и остановка:
+
+```text
+docker desktop start --timeout 120
+node tools/smoke.mjs
+docker desktop stop --timeout 60
+wsl --shutdown
+```
+
+Последняя команда относится к Windows и завершает виртуальную среду WSL. В этом профиле WSL использует только лаборатория; если появятся другие дистрибутивы с работающими задачами, учитывайте их перед общим shutdown. Smoke удаляет только собственные контейнеры и сеть. Docker Desktop и WSL VM после работы нужно остановить также при ошибке проверки, сохранив диагностику. Программы, образы, библиотеки и кеши оставляем для следующих запусков.
+
+После этого прогона подтверждены: контейнеров нет, Docker Desktop остановлен, wsl --shutdown выполнен, процессов Docker/vmmemWSL нет, автозапуск выключен. Личный Mac остаётся NOT_RUN; P01/G1 не объявляются принятыми без решения владельца.

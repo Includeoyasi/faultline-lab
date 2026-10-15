@@ -2,13 +2,13 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **33**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
+Ревизия: **34**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
 
 ## Краткое текущее состояние
 
 | Поле | Фактический статус |
 |---|---|
-| Текущая задача | P01-05..P01-08: IN_PROGRESS |
+| Текущая задача | P01-05..P01-08: IN_REVIEW |
 | G0 | APPROVED |
 | G1 | NOT_READY |
 | G2 | NOT_READY |
@@ -17,7 +17,7 @@
 | Код бизнес-сервисов | GRPC_HEALTH_CONFIG_JSON_BOUNDED_SHUTDOWN_AND_PROBE_CREATED |
 | Инфраструктура Compose | THREE_RUNTIME_SERVICES_INTERNAL_NETWORK_EPHEMERAL_TOOLCHAIN |
 | Эксперименты | NOT_RUN |
-| Следующий пакет | P01: IN_PROGRESS |
+| Следующий пакет | P01: IN_REVIEW |
 
 ## Как использовать этот файл в другом чате
 
@@ -88,15 +88,15 @@ G0 полностью принят пользователем; это согла
 
 В голосовом обсуждении владелец проекта подтвердил направление развития: общая лаборатория отделена от адаптера и тестируемой системы; эталонный магазин использует ту же границу через встроенный адаптер бизнес-операций и проверок. По прямому поручению обсуждение сохранено в docs/architecture/LAB_BOUNDARY.md: обязанности частей, цикл эксперимента, предлагаемый контракт адаптера, профиль и доказательство переносимости. Обработка изображений — кандидат второго бизнеса, а мастер автоматической настройки — перспектива. Точные интерфейсы и новые критерии G4 ещё не приняты; согласованные границы трёх сервисов G0 сохраняются.
 
-Владелец проекта явно согласовал Docker как общую среду разработки и запуска на Windows и macOS. План docs/development/ENVIRONMENT.md предусматривает отдельные контейнеры трёх сервисов, общий контейнерный toolchain и Compose с инфраструктурой по этапам. Адаптер — модуль внутри инструментов, без обязательного отдельного контейнера; инструменты запускаются временно. Распределение и число контейнеров — рекомендации по текущему составу, а не измеренные ресурсы. Характеристики Windows-хоста прочитаны и сохранены в docs/development/RESOURCE_PROFILES.md; бюджет Docker и потребление приложения ещё не измерены. macOS — второй основной компьютер, арендуемый сервер — возможный вариант позже, без поручения на аренду. Go-модуль, Dockerfile инструментов и Compose toolchain созданы в P01-01; P01-02–04 добавляют health-процессы, JSON-логи и конфигурацию. В P01-05–08 созданы runtime-образы и bounded graceful shutdown; полный Linux CI с контейнерным smoke прошёл на AMD64/ARM64. Docker Desktop и WSL на Windows отсутствуют, поэтому обязательный Windows container smoke остаётся NOT_RUN; PR #8 сохраняет статус draft. Детали и доказательства находятся в environment_strategy и environment_facts ниже.
+Владелец проекта явно согласовал Docker как общую среду разработки и запуска на Windows и macOS. План docs/development/ENVIRONMENT.md предусматривает отдельные контейнеры трёх сервисов, общий контейнерный toolchain и Compose с инфраструктурой по этапам. Адаптер — модуль внутри инструментов, без обязательного отдельного контейнера; инструменты запускаются временно. Распределение и число контейнеров — рекомендации по текущему составу, а не измеренные ресурсы. Характеристики Windows-хоста прочитаны и сохранены в docs/development/RESOURCE_PROFILES.md; WSL-бюджет ограничен 2 CPU, memory=2GB, swap=1GB; потребление бизнеса под нагрузкой ещё не измерено. macOS — второй основной компьютер, арендуемый сервер — возможный вариант позже, без поручения на аренду. Go-модуль, Dockerfile инструментов и Compose toolchain созданы в P01-01; P01-02–04 добавляют health-процессы, JSON-логи и конфигурацию. В P01-05–08 созданы runtime-образы и bounded graceful shutdown; полный Linux CI с контейнерным smoke прошёл на AMD64/ARM64. Go1.27.2, Docker Desktop4.95 и WSL2.7.13 установлены; Windows container smoke PASS, PR #8 готов к ревью. Детали и доказательства находятся в environment_strategy и environment_facts ниже.
 
 По отдельному поручению подготовлены три пастельные SVG-концепции оформления. Владелец проекта выбрал вариант 2 — «Поток эксперимента»; он применён к общему баннеру README. Название Faultline Lab и бизнес-правила не менялись. Выбор, смысл композиции и ссылки на исходники сохранены в docs/design/BANNER_OPTIONS.md и branding_notes. Кривые баннера декоративные и не изображают фактические измерения. Публикация ветки и документационного PR отражается в структурированном состоянии; до merge новый баннер не появляется на главной странице main.
 
-В docs/development/packets/P01.md сохранены восемь задач с зависимостями и критериями. P01-01–04 приняты владельцем через PR #6/#7 (main bc09d08), 4/8. Оставшиеся P01-05–08 реализуются одним PR: bounded graceful shutdown, минимальные runtime-образы/Compose, итоговый CI и smoke с отчётом. GitHub Issue #3 — текущий трекер; Projects не настроен. Windows Docker/WSL отсутствуют, container smoke NOT_RUN; итоговый PR остаётся draft до выполнения P01-06. Данные и код включены в полный снимок, зелёный CI не заменяет принятие владельцем. G0 принят, G1–G4 ещё не готовы.
+В docs/development/packets/P01.md сохранены восемь задач с зависимостями и критериями. P01-01–04 приняты владельцем через PR #6/#7 (main bc09d08), 4/8. Оставшиеся P01-05–08 реализуются одним PR: bounded graceful shutdown, минимальные runtime-образы/Compose, итоговый CI и smoke с отчётом. GitHub Issue #3 — текущий трекер; Projects не настроен. Windows container smoke P01-06 выполнен; реализация проверена 8/8, владелец принял 4/8, PR #8 готов к ревью. Данные и код включены в полный снимок, зелёный CI не заменяет принятие владельцем. G0 принят, G1–G4 ещё не готовы.
 
 По уточнению владельца проекта обозначения разделены: G0–G4 — контрольные точки приёмки, P01–P05 — кодовые пакеты. Первый PR P01 выполняется между G0 и G1; после него следуют PR основы данных/заказа/склада, затем приёмка G1. Ранее первый пакет имел неоднозначный префикс контрольной точки; старое название сохраняется только в истории и таблице соответствия review_sequence. Восемь задач и критерии первого PR от переименования не изменились.
 
-15 октября владелец принял PR #7; GitHub подтвердил merge main bc09d08. P01-01–04 приняты (4/8). Оставшиеся P01-05–08 поручены одним PR: graceful shutdown, runtime-образы/Compose, итоговые проверки и smoke. Для новых PR нужны простые описательные заголовки: «Что было сделано», «Проверки», «На что обратить внимание»; прежняя вопросительная формулировка отвергнута. Docker/WSL на Windows отсутствуют, поэтому обязательный локальный container smoke пока NOT_RUN и итоговый PR остаётся draft.
+15 октября владелец принял PR #7; GitHub подтвердил merge main bc09d08. P01-01–04 приняты (4/8). Оставшиеся P01-05–08 поручены одним PR: graceful shutdown, runtime-образы/Compose, итоговые проверки и smoke. Для новых PR нужны простые описательные заголовки: «Что было сделано», «Проверки», «На что обратить внимание»; прежняя вопросительная формулировка отвергнута. Windows Docker/WSL теперь установлены, обязательный локальный smoke PASS; PR #8 готов к ревью, приёмка остаётся за владельцем.
 
 ## Архитектурные опорные правила
 
@@ -254,9 +254,7 @@ MVP — этапы 0–2: работающие три сервиса, весь �
 
 Ни один перечень будущих файлов, CLI-команд или метрик в приложениях не доказывает, что они уже созданы. Источником фактического прогресса служит следующий раздел со структурированным состоянием и доказательствами.
 
-15 октября владелец разрешил установку Docker Desktop и WSL2. Официальный установщик Docker проверен по SHA256 и цифровой подписи, но его precheck требует VirtualMachinePlatform. WSL требует admin; запрос UAC завершился отменой до запуска script. Установка пока не выполнена, перезагрузки не было. Не спрашивать разрешение на саму установку повторно; для продолжения нужен интерактивный административный допуск, а для перезагрузки — отдельное согласие. Windows container smoke остаётся NOT_RUN, PR #8 draft.
-
-Владелец сообщил, что сейчас не имеет физического доступа к компьютеру. Установка разрешена, но отложена до возможности подтвердить UAC. Повторные системные запросы пока не запускать; согласие на перезагрузку по-прежнему требуется отдельно. Windows container smoke остаётся NOT_RUN, PR #8 — draft.
+15 октября установка host Go1.27.2, WSL2.7.13 и Docker Desktop4.95 завершена без перезагрузки. Windows container smoke PASS на чистом d81b51c; исходные JSON/JSONL, бюджет и подтверждение остановки включены в приложения. По прямому поручению владельца после проверок контейнеры удаляются, Docker Desktop и его WSL VM выключаются, автозапуск Docker отключён; программы и полезные кеши остаются. Фактически после этого прогона контейнеров и процессов Docker/vmmemWSL нет. PR #8 ready, P01 проверен 8/8, принято владельцем 4/8; G1 не принят.
 
 ## Структурированное состояние, проверки и история
 
@@ -266,7 +264,7 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 33,
+  "context_revision": 34,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -275,45 +273,46 @@ JSON ниже является частью этого файла и доста�
   "current_task": {
     "id": "P01-05..P01-08",
     "description": "Один итоговый PR: bounded graceful shutdown, runtime-контейнеры/Compose, итоговый CI и smoke с отчётом",
-    "status": "IN_PROGRESS",
+    "status": "IN_REVIEW",
     "authorization": "Владелец принял PR #7 и поручил оставшиеся задачи одним PR; попросил понятные описательные заголовки вместо прежней вопросительной формулы.",
     "result": {
       "branch": "feat/p01-05-08-runtime",
       "base_commit": "bc09d08ce7867f3109d996f71015e3ce73986452",
       "scope": "P01_05_THROUGH_08_ONLY",
-      "implementation": "IMPLEMENTED_AND_VERIFIED_EXCEPT_WINDOWS_CONTAINER_CRITERION",
-      "local_go": "PASS_WINDOWS_BUILD_VET_UNIT_PROCESS_TESTS",
-      "local_docker": "NOT_RUN_DOCKER_AND_WSL_NOT_INSTALLED",
+      "implementation": "ALL_P01_05_THROUGH_08_IMPLEMENTED_AND_VERIFIED",
+      "local_go": "HOST_MSI_GO_1_27_2_VERSION_VERIFIED; EARLIER_NATIVE_WINDOWS_UNIT_PROCESS_TESTS_PASS",
+      "local_docker": "PASS_WINDOWS_LINUX_CONTAINERS",
       "native_macos": "NOT_RUN",
       "go_ci": "PASS_NATIVE_LINUX_AMD64_AND_ARM64",
       "runtime_smoke_ci": "PASS_NATIVE_LINUX_AMD64_AND_ARM64",
       "owner_acceptance": "PENDING",
       "author": "AI-Your-Bro",
-      "draft_required": true,
-      "draft_reason": "P01-06 Windows container smoke is mandatory and cannot run without Docker/WSL",
+      "draft_required": false,
+      "draft_reason": null,
       "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
       "commit_created": true,
       "pushed": true,
       "pull_request_number": 8,
-      "draft": true,
+      "draft": false,
       "go_workflow": {
         "name": "Go toolchain",
-        "head_sha": "59684070fa85a0aea8561b48828088e574a06436",
+        "head_sha": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
         "status": "completed",
         "conclusion": "success",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38747476656"
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38751178279"
       },
       "documentation_ci": {
         "name": "Documentation",
-        "head_sha": "59684070fa85a0aea8561b48828088e574a06436",
+        "head_sha": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
         "status": "completed",
         "conclusion": "success",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38747476687"
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38751178336"
       },
-      "observed_commit": "59684070fa85a0aea8561b48828088e574a06436",
-      "review_status": "DRAFT_AWAITING_REQUIRED_WINDOWS_CONTAINER_SMOKE",
+      "observed_commit": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+      "review_status": "READY_FOR_OWNER_REVIEW",
       "handoff_note": "Evidence refers to the source HEAD before final context changes. Final HEAD and checks are available in PR #8; the snapshot cannot embed its own commit hash.",
-      "environment_installation": "AUTHORIZED_DEFERRED_OWNER_HAS_NO_PHYSICAL_ACCESS"
+      "environment_installation": "COMPLETED_RUNTIME_STOPPED_AFTER_CHECKS",
+      "windows_evidence": "docs/development/evidence/p01/WINDOWS_SMOKE.md"
     }
   },
   "roles": {
@@ -375,7 +374,7 @@ JSON ниже является частью этого файла и доста�
       "smoke_node": "v22.23.3"
     },
     "git_repository": "INITIALIZED",
-    "git_commit": "59684070fa85a0aea8561b48828088e574a06436",
+    "git_commit": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -482,7 +481,7 @@ JSON ниже является частью этого файла и доста�
         "number": 8,
         "url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
         "state": "OPEN",
-        "draft": true,
+        "draft": false,
         "merged": false,
         "author": "AI-Your-Bro",
         "head_ref": "feat/p01-05-08-runtime",
@@ -495,8 +494,9 @@ JSON ниже является частью этого файла и доста�
           "P01-08"
         ],
         "human_review": "PENDING",
-        "draft_reason": "Required Windows container smoke NOT_RUN. Installation authorized; WSL elevation cancelled and Docker prerequisite VirtualMachinePlatform disabled.",
-        "observed_head": "59684070fa85a0aea8561b48828088e574a06436"
+        "draft_reason": null,
+        "observed_head": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+        "windows_smoke": "PASS"
       }
     ],
     "toolchain_container": "VERIFIED_NATIVE_LINUX_AMD64_ARM64_WITH_RUNTIME_IMAGES",
@@ -545,11 +545,12 @@ JSON ниже является частью этого файла и доста�
     "PR #7 принят и смержен владельцем в main bc09d08; P01-01–04 приняты (4/8). Оставшиеся 05–08 поручены одним PR. Зафиксировано новое правило понятных описательных заголовков для комментариев/PR.",
     "Реализованы GracefulStop/deadline/fatal force, собственный healthcheck CLI, scratch runtime для трёх сервисов, internal Compose network и host-side Docker smoke с JSON/JSONL-отчётом. Unit/process tests прошли на Windows; runtime Docker/WSL локально отсутствуют, smoke NOT_RUN; Linux CI нового кода ожидается.",
     "P01-05/07/08 реализованы и проверены Linux CI AMD64/ARM64: linters 0 issues, unit/race, govulncheck, process signals/forced exit 1, три scratch-образа и полный runtime smoke PASS. Оба артефакта report.json/JSONL прочитаны: реальные image IDs, health, права, изоляция, graceful exit 0 и cleanup подтверждены. Реализация проверена 7/8; P01-06 не закрыта из-за Windows container smoke NOT_RUN; принято владельцем 4/8.",
-    "Владелец разрешил установку Docker Desktop/WSL2. Официальный Docker Desktop 4.95.0 скачан, SHA256 и Authenticode Docker Inc подтверждены; установка остановлена precheck VirtualMachinePlatform. WSL winget требует admin, последующий UAC завершился отменой до запуска script. Ничего не объявляется установленным, перезагрузки не было; необходим интерактивный административный допуск. Linux CI HEAD5968407 и оба артефакта PASS."
+    "Владелец разрешил установку Docker Desktop/WSL2. Официальный Docker Desktop 4.95.0 скачан, SHA256 и Authenticode Docker Inc подтверждены; установка остановлена precheck VirtualMachinePlatform. WSL winget требует admin, последующий UAC завершился отменой до запуска script. Ничего не объявляется установленным, перезагрузки не было; необходим интерактивный административный допуск. Linux CI HEAD5968407 и оба артефакта PASS.",
+    "15 октября завершена установка host Go1.27.2, WSL2.7.13 и DockerDesktop4.95. Windows container smoke на чистом d81b51c PASS, проверены все 8/8 задач реализации P01. Runtime после работы выключен, автозапуск Docker отключён; программы/образы/кеши сохранены. PR #8 переведён из draft, owner review/merge ещё не выполнены; принято 4/8, G1 не принят."
   ],
   "next_implementation_packet": {
     "id": "P01",
-    "status": "IN_PROGRESS",
+    "status": "IN_REVIEW",
     "goal": "Контейнерная основа трёх Go-сервисов: entrypoints, конфигурация, gRPC health, graceful shutdown, JSON-логи, toolchain, образы, минимальный Compose и Go CI",
     "approval_dependency": "G0 уже принят; повторное согласование G0 не требуется",
     "following_packets": [
@@ -560,9 +561,9 @@ JSON ниже является частью этого файла и доста�
     ],
     "decomposition_status": "DOCUMENTED_READY_FOR_IMPLEMENTATION",
     "specification": "docs/development/packets/P01.md",
-    "acceptance_status": "7_OF_8_IMPLEMENTATION_CHECKS_COMPLETE; P01_06_WINDOWS_CONTAINER_CRITERION_PENDING; OWNER_ACCEPTED_4_OF_8",
+    "acceptance_status": "8_OF_8_IMPLEMENTATION_CHECKS_COMPLETE; OWNER_ACCEPTED_4_OF_8; FINAL_PR_REVIEW_PENDING",
     "progress": {
-      "completed": 7,
+      "completed": 8,
       "total": 8,
       "owner_accepted": 4
     },
@@ -624,8 +625,8 @@ JSON ниже является частью этого файла и доста�
         "depends_on": [
           "P01-04"
         ],
-        "status": "IN_PROGRESS",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_GO_LIFECYCLE_AND_RUNTIME_SMOKE; DRAFT_NOT_IN_REVIEW",
+        "status": "IN_REVIEW",
+        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
         "owner_acceptance": "PENDING",
@@ -641,13 +642,12 @@ JSON ниже является частью этого файла и доста�
           "P01-04",
           "P01-05"
         ],
-        "status": "IN_PROGRESS",
-        "evidence": "PASS_BOTH_NATIVE_LINUX_IMAGE_START_HEALTH_STOP; WINDOWS_CONTAINER_SMOKE_NOT_RUN",
+        "status": "IN_REVIEW",
+        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
         "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "CREATED_LINUX_AMD64_ARM64_VERIFIED",
+        "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
         "owner_acceptance": "PENDING",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
-        "blocked_on": "WINDOWS_CONTAINER_SMOKE"
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
       },
       {
         "id": "P01-07",
@@ -659,8 +659,8 @@ JSON ниже является частью этого файла и доста�
           "P01-04",
           "P01-05"
         ],
-        "status": "IN_PROGRESS",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_GO_LIFECYCLE_AND_RUNTIME_SMOKE; DRAFT_NOT_IN_REVIEW",
+        "status": "IN_REVIEW",
+        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
         "owner_acceptance": "PENDING",
@@ -673,8 +673,8 @@ JSON ниже является частью этого файла и доста�
           "P01-06",
           "P01-07"
         ],
-        "status": "IN_PROGRESS",
-        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_GO_LIFECYCLE_AND_RUNTIME_SMOKE; DRAFT_NOT_IN_REVIEW",
+        "status": "IN_REVIEW",
+        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CI_AND_WINDOWS_CONTAINER_SMOKE",
         "acceptance_source": "docs/development/packets/P01.md",
         "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
         "owner_acceptance": "PENDING",
@@ -687,18 +687,7 @@ JSON ниже является частью этого файла и доста�
     "tracker_stage": "IN_PROGRESS",
     "current_task": "P01-05..P01-08"
   },
-  "active_blockers": [
-    {
-      "id": "WINDOWS_CONTAINER_SMOKE",
-      "status": "OPEN",
-      "scope": "P01-06 acceptance criterion",
-      "reason": "Windows container smoke NOT_RUN. Installation authorized, but WSL needs administrator elevation; UAC request was cancelled. Docker per-user precheck rejects disabled VirtualMachinePlatform.",
-      "effect": "Prepare and validate code/images in Linux CI; keep final PR draft until the required local check is performed or the owner explicitly changes that criterion.",
-      "next_action": "Wait until the owner has interactive access and is ready to confirm administrator UAC. Do not launch more UAC prompts while unavailable. Installation permission remains granted; reboot still requires separate consent. Then complete WSL/Docker setup and run Windows container smoke.",
-      "installation_approval": "GRANTED_BY_OWNER",
-      "owner_availability": "NO_PHYSICAL_ACCESS; ADMIN_UAC_CONFIRMATION_UNAVAILABLE"
-    }
-  ],
+  "active_blockers": [],
   "open_review_comments": [],
   "lab_evolution_notes": {
     "status": "USER_CONFIRMED_DIRECTION_WITH_REVIEWABLE_DETAIL",
@@ -718,8 +707,8 @@ JSON ниже является частью этого файла и доста�
     "detail_document": "docs/architecture/LAB_BOUNDARY.md"
   },
   "pending_implementation_choices": [
-    "Обеспечить доступные Docker Desktop/Compose и снять фактические лимиты backend; контейнерный toolchain заменяет обязательную установку host Go. Windows-хост измерен, macOS пока нет.",
-    "Go/tools и образы toolchain закреплены в P01-01. gRPC v1.84.0 закреплён в P01-04. Закреплять SQL/Kafka/Redis библиотеки при их первом использовании; runtime-образы реализованы в P01-06, проверка Windows пока NOT_RUN.",
+    "Windows Docker/WSL установлены и проверены, бюджет 2 CPU / memory=2GB / swap=1GB. Далее измерять потребление полного бизнеса под нагрузкой; macOS пока не проверена.",
+    "Go/tools и образы toolchain закреплены в P01-01. gRPC v1.84.0 закреплён в P01-04. Закреплять SQL/Kafka/Redis библиотеки при их первом использовании; runtime-образы реализованы в P01-06, Windows container smoke PASS.",
     "Подготовить точные protobuf-схемы, error codes и SQL-модели в рамках G0",
     "Определить конкретную реализацию lease/version fencing, outbox ordering и durable job dispatch",
     "Откалибровать гипотетические SLO и ресурсные лимиты после работающего MVP"
@@ -730,8 +719,8 @@ JSON ниже является частью этого файла и доста�
     "user_timezone": "Europe/Moscow",
     "project_path_at_snapshot": null,
     "path_required_to_read_context": false,
-    "go_available": "NOT_IN_HOST_PATH_PORTABLE_GO_USED_IN_IGNORED_LOCAL_DIRECTORY",
-    "docker_available": "NOT_FOUND_IN_CURRENT_PATH_OR_STANDARD_WINDOWS_LOCATION",
+    "go_available": "HOST_MSI_GO_1_27_2_INSTALLED_MACHINE_PATH_REGISTERED",
+    "docker_available": "DESKTOP_4_95_0_INSTALLED_PER_USER_CURRENTLY_STOPPED",
     "tool_commands_checked_on": "2026-10-15",
     "tool_check_scope": "Go/Docker отсутствуют в текущем PATH и стандартных проверенных Windows-путях. Вспомогательный официальный Go 1.27.2 скачан в .local и проверен по SHA256; не установлен в систему. Docker проверяется в Linux CI, не на Windows-хосте.",
     "powershell_version": "7.6.5",
@@ -757,20 +746,52 @@ JSON ниже является частью этого файла и доста�
       "note": "Свободные ресурсы изменяются; снимок хоста не равен бюджету Docker и не подтверждает capacity приложения"
     },
     "local_go_health_check": "PASS_WINDOWS_NATIVE_TCP_UNIT_AND_PROCESS_TESTS; CONTAINER_TESTS_NOT_RUN",
-    "wsl_status": "BOOTSTRAP_EXECUTABLE_PRESENT_SUBSYSTEM_NOT_INSTALLED_2026_10_15",
-    "docker_service_status": "NO_DOCKER_SERVICE_FOUND_AFTER_ELEVATED_READ_2026_10_15",
+    "wsl_status": "INSTALLED_2_7_13_0_VM_SHUT_DOWN",
+    "docker_service_status": "PER_USER_INSTALL_NO_PRIVILEGED_DOCKER_SERVICE_REQUIRED",
     "local_container_smoke": {
       "date": "2026-10-15",
-      "result": "NOT_RUN",
-      "exit_code": 2,
-      "failed_phase": "prerequisites",
-      "detail": "node tools/smoke.mjs wrote a report; Docker executable unavailable (ENOENT). No containers were started."
+      "result": "PASS",
+      "exit_code": 0,
+      "source_revision": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+      "source_dirty": false,
+      "run_id": "8119b50d-f910-412a-9bd2-ab50fccd1b71",
+      "evidence": "docs/development/evidence/p01/WINDOWS_SMOKE.md"
     },
     "os_verified_on": "2026-10-15",
     "os_verified": "Windows 11 Pro 10.0.26200 x64",
     "hypervisor_present": true,
     "lanmanserver": "RUNNING_AUTOMATIC",
-    "installation_status": "AUTHORIZED_DEFERRED_OWNER_HAS_NO_PHYSICAL_ACCESS"
+    "installation_status": "COMPLETE",
+    "host_versions": {
+      "go": "1.27.2",
+      "wsl": "2.7.13.0",
+      "docker_desktop": "4.95.0",
+      "docker_engine": "29.8.2",
+      "compose": "5.6.0",
+      "node": "v24.19.0"
+    },
+    "docker_budget": {
+      "wsl_config": {
+        "memory": "2GB",
+        "processors": 2,
+        "swap": "1GB"
+      },
+      "engine_cpu_count": 2,
+      "engine_memory_bytes": 1996603392,
+      "performance_capacity": "NOT_MEASURED"
+    },
+    "post_task_cleanup": {
+      "containers_remaining": 0,
+      "wsl_shutdown_exit": 0,
+      "images_and_build_cache_preserved": true,
+      "desktop_stop_exit": 0,
+      "remaining_development_processes": [],
+      "installed_tools_preserved": true,
+      "docker_autostart": false,
+      "docker_run_entry_present": false,
+      "observed_at": "2026-10-15T22:49:53.4008625+03:00",
+      "reboot_performed": false
+    }
   },
   "validation_evidence": [
     {
@@ -1263,6 +1284,17 @@ JSON ниже является частью этого файла и доста�
       "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38747476656",
       "documentation_ci": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38747476687",
       "detail": "Both native architecture jobs passed all Go/process/runtime checks. Both retained JSON/JSONL artifacts independently read, merge checkout cf9462c321e939279bd926f367ef4fde3015ef71, clean tree, all 3 containers healthy, unprivileged/readonly/internal/no host ports or mounts, normal exit0, peer isolation and cleanup PASS. No source edits after this proof; later snapshot publication requires its own HEAD checks."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "Windows Docker Desktop/WSL2 runtime smoke and shutdown",
+      "result": "PASS",
+      "head_sha": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+      "command": "node tools/smoke.mjs",
+      "run_id": "8119b50d-f910-412a-9bd2-ab50fccd1b71",
+      "source_dirty": false,
+      "evidence": "docs/development/evidence/p01/WINDOWS_SMOKE.md",
+      "detail": "All 3 real Linux containers healthy/security constraints verified; orders isolation PASS; all graceful exit0; scoped cleanup PASS. Go MSI 1.27.2 installed/version verified; WSL2.7.13.0; Desktop4.95.0; Engine29.8.2; Compose5.6.0; Node24.19.0. Desktop and WSL VM stopped afterward, no Docker/vmmemWSL processes, autostart disabled. No reboot."
     }
   ],
   "source_documents": [
@@ -1535,6 +1567,47 @@ JSON ниже является частью этого файла и доста�
       "path": "docs/development/CONTAINER_RUNTIME.md",
       "anchor": "appendix-container-runtime",
       "title": "Runtime build, health, shutdown, smoke and review limitations"
+    },
+    {
+      "path": "docs/development/evidence/p01/WINDOWS_SMOKE.md",
+      "anchor": "windows-smoke-proof",
+      "title": "Windows smoke: итог и ограничения"
+    },
+    {
+      "path": "docs/development/evidence/p01/windows-2026-10-15/report.json",
+      "anchor": "windows-smoke-report",
+      "title": "Полный Windows smoke report",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p01/windows-2026-10-15/orders.jsonl",
+      "anchor": "windows-smoke-orders",
+      "title": "Windows: Orders JSONL",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p01/windows-2026-10-15/inventory.jsonl",
+      "anchor": "windows-smoke-inventory",
+      "title": "Windows: Inventory JSONL",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p01/windows-2026-10-15/payments.jsonl",
+      "anchor": "windows-smoke-payments",
+      "title": "Windows: Payments JSONL",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p01/windows-2026-10-15/environment.json",
+      "anchor": "windows-smoke-environment",
+      "title": "Windows: фактический бюджет",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p01/windows-2026-10-15/cleanup.json",
+      "anchor": "windows-smoke-cleanup",
+      "title": "Windows: подтверждение остановки",
+      "language": "json"
     }
   ],
   "change_history": [
@@ -1735,6 +1808,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-15",
       "summary": "Владелец сообщил об отсутствии физического доступа к Windows. Установка уже разрешена, но отложена до возможности подтвердить UAC. Повторные UAC не запускать без готовности владельца; перезагрузка отдельно. PR #8 опубликован с понятным комментарием; обязательный Windows smoke остаётся NOT_RUN.",
       "revision": 33
+    },
+    {
+      "revision": 34,
+      "date": "2026-10-15",
+      "summary": "Завершена установка Go/WSL/Docker и реальный Windows smoke P01-06 PASS. Опубликованы воспроизводимые JSON/JSONL доказательства. По поручению владельца Docker Desktop и WSL VM выключены, автозапуск отключён, полезные кеши сохранены. PR #8 ready; P01 реализация 8/8, owner acceptance4/8, G1 NOT_READY.",
+      "trigger": "Владелец вернулся к компьютеру, подтвердил UAC и поручил освобождать ресурсы личного ПК после работы"
     }
   ],
   "repository": {
@@ -1763,26 +1842,26 @@ JSON ниже является частью этого файла и доста�
     "current_publication": {
       "branch": "feat/p01-05-08-runtime",
       "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
-      "status": "DRAFT",
-      "draft": true,
+      "status": "IN_REVIEW",
+      "draft": false,
       "merged": false,
       "author": "AI-Your-Bro",
       "scope": "P01-05..P01-08",
-      "observed_commit": "59684070fa85a0aea8561b48828088e574a06436",
+      "observed_commit": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
       "observed_ci": [
         {
           "name": "Documentation",
-          "head_sha": "59684070fa85a0aea8561b48828088e574a06436",
+          "head_sha": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
           "status": "completed",
           "conclusion": "success",
-          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38747476687"
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38751178336"
         },
         {
           "name": "Go toolchain",
-          "head_sha": "59684070fa85a0aea8561b48828088e574a06436",
+          "head_sha": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
           "status": "completed",
           "conclusion": "success",
-          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38747476656"
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38751178279"
         }
       ]
     }
@@ -1813,7 +1892,7 @@ JSON ниже является частью этого файла и доста�
     "current_identity_transition_pr": "https://github.com/Includeoyasi/faultline-lab/pull/5"
   },
   "environment_strategy": {
-    "status": "RUNTIME_IMAGES_AND_COMPOSE_VERIFIED_NATIVE_LINUX_AMD64_ARM64; WINDOWS_DOCKER_NOT_INSTALLED",
+    "status": "VERIFIED_WINDOWS_X64_AND_NATIVE_LINUX_AMD64_ARM64; MACOS_NOT_RUN",
     "approved_on": "2026-10-13",
     "confirmation_evidence": "Владелец проекта описал работу на Windows и macOS, согласовал Docker-подход сообщением Да, давай так и сделаем",
     "documents": [
@@ -1845,12 +1924,13 @@ JSON ниже является частью этого файла и доста�
       "rental_or_deployment_authorized": false
     },
     "runtime_created": true,
-    "windows_container_start_verified": false,
+    "windows_container_start_verified": true,
     "macos_container_start_verified": false,
-    "toolchain_status": "VERIFIED_NATIVE_LINUX_CI; WINDOWS_MAC_CONTAINER_START_NOT_RUN",
+    "toolchain_status": "VERIFIED_NATIVE_LINUX_CI; RUNTIME_STAGE_BUILT_ON_WINDOWS",
     "runtime_scope": "THREE_HEALTH_SERVICES_WITH_BOUNDED_SHUTDOWN; NO_BUSINESS_OR_INFRA",
     "runtime_containers_created": true,
-    "runtime_container_linux_verification": "PASS_NATIVE_AMD64_AND_ARM64"
+    "runtime_container_linux_verification": "PASS_NATIVE_AMD64_AND_ARM64",
+    "runtime_container_windows_verification": "PASS"
   },
   "branding_notes": {
     "status": "USER_SELECTED_MERGED_TO_MAIN",
@@ -1905,7 +1985,7 @@ JSON ниже является частью этого файла и доста�
     "current_packet_issue_number": 3,
     "current_packet_stage": "IN_PROGRESS",
     "progress": {
-      "completed": 7,
+      "completed": 8,
       "total": 8,
       "owner_accepted": 4
     },
@@ -1913,12 +1993,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-15",
       "number": 3,
       "state": "OPEN",
-      "checked_tasks": 7,
-      "unchecked_tasks": 1,
-      "stage": "IN_PROGRESS",
+      "checked_tasks": 8,
+      "unchecked_tasks": 0,
+      "stage": "IN_REVIEW",
       "current_task": "P01-05..P01-08",
-      "source": "Executor PATCH verified; owner accepted/merged PR #7",
-      "note": "Executor PATCH response verified: 7 implemented/checked tasks, 4 owner-accepted; P01-06 unchecked because required Windows container smoke is NOT_RUN. Draft PR #8 remains open."
+      "source": "Executor PATCH response verified; Windows container smoke PASS",
+      "note": "8 implementation checks complete; owner accepted 4/8. PR #8 ready, no approval or merge performed."
     },
     "documentation_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
     "documentation_pr_closes_packet": false,
@@ -1930,7 +2010,7 @@ JSON ниже является частью этого файла и доста�
       "whole_packet_acceptance": "PENDING_FINAL_PR_AND_ALL_APPLICABLE_CRITERIA"
     },
     "current_task_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
-    "current_subtask_stage": "IN_PROGRESS_DRAFT_WINDOWS_CRITERION_PENDING"
+    "current_subtask_stage": "IN_REVIEW"
   },
   "review_sequence": {
     "confirmed_on": "2026-10-13",
@@ -2121,14 +2201,14 @@ JSON ниже является частью этого файла и доста�
   "environment_installation_request": {
     "asked_on": "2026-10-15",
     "authorized_on": "2026-10-15",
-    "status": "AUTHORIZED_DEFERRED_OWNER_HAS_NO_PHYSICAL_ACCESS",
+    "status": "COMPLETED_VERIFIED_AND_RUNTIME_STOPPED",
     "owner_reply": "Разрешаю установку Docker Desktop и WSL2",
     "requested_actions": [
       "Install Docker Desktop",
       "Install WSL2 prerequisites"
     ],
     "reason": "P01-06 requires local Windows container start/health/stop.",
-    "reboot": "No reboot performed; separate explicit owner consent required.",
+    "reboot": "Not required by observed installers; no reboot performed",
     "attempts": [
       {
         "component": "Microsoft.WSL 2.7.13",
@@ -2152,14 +2232,22 @@ JSON ниже является частью этого файла и доста�
         "detail": "Installer log: VirtualMachinePlatform Windows feature is not enabled; per-user installer cannot enable it."
       }
     ],
-    "installed": false,
-    "next_action": "Wait until the owner has interactive access and is ready to confirm administrator UAC. Do not launch more UAC prompts while unavailable. Installation permission remains granted; reboot still requires separate consent. Then complete WSL/Docker setup and run Windows container smoke.",
+    "installed": true,
+    "next_action": "Owner review of PR #8. Start local Docker only when needed; stop it and the WSL VM after checks.",
     "instructions": [
       "https://learn.microsoft.com/en-us/windows/wsl/basic-commands",
       "https://docs.docker.com/desktop/setup/install/windows-install/"
     ],
     "checksum_source": "https://desktop.docker.com/win/main/amd64/242831/checksums.txt",
-    "owner_availability": "Сейчас у меня нет физического доступа к компьютеру"
+    "owner_availability": "OWNER_RETURNED_AND_CONFIRMED_UAC",
+    "final_result": {
+      "go": "1.27.2 MSI; exit0; version verified; SHA256 dc673c9207a83f95031549fafe72cc0b4c4554a1c16b373d875e90cf8d995ed9; valid Google LLC signature",
+      "wsl": "2.7.13.0 installed; VirtualMachinePlatform Enabled",
+      "docker": "4.95.0 per-user; exit0; valid Docker Inc signature; Linux engine verified",
+      "windows_container_smoke": "PASS",
+      "runtime_after_work": "STOPPED",
+      "startup": "DISABLED"
+    }
   },
   "runtime_smoke_evidence": {
     "source_head": "59684070fa85a0aea8561b48828088e574a06436",
@@ -2284,9 +2372,144 @@ JSON ниже является частью этого файла и доста�
         }
       }
     ],
-    "local_windows": "NOT_RUN_INSTALLATION_REQUIRES_INTERACTIVE_ADMIN_UAC",
+    "local_windows": "PASS",
     "macos": "NOT_RUN",
-    "performance_capacity": "NOT_MEASURED"
+    "performance_capacity": "NOT_MEASURED",
+    "windows": {
+      "source_head": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+      "source_dirty": false,
+      "run_id": "8119b50d-f910-412a-9bd2-ab50fccd1b71",
+      "result": "PASS",
+      "report": "docs/development/evidence/p01/windows-2026-10-15/report.json",
+      "report_sha256": "b08d9deabadc65c765d9173482e9171782aeff28affb5e7fd9bf0b201d5add65",
+      "environment": {
+        "desktop": "4.95.0",
+        "docker": "29.8.2",
+        "remaining_containers_before_stop": [],
+        "cpus": 2,
+        "memory_bytes": 1996603392,
+        "wsl_config": {
+          "memory": "2GB",
+          "processors": 2,
+          "swap": "1GB"
+        },
+        "platform": "linux/x86_64",
+        "observed_at": "2026-10-15T22:49:35.7064530+03:00"
+      },
+      "cleanup": {
+        "containers_remaining": 0,
+        "wsl_shutdown_exit": 0,
+        "images_and_build_cache_preserved": true,
+        "desktop_stop_exit": 0,
+        "remaining_development_processes": [],
+        "installed_tools_preserved": true,
+        "docker_autostart": false,
+        "docker_run_entry_present": false,
+        "observed_at": "2026-10-15T22:49:53.4008625+03:00",
+        "reboot_performed": false
+      },
+      "services": {
+        "orders": {
+          "id": "0e35127ad00aa13be4f551edf6b032c00ffc4894081efb4e4c33cc723fff9b04",
+          "image_id": "sha256:c15eb12d4ab1369a2c49fd8da5f6ca178c530d39cf0f19c37d4ad513eac4574f",
+          "architecture": "linux/x86_64",
+          "healthy": true,
+          "security": {
+            "user": "65532:65532",
+            "read_only": true,
+            "capabilities_dropped": true,
+            "no_new_privileges": true,
+            "host_ports": [],
+            "mounts": [],
+            "internal_network": true
+          },
+          "stopped": true,
+          "exit_code": 0,
+          "oom_killed": false,
+          "stop_mode": "graceful"
+        },
+        "inventory": {
+          "id": "926b6baf437c4b0d0a01302d158872112689ddf89472c58a56f0d66c8f621d84",
+          "image_id": "sha256:1fb289e7407f8559f671e9ec276faac6715f7c6e364220f70b30839624c7f778",
+          "architecture": "linux/x86_64",
+          "healthy": true,
+          "security": {
+            "user": "65532:65532",
+            "read_only": true,
+            "capabilities_dropped": true,
+            "no_new_privileges": true,
+            "host_ports": [],
+            "mounts": [],
+            "internal_network": true
+          },
+          "stopped": true,
+          "exit_code": 0,
+          "oom_killed": false,
+          "stop_mode": "graceful"
+        },
+        "payments": {
+          "id": "8a8c51c0112100bbdf7b981f9ebc1f9c4e099baaa24654a85eb85e956f55b868",
+          "image_id": "sha256:3481c4f6aea54924e0f16b1da34fb2082bef2e937f5477fe077f5bce8b4eec35",
+          "architecture": "linux/x86_64",
+          "healthy": true,
+          "security": {
+            "user": "65532:65532",
+            "read_only": true,
+            "capabilities_dropped": true,
+            "no_new_privileges": true,
+            "host_ports": [],
+            "mounts": [],
+            "internal_network": true
+          },
+          "stopped": true,
+          "exit_code": 0,
+          "oom_killed": false,
+          "stop_mode": "graceful"
+        }
+      },
+      "limitations": [
+        "No business operations or capacity measurement",
+        "Personal macOS NOT_RUN"
+      ]
+    }
+  },
+  "resolved_blockers": [
+    {
+      "id": "WINDOWS_CONTAINER_SMOKE",
+      "resolved_on": "2026-10-15",
+      "result": "PASS",
+      "source_commit": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+      "evidence": "docs/development/evidence/p01/WINDOWS_SMOKE.md"
+    }
+  ],
+  "personal_computer_policy": {
+    "authorized_on": "2026-10-15",
+    "owner_instruction": "После работы выключать рабочие компоненты; это личный компьютер. Полезные программы и библиотеки можно оставить.",
+    "scope": "Windows personal computer",
+    "rules": [
+      "Stop this task containers and remove its network after checks",
+      "Quit Docker Desktop and stop its WSL VM after work",
+      "Keep Docker autostart disabled",
+      "Keep installed Go/Docker/WSL, reusable images and build/module caches",
+      "Stop only task-owned resources; preserve unrelated workloads"
+    ],
+    "configured_wsl_budget": {
+      "memory": "2GB",
+      "processors": 2,
+      "swap": "1GB"
+    },
+    "verified_cleanup": {
+      "containers_remaining": 0,
+      "wsl_shutdown_exit": 0,
+      "images_and_build_cache_preserved": true,
+      "desktop_stop_exit": 0,
+      "remaining_development_processes": [],
+      "installed_tools_preserved": true,
+      "docker_autostart": false,
+      "docker_run_entry_present": false,
+      "observed_at": "2026-10-15T22:49:53.4008625+03:00",
+      "reboot_performed": false
+    }
   }
 }
 ```
@@ -2297,31 +2520,31 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `af77e9f9f62d8c69d3476d02c72849bf5fe82166004d7e0c91cbb51350a9cef6` |
-| `tools/context_intro.md` | `e30f69822c76e79c81ab03643230e862821599a6110a7cd8c5be0b22886d82f4` |
+| `CONTEXT_STATE.json` | `b3cd900f54f45d58564ce3e2ad0d8830d09ba73bf51675d4c877d0504511bea5` |
+| `tools/context_intro.md` | `b22331832075e551a5fa41219c01e2eea76b8f0ab54953e368ccd00d020c5b36` |
 | `tools/update_context.ps1` | `f830ed3538ae98ef5129b2ab5ae1d1ad564b0482d8ed2978a7ec2b96bcf5e731` |
-| `README.md` | `e95a49d6d4ee46c0bf94f2eca9f5784449a6487af03d852581ef0b1057c90e76` |
-| `README.ru.md` | `a0f2c97eaaf38b817bfbeecc56bf4f62bae85aac63660bf585651b74e3492ee7` |
-| `docs/README.md` | `4613e40cc736504a6cbf0fe6edb0c3c86567577e8669ee6958d64415ceb7e5d7` |
+| `README.md` | `3f1e181bdda675314b738a740f54a12f05ebf68814b07b6692ad7a3c21c071c5` |
+| `README.ru.md` | `5d2bdd90a2a2af1be39b4041d5b21ff2b54a8cebba5153b16eafb2031b8ec881` |
+| `docs/README.md` | `a31c3fe3dd087853b7a7c307249d580d849b50b2a832f2e04e9848edc16bfdef` |
 | `docs/ROADMAP.md` | `1711f0126f2a10341d5c3464e145275610c7cf5a430389059f057a1092ca7660` |
 | `docs/architecture/DESIGN.md` | `6db3d3ff87a24520ff2c7205051db0056251e2c867ee0d093fe8e4fc78aa14dd` |
 | `docs/architecture/PROCESSES.md` | `dd6d00ee9d169236fe0f0d14de4b6f54d778a7cf79489f6b6a3354357e2e9ec6` |
-| `docs/development/WORKFLOW.md` | `baf71ff355e406ec6efd9fc77c57f78d3ac1b1fa1f21eb8db375aa84c54c541f` |
+| `docs/development/WORKFLOW.md` | `2ab721f10ca3d1cd5a0812bebeccb67513d47222cf8e1cdd509ab421a1060e36` |
 | `docs/experiments/REPORT_TEMPLATE.md` | `4f569aab52ba34a68bb2e8b4551c6a3bf4932277c26c3b4206dbb505781a2cab` |
-| `AGENTS.md` | `5b358fb45c37b5ba01161abe3e1c09cbf8a769cf5f39047a5e625e0952ec1e10` |
+| `AGENTS.md` | `7b5f38117e84c442177d466efea81870eec5cfbba9e3ab290607e58544f5698a` |
 | `docs/adr/0001-approved-g0.md` | `b8518c5c49cdefea3dbf0bf2a79ab40459dba2b565e71a6c534a555cbafa20df` |
 | `CONTRIBUTING.md` | `b805939c170ddf7036212bd9c880597f6172076216996d36cb742833e992eaa0` |
 | `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
 | `docs/development/CODE_REVIEW.md` | `824f73048b3e20bf77b78809c23574a0235d2735052b5b670efe512ea0cae35b` |
 | `docs/architecture/LAB_BOUNDARY.md` | `790709c43d5c2920909a9f5227467bcb77ec4d228024156dd5f69f29a8d92e46` |
-| `docs/development/ENVIRONMENT.md` | `b88aec36682943a0b53a4d948934e39f4b62d8f01bc2ba87b58e8107ccf6f261` |
-| `docs/development/RESOURCE_PROFILES.md` | `d8b1940515fccff72c2af270abfeabef60d648cd5ec546ece33a30362d87b4d0` |
+| `docs/development/ENVIRONMENT.md` | `b0c77977872904c72096ca38e6161528d68f645e6a2814b6527b90f76757b3fe` |
+| `docs/development/RESOURCE_PROFILES.md` | `60212954c54085f2c8b74c4d3cf5c50f8ccf90192e8e9a502da357208645d44f` |
 | `docs/design/BANNER_OPTIONS.md` | `27d7b336acd60aa3106e6498233f2a33eefd2bc37bf8e26cf12d2c0c0d229724` |
-| `docs/development/packets/P01.md` | `f4e3f3b3b2589cbddf68ce6a6b9eb9a3b379556ac08be7b558ec4b89a5e68863` |
-| `docs/development/TASK_TRACKING.md` | `1aa776a1db2fbcb5d8353d5190c893aafde52f8715c4f2a838ff0c58fa7e08ac` |
+| `docs/development/packets/P01.md` | `9963cf254f0ba229817d64fb5477ddea4e5967929304462b3062a584357d0d78` |
+| `docs/development/TASK_TRACKING.md` | `bb4f02bfcac403cd45ee5b3c5feeeeaeeb1a2de48a2c1d054f17c84d284c72a0` |
 | `docs/development/REPOSITORY_SECURITY.md` | `b10363e3417429cc06376dff0277f257a92912dae03af12d7d9ff8252a80cb6e` |
 | `.github/CODEOWNERS` | `95de6cc3de1ba640d0ab9e2b9bfbdea79b7ce6641a8bcdb0bcef1f7607666415` |
-| `docs/development/TOOLCHAIN.md` | `6810c4825b6b4cae61c4ab427009ea77869cd3c0c60aa4547e8585c0f0db5517` |
+| `docs/development/TOOLCHAIN.md` | `5fbb316168a84bd2ca039d1bde1fda56850356fa9b9ec1e8dde413e0d8360e32` |
 | `go.mod` | `6b5e4488754d547057e6b8ddd0963cde3d86100430adf16fdb7060107517fa62` |
 | `go.sum` | `9f863b08d769d3d2d631ac9534db6bbd7f8d8fa5c59ee9f5bfa762763d310cc7` |
 | `cmd/orders/main.go` | `131626df0bae0819d49c3d46793809c839cacb6dbd71a93b4bc1740a04ea3e6c` |
@@ -2348,7 +2571,14 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/service/command_test.go` | `56eb2c958131551d61097e00fd66a34068332c141b81c3eaa5ec8358072a7051` |
 | `internal/service/shutdown_test.go` | `9387689f5183003faabddb0c5f6d6d5fd5c89e410fec66cf76aa94eebf25be58` |
 | `tools/smoke.mjs` | `2f0983a9e373ddb9bcd0cf343a4f02c8fb84bca996dbbcd5d9ae281caf06f5ce` |
-| `docs/development/CONTAINER_RUNTIME.md` | `20342e2f1b0cc07b9ee5436d494b4d4336a5a90d64a90268f9479f27ca3d8c42` |
+| `docs/development/CONTAINER_RUNTIME.md` | `1ec5ac564c560b810dbd5cf69c1b542533a3fea472e54fbcaf511795f7e0d532` |
+| `docs/development/evidence/p01/WINDOWS_SMOKE.md` | `8b17000ed9fb0c10083508e57a3d6da29ca36dc624e0d5d27be8c1f9ff837b53` |
+| `docs/development/evidence/p01/windows-2026-10-15/report.json` | `b08d9deabadc65c765d9173482e9171782aeff28affb5e7fd9bf0b201d5add65` |
+| `docs/development/evidence/p01/windows-2026-10-15/orders.jsonl` | `84ff81f5e1e0d74fc37e092972581d0243e46ef5ff6f88d7c75e8bfa4a2fe8c2` |
+| `docs/development/evidence/p01/windows-2026-10-15/inventory.jsonl` | `c74c87b48339c263f785ceb169c48415448bef963eaca5e804be4ad05ff6d3f3` |
+| `docs/development/evidence/p01/windows-2026-10-15/payments.jsonl` | `d3466907750bc5c137738ba0045f8d37f6c83e7fb4e3690a56896cbf9ad83c58` |
+| `docs/development/evidence/p01/windows-2026-10-15/environment.json` | `e32d9a5c383c6fcc426179fc716ab8ad39bece710670215b208405ee099bc90b` |
+| `docs/development/evidence/p01/windows-2026-10-15/cleanup.json` | `6c78a1ca41714a3ccb50e4777a2532ffeaca7d1cfb5fb561127e76e91fe0ad79` |
 
 ## Полные самостоятельные приложения
 
@@ -2401,6 +2631,13 @@ SHA-256 относится к исходному файлу на момент с
 - [Controlled active RPC and deadline tests](#appendix-shutdown-tests) — `internal/service/shutdown_test.go`
 - [Cross-platform Docker smoke and diagnostics](#appendix-container-smoke) — `tools/smoke.mjs`
 - [Runtime build, health, shutdown, smoke and review limitations](#appendix-container-runtime) — `docs/development/CONTAINER_RUNTIME.md`
+- [Windows smoke: итог и ограничения](#windows-smoke-proof) — `docs/development/evidence/p01/WINDOWS_SMOKE.md`
+- [Полный Windows smoke report](#windows-smoke-report) — `docs/development/evidence/p01/windows-2026-10-15/report.json`
+- [Windows: Orders JSONL](#windows-smoke-orders) — `docs/development/evidence/p01/windows-2026-10-15/orders.jsonl`
+- [Windows: Inventory JSONL](#windows-smoke-inventory) — `docs/development/evidence/p01/windows-2026-10-15/inventory.jsonl`
+- [Windows: Payments JSONL](#windows-smoke-payments) — `docs/development/evidence/p01/windows-2026-10-15/payments.jsonl`
+- [Windows: фактический бюджет](#windows-smoke-environment) — `docs/development/evidence/p01/windows-2026-10-15/environment.json`
+- [Windows: подтверждение остановки](#windows-smoke-cleanup) — `docs/development/evidence/p01/windows-2026-10-15/cleanup.json`
 
 <a id="appendix-readme-en"></a>
 
@@ -2440,11 +2677,11 @@ SHA-256 относится к исходному файлу на момент с
 | Detailed process diagrams and review gates | PostgreSQL ownership, migrations and gRPC contracts | Grafana dashboards, alerts and experiment reports |
 | Portable context with a freshness check | Durable workflows, Kafka and compensation | Scaling comparisons under equal resource budgets |
 
-The first code [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) covers **P01-01**, after G0 and before G1. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) tracks all eight tasks; [the packet specification](#appendix-p01) defines acceptance criteria. P01-01–04 are accepted and merged in PR #6/#7. P01-05–08 are being implemented together. Windows Docker/WSL are unavailable, so the Windows container acceptance check is NOT_RUN; the final PR remains draft until that check is completed.
+The first code [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) covers **P01-01**, after G0 and before G1. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) tracks all eight tasks; [the packet specification](#appendix-p01) defines acceptance criteria. P01-01–04 are accepted and merged in PR #6/#7. P01-05–08 are ready for owner review in [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). All eight implementation checks are complete; four tasks are owner-accepted. [Windows container smoke](#windows-smoke-proof) and native Linux AMD64/ARM64 CI pass. The personal Mac remains untested.
 
 No capacity numbers or performance improvements are claimed before measurement. The [roadmap](#appendix-roadmap) distinguishes design hypotheses from acceptance criteria and observed results.
 
-The owner has agreed on container-based development for Windows and macOS and a reusable lab boundary with business adapters. The [environment plan](#appendix-environment) and [boundary proposal](#appendix-lab-boundary) record this direction; runtime containers are being verified; a second business integration is still to come.
+The owner has agreed on container-based development for Windows and macOS and a reusable lab boundary with business adapters. The [environment plan](#appendix-environment) and [boundary proposal](#appendix-lab-boundary) record this direction; runtime containers are verified on Windows/WSL2 and native Linux AMD64/ARM64; a second business integration is still to come.
 
 #### What this project investigates
 
@@ -2616,7 +2853,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 
 Ближайший пакет **P01**: три Go entrypoints, конфигурация, health, graceful shutdown и JSON-логи, контейнерный toolchain и Compose-запуск для Windows/macOS. [План среды](#appendix-environment) объясняет состав контейнеров; [граница лаборатории](#appendix-lab-boundary) сохраняет направление подключения других бизнесов. Проверки документации не являются тестами будущих сервисов. Производительность стенда пока не измерялась.
 
-Задачи ведутся в [P01 — Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3): P01-01 принята и слита в [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6); P01-02–04 приняты и слиты в PR #7. P01-05–08 разрабатываются одним PR. Принято владельцем 4/8; Windows container smoke NOT_RUN, пока Docker/WSL не установлены. [Спецификация пакета](#appendix-p01) содержит критерии. P01 идёт после G0 и до G1.
+Задачи ведутся в [P01 — Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3): P01-01 принята и слита в [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6); P01-02–04 приняты и слиты в PR #7. P01-05–08 готовы к ревью в [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). Реализация и проверки — 8/8, принято владельцем 4/8; [Windows container smoke](#windows-smoke-proof) и Linux AMD64/ARM64 CI PASS. Личный Mac пока не проверен. [Спецификация пакета](#appendix-p01) содержит критерии. P01 идёт после G0 и до G1.
 
 #### Идея
 
@@ -2742,6 +2979,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Собрать и проверить первые Go-бинарники | [Toolchain P01-01](#appendix-toolchain) — версии, Docker-команды и границы проверок |
 | Запустить и проверить три процесса | [Запуск сервисов](#appendix-service-runtime) — настройки, JSON, health и границы shutdown |
 | Поднять три runtime-контейнера | [Контейнерный каркас](#appendix-container-runtime) — сборка, health, остановка и smoke с отчётом |
+| Проверить Windows smoke | [Отчёт P01](#windows-smoke-proof) — исходные JSON/JSONL, бюджет и остановка среды |
 | Проверить исходные ресурсы | [Профили сред](#appendix-resource-profiles) — Windows, macOS и возможный будущий сервер |
 | Посмотреть оформление | [Концепции баннера](#appendix-banner-options) — три варианта и выбранное решение |
 | Принять участие в разработке | [CONTRIBUTING](#appendix-contributing) → [Правила ревью](#appendix-code-review) → [Workflow](#appendix-development-process) → [AGENTS](#appendix-agents) |
@@ -2757,7 +2995,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [Процессы](#appendix-g0-processes): 15 подробных схем транзакций, отказов, гонок и восстановления.
 - [Граница лаборатории](#appendix-lab-boundary): общий механизм, адаптеры, кандидат второго бизнеса и доказательство переносимости.
 - [Среда](#appendix-environment): Docker для Windows/macOS, распределение контейнеров и ограничения измерений.
-- [Ресурсные профили](#appendix-resource-profiles): снимок Windows-хоста и отдельно ещё не измеренные среды/лимиты.
+- [Ресурсные профили](#appendix-resource-profiles): снимок Windows-хоста и текущий WSL-бюджет и отдельно ещё не измеренные среды.
 - [Roadmap](#appendix-roadmap): этапы 0–7, критерии готовности, риски и 12 сценариев экспериментов.
 - [Workflow](#appendix-development-process): роли человека и ИИ, состав ревью и контрольные точки G0–G4.
 - [Правила ревью](#appendix-code-review): стандарт Go, блокирующие замечания, проверки и критерии слияния.
@@ -3877,7 +4115,7 @@ G0–G4 — контрольные точки приёмки. P01–P05 — не
 | G3: устойчивость | После этапа 4 | Сценарии неизвестного результата, поздних событий, отмены, replay; объяснение политики ошибок и recovery | Ревью и сценарии приняты; нерешённые процессы явно учитываются; отсутствуют ложные terminal states |
 | G4: готовая лаборатория | После этапа 7 | Каталог экспериментов, результаты сравнения решений, масштабирование, автоматический запуск/сверка/отчёты, инструкции | Владелец проекта воспроизвёл или проверил заявленный цикл; отчёты отражают корректность, ресурсы и ограничения |
 
-Статус G0: **полностью принят 2026-10-13, Europe/Moscow**. Прямое решение пользователя: «G0 полностью принят». G1–G4 ещё не достигнуты. P01-01–04 приняты; в PR #8 подготовлены bounded graceful shutdown, runtime-контейнеры и smoke. Полный Linux CI прошёл на AMD64/ARM64; обязательная локальная Windows-проверка контейнеров ещё не выполнена. Бизнес-операции пока не реализованы. Работа над согласованной основой для G1 разрешена; повторное согласование G0 не требуется.
+Статус G0: **полностью принят 2026-10-13, Europe/Moscow**. Прямое решение пользователя: «G0 полностью принят». G1–G4 ещё не достигнуты. P01-01–04 приняты; в PR #8 подготовлены bounded graceful shutdown, runtime-контейнеры и smoke. Полный Linux CI прошёл на AMD64/ARM64; обязательная локальная Windows-проверка контейнеров выполнена (PASS); PR #8 ждёт ревью владельца. Бизнес-операции пока не реализованы. Работа над согласованной основой для G1 разрешена; повторное согласование G0 не требуется.
 
 На контрольной точке Codex сначала доводит текущий пакет до проверяемого результата, затем предоставляет его владельцу проекта. Следующий этап, зависящий от согласования, начинается после явного решения. Замечания владельца проекта вносятся в пакет до повторного рассмотрения.
 
@@ -4059,6 +4297,8 @@ PROJECT_CONTEXT.md — самостоятельный пакет для друг
 - Keep the portable context current after every substantive task, review resolution, approval, experiment, environment change or newly discovered blocker. Update CONTEXT_STATE.json and the affected source documents, increment the context revision, then run tools/update_context.ps1 and tools/update_context.ps1 -CheckOnly. Include the refreshed PROJECT_CONTEXT.md in the review packet.
 - PROJECT_CONTEXT.md is generated from CONTEXT_STATE.json, tools/context_intro.md and the embedded canonical documents. Update those inputs instead of editing only the generated local file. Do not put secrets in any context artifact.
 - An agent without the repository works from the dated snapshot and returns an updated context/change proposal with its result. It must distinguish proposed edits from locally applied changes and list checks it could not run. Separate snapshots are reconciled by revision and evidence, not by silently overwriting a newer context.
+
+- On the owner's personal Windows computer, stop task-owned containers and quit Docker Desktop and its WSL VM after development checks. Keep Docker autostart disabled. Retain installed tools, useful images and build/module caches. Preserve unrelated workloads; verify shutdown rather than only requesting it. This owner instruction was given on 2026-10-15.
 
 <a id="appendix-adr-0001"></a>
 
@@ -4460,7 +4700,7 @@ experiments/scenarios/         # Воспроизводимые условия �
 
 ### Переносимая среда разработки и экспериментов
 
-Статус на 15 октября 2026 года: Docker-подход согласован. P01-01–04 приняты в main; P01-05–08 добавляют graceful shutdown, минимальные runtime-образы, внутреннюю Compose-сеть и smoke ([инструкция](#appendix-container-runtime)). Docker/WSL на Windows отсутствуют, local container smoke NOT_RUN; Linux CI нового кода PASS на AMD64/ARM64, личный Mac не проверен.
+Статус на 15 октября 2026 года: P01-01–04 приняты и слиты. Реализация и проверки P01 — 8/8; владельцем принято 4/8. P01-05–08 находятся на ревью в [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). Linux AMD64/ARM64 CI и Windows container smoke PASS; личная macOS NOT_RUN. Установлены Go 1.27.2, WSL 2.7.13 и Docker Desktop 4.95. Среда после проверки остановлена, автозапуск Docker выключен.
 
 #### Что согласовано
 
@@ -4533,11 +4773,11 @@ Docker рекомендует разделять ответственности 
 
 Для A/B по умолчанию используется одна машина с одинаковым бюджетом и нативной архитектурой. Сравнение между Windows и macOS возможно как отдельный эксперимент с явными ограничениями. В manifest сохраняются архитектура CPU, аппаратные ресурсы, OS, Docker, volumes, image digests и фактические лимиты.
 
-Для локального runtime-запуска ещё нужны доступные Docker Desktop/Compose и проверка ресурсов машины. Версии и команды toolchain уже закреплены и проверены в Linux CI; runtime-образы сервисов и их smoke относятся к P01-06.
+Локальный runtime-запуск проверен на Windows через Docker Desktop/WSL2. [Доказательства smoke](#windows-smoke-proof) содержат версии, лимиты и исходы; личный Mac пока не проверен.
 
-##### Попытка локальной установки, 15 октября
+##### Личный компьютер после проверки
 
-Установка среды согласована владельцем 15 октября. Официальный Docker Desktop 4.95.0 загружен, SHA256 и подпись Docker Inc проверены. WSL 2.7.13 через winget потребовал admin; запрос UAC завершился отменой до запуска установки. Docker per-user installer завершился precheck: VirtualMachinePlatform выключен. Ни WSL, ни Docker пока не установлены, перезагрузки не было. Для продолжения нужен интерактивный административный допуск; после установки/при необходимости отдельно согласованной перезагрузки выполняется `node tools/smoke.mjs`.
+По поручению владельца среда запускается по необходимости. После smoke контейнеры/сеть удалены, Docker Desktop и WSL VM остановлены; автозапуск Docker выключен. Go, Docker, WSL, образы и полезные кеши сохранены. WSL ограничен 2 CPU, memory=2GB, swap=1GB. Нового измерения бизнес-производительности это не заменяет.
 
 <a id="appendix-resource-profiles"></a>
 
@@ -4547,7 +4787,7 @@ Docker рекомендует разделять ответственности 
 
 ### Ресурсные профили сред
 
-Статус на 13 октября 2026 года: характеристики текущего Windows-хоста прочитаны; Docker-бюджет и потребление приложения ещё не измерены. Владелец проекта подтвердил два основных компьютера и возможный арендуемый сервер позже, когда появится потребность в ресурсах.
+Статус на 15 октября 2026 года: снимок Windows-хоста от 13 октября сохранён ниже как исторический. Go/WSL/Docker теперь установлены, Windows smoke PASS, текущий бюджет WSL и завершение среды зафиксированы отдельно. macOS/сервер не измерены.
 
 #### Три уровня данных
 
@@ -4557,9 +4797,9 @@ Docker рекомендует разделять ответственности 
 
 Профили не обещают одинаковую производительность разных машин. По умолчанию сравнение A/B выполняется на одной машине с одинаковыми лимитами. Изменение ресурсов или перенос на другой хост учитывается как отдельный фактор.
 
-Повторная проверка 15 октября: Docker CLI/Desktop и Docker-служба не найдены; wsl.exe присутствует как bootstrap, но подсистема WSL не установлена. Windows Go unit/process tests выполняются переносимым Go; container smoke NOT_RUN. CPU/RAM/disk данные ниже остаются снимком 13 октября, а не новым измерением.
+До установки 15 октября Docker/WSL отсутствовали. После установки выполнен [Windows smoke](#windows-smoke-proof): Go1.27.2, WSL2.7.13, Desktop4.95, Engine29.8.2, Compose5.6. Бюджет: WSL memory=2GB, processors=2, swap=1GB; Engine NCPU=2, MemTotal=1996603392 bytes. Перед запуском свободно около 2.06 GiB RAM; это отдельный изменчивый снимок, не постоянная ёмкость. После проверки Docker/WSL VM выключены, автозапуск Docker отключён.
 
-#### Windows: наблюдаемый снимок
+#### Windows: исторический снимок 13 октября
 
 | Параметр | Значение |
 | :--- | :--- |
@@ -4572,7 +4812,7 @@ Docker рекомендует разделять ответственности 
 | Go / Docker в текущем PATH | Не обнаружены |
 | Команда WSL | Обнаружена; работоспособность и конфигурация не проверены |
 | Docker daemon и лимиты | Не проверены |
-| Потребление стенда | Не измерено; runtime ещё не создан |
+| Потребление стенда | На дату снимка не измерено; runtime ещё не был создан |
 
 Основание: чтение Windows CIM классов процессора/ОС и сведений о томе через PowerShell. Первое чтение CIM было ограничено песочницей; повтор с разрешённым расширенным доступом выполнен успешно. Имена компьютера, серийные номера, идентификаторы оборудования и персональные пути не сохранялись.
 
@@ -4592,7 +4832,7 @@ Docker рекомендует разделять ответственности 
 
 После подготовки каркаса и доступности Docker: проверить daemon/Compose → снять фактический бюджет → запустить минимальный профиль → измерить простой → добавить инфраструктуру → проверить ресурсы под контролируемой нагрузкой. Каждый прогон сохраняет свой снимок условий в manifest; текущая таблица не заменяет данные будущих запусков.
 
-15 октября повторно подтверждены Windows 11 Pro build 26200 x64, работающий гипервизор и LanmanServer. Установка WSL/Docker разрешена, но не завершена: UAC отменён, компонент VirtualMachinePlatform выключен. Это проверка prerequisites, а не измерение бюджета Docker или потребления приложения.
+15 октября установка завершена; VirtualMachinePlatform Enabled, гипервизор и Linux backend работают. Перезагрузка не выполнялась. Пиковые CPU/RAM и бизнес-throughput не измерялись.
 
 <a id="appendix-banner-options"></a>
 
@@ -4636,7 +4876,7 @@ Docker рекомендует разделять ответственности 
 
 ### P01 — Go-каркас между G0 и G1
 
-Состояние на 15 октября 2026 года: **P01-01–04 DONE**, приняты и слиты через PR #6/#7 (main bc09d08). **P01-05–08 IN_PROGRESS**, объединены одним PR по прямому поручению владельца. Проверено 7/8, принято 4/8; P01-06 не закрыта из-за Windows container smoke NOT_RUN. Код завершения, runtime-образы, Compose и smoke подготовлены; Linux container CI PASS на AMD64/ARM64, Windows container smoke NOT_RUN из-за отсутствующих Docker/WSL. G0 принят; P01 находится до G1. [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8) остаётся draft до обязательной локальной проверки P01-06.
+Статус на 15 октября 2026 года: P01-01–04 приняты и слиты. Реализация и проверки P01 — 8/8; владельцем принято 4/8. P01-05–08 находятся на ревью в [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). Linux AMD64/ARM64 CI и Windows container smoke PASS; личная macOS NOT_RUN. Установлены Go 1.27.2, WSL 2.7.13 и Docker Desktop 4.95. Среда после проверки остановлена, автозапуск Docker выключен.
 
 Основа: [первый пакет реализации](#appendix-design-review), [roadmap](#appendix-roadmap), [порядок ревью](#appendix-development-process), [стандарт Go](#appendix-code-review) и согласованный [Docker-подход](#appendix-environment).
 
@@ -4660,10 +4900,10 @@ PostgreSQL/Kafka/Redis и миграции относятся к P02. Домен
 | P01-02 | Конфигурация с проверкой | 01 | DONE | Успешный старт с допустимой конфигурацией; отказ на некорректной |
 | P01-03 | Структурированные логи | 01 | DONE | Разбор стартовых/финальных записей как JSON с ожидаемыми полями |
 | P01-04 | Три entrypoints и gRPC health | 02, 03 | DONE | Проверки всех трёх endpoints; ошибка занятого адреса |
-| P01-05 | Graceful shutdown с пределом ожидания | 04 | IN_PROGRESS | Завершение активной работы и принудительное прекращение по deadline |
-| P01-06 | Образы и минимальный Compose | 01–05 | IN_PROGRESS | Сборка образов, health и остановка трёх контейнеров |
-| P01-07 | Go-проверки и CI | 01–05 | IN_PROGRESS | Успешные обязательные проверки на предъявленном HEAD |
-| P01-08 | Smoke-проверка, инструкция и review packet | 06, 07 | IN_PROGRESS | Воспроизводимые команды, результаты, ограничения и открытый PR |
+| P01-05 | Graceful shutdown с пределом ожидания | 04 | IN_REVIEW | Завершение активной работы и принудительное прекращение по deadline |
+| P01-06 | Образы и минимальный Compose | 01–05 | IN_REVIEW | Сборка образов, health и остановка трёх контейнеров |
+| P01-07 | Go-проверки и CI | 01–05 | IN_REVIEW | Успешные обязательные проверки на предъявленном HEAD |
+| P01-08 | Smoke-проверка, инструкция и review packet | 06, 07 | IN_REVIEW | Воспроизводимые команды, результаты, ограничения и открытый PR |
 
 #### Проверяемые критерии по задачам
 
@@ -4734,14 +4974,14 @@ P01 не достигает всей контрольной точки G1: ба�
 
 #### Известные ограничения выполнения
 
-- На текущем хосте Go/Docker не найдены в PATH. Для вспомогательной проверки P01-01 используется официальный временный Go в игнорируемой папке, основной путь — Docker. Контейнерный toolchain проверяется в Linux CI; Docker Desktop/Compose и бюджет Windows надо подтвердить до runtime smoke P01-06. Нового архитектурного gate это не создаёт.
-- Характеристики Windows сохранены в [ресурсном профиле](#appendix-resource-profiles). Ни Docker-лимиты, ни потребление приложения по этим сведениям не измерены.
+- Go 1.27.2 и Docker Desktop 4.95/Compose 5.6 установлены; Windows Linux-container smoke PASS. macOS остаётся отдельной непроведённой проверкой.
+- Характеристики Windows сохранены в [ресурсном профиле](#appendix-resource-profiles). Текущий WSL-бюджет 2 CPU / memory=2GB / swap=1GB подтверждён отдельно; потребление бизнеса под нагрузкой не измерено.
 - Среда macOS и возможный будущий сервер недоступны для проверки; их результаты не придумываются.
 - Команды toolchain приведены в [инструкции](#appendix-toolchain). Запуск, health и Docker smoke описаны в [контейнерном пакете](#appendix-container-runtime); Linux CI и локальная Windows проверка фиксируются отдельно.
 
 #### Где следить за задачами
 
-Принятый порядок описан в [учёте задач](#appendix-task-tracking): один GitHub Issue на пакет, чеклист восьми задач и ссылки на их PR. [Карточка P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта; Projects пока не настроен. Этот файл хранит критерии и датированный снимок: P01-01–04 приняты, 4/8; P01-05–08 реализуются одним PR. Windows container smoke остаётся обязательным невыполненным критерием, пока Docker/WSL не доступны.
+Принятый порядок описан в [учёте задач](#appendix-task-tracking): один GitHub Issue на пакет, чеклист восьми задач и ссылки на их PR. [Карточка P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта; Projects пока не настроен. Этот файл хранит критерии и датированный снимок: P01-01–04 приняты, 4/8; P01-05–08 реализуются одним PR. Windows container smoke P01-06 выполнен: [отчёт и исходные данные](#windows-smoke-proof).
 
 <a id="appendix-task-tracking"></a>
 
@@ -4751,7 +4991,7 @@ P01 не достигает всей контрольной точки G1: ба�
 
 ### Учёт задач и статусов
 
-Статус на 15 октября 2026 года: P01-01–04 приняты и слиты (4/8) через PR #6/#7. Проверено 7/8; P01-05/07/08 реализованы и проверены в Linux CI, P01-06 ждёт Windows container smoke. P01-05–08 IN_PROGRESS в [draft PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8), объединены одним PR по прямому поручению владельца. Код и smoke подготовлены; новый Linux CI PASS на AMD64/ARM64, Windows Docker smoke NOT_RUN. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыт; [спецификация P01](#appendix-p01) сохраняет критерии.
+Статус на 15 октября 2026 года: P01-01–04 приняты и слиты. Реализация и проверки P01 — 8/8; владельцем принято 4/8. P01-05–08 находятся на ревью в [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). Linux AMD64/ARM64 CI и Windows container smoke PASS; личная macOS NOT_RUN. Установлены Go 1.27.2, WSL 2.7.13 и Docker Desktop 4.95. Среда после проверки остановлена, автозапуск Docker выключен.
 
 #### Разделение назначений
 
@@ -4799,7 +5039,7 @@ BLOCKED — отдельный признак с причиной и требу�
 - P01-01–04 DONE; P01-05–08 IN_PROGRESS. Код/проверки нового PR не заменяют ревью владельца.
 - Карточка [P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта: IN_PROGRESS, первые четыре задачи приняты. Оставшиеся предъявляются в одном PR; Projects не создан.
 - Документационные PR #4 и [#5](https://github.com/Includeoyasi/faultline-lab/pull/5) слиты. CODEOWNERS и защита main действуют; PR первой задачи публикуется от AI-Your-Bro с ревью Includeoyasi.
-- Текущий PR объединяет P01-05–08. До Windows container smoke он остаётся draft; весь P01 и G1 ещё не приняты.
+- Текущий PR объединяет P01-05–08 и готов к ревью: обязательный Windows container smoke PASS. Весь P01 и G1 ещё не приняты владельцем.
 
 <a id="appendix-repository-security"></a>
 
@@ -4903,11 +5143,11 @@ docker compose run --rm toolchain service-smoke
 
 `versions` выводит фактические Go, golangci-lint, build metadata goimports и версию govulncheck. `check` проверяет gofmt/goimports без перезаписи исходников, tidy без diff, verify, build, согласованные линтеры, unit/race commands и govulncheck. Ошибка любого шага завершает команду с ненулевым кодом. Набор линтеров — govet, staticcheck, errcheck, ineffassign, unused.
 
-`build` создаёт Linux-бинарники bin/orders, bin/inventory, bin/payments для архитектуры toolchain-контейнера и выводит build metadata. Они игнорируются Git. На Windows эти Linux-бинарники не запускаются напрямую. `service-smoke` собирает и проверяет три отдельных процесса: health, JSON-диагностику ошибок, выход и независимость. Unit/process tests теперь существуют; graceful drain, runtime-контейнеры и бизнес-процессы остаются будущими задачами. Прежний bootstrap-smoke удалён: сервисы больше не завершаются сразу после запуска.
+`build` создаёт Linux-бинарники bin/orders, bin/inventory, bin/payments для архитектуры toolchain-контейнера и выводит build metadata. Они игнорируются Git. На Windows эти Linux-бинарники не запускаются напрямую. `service-smoke` собирает и проверяет три отдельных процесса: health, JSON-диагностику ошибок, выход и независимость. Unit/process tests, graceful drain и runtime-контейнеры реализованы и проверены; бизнес-процессы остаются следующими пакетами. Прежний bootstrap-smoke удалён: сервисы больше не завершаются сразу после запуска.
 
 Для осознанного исправления форматирования: `docker compose run --rm toolchain format`. Эта команда меняет Go-исходники в рабочей копии; check их не меняет. Неподдерживаемая команда и лишние аргументы дают exit code 2.
 
-Toolchain — временный сервис профиля tools. Явный `compose run toolchain` активирует его; команды не поднимают PostgreSQL/Kafka/Redis или runtime сервисов. Shell-скрипт выполняется внутри Linux-контейнера. Исходники подключаются из относительного пути, кеши модулей и сборки — в отдельных named volumes. Используются стандартные capabilities Docker для записи в bind mount; privileged mode и Docker socket не включены, no-new-privileges включён. Ограничения runtime-контейнеров сервисов проектируются в P01-06 отдельно от среды сборки.
+Toolchain — временный сервис профиля tools. Явный `compose run toolchain` активирует его; команды не поднимают PostgreSQL/Kafka/Redis или runtime сервисов. Shell-скрипт выполняется внутри Linux-контейнера. Исходники подключаются из относительного пути, кеши модулей и сборки — в отдельных named volumes. Используются стандартные capabilities Docker для записи в bind mount; privileged mode и Docker socket не включены, no-new-privileges включён. Ограничения runtime-контейнеров сервисов описаны отдельно в [контейнерном каркасе](#appendix-container-runtime).
 
 Внутри образа Git доверяет только рабочему каталогу /workspace: bind mount может иметь другого владельца, а Go читает Git для настоящих VCS build metadata. Настройка действует в образе инструментов и не меняет Git-конфигурацию хоста.
 
@@ -4915,7 +5155,7 @@ Toolchain — временный сервис профиля tools. Явный `
 
 [Go workflow](#appendix-go-workflow) использует нативные ubuntu-24.04 (AMD64) и ubuntu-24.04-arm (ARM64). На каждой архитектуре он собирает один и тот же Dockerfile, выполняет check, service-smoke и проверяет отказ на неизвестную команду. Затем проверяет отсутствие изменений отслеживаемых исходников. Успешная сборка ARM64 в CI не доказывает запуск Docker Desktop на личном Mac.
 
-На Windows Docker пока не найден; локальный container smoke — NOT_RUN. Для дополнительной проверки скачан официальный переносимый Go 1.27.2 с проверкой SHA-256 в игнорируемую папку .local, без установки в PATH. Это вспомогательная проверка, а не основной путь разработки. Личная macOS-среда ещё не проверялась; измерений потребления и производительности нет.
+На Windows установлены host Go1.27.2, WSL2.7.13 и Docker Desktop4.95. [Runtime smoke и shutdown](#windows-smoke-proof) PASS; основной путь сборки остаётся контейнерным. Личная macOS не проверена, performance capacity не измерена. После работы Docker Desktop/WSL VM выключаются; установленные инструменты и полезные кеши сохраняются.
 
 Версии, директивы tools и образы обновляются совместно отдельным проверяемым изменением. GOTOOLCHAIN=local запрещает неявную загрузку другого Go, контейнер использует GOFLAGS=-mod=readonly. После изменения go.mod/go.sum контейнер пересобирается. Текущая защита main и required checks отражаются в [безопасности репозитория](#appendix-repository-security), а не выводятся из наличия workflow.
 
@@ -7013,7 +7253,7 @@ try {
 
 Этот пакет завершает реализацию P01-05–08: ограниченное graceful shutdown, отдельные runtime-образы трёх сервисов, Compose, CI и smoke с диагностикой. G0 принят; P01 выполняется до G1. Бизнес-операции и инфраструктура PostgreSQL/Kafka/Redis относятся к следующим пакетам.
 
-PR #7 принят и слит владельцем (main `bc09d08`), задачи 01–04 DONE. [Draft PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8) содержит реализацию оставшихся задач. [Полный CI AMD64/ARM64](https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340) PASS на source HEAD d5e13a9; отчёты [AMD64](https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340/artifacts/11977328529) и [ARM64](https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340/artifacts/11977248425) прочитаны и подтверждают health, ограничения, exit 0, изоляцию и cleanup. Актуальные checks итогового HEAD доступны в PR. Текущее выполнение и результаты находятся в [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3), [спецификации P01](#appendix-p01) и переносимом контексте. Описание нового PR использует разделы «Что было сделано», «Проверки» и «На что обратить внимание».
+PR #7 принят владельцем. P01-05–08 подготовлены в [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8): Linux AMD64/ARM64 CI и [Windows container smoke](#windows-smoke-proof) PASS. Реализация и проверки P01 — 8/8, принято владельцем 4/8; G1 ещё не достигнут.
 
 #### Состав и границы
 
@@ -7101,10 +7341,913 @@ CI на нативных Linux AMD64/ARM64 выполняет этот smoke п�
 
 #### Локальная проверка Windows
 
-15 октября проверено: Docker CLI, стандартная установка Docker Desktop и Docker-служба отсутствуют; WSL сообщает, что подсистема не установлена. Локальный запуск `node tools/smoke.mjs` сохранил NOT_RUN на prerequisites и exit 2. Native Windows Go unit/process tests проходят; Unix-сигналы проверяются отдельно на Linux. Личная macOS недоступна, её container smoke NOT_RUN.
+15 октября установлены host Go 1.27.2 (официальный MSI), WSL 2.7.13.0 и Docker Desktop 4.95.0 в профиль пользователя. Linux engine 29.8.2 / Compose 5.6.0 успешно выполнили smoke на чистом source d81b51c. [Отчёт, JSONL и подтверждение остановки](#windows-smoke-proof) включены в репозиторий и переносимый контекст. Перезагрузка не понадобилась.
 
-P01-06 требует Windows container smoke. Пока он не выполнен, итоговый PR остаётся draft с конкретным невыполненным критерием; успешный Linux CI не заменяет эту проверку. После установки Docker с Linux backend запускается та же команда smoke, её отчёт добавляется в review evidence. По результату владелец принимает конкретный HEAD; ИИ не выполняет approve/merge.
+#### Личный компьютер: запуск по необходимости
 
-Установка среды согласована владельцем 15 октября. Официальный Docker Desktop 4.95.0 загружен, SHA256 и подпись Docker Inc проверены. WSL 2.7.13 через winget потребовал admin; запрос UAC завершился отменой до запуска установки. Docker per-user installer завершился precheck: VirtualMachinePlatform выключен. Ни WSL, ни Docker пока не установлены, перезагрузки не было. Для продолжения нужен интерактивный административный допуск; после установки/при необходимости отдельно согласованной перезагрузки выполняется `node tools/smoke.mjs`.
+WSL ограничен двумя CPU, memory=2GB и swap=1GB; Engine видит 2 CPU и 1996603392 bytes RAM. Это бюджет smoke, не измерение capacity бизнеса. AutoStart Docker выключен и запись из автозагрузки Windows удалена.
 
-Владелец сообщил, что сейчас не имеет физического доступа к компьютеру. Установка разрешена, но отложена до возможности подтвердить UAC. Повторные системные запросы пока не запускать; согласие на перезагрузку по-прежнему требуется отдельно. Windows container smoke остаётся NOT_RUN, PR #8 — draft.
+После установки откройте новый терминал, чтобы он получил обновлённый PATH. Запуск и остановка:
+
+```text
+docker desktop start --timeout 120
+node tools/smoke.mjs
+docker desktop stop --timeout 60
+wsl --shutdown
+```
+
+Последняя команда относится к Windows и завершает виртуальную среду WSL. В этом профиле WSL использует только лаборатория; если появятся другие дистрибутивы с работающими задачами, учитывайте их перед общим shutdown. Smoke удаляет только собственные контейнеры и сеть. Docker Desktop и WSL VM после работы нужно остановить также при ошибке проверки, сохранив диагностику. Программы, образы, библиотеки и кеши оставляем для следующих запусков.
+
+После этого прогона подтверждены: контейнеров нет, Docker Desktop остановлен, wsl --shutdown выполнен, процессов Docker/vmmemWSL нет, автозапуск выключен. Личный Mac остаётся NOT_RUN; P01/G1 не объявляются принятыми без решения владельца.
+
+<a id="windows-smoke-proof"></a>
+
+## Приложение: Windows smoke: итог и ограничения
+
+Полный исходный документ: `docs/development/evidence/p01/WINDOWS_SMOKE.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### P01: проверка контейнеров на Windows
+
+15 октября 2026 года выполнен обязательный Windows container smoke P01-06. Это запуск Linux-контейнеров через Docker Desktop/WSL2 на личном Windows-компьютере, а не проверка Windows container images или macOS.
+
+Исходный commit: `d81b51ce2eb46f56d698fd8bf5f9966b91a16036`, рабочее дерево чистое. Команда: `node tools/smoke.mjs`. Run ID: `8119b50d-f910-412a-9bd2-ab50fccd1b71`. Результат: **PASS**.
+
+| Компонент | Проверенная версия / значение |
+| :--- | :--- |
+| Хост | Windows 11 Pro, build 26200, x64 |
+| Go на хосте | 1.27.2 windows/amd64; официальный MSI, SHA256 и подпись Google LLC проверены |
+| WSL | 2.7.13.0 |
+| Docker Desktop | 4.95.0, установка в профиль пользователя |
+| Docker Engine | 29.8.2, linux/x86_64 |
+| Compose | 5.6.0 |
+| Node smoke | v24.19.0 |
+| Бюджет | 2 CPU, Engine MemTotal 1996603392 bytes |
+| WSL config | memory=2GB, processors=2, swap=1GB |
+
+| Сервис | Health | Ограничения | Остановка |
+| :--- | :--- | :--- | :--- |
+| orders | healthy; unary Check PASS | UID 65532:65532, read-only, capabilities dropped, no-new-privileges, internal network, no host ports/mounts | exit 0, graceful, OOM=false |
+| inventory | healthy; unary Check PASS | UID 65532:65532, read-only, capabilities dropped, no-new-privileges, internal network, no host ports/mounts | exit 0, graceful, OOM=false |
+| payments | healthy; unary Check PASS | UID 65532:65532, read-only, capabilities dropped, no-new-privileges, internal network, no host ports/mounts | exit 0, graceful, OOM=false |
+
+После остановки Orders оставшиеся сервисы продолжили отвечать: **PASS**. Удаление собственного Compose-проекта: **PASS**.
+
+#### Исходные данные
+
+- [report.json](#windows-smoke-report): команды, время, исходы, source revision и реальные image IDs.
+- Логи: [Orders](#windows-smoke-orders), [Inventory](#windows-smoke-inventory), [Payments](#windows-smoke-payments).
+- [environment.json](#windows-smoke-environment): наблюдённый backend и бюджет.
+- [cleanup.json](#windows-smoke-cleanup): подтверждение остановки среды.
+- SHA256 report.json: `b08d9deabadc65c765d9173482e9171782aeff28affb5e7fd9bf0b201d5add65`.
+
+#### Состояние личного компьютера после проверки
+
+Тестовые контейнеры и сеть удалены. Docker Desktop штатно остановлен, выполнен wsl --shutdown; процессов Docker и vmmemWSL при финальной проверке нет. AutoStart=false, запись Docker Desktop из автозагрузки Windows удалена. Go, Docker, WSL, образы и build cache сохранены для дальнейшей работы. Перезагрузка не потребовалась и не выполнялась.
+
+При следующих проверках запускайте среду по необходимости и освобождайте ресурсы после окончания. Инструкция: [контейнерный каркас](#appendix-container-runtime).
+
+Этот smoke подтверждает lifecycle каркаса. Бизнес-операции, базы, пропускная способность и пиковое потребление под нагрузкой не измерялись. Личный Mac остаётся NOT_RUN. Результат не означает принятия P01 или G1 владельцем.
+
+<a id="windows-smoke-report"></a>
+
+## Приложение: Полный Windows smoke report
+
+Полный исходный документ: `docs/development/evidence/p01/windows-2026-10-15/report.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "run_id": "8119b50d-f910-412a-9bd2-ab50fccd1b71",
+  "started_at": "2026-10-15T19:45:57.496Z",
+  "result": "PASS",
+  "host_platform": "win32",
+  "node": "v24.19.0",
+  "project": "faultline-smoke-8119b50d",
+  "services": {
+    "orders": {
+      "id": "0e35127ad00aa13be4f551edf6b032c00ffc4894081efb4e4c33cc723fff9b04",
+      "image_id": "sha256:c15eb12d4ab1369a2c49fd8da5f6ca178c530d39cf0f19c37d4ad513eac4574f",
+      "architecture": "linux/x86_64",
+      "healthy": true,
+      "security": {
+        "user": "65532:65532",
+        "read_only": true,
+        "capabilities_dropped": true,
+        "no_new_privileges": true,
+        "host_ports": [],
+        "mounts": [],
+        "internal_network": true
+      },
+      "stopped": true,
+      "exit_code": 0,
+      "oom_killed": false,
+      "stop_mode": "graceful"
+    },
+    "inventory": {
+      "id": "926b6baf437c4b0d0a01302d158872112689ddf89472c58a56f0d66c8f621d84",
+      "image_id": "sha256:1fb289e7407f8559f671e9ec276faac6715f7c6e364220f70b30839624c7f778",
+      "architecture": "linux/x86_64",
+      "healthy": true,
+      "security": {
+        "user": "65532:65532",
+        "read_only": true,
+        "capabilities_dropped": true,
+        "no_new_privileges": true,
+        "host_ports": [],
+        "mounts": [],
+        "internal_network": true
+      },
+      "stopped": true,
+      "exit_code": 0,
+      "oom_killed": false,
+      "stop_mode": "graceful"
+    },
+    "payments": {
+      "id": "8a8c51c0112100bbdf7b981f9ebc1f9c4e099baaa24654a85eb85e956f55b868",
+      "image_id": "sha256:3481c4f6aea54924e0f16b1da34fb2082bef2e937f5477fe077f5bce8b4eec35",
+      "architecture": "linux/x86_64",
+      "healthy": true,
+      "security": {
+        "user": "65532:65532",
+        "read_only": true,
+        "capabilities_dropped": true,
+        "no_new_privileges": true,
+        "host_ports": [],
+        "mounts": [],
+        "internal_network": true
+      },
+      "stopped": true,
+      "exit_code": 0,
+      "oom_killed": false,
+      "stop_mode": "graceful"
+    }
+  },
+  "commands": [
+    {
+      "program": "docker",
+      "args": [
+        "version",
+        "--format",
+        "{{.Server.Version}}"
+      ],
+      "started_at": "2026-10-15T19:45:57.501Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:45:57.858Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "info",
+        "--format",
+        "{{.OSType}}/{{.Architecture}}"
+      ],
+      "started_at": "2026-10-15T19:45:57.858Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:45:59.547Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "version",
+        "--short"
+      ],
+      "started_at": "2026-10-15T19:45:59.547Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:46:00.081Z"
+    },
+    {
+      "program": "git",
+      "args": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "started_at": "2026-10-15T19:46:00.081Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:46:00.163Z"
+    },
+    {
+      "program": "git",
+      "args": [
+        "status",
+        "--porcelain"
+      ],
+      "started_at": "2026-10-15T19:46:00.163Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:46:00.244Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "config",
+        "--quiet"
+      ],
+      "started_at": "2026-10-15T19:46:00.245Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:46:00.877Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "build",
+        "orders",
+        "inventory",
+        "payments"
+      ],
+      "started_at": "2026-10-15T19:46:00.877Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:16.700Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "up",
+        "-d",
+        "--wait",
+        "--wait-timeout",
+        "60",
+        "orders",
+        "inventory",
+        "payments"
+      ],
+      "started_at": "2026-10-15T19:48:16.701Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:23.023Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "exec",
+        "-T",
+        "orders",
+        "/app/service",
+        "healthcheck"
+      ],
+      "started_at": "2026-10-15T19:48:23.024Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:23.550Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "ps",
+        "--all",
+        "-q",
+        "orders"
+      ],
+      "started_at": "2026-10-15T19:48:23.550Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:24.049Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "inspect",
+        "0e35127ad00aa13be4f551edf6b032c00ffc4894081efb4e4c33cc723fff9b04"
+      ],
+      "started_at": "2026-10-15T19:48:24.049Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:24.274Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "network",
+        "inspect",
+        "b526971f08818f9bea79d032f95822db2be12065b6e61d0bb72556e38d5fc2a6"
+      ],
+      "started_at": "2026-10-15T19:48:24.278Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:24.501Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "exec",
+        "-T",
+        "inventory",
+        "/app/service",
+        "healthcheck"
+      ],
+      "started_at": "2026-10-15T19:48:24.501Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:25.030Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "ps",
+        "--all",
+        "-q",
+        "inventory"
+      ],
+      "started_at": "2026-10-15T19:48:25.030Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:25.523Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "inspect",
+        "926b6baf437c4b0d0a01302d158872112689ddf89472c58a56f0d66c8f621d84"
+      ],
+      "started_at": "2026-10-15T19:48:25.523Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:25.745Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "network",
+        "inspect",
+        "b526971f08818f9bea79d032f95822db2be12065b6e61d0bb72556e38d5fc2a6"
+      ],
+      "started_at": "2026-10-15T19:48:25.745Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:25.964Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "exec",
+        "-T",
+        "payments",
+        "/app/service",
+        "healthcheck"
+      ],
+      "started_at": "2026-10-15T19:48:25.964Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:26.622Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "ps",
+        "--all",
+        "-q",
+        "payments"
+      ],
+      "started_at": "2026-10-15T19:48:26.622Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:27.459Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "inspect",
+        "8a8c51c0112100bbdf7b981f9ebc1f9c4e099baaa24654a85eb85e956f55b868"
+      ],
+      "started_at": "2026-10-15T19:48:27.459Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:27.893Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "network",
+        "inspect",
+        "b526971f08818f9bea79d032f95822db2be12065b6e61d0bb72556e38d5fc2a6"
+      ],
+      "started_at": "2026-10-15T19:48:27.893Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:28.184Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "stop",
+        "orders"
+      ],
+      "started_at": "2026-10-15T19:48:28.185Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:29.105Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "ps",
+        "--all",
+        "-q",
+        "orders"
+      ],
+      "started_at": "2026-10-15T19:48:29.106Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:29.676Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "inspect",
+        "0e35127ad00aa13be4f551edf6b032c00ffc4894081efb4e4c33cc723fff9b04"
+      ],
+      "started_at": "2026-10-15T19:48:29.676Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:29.836Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "ps",
+        "--all",
+        "-q",
+        "orders"
+      ],
+      "started_at": "2026-10-15T19:48:29.836Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:30.294Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "logs",
+        "0e35127ad00aa13be4f551edf6b032c00ffc4894081efb4e4c33cc723fff9b04"
+      ],
+      "started_at": "2026-10-15T19:48:30.294Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:30.517Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "exec",
+        "-T",
+        "inventory",
+        "/app/service",
+        "healthcheck"
+      ],
+      "started_at": "2026-10-15T19:48:30.523Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:31.082Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "ps",
+        "--all",
+        "-q",
+        "inventory"
+      ],
+      "started_at": "2026-10-15T19:48:31.082Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:31.590Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "inspect",
+        "926b6baf437c4b0d0a01302d158872112689ddf89472c58a56f0d66c8f621d84"
+      ],
+      "started_at": "2026-10-15T19:48:31.590Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:31.821Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "network",
+        "inspect",
+        "b526971f08818f9bea79d032f95822db2be12065b6e61d0bb72556e38d5fc2a6"
+      ],
+      "started_at": "2026-10-15T19:48:31.822Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:32.080Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "exec",
+        "-T",
+        "payments",
+        "/app/service",
+        "healthcheck"
+      ],
+      "started_at": "2026-10-15T19:48:32.080Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:32.626Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "ps",
+        "--all",
+        "-q",
+        "payments"
+      ],
+      "started_at": "2026-10-15T19:48:32.626Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:33.148Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "inspect",
+        "8a8c51c0112100bbdf7b981f9ebc1f9c4e099baaa24654a85eb85e956f55b868"
+      ],
+      "started_at": "2026-10-15T19:48:33.148Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:33.400Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "network",
+        "inspect",
+        "b526971f08818f9bea79d032f95822db2be12065b6e61d0bb72556e38d5fc2a6"
+      ],
+      "started_at": "2026-10-15T19:48:33.400Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:33.648Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "stop",
+        "inventory",
+        "payments"
+      ],
+      "started_at": "2026-10-15T19:48:33.648Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:34.375Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "ps",
+        "--all",
+        "-q",
+        "inventory"
+      ],
+      "started_at": "2026-10-15T19:48:34.375Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:34.879Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "inspect",
+        "926b6baf437c4b0d0a01302d158872112689ddf89472c58a56f0d66c8f621d84"
+      ],
+      "started_at": "2026-10-15T19:48:34.879Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:35.106Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "ps",
+        "--all",
+        "-q",
+        "inventory"
+      ],
+      "started_at": "2026-10-15T19:48:35.106Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:35.618Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "logs",
+        "926b6baf437c4b0d0a01302d158872112689ddf89472c58a56f0d66c8f621d84"
+      ],
+      "started_at": "2026-10-15T19:48:35.618Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:35.845Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "ps",
+        "--all",
+        "-q",
+        "payments"
+      ],
+      "started_at": "2026-10-15T19:48:35.847Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:36.370Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "inspect",
+        "8a8c51c0112100bbdf7b981f9ebc1f9c4e099baaa24654a85eb85e956f55b868"
+      ],
+      "started_at": "2026-10-15T19:48:36.370Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:36.590Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "ps",
+        "--all",
+        "-q",
+        "payments"
+      ],
+      "started_at": "2026-10-15T19:48:36.590Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:37.106Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "logs",
+        "8a8c51c0112100bbdf7b981f9ebc1f9c4e099baaa24654a85eb85e956f55b868"
+      ],
+      "started_at": "2026-10-15T19:48:37.106Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:37.335Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "ps",
+        "--all",
+        "-q",
+        "orders"
+      ],
+      "started_at": "2026-10-15T19:48:37.336Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:37.841Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "logs",
+        "0e35127ad00aa13be4f551edf6b032c00ffc4894081efb4e4c33cc723fff9b04"
+      ],
+      "started_at": "2026-10-15T19:48:37.841Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:38.064Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "ps",
+        "--all",
+        "-q",
+        "inventory"
+      ],
+      "started_at": "2026-10-15T19:48:38.066Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:38.651Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "logs",
+        "926b6baf437c4b0d0a01302d158872112689ddf89472c58a56f0d66c8f621d84"
+      ],
+      "started_at": "2026-10-15T19:48:38.651Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:38.814Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "ps",
+        "--all",
+        "-q",
+        "payments"
+      ],
+      "started_at": "2026-10-15T19:48:38.815Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:39.321Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "logs",
+        "8a8c51c0112100bbdf7b981f9ebc1f9c4e099baaa24654a85eb85e956f55b868"
+      ],
+      "started_at": "2026-10-15T19:48:39.321Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:39.633Z"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-8119b50d",
+        "down",
+        "--remove-orphans"
+      ],
+      "started_at": "2026-10-15T19:48:39.634Z",
+      "exit_code": 0,
+      "finished_at": "2026-10-15T19:48:40.359Z"
+    }
+  ],
+  "limitations": [
+    "No business operations or capacity measurement"
+  ],
+  "docker_version": "29.8.2",
+  "docker_architecture": "linux/x86_64",
+  "compose_version": "5.6.0",
+  "source_revision": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+  "source_dirty": false,
+  "isolation_after_orders_stop": "PASS",
+  "cleanup": "PASS",
+  "finished_at": "2026-10-15T19:48:40.359Z"
+}
+```
+
+<a id="windows-smoke-orders"></a>
+
+## Приложение: Windows: Orders JSONL
+
+Полный исходный документ: `docs/development/evidence/p01/windows-2026-10-15/orders.jsonl`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{"time":"2026-10-15T19:48:17.515896056Z","level":"INFO","msg":"service started","service":"orders","version":"(devel)","revision":"unknown","vcs_modified":"unknown","go_version":"go1.27.2","grpc_address":"[::]:50051"}
+{"time":"2026-10-15T19:48:28.731075342Z","level":"INFO","msg":"service stopping","service":"orders","health":"NOT_SERVING","shutdown_timeout":"10s"}
+{"time":"2026-10-15T19:48:28.731311009Z","level":"INFO","msg":"service stopped","service":"orders","stop_mode":"graceful"}
+```
+
+<a id="windows-smoke-inventory"></a>
+
+## Приложение: Windows: Inventory JSONL
+
+Полный исходный документ: `docs/development/evidence/p01/windows-2026-10-15/inventory.jsonl`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{"time":"2026-10-15T19:48:17.642915372Z","level":"INFO","msg":"service started","service":"inventory","version":"(devel)","revision":"unknown","vcs_modified":"unknown","go_version":"go1.27.2","grpc_address":"[::]:50051"}
+{"time":"2026-10-15T19:48:33.994730098Z","level":"INFO","msg":"service stopping","service":"inventory","health":"NOT_SERVING","shutdown_timeout":"10s"}
+{"time":"2026-10-15T19:48:33.995400269Z","level":"INFO","msg":"service stopped","service":"inventory","stop_mode":"graceful"}
+```
+
+<a id="windows-smoke-payments"></a>
+
+## Приложение: Windows: Payments JSONL
+
+Полный исходный документ: `docs/development/evidence/p01/windows-2026-10-15/payments.jsonl`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{"time":"2026-10-15T19:48:17.801803375Z","level":"INFO","msg":"service started","service":"payments","version":"(devel)","revision":"unknown","vcs_modified":"unknown","go_version":"go1.27.2","grpc_address":"[::]:50051"}
+{"time":"2026-10-15T19:48:33.994900713Z","level":"INFO","msg":"service stopping","service":"payments","health":"NOT_SERVING","shutdown_timeout":"10s"}
+{"time":"2026-10-15T19:48:33.995212132Z","level":"INFO","msg":"service stopped","service":"payments","stop_mode":"graceful"}
+```
+
+<a id="windows-smoke-environment"></a>
+
+## Приложение: Windows: фактический бюджет
+
+Полный исходный документ: `docs/development/evidence/p01/windows-2026-10-15/environment.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "desktop": "4.95.0",
+  "docker": "29.8.2",
+  "remaining_containers_before_stop": [],
+  "cpus": 2,
+  "memory_bytes": 1996603392,
+  "wsl_config": {
+    "memory": "2GB",
+    "processors": 2,
+    "swap": "1GB"
+  },
+  "platform": "linux/x86_64",
+  "observed_at": "2026-10-15T22:49:35.7064530+03:00"
+}
+```
+
+<a id="windows-smoke-cleanup"></a>
+
+## Приложение: Windows: подтверждение остановки
+
+Полный исходный документ: `docs/development/evidence/p01/windows-2026-10-15/cleanup.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "containers_remaining": 0,
+  "wsl_shutdown_exit": 0,
+  "images_and_build_cache_preserved": true,
+  "desktop_stop_exit": 0,
+  "remaining_development_processes": [],
+  "installed_tools_preserved": true,
+  "docker_autostart": false,
+  "docker_run_entry_present": false,
+  "observed_at": "2026-10-15T22:49:53.4008625+03:00",
+  "reboot_performed": false
+}
+```

@@ -30,11 +30,11 @@
 | Detailed process diagrams and review gates | PostgreSQL ownership, migrations and gRPC contracts | Grafana dashboards, alerts and experiment reports |
 | Portable context with a freshness check | Durable workflows, Kafka and compensation | Scaling comparisons under equal resource budgets |
 
-The first code [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) covers **P01-01**, after G0 and before G1. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) tracks all eight tasks; [the packet specification](docs/development/packets/P01.md) defines acceptance criteria. P01-01–04 are accepted and merged in PR #6/#7. P01-05–08 are being implemented together. Windows Docker/WSL are unavailable, so the Windows container acceptance check is NOT_RUN; the final PR remains draft until that check is completed.
+The first code [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) covers **P01-01**, after G0 and before G1. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) tracks all eight tasks; [the packet specification](docs/development/packets/P01.md) defines acceptance criteria. P01-01–04 are accepted and merged in PR #6/#7. P01-05–08 are ready for owner review in [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). All eight implementation checks are complete; four tasks are owner-accepted. [Windows container smoke](docs/development/evidence/p01/WINDOWS_SMOKE.md) and native Linux AMD64/ARM64 CI pass. The personal Mac remains untested.
 
 No capacity numbers or performance improvements are claimed before measurement. The [roadmap](docs/ROADMAP.md) distinguishes design hypotheses from acceptance criteria and observed results.
 
-The owner has agreed on container-based development for Windows and macOS and a reusable lab boundary with business adapters. The [environment plan](docs/development/ENVIRONMENT.md) and [boundary proposal](docs/architecture/LAB_BOUNDARY.md) record this direction; runtime containers are being verified; a second business integration is still to come.
+The owner has agreed on container-based development for Windows and macOS and a reusable lab boundary with business adapters. The [environment plan](docs/development/ENVIRONMENT.md) and [boundary proposal](docs/architecture/LAB_BOUNDARY.md) record this direction; runtime containers are verified on Windows/WSL2 and native Linux AMD64/ARM64; a second business integration is still to come.
 
 ## What this project investigates
 

@@ -1,0 +1,14 @@
+{
+  "desktop": "4.95.0",
+  "docker": "29.8.2",
+  "remaining_containers_before_stop": [],
+  "cpus": 2,
+  "memory_bytes": 1996603392,
+  "wsl_config": {
+    "memory": "2GB",
+    "processors": 2,
+    "swap": "1GB"
+  },
+  "platform": "linux/x86_64",
+  "observed_at": "2026-10-15T22:49:35.7064530+03:00"
+}
