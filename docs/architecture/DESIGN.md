@@ -109,7 +109,7 @@ flowchart LR
 Порядок небольших пакетов для код-ревью:
 
 1. **P01 — первый PR после G0, до G1.** Три Go entrypoints, конфигурация, health, shutdown и JSON-логи; контейнерный toolchain, образы сервисов, минимальный Compose и Go CI. Дополнение среды согласовано после G0 для Windows/macOS; детали и статус — в [описании среды](../development/ENVIRONMENT.md).
-2. **P02:** Compose для PostgreSQL/Kafka/Redis, отдельные БД/роли, миграции и seed. [Согласованная декомпозиция](../development/packets/P02.md) сохраняет этот объём: восемь Issues, первый будущий PR — 01–04, второй — 05–08. Реализация не начата.
+2. **P02:** Compose для PostgreSQL/Kafka/Redis, отдельные БД/роли, миграции и seed. [Согласованная декомпозиция](../development/packets/P02.md) сохраняет этот объём: две задачи под два будущих PR: #12 — PostgreSQL/миграции/seed, #16 — Kafka/Redis и проверка полного стенда. Реализация не начата.
 3. **P03:** Protobuf-контракты с operation keys, состояниями и классификацией ошибок.
 4. **P04:** Create/Get/GetByRequestKey и долговечная задача Orders.
 5. **P05:** Reserve/Commit/Release/GetReservation с ledger, блокировками и cancellation barrier.

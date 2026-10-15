@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 39,
+  "context_revision": 40,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-16",
   "user_timezone": "Europe/Moscow",
@@ -9,31 +9,25 @@
   "current_phase": "G0_APPROVED_P01_DONE_P02_PLAN_PUBLISHED",
   "current_task": {
     "id": "P02-PLANNING",
-    "description": "Published approved P02 planning: eight issues, milestone, descriptions, criteria and two future PR groups",
+    "description": "Consolidated P02 into two cohesive issues, each for one future PR; complete requirements and observable acceptance criteria",
     "status": "PLAN_APPROVED_AND_PUBLISHED_IMPLEMENTATION_NOT_STARTED",
-    "authorization": "Owner explicitly instructed: публикуй на гит, разработку не начинай",
+    "authorization": "Latest owner instruction: combine P02-01–04 into one task and P02-05–08 into another, each with a complete description and quality acceptance criteria; previous no-development instruction remains",
     "result": {
       "specification": "docs/development/packets/P02.md",
       "issue_url": null,
       "implementation": "NOT_STARTED",
-      "priority": "APPROVED_P02_01_THROUGH_08",
+      "priority": "ISSUE12_THEN_ISSUE16",
       "code_changes": false,
       "local_runtime_started": false,
       "documentation_pr": null,
       "draft": null,
       "owner_decision": "PLAN_AND_PUBLICATION_APPROVED; IMPLEMENTATION_EXPLICITLY_PROHIBITED_UNTIL_SEPARATE_INSTRUCTION",
-      "publication_status": "MILESTONE_AND_8_ISSUES_PUBLISHED; DOCS_BRANCH_PREPARED",
+      "publication_status": "TWO_CONSOLIDATED_ISSUES_PUBLISHED",
       "followup": "Wait for owner instruction to start implementation; do not create implementation PRs yet",
-      "context_correction": "Publication includes closure of premature Issue10 and PR11 and subsequent explicit authorization",
+      "context_correction": "Latest consolidation supersedes the eight-Issue format; six replaced tasks are closed not_planned and outside milestone",
       "issue_urls": [
         "https://github.com/Includeoyasi/faultline-lab/issues/12",
-        "https://github.com/Includeoyasi/faultline-lab/issues/13",
-        "https://github.com/Includeoyasi/faultline-lab/issues/14",
-        "https://github.com/Includeoyasi/faultline-lab/issues/15",
-        "https://github.com/Includeoyasi/faultline-lab/issues/16",
-        "https://github.com/Includeoyasi/faultline-lab/issues/17",
-        "https://github.com/Includeoyasi/faultline-lab/issues/18",
-        "https://github.com/Includeoyasi/faultline-lab/issues/19"
+        "https://github.com/Includeoyasi/faultline-lab/issues/16"
       ],
       "milestone_url": "https://github.com/Includeoyasi/faultline-lab/milestone/1",
       "publication_branch": "docs/p02-tasks",
@@ -100,7 +94,7 @@
       "smoke_node": "v22.23.3"
     },
     "git_repository": "INITIALIZED",
-    "git_commit": "646dbfd72fa962b76f9c2223d663957ccb1adfcc",
+    "git_commit": "2eceac6f425c6772eb0667cd70a9c47b3247f69b",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -293,7 +287,8 @@
     "Создана отдельная backlog-задача #9 (AI-Your-Bro), код переноса smoke на Go не начат. Подготовлены обзор инженерных решений, ADR 0002 о процессе фиксации, proposed ADR 0003 и переносимая спецификация #9. Документация представляется в PR #8; приёмка P01/G1 не меняется.",
     "16 октября наблюдён owner merge PR8 (HEAD56f3672, merge3ca290d): P01 принят 8/8, Issue3 закрыт. По запросу подготовлен предложенный план P02 с восемью задачами и критериями, создан Issue10 BACKLOG и draft документационный PR11. Реализация P02 и Go smoke9 не начата; приоритет/группировка PR обсуждаются.",
     "После замечания владельца преждевременный PR11 закрыт без merge. P02 остаётся обсуждением, код не начат. Корректировка контекста сохранена локально, дальнейшая публикация остановлена; Issue10 не означает принятие плана.",
-    "16 октября владелец принял короткие описания/критерии восьми задач P02, отдельные Issues в milestone и два будущих PR, затем прямо разрешил публикацию с запретом разработки. Созданы milestoneP02 и Issues12–19, все TODO/NOT_STARTED, без исполнителей и сроков. Закрытие преждевременного Issue10 not_planned отражено в снимке; PR11 закрыт без merge. Реализация P02 и Go smoke9 не начата."
+    "16 октября владелец принял короткие описания/критерии восьми задач P02, отдельные Issues в milestone и два будущих PR, затем прямо разрешил публикацию с запретом разработки. Созданы milestoneP02 и Issues12–19, все TODO/NOT_STARTED, без исполнителей и сроков. Закрытие преждевременного Issue10 not_planned отражено в снимке; PR11 закрыт без merge. Реализация P02 и Go smoke9 не начата.",
+    "По последнему поручению владельца P02 объединён в две задачи под два будущих PR: #12 PostgreSQL/миграции/seed (прежние01–04), #16 Kafka/Redis/интеграционные проверки/итог (прежние05–08). Описания переписаны по существу с проверяемыми критериями. Шесть заменённых карточек закрыты not_planned и убраны из milestone. Прогресс реализации0/2; код и PR не начинались."
   ],
   "next_implementation_packet": {
     "id": "P02",
@@ -302,171 +297,71 @@
     "specification": "docs/development/packets/P02.md",
     "github_issue_url": null,
     "tracker_stage": "TODO",
-    "decomposition_status": "APPROVED_AND_PUBLISHED",
-    "authorization": "Names, short descriptions, criteria, eight separate Issues in milestone P02 and two future PR groups approved in chat. Publication explicitly authorized; development explicitly not authorized yet.",
+    "decomposition_status": "TWO_COHESIVE_ISSUES_ONE_PR_EACH",
+    "authorization": "Owner explicitly requested two consolidated tasks: former01–04 in Issue12, former05–08 in Issue16, one future PR each. Requirements edited/published within approved G0; implementation not authorized.",
     "approval_dependency": "G0 accepted; P02 plan approved. Await separate instruction to start development. G1 NOT_READY.",
-    "acceptance_status": "PLAN_APPROVED; IMPLEMENTATION_NOT_STARTED; CODE_ACCEPTANCE_0_OF_8",
+    "acceptance_status": "REQUIREMENTS_PREPARED_PER_OWNER_REQUEST; IMPLEMENTATION_NOT_STARTED; CODE_ACCEPTANCE_0_OF_2",
     "progress": {
       "completed": 0,
-      "total": 8,
+      "total": 2,
       "owner_accepted": 0
     },
     "tasks": [
       {
-        "id": "P02-01",
-        "title": "Настроить раздельный запуск компонентов и хранение данных в Docker Compose",
-        "description": "Подготовить Compose для запуска компонентов, настройки окружения и сохранения данных.",
+        "id": "P02-01–04",
+        "title": "P02: Подготовить PostgreSQL, миграции и исходные данные",
+        "description": "Подготовить воспроизводимую основу данных для Orders, Inventory и Payments: PostgreSQL в Compose, отдельные базы и роли, версионируемые миграции и начальный каталог Inventory. Новый стенд должен подготавливаться документированными командами, а повторная подготовка и перезапуски — сохранять существующие данные.",
         "acceptance_criteria": [
-          "Компоненты запускаются по конфигурации.",
-          "Обычная остановка сохраняет данные."
+          "PostgreSQL запускается из чистого checkout через Compose с закреплённым образом и постоянным volume. Настройки окружения вынесены из Go-кода; секреты отсутствуют в Git и логах.",
+          "Созданы orders_db, inventory_db и payments_db с отдельными прикладными ролями и правами миграции. Разрешённые подключения и операции проверены на реальной БД.",
+          "Прикладные роли не имеют superuser/DDL-прав и доступа к чужим базам; отрицательные проверки подтверждают запреты.",
+          "Миграции применяются по сервисам с нуля; повторный запуск не меняет схему. Одновременный запуск не дублирует версии; ошибка возвращает ненулевой код и не помечает миграцию успешно применённой.",
+          "Минимальная схема Inventory и seed создают воспроизводимые SKU, цены в минимальных денежных единицах и исходные остатки. Повтор seed не дублирует товары и не перезаписывает изменённые остатки.",
+          "Штатный перезапуск сохраняет схему и данные. Сброс выполняется отдельной явной командой только для выделенного стенда.",
+          "Проверки прав, миграций, seed и сохранности данных включены в CI и проходят вместе с существующими Go-проверками.",
+          "Инструкция позволяет воспроизвести подготовку, проверки и остановку через контейнерные инструменты; указаны фактические результаты и ограничения среды."
         ],
-        "depends_on": [
-          "P01"
+        "covered_prior_ids": [
+          "P02-01",
+          "P02-02",
+          "P02-03",
+          "P02-04"
         ],
+        "depends_on_issue_number": 3,
         "status": "TODO",
         "implementation": "NOT_STARTED",
-        "owner_acceptance": "PLAN_ACCEPTED; CODE_NOT_IMPLEMENTED_OR_ACCEPTED",
+        "owner_acceptance": "NOT_IMPLEMENTED_OR_ACCEPTED",
         "acceptance_source": "docs/development/packets/P02.md",
         "github_issue_number": 12,
         "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/12",
         "planned_pr": 1
       },
       {
-        "id": "P02-02",
-        "title": "Создать базы сервисов и разграничить права доступа в PostgreSQL",
-        "description": "Создать три базы PostgreSQL и ограничить доступ каждого сервиса своей базой.",
+        "id": "P02-05–08",
+        "title": "P02: Подключить Kafka и Redis с интеграционными проверками и CI",
+        "description": "Дополнить стенд из #12 одним Kafka broker и Redis. Проверить доставку и сохранность сообщений, доступ к кешу и TTL, затем автоматизировать проверку полного состава инфраструктуры. Сохранить инструкции и результаты, по которым можно воспроизвести запуск, оценить потребление ресурсов и безопасно остановить стенд.",
         "acceptance_criteria": [
-          "Каждый сервис работает со своей БД.",
-          "Доступ к чужой базе и изменение схемы под прикладной ролью запрещены."
+          "Kafka и Redis запускаются в Compose с закреплёнными образами, явной конфигурацией и проверками готовности. Адреса задаются через DNS стенда; секреты не публикуются.",
+          "Реальный producer/consumer подтверждает отправку и чтение сообщений в изолированном топике. После штатного перезапуска брокера записи сохраняются на volume и доступны для чтения.",
+          "Для Redis проверены разрешённый и запрещённый доступ, запись, чтение и истечение TTL. Ошибки подключения завершаются в пределах заданного таймаута; тест использует собственные ключи.",
+          "Интеграционный прогон проверяет совместный запуск PostgreSQL, Kafka и Redis, перезапуски и сохранность данных. У него отдельный Compose project, ограниченные сроки команд и диагностика при сбое.",
+          "В Linux CI AMD64/ARM64 проходят существующие Go-проверки и новые инфраструктурные проверки. Выполнен smoke на доступном Windows/WSL2; macOS отражается отдельным результатом и остаётся NOT_RUN до реальной проверки.",
+          "Cleanup после успеха и ошибки затрагивает только ресурсы своего тестового запуска. Обычная остановка сохраняет данные; после локальных проверок Docker Desktop/WSL остановлены по правилу личного ПК.",
+          "Инструкция и отчёт содержат команды запуска/проверки/остановки, версии и digests, лимиты, наблюдаемое потребление ресурсов и результаты PASS/FAIL/NOT_RUN. Переносимый контекст обновлён."
         ],
-        "depends_on": [
-          "P02-01"
+        "covered_prior_ids": [
+          "P02-05",
+          "P02-06",
+          "P02-07",
+          "P02-08"
         ],
+        "depends_on_issue_number": 12,
         "status": "TODO",
         "implementation": "NOT_STARTED",
-        "owner_acceptance": "PLAN_ACCEPTED; CODE_NOT_IMPLEMENTED_OR_ACCEPTED",
-        "acceptance_source": "docs/development/packets/P02.md",
-        "github_issue_number": 13,
-        "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/13",
-        "planned_pr": 1
-      },
-      {
-        "id": "P02-03",
-        "title": "Организовать версионируемые миграции с контролем повторного запуска и ошибок",
-        "description": "Настроить применение миграций с контролем версий, повторных запусков и ошибок.",
-        "acceptance_criteria": [
-          "Чистый и повторный запуск миграций корректны.",
-          "Ошибки и конкурентные запуски обрабатываются явно."
-        ],
-        "depends_on": [
-          "P02-02"
-        ],
-        "status": "TODO",
-        "implementation": "NOT_STARTED",
-        "owner_acceptance": "PLAN_ACCEPTED; CODE_NOT_IMPLEMENTED_OR_ACCEPTED",
-        "acceptance_source": "docs/development/packets/P02.md",
-        "github_issue_number": 14,
-        "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/14",
-        "planned_pr": 1
-      },
-      {
-        "id": "P02-04",
-        "title": "Создать каталог товаров и повторяемую загрузку тестовых данных без сброса остатков",
-        "description": "Подготовить каталог товаров и загрузку тестовых данных без перезаписи остатков.",
-        "acceptance_criteria": [
-          "Исходные данные воспроизводимы.",
-          "Повтор seed не дублирует товары и не сбрасывает остатки."
-        ],
-        "depends_on": [
-          "P02-03"
-        ],
-        "status": "TODO",
-        "implementation": "NOT_STARTED",
-        "owner_acceptance": "PLAN_ACCEPTED; CODE_NOT_IMPLEMENTED_OR_ACCEPTED",
-        "acceptance_source": "docs/development/packets/P02.md",
-        "github_issue_number": 15,
-        "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/15",
-        "planned_pr": 1
-      },
-      {
-        "id": "P02-05",
-        "title": "Настроить Kafka и проверить доставку и сохранность сообщений после перезапуска",
-        "description": "Поднять Kafka, проверить доставку сообщений и их сохранность после перезапуска.",
-        "acceptance_criteria": [
-          "Отправка и чтение сообщений проходят.",
-          "Записи сохраняются после перезапуска брокера."
-        ],
-        "depends_on": [
-          "P02-01"
-        ],
-        "status": "TODO",
-        "implementation": "NOT_STARTED",
-        "owner_acceptance": "PLAN_ACCEPTED; CODE_NOT_IMPLEMENTED_OR_ACCEPTED",
+        "owner_acceptance": "NOT_IMPLEMENTED_OR_ACCEPTED",
         "acceptance_source": "docs/development/packets/P02.md",
         "github_issue_number": 16,
         "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/16",
-        "planned_pr": 2
-      },
-      {
-        "id": "P02-06",
-        "title": "Настроить Redis и проверить права доступа и время жизни ключей",
-        "description": "Поднять Redis, проверить доступ, чтение, запись и истечение ключей.",
-        "acceptance_criteria": [
-          "Доступ, чтение и запись проверены.",
-          "TTL работает, ошибки подключения ограничены по времени."
-        ],
-        "depends_on": [
-          "P02-01"
-        ],
-        "status": "TODO",
-        "implementation": "NOT_STARTED",
-        "owner_acceptance": "PLAN_ACCEPTED; CODE_NOT_IMPLEMENTED_OR_ACCEPTED",
-        "acceptance_source": "docs/development/packets/P02.md",
-        "github_issue_number": 17,
-        "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/17",
-        "planned_pr": 2
-      },
-      {
-        "id": "P02-07",
-        "title": "Автоматизировать в CI проверки прав БД, миграций, перезапусков и очистки тестового стенда",
-        "description": "Автоматизировать проверки инфраструктуры в CI и безопасную очистку тестового окружения.",
-        "acceptance_criteria": [
-          "Проверки автоматически проходят в CI.",
-          "Очистка затрагивает только ресурсы своего тестового запуска."
-        ],
-        "depends_on": [
-          "P02-02",
-          "P02-03",
-          "P02-04",
-          "P02-05",
-          "P02-06"
-        ],
-        "status": "TODO",
-        "implementation": "NOT_STARTED",
-        "owner_acceptance": "PLAN_ACCEPTED; CODE_NOT_IMPLEMENTED_OR_ACCEPTED",
-        "acceptance_source": "docs/development/packets/P02.md",
-        "github_issue_number": 18,
-        "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/18",
-        "planned_pr": 2
-      },
-      {
-        "id": "P02-08",
-        "title": "Подготовить инструкции запуска P02 и отчёт о проверках и потреблении ресурсов",
-        "description": "Описать запуск стенда, сохранить результаты проверок и потребление ресурсов.",
-        "acceptance_criteria": [
-          "Инструкция воспроизводима.",
-          "Результаты, ресурсы и ограничения сохранены.",
-          "Переносимый контекст актуален."
-        ],
-        "depends_on": [
-          "P02-07"
-        ],
-        "status": "TODO",
-        "implementation": "NOT_STARTED",
-        "owner_acceptance": "PLAN_ACCEPTED; CODE_NOT_IMPLEMENTED_OR_ACCEPTED",
-        "acceptance_source": "docs/development/packets/P02.md",
-        "github_issue_number": 19,
-        "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/19",
         "planned_pr": 2
       }
     ],
@@ -478,19 +373,13 @@
       "P05 Inventory operations and ledger"
     ],
     "proposed_pr_groups": [
-      "APPROVED PR1: P02-01..04; tests/docs included",
-      "APPROVED PR2: P02-05..08; tests/docs included"
+      "PR1: Issue12 (formerP02-01..04), tests/docs included",
+      "PR2: Issue16 (formerP02-05..08), tests/docs included"
     ],
     "smoke_migration": "Issue9 remains separate BACKLOG; priority relative to P03 pending owner",
     "github_issue_urls": [
       "https://github.com/Includeoyasi/faultline-lab/issues/12",
-      "https://github.com/Includeoyasi/faultline-lab/issues/13",
-      "https://github.com/Includeoyasi/faultline-lab/issues/14",
-      "https://github.com/Includeoyasi/faultline-lab/issues/15",
-      "https://github.com/Includeoyasi/faultline-lab/issues/16",
-      "https://github.com/Includeoyasi/faultline-lab/issues/17",
-      "https://github.com/Includeoyasi/faultline-lab/issues/18",
-      "https://github.com/Includeoyasi/faultline-lab/issues/19"
+      "https://github.com/Includeoyasi/faultline-lab/issues/16"
     ],
     "milestone_url": "https://github.com/Includeoyasi/faultline-lab/milestone/1",
     "publication_approval": {
@@ -500,6 +389,22 @@
       "final_criteria_approval": "Хорошо",
       "publication": "публикуй на гит, разработку не начинай",
       "implementation_authorized": false
+    },
+    "consolidation": {
+      "date": "2026-10-16",
+      "source": "Direct owner instruction in chat",
+      "groups": "01–04 → Issue12; 05–08 → Issue16; one PR per issue",
+      "replaces": "Previous eight-Issue tracking; unchanged overall P02 scope",
+      "closed_not_planned": [
+        13,
+        14,
+        15,
+        17,
+        18,
+        19
+      ],
+      "removed_from_milestone": true,
+      "no_work_claimed_done": true
     }
   },
   "active_blockers": [],
@@ -1155,6 +1060,19 @@
         "git diff --check"
       ],
       "detail": "Executor create responses verify milestoneP02 and eight open Issues12–19, authorAI-Your-Bro, unassigned, all criteria unchecked. Local documentation/context checks passed; no application/runtime source changes and no local runtime started. Dependency links and final branch publication verified separately after publication."
+    },
+    {
+      "date": "2026-10-16",
+      "check": "P02 consolidation and documentation",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly (PowerShell7)",
+        "tools/update_context.ps1 -CheckOnly (Windows PowerShell5.1)",
+        "git diff --check",
+        "Executor GET milestone issue collection and PATCH response verification"
+      ],
+      "detail": "Milestone-filtered issue collection contains only open12/16; titles/bodies match canonical descriptions and criteria, all checkboxes unchecked and no assignees. Six replaced cards are closed not_planned with milestone=null. Local docs/context checks passed. Milestone cached aggregate counters are checked separately; no development/runtime startup or PR creation."
     }
   ],
   "source_documents": [
@@ -1729,6 +1647,12 @@
       "date": "2026-10-16",
       "summary": "План P02 согласован в чате и опубликован по отдельному прямому поручению: milestoneP02, восемь Issues12–19, два будущих PR (01–04/05–08), короткие тексты и критерии. Все TODO/NOT_STARTED; разработку владелец пока запретил. Issue10 закрыт not_planned, PR11 закрыт без merge. Обновлены источники и контекст; публикация документов в docs/p02-tasks, новый PR не создаётся.",
       "trigger": "публикуй на гит, разработку не начинай"
+    },
+    {
+      "revision": 40,
+      "date": "2026-10-16",
+      "summary": "Вместо восьми мелких Issues P02 теперь две цельные задачи #12/#16, каждая под один будущий PR. Полные описания и критерии заменяют организационную воду и дублирование. #13–15/#17–19 закрыты not_planned, исключены из milestone, не считаются выполненными. Объём G0/P02 сохранён; реализация0/2, G1 NOT_READY, новые PR не созданы.",
+      "trigger": "Владелец попросил объединить01–04 в одну задачу и05–08 в другую, с хорошими полными описаниями и качественными критериями"
     }
   ],
   "repository": {
@@ -1759,19 +1683,13 @@
       "pull_request_url": null,
       "status": "AUTHORIZED_PLANNING_PUBLICATION",
       "author": "AI-Your-Bro",
-      "scope": "Approved plan and portable context only; no development or new PR",
+      "scope": "Consolidated planning documentation and context only; no implementation or new PR",
       "milestone_url": "https://github.com/Includeoyasi/faultline-lab/milestone/1",
       "issue_urls": [
         "https://github.com/Includeoyasi/faultline-lab/issues/12",
-        "https://github.com/Includeoyasi/faultline-lab/issues/13",
-        "https://github.com/Includeoyasi/faultline-lab/issues/14",
-        "https://github.com/Includeoyasi/faultline-lab/issues/15",
-        "https://github.com/Includeoyasi/faultline-lab/issues/16",
-        "https://github.com/Includeoyasi/faultline-lab/issues/17",
-        "https://github.com/Includeoyasi/faultline-lab/issues/18",
-        "https://github.com/Includeoyasi/faultline-lab/issues/19"
+        "https://github.com/Includeoyasi/faultline-lab/issues/16"
       ],
-      "observed_commit": "646dbfd72fa962b76f9c2223d663957ccb1adfcc",
+      "observed_commit": "2eceac6f425c6772eb0667cd70a9c47b3247f69b",
       "observed_ci": [],
       "note": "git_commit is the observed parent; final publication hash is checked with git. No implementation PR created."
     }
@@ -1883,7 +1801,7 @@
     "automatic_snapshot_sync": false,
     "completion_rule": "DONE только после выполненных критериев, принятия владельцем конкретного HEAD и merge; draft/зелёный CI не равны приёмке",
     "snapshot_rule": "GitHub Issue — источник текущего выполнения; спецификация и контекст сохраняют датированный снимок с URL, результатами и ограничениями",
-    "tracker": "P02: eight separate GitHub Issues grouped by milestone; P01 retained historical one-Issue checklist",
+    "tracker": "P02: two cohesive GitHub Issues in milestone P02, one future PR per issue",
     "stages": [
       "BACKLOG",
       "TODO",
@@ -1897,28 +1815,22 @@
     "current_packet_stage": "TODO",
     "progress": {
       "completed": 0,
-      "total": 8,
+      "total": 2,
       "owner_accepted": 0
     },
     "last_issue_observation": {
       "date": "2026-10-16",
       "issue_numbers": [
         12,
-        13,
-        14,
-        15,
-        16,
-        17,
-        18,
-        19
+        16
       ],
       "state": "OPEN",
       "stage": "TODO",
       "implementation": "NOT_STARTED",
-      "assignees": [],
       "milestone": 1,
-      "source": "Executor-authenticated create responses; all unchecked criteria",
-      "note": "Approved publication only. No implementation PR or code changes."
+      "assignees": [],
+      "source": "Executor PATCH responses verified for complete bodies/titles",
+      "note": "Six replaced cards closed not_planned and removed from milestone; no implementation or new PR"
     },
     "documentation_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
     "documentation_pr_closes_packet": false,
@@ -1926,7 +1838,7 @@
     "current_subtask": "P02-PLANNING_PUBLICATION",
     "task_pr_granularity": {
       "confirmed_on": "2026-10-16",
-      "rule": "P02 uses eight separate Issues and two future implementation PRs: 01–04, 05–08. Tests/docs in both. No implementation authorized yet.",
+      "rule": "Issue12 = first PR (former01–04); Issue16 = second PR (former05–08); one issue per PR with its own tests/docs",
       "whole_packet_acceptance": "PENDING_IMPLEMENTATION_REVIEW_AND_MERGE"
     },
     "current_task_pr_url": null,
@@ -1972,13 +1884,7 @@
     },
     "current_packet_issue_urls": [
       "https://github.com/Includeoyasi/faultline-lab/issues/12",
-      "https://github.com/Includeoyasi/faultline-lab/issues/13",
-      "https://github.com/Includeoyasi/faultline-lab/issues/14",
-      "https://github.com/Includeoyasi/faultline-lab/issues/15",
-      "https://github.com/Includeoyasi/faultline-lab/issues/16",
-      "https://github.com/Includeoyasi/faultline-lab/issues/17",
-      "https://github.com/Includeoyasi/faultline-lab/issues/18",
-      "https://github.com/Includeoyasi/faultline-lab/issues/19"
+      "https://github.com/Includeoyasi/faultline-lab/issues/16"
     ],
     "current_milestone_url": "https://github.com/Includeoyasi/faultline-lab/milestone/1",
     "premature_issue_history": {
@@ -1987,6 +1893,22 @@
       "state_reason": "not_planned",
       "source": "Executor PATCH response verified on2026-10-16",
       "not_completed": true
+    },
+    "consolidation_history": {
+      "date": "2026-10-16",
+      "source": "Direct owner instruction in chat",
+      "groups": "01–04 → Issue12; 05–08 → Issue16; one PR per issue",
+      "replaces": "Previous eight-Issue tracking; unchanged overall P02 scope",
+      "closed_not_planned": [
+        13,
+        14,
+        15,
+        17,
+        18,
+        19
+      ],
+      "removed_from_milestone": true,
+      "no_work_claimed_done": true
     }
   },
   "review_sequence": {
@@ -2009,21 +1931,16 @@
       "whole_packet_acceptance": "PENDING_FINAL_PR_AND_ALL_APPLICABLE_CRITERIA"
     },
     "p02_approved_grouping": {
-      "issues": "Separate Issues12–19, milestoneP02",
+      "issues": "Two Issues12/16, milestoneP02",
       "pr1": [
-        "P02-01",
-        "P02-02",
-        "P02-03",
-        "P02-04"
+        "Issue12"
       ],
       "pr2": [
-        "P02-05",
-        "P02-06",
-        "P02-07",
-        "P02-08"
+        "Issue16"
       ],
       "tests_docs": "Both PRs",
-      "implementation_authorized": false
+      "implementation_authorized": false,
+      "previous_codes": "01–04 first issue; 05–08 second issue"
     }
   },
   "repository_security": {
@@ -2702,6 +2619,6 @@
     "issue10": "CLOSED_NOT_PLANNED; superseded after explicit authorization by eight Issues12–19",
     "pr11": "CLOSED_UNMERGED",
     "correction": "Context revision39 is authorized for publication in docs/p02-tasks",
-    "subsequent_authorization": "Owner explicitly approved publication only; development remains prohibited until separate instruction"
+    "subsequent_authorization": "Owner authorized plan publication, then consolidation into two issues. Development remains prohibited until separate instruction."
   }
 }

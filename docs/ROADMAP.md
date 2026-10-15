@@ -387,7 +387,7 @@ docs/adr/
 
 P01 включает контейнерный toolchain, образы трёх сервисов и минимальный Compose-запуск вместе с Go entrypoints/config/health/shutdown/JSON-логами и Go CI. Основная инфраструктура подключается в P02, наблюдаемость — на соответствующем этапе. Инструменты запускаются по задаче; адаптер не требует отдельного контейнера.
 
-[P01](development/packets/P01.md) завершён, Issue #3 закрыт. [P02](development/packets/P02.md) согласован и опубликован: восемь отдельных [Issues #12–19 в milestone P02](https://github.com/Includeoyasi/faultline-lab/milestone/1), два будущих PR, короткие описания и критерии. Задачи TODO / NOT_STARTED; реализация не начата. [Учёт задач](development/TASK_TRACKING.md) определяет переходы статусов; G1 NOT_READY.
+[P01](development/packets/P01.md) завершён, Issue #3 закрыт. [P02](development/packets/P02.md) согласован и опубликован: две задачи в [milestone P02](https://github.com/Includeoyasi/faultline-lab/milestone/1), каждая под один будущий PR: #12 — PostgreSQL и подготовка данных, #16 — Kafka/Redis и проверка полного стенда. Задачи TODO / NOT_STARTED; реализация не начата. [Учёт задач](development/TASK_TRACKING.md) определяет переходы статусов; G1 NOT_READY.
 
 Этап 2: запуск Compose и loadgen вручную, экспорт JSON/CSV, Markdown отчёт по шаблону. Этап 4: hooks и crash scripts. Этап 7: `labctl` объединяет уже проверенные действия.
 
