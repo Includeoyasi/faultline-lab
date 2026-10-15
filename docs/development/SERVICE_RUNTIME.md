@@ -2,7 +2,7 @@
 
 Три независимых процесса Orders, Inventory и Payments проверяют настройки, пишут JSON в stderr и обслуживают стандартный `grpc.health.v1.Health/Check`. Health пока подтверждает только работу gRPC-каркаса. Бизнес-методов, PostgreSQL/Kafka/Redis и доменных protobuf здесь нет.
 
-P01-01 принят владельцем и слит через [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6). [Draft PR #7](https://github.com/Includeoyasi/faultline-lab/pull/7) объединяет задачи 02–04 по прямому поручению владельца. Статус проверок и ссылка на текущий PR находятся в [P01](packets/P01.md) и [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3).
+P01-01 принят владельцем и слит через [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6). [PR #7](https://github.com/Includeoyasi/faultline-lab/pull/7) объединяет задачи 02–04 по прямому поручению владельца. Статус проверок и ссылка на текущий PR находятся в [P01](packets/P01.md) и [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3).
 
 ## Как устроен запуск
 
@@ -45,6 +45,17 @@ flowchart LR
 - `service failed` (ERROR): ошибка bind или обслуживания/остановки.
 
 Уровень фильтрует записи: при WARN/ERROR штатные старт/стоп INFO не выводятся. По умолчанию INFO они доступны. Секреты и payload не добавляются. Идентификаторы запросов/заказов появятся вместе с соответствующими операциями.
+
+## Наблюдённые записи CI
+
+Ниже реальные записи из [прошедшего AMD64 job](https://github.com/Includeoyasi/faultline-lab/actions/runs/38734815221), source HEAD `4d3b235`. Порядок JSON-ключей нормализован тестом. В pull_request CI checkout собирает временный merge ref: поэтому build revision `108fabc` отличается от HEAD ветки. Это сведения о фактически собранном коде, а не подстановка SHA задачи.
+
+```json
+{"go_version":"go1.27.2","grpc_address":"127.0.0.1:34189","level":"INFO","msg":"service started","revision":"108fabc9d038d1a49f0f5025c8190d900de72ba2","service":"orders","time":"2026-10-15T12:29:40.759977921Z","vcs_modified":"false","version":"v0.0.0-20261015122747-108fabc9d038"}
+{"error":"FL_LOG_LEVEL must be DEBUG, INFO, WARN or ERROR","level":"ERROR","msg":"configuration rejected","service":"orders","time":"2026-10-15T12:29:40.763519761Z"}
+{"error":"listen for gRPC: listen tcp 127.0.0.1:34189: bind: address already in use","level":"ERROR","msg":"service failed","service":"orders","time":"2026-10-15T12:29:40.769974111Z"}
+{"level":"INFO","msg":"service stopped","service":"orders","stop_mode":"immediate","time":"2026-10-15T12:29:40.796337143Z"}
+```
 
 ## Сборка и проверки
 

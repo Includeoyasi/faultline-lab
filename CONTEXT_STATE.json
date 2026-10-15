@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 24,
+  "context_revision": 25,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -10,7 +10,7 @@
   "current_task": {
     "id": "P01-02..P01-04",
     "description": "Один PR: конфигурация, JSON-логи и три независимых gRPC health-процесса",
-    "status": "IN_PROGRESS",
+    "status": "IN_REVIEW",
     "authorization": "Владелец сообщил о merge PR #6 и поручил объединить P01-02, P01-03 и P01-04 следующим PR; подготовить комментарий «Что я найду внутри?»",
     "result": {
       "branch": "feat/p01-02-04-service-runtime",
@@ -23,7 +23,7 @@
       "native_macos": "NOT_RUN",
       "go_tests": "PASS_UNIT_AND_REAL_PROCESS_SMOKE",
       "govulncheck": "PASS_NO_VULNERABILITIES",
-      "ci": "FIRST_RUN_STATICCHECK_QF1001_FAILED; VALIDATION_EXPRESSION_FIXED; RERUN_PENDING",
+      "ci": "PASS_NATIVE_LINUX_AMD64_AND_ARM64",
       "owner_acceptance": "PENDING",
       "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7",
       "commit_created": true,
@@ -32,8 +32,26 @@
       "remaining_tasks": "P01-05..P01-08_NOT_STARTED",
       "shutdown": "IMMEDIATE_STOP_ONLY; DRAIN_AND_TIMEOUT_P01_05_NOT_IMPLEMENTED",
       "pull_request_number": 7,
-      "draft": true,
-      "observed_commit": "e8d9102acca633883d3b01ae3488b113111c0c92"
+      "draft": false,
+      "observed_commit": "4d3b2356b472f275063efb576d8226de4a35f594",
+      "go_ci": {
+        "name": "Go toolchain",
+        "head_sha": "4d3b2356b472f275063efb576d8226de4a35f594",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38734815221"
+      },
+      "documentation_ci": {
+        "name": "Documentation",
+        "head_sha": "4d3b2356b472f275063efb576d8226de4a35f594",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38734815235"
+      },
+      "review_requested_from": "Includeoyasi",
+      "local_validation": "PASS",
+      "source_scope": "P01-02_P01-03_P01-04_ONLY; NO_GRACEFUL_DRAIN_RUNTIME_IMAGES_OR_BUSINESS_API",
+      "handoff_note": "CI evidence refers to the source HEAD before this documentation/context commit. Final HEAD and required checks are available in PR #7. The snapshot cannot embed its own commit hash."
     }
   },
   "roles": {
@@ -87,7 +105,7 @@
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "e4a9b0b80f97b2fb20ca973ef57030d32f8ba878",
+    "git_commit": "4d3b2356b472f275063efb576d8226de4a35f594",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -183,11 +201,13 @@
         ],
         "human_review": "PENDING",
         "merged": false,
-        "draft": true,
-        "observed_head": "e8d9102acca633883d3b01ae3488b113111c0c92"
+        "draft": false,
+        "observed_head": "4d3b2356b472f275063efb576d8226de4a35f594",
+        "requested_reviewer": "Includeoyasi",
+        "observation_note": "Ready state and author AI-Your-Bro verified via executor GraphQL response; requested reviewer Includeoyasi via REST. Human approval pending."
       }
     ],
-    "toolchain_container": "VERIFIED_NATIVE_LINUX_AMD64_AND_ARM64_IN_CI",
+    "toolchain_container": "VERIFIED_NATIVE_LINUX_AMD64_AND_ARM64_WITH_SERVICE_HEALTH_SMOKE",
     "go_quality_workflow": "ACTIVE_NATIVE_AMD64_ARM64; REQUIRED_CHECKS"
   },
   "completed_work": [
@@ -226,7 +246,8 @@
     "Созданы модуль с tool directives/go.sum, три минимальные точки запуска, закреплённый Docker toolchain и Compose для инструментов. Локальные build/tidy/verify/goimports/govulncheck прошли временным Go; Go tests завершились с no test files. Контейнерные проверки ожидают CI.",
     "P01-01 реализована и прошла полный Docker CI на нативных AMD64/ARM64. PR #6 от AI-Your-Bro переведён в ready, ревью запрошено у Includeoyasi. Issue #3 обновлён: проверено 1/8, принято владельцем 0/8; остальные задачи не начаты.",
     "Владелец принял и смержил PR #6; main e4a9b0b содержит P01-01, приёмка 1/8. Новым поручением объединены P01-02–04 и запрошен комментарий «Что я найду внутри?» к следующему PR.",
-    "Реализованы конфигурация с безопасной диагностикой, JSON slog/build metadata, три gRPC health-сервера, unit и process smoke. Windows Go проверки, build/vet/tidy/verify и govulncheck прошли; Linux container CI ожидается. Graceful shutdown/runtime-образы и бизнес-логика не реализованы."
+    "Реализованы конфигурация с безопасной диагностикой, JSON slog/build metadata, три gRPC health-сервера, unit и process smoke. Windows Go проверки, build/vet/tidy/verify и govulncheck прошли; Linux container CI ожидается. Graceful shutdown/runtime-образы и бизнес-логика не реализованы.",
+    "P01-02–04 прошли полный контейнерный CI на нативных Linux AMD64/ARM64: format/imports/tidy/verify/build, lint (0 issues), unit/race, govulncheck (no vulnerabilities), реальный process health/JSON/error/exit/isolation smoke. PR #7 ready от AI-Your-Bro, ревью запрошено у Includeoyasi; Issue #3: проверено 4/8, принято 1/8. Последующие 05–08 и G1 не объявляются готовыми."
   ],
   "next_implementation_packet": {
     "id": "P01",
@@ -241,9 +262,9 @@
     ],
     "decomposition_status": "DOCUMENTED_READY_FOR_IMPLEMENTATION",
     "specification": "docs/development/packets/P01.md",
-    "acceptance_status": "P01_01_ACCEPTED_P01_02_04_IN_PROGRESS",
+    "acceptance_status": "P01_01_ACCEPTED_P01_02_04_IN_REVIEW_P01_05_08_NOT_STARTED",
     "progress": {
-      "completed": 1,
+      "completed": 4,
       "total": 8,
       "owner_accepted": 1
     },
@@ -265,10 +286,10 @@
         "depends_on": [
           "P01-01"
         ],
-        "status": "IN_PROGRESS",
-        "evidence": "PASS_LOCAL_WINDOWS_GO_UNIT_PROCESS_SMOKE; NATIVE_LINUX_CI_PENDING",
+        "status": "IN_REVIEW",
+        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_FORMAT_LINT_UNIT_RACE_VULN_REAL_PROCESS_HEALTH_JSON_BIND_ISOLATION",
         "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "CREATED",
+        "implementation": "VERIFIED",
         "owner_acceptance": "PENDING",
         "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
       },
@@ -278,10 +299,10 @@
         "depends_on": [
           "P01-01"
         ],
-        "status": "IN_PROGRESS",
-        "evidence": "PASS_LOCAL_WINDOWS_GO_UNIT_PROCESS_SMOKE; NATIVE_LINUX_CI_PENDING",
+        "status": "IN_REVIEW",
+        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_FORMAT_LINT_UNIT_RACE_VULN_REAL_PROCESS_HEALTH_JSON_BIND_ISOLATION",
         "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "CREATED",
+        "implementation": "VERIFIED",
         "owner_acceptance": "PENDING",
         "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
       },
@@ -292,10 +313,10 @@
           "P01-02",
           "P01-03"
         ],
-        "status": "IN_PROGRESS",
-        "evidence": "PASS_LOCAL_WINDOWS_GO_UNIT_PROCESS_SMOKE; NATIVE_LINUX_CI_PENDING",
+        "status": "IN_REVIEW",
+        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_FORMAT_LINT_UNIT_RACE_VULN_REAL_PROCESS_HEALTH_JSON_BIND_ISOLATION",
         "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "CREATED",
+        "implementation": "VERIFIED",
         "owner_acceptance": "PENDING",
         "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/7"
       },
@@ -779,6 +800,33 @@
       "head_sha": "e8d9102acca633883d3b01ae3488b113111c0c92",
       "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38734508988",
       "detail": "Оба image build и module verify прошли; staticcheck QF1001 потребовал упростить инвертированную проверку символа DNS. Переписано в явный switch допустимых символов, без подавления анализатора. Tests/race/smoke этой попытки ещё не выполнялись. Documentation CI PASS."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "P01-02–04 native Linux container checks",
+      "result": "PASS",
+      "head_sha": "4d3b2356b472f275063efb576d8226de4a35f594",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38734815221",
+      "documentation_ci": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38734815235",
+      "commands": [
+        "docker compose build toolchain",
+        "docker compose run --rm toolchain check",
+        "docker compose run --rm toolchain service-smoke",
+        "invalid-command exits exactly 2",
+        "git diff --exit-code"
+      ],
+      "environments": [
+        "ubuntu-24.04 amd64",
+        "ubuntu-24.04-arm arm64"
+      ],
+      "detail": "Both jobs SUCCESS. Go 1.27.2; gRPC 1.84.0; lint 0 issues; unit and process tests PASS; -race PASS, including in-process server paths; govulncheck No vulnerabilities found. All three binaries SERVING, unknown health NotFound, invalid config/bind exit 1 with JSON, orders SIGINT exit 0 and final JSON, other two stay SERVING. Immediate stop only; no drain deadline or runtime images. Child smoke binaries are ordinary builds; race instruments the server unit test. Windows Docker/macOS/capacity NOT_RUN."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "PR #7 review handoff and tracker",
+      "result": "PASS",
+      "url": "https://github.com/Includeoyasi/faultline-lab/pull/7",
+      "detail": "Executor GraphQL confirmed draft=false and author AI-Your-Bro; review requested from Includeoyasi. Issue PATCH verified 4 completed implementation checkboxes; 1 owner-accepted task, 3 in review, 4 not started. Issue remains open. AI did not approve or merge."
     }
   ],
   "source_documents": [
@@ -885,7 +933,7 @@
     {
       "path": ".github/CODEOWNERS",
       "anchor": "appendix-codeowners",
-      "title": "Подготовленный CODEOWNERS для человеческого ревью"
+      "title": "Действующий CODEOWNERS для человеческого ревью"
     },
     {
       "path": "docs/development/TOOLCHAIN.md",
@@ -1150,6 +1198,12 @@
       "date": "2026-10-15",
       "summary": "Создан draft PR #7 от AI-Your-Bro, прикреплён к чату. Первый Linux CI остановлен staticcheck QF1001; проверка допустимых символов переписана без подавления линтера, ожидается повторный полный прогон. Новые задачи ещё не IN_REVIEW.",
       "trigger": "CI feedback и исправление перед готовностью к ревью"
+    },
+    {
+      "revision": 25,
+      "date": "2026-10-15",
+      "summary": "Задачи P01-02–04 проверены на обеих нативных Linux-архитектурах и предъявлены в ready PR #7. Issue #3 отражает 4/8 проверено и 1/8 принято владельцем. Добавлены реальные JSON-записи и полный переносимый исходный код. P01-05–08 остаются будущими задачами; immediate stop не выдаётся за graceful shutdown.",
+      "trigger": "Завершение согласованной группы задач и передача на ревью"
     }
   ],
   "repository": {
@@ -1226,7 +1280,7 @@
     "current_identity_transition_pr": "https://github.com/Includeoyasi/faultline-lab/pull/5"
   },
   "environment_strategy": {
-    "status": "TOOLCHAIN_VERIFIED; GRPC_HEALTH_PROCESSES_CREATED; RUNTIME_CONTAINERS_NOT_CREATED",
+    "status": "TOOLCHAIN_AND_GRPC_HEALTH_PROCESSES_VERIFIED_LINUX_AMD64_ARM64; RUNTIME_IMAGES_NOT_CREATED",
     "approved_on": "2026-10-13",
     "confirmation_evidence": "Владелец проекта описал работу на Windows и macOS, согласовал Docker-подход сообщением Да, давай так и сделаем",
     "documents": [
@@ -1260,7 +1314,7 @@
     "runtime_created": true,
     "windows_container_start_verified": false,
     "macos_container_start_verified": false,
-    "toolchain_status": "VERIFIED_NATIVE_LINUX_AMD64_ARM64_IN_CI; HOST_DOCKER_WINDOWS_MAC_NOT_RUN",
+    "toolchain_status": "VERIFIED_NATIVE_LINUX_AMD64_ARM64_IN_CI_WITH_REAL_PROCESS_SMOKE; HOST_DOCKER_WINDOWS_MAC_NOT_RUN",
     "runtime_scope": "GRPC_HEALTH_PROCESSES_ONLY",
     "runtime_containers_created": false
   },
@@ -1317,7 +1371,7 @@
     "current_packet_issue_number": 3,
     "current_packet_stage": "IN_PROGRESS",
     "progress": {
-      "completed": 1,
+      "completed": 4,
       "total": 8,
       "owner_accepted": 1
     },
@@ -1325,12 +1379,12 @@
       "date": "2026-10-15",
       "number": 3,
       "state": "OPEN",
-      "checked_tasks": 1,
-      "unchecked_tasks": 7,
+      "checked_tasks": 4,
+      "unchecked_tasks": 4,
       "stage": "IN_PROGRESS",
       "current_task": "P01-02..P01-04",
-      "task_stage": "IN_PROGRESS",
-      "source": "Executor PATCH response verified"
+      "task_stage": "IN_REVIEW",
+      "source": "Executor PATCH response verified; PR #7 ready, review requested"
     },
     "documentation_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
     "documentation_pr_closes_packet": false,
@@ -1342,7 +1396,7 @@
       "whole_packet_acceptance": "NOT_COMPLETE_AFTER_P01_01_OR_P01_02_04"
     },
     "current_task_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/7",
-    "current_subtask_stage": "IN_PROGRESS"
+    "current_subtask_stage": "IN_REVIEW"
   },
   "review_sequence": {
     "confirmed_on": "2026-10-13",
@@ -1479,6 +1533,7 @@
       "ubuntu-24.04-arm"
     ],
     "bootstrap_behavior": "THREE_GRPC_HEALTH_SERVERS_UNTIL_SIGNAL; IMMEDIATE_STOP_ONLY",
-    "smoke_command": "docker compose run --rm toolchain service-smoke"
+    "smoke_command": "docker compose run --rm toolchain service-smoke",
+    "service_runtime_document": "docs/development/SERVICE_RUNTIME.md"
   }
 }

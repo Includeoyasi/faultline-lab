@@ -1,6 +1,6 @@
 # Учёт задач и статусов
 
-Статус на 15 октября 2026 года: [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) содержит восемь задач. Пакет IN_PROGRESS; P01-01 принята и слита в [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6). P01-02–04 IN_PROGRESS, объединены в следующий PR по поручению владельца; P01-05–08 не начаты. Приёмка владельцем 1/8; проверки следующего PR фиксируются отдельно. [Спецификация P01](packets/P01.md) сохраняет версионируемые требования.
+Статус на 15 октября 2026 года: [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) содержит восемь задач. Пакет IN_PROGRESS; P01-01 принята и слита в [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6). P01-02–04 IN_REVIEW в [PR #7](https://github.com/Includeoyasi/faultline-lab/pull/7), объединены по поручению владельца; P01-05–08 не начаты. Проверено 4/8, принято владельцем 1/8; нативный Linux CI AMD64/ARM64 прошёл. [Спецификация P01](packets/P01.md) сохраняет версионируемые требования.
 
 ## Разделение назначений
 
@@ -45,7 +45,7 @@ BLOCKED — отдельный признак с причиной и требу�
 
 ## Фактический статус сейчас
 
-- P01-01 DONE; P01-02–04 IN_PROGRESS: конфигурация, JSON и health. P01-05–08 не начаты; бизнес-проверки NOT_RUN.
-- Карточка [P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта: IN_PROGRESS, первый чекбокс отмечен после реализации и проверок. Первая задача принята после ревью и merge PR #6; текущие задачи потребуют отдельного ревью. Projects не создан.
+- P01-01 DONE; P01-02–04 IN_REVIEW: конфигурация, JSON и health. P01-05–08 не начаты; бизнес-проверки NOT_RUN.
+- Карточка [P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта: IN_PROGRESS, первые четыре чекбокса отмечены после реализации и проверок; три новые задачи ожидают ревью. Первая задача принята после ревью и merge PR #6; текущие задачи потребуют отдельного ревью. Projects не создан.
 - Документационные PR #4 и [#5](https://github.com/Includeoyasi/faultline-lab/pull/5) слиты. CODEOWNERS и защита main действуют; PR первой задачи публикуется от AI-Your-Bro с ревью Includeoyasi.
 - Текущий PR объединяет P01-02–04; после их принятия следующая задача — P01-05. Весь P01 и G1 ещё не приняты.
