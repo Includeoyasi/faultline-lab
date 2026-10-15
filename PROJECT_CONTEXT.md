@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **34**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
+Ревизия: **35**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
 
 ## Краткое текущее состояние
 
@@ -264,7 +264,7 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 34,
+  "context_revision": 35,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -684,7 +684,7 @@ JSON ниже является частью этого файла и доста�
     "interval": "AFTER_G0_BEFORE_G1",
     "target_review_gate": "G1",
     "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/3",
-    "tracker_stage": "IN_PROGRESS",
+    "tracker_stage": "IN_REVIEW",
     "current_task": "P01-05..P01-08"
   },
   "active_blockers": [],
@@ -722,7 +722,7 @@ JSON ниже является частью этого файла и доста�
     "go_available": "HOST_MSI_GO_1_27_2_INSTALLED_MACHINE_PATH_REGISTERED",
     "docker_available": "DESKTOP_4_95_0_INSTALLED_PER_USER_CURRENTLY_STOPPED",
     "tool_commands_checked_on": "2026-10-15",
-    "tool_check_scope": "Go/Docker отсутствуют в текущем PATH и стандартных проверенных Windows-путях. Вспомогательный официальный Go 1.27.2 скачан в .local и проверен по SHA256; не установлен в систему. Docker проверяется в Linux CI, не на Windows-хосте.",
+    "tool_check_scope": "Установлены host Go1.27.2 через официальный MSI и Docker Desktop4.95 per-user/WSL2.7.13; machine PATH Go зарегистрирован, установленный go.exe version проверен. Windows container smoke PASS. Docker Desktop и WSL VM после проверки остановлены. Существующему терминалу может потребоваться переоткрытие для обновления PATH.",
     "powershell_version": "7.6.5",
     "cpu_ram_disk_budget": "HOST_SNAPSHOT_COLLECTED_DOCKER_BUDGET_NOT_MEASURED",
     "local_directory_name": "faultline-lab",
@@ -745,7 +745,7 @@ JSON ниже является частью этого файла и доста�
       "future_server_resources": "NOT_SELECTED",
       "note": "Свободные ресурсы изменяются; снимок хоста не равен бюджету Docker и не подтверждает capacity приложения"
     },
-    "local_go_health_check": "PASS_WINDOWS_NATIVE_TCP_UNIT_AND_PROCESS_TESTS; CONTAINER_TESTS_NOT_RUN",
+    "local_go_health_check": "EARLIER_NATIVE_WINDOWS_GO_TCP_UNIT_AND_PROCESS_TESTS_PASS; WINDOWS_CONTAINER_SMOKE_NOW_PASS",
     "wsl_status": "INSTALLED_2_7_13_0_VM_SHUT_DOWN",
     "docker_service_status": "PER_USER_INSTALL_NO_PRIVILEGED_DOCKER_SERVICE_REQUIRED",
     "local_container_smoke": {
@@ -1814,6 +1814,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-15",
       "summary": "Завершена установка Go/WSL/Docker и реальный Windows smoke P01-06 PASS. Опубликованы воспроизводимые JSON/JSONL доказательства. По поручению владельца Docker Desktop и WSL VM выключены, автозапуск отключён, полезные кеши сохранены. PR #8 ready; P01 реализация 8/8, owner acceptance4/8, G1 NOT_READY.",
       "trigger": "Владелец вернулся к компьютеру, подтвердил UAC и поручил освобождать ресурсы личного ПК после работы"
+    },
+    {
+      "revision": 35,
+      "summary": "Согласованы текущие tracker_stage/current_packet_stage с фактическим IN_REVIEW PR #8 и заменены прежние сведения об отсутствующем host Go/Docker на проверенные результаты установки. Доказательства Windows/cleanup не менялись; владелец принял 4/8, G1 NOT_READY.",
+      "date": "2026-10-15",
+      "trigger": "Проверка согласованности переносимого контекста перед окончательной передачей на ревью"
     }
   ],
   "repository": {
@@ -1983,7 +1989,7 @@ JSON ниже является частью этого файла и доста�
     "approved_on": "2026-10-13",
     "approval_evidence": "Прямое поручение владельца проекта: молодец, фиксируй изменения и заводи задачи",
     "current_packet_issue_number": 3,
-    "current_packet_stage": "IN_PROGRESS",
+    "current_packet_stage": "IN_REVIEW",
     "progress": {
       "completed": 8,
       "total": 8,
@@ -2394,7 +2400,7 @@ JSON ниже является частью этого файла и доста�
           "swap": "1GB"
         },
         "platform": "linux/x86_64",
-        "observed_at": "2026-10-15T22:49:35.7064530+03:00"
+        "observed_at": "2026-10-15T22:49:35.706453+03:00"
       },
       "cleanup": {
         "containers_remaining": 0,
@@ -2520,7 +2526,7 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `b3cd900f54f45d58564ce3e2ad0d8830d09ba73bf51675d4c877d0504511bea5` |
+| `CONTEXT_STATE.json` | `5fd52451ed7203be8d924e5b2830b0a5b0eb3a6e2a4a3c3ac26fd1ec0955eb12` |
 | `tools/context_intro.md` | `b22331832075e551a5fa41219c01e2eea76b8f0ab54953e368ccd00d020c5b36` |
 | `tools/update_context.ps1` | `f830ed3538ae98ef5129b2ab5ae1d1ad564b0482d8ed2978a7ec2b96bcf5e731` |
 | `README.md` | `3f1e181bdda675314b738a740f54a12f05ebf68814b07b6692ad7a3c21c071c5` |
