@@ -1,6 +1,6 @@
 # Переносимая среда разработки и экспериментов
 
-Статус на 15 октября 2026 года: Docker-подход согласован. P01-01–04 приняты в main; P01-05–08 добавляют graceful shutdown, минимальные runtime-образы, внутреннюю Compose-сеть и smoke ([инструкция](CONTAINER_RUNTIME.md)). Docker/WSL на Windows отсутствуют, local container smoke NOT_RUN; Linux CI нового кода ожидается, личный Mac не проверен.
+Статус на 15 октября 2026 года: Docker-подход согласован. P01-01–04 приняты в main; P01-05–08 добавляют graceful shutdown, минимальные runtime-образы, внутреннюю Compose-сеть и smoke ([инструкция](CONTAINER_RUNTIME.md)). Docker/WSL на Windows отсутствуют, local container smoke NOT_RUN; Linux CI нового кода PASS на AMD64/ARM64, личный Mac не проверен.
 
 ## Что согласовано
 

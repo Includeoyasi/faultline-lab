@@ -1,6 +1,6 @@
 # Учёт задач и статусов
 
-Статус на 15 октября 2026 года: P01-01–04 приняты и слиты (4/8) через PR #6/#7. P01-05–08 IN_PROGRESS, объединены одним PR по прямому поручению владельца. Код и smoke подготовлены; новый Linux CI ожидается, Windows Docker smoke NOT_RUN. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыт; [спецификация P01](packets/P01.md) сохраняет критерии.
+Статус на 15 октября 2026 года: P01-01–04 приняты и слиты (4/8) через PR #6/#7. Проверено 7/8; P01-05/07/08 реализованы и проверены в Linux CI, P01-06 ждёт Windows container smoke. P01-05–08 IN_PROGRESS в [draft PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8), объединены одним PR по прямому поручению владельца. Код и smoke подготовлены; новый Linux CI PASS на AMD64/ARM64, Windows Docker smoke NOT_RUN. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыт; [спецификация P01](packets/P01.md) сохраняет критерии.
 
 ## Разделение назначений
 

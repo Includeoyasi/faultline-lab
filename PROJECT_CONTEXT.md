@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **30**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
+Ревизия: **31**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
 
 ## Краткое текущее состояние
 
@@ -88,7 +88,7 @@ G0 полностью принят пользователем; это согла
 
 В голосовом обсуждении владелец проекта подтвердил направление развития: общая лаборатория отделена от адаптера и тестируемой системы; эталонный магазин использует ту же границу через встроенный адаптер бизнес-операций и проверок. По прямому поручению обсуждение сохранено в docs/architecture/LAB_BOUNDARY.md: обязанности частей, цикл эксперимента, предлагаемый контракт адаптера, профиль и доказательство переносимости. Обработка изображений — кандидат второго бизнеса, а мастер автоматической настройки — перспектива. Точные интерфейсы и новые критерии G4 ещё не приняты; согласованные границы трёх сервисов G0 сохраняются.
 
-Владелец проекта явно согласовал Docker как общую среду разработки и запуска на Windows и macOS. План docs/development/ENVIRONMENT.md предусматривает отдельные контейнеры трёх сервисов, общий контейнерный toolchain и Compose с инфраструктурой по этапам. Адаптер — модуль внутри инструментов, без обязательного отдельного контейнера; инструменты запускаются временно. Распределение и число контейнеров — рекомендации по текущему составу, а не измеренные ресурсы. Характеристики Windows-хоста прочитаны и сохранены в docs/development/RESOURCE_PROFILES.md; бюджет Docker и потребление приложения ещё не измерены. macOS — второй основной компьютер, арендуемый сервер — возможный вариант позже, без поручения на аренду. Go-модуль, Dockerfile инструментов и Compose toolchain созданы в P01-01; P01-02–04 добавляют health-процессы, JSON-логи и конфигурацию. В P01-05–08 созданы runtime-образы и bounded graceful shutdown; проверка Linux CI ожидается, Windows container smoke NOT_RUN. Локальный Docker не подтверждён, контейнерный toolchain проверен в нативном Linux CI AMD64/ARM64. Детали и доказательства находятся в environment_strategy и environment_facts ниже.
+Владелец проекта явно согласовал Docker как общую среду разработки и запуска на Windows и macOS. План docs/development/ENVIRONMENT.md предусматривает отдельные контейнеры трёх сервисов, общий контейнерный toolchain и Compose с инфраструктурой по этапам. Адаптер — модуль внутри инструментов, без обязательного отдельного контейнера; инструменты запускаются временно. Распределение и число контейнеров — рекомендации по текущему составу, а не измеренные ресурсы. Характеристики Windows-хоста прочитаны и сохранены в docs/development/RESOURCE_PROFILES.md; бюджет Docker и потребление приложения ещё не измерены. macOS — второй основной компьютер, арендуемый сервер — возможный вариант позже, без поручения на аренду. Go-модуль, Dockerfile инструментов и Compose toolchain созданы в P01-01; P01-02–04 добавляют health-процессы, JSON-логи и конфигурацию. В P01-05–08 созданы runtime-образы и bounded graceful shutdown; полный Linux CI с контейнерным smoke прошёл на AMD64/ARM64. Docker Desktop и WSL на Windows отсутствуют, поэтому обязательный Windows container smoke остаётся NOT_RUN; PR #8 сохраняет статус draft. Детали и доказательства находятся в environment_strategy и environment_facts ниже.
 
 По отдельному поручению подготовлены три пастельные SVG-концепции оформления. Владелец проекта выбрал вариант 2 — «Поток эксперимента»; он применён к общему баннеру README. Название Faultline Lab и бизнес-правила не менялись. Выбор, смысл композиции и ссылки на исходники сохранены в docs/design/BANNER_OPTIONS.md и branding_notes. Кривые баннера декоративные и не изображают фактические измерения. Публикация ветки и документационного PR отражается в структурированном состоянии; до merge новый баннер не появляется на главной странице main.
 
@@ -262,7 +262,7 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 30,
+  "context_revision": 31,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -277,12 +277,12 @@ JSON ниже является частью этого файла и доста�
       "branch": "feat/p01-05-08-runtime",
       "base_commit": "bc09d08ce7867f3109d996f71015e3ce73986452",
       "scope": "P01_05_THROUGH_08_ONLY",
-      "implementation": "CREATED",
+      "implementation": "IMPLEMENTED_AND_VERIFIED_EXCEPT_WINDOWS_CONTAINER_CRITERION",
       "local_go": "PASS_WINDOWS_BUILD_VET_UNIT_PROCESS_TESTS",
       "local_docker": "NOT_RUN_DOCKER_AND_WSL_NOT_INSTALLED",
       "native_macos": "NOT_RUN",
-      "go_ci": "FIRST_RUN_PROFILE_DEPENDENCY_FAILED; SINGLE_DOCKERFILE_FIX_AWAITING_CI",
-      "runtime_smoke_ci": "PENDING",
+      "go_ci": "PASS_NATIVE_LINUX_AMD64_AND_ARM64",
+      "runtime_smoke_ci": "PASS_NATIVE_LINUX_AMD64_AND_ARM64",
       "owner_acceptance": "PENDING",
       "author": "AI-Your-Bro",
       "draft_required": true,
@@ -291,7 +291,24 @@ JSON ниже является частью этого файла и доста�
       "commit_created": true,
       "pushed": true,
       "pull_request_number": 8,
-      "draft": true
+      "draft": true,
+      "go_workflow": {
+        "name": "Go toolchain",
+        "head_sha": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340"
+      },
+      "documentation_ci": {
+        "name": "Documentation",
+        "head_sha": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910192"
+      },
+      "observed_commit": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+      "review_status": "DRAFT_AWAITING_REQUIRED_WINDOWS_CONTAINER_SMOKE",
+      "handoff_note": "Evidence refers to the source HEAD before final context changes. Final HEAD and checks are available in PR #8; the snapshot cannot embed its own commit hash."
     }
   },
   "roles": {
@@ -343,9 +360,17 @@ JSON ниже является частью этого файла и доста�
     "dashboards_alerts": "NOT_CREATED",
     "experiments": "NOT_RUN",
     "measured_capacity": null,
-    "actual_runtime_versions": null,
+    "actual_runtime_versions": {
+      "observed_on": "2026-10-15",
+      "scope": "Native Linux CI only",
+      "go": "1.27.2",
+      "grpc": "v1.84.0",
+      "docker": "28.0.4",
+      "compose": "2.38.2",
+      "smoke_node": "v22.23.3"
+    },
     "git_repository": "INITIALIZED",
-    "git_commit": "bc09d08ce7867f3109d996f71015e3ce73986452",
+    "git_commit": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -465,11 +490,12 @@ JSON ниже является частью этого файла и доста�
           "P01-08"
         ],
         "human_review": "PENDING",
-        "draft_reason": "Windows container smoke NOT_RUN; new Linux CI pending"
+        "draft_reason": "Linux CI passed; mandatory Windows container smoke NOT_RUN. Owner installation decision requested.",
+        "observed_head": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1"
       }
     ],
-    "toolchain_container": "PREVIOUS_NATIVE_LINUX_VERIFIED; NEW_RUNTIME_CI_PENDING",
-    "go_quality_workflow": "EXTENDED_WITH_RUNTIME_SMOKE_AND_DIAGNOSTIC_ARTIFACTS; CI_PENDING"
+    "toolchain_container": "VERIFIED_NATIVE_LINUX_AMD64_ARM64_WITH_RUNTIME_IMAGES",
+    "go_quality_workflow": "PASS_NATIVE_AMD64_ARM64_WITH_RUNTIME_SMOKE_AND_ARTIFACTS; REQUIRED_CHECKS"
   },
   "completed_work": [
     "Подготовлен практический roadmap с этапами, критериями, рисками и оценками объёма",
@@ -512,7 +538,8 @@ JSON ниже является частью этого файла и доста�
     "По замечанию владельца в PR #7 удалены IP/порты и параметр defaultAddress из Go entrypoints/общего запуска. FL_GRPC_ADDR обязателен. Добавлены local/container env examples, игнорирование личных *.env и корректная loopback-публикация в инструкции. Локальные Windows Go/TCP проверки прошли; Linux CI после правки ожидается.",
     "Сетевое замечание PR #7 проверено в полном нативном Linux AMD64/ARM64 CI на 2922b4a: в том числе missing/empty address exit 1 для всех трёх бинарников, health/JSON/ошибки/изоляция/race/vuln. Правка предъявляется на повторное ревью владельцу; приёмка не приписывается человеку.",
     "PR #7 принят и смержен владельцем в main bc09d08; P01-01–04 приняты (4/8). Оставшиеся 05–08 поручены одним PR. Зафиксировано новое правило понятных описательных заголовков для комментариев/PR.",
-    "Реализованы GracefulStop/deadline/fatal force, собственный healthcheck CLI, scratch runtime для трёх сервисов, internal Compose network и host-side Docker smoke с JSON/JSONL-отчётом. Unit/process tests прошли на Windows; runtime Docker/WSL локально отсутствуют, smoke NOT_RUN; Linux CI нового кода ожидается."
+    "Реализованы GracefulStop/deadline/fatal force, собственный healthcheck CLI, scratch runtime для трёх сервисов, internal Compose network и host-side Docker smoke с JSON/JSONL-отчётом. Unit/process tests прошли на Windows; runtime Docker/WSL локально отсутствуют, smoke NOT_RUN; Linux CI нового кода ожидается.",
+    "P01-05/07/08 реализованы и проверены Linux CI AMD64/ARM64: linters 0 issues, unit/race, govulncheck, process signals/forced exit 1, три scratch-образа и полный runtime smoke PASS. Оба артефакта report.json/JSONL прочитаны: реальные image IDs, health, права, изоляция, graceful exit 0 и cleanup подтверждены. Реализация проверена 7/8; P01-06 не закрыта из-за Windows container smoke NOT_RUN; принято владельцем 4/8."
   ],
   "next_implementation_packet": {
     "id": "P01",
@@ -527,9 +554,9 @@ JSON ниже является частью этого файла и доста�
     ],
     "decomposition_status": "DOCUMENTED_READY_FOR_IMPLEMENTATION",
     "specification": "docs/development/packets/P01.md",
-    "acceptance_status": "P01_01_THROUGH_04_ACCEPTED; P01_05_THROUGH_08_IMPLEMENTED_VALIDATING",
+    "acceptance_status": "7_OF_8_IMPLEMENTATION_CHECKS_COMPLETE; P01_06_WINDOWS_CONTAINER_CRITERION_PENDING; OWNER_ACCEPTED_4_OF_8",
     "progress": {
-      "completed": 4,
+      "completed": 7,
       "total": 8,
       "owner_accepted": 4
     },
@@ -592,9 +619,9 @@ JSON ниже является частью этого файла и доста�
           "P01-04"
         ],
         "status": "IN_PROGRESS",
-        "evidence": "LOCAL_GO_PASS_WHERE_APPLICABLE; LINUX_CI_PENDING",
+        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_GO_LIFECYCLE_AND_RUNTIME_SMOKE; DRAFT_NOT_IN_REVIEW",
         "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "CREATED",
+        "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
         "owner_acceptance": "PENDING",
         "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
       },
@@ -609,11 +636,12 @@ JSON ниже является частью этого файла и доста�
           "P01-05"
         ],
         "status": "IN_PROGRESS",
-        "evidence": "LINUX_CI_PENDING; WINDOWS_CONTAINER_SMOKE_NOT_RUN",
+        "evidence": "PASS_BOTH_NATIVE_LINUX_IMAGE_START_HEALTH_STOP; WINDOWS_CONTAINER_SMOKE_NOT_RUN",
         "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "CREATED",
+        "implementation": "CREATED_LINUX_AMD64_ARM64_VERIFIED",
         "owner_acceptance": "PENDING",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
+        "blocked_on": "WINDOWS_CONTAINER_SMOKE"
       },
       {
         "id": "P01-07",
@@ -626,9 +654,9 @@ JSON ниже является частью этого файла и доста�
           "P01-05"
         ],
         "status": "IN_PROGRESS",
-        "evidence": "LOCAL_GO_PASS_WHERE_APPLICABLE; LINUX_CI_PENDING",
+        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_GO_LIFECYCLE_AND_RUNTIME_SMOKE; DRAFT_NOT_IN_REVIEW",
         "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "CREATED",
+        "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
         "owner_acceptance": "PENDING",
         "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
       },
@@ -640,9 +668,9 @@ JSON ниже является частью этого файла и доста�
           "P01-07"
         ],
         "status": "IN_PROGRESS",
-        "evidence": "LOCAL_GO_PASS_WHERE_APPLICABLE; LINUX_CI_PENDING",
+        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_GO_LIFECYCLE_AND_RUNTIME_SMOKE; DRAFT_NOT_IN_REVIEW",
         "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "CREATED",
+        "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
         "owner_acceptance": "PENDING",
         "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
       }
@@ -660,7 +688,8 @@ JSON ниже является частью этого файла и доста�
       "scope": "P01-06 acceptance criterion",
       "reason": "Docker CLI/Desktop/service absent; WSL bootstrap reports subsystem not installed. Native Windows container smoke NOT_RUN.",
       "effect": "Prepare and validate code/images in Linux CI; keep final PR draft until the required local check is performed or the owner explicitly changes that criterion.",
-      "next_action": "Provide a Windows Linux-container Docker backend, then run node tools/smoke.mjs and retain report.json/JSONL."
+      "next_action": "Provide a Windows Linux-container Docker backend, then run node tools/smoke.mjs and retain report.json/JSONL.",
+      "installation_approval": "REQUESTED_AWAITING_OWNER_RESPONSE"
     }
   ],
   "open_review_comments": [],
@@ -1193,6 +1222,26 @@ JSON ниже является частью этого файла и доста�
       "head_sha": "afdce9351ed7d9616954526f3e8ac444bdaef9b4",
       "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744565647",
       "detail": "Both architectures failed Compose model validation before build: inactive profile service toolchain was referenced as an additional context. Replaced cross-service build dependency with one multi-stage build/Dockerfile and explicit toolchain/runtime targets. Checks remain enabled; rerun required."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "P01-05–08 native Linux Go and runtime CI",
+      "result": "PASS",
+      "head_sha": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340",
+      "documentation_ci": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910192",
+      "environments": [
+        "ubuntu-24.04 amd64",
+        "ubuntu-24.04-arm arm64"
+      ],
+      "commands": [
+        "docker compose build toolchain",
+        "docker compose run --rm toolchain check",
+        "docker compose run --rm toolchain service-smoke",
+        "node tools/smoke.mjs",
+        "git diff --exit-code"
+      ],
+      "detail": "Both jobs SUCCESS. Format/tidy/verify/build/lint (0 issues), unit/race, govulncheck (No vulnerabilities found). Controlled RPC drain/deadline checks pass. All 3 real processes verify SIGTERM/SIGINT normal exit and held Watch forced exit 1. Both architectures build scratch runtime images, start 3 containers, verify health/security/internal network/no host ports or mounts, stop orders without stopping peers, verify all normal exits/log order and cleanup. Artifacts retained 14 days and independently read; image IDs and runtime outcomes recorded in runtime_smoke_evidence. Windows/macOS Docker are NOT_RUN; no capacity claim."
     }
   ],
   "source_documents": [
@@ -1647,6 +1696,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-15",
       "summary": "Создан draft PR #8 от AI-Your-Bro и прикреплён к чату. Первый CI выявил зависимость сборки от неактивного toolchain-профиля; введён единый multi-stage Dockerfile с target toolchain/runtime. Повторный CI ожидается; Windows smoke по-прежнему NOT_RUN.",
       "trigger": "Публикация и исправление модели Compose по результату CI"
+    },
+    {
+      "revision": 31,
+      "date": "2026-10-15",
+      "summary": "Полный P01-05–08 CI и runtime smoke PASS на AMD64/ARM64, оба отчёта/логи прочитаны. P01-05/07/08 завершили реализацию и проверки; P01-06 остаётся с невыполненным Windows container-критерием. Draft PR #8 сохранён; установка Docker/WSL запрошена у владельца, автоматическая перезагрузка не разрешена.",
+      "trigger": "Нативные контейнерные доказательства и подготовка итогового draft review packet"
     }
   ],
   "repository": {
@@ -1680,7 +1735,23 @@ JSON ниже является частью этого файла и доста�
       "merged": false,
       "author": "AI-Your-Bro",
       "scope": "P01-05..P01-08",
-      "observed_commit": "afdce9351ed7d9616954526f3e8ac444bdaef9b4"
+      "observed_commit": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+      "observed_ci": [
+        {
+          "name": "Documentation",
+          "head_sha": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910192"
+        },
+        {
+          "name": "Go toolchain",
+          "head_sha": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340"
+        }
+      ]
     }
   },
   "review_policy": {
@@ -1709,7 +1780,7 @@ JSON ниже является частью этого файла и доста�
     "current_identity_transition_pr": "https://github.com/Includeoyasi/faultline-lab/pull/5"
   },
   "environment_strategy": {
-    "status": "RUNTIME_IMAGES_AND_COMPOSE_CREATED; NEW_NATIVE_CI_PENDING; WINDOWS_DOCKER_NOT_INSTALLED",
+    "status": "RUNTIME_IMAGES_AND_COMPOSE_VERIFIED_NATIVE_LINUX_AMD64_ARM64; WINDOWS_DOCKER_NOT_INSTALLED",
     "approved_on": "2026-10-13",
     "confirmation_evidence": "Владелец проекта описал работу на Windows и macOS, согласовал Docker-подход сообщением Да, давай так и сделаем",
     "documents": [
@@ -1743,9 +1814,10 @@ JSON ниже является частью этого файла и доста�
     "runtime_created": true,
     "windows_container_start_verified": false,
     "macos_container_start_verified": false,
-    "toolchain_status": "VERIFIED_NATIVE_LINUX_AMD64_ARM64_IN_CI_WITH_REAL_PROCESS_SMOKE; HOST_DOCKER_WINDOWS_MAC_NOT_RUN",
+    "toolchain_status": "VERIFIED_NATIVE_LINUX_CI; WINDOWS_MAC_CONTAINER_START_NOT_RUN",
     "runtime_scope": "THREE_HEALTH_SERVICES_WITH_BOUNDED_SHUTDOWN; NO_BUSINESS_OR_INFRA",
-    "runtime_containers_created": true
+    "runtime_containers_created": true,
+    "runtime_container_linux_verification": "PASS_NATIVE_AMD64_AND_ARM64"
   },
   "branding_notes": {
     "status": "USER_SELECTED_MERGED_TO_MAIN",
@@ -1800,7 +1872,7 @@ JSON ниже является частью этого файла и доста�
     "current_packet_issue_number": 3,
     "current_packet_stage": "IN_PROGRESS",
     "progress": {
-      "completed": 4,
+      "completed": 7,
       "total": 8,
       "owner_accepted": 4
     },
@@ -1808,11 +1880,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-15",
       "number": 3,
       "state": "OPEN",
-      "checked_tasks": 4,
-      "unchecked_tasks": 4,
+      "checked_tasks": 7,
+      "unchecked_tasks": 1,
       "stage": "IN_PROGRESS",
       "current_task": "P01-05..P01-08",
-      "source": "Executor PATCH verified; owner accepted/merged PR #7"
+      "source": "Executor PATCH verified; owner accepted/merged PR #7",
+      "note": "Executor PATCH response verified: 7 implemented/checked tasks, 4 owner-accepted; P01-06 unchecked because required Windows container smoke is NOT_RUN. Draft PR #8 remains open."
     },
     "documentation_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
     "documentation_pr_closes_packet": false,
@@ -1824,7 +1897,7 @@ JSON ниже является частью этого файла и доста�
       "whole_packet_acceptance": "PENDING_FINAL_PR_AND_ALL_APPLICABLE_CRITERIA"
     },
     "current_task_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
-    "current_subtask_stage": "IN_PROGRESS"
+    "current_subtask_stage": "IN_PROGRESS_DRAFT_WINDOWS_CRITERION_PENDING"
   },
   "review_sequence": {
     "confirmed_on": "2026-10-13",
@@ -2011,6 +2084,144 @@ JSON ниже является частью этого файла и доста�
     "authority": "Latest direct owner instruction",
     "rule": "Use clear descriptive headings: Что было сделано / Проверки / На что обратить внимание, or another plain heading that describes the content. Do not use the old question-style guide title.",
     "applies_to": "All new PR descriptions and comments; old requests in change history are superseded."
+  },
+  "environment_installation_request": {
+    "asked_on": "2026-10-15",
+    "status": "AWAITING_OWNER_RESPONSE",
+    "reason": "P01-06 explicitly requires local Windows start/health/stop; Docker Desktop and WSL2 are absent.",
+    "requested_actions": [
+      "Install Docker Desktop",
+      "Install WSL2 prerequisites"
+    ],
+    "reboot": "Requires separate explicit owner consent; no automatic reboot authorized",
+    "source": "Async user-input question after both native Linux CI jobs and reports passed"
+  },
+  "runtime_smoke_evidence": {
+    "source_head": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+    "workflow": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340",
+    "artifacts": [
+      {
+        "architecture": "amd64",
+        "artifact_id": 11977328529,
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340/artifacts/11977328529",
+        "retention_days": 14,
+        "result": "PASS",
+        "built_merge_revision": "6b672533738f984428e4b7016fdefd1896288296",
+        "source_dirty": false,
+        "docker_platform": "linux/x86_64",
+        "cleanup": "PASS",
+        "isolation_after_orders_stop": "PASS",
+        "services": {
+          "orders": {
+            "image_id": "sha256:44047c82841ec5dd6b4ba1f67e7b24e71e3f953ad4f51b72db3988373e6ef89e",
+            "healthy": true,
+            "exit_code": 0,
+            "stop_mode": "graceful",
+            "security": {
+              "user": "65532:65532",
+              "read_only": true,
+              "capabilities_dropped": true,
+              "no_new_privileges": true,
+              "host_ports": [],
+              "mounts": [],
+              "internal_network": true
+            }
+          },
+          "inventory": {
+            "image_id": "sha256:92774134576c36348ff18e29cc04b02fb36d6dfb02c110f6fc46f46353ef9856",
+            "healthy": true,
+            "exit_code": 0,
+            "stop_mode": "graceful",
+            "security": {
+              "user": "65532:65532",
+              "read_only": true,
+              "capabilities_dropped": true,
+              "no_new_privileges": true,
+              "host_ports": [],
+              "mounts": [],
+              "internal_network": true
+            }
+          },
+          "payments": {
+            "image_id": "sha256:4f4613c5df2377de6a1907b33b00880ae637adbb3b38d7504e62bc25b2d69c18",
+            "healthy": true,
+            "exit_code": 0,
+            "stop_mode": "graceful",
+            "security": {
+              "user": "65532:65532",
+              "read_only": true,
+              "capabilities_dropped": true,
+              "no_new_privileges": true,
+              "host_ports": [],
+              "mounts": [],
+              "internal_network": true
+            }
+          }
+        }
+      },
+      {
+        "architecture": "arm64",
+        "artifact_id": 11977248425,
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340/artifacts/11977248425",
+        "retention_days": 14,
+        "result": "PASS",
+        "built_merge_revision": "6b672533738f984428e4b7016fdefd1896288296",
+        "source_dirty": false,
+        "docker_platform": "linux/aarch64",
+        "cleanup": "PASS",
+        "isolation_after_orders_stop": "PASS",
+        "services": {
+          "orders": {
+            "image_id": "sha256:850c07550fa10d86021fe299054a6e20ec1d3f78923d78eaaf788dea57c031f9",
+            "healthy": true,
+            "exit_code": 0,
+            "stop_mode": "graceful",
+            "security": {
+              "user": "65532:65532",
+              "read_only": true,
+              "capabilities_dropped": true,
+              "no_new_privileges": true,
+              "host_ports": [],
+              "mounts": [],
+              "internal_network": true
+            }
+          },
+          "inventory": {
+            "image_id": "sha256:da54231eea1ef58e878b3dc09882af067ca1ba46d4461292ecdcdf7184ee023a",
+            "healthy": true,
+            "exit_code": 0,
+            "stop_mode": "graceful",
+            "security": {
+              "user": "65532:65532",
+              "read_only": true,
+              "capabilities_dropped": true,
+              "no_new_privileges": true,
+              "host_ports": [],
+              "mounts": [],
+              "internal_network": true
+            }
+          },
+          "payments": {
+            "image_id": "sha256:f78fd03489bbcf16538c9efa797f4e473349353d203a4764141efc171f792038",
+            "healthy": true,
+            "exit_code": 0,
+            "stop_mode": "graceful",
+            "security": {
+              "user": "65532:65532",
+              "read_only": true,
+              "capabilities_dropped": true,
+              "no_new_privileges": true,
+              "host_ports": [],
+              "mounts": [],
+              "internal_network": true
+            }
+          }
+        }
+      }
+    ],
+    "local_windows": "NOT_RUN_DOCKER_WSL_NOT_INSTALLED",
+    "macos": "NOT_RUN",
+    "performance_capacity": "NOT_MEASURED"
   }
 }
 ```
@@ -2021,8 +2232,8 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `3de7226ec8278169679c05baeea7adcd6f554756f5a873c5cefbb56dcdb3b50f` |
-| `tools/context_intro.md` | `e071296fead54d852877588c566808e3c124336f61313d0a8a3c52c0e82c3470` |
+| `CONTEXT_STATE.json` | `cbca436a3c827dbf833bf3295e4c4470aeaaa1ab9fdcf054d494ab996e0375f7` |
+| `tools/context_intro.md` | `ddcf85e81b7826c57ae2a8a7777f6bdf70436265d669bc4de790a6d00298ea3e` |
 | `tools/update_context.ps1` | `f830ed3538ae98ef5129b2ab5ae1d1ad564b0482d8ed2978a7ec2b96bcf5e731` |
 | `README.md` | `e95a49d6d4ee46c0bf94f2eca9f5784449a6487af03d852581ef0b1057c90e76` |
 | `README.ru.md` | `a0f2c97eaaf38b817bfbeecc56bf4f62bae85aac63660bf585651b74e3492ee7` |
@@ -2030,7 +2241,7 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/ROADMAP.md` | `1711f0126f2a10341d5c3464e145275610c7cf5a430389059f057a1092ca7660` |
 | `docs/architecture/DESIGN.md` | `6db3d3ff87a24520ff2c7205051db0056251e2c867ee0d093fe8e4fc78aa14dd` |
 | `docs/architecture/PROCESSES.md` | `dd6d00ee9d169236fe0f0d14de4b6f54d778a7cf79489f6b6a3354357e2e9ec6` |
-| `docs/development/WORKFLOW.md` | `d7620ce2e3871d436eb389946aa13610a4ef2283b4b128fbcb54929fac30d84b` |
+| `docs/development/WORKFLOW.md` | `baf71ff355e406ec6efd9fc77c57f78d3ac1b1fa1f21eb8db375aa84c54c541f` |
 | `docs/experiments/REPORT_TEMPLATE.md` | `4f569aab52ba34a68bb2e8b4551c6a3bf4932277c26c3b4206dbb505781a2cab` |
 | `AGENTS.md` | `5b358fb45c37b5ba01161abe3e1c09cbf8a769cf5f39047a5e625e0952ec1e10` |
 | `docs/adr/0001-approved-g0.md` | `b8518c5c49cdefea3dbf0bf2a79ab40459dba2b565e71a6c534a555cbafa20df` |
@@ -2038,14 +2249,14 @@ SHA-256 относится к исходному файлу на момент с
 | `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
 | `docs/development/CODE_REVIEW.md` | `824f73048b3e20bf77b78809c23574a0235d2735052b5b670efe512ea0cae35b` |
 | `docs/architecture/LAB_BOUNDARY.md` | `790709c43d5c2920909a9f5227467bcb77ec4d228024156dd5f69f29a8d92e46` |
-| `docs/development/ENVIRONMENT.md` | `cd12d8c89253bbaf03647fc010e6d7ee219dce4917a873276fe4bfeb2798c092` |
+| `docs/development/ENVIRONMENT.md` | `866fa5915ebea6129fd9d0b6833d85176fc0c0d3c71f650b8be378acb05644c4` |
 | `docs/development/RESOURCE_PROFILES.md` | `7d40665b2226f08542b94c8286c97d17847ca4c42038c0d44086a4addc9031e4` |
 | `docs/design/BANNER_OPTIONS.md` | `27d7b336acd60aa3106e6498233f2a33eefd2bc37bf8e26cf12d2c0c0d229724` |
-| `docs/development/packets/P01.md` | `b8e62b1ba2c351cd6ce4afaee74ceb6cb61b6867698f6adb5f1ba56c685c2407` |
-| `docs/development/TASK_TRACKING.md` | `74de561c382556b7d4e238a42d7bc3fbb75fdb56e4500ce220cf7ec86b5cba76` |
+| `docs/development/packets/P01.md` | `f4e3f3b3b2589cbddf68ce6a6b9eb9a3b379556ac08be7b558ec4b89a5e68863` |
+| `docs/development/TASK_TRACKING.md` | `1aa776a1db2fbcb5d8353d5190c893aafde52f8715c4f2a838ff0c58fa7e08ac` |
 | `docs/development/REPOSITORY_SECURITY.md` | `b10363e3417429cc06376dff0277f257a92912dae03af12d7d9ff8252a80cb6e` |
 | `.github/CODEOWNERS` | `95de6cc3de1ba640d0ab9e2b9bfbdea79b7ce6641a8bcdb0bcef1f7607666415` |
-| `docs/development/TOOLCHAIN.md` | `631ad1727a724c5daca0a651d17380ab3c2e45b2a23ca7fd3d0eab59bebbd105` |
+| `docs/development/TOOLCHAIN.md` | `6810c4825b6b4cae61c4ab427009ea77869cd3c0c60aa4547e8585c0f0db5517` |
 | `go.mod` | `6b5e4488754d547057e6b8ddd0963cde3d86100430adf16fdb7060107517fa62` |
 | `go.sum` | `9f863b08d769d3d2d631ac9534db6bbd7f8d8fa5c59ee9f5bfa762763d310cc7` |
 | `cmd/orders/main.go` | `131626df0bae0819d49c3d46793809c839cacb6dbd71a93b4bc1740a04ea3e6c` |
@@ -2072,7 +2283,7 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/service/command_test.go` | `56eb2c958131551d61097e00fd66a34068332c141b81c3eaa5ec8358072a7051` |
 | `internal/service/shutdown_test.go` | `9387689f5183003faabddb0c5f6d6d5fd5c89e410fec66cf76aa94eebf25be58` |
 | `tools/smoke.mjs` | `2f0983a9e373ddb9bcd0cf343a4f02c8fb84bca996dbbcd5d9ae281caf06f5ce` |
-| `docs/development/CONTAINER_RUNTIME.md` | `e5569d723c1496c45a8c467ca052fa79af746110a15802fb48172b13d0942514` |
+| `docs/development/CONTAINER_RUNTIME.md` | `2bb8d4250c91f737f2c2331e1fd06a8eb1e21bf945aa6cbf06a3b313a4a78965` |
 
 ## Полные самостоятельные приложения
 
@@ -3601,7 +3812,7 @@ G0–G4 — контрольные точки приёмки. P01–P05 — не
 | G3: устойчивость | После этапа 4 | Сценарии неизвестного результата, поздних событий, отмены, replay; объяснение политики ошибок и recovery | Ревью и сценарии приняты; нерешённые процессы явно учитываются; отсутствуют ложные terminal states |
 | G4: готовая лаборатория | После этапа 7 | Каталог экспериментов, результаты сравнения решений, масштабирование, автоматический запуск/сверка/отчёты, инструкции | Владелец проекта воспроизвёл или проверил заявленный цикл; отчёты отражают корректность, ресурсы и ограничения |
 
-Статус G0: **полностью принят 2026-10-13, Europe/Moscow**. Прямое решение пользователя: «G0 полностью принят». G1–G4 ещё не достигнуты. Реализация сервисов в текущих файлах отсутствует. Работа над согласованной основой для G1 разрешена; повторное согласование G0 не требуется.
+Статус G0: **полностью принят 2026-10-13, Europe/Moscow**. Прямое решение пользователя: «G0 полностью принят». G1–G4 ещё не достигнуты. P01-01–04 приняты; в PR #8 подготовлены bounded graceful shutdown, runtime-контейнеры и smoke. Полный Linux CI прошёл на AMD64/ARM64; обязательная локальная Windows-проверка контейнеров ещё не выполнена. Бизнес-операции пока не реализованы. Работа над согласованной основой для G1 разрешена; повторное согласование G0 не требуется.
 
 На контрольной точке Codex сначала доводит текущий пакет до проверяемого результата, затем предоставляет его владельцу проекта. Следующий этап, зависящий от согласования, начинается после явного решения. Замечания владельца проекта вносятся в пакет до повторного рассмотрения.
 
@@ -4184,7 +4395,7 @@ experiments/scenarios/         # Воспроизводимые условия �
 
 ### Переносимая среда разработки и экспериментов
 
-Статус на 15 октября 2026 года: Docker-подход согласован. P01-01–04 приняты в main; P01-05–08 добавляют graceful shutdown, минимальные runtime-образы, внутреннюю Compose-сеть и smoke ([инструкция](#appendix-container-runtime)). Docker/WSL на Windows отсутствуют, local container smoke NOT_RUN; Linux CI нового кода ожидается, личный Mac не проверен.
+Статус на 15 октября 2026 года: Docker-подход согласован. P01-01–04 приняты в main; P01-05–08 добавляют graceful shutdown, минимальные runtime-образы, внутреннюю Compose-сеть и smoke ([инструкция](#appendix-container-runtime)). Docker/WSL на Windows отсутствуют, local container smoke NOT_RUN; Linux CI нового кода PASS на AMD64/ARM64, личный Mac не проверен.
 
 #### Что согласовано
 
@@ -4354,7 +4565,7 @@ Docker рекомендует разделять ответственности 
 
 ### P01 — Go-каркас между G0 и G1
 
-Состояние на 15 октября 2026 года: **P01-01–04 DONE**, приняты и слиты через PR #6/#7 (main bc09d08). **P01-05–08 IN_PROGRESS**, объединены одним PR по прямому поручению владельца. Принято 4/8. Код завершения, runtime-образы, Compose и smoke подготовлены; Linux container CI ожидается, Windows container smoke NOT_RUN из-за отсутствующих Docker/WSL. G0 принят; P01 находится до G1. Новый PR остаётся draft до обязательной локальной проверки P01-06.
+Состояние на 15 октября 2026 года: **P01-01–04 DONE**, приняты и слиты через PR #6/#7 (main bc09d08). **P01-05–08 IN_PROGRESS**, объединены одним PR по прямому поручению владельца. Проверено 7/8, принято 4/8; P01-06 не закрыта из-за Windows container smoke NOT_RUN. Код завершения, runtime-образы, Compose и smoke подготовлены; Linux container CI PASS на AMD64/ARM64, Windows container smoke NOT_RUN из-за отсутствующих Docker/WSL. G0 принят; P01 находится до G1. [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8) остаётся draft до обязательной локальной проверки P01-06.
 
 Основа: [первый пакет реализации](#appendix-design-review), [roadmap](#appendix-roadmap), [порядок ревью](#appendix-development-process), [стандарт Go](#appendix-code-review) и согласованный [Docker-подход](#appendix-environment).
 
@@ -4469,7 +4680,7 @@ P01 не достигает всей контрольной точки G1: ба�
 
 ### Учёт задач и статусов
 
-Статус на 15 октября 2026 года: P01-01–04 приняты и слиты (4/8) через PR #6/#7. P01-05–08 IN_PROGRESS, объединены одним PR по прямому поручению владельца. Код и smoke подготовлены; новый Linux CI ожидается, Windows Docker smoke NOT_RUN. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыт; [спецификация P01](#appendix-p01) сохраняет критерии.
+Статус на 15 октября 2026 года: P01-01–04 приняты и слиты (4/8) через PR #6/#7. Проверено 7/8; P01-05/07/08 реализованы и проверены в Linux CI, P01-06 ждёт Windows container smoke. P01-05–08 IN_PROGRESS в [draft PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8), объединены одним PR по прямому поручению владельца. Код и smoke подготовлены; новый Linux CI PASS на AMD64/ARM64, Windows Docker smoke NOT_RUN. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыт; [спецификация P01](#appendix-p01) сохраняет критерии.
 
 #### Разделение назначений
 
@@ -4590,7 +4801,7 @@ GitHub разрешает machine account, зарегистрированный 
 
 ### Go-модуль и контейнерный toolchain
 
-Состояние на 15 октября 2026 года: P01-01–04 приняты и слиты через PR #6/#7. Закреплённый toolchain используется Go CI и как named build context трёх [runtime-образов](#appendix-container-runtime). В следующем PR P01-05–08 реализованы graceful shutdown, runtime Compose и smoke с отчётом; фактические результаты нового CI и локальные ограничения находятся в контексте/PR.
+Состояние на 15 октября 2026 года: P01-01–04 приняты и слиты через PR #6/#7. Закреплённый toolchain используется Go CI и как общий build stage трёх [runtime-образов](#appendix-container-runtime). В следующем PR P01-05–08 реализованы graceful shutdown, runtime Compose и smoke с отчётом; фактические результаты CI и локальные ограничения находятся в контексте/PR.
 
 #### Состав и версии
 
@@ -6731,7 +6942,7 @@ try {
 
 Этот пакет завершает реализацию P01-05–08: ограниченное graceful shutdown, отдельные runtime-образы трёх сервисов, Compose, CI и smoke с диагностикой. G0 принят; P01 выполняется до G1. Бизнес-операции и инфраструктура PostgreSQL/Kafka/Redis относятся к следующим пакетам.
 
-PR #7 принят и слит владельцем (main `bc09d08`), задачи 01–04 DONE. Текущее выполнение и результаты находятся в [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3), [спецификации P01](#appendix-p01) и переносимом контексте. Описание нового PR использует разделы «Что было сделано», «Проверки» и «На что обратить внимание».
+PR #7 принят и слит владельцем (main `bc09d08`), задачи 01–04 DONE. [Draft PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8) содержит реализацию оставшихся задач. [Полный CI AMD64/ARM64](https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340) PASS на source HEAD d5e13a9; отчёты [AMD64](https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340/artifacts/11977328529) и [ARM64](https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340/artifacts/11977248425) прочитаны и подтверждают health, ограничения, exit 0, изоляцию и cleanup. Актуальные checks итогового HEAD доступны в PR. Текущее выполнение и результаты находятся в [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3), [спецификации P01](#appendix-p01) и переносимом контексте. Описание нового PR использует разделы «Что было сделано», «Проверки» и «На что обратить внимание».
 
 #### Состав и границы
 
@@ -6774,6 +6985,8 @@ docker compose down
 `up --wait` ожидает healthy. Команда `healthcheck` внутри того же бинарника вызывает стандартный gRPC `Health/Check`, молчит при успехе и возвращает 0. Ошибка/NOT_SERVING — безопасная JSON-диагностика и exit 1; неизвестная команда — exit 2. Проба ограничена двумя секундами, Compose даёт ей три секунды. Проба не подтверждает готовность базы или бизнес-процесса.
 
 Окружение задаётся через [container.env.example](#appendix-container-env-example). Все три контейнера могут использовать один внутренний порт; адресов/портов по умолчанию в Go-коде нет. `FL_GRPC_ADDR` обязателен для сервера; отдельный `FL_HEALTH_TARGET` обязателен только для команды healthcheck. Wildcard допустим как явно выбранный listener, но отклоняется как цель подключения.
+
+При изменении порта listener обновляйте и target собственной health-пробы. Для нескольких локальных процессов target каждого должен указывать на его listener; в Compose каждый сервис имеет отдельное сетевое пространство.
 
 Для личной конфигурации скопируйте образец в игнорируемый `configs/env/container.env` и задайте в корневом игнорируемом `.env`:
 

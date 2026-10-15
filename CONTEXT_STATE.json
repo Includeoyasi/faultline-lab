@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 30,
+  "context_revision": 31,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -16,12 +16,12 @@
       "branch": "feat/p01-05-08-runtime",
       "base_commit": "bc09d08ce7867f3109d996f71015e3ce73986452",
       "scope": "P01_05_THROUGH_08_ONLY",
-      "implementation": "CREATED",
+      "implementation": "IMPLEMENTED_AND_VERIFIED_EXCEPT_WINDOWS_CONTAINER_CRITERION",
       "local_go": "PASS_WINDOWS_BUILD_VET_UNIT_PROCESS_TESTS",
       "local_docker": "NOT_RUN_DOCKER_AND_WSL_NOT_INSTALLED",
       "native_macos": "NOT_RUN",
-      "go_ci": "FIRST_RUN_PROFILE_DEPENDENCY_FAILED; SINGLE_DOCKERFILE_FIX_AWAITING_CI",
-      "runtime_smoke_ci": "PENDING",
+      "go_ci": "PASS_NATIVE_LINUX_AMD64_AND_ARM64",
+      "runtime_smoke_ci": "PASS_NATIVE_LINUX_AMD64_AND_ARM64",
       "owner_acceptance": "PENDING",
       "author": "AI-Your-Bro",
       "draft_required": true,
@@ -30,7 +30,24 @@
       "commit_created": true,
       "pushed": true,
       "pull_request_number": 8,
-      "draft": true
+      "draft": true,
+      "go_workflow": {
+        "name": "Go toolchain",
+        "head_sha": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340"
+      },
+      "documentation_ci": {
+        "name": "Documentation",
+        "head_sha": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910192"
+      },
+      "observed_commit": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+      "review_status": "DRAFT_AWAITING_REQUIRED_WINDOWS_CONTAINER_SMOKE",
+      "handoff_note": "Evidence refers to the source HEAD before final context changes. Final HEAD and checks are available in PR #8; the snapshot cannot embed its own commit hash."
     }
   },
   "roles": {
@@ -82,9 +99,17 @@
     "dashboards_alerts": "NOT_CREATED",
     "experiments": "NOT_RUN",
     "measured_capacity": null,
-    "actual_runtime_versions": null,
+    "actual_runtime_versions": {
+      "observed_on": "2026-10-15",
+      "scope": "Native Linux CI only",
+      "go": "1.27.2",
+      "grpc": "v1.84.0",
+      "docker": "28.0.4",
+      "compose": "2.38.2",
+      "smoke_node": "v22.23.3"
+    },
     "git_repository": "INITIALIZED",
-    "git_commit": "bc09d08ce7867f3109d996f71015e3ce73986452",
+    "git_commit": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -204,11 +229,12 @@
           "P01-08"
         ],
         "human_review": "PENDING",
-        "draft_reason": "Windows container smoke NOT_RUN; new Linux CI pending"
+        "draft_reason": "Linux CI passed; mandatory Windows container smoke NOT_RUN. Owner installation decision requested.",
+        "observed_head": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1"
       }
     ],
-    "toolchain_container": "PREVIOUS_NATIVE_LINUX_VERIFIED; NEW_RUNTIME_CI_PENDING",
-    "go_quality_workflow": "EXTENDED_WITH_RUNTIME_SMOKE_AND_DIAGNOSTIC_ARTIFACTS; CI_PENDING"
+    "toolchain_container": "VERIFIED_NATIVE_LINUX_AMD64_ARM64_WITH_RUNTIME_IMAGES",
+    "go_quality_workflow": "PASS_NATIVE_AMD64_ARM64_WITH_RUNTIME_SMOKE_AND_ARTIFACTS; REQUIRED_CHECKS"
   },
   "completed_work": [
     "Подготовлен практический roadmap с этапами, критериями, рисками и оценками объёма",
@@ -251,7 +277,8 @@
     "По замечанию владельца в PR #7 удалены IP/порты и параметр defaultAddress из Go entrypoints/общего запуска. FL_GRPC_ADDR обязателен. Добавлены local/container env examples, игнорирование личных *.env и корректная loopback-публикация в инструкции. Локальные Windows Go/TCP проверки прошли; Linux CI после правки ожидается.",
     "Сетевое замечание PR #7 проверено в полном нативном Linux AMD64/ARM64 CI на 2922b4a: в том числе missing/empty address exit 1 для всех трёх бинарников, health/JSON/ошибки/изоляция/race/vuln. Правка предъявляется на повторное ревью владельцу; приёмка не приписывается человеку.",
     "PR #7 принят и смержен владельцем в main bc09d08; P01-01–04 приняты (4/8). Оставшиеся 05–08 поручены одним PR. Зафиксировано новое правило понятных описательных заголовков для комментариев/PR.",
-    "Реализованы GracefulStop/deadline/fatal force, собственный healthcheck CLI, scratch runtime для трёх сервисов, internal Compose network и host-side Docker smoke с JSON/JSONL-отчётом. Unit/process tests прошли на Windows; runtime Docker/WSL локально отсутствуют, smoke NOT_RUN; Linux CI нового кода ожидается."
+    "Реализованы GracefulStop/deadline/fatal force, собственный healthcheck CLI, scratch runtime для трёх сервисов, internal Compose network и host-side Docker smoke с JSON/JSONL-отчётом. Unit/process tests прошли на Windows; runtime Docker/WSL локально отсутствуют, smoke NOT_RUN; Linux CI нового кода ожидается.",
+    "P01-05/07/08 реализованы и проверены Linux CI AMD64/ARM64: linters 0 issues, unit/race, govulncheck, process signals/forced exit 1, три scratch-образа и полный runtime smoke PASS. Оба артефакта report.json/JSONL прочитаны: реальные image IDs, health, права, изоляция, graceful exit 0 и cleanup подтверждены. Реализация проверена 7/8; P01-06 не закрыта из-за Windows container smoke NOT_RUN; принято владельцем 4/8."
   ],
   "next_implementation_packet": {
     "id": "P01",
@@ -266,9 +293,9 @@
     ],
     "decomposition_status": "DOCUMENTED_READY_FOR_IMPLEMENTATION",
     "specification": "docs/development/packets/P01.md",
-    "acceptance_status": "P01_01_THROUGH_04_ACCEPTED; P01_05_THROUGH_08_IMPLEMENTED_VALIDATING",
+    "acceptance_status": "7_OF_8_IMPLEMENTATION_CHECKS_COMPLETE; P01_06_WINDOWS_CONTAINER_CRITERION_PENDING; OWNER_ACCEPTED_4_OF_8",
     "progress": {
-      "completed": 4,
+      "completed": 7,
       "total": 8,
       "owner_accepted": 4
     },
@@ -331,9 +358,9 @@
           "P01-04"
         ],
         "status": "IN_PROGRESS",
-        "evidence": "LOCAL_GO_PASS_WHERE_APPLICABLE; LINUX_CI_PENDING",
+        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_GO_LIFECYCLE_AND_RUNTIME_SMOKE; DRAFT_NOT_IN_REVIEW",
         "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "CREATED",
+        "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
         "owner_acceptance": "PENDING",
         "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
       },
@@ -348,11 +375,12 @@
           "P01-05"
         ],
         "status": "IN_PROGRESS",
-        "evidence": "LINUX_CI_PENDING; WINDOWS_CONTAINER_SMOKE_NOT_RUN",
+        "evidence": "PASS_BOTH_NATIVE_LINUX_IMAGE_START_HEALTH_STOP; WINDOWS_CONTAINER_SMOKE_NOT_RUN",
         "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "CREATED",
+        "implementation": "CREATED_LINUX_AMD64_ARM64_VERIFIED",
         "owner_acceptance": "PENDING",
-        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
+        "blocked_on": "WINDOWS_CONTAINER_SMOKE"
       },
       {
         "id": "P01-07",
@@ -365,9 +393,9 @@
           "P01-05"
         ],
         "status": "IN_PROGRESS",
-        "evidence": "LOCAL_GO_PASS_WHERE_APPLICABLE; LINUX_CI_PENDING",
+        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_GO_LIFECYCLE_AND_RUNTIME_SMOKE; DRAFT_NOT_IN_REVIEW",
         "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "CREATED",
+        "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
         "owner_acceptance": "PENDING",
         "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
       },
@@ -379,9 +407,9 @@
           "P01-07"
         ],
         "status": "IN_PROGRESS",
-        "evidence": "LOCAL_GO_PASS_WHERE_APPLICABLE; LINUX_CI_PENDING",
+        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_GO_LIFECYCLE_AND_RUNTIME_SMOKE; DRAFT_NOT_IN_REVIEW",
         "acceptance_source": "docs/development/packets/P01.md",
-        "implementation": "CREATED",
+        "implementation": "VERIFIED_AWAITING_OWNER_REVIEW",
         "owner_acceptance": "PENDING",
         "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/8"
       }
@@ -399,7 +427,8 @@
       "scope": "P01-06 acceptance criterion",
       "reason": "Docker CLI/Desktop/service absent; WSL bootstrap reports subsystem not installed. Native Windows container smoke NOT_RUN.",
       "effect": "Prepare and validate code/images in Linux CI; keep final PR draft until the required local check is performed or the owner explicitly changes that criterion.",
-      "next_action": "Provide a Windows Linux-container Docker backend, then run node tools/smoke.mjs and retain report.json/JSONL."
+      "next_action": "Provide a Windows Linux-container Docker backend, then run node tools/smoke.mjs and retain report.json/JSONL.",
+      "installation_approval": "REQUESTED_AWAITING_OWNER_RESPONSE"
     }
   ],
   "open_review_comments": [],
@@ -932,6 +961,26 @@
       "head_sha": "afdce9351ed7d9616954526f3e8ac444bdaef9b4",
       "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744565647",
       "detail": "Both architectures failed Compose model validation before build: inactive profile service toolchain was referenced as an additional context. Replaced cross-service build dependency with one multi-stage build/Dockerfile and explicit toolchain/runtime targets. Checks remain enabled; rerun required."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "P01-05–08 native Linux Go and runtime CI",
+      "result": "PASS",
+      "head_sha": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340",
+      "documentation_ci": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910192",
+      "environments": [
+        "ubuntu-24.04 amd64",
+        "ubuntu-24.04-arm arm64"
+      ],
+      "commands": [
+        "docker compose build toolchain",
+        "docker compose run --rm toolchain check",
+        "docker compose run --rm toolchain service-smoke",
+        "node tools/smoke.mjs",
+        "git diff --exit-code"
+      ],
+      "detail": "Both jobs SUCCESS. Format/tidy/verify/build/lint (0 issues), unit/race, govulncheck (No vulnerabilities found). Controlled RPC drain/deadline checks pass. All 3 real processes verify SIGTERM/SIGINT normal exit and held Watch forced exit 1. Both architectures build scratch runtime images, start 3 containers, verify health/security/internal network/no host ports or mounts, stop orders without stopping peers, verify all normal exits/log order and cleanup. Artifacts retained 14 days and independently read; image IDs and runtime outcomes recorded in runtime_smoke_evidence. Windows/macOS Docker are NOT_RUN; no capacity claim."
     }
   ],
   "source_documents": [
@@ -1386,6 +1435,12 @@
       "date": "2026-10-15",
       "summary": "Создан draft PR #8 от AI-Your-Bro и прикреплён к чату. Первый CI выявил зависимость сборки от неактивного toolchain-профиля; введён единый multi-stage Dockerfile с target toolchain/runtime. Повторный CI ожидается; Windows smoke по-прежнему NOT_RUN.",
       "trigger": "Публикация и исправление модели Compose по результату CI"
+    },
+    {
+      "revision": 31,
+      "date": "2026-10-15",
+      "summary": "Полный P01-05–08 CI и runtime smoke PASS на AMD64/ARM64, оба отчёта/логи прочитаны. P01-05/07/08 завершили реализацию и проверки; P01-06 остаётся с невыполненным Windows container-критерием. Draft PR #8 сохранён; установка Docker/WSL запрошена у владельца, автоматическая перезагрузка не разрешена.",
+      "trigger": "Нативные контейнерные доказательства и подготовка итогового draft review packet"
     }
   ],
   "repository": {
@@ -1419,7 +1474,23 @@
       "merged": false,
       "author": "AI-Your-Bro",
       "scope": "P01-05..P01-08",
-      "observed_commit": "afdce9351ed7d9616954526f3e8ac444bdaef9b4"
+      "observed_commit": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+      "observed_ci": [
+        {
+          "name": "Documentation",
+          "head_sha": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910192"
+        },
+        {
+          "name": "Go toolchain",
+          "head_sha": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340"
+        }
+      ]
     }
   },
   "review_policy": {
@@ -1448,7 +1519,7 @@
     "current_identity_transition_pr": "https://github.com/Includeoyasi/faultline-lab/pull/5"
   },
   "environment_strategy": {
-    "status": "RUNTIME_IMAGES_AND_COMPOSE_CREATED; NEW_NATIVE_CI_PENDING; WINDOWS_DOCKER_NOT_INSTALLED",
+    "status": "RUNTIME_IMAGES_AND_COMPOSE_VERIFIED_NATIVE_LINUX_AMD64_ARM64; WINDOWS_DOCKER_NOT_INSTALLED",
     "approved_on": "2026-10-13",
     "confirmation_evidence": "Владелец проекта описал работу на Windows и macOS, согласовал Docker-подход сообщением Да, давай так и сделаем",
     "documents": [
@@ -1482,9 +1553,10 @@
     "runtime_created": true,
     "windows_container_start_verified": false,
     "macos_container_start_verified": false,
-    "toolchain_status": "VERIFIED_NATIVE_LINUX_AMD64_ARM64_IN_CI_WITH_REAL_PROCESS_SMOKE; HOST_DOCKER_WINDOWS_MAC_NOT_RUN",
+    "toolchain_status": "VERIFIED_NATIVE_LINUX_CI; WINDOWS_MAC_CONTAINER_START_NOT_RUN",
     "runtime_scope": "THREE_HEALTH_SERVICES_WITH_BOUNDED_SHUTDOWN; NO_BUSINESS_OR_INFRA",
-    "runtime_containers_created": true
+    "runtime_containers_created": true,
+    "runtime_container_linux_verification": "PASS_NATIVE_AMD64_AND_ARM64"
   },
   "branding_notes": {
     "status": "USER_SELECTED_MERGED_TO_MAIN",
@@ -1539,7 +1611,7 @@
     "current_packet_issue_number": 3,
     "current_packet_stage": "IN_PROGRESS",
     "progress": {
-      "completed": 4,
+      "completed": 7,
       "total": 8,
       "owner_accepted": 4
     },
@@ -1547,11 +1619,12 @@
       "date": "2026-10-15",
       "number": 3,
       "state": "OPEN",
-      "checked_tasks": 4,
-      "unchecked_tasks": 4,
+      "checked_tasks": 7,
+      "unchecked_tasks": 1,
       "stage": "IN_PROGRESS",
       "current_task": "P01-05..P01-08",
-      "source": "Executor PATCH verified; owner accepted/merged PR #7"
+      "source": "Executor PATCH verified; owner accepted/merged PR #7",
+      "note": "Executor PATCH response verified: 7 implemented/checked tasks, 4 owner-accepted; P01-06 unchecked because required Windows container smoke is NOT_RUN. Draft PR #8 remains open."
     },
     "documentation_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
     "documentation_pr_closes_packet": false,
@@ -1563,7 +1636,7 @@
       "whole_packet_acceptance": "PENDING_FINAL_PR_AND_ALL_APPLICABLE_CRITERIA"
     },
     "current_task_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
-    "current_subtask_stage": "IN_PROGRESS"
+    "current_subtask_stage": "IN_PROGRESS_DRAFT_WINDOWS_CRITERION_PENDING"
   },
   "review_sequence": {
     "confirmed_on": "2026-10-13",
@@ -1750,5 +1823,143 @@
     "authority": "Latest direct owner instruction",
     "rule": "Use clear descriptive headings: Что было сделано / Проверки / На что обратить внимание, or another plain heading that describes the content. Do not use the old question-style guide title.",
     "applies_to": "All new PR descriptions and comments; old requests in change history are superseded."
+  },
+  "environment_installation_request": {
+    "asked_on": "2026-10-15",
+    "status": "AWAITING_OWNER_RESPONSE",
+    "reason": "P01-06 explicitly requires local Windows start/health/stop; Docker Desktop and WSL2 are absent.",
+    "requested_actions": [
+      "Install Docker Desktop",
+      "Install WSL2 prerequisites"
+    ],
+    "reboot": "Requires separate explicit owner consent; no automatic reboot authorized",
+    "source": "Async user-input question after both native Linux CI jobs and reports passed"
+  },
+  "runtime_smoke_evidence": {
+    "source_head": "d5e13a9ece471c6ab8410a53a973b96ad9345aa1",
+    "workflow": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340",
+    "artifacts": [
+      {
+        "architecture": "amd64",
+        "artifact_id": 11977328529,
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340/artifacts/11977328529",
+        "retention_days": 14,
+        "result": "PASS",
+        "built_merge_revision": "6b672533738f984428e4b7016fdefd1896288296",
+        "source_dirty": false,
+        "docker_platform": "linux/x86_64",
+        "cleanup": "PASS",
+        "isolation_after_orders_stop": "PASS",
+        "services": {
+          "orders": {
+            "image_id": "sha256:44047c82841ec5dd6b4ba1f67e7b24e71e3f953ad4f51b72db3988373e6ef89e",
+            "healthy": true,
+            "exit_code": 0,
+            "stop_mode": "graceful",
+            "security": {
+              "user": "65532:65532",
+              "read_only": true,
+              "capabilities_dropped": true,
+              "no_new_privileges": true,
+              "host_ports": [],
+              "mounts": [],
+              "internal_network": true
+            }
+          },
+          "inventory": {
+            "image_id": "sha256:92774134576c36348ff18e29cc04b02fb36d6dfb02c110f6fc46f46353ef9856",
+            "healthy": true,
+            "exit_code": 0,
+            "stop_mode": "graceful",
+            "security": {
+              "user": "65532:65532",
+              "read_only": true,
+              "capabilities_dropped": true,
+              "no_new_privileges": true,
+              "host_ports": [],
+              "mounts": [],
+              "internal_network": true
+            }
+          },
+          "payments": {
+            "image_id": "sha256:4f4613c5df2377de6a1907b33b00880ae637adbb3b38d7504e62bc25b2d69c18",
+            "healthy": true,
+            "exit_code": 0,
+            "stop_mode": "graceful",
+            "security": {
+              "user": "65532:65532",
+              "read_only": true,
+              "capabilities_dropped": true,
+              "no_new_privileges": true,
+              "host_ports": [],
+              "mounts": [],
+              "internal_network": true
+            }
+          }
+        }
+      },
+      {
+        "architecture": "arm64",
+        "artifact_id": 11977248425,
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38744910340/artifacts/11977248425",
+        "retention_days": 14,
+        "result": "PASS",
+        "built_merge_revision": "6b672533738f984428e4b7016fdefd1896288296",
+        "source_dirty": false,
+        "docker_platform": "linux/aarch64",
+        "cleanup": "PASS",
+        "isolation_after_orders_stop": "PASS",
+        "services": {
+          "orders": {
+            "image_id": "sha256:850c07550fa10d86021fe299054a6e20ec1d3f78923d78eaaf788dea57c031f9",
+            "healthy": true,
+            "exit_code": 0,
+            "stop_mode": "graceful",
+            "security": {
+              "user": "65532:65532",
+              "read_only": true,
+              "capabilities_dropped": true,
+              "no_new_privileges": true,
+              "host_ports": [],
+              "mounts": [],
+              "internal_network": true
+            }
+          },
+          "inventory": {
+            "image_id": "sha256:da54231eea1ef58e878b3dc09882af067ca1ba46d4461292ecdcdf7184ee023a",
+            "healthy": true,
+            "exit_code": 0,
+            "stop_mode": "graceful",
+            "security": {
+              "user": "65532:65532",
+              "read_only": true,
+              "capabilities_dropped": true,
+              "no_new_privileges": true,
+              "host_ports": [],
+              "mounts": [],
+              "internal_network": true
+            }
+          },
+          "payments": {
+            "image_id": "sha256:f78fd03489bbcf16538c9efa797f4e473349353d203a4764141efc171f792038",
+            "healthy": true,
+            "exit_code": 0,
+            "stop_mode": "graceful",
+            "security": {
+              "user": "65532:65532",
+              "read_only": true,
+              "capabilities_dropped": true,
+              "no_new_privileges": true,
+              "host_ports": [],
+              "mounts": [],
+              "internal_network": true
+            }
+          }
+        }
+      }
+    ],
+    "local_windows": "NOT_RUN_DOCKER_WSL_NOT_INSTALLED",
+    "macos": "NOT_RUN",
+    "performance_capacity": "NOT_MEASURED"
   }
 }
