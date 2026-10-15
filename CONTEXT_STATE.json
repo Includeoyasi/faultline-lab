@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 32,
+  "context_revision": 33,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -48,7 +48,7 @@
       "observed_commit": "59684070fa85a0aea8561b48828088e574a06436",
       "review_status": "DRAFT_AWAITING_REQUIRED_WINDOWS_CONTAINER_SMOKE",
       "handoff_note": "Evidence refers to the source HEAD before final context changes. Final HEAD and checks are available in PR #8; the snapshot cannot embed its own commit hash.",
-      "environment_installation": "OWNER_AUTHORIZED_UAC_CANCELLED_BEFORE_WSL_INSTALLATION"
+      "environment_installation": "AUTHORIZED_DEFERRED_OWNER_HAS_NO_PHYSICAL_ACCESS"
     }
   },
   "roles": {
@@ -429,8 +429,9 @@
       "scope": "P01-06 acceptance criterion",
       "reason": "Windows container smoke NOT_RUN. Installation authorized, but WSL needs administrator elevation; UAC request was cancelled. Docker per-user precheck rejects disabled VirtualMachinePlatform.",
       "effect": "Prepare and validate code/images in Linux CI; keep final PR draft until the required local check is performed or the owner explicitly changes that criterion.",
-      "next_action": "Obtain interactive administrator UAC confirmation, install WSL/enable VirtualMachinePlatform, determine if a reboot is required (request consent separately), retry verified Docker per-user installer, start Linux backend, run smoke and retain report.",
-      "installation_approval": "GRANTED_BY_OWNER"
+      "next_action": "Wait until the owner has interactive access and is ready to confirm administrator UAC. Do not launch more UAC prompts while unavailable. Installation permission remains granted; reboot still requires separate consent. Then complete WSL/Docker setup and run Windows container smoke.",
+      "installation_approval": "GRANTED_BY_OWNER",
+      "owner_availability": "NO_PHYSICAL_ACCESS; ADMIN_UAC_CONFIRMATION_UNAVAILABLE"
     }
   ],
   "open_review_comments": [],
@@ -504,7 +505,7 @@
     "os_verified": "Windows 11 Pro 10.0.26200 x64",
     "hypervisor_present": true,
     "lanmanserver": "RUNNING_AUTOMATIC",
-    "installation_status": "AUTHORIZED_INSTALLATION_ATTEMPTED_UAC_CANCELLED"
+    "installation_status": "AUTHORIZED_DEFERRED_OWNER_HAS_NO_PHYSICAL_ACCESS"
   },
   "validation_evidence": [
     {
@@ -1463,6 +1464,12 @@
       "date": "2026-10-15",
       "summary": "Зафиксировано разрешение владельца на Docker/WSL и реальные результаты установки: WSL требует admin, UAC отменён, Docker prerequisite VirtualMachinePlatform отсутствует. Windows smoke остаётся NOT_RUN, PR #8 draft. Повторный полный CI HEAD5968407 и оба отчёта PASS; понятное описание PR подготовлено.",
       "trigger": "Ответ владельца об установке среды и проверка финального кода"
+    },
+    {
+      "trigger": "Ответ владельца о недоступности компьютера",
+      "date": "2026-10-15",
+      "summary": "Владелец сообщил об отсутствии физического доступа к Windows. Установка уже разрешена, но отложена до возможности подтвердить UAC. Повторные UAC не запускать без готовности владельца; перезагрузка отдельно. PR #8 опубликован с понятным комментарием; обязательный Windows smoke остаётся NOT_RUN.",
+      "revision": 33
     }
   ],
   "repository": {
@@ -1849,7 +1856,7 @@
   "environment_installation_request": {
     "asked_on": "2026-10-15",
     "authorized_on": "2026-10-15",
-    "status": "AUTHORIZED_INSTALLATION_ATTEMPTED_UAC_CANCELLED",
+    "status": "AUTHORIZED_DEFERRED_OWNER_HAS_NO_PHYSICAL_ACCESS",
     "owner_reply": "Разрешаю установку Docker Desktop и WSL2",
     "requested_actions": [
       "Install Docker Desktop",
@@ -1881,12 +1888,13 @@
       }
     ],
     "installed": false,
-    "next_action": "Obtain interactive administrator UAC confirmation, install WSL/enable VirtualMachinePlatform, determine if a reboot is required (request consent separately), retry verified Docker per-user installer, start Linux backend, run smoke and retain report.",
+    "next_action": "Wait until the owner has interactive access and is ready to confirm administrator UAC. Do not launch more UAC prompts while unavailable. Installation permission remains granted; reboot still requires separate consent. Then complete WSL/Docker setup and run Windows container smoke.",
     "instructions": [
       "https://learn.microsoft.com/en-us/windows/wsl/basic-commands",
       "https://docs.docker.com/desktop/setup/install/windows-install/"
     ],
-    "checksum_source": "https://desktop.docker.com/win/main/amd64/242831/checksums.txt"
+    "checksum_source": "https://desktop.docker.com/win/main/amd64/242831/checksums.txt",
+    "owner_availability": "Сейчас у меня нет физического доступа к компьютеру"
   },
   "runtime_smoke_evidence": {
     "source_head": "59684070fa85a0aea8561b48828088e574a06436",

@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **32**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
+Ревизия: **33**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
 
 ## Краткое текущее состояние
 
@@ -256,6 +256,8 @@ MVP — этапы 0–2: работающие три сервиса, весь �
 
 15 октября владелец разрешил установку Docker Desktop и WSL2. Официальный установщик Docker проверен по SHA256 и цифровой подписи, но его precheck требует VirtualMachinePlatform. WSL требует admin; запрос UAC завершился отменой до запуска script. Установка пока не выполнена, перезагрузки не было. Не спрашивать разрешение на саму установку повторно; для продолжения нужен интерактивный административный допуск, а для перезагрузки — отдельное согласие. Windows container smoke остаётся NOT_RUN, PR #8 draft.
 
+Владелец сообщил, что сейчас не имеет физического доступа к компьютеру. Установка разрешена, но отложена до возможности подтвердить UAC. Повторные системные запросы пока не запускать; согласие на перезагрузку по-прежнему требуется отдельно. Windows container smoke остаётся NOT_RUN, PR #8 — draft.
+
 ## Структурированное состояние, проверки и история
 
 JSON ниже является частью этого файла и достаточен для чтения без отдельного CONTEXT_STATE.json. Null/NOT_CHECKED/NOT_CREATED означают отсутствие подтверждённых сведений, а не нулевые значения или успешное завершение.
@@ -264,7 +266,7 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 32,
+  "context_revision": 33,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -311,7 +313,7 @@ JSON ниже является частью этого файла и доста�
       "observed_commit": "59684070fa85a0aea8561b48828088e574a06436",
       "review_status": "DRAFT_AWAITING_REQUIRED_WINDOWS_CONTAINER_SMOKE",
       "handoff_note": "Evidence refers to the source HEAD before final context changes. Final HEAD and checks are available in PR #8; the snapshot cannot embed its own commit hash.",
-      "environment_installation": "OWNER_AUTHORIZED_UAC_CANCELLED_BEFORE_WSL_INSTALLATION"
+      "environment_installation": "AUTHORIZED_DEFERRED_OWNER_HAS_NO_PHYSICAL_ACCESS"
     }
   },
   "roles": {
@@ -692,8 +694,9 @@ JSON ниже является частью этого файла и доста�
       "scope": "P01-06 acceptance criterion",
       "reason": "Windows container smoke NOT_RUN. Installation authorized, but WSL needs administrator elevation; UAC request was cancelled. Docker per-user precheck rejects disabled VirtualMachinePlatform.",
       "effect": "Prepare and validate code/images in Linux CI; keep final PR draft until the required local check is performed or the owner explicitly changes that criterion.",
-      "next_action": "Obtain interactive administrator UAC confirmation, install WSL/enable VirtualMachinePlatform, determine if a reboot is required (request consent separately), retry verified Docker per-user installer, start Linux backend, run smoke and retain report.",
-      "installation_approval": "GRANTED_BY_OWNER"
+      "next_action": "Wait until the owner has interactive access and is ready to confirm administrator UAC. Do not launch more UAC prompts while unavailable. Installation permission remains granted; reboot still requires separate consent. Then complete WSL/Docker setup and run Windows container smoke.",
+      "installation_approval": "GRANTED_BY_OWNER",
+      "owner_availability": "NO_PHYSICAL_ACCESS; ADMIN_UAC_CONFIRMATION_UNAVAILABLE"
     }
   ],
   "open_review_comments": [],
@@ -767,7 +770,7 @@ JSON ниже является частью этого файла и доста�
     "os_verified": "Windows 11 Pro 10.0.26200 x64",
     "hypervisor_present": true,
     "lanmanserver": "RUNNING_AUTOMATIC",
-    "installation_status": "AUTHORIZED_INSTALLATION_ATTEMPTED_UAC_CANCELLED"
+    "installation_status": "AUTHORIZED_DEFERRED_OWNER_HAS_NO_PHYSICAL_ACCESS"
   },
   "validation_evidence": [
     {
@@ -1726,6 +1729,12 @@ JSON ниже является частью этого файла и доста�
       "date": "2026-10-15",
       "summary": "Зафиксировано разрешение владельца на Docker/WSL и реальные результаты установки: WSL требует admin, UAC отменён, Docker prerequisite VirtualMachinePlatform отсутствует. Windows smoke остаётся NOT_RUN, PR #8 draft. Повторный полный CI HEAD5968407 и оба отчёта PASS; понятное описание PR подготовлено.",
       "trigger": "Ответ владельца об установке среды и проверка финального кода"
+    },
+    {
+      "trigger": "Ответ владельца о недоступности компьютера",
+      "date": "2026-10-15",
+      "summary": "Владелец сообщил об отсутствии физического доступа к Windows. Установка уже разрешена, но отложена до возможности подтвердить UAC. Повторные UAC не запускать без готовности владельца; перезагрузка отдельно. PR #8 опубликован с понятным комментарием; обязательный Windows smoke остаётся NOT_RUN.",
+      "revision": 33
     }
   ],
   "repository": {
@@ -2112,7 +2121,7 @@ JSON ниже является частью этого файла и доста�
   "environment_installation_request": {
     "asked_on": "2026-10-15",
     "authorized_on": "2026-10-15",
-    "status": "AUTHORIZED_INSTALLATION_ATTEMPTED_UAC_CANCELLED",
+    "status": "AUTHORIZED_DEFERRED_OWNER_HAS_NO_PHYSICAL_ACCESS",
     "owner_reply": "Разрешаю установку Docker Desktop и WSL2",
     "requested_actions": [
       "Install Docker Desktop",
@@ -2144,12 +2153,13 @@ JSON ниже является частью этого файла и доста�
       }
     ],
     "installed": false,
-    "next_action": "Obtain interactive administrator UAC confirmation, install WSL/enable VirtualMachinePlatform, determine if a reboot is required (request consent separately), retry verified Docker per-user installer, start Linux backend, run smoke and retain report.",
+    "next_action": "Wait until the owner has interactive access and is ready to confirm administrator UAC. Do not launch more UAC prompts while unavailable. Installation permission remains granted; reboot still requires separate consent. Then complete WSL/Docker setup and run Windows container smoke.",
     "instructions": [
       "https://learn.microsoft.com/en-us/windows/wsl/basic-commands",
       "https://docs.docker.com/desktop/setup/install/windows-install/"
     ],
-    "checksum_source": "https://desktop.docker.com/win/main/amd64/242831/checksums.txt"
+    "checksum_source": "https://desktop.docker.com/win/main/amd64/242831/checksums.txt",
+    "owner_availability": "Сейчас у меня нет физического доступа к компьютеру"
   },
   "runtime_smoke_evidence": {
     "source_head": "59684070fa85a0aea8561b48828088e574a06436",
@@ -2287,8 +2297,8 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `73e2b7f824ee1d74b1fa6f6c110a178c582d91f5641792dd50aadd2894157aae` |
-| `tools/context_intro.md` | `8a07708404b56320fc95da90059b4bbdd1e5313ea50e5be4498fe10e9c0a4a0e` |
+| `CONTEXT_STATE.json` | `af77e9f9f62d8c69d3476d02c72849bf5fe82166004d7e0c91cbb51350a9cef6` |
+| `tools/context_intro.md` | `e30f69822c76e79c81ab03643230e862821599a6110a7cd8c5be0b22886d82f4` |
 | `tools/update_context.ps1` | `f830ed3538ae98ef5129b2ab5ae1d1ad564b0482d8ed2978a7ec2b96bcf5e731` |
 | `README.md` | `e95a49d6d4ee46c0bf94f2eca9f5784449a6487af03d852581ef0b1057c90e76` |
 | `README.ru.md` | `a0f2c97eaaf38b817bfbeecc56bf4f62bae85aac63660bf585651b74e3492ee7` |
@@ -2338,7 +2348,7 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/service/command_test.go` | `56eb2c958131551d61097e00fd66a34068332c141b81c3eaa5ec8358072a7051` |
 | `internal/service/shutdown_test.go` | `9387689f5183003faabddb0c5f6d6d5fd5c89e410fec66cf76aa94eebf25be58` |
 | `tools/smoke.mjs` | `2f0983a9e373ddb9bcd0cf343a4f02c8fb84bca996dbbcd5d9ae281caf06f5ce` |
-| `docs/development/CONTAINER_RUNTIME.md` | `8d556cf22140e3aefa8ec614d58e071f39c0e17ca7397e61c2e31454053513b0` |
+| `docs/development/CONTAINER_RUNTIME.md` | `20342e2f1b0cc07b9ee5436d494b4d4336a5a90d64a90268f9479f27ca3d8c42` |
 
 ## Полные самостоятельные приложения
 
@@ -7096,3 +7106,5 @@ CI на нативных Linux AMD64/ARM64 выполняет этот smoke п�
 P01-06 требует Windows container smoke. Пока он не выполнен, итоговый PR остаётся draft с конкретным невыполненным критерием; успешный Linux CI не заменяет эту проверку. После установки Docker с Linux backend запускается та же команда smoke, её отчёт добавляется в review evidence. По результату владелец принимает конкретный HEAD; ИИ не выполняет approve/merge.
 
 Установка среды согласована владельцем 15 октября. Официальный Docker Desktop 4.95.0 загружен, SHA256 и подпись Docker Inc проверены. WSL 2.7.13 через winget потребовал admin; запрос UAC завершился отменой до запуска установки. Docker per-user installer завершился precheck: VirtualMachinePlatform выключен. Ни WSL, ни Docker пока не установлены, перезагрузки не было. Для продолжения нужен интерактивный административный допуск; после установки/при необходимости отдельно согласованной перезагрузки выполняется `node tools/smoke.mjs`.
+
+Владелец сообщил, что сейчас не имеет физического доступа к компьютеру. Установка разрешена, но отложена до возможности подтвердить UAC. Повторные системные запросы пока не запускать; согласие на перезагрузку по-прежнему требуется отдельно. Windows container smoke остаётся NOT_RUN, PR #8 — draft.
