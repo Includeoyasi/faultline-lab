@@ -1,12 +1,12 @@
 # Go-модуль и контейнерный toolchain
 
-Состояние на 15 октября 2026 года: созданы Go-модуль, три bootstrap entrypoints и контейнер инструментов. Локальная сборка временным Go на Windows прошла. На нативных Linux AMD64/ARM64 прошли Docker build, Go checks, сборка/запуск всех трёх бинарников и отказ на неизвестную команду: [проверенный прогон](https://github.com/Includeoyasi/faultline-lab/actions/runs/38723552125), исходный HEAD 7ea4b89. [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) принят и слит; он покрывал только P01-01. В следующем PR задачи 02–04 добавляют [gRPC health-процессы](SERVICE_RUNTIME.md), конфигурацию и JSON-логи. Runtime-образы и бизнес-API ещё не реализованы. Текущий HEAD и его проверки доступны в соответствующем PR.
+Состояние на 15 октября 2026 года: P01-01–04 приняты и слиты через PR #6/#7. Закреплённый toolchain используется Go CI и как общий build stage трёх [runtime-образов](CONTAINER_RUNTIME.md). В следующем PR P01-05–08 реализованы graceful shutdown, runtime Compose и smoke с отчётом; фактические результаты CI и локальные ограничения находятся в контексте/PR.
 
 ## Состав и версии
 
 | Компонент | Источник закрепления | Версия |
 | :--- | :--- | :--- |
-| Go | [go.mod](../../go.mod), [Dockerfile](../../build/toolchain.Dockerfile) | 1.27.2 |
+| Go | [go.mod](../../go.mod), [Dockerfile](../../build/Dockerfile) | 1.27.2 |
 | goimports | tool directive в go.mod, go.sum | golang.org/x/tools v0.52.0 |
 | govulncheck | tool directive в go.mod, go.sum | golang.org/x/vuln v1.9.0 |
 | golangci-lint | Dockerfile, официальный образ с digest | v2.14.0 |
@@ -31,11 +31,11 @@ docker compose run --rm toolchain service-smoke
 
 `versions` выводит фактические Go, golangci-lint, build metadata goimports и версию govulncheck. `check` проверяет gofmt/goimports без перезаписи исходников, tidy без diff, verify, build, согласованные линтеры, unit/race commands и govulncheck. Ошибка любого шага завершает команду с ненулевым кодом. Набор линтеров — govet, staticcheck, errcheck, ineffassign, unused.
 
-`build` создаёт Linux-бинарники bin/orders, bin/inventory, bin/payments для архитектуры toolchain-контейнера и выводит build metadata. Они игнорируются Git. На Windows эти Linux-бинарники не запускаются напрямую. `service-smoke` собирает и проверяет три отдельных процесса: health, JSON-диагностику ошибок, выход и независимость. Unit/process tests теперь существуют; graceful drain, runtime-контейнеры и бизнес-процессы остаются будущими задачами. Прежний bootstrap-smoke удалён: сервисы больше не завершаются сразу после запуска.
+`build` создаёт Linux-бинарники bin/orders, bin/inventory, bin/payments для архитектуры toolchain-контейнера и выводит build metadata. Они игнорируются Git. На Windows эти Linux-бинарники не запускаются напрямую. `service-smoke` собирает и проверяет три отдельных процесса: health, JSON-диагностику ошибок, выход и независимость. Unit/process tests, graceful drain и runtime-контейнеры реализованы и проверены; бизнес-процессы остаются следующими пакетами. Прежний bootstrap-smoke удалён: сервисы больше не завершаются сразу после запуска.
 
 Для осознанного исправления форматирования: `docker compose run --rm toolchain format`. Эта команда меняет Go-исходники в рабочей копии; check их не меняет. Неподдерживаемая команда и лишние аргументы дают exit code 2.
 
-Toolchain — временный сервис профиля tools. Явный `compose run toolchain` активирует его; команды не поднимают PostgreSQL/Kafka/Redis или runtime сервисов. Shell-скрипт выполняется внутри Linux-контейнера. Исходники подключаются из относительного пути, кеши модулей и сборки — в отдельных named volumes. Используются стандартные capabilities Docker для записи в bind mount; privileged mode и Docker socket не включены, no-new-privileges включён. Ограничения runtime-контейнеров сервисов проектируются в P01-06 отдельно от среды сборки.
+Toolchain — временный сервис профиля tools. Явный `compose run toolchain` активирует его; команды не поднимают PostgreSQL/Kafka/Redis или runtime сервисов. Shell-скрипт выполняется внутри Linux-контейнера. Исходники подключаются из относительного пути, кеши модулей и сборки — в отдельных named volumes. Используются стандартные capabilities Docker для записи в bind mount; privileged mode и Docker socket не включены, no-new-privileges включён. Ограничения runtime-контейнеров сервисов описаны отдельно в [контейнерном каркасе](CONTAINER_RUNTIME.md).
 
 Внутри образа Git доверяет только рабочему каталогу /workspace: bind mount может иметь другого владельца, а Go читает Git для настоящих VCS build metadata. Настройка действует в образе инструментов и не меняет Git-конфигурацию хоста.
 
@@ -43,6 +43,6 @@ Toolchain — временный сервис профиля tools. Явный `
 
 [Go workflow](../../.github/workflows/go.yml) использует нативные ubuntu-24.04 (AMD64) и ubuntu-24.04-arm (ARM64). На каждой архитектуре он собирает один и тот же Dockerfile, выполняет check, service-smoke и проверяет отказ на неизвестную команду. Затем проверяет отсутствие изменений отслеживаемых исходников. Успешная сборка ARM64 в CI не доказывает запуск Docker Desktop на личном Mac.
 
-На Windows Docker пока не найден; локальный container smoke — NOT_RUN. Для дополнительной проверки скачан официальный переносимый Go 1.27.2 с проверкой SHA-256 в игнорируемую папку .local, без установки в PATH. Это вспомогательная проверка, а не основной путь разработки. Личная macOS-среда ещё не проверялась; измерений потребления и производительности нет.
+На Windows установлены host Go1.27.2, WSL2.7.13 и Docker Desktop4.95. [Runtime smoke и shutdown](evidence/p01/WINDOWS_SMOKE.md) PASS; основной путь сборки остаётся контейнерным. Личная macOS не проверена, performance capacity не измерена. После работы Docker Desktop/WSL VM выключаются; установленные инструменты и полезные кеши сохраняются.
 
 Версии, директивы tools и образы обновляются совместно отдельным проверяемым изменением. GOTOOLCHAIN=local запрещает неявную загрузку другого Go, контейнер использует GOFLAGS=-mod=readonly. После изменения go.mod/go.sum контейнер пересобирается. Текущая защита main и required checks отражаются в [безопасности репозитория](REPOSITORY_SECURITY.md), а не выводятся из наличия workflow.

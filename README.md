@@ -22,19 +22,19 @@
 
 ## Current state
 
-**Architecture approved · gRPC skeleton under review.** The project owner accepted G0 on **13 October 2026** and merged P01-01. P01-02–04 add validated configuration, JSON logging and three independent gRPC health servers. Business operations and experiment results are still to come. [Build commands](docs/development/TOOLCHAIN.md) · [Service runtime](docs/development/SERVICE_RUNTIME.md).
+**Architecture approved · container skeleton in progress.** G0 was accepted on **13 October 2026**; P01-01–04 are merged. P01-05–08 add bounded graceful shutdown, three minimal runtime images, Compose and smoke reports. [Build tools](docs/development/TOOLCHAIN.md) · [Runtime guide](docs/development/CONTAINER_RUNTIME.md). Business operations and experiment results are still to come.
 
 | Ready | Next | Later |
 | :--- | :--- | :--- |
-| Approved architecture and business invariants | Review configuration/JSON/health; add bounded shutdown | Repeatable load and failure experiments |
+| Approved architecture and business invariants | Review runtime images and bounded shutdown | Repeatable load and failure experiments |
 | Detailed process diagrams and review gates | PostgreSQL ownership, migrations and gRPC contracts | Grafana dashboards, alerts and experiment reports |
 | Portable context with a freshness check | Durable workflows, Kafka and compensation | Scaling comparisons under equal resource budgets |
 
-The first code [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) covers **P01-01**, after G0 and before G1. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) tracks all eight tasks; [the packet specification](docs/development/packets/P01.md) defines acceptance criteria. P01-01 is accepted and merged; P01-02–04 are verified on native Linux AMD64/ARM64 and under review together in [PR #7](https://github.com/Includeoyasi/faultline-lab/pull/7), at the owner's request. P01-05–08 have not started; the full packet is still incomplete.
+The first code [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) covers **P01-01**, after G0 and before G1. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) tracks all eight tasks; [the packet specification](docs/development/packets/P01.md) defines acceptance criteria. P01-01–04 are accepted and merged in PR #6/#7. P01-05–08 are ready for owner review in [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). All eight implementation checks are complete; four tasks are owner-accepted. [Windows container smoke](docs/development/evidence/p01/WINDOWS_SMOKE.md) and native Linux AMD64/ARM64 CI pass. The personal Mac remains untested.
 
 No capacity numbers or performance improvements are claimed before measurement. The [roadmap](docs/ROADMAP.md) distinguishes design hypotheses from acceptance criteria and observed results.
 
-The owner has agreed on container-based development for Windows and macOS and a reusable lab boundary with business adapters. The [environment plan](docs/development/ENVIRONMENT.md) and [boundary proposal](docs/architecture/LAB_BOUNDARY.md) record this direction; runnable containers and a second business integration are still to come.
+The owner has agreed on container-based development for Windows and macOS and a reusable lab boundary with business adapters. The [environment plan](docs/development/ENVIRONMENT.md) and [boundary proposal](docs/architecture/LAB_BOUNDARY.md) record this direction; runtime containers are verified on Windows/WSL2 and native Linux AMD64/ARM64; a second business integration is still to come.
 
 ## What this project investigates
 
@@ -120,6 +120,8 @@ flowchart LR
 
 The [code review standard](docs/development/CODE_REVIEW.md) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](docs/development/WORKFLOW.md). [AGENTS.md](AGENTS.md) gives implementers their working rules; [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
 
+[Engineering decisions and review](docs/development/ENGINEERING_DECISIONS.md) traces owner feedback through the rationale, changes and verification. It also links the separate [Go smoke backlog task](https://github.com/Includeoyasi/faultline-lab/issues/9); that migration has not started.
+
 ## Repository map
 
 ```text
@@ -148,7 +150,7 @@ faultline-lab/
 └── .github/                    # Documentation CI and review templates
 ```
 
-Runtime service images will be added in P01-06; the current Compose service is the development toolchain. The [roadmap](docs/ROADMAP.md) contains the planned code layout.
+Compose now defines three runtime services and the temporary toolchain profile; see the [runtime guide](docs/development/CONTAINER_RUNTIME.md). The [roadmap](docs/ROADMAP.md) contains the planned code layout.
 
 ## Working with this snapshot
 

@@ -12,3 +12,15 @@ RUN git config --system --add safe.directory /workspace \
 COPY --chmod=0755 tools/go.sh /usr/local/bin/lab-go
 ENTRYPOINT ["/usr/local/bin/lab-go"]
 CMD ["versions"]
+
+FROM toolchain AS service-build
+ARG SERVICE
+COPY . .
+RUN case "$SERVICE" in orders|inventory|payments) ;; *) exit 2 ;; esac \
+    && CGO_ENABLED=0 go build -trimpath -o /out/service "./cmd/$SERVICE"
+
+FROM scratch AS runtime
+COPY --from=service-build /out/service /app/service
+USER 65532:65532
+STOPSIGNAL SIGTERM
+ENTRYPOINT ["/app/service"]

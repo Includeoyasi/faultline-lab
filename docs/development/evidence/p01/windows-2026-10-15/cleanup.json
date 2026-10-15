@@ -1,0 +1,12 @@
+{
+  "containers_remaining": 0,
+  "wsl_shutdown_exit": 0,
+  "images_and_build_cache_preserved": true,
+  "desktop_stop_exit": 0,
+  "remaining_development_processes": [],
+  "installed_tools_preserved": true,
+  "docker_autostart": false,
+  "docker_run_entry_present": false,
+  "observed_at": "2026-10-15T22:49:53.4008625+03:00",
+  "reboot_performed": false
+}
