@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 35,
+  "context_revision": 36,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -33,23 +33,24 @@
       "draft": false,
       "go_workflow": {
         "name": "Go toolchain",
-        "head_sha": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+        "head_sha": "445d324ea48419133fa37b15d44242bd6bbf5b08",
         "status": "completed",
         "conclusion": "success",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38751178279"
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38798549009"
       },
       "documentation_ci": {
         "name": "Documentation",
-        "head_sha": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+        "head_sha": "445d324ea48419133fa37b15d44242bd6bbf5b08",
         "status": "completed",
         "conclusion": "success",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38751178336"
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38798549034"
       },
-      "observed_commit": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+      "observed_commit": "445d324ea48419133fa37b15d44242bd6bbf5b08",
       "review_status": "READY_FOR_OWNER_REVIEW",
       "handoff_note": "Evidence refers to the source HEAD before final context changes. Final HEAD and checks are available in PR #8; the snapshot cannot embed its own commit hash.",
       "environment_installation": "COMPLETED_RUNTIME_STOPPED_AFTER_CHECKS",
-      "windows_evidence": "docs/development/evidence/p01/WINDOWS_SMOKE.md"
+      "windows_evidence": "docs/development/evidence/p01/WINDOWS_SMOKE.md",
+      "documentation_additions": "Engineering decisions overview, ADR 0002/0003, separate Issue #9 BACKLOG specification; no Go smoke migration implementation"
     }
   },
   "roles": {
@@ -111,7 +112,7 @@
       "smoke_node": "v22.23.3"
     },
     "git_repository": "INITIALIZED",
-    "git_commit": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+    "git_commit": "445d324ea48419133fa37b15d44242bd6bbf5b08",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -232,7 +233,7 @@
         ],
         "human_review": "PENDING",
         "draft_reason": null,
-        "observed_head": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+        "observed_head": "445d324ea48419133fa37b15d44242bd6bbf5b08",
         "windows_smoke": "PASS"
       }
     ],
@@ -283,7 +284,8 @@
     "Реализованы GracefulStop/deadline/fatal force, собственный healthcheck CLI, scratch runtime для трёх сервисов, internal Compose network и host-side Docker smoke с JSON/JSONL-отчётом. Unit/process tests прошли на Windows; runtime Docker/WSL локально отсутствуют, smoke NOT_RUN; Linux CI нового кода ожидается.",
     "P01-05/07/08 реализованы и проверены Linux CI AMD64/ARM64: linters 0 issues, unit/race, govulncheck, process signals/forced exit 1, три scratch-образа и полный runtime smoke PASS. Оба артефакта report.json/JSONL прочитаны: реальные image IDs, health, права, изоляция, graceful exit 0 и cleanup подтверждены. Реализация проверена 7/8; P01-06 не закрыта из-за Windows container smoke NOT_RUN; принято владельцем 4/8.",
     "Владелец разрешил установку Docker Desktop/WSL2. Официальный Docker Desktop 4.95.0 скачан, SHA256 и Authenticode Docker Inc подтверждены; установка остановлена precheck VirtualMachinePlatform. WSL winget требует admin, последующий UAC завершился отменой до запуска script. Ничего не объявляется установленным, перезагрузки не было; необходим интерактивный административный допуск. Linux CI HEAD5968407 и оба артефакта PASS.",
-    "15 октября завершена установка host Go1.27.2, WSL2.7.13 и DockerDesktop4.95. Windows container smoke на чистом d81b51c PASS, проверены все 8/8 задач реализации P01. Runtime после работы выключен, автозапуск Docker отключён; программы/образы/кеши сохранены. PR #8 переведён из draft, owner review/merge ещё не выполнены; принято 4/8, G1 не принят."
+    "15 октября завершена установка host Go1.27.2, WSL2.7.13 и DockerDesktop4.95. Windows container smoke на чистом d81b51c PASS, проверены все 8/8 задач реализации P01. Runtime после работы выключен, автозапуск Docker отключён; программы/образы/кеши сохранены. PR #8 переведён из draft, owner review/merge ещё не выполнены; принято 4/8, G1 не принят.",
+    "Создана отдельная backlog-задача #9 (AI-Your-Bro), код переноса smoke на Go не начат. Подготовлены обзор инженерных решений, ADR 0002 о процессе фиксации, proposed ADR 0003 и переносимая спецификация #9. Документация представляется в PR #8; приёмка P01/G1 не меняется."
   ],
   "next_implementation_packet": {
     "id": "P01",
@@ -1032,6 +1034,18 @@
       "source_dirty": false,
       "evidence": "docs/development/evidence/p01/WINDOWS_SMOKE.md",
       "detail": "All 3 real Linux containers healthy/security constraints verified; orders isolation PASS; all graceful exit0; scoped cleanup PASS. Go MSI 1.27.2 installed/version verified; WSL2.7.13.0; Desktop4.95.0; Engine29.8.2; Compose5.6.0; Node24.19.0. Desktop and WSL VM stopped afterward, no Docker/vmmemWSL processes, autostart disabled. No reboot."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "Engineering decision records and separate Go smoke backlog",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly (PowerShell 7)",
+        "tools/update_context.ps1 -CheckOnly (Windows PowerShell 5.1)",
+        "git diff --check"
+      ],
+      "detail": "31 Markdown files, 437 local links, 62 Mermaid blocks checked structurally; context revision36, 60 embedded documents, 63 fingerprints. Executor GET confirms Issue9 OPEN/backlog/enhancement, AI-Your-Bro author, unassigned. No implementation or local runtime started; P01 owner acceptance4/8, G1 NOT_READY. Final publication HEAD CI is checked in PR8, not inferred from baseline CI."
     }
   ],
   "source_documents": [
@@ -1345,6 +1359,26 @@
       "anchor": "windows-smoke-cleanup",
       "title": "Windows: подтверждение остановки",
       "language": "json"
+    },
+    {
+      "path": "docs/development/ENGINEERING_DECISIONS.md",
+      "anchor": "appendix-engineering-decisions",
+      "title": "Инженерные решения, вклад владельца и доказательства ревью"
+    },
+    {
+      "path": "docs/adr/0002-record-review-decisions.md",
+      "anchor": "appendix-adr-0002",
+      "title": "ADR 0002: согласованный порядок фиксации решений"
+    },
+    {
+      "path": "docs/adr/0003-go-container-smoke.md",
+      "anchor": "appendix-adr-0003",
+      "title": "ADR 0003: proposed Go container smoke"
+    },
+    {
+      "path": "docs/development/backlog/GO_SMOKE.md",
+      "anchor": "appendix-go-smoke-backlog",
+      "title": "Backlog #9: перенос smoke на Go, объём и критерии"
     }
   ],
   "change_history": [
@@ -1557,6 +1591,12 @@
       "summary": "Согласованы текущие tracker_stage/current_packet_stage с фактическим IN_REVIEW PR #8 и заменены прежние сведения об отсутствующем host Go/Docker на проверенные результаты установки. Доказательства Windows/cleanup не менялись; владелец принял 4/8, G1 NOT_READY.",
       "date": "2026-10-15",
       "trigger": "Проверка согласованности переносимого контекста перед окончательной передачей на ревью"
+    },
+    {
+      "revision": 36,
+      "date": "2026-10-15",
+      "summary": "Зафиксирован согласованный порядок PR/ADR/обзор с явным авторством замечаний из чата. По прямому поручению создана отдельная Issue #9 BACKLOG для Go smoke с критериями, без начала реализации; все четыре новых документа включены в переносимый контекст. P01 остаётся IN_REVIEW, принято 4/8, G1 NOT_READY; runtime не запускался.",
+      "trigger": "Ответ владельца Хорошо на предложение фиксации инженерных решений; затем поручение оформить Go smoke отдельной backlog-задачей"
     }
   ],
   "repository": {
@@ -1590,21 +1630,21 @@
       "merged": false,
       "author": "AI-Your-Bro",
       "scope": "P01-05..P01-08",
-      "observed_commit": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+      "observed_commit": "445d324ea48419133fa37b15d44242bd6bbf5b08",
       "observed_ci": [
         {
           "name": "Documentation",
-          "head_sha": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+          "head_sha": "445d324ea48419133fa37b15d44242bd6bbf5b08",
           "status": "completed",
           "conclusion": "success",
-          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38751178336"
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38798549034"
         },
         {
           "name": "Go toolchain",
-          "head_sha": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+          "head_sha": "445d324ea48419133fa37b15d44242bd6bbf5b08",
           "status": "completed",
           "conclusion": "success",
-          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38751178279"
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38798549009"
         }
       ]
     }
@@ -1718,6 +1758,7 @@
     "snapshot_rule": "GitHub Issue — источник текущего выполнения; спецификация и контекст сохраняют датированный снимок с URL, результатами и ограничениями",
     "tracker": "GitHub Issues, один Issue на review packet, чеклист подзадач",
     "stages": [
+      "BACKLOG",
       "TODO",
       "IN_PROGRESS",
       "IN_REVIEW",
@@ -1753,7 +1794,33 @@
       "whole_packet_acceptance": "PENDING_FINAL_PR_AND_ALL_APPLICABLE_CRITERIA"
     },
     "current_task_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
-    "current_subtask_stage": "IN_REVIEW"
+    "current_subtask_stage": "IN_REVIEW",
+    "backlog": [
+      {
+        "number": 9,
+        "title": "Перенести контейнерный smoke на Go",
+        "url": "https://github.com/Includeoyasi/faultline-lab/issues/9",
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "proposed_implementation_checks": "NOT_RUN",
+        "labels": [
+          "enhancement",
+          "backlog"
+        ],
+        "author": "AI-Your-Bro",
+        "assignees": [],
+        "start_date": null,
+        "implementation_pr": null,
+        "specification": "docs/development/backlog/GO_SMOKE.md",
+        "decision": "docs/adr/0003-go-container-smoke.md",
+        "requested_on": "2026-10-15",
+        "request": "Перенос смоук тестов на Go оформи как отдельную задачу типа backlog",
+        "request_source": "Direct project owner instruction in chat",
+        "authorization_scope": "CREATE_BACKLOG_ONLY; owner selects priority/start separately; separate future PR; does not extend P01 or accept G1",
+        "scope": "Replace tools/smoke.mjs orchestration with a small Go CLI while preserving health/security/isolation/stop/JSON/JSONL/exit codes/scoped cleanup; document pinned container build and ready binary path without mandatory host Go or Node; docs checker remains Node.js",
+        "evidence": "Executor-authenticated GET /issues/9 confirms OPEN, author AI-Your-Bro and backlog/enhancement labels; no assignee or implementation PR"
+      }
+    ]
   },
   "review_sequence": {
     "confirmed_on": "2026-10-13",
@@ -2253,5 +2320,43 @@
       "observed_at": "2026-10-15T22:49:53.4008625+03:00",
       "reboot_performed": false
     }
+  },
+  "review_decision_tracking": {
+    "requested_on": "2026-10-15",
+    "policy_status": "ACCEPTED_IN_CHAT",
+    "policy_evidence": "Owner replied Хорошо to the proposal: working discussion in PR, significant decisions in ADR, one engineering overview linked from README",
+    "overview": "docs/development/ENGINEERING_DECISIONS.md",
+    "policy_adr": "docs/adr/0002-record-review-decisions.md",
+    "publication_pr": "https://github.com/Includeoyasi/faultline-lab/pull/8",
+    "publication_review": "PENDING_OWNER_REVIEW; policy acceptance does not approve PR #8",
+    "record_fields": [
+      "Question and source",
+      "Alternatives and rationale",
+      "Change",
+      "Verification evidence",
+      "Status and acceptance source"
+    ],
+    "attribution_rule": "AI-Your-Bro publishes executor summaries; owner requirements from chat are identified as such. Do not fabricate GitHub comments or approvals by Includeoyasi.",
+    "routine_fixes": "PR only; ADR reserved for significant decisions; approved scope remains autonomous",
+    "cases": [
+      {
+        "topic": "Explicit environment configuration instead of application network defaults",
+        "status": "ACCEPTED_PR7_OWNER_MERGE",
+        "source": "Owner review in chat",
+        "evidence": "https://github.com/Includeoyasi/faultline-lab/pull/7#issuecomment-6192239609"
+      },
+      {
+        "topic": "Go container smoke runner",
+        "status": "BACKLOG_NOT_STARTED",
+        "source": "Owner question in chat and explicit separate-backlog instruction",
+        "evidence": "https://github.com/Includeoyasi/faultline-lab/issues/9"
+      },
+      {
+        "topic": "Personal PC runtime shutdown and bounded VM resources",
+        "status": "IMPLEMENTED_VERIFIED_PR8_REVIEW_PENDING",
+        "source": "Owner personal-computer instruction in chat; executor selected VM limits",
+        "evidence": "docs/development/evidence/p01/WINDOWS_SMOKE.md"
+      }
+    ]
   }
 }

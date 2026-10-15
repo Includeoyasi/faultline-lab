@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **35**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
+Ревизия: **36**. Состояние на: **2026-10-15**, Europe/Moscow. Фаза: **G0_APPROVED_IMPLEMENTATION_IN_PROGRESS**.
 
 ## Краткое текущее состояние
 
@@ -242,6 +242,10 @@ MVP — этапы 0–2: работающие три сервиса, весь �
 
 ## Что агент обязан отличать
 
+Порядок фиксации решений согласован владельцем: PR хранит обсуждение, ADR — существенное решение с обоснованием, docs/development/ENGINEERING_DECISIONS.md — краткие примеры со ссылками. Замечания из чата пересказывает исполнитель с явным указанием источника и автора требования; это не комментарий и не approval от аккаунта владельца.
+
+По отдельному поручению от 15 октября перенос контейнерного smoke на Go заведён как Issue #9 с меткой backlog. Состояние BACKLOG / NOT_STARTED; спецификация docs/development/backlog/GO_SMOKE.md и proposed ADR 0003 включены в приложения. Начало разработки и приоритет выбирает владелец отдельно. P01 и его приёмка не расширяются; действующий smoke остаётся tools/smoke.mjs.
+
 - **APPROVED** — прямое согласование владельца проекта с зафиксированным основанием.
 - **PLANNED / PROPOSED** — намеченное поведение или предложение, ещё не реализация.
 - **IMPLEMENTED / APPLIED** — изменения действительно существуют в указанном рабочем состоянии.
@@ -264,7 +268,7 @@ JSON ниже является частью этого файла и доста�
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 35,
+  "context_revision": 36,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
@@ -296,23 +300,24 @@ JSON ниже является частью этого файла и доста�
       "draft": false,
       "go_workflow": {
         "name": "Go toolchain",
-        "head_sha": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+        "head_sha": "445d324ea48419133fa37b15d44242bd6bbf5b08",
         "status": "completed",
         "conclusion": "success",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38751178279"
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38798549009"
       },
       "documentation_ci": {
         "name": "Documentation",
-        "head_sha": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+        "head_sha": "445d324ea48419133fa37b15d44242bd6bbf5b08",
         "status": "completed",
         "conclusion": "success",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38751178336"
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38798549034"
       },
-      "observed_commit": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+      "observed_commit": "445d324ea48419133fa37b15d44242bd6bbf5b08",
       "review_status": "READY_FOR_OWNER_REVIEW",
       "handoff_note": "Evidence refers to the source HEAD before final context changes. Final HEAD and checks are available in PR #8; the snapshot cannot embed its own commit hash.",
       "environment_installation": "COMPLETED_RUNTIME_STOPPED_AFTER_CHECKS",
-      "windows_evidence": "docs/development/evidence/p01/WINDOWS_SMOKE.md"
+      "windows_evidence": "docs/development/evidence/p01/WINDOWS_SMOKE.md",
+      "documentation_additions": "Engineering decisions overview, ADR 0002/0003, separate Issue #9 BACKLOG specification; no Go smoke migration implementation"
     }
   },
   "roles": {
@@ -374,7 +379,7 @@ JSON ниже является частью этого файла и доста�
       "smoke_node": "v22.23.3"
     },
     "git_repository": "INITIALIZED",
-    "git_commit": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+    "git_commit": "445d324ea48419133fa37b15d44242bd6bbf5b08",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -495,7 +500,7 @@ JSON ниже является частью этого файла и доста�
         ],
         "human_review": "PENDING",
         "draft_reason": null,
-        "observed_head": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+        "observed_head": "445d324ea48419133fa37b15d44242bd6bbf5b08",
         "windows_smoke": "PASS"
       }
     ],
@@ -546,7 +551,8 @@ JSON ниже является частью этого файла и доста�
     "Реализованы GracefulStop/deadline/fatal force, собственный healthcheck CLI, scratch runtime для трёх сервисов, internal Compose network и host-side Docker smoke с JSON/JSONL-отчётом. Unit/process tests прошли на Windows; runtime Docker/WSL локально отсутствуют, smoke NOT_RUN; Linux CI нового кода ожидается.",
     "P01-05/07/08 реализованы и проверены Linux CI AMD64/ARM64: linters 0 issues, unit/race, govulncheck, process signals/forced exit 1, три scratch-образа и полный runtime smoke PASS. Оба артефакта report.json/JSONL прочитаны: реальные image IDs, health, права, изоляция, graceful exit 0 и cleanup подтверждены. Реализация проверена 7/8; P01-06 не закрыта из-за Windows container smoke NOT_RUN; принято владельцем 4/8.",
     "Владелец разрешил установку Docker Desktop/WSL2. Официальный Docker Desktop 4.95.0 скачан, SHA256 и Authenticode Docker Inc подтверждены; установка остановлена precheck VirtualMachinePlatform. WSL winget требует admin, последующий UAC завершился отменой до запуска script. Ничего не объявляется установленным, перезагрузки не было; необходим интерактивный административный допуск. Linux CI HEAD5968407 и оба артефакта PASS.",
-    "15 октября завершена установка host Go1.27.2, WSL2.7.13 и DockerDesktop4.95. Windows container smoke на чистом d81b51c PASS, проверены все 8/8 задач реализации P01. Runtime после работы выключен, автозапуск Docker отключён; программы/образы/кеши сохранены. PR #8 переведён из draft, owner review/merge ещё не выполнены; принято 4/8, G1 не принят."
+    "15 октября завершена установка host Go1.27.2, WSL2.7.13 и DockerDesktop4.95. Windows container smoke на чистом d81b51c PASS, проверены все 8/8 задач реализации P01. Runtime после работы выключен, автозапуск Docker отключён; программы/образы/кеши сохранены. PR #8 переведён из draft, owner review/merge ещё не выполнены; принято 4/8, G1 не принят.",
+    "Создана отдельная backlog-задача #9 (AI-Your-Bro), код переноса smoke на Go не начат. Подготовлены обзор инженерных решений, ADR 0002 о процессе фиксации, proposed ADR 0003 и переносимая спецификация #9. Документация представляется в PR #8; приёмка P01/G1 не меняется."
   ],
   "next_implementation_packet": {
     "id": "P01",
@@ -1295,6 +1301,18 @@ JSON ниже является частью этого файла и доста�
       "source_dirty": false,
       "evidence": "docs/development/evidence/p01/WINDOWS_SMOKE.md",
       "detail": "All 3 real Linux containers healthy/security constraints verified; orders isolation PASS; all graceful exit0; scoped cleanup PASS. Go MSI 1.27.2 installed/version verified; WSL2.7.13.0; Desktop4.95.0; Engine29.8.2; Compose5.6.0; Node24.19.0. Desktop and WSL VM stopped afterward, no Docker/vmmemWSL processes, autostart disabled. No reboot."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "Engineering decision records and separate Go smoke backlog",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly (PowerShell 7)",
+        "tools/update_context.ps1 -CheckOnly (Windows PowerShell 5.1)",
+        "git diff --check"
+      ],
+      "detail": "31 Markdown files, 437 local links, 62 Mermaid blocks checked structurally; context revision36, 60 embedded documents, 63 fingerprints. Executor GET confirms Issue9 OPEN/backlog/enhancement, AI-Your-Bro author, unassigned. No implementation or local runtime started; P01 owner acceptance4/8, G1 NOT_READY. Final publication HEAD CI is checked in PR8, not inferred from baseline CI."
     }
   ],
   "source_documents": [
@@ -1608,6 +1626,26 @@ JSON ниже является частью этого файла и доста�
       "anchor": "windows-smoke-cleanup",
       "title": "Windows: подтверждение остановки",
       "language": "json"
+    },
+    {
+      "path": "docs/development/ENGINEERING_DECISIONS.md",
+      "anchor": "appendix-engineering-decisions",
+      "title": "Инженерные решения, вклад владельца и доказательства ревью"
+    },
+    {
+      "path": "docs/adr/0002-record-review-decisions.md",
+      "anchor": "appendix-adr-0002",
+      "title": "ADR 0002: согласованный порядок фиксации решений"
+    },
+    {
+      "path": "docs/adr/0003-go-container-smoke.md",
+      "anchor": "appendix-adr-0003",
+      "title": "ADR 0003: proposed Go container smoke"
+    },
+    {
+      "path": "docs/development/backlog/GO_SMOKE.md",
+      "anchor": "appendix-go-smoke-backlog",
+      "title": "Backlog #9: перенос smoke на Go, объём и критерии"
     }
   ],
   "change_history": [
@@ -1820,6 +1858,12 @@ JSON ниже является частью этого файла и доста�
       "summary": "Согласованы текущие tracker_stage/current_packet_stage с фактическим IN_REVIEW PR #8 и заменены прежние сведения об отсутствующем host Go/Docker на проверенные результаты установки. Доказательства Windows/cleanup не менялись; владелец принял 4/8, G1 NOT_READY.",
       "date": "2026-10-15",
       "trigger": "Проверка согласованности переносимого контекста перед окончательной передачей на ревью"
+    },
+    {
+      "revision": 36,
+      "date": "2026-10-15",
+      "summary": "Зафиксирован согласованный порядок PR/ADR/обзор с явным авторством замечаний из чата. По прямому поручению создана отдельная Issue #9 BACKLOG для Go smoke с критериями, без начала реализации; все четыре новых документа включены в переносимый контекст. P01 остаётся IN_REVIEW, принято 4/8, G1 NOT_READY; runtime не запускался.",
+      "trigger": "Ответ владельца Хорошо на предложение фиксации инженерных решений; затем поручение оформить Go smoke отдельной backlog-задачей"
     }
   ],
   "repository": {
@@ -1853,21 +1897,21 @@ JSON ниже является частью этого файла и доста�
       "merged": false,
       "author": "AI-Your-Bro",
       "scope": "P01-05..P01-08",
-      "observed_commit": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+      "observed_commit": "445d324ea48419133fa37b15d44242bd6bbf5b08",
       "observed_ci": [
         {
           "name": "Documentation",
-          "head_sha": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+          "head_sha": "445d324ea48419133fa37b15d44242bd6bbf5b08",
           "status": "completed",
           "conclusion": "success",
-          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38751178336"
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38798549034"
         },
         {
           "name": "Go toolchain",
-          "head_sha": "d81b51ce2eb46f56d698fd8bf5f9966b91a16036",
+          "head_sha": "445d324ea48419133fa37b15d44242bd6bbf5b08",
           "status": "completed",
           "conclusion": "success",
-          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38751178279"
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38798549009"
         }
       ]
     }
@@ -1981,6 +2025,7 @@ JSON ниже является частью этого файла и доста�
     "snapshot_rule": "GitHub Issue — источник текущего выполнения; спецификация и контекст сохраняют датированный снимок с URL, результатами и ограничениями",
     "tracker": "GitHub Issues, один Issue на review packet, чеклист подзадач",
     "stages": [
+      "BACKLOG",
       "TODO",
       "IN_PROGRESS",
       "IN_REVIEW",
@@ -2016,7 +2061,33 @@ JSON ниже является частью этого файла и доста�
       "whole_packet_acceptance": "PENDING_FINAL_PR_AND_ALL_APPLICABLE_CRITERIA"
     },
     "current_task_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/8",
-    "current_subtask_stage": "IN_REVIEW"
+    "current_subtask_stage": "IN_REVIEW",
+    "backlog": [
+      {
+        "number": 9,
+        "title": "Перенести контейнерный smoke на Go",
+        "url": "https://github.com/Includeoyasi/faultline-lab/issues/9",
+        "status": "BACKLOG",
+        "implementation": "NOT_STARTED",
+        "proposed_implementation_checks": "NOT_RUN",
+        "labels": [
+          "enhancement",
+          "backlog"
+        ],
+        "author": "AI-Your-Bro",
+        "assignees": [],
+        "start_date": null,
+        "implementation_pr": null,
+        "specification": "docs/development/backlog/GO_SMOKE.md",
+        "decision": "docs/adr/0003-go-container-smoke.md",
+        "requested_on": "2026-10-15",
+        "request": "Перенос смоук тестов на Go оформи как отдельную задачу типа backlog",
+        "request_source": "Direct project owner instruction in chat",
+        "authorization_scope": "CREATE_BACKLOG_ONLY; owner selects priority/start separately; separate future PR; does not extend P01 or accept G1",
+        "scope": "Replace tools/smoke.mjs orchestration with a small Go CLI while preserving health/security/isolation/stop/JSON/JSONL/exit codes/scoped cleanup; document pinned container build and ready binary path without mandatory host Go or Node; docs checker remains Node.js",
+        "evidence": "Executor-authenticated GET /issues/9 confirms OPEN, author AI-Your-Bro and backlog/enhancement labels; no assignee or implementation PR"
+      }
+    ]
   },
   "review_sequence": {
     "confirmed_on": "2026-10-13",
@@ -2516,6 +2587,44 @@ JSON ниже является частью этого файла и доста�
       "observed_at": "2026-10-15T22:49:53.4008625+03:00",
       "reboot_performed": false
     }
+  },
+  "review_decision_tracking": {
+    "requested_on": "2026-10-15",
+    "policy_status": "ACCEPTED_IN_CHAT",
+    "policy_evidence": "Owner replied Хорошо to the proposal: working discussion in PR, significant decisions in ADR, one engineering overview linked from README",
+    "overview": "docs/development/ENGINEERING_DECISIONS.md",
+    "policy_adr": "docs/adr/0002-record-review-decisions.md",
+    "publication_pr": "https://github.com/Includeoyasi/faultline-lab/pull/8",
+    "publication_review": "PENDING_OWNER_REVIEW; policy acceptance does not approve PR #8",
+    "record_fields": [
+      "Question and source",
+      "Alternatives and rationale",
+      "Change",
+      "Verification evidence",
+      "Status and acceptance source"
+    ],
+    "attribution_rule": "AI-Your-Bro publishes executor summaries; owner requirements from chat are identified as such. Do not fabricate GitHub comments or approvals by Includeoyasi.",
+    "routine_fixes": "PR only; ADR reserved for significant decisions; approved scope remains autonomous",
+    "cases": [
+      {
+        "topic": "Explicit environment configuration instead of application network defaults",
+        "status": "ACCEPTED_PR7_OWNER_MERGE",
+        "source": "Owner review in chat",
+        "evidence": "https://github.com/Includeoyasi/faultline-lab/pull/7#issuecomment-6192239609"
+      },
+      {
+        "topic": "Go container smoke runner",
+        "status": "BACKLOG_NOT_STARTED",
+        "source": "Owner question in chat and explicit separate-backlog instruction",
+        "evidence": "https://github.com/Includeoyasi/faultline-lab/issues/9"
+      },
+      {
+        "topic": "Personal PC runtime shutdown and bounded VM resources",
+        "status": "IMPLEMENTED_VERIFIED_PR8_REVIEW_PENDING",
+        "source": "Owner personal-computer instruction in chat; executor selected VM limits",
+        "evidence": "docs/development/evidence/p01/WINDOWS_SMOKE.md"
+      }
+    ]
   }
 }
 ```
@@ -2526,18 +2635,18 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `5fd52451ed7203be8d924e5b2830b0a5b0eb3a6e2a4a3c3ac26fd1ec0955eb12` |
-| `tools/context_intro.md` | `b22331832075e551a5fa41219c01e2eea76b8f0ab54953e368ccd00d020c5b36` |
+| `CONTEXT_STATE.json` | `a0c7de6a18c8f4b9f61b86fe932d582c7533baf4771b732eb68c12fc0f56ee4f` |
+| `tools/context_intro.md` | `636189e5a362e3b50913c52fa305e21d917525e288a262808cb910fa799ba1c7` |
 | `tools/update_context.ps1` | `f830ed3538ae98ef5129b2ab5ae1d1ad564b0482d8ed2978a7ec2b96bcf5e731` |
-| `README.md` | `3f1e181bdda675314b738a740f54a12f05ebf68814b07b6692ad7a3c21c071c5` |
-| `README.ru.md` | `5d2bdd90a2a2af1be39b4041d5b21ff2b54a8cebba5153b16eafb2031b8ec881` |
-| `docs/README.md` | `a31c3fe3dd087853b7a7c307249d580d849b50b2a832f2e04e9848edc16bfdef` |
+| `README.md` | `1e250ea01853d8d6dc62c270923a34fd2bcf25504e0da1a32cdc53a48c95b28d` |
+| `README.ru.md` | `0566419c177b29d2c2fb679eff838a6a6859993a21713219b60d190df4c9dbf9` |
+| `docs/README.md` | `3abda30d787100aa04f83b1125dc75ef91a8abb228712645c9f2f69176191ca4` |
 | `docs/ROADMAP.md` | `1711f0126f2a10341d5c3464e145275610c7cf5a430389059f057a1092ca7660` |
 | `docs/architecture/DESIGN.md` | `6db3d3ff87a24520ff2c7205051db0056251e2c867ee0d093fe8e4fc78aa14dd` |
 | `docs/architecture/PROCESSES.md` | `dd6d00ee9d169236fe0f0d14de4b6f54d778a7cf79489f6b6a3354357e2e9ec6` |
-| `docs/development/WORKFLOW.md` | `2ab721f10ca3d1cd5a0812bebeccb67513d47222cf8e1cdd509ab421a1060e36` |
+| `docs/development/WORKFLOW.md` | `e75051643643726a8454acbc07fd408e58689102f3b0f9cb783221d1b491ceb4` |
 | `docs/experiments/REPORT_TEMPLATE.md` | `4f569aab52ba34a68bb2e8b4551c6a3bf4932277c26c3b4206dbb505781a2cab` |
-| `AGENTS.md` | `7b5f38117e84c442177d466efea81870eec5cfbba9e3ab290607e58544f5698a` |
+| `AGENTS.md` | `bc99a50320c9bc84bc80c8be61ddae818aafff6643150a5c31c8e623d96ae24b` |
 | `docs/adr/0001-approved-g0.md` | `b8518c5c49cdefea3dbf0bf2a79ab40459dba2b565e71a6c534a555cbafa20df` |
 | `CONTRIBUTING.md` | `b805939c170ddf7036212bd9c880597f6172076216996d36cb742833e992eaa0` |
 | `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
@@ -2547,7 +2656,7 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/RESOURCE_PROFILES.md` | `60212954c54085f2c8b74c4d3cf5c50f8ccf90192e8e9a502da357208645d44f` |
 | `docs/design/BANNER_OPTIONS.md` | `27d7b336acd60aa3106e6498233f2a33eefd2bc37bf8e26cf12d2c0c0d229724` |
 | `docs/development/packets/P01.md` | `9963cf254f0ba229817d64fb5477ddea4e5967929304462b3062a584357d0d78` |
-| `docs/development/TASK_TRACKING.md` | `bb4f02bfcac403cd45ee5b3c5feeeeaeeb1a2de48a2c1d054f17c84d284c72a0` |
+| `docs/development/TASK_TRACKING.md` | `0a1f000ee2175ce64f6ed5778d7f345830467b3ff89c59f5bc671a3ac13e0458` |
 | `docs/development/REPOSITORY_SECURITY.md` | `b10363e3417429cc06376dff0277f257a92912dae03af12d7d9ff8252a80cb6e` |
 | `.github/CODEOWNERS` | `95de6cc3de1ba640d0ab9e2b9bfbdea79b7ce6641a8bcdb0bcef1f7607666415` |
 | `docs/development/TOOLCHAIN.md` | `5fbb316168a84bd2ca039d1bde1fda56850356fa9b9ec1e8dde413e0d8360e32` |
@@ -2585,6 +2694,10 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/evidence/p01/windows-2026-10-15/payments.jsonl` | `d3466907750bc5c137738ba0045f8d37f6c83e7fb4e3690a56896cbf9ad83c58` |
 | `docs/development/evidence/p01/windows-2026-10-15/environment.json` | `e32d9a5c383c6fcc426179fc716ab8ad39bece710670215b208405ee099bc90b` |
 | `docs/development/evidence/p01/windows-2026-10-15/cleanup.json` | `6c78a1ca41714a3ccb50e4777a2532ffeaca7d1cfb5fb561127e76e91fe0ad79` |
+| `docs/development/ENGINEERING_DECISIONS.md` | `dc4c8af1736dc4cc7acf65d8cb5c60bace32011994714b4499c2266eb9da792a` |
+| `docs/adr/0002-record-review-decisions.md` | `1bd22b477ad009890fc825bba2962804d4865982a046902497c6ed2fefd7952a` |
+| `docs/adr/0003-go-container-smoke.md` | `cadf546c37267a8ea6f845738e07808e8de7b3e1e86628110a5a8aa18c20b6ff` |
+| `docs/development/backlog/GO_SMOKE.md` | `0b18838f8e6620a66845ad5faa92bf7c7b0ff13888040766655979de6cdb4451` |
 
 ## Полные самостоятельные приложения
 
@@ -2644,6 +2757,10 @@ SHA-256 относится к исходному файлу на момент с
 - [Windows: Payments JSONL](#windows-smoke-payments) — `docs/development/evidence/p01/windows-2026-10-15/payments.jsonl`
 - [Windows: фактический бюджет](#windows-smoke-environment) — `docs/development/evidence/p01/windows-2026-10-15/environment.json`
 - [Windows: подтверждение остановки](#windows-smoke-cleanup) — `docs/development/evidence/p01/windows-2026-10-15/cleanup.json`
+- [Инженерные решения, вклад владельца и доказательства ревью](#appendix-engineering-decisions) — `docs/development/ENGINEERING_DECISIONS.md`
+- [ADR 0002: согласованный порядок фиксации решений](#appendix-adr-0002) — `docs/adr/0002-record-review-decisions.md`
+- [ADR 0003: proposed Go container smoke](#appendix-adr-0003) — `docs/adr/0003-go-container-smoke.md`
+- [Backlog #9: перенос smoke на Go, объём и критерии](#appendix-go-smoke-backlog) — `docs/development/backlog/GO_SMOKE.md`
 
 <a id="appendix-readme-en"></a>
 
@@ -2772,6 +2889,8 @@ flowchart LR
 | **G4** | Reproducible engineering lab | Planned |
 
 The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
+
+[Engineering decisions and review](#appendix-engineering-decisions) traces owner feedback through the rationale, changes and verification. It also links the separate [Go smoke backlog task](https://github.com/Includeoyasi/faultline-lab/issues/9); that migration has not started.
 
 #### Repository map
 
@@ -2936,6 +3055,8 @@ flowchart LR
 
 [Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/PROJECT_CONTEXT.md) включает полные документы, статусы и согласования: его можно передать агенту без доступа к репозиторию.
 
+[Инженерные решения и ревью](#appendix-engineering-decisions) связывают замечания владельца с обоснованием, изменениями и проверками. Перенос контейнерного smoke на Go заведён отдельной [backlog-задачей #9](https://github.com/Includeoyasi/faultline-lab/issues/9); разработка ещё не начата.
+
 #### С чего начать
 
 1. [Карта документации](#appendix-docs-index) — выбрать маршрут чтения.
@@ -2991,6 +3112,8 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Принять участие в разработке | [CONTRIBUTING](#appendix-contributing) → [Правила ревью](#appendix-code-review) → [Workflow](#appendix-development-process) → [AGENTS](#appendix-agents) |
 | Проверить ближайший PR | [P01](#appendix-p01) — задачи, зависимости, критерии и фактический прогресс |
 | Следить за выполнением | [Учёт задач](#appendix-task-tracking) — GitHub Issues/PR и снимки контекста |
+| Проследить инженерные решения | [Решения и ревью](#appendix-engineering-decisions) — вопросы владельца, обоснования, изменения и доказательства |
+| Проверить отдельный backlog | [Перенос smoke на Go](#appendix-go-smoke-backlog) — задача #9, границы и критерии; реализация не начата |
 | Проверить права и защиту main | [Безопасность репозитория](#appendix-repository-security) — действующая защита и переход на аккаунт исполнителя |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
 | Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
@@ -3006,6 +3129,8 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [Workflow](#appendix-development-process): роли человека и ИИ, состав ревью и контрольные точки G0–G4.
 - [Правила ревью](#appendix-code-review): стандарт Go, блокирующие замечания, проверки и критерии слияния.
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
+- [ADR 0002](#appendix-adr-0002): согласованный порядок фиксации решений в PR, ADR и обзорной странице.
+- [ADR 0003](#appendix-adr-0003): предложение перенести контейнерный smoke на Go; задача в backlog.
 - [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/feat/p01-05-08-runtime/CONTEXT_STATE.json): текущая работа, проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
@@ -4140,6 +4265,12 @@ G0–G4 — контрольные точки приёмки. P01–P05 — не
 
 Решения, меняющие проект, сохраняются в ADR с причиной и последствиями. Итог пакета содержит текущий статус контрольной точки, оставшиеся замечания и ссылку на воспроизводимый результат.
 
+По согласованному [ADR 0002](#appendix-adr-0002) рабочее обсуждение сохраняется в PR, существенное решение — в ADR, а отобранные примеры — на странице [«Инженерные решения и ревью»](#appendix-engineering-decisions). Запись связывает вопрос, варианты и причину выбора, изменение, доказательства и статус. Для рутинного исправления достаточно PR; отдельный ADR не требуется.
+
+Замечания из чата пересказывает исполнитель от AI-Your-Bro, указывая владельца как автора требования и чат как источник. Он не создаёт комментарии или approvals от имени владельца. Согласование направления, готовая реализация, результаты тестов и приёмка конкретного PR фиксируются отдельно. Обзор и переносимый контекст обновляются при изменении существенного решения или его статуса.
+
+Перенос контейнерного smoke с Node.js на Go оформлен отдельной [задачей #9](https://github.com/Includeoyasi/faultline-lab/issues/9) в **BACKLOG**; [критерии](#appendix-go-smoke-backlog) сохранены в репозитории. Это будущий отдельный PR, а не дополнение реализации P01-05–08. Постановка в backlog не означает поручения начать разработку.
+
 Исходные оценки часов в docs/ROADMAP.md описывают объём ручной разработки. Для работы Codex календарный прогноз уточняется по фактическим ограничениям среды, времени проверок и ревью. Контрольная точка достигается по критериям готовности.
 
 #### Актуальность переносимого контекста
@@ -4300,6 +4431,8 @@ PROJECT_CONTEXT.md — самостоятельный пакет для друг
 - Significant changes to approved service boundaries, invariants, incompatible contracts or infrastructure scope require a concrete proposal and human approval.
 - Keep exactly three business services: Orders, Inventory and Payments. Do not add another business service to host workflow orchestration.
 - Never report measurements, tests or approvals that have not actually occurred. Keep proposed decisions, implemented behavior and observed results distinct.
+- Keep working review discussion in PRs, substantial decisions with rationale/status in ADRs, and selected examples in docs/development/ENGINEERING_DECISIONS.md (ADR 0002). Attribute requirements received in chat to the project owner and identify chat as the source; executor summaries must not impersonate owner GitHub comments or approvals. Update the overview and portable context when a significant decision or its status changes.
+- Go container smoke migration is separate BACKLOG Issue #9, specified in docs/development/backlog/GO_SMOKE.md and proposed ADR 0003. Its implementation has not started and requires separate prioritization by the owner. Do not expand P01 or replace tools/smoke.mjs while recording this backlog task.
 - Keep the portable context current after every substantive task, review resolution, approval, experiment, environment change or newly discovered blocker. Update CONTEXT_STATE.json and the affected source documents, increment the context revision, then run tools/update_context.ps1 and tools/update_context.ps1 -CheckOnly. Include the refreshed PROJECT_CONTEXT.md in the review packet.
 - PROJECT_CONTEXT.md is generated from CONTEXT_STATE.json, tools/context_intro.md and the embedded canonical documents. Update those inputs instead of editing only the generated local file. Do not put secrets in any context artifact.
 - An agent without the repository works from the dated snapshot and returns an updated context/change proposal with its result. It must distinguish proposed edits from locally applied changes and list checks it could not run. Separate snapshots are reconciled by revision and evidence, not by silently overwriting a newer context.
@@ -5023,7 +5156,8 @@ GitHub — основной источник текущего выполнени
 
 | Статус | Основание перехода |
 | :--- | :--- |
-| TODO | Задача описана, код не начат |
+| BACKLOG | Задача описана, разработка не начата; место в очереди ещё не выбрано |
+| TODO | Владелец выбрал задачу для предстоящей реализации; код не начат |
 | IN_PROGRESS | Есть фактически выполняемая реализация или проверка |
 | IN_REVIEW | PR готов, доказательства представлены; ждёт ревью человека |
 | DONE | Критерии выполнены, ревью принято, PR слит по решению человека |
@@ -5031,6 +5165,10 @@ GitHub — основной источник текущего выполнени
 BLOCKED — отдельный признак с причиной и требуемым действием, а не исчезнувшая задача. Общее ограничение Docker не означает, что запрещено готовить исходники или draft PR. При изменении причины блокера запись обновляется.
 
 Пока Projects не настроен, стадия указывается в описании Issue; при необходимости добавляются метки. Это наш рабочий порядок, а не новые встроенные состояния GitHub Issues. Чекбокс подзадачи означает, что её реализация и применимая проверка закончены; весь пакет закрывается только после человеческого принятия и merge.
+
+##### Отдельный backlog
+
+[Issue #9: перенос контейнерного smoke на Go](https://github.com/Includeoyasi/faultline-lab/issues/9) — **BACKLOG**, метки `backlog` и `enhancement`, исполнитель не назначен. [Спецификация](#appendix-go-smoke-backlog) содержит объём и критерии; разработка и проверки Go-замены не начаты. Задача будет выполняться отдельным PR после выбора приоритета владельцем и не добавляется в восемь задач P01. До этого используется существующий Node.js smoke.
 
 #### Обновление и доказательства
 
@@ -5042,8 +5180,8 @@ BLOCKED — отдельный признак с причиной и требу�
 
 #### Фактический статус сейчас
 
-- P01-01–04 DONE; P01-05–08 IN_PROGRESS. Код/проверки нового PR не заменяют ревью владельца.
-- Карточка [P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта: IN_PROGRESS, первые четыре задачи приняты. Оставшиеся предъявляются в одном PR; Projects не создан.
+- P01-01–04 DONE; P01-05–08 IN_REVIEW. Код/проверки нового PR не заменяют ревью владельца.
+- Карточка [P01 #3](https://github.com/Includeoyasi/faultline-lab/issues/3) открыта: IN_REVIEW, первые четыре задачи приняты. Оставшиеся предъявлены в PR #8; Projects не создан.
 - Документационные PR #4 и [#5](https://github.com/Includeoyasi/faultline-lab/pull/5) слиты. CODEOWNERS и защита main действуют; PR первой задачи публикуется от AI-Your-Bro с ревью Includeoyasi.
 - Текущий PR объединяет P01-05–08 и готов к ревью: обязательный Windows container smoke PASS. Весь P01 и G1 ещё не приняты владельцем.
 
@@ -8257,3 +8395,177 @@ wsl --shutdown
   "reboot_performed": false
 }
 ```
+
+<a id="appendix-engineering-decisions"></a>
+
+## Приложение: Инженерные решения, вклад владельца и доказательства ревью
+
+Полный исходный документ: `docs/development/ENGINEERING_DECISIONS.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Инженерные решения и ревью
+
+Короткая подборка обсуждений: какой вопрос поднял владелец, какое решение подготовил исполнитель и чем подтверждён результат. Подробности остаются в PR, ADR и отчётах. Состояние на 15 октября 2026 года; GitHub хранит актуальные обсуждения и приёмку конкретного HEAD.
+
+#### Примеры из проекта
+
+| Обсуждение | Решение и результат | Статус | Материалы |
+| :--- | :--- | :--- | :--- |
+| Владелец заметил сетевые IP/порты в прикладном коде | FL_GRPC_ADDR стал обязательным; окружение, listener и публикация портов разделены. Ошибочная конфигурация проверяется до bind | Принято владельцем в PR #7 | [Сводка исправления](https://github.com/Includeoyasi/faultline-lab/pull/7#issuecomment-6192239609), [конфигурация](#appendix-service-config), [описание](#appendix-service-runtime) |
+| Владелец поставил вопрос о Node.js в Go-проекте и поручил вынести перенос в backlog | Предложен Go CLI с сохранением smoke-проверок и отчёта; проверка документации остаётся отдельным Node.js-инструментом | BACKLOG, код переноса не начат; детали решения proposed | [Задача #9](https://github.com/Includeoyasi/faultline-lab/issues/9), [ADR 0003](#appendix-adr-0003), [критерии](#appendix-go-smoke-backlog) |
+| Владелец потребовал освобождать ресурсы личного ПК после работы | Исполнитель ограничил WSL до 2 CPU / memory=2GB / swap=1GB; после smoke выключил Docker Desktop/WSL VM и автозапуск, сохранив программы и кеши | Реализовано и проверено; PR #8 на ревью | [Windows evidence](#windows-smoke-proof), [cleanup.json](#windows-smoke-cleanup), [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8) |
+
+Замечания в этих примерах получены в чате с владельцем. Их пересказ и ссылки подготовлены исполнителем AI-Your-Bro. Авторство GitHub-комментариев видно в самих PR; пересказ не выдаётся за комментарий, написанный владельцем на GitHub. Принятие PR #7 подтверждено merge аккаунтом Includeoyasi; PR #8 ещё не принят.
+
+#### Как сохраняем следующие обсуждения
+
+```mermaid
+flowchart LR
+    Q["Вопрос или замечание<br/>PR / чат"] --> V["Варианты и обоснование"]
+    V --> C["Изменение и commit"]
+    C --> T["Проверка и отчёт"]
+    T --> R["Ревью конкретного HEAD"]
+    R -->|принято| M["Merge и обновление статуса"]
+    R -->|замечания| C
+    V -. значимое решение .-> A["ADR: причины и последствия"]
+```
+
+- **PR** хранит рабочее обсуждение, изменения и результаты проверок. Для замечания из чата исполнитель указывает источник и автора требования. Комментарий сам по себе не означает approval.
+- **ADR** сохраняет существенное решение: контекст, варианты, выбор, последствия, статус и основание согласования. Рутинные исправления остаются в PR. Изменение согласованных границ сначала выносится владельцу; в согласованном объёме исполнитель работает самостоятельно.
+- **Эта страница** содержит отобранные примеры и ссылки. Добавляем запись при появлении содержательного решения или изменении его статуса; полный чат сюда не переносится.
+
+Для каждого примера достаточно пяти полей: вопрос → варианты/причина выбора → изменение → доказательства → статус и источник приёмки. Следующие агенты обновляют их вместе с переносимым контекстом.
+
+#### Как читать статусы
+
+**Proposed** — вариант ещё обсуждается. **BACKLOG** — задача заведена, разработка не начата. **На ревью** — реализация и проверки представлены владельцу. **Принято** — есть явное решение владельца; для кода также применяются требования review/merge из [workflow](#appendix-development-process). Успешный тест подтверждает только проверенное поведение.
+
+#### Реестр ADR
+
+| Запись | Предмет | Статус решения |
+| :--- | :--- | :--- |
+| [0001](#appendix-adr-0001) | Архитектура G0 | accepted |
+| [0002](#appendix-adr-0002) | PR, ADR и обзорная страница для фиксации решений | accepted: порядок согласован в чате; публикация на ревью |
+| [0003](#appendix-adr-0003) | Go вместо Node.js для контейнерного smoke | proposed; задача #9 в BACKLOG |
+
+<a id="appendix-adr-0002"></a>
+
+## Приложение: ADR 0002: согласованный порядок фиксации решений
+
+Полный исходный документ: `docs/adr/0002-record-review-decisions.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### ADR 0002: фиксация инженерных решений и ревью
+
+- Дата: 2026-10-15, Europe/Moscow.
+- Статус решения: **accepted**.
+- Решение принял владелец проекта; запись подготовил исполнитель AI-Your-Bro.
+- Основание: после предложения использовать PR для обсуждений, ADR для существенных решений и обзорную страницу владелец ответил в чате: «Хорошо».
+- Документ публикуется в PR #8; согласие с порядком работы не заменяет approval этого PR.
+
+#### Контекст
+
+Проект развивается в сотрудничестве владельца с ИИ. Нужно сохранять причины изменений, замечания владельца, выбранные варианты и реальные результаты, чтобы читатель мог проследить инженерную работу по репозиторию. Часть обсуждений происходит в чате и не имеет собственного GitHub URL.
+
+#### Варианты
+
+1. Оставлять обсуждения только в чате: сведения недоступны читателю репозитория.
+2. Складывать полные обсуждения в один журнал: растёт объём, трудно найти решение и проверить статус.
+3. Хранить рабочее обсуждение в PR, существенные решения в ADR и краткую подборку со ссылками на обзорной странице.
+
+#### Принятое решение
+
+Выбран третий вариант. [Обзорная страница](#appendix-engineering-decisions) связывает вопрос владельца, обоснование, изменение, доказательства и статус. PR остаётся местом ревью кода; ADR описывает одно существенное решение с последствиями. Исходное назначение ADR — сохранять решение и его обоснование: [описание формата](https://adr.github.io/).
+
+Владелец оставляет замечания в PR или чате. Исполнитель поддерживает записи и ссылки. При переносе из чата он публикует пересказ от AI-Your-Bro с явным указанием источника и автора требования. GitHub-комментарии, approvals и решения от аккаунта владельца не создаются исполнителем.
+
+#### Последствия
+
+- Для следующего агента сохраняется и технический результат, и причина выбора.
+- Статусы proposed, BACKLOG, на ревью и принято различаются; приёмка ссылается на фактическое основание.
+- Рутинные исправления не требуют отдельного ADR. Обзорная страница содержит значимые примеры, а не полный чат.
+- После изменения решения обновляются PR/ADR, обзорная страница и переносимый контекст.
+- Границы сервисов G0, контрольные точки и право владельца на review/merge сохраняются.
+
+<a id="appendix-adr-0003"></a>
+
+## Приложение: ADR 0003: proposed Go container smoke
+
+Полный исходный документ: `docs/adr/0003-go-container-smoke.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### ADR 0003: Go для контейнерного smoke
+
+- Дата обсуждения: 2026-10-15, Europe/Moscow.
+- Статус решения: **proposed**; [задача #9](https://github.com/Includeoyasi/faultline-lab/issues/9) находится в **BACKLOG**.
+- Источник: вопросы владельца о Node.js в Go-проекте и его прямое поручение вынести перенос smoke в отдельную backlog-задачу.
+- Постановка в backlog согласована; разработка, интерфейс CLI и способ распространения ещё не начаты и не утверждены как готовые.
+
+#### Контекст
+
+`tools/smoke.mjs` управляет Docker CLI, проверяет запуск/health/security/isolation/stop трёх контейнеров и сохраняет JSON/JSONL. Выбор Node.js позволил использовать runtime, уже нужный документационным проверкам. Тесты сервисов в `*_test.go` написаны на Go.
+
+Владелец обсуждает целостность инструментария проекта и его использование как Go-портфолио. Go также подходит для внешних команд и сроков ожидания через стандартный [os/exec](https://pkg.go.dev/os/exec). Сам выбор Node.js не доказывает дефект; перенос должен сохранять проверенные свойства и иметь явную стоимость поддержки.
+
+#### Варианты и последствия
+
+| Вариант | Что сохраняем / получаем | Стоимость |
+| :--- | :--- | :--- |
+| Оставить Node.js smoke | Уже проверенный кроссплатформенный сценарий; runtime используется документацией | Для автоматического smoke нужен Node.js; основной инструмент лаборатории поддерживается на другом языке |
+| Реализовать небольшой Go CLI | Общие Go-проверки и типы; запуск готового бинарника без Node.js | Нужно перенести проверки без потери поведения, определить сборку и получение бинарника для каждой ОС/архитектуры |
+
+#### Предложение
+
+Перенести Docker orchestration в Go отдельным небольшим PR. [Backlog-спецификация](#appendix-go-smoke-backlog) сохраняет критерии эквивалентности, диагностики, кодов выхода, cleanup и платформенных проверок. Основной пользовательский путь должен обходиться готовым бинарником, без обязательного host Go SDK; сборка использует закреплённый контейнерный toolchain.
+
+Проверка документации на Node.js остаётся отдельной задачей и этим переносом не удаляется. Сборка macOS-варианта не выдаётся за проверенный запуск на личном Mac. Бизнес-логика и транспорт трёх сервисов не меняются.
+
+#### Текущее состояние
+
+В работе остаётся существующий Node.js smoke из PR #8. Реализация переноса — **NOT_STARTED**, проверки новой Go-версии — **NOT_RUN**. Владелец отдельно выбирает момент начала; явный выбор интерфейса и оценка результата появятся в задаче #9 и её PR. После принятия реального решения этот ADR обновляется с основанием.
+
+<a id="appendix-go-smoke-backlog"></a>
+
+## Приложение: Backlog #9: перенос smoke на Go, объём и критерии
+
+Полный исходный документ: `docs/development/backlog/GO_SMOKE.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Backlog: перенос контейнерного smoke на Go
+
+Источник текущего статуса — [GitHub Issue #9](https://github.com/Includeoyasi/faultline-lab/issues/9), метка backlog. Снимок от 15 октября 2026 года: BACKLOG, код не начат, срок старта не назначен. Предложение и компромиссы: [ADR 0003](#appendix-adr-0003).
+
+#### Цель
+
+Перенести управление контейнерным smoke из `tools/smoke.mjs` в Go-инструмент: единый язык основных инструментов лаборатории, общие Go-проверки и запуск smoke без Node.js. Проверки самих сервисов в `*_test.go` уже написаны на Go.
+
+#### Статус и место в плане
+
+**BACKLOG — разработка не начата.** Владелец 15 октября 2026 года поручил завести отдельную задачу. Это согласование постановки в backlog; очередь и начало реализации выбираются отдельно.
+
+Задача следует за текущим P01/PR #8 и будет оформлена отдельным PR. Она не расширяет P01-05–08 и не означает приёмку P01 или G1. Действующий smoke остаётся Node.js до реализации и ревью замены.
+
+#### Объём
+
+- Перенести Docker CLI orchestration, сбор результатов, JSON/JSONL-отчёт и cleanup в небольшой Go CLI.
+- Сохранить текущую проверку трёх сервисов, явный тестовый Compose-профиль и уникальный проект запуска.
+- Предусмотреть документированный путь сборки через закреплённый контейнерный toolchain и запуск готового бинарника; host Go SDK остаётся необязательным для пользователя smoke.
+- Обновить CI, команды запуска и переносимый контекст; удалить `tools/smoke.mjs` после проверки замены.
+- Проверка документации `tools/check_docs.mjs` остаётся отдельным Node.js-инструментом. Задача не удаляет весь JavaScript из репозитория и не добавляет бизнес-функциональность.
+
+#### Критерии приёмки
+
+- [ ] Go CLI запускает Docker напрямую с массивом аргументов, без обязательного shell, Docker socket в контейнере и дополнительных Go-библиотек без обоснования.
+- [ ] Сохранены build → start → health/security → orders isolation → stop/logs → cleanup; исходы и реальные image IDs присутствуют в отчёте.
+- [ ] Сохранены коды 0=PASS, 1=FAIL, 2=NOT_RUN и совместимый формат JSON/JSONL. Изменение схемы, если понадобится, явно описано и проверено.
+- [ ] У команд есть сроки ожидания; ошибка или поддерживаемое ОС прерывание запуска приводит к ограниченному cleanup собственного Compose-проекта. Чужие ресурсы не удаляются.
+- [ ] Значимые ошибки проверены: отсутствующий Docker/backend, ошибка build/health/stop и ошибка cleanup; диагностика сохраняется, секреты/персональные пути не публикуются.
+- [ ] Сборка CLI проверена для Windows AMD64, Linux AMD64/ARM64 и macOS AMD64/ARM64; реальные smoke выполнены на доступных Windows/Linux. Mac runtime отдельно остаётся NOT_RUN до доступа к машине.
+- [ ] CLI проходит применимые format/build/lint/unit/race проверки общего Go CI. Перед заменой показана эквивалентность результатов прежнего и нового runner на одной среде.
+- [ ] Основной путь smoke больше не требует Node.js или host Go SDK; сборка/получение бинарника, prerequisites и запуск описаны явно.
+- [ ] Обновлены инструкции, workflow, документы решений и PROJECT_CONTEXT.md; после локальных проверок Docker Desktop/WSL выключены по правилу личного ПК, установленные инструменты и полезные кеши сохранены.
+- [ ] Отдельный PR принят владельцем; задача закрывается после review/merge, а не после одной успешной сборки.
+
+#### Источники и проверяемая исходная точка
+
+- [Текущий PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8).
+- [Node.js smoke](https://github.com/Includeoyasi/faultline-lab/blob/445d324ea48419133fa37b15d44242bd6bbf5b08/tools/smoke.mjs).
+- [Windows baseline и исходные данные](https://github.com/Includeoyasi/faultline-lab/blob/445d324ea48419133fa37b15d44242bd6bbf5b08/docs/development/evidence/p01/WINDOWS_SMOKE.md).
+
+Основание — обсуждение владельцем и исполнителем выбора Node.js/Go в чате. Постановку документирует AI-Your-Bro; GitHub approval от имени владельца не создаётся. Требования бизнес-сервисов G0 и их ровно три границы не меняются.

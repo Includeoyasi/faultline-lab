@@ -16,7 +16,7 @@ assignees: ""
 
 ## Tasks and status
 
-<!-- Packet/task IDs, dependencies, checklist and current stage: TODO / IN_PROGRESS / IN_REVIEW. Explain blockers separately. -->
+<!-- Packet/task IDs, dependencies, checklist and current stage: BACKLOG / TODO / IN_PROGRESS / IN_REVIEW. BACKLOG is unprioritized; TODO is selected for implementation. Explain blockers separately. -->
 
 ## Acceptance and evidence
 
