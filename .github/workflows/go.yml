@@ -1,0 +1,50 @@
+name: Go toolchain
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: go-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  toolchain:
+    name: Go toolchain (${{ matrix.arch }})
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Show Docker prerequisites
+        run: |
+          docker version
+          docker compose version
+      - name: Build pinned toolchain
+        run: docker compose build toolchain
+      - name: Run Go quality checks
+        run: docker compose run --rm toolchain check
+      - name: Build and run bootstrap entrypoints
+        run: docker compose run --rm toolchain bootstrap-smoke
+      - name: Reject invalid toolchain command
+        run: |
+          if docker compose run --rm toolchain invalid-command; then
+            status=0
+          else
+            status=$?
+          fi
+          test "$status" -eq 2
+      - name: Ensure checks did not change source files
+        run: git diff --exit-code

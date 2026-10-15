@@ -1,52 +1,55 @@
 {
   "schema_version": 1,
   "project_id": "faultline-lab",
-  "context_revision": 17,
+  "context_revision": 22,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-13",
+  "context_updated_on": "2026-10-15",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
-  "current_phase": "G0_APPROVED_PRE_IMPLEMENTATION",
+  "current_phase": "G0_APPROVED_IMPLEMENTATION_IN_PROGRESS",
   "current_task": {
-    "id": "REPO-SECURITY-001",
-    "description": "Разделить GitHub identity владельца и исполнителя и включить защиту main",
-    "status": "MAIN_PROTECTED_EXECUTOR_CONNECTED_SECURITY_PR_AWAITING_OWNER_REVIEW",
-    "authorization": "Владелец поручил отдельный аккаунт исполнителя для всех новых PR и защиту main; затем предоставил логин AI-Your-Bro",
+    "id": "P01-01",
+    "description": "Первая задача: Go-модуль, три bootstrap entrypoints и закреплённый контейнерный toolchain",
+    "status": "IN_REVIEW",
+    "authorization": "Владелец сообщил о merge PR #5 и поручил взять первую утверждённую задачу и создать PR для ревью",
     "result": {
-      "main_protection": "APPLIED_AND_READ_BACK",
-      "executor_login": "AI-Your-Bro",
-      "profile": "VERIFIED_EXISTS",
-      "invitation": "ACCEPTED_WRITE_ACCESS_VERIFIED",
-      "authentication": "VERIFIED_AI_YOUR_BRO_GCM_OAUTH_DEVICE_FLOW",
-      "two_factor_authentication": "USER_DECLINED_ENABLEMENT_API_STATUS_NOT_RETURNED",
-      "branch": "chore/executor-security",
-      "base_commit": "8c392b8ed4145d8b2b9efa93c5be14d9fdf113d1",
-      "local_docs": "PREPARED",
-      "codeowners": "PUBLISHED_IN_OPEN_PR_NOT_IN_MAIN",
-      "local_validation": "PASS",
-      "new_commit_created": true,
+      "branch": "feat/p01-01-toolchain",
+      "base_commit": "d616a221566be4f7f7be89f6f3223501a539c45c",
+      "scope": "P01-01_ONLY",
+      "implementation": "BOOTSTRAP_AND_TOOLCHAIN_CREATED",
+      "local_go": "PASS_PORTABLE_WINDOWS_GO_1_27_2",
+      "local_docker": "NOT_RUN",
+      "ci": "PASS_NATIVE_LINUX_AMD64_AND_ARM64",
+      "native_macos": "NOT_RUN",
+      "go_tests": "COMMAND_PASS_NO_TEST_FILES",
+      "owner_acceptance": "PENDING",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/6",
+      "commit_created": true,
       "pushed": true,
-      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
-      "publication_dependency": null,
-      "business_implementation": "NOT_STARTED",
-      "go_checks": "NOT_RUN_NO_GO_MODULE",
-      "git_identity": "CONFIGURED_LOCALLY_FOR_AI_YOUR_BRO",
-      "observed_published_commit": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
-      "pull_request_number": 5,
-      "pull_request_author": "AI-Your-Bro",
+      "remaining_tasks": "P01-02..P01-08_NOT_STARTED",
+      "pull_request_number": 6,
+      "author": "AI-Your-Bro",
+      "draft": false,
+      "observed_commit": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
+      "local_docs": "PASS_REVISION_18_PS7_AND_WINDOWS_PS51",
       "review_requested_from": "Includeoyasi",
-      "human_review": "PENDING",
-      "merged": false,
+      "local_validation": "PASS",
       "documentation_ci": {
-        "workflow": "Documentation",
-        "head_sha": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
-        "status": "COMPLETED",
-        "conclusion": "SUCCESS",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38413156014",
-        "event": "pull_request",
-        "scope": "Документационный CI исходного security PR; после коммита handoff проверять актуальный HEAD PR #5"
+        "name": "Documentation",
+        "head_sha": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38723552133"
       },
-      "handoff_note": "Наблюдённый HEAD и CI относятся к исходному коммиту security PR. Финальный hash собственного handoff не может находиться внутри снимка; текущий HEAD/checks проверяются в PR."
+      "go_ci": {
+        "name": "Go toolchain",
+        "head_sha": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38723552125"
+      },
+      "source_scope": "P01-01_ONLY; NO_CONFIG_HEALTH_SHUTDOWN_OR_BUSINESS_RUNTIME",
+      "handoff_note": "CI указан с точным SHA до коммита снимка. Финальные HEAD/checks доступны в PR; snapshot не содержит hash собственного коммита."
     }
   },
   "roles": {
@@ -88,11 +91,11 @@
     }
   ],
   "implementation_status": {
-    "business_service_code": "NOT_CREATED",
-    "go_module": "NOT_CREATED",
+    "business_service_code": "BOOTSTRAP_ENTRYPOINTS_ONLY_NO_BUSINESS_RUNTIME",
+    "go_module": "CREATED_WITH_TOOL_DIRECTIVES_AND_SUMS",
     "protobuf_files": "NOT_CREATED",
     "sql_migrations": "NOT_CREATED",
-    "docker_compose": "NOT_CREATED",
+    "docker_compose": "TOOLCHAIN_ONLY_NO_RUNTIME_SERVICES",
     "load_generator": "NOT_CREATED",
     "business_verifier": "NOT_CREATED",
     "dashboards_alerts": "NOT_CREATED",
@@ -100,7 +103,7 @@
     "measured_capacity": null,
     "actual_runtime_versions": null,
     "git_repository": "INITIALIZED",
-    "git_commit": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
+    "git_commit": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
     "git_remote": "https://github.com/Includeoyasi/faultline-lab.git",
     "pull_requests": [
       {
@@ -145,19 +148,41 @@
       {
         "number": 5,
         "url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
-        "state": "OPEN",
+        "state": "MERGED",
         "author": "AI-Your-Bro",
         "head_ref": "chore/executor-security",
         "base_ref": "main",
         "scope": "Защита main, CODEOWNERS, разделение GitHub identity и обновление контекста",
         "code_packet": false,
+        "human_review": "USER_CONFIRMED_AND_GITHUB_MERGE_OBSERVED",
+        "requested_reviewer": "Includeoyasi",
+        "merged": true,
+        "observed_head": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
+        "observation_note": "Владелец сообщил о merge; API подтвердил. ИИ не approve/merge.",
+        "head_at_merge": "704a7ecae42372dbbe89de1d20fa7afcfd274491",
+        "merge_commit": "d616a221566be4f7f7be89f6f3223501a539c45c"
+      },
+      {
+        "number": 6,
+        "url": "https://github.com/Includeoyasi/faultline-lab/pull/6",
+        "state": "OPEN",
+        "author": "AI-Your-Bro",
+        "head_ref": "feat/p01-01-toolchain",
+        "base_ref": "main",
+        "scope": "P01-01: Go module, bootstrap entrypoints, pinned container toolchain",
+        "code_packet": true,
+        "parent_packet": "P01",
+        "task": "P01-01",
         "human_review": "PENDING",
         "requested_reviewer": "Includeoyasi",
         "merged": false,
-        "observed_head": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
-        "observation_note": "HEAD при создании PR; финальный handoff commit добавляется позже, текущий HEAD доступен на GitHub."
+        "draft": false,
+        "observed_head": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
+        "observation_note": "HEAD до коммита финального снимка; актуальный HEAD и результаты в PR."
       }
-    ]
+    ],
+    "toolchain_container": "VERIFIED_NATIVE_LINUX_AMD64_AND_ARM64_IN_CI",
+    "go_quality_workflow": "ACTIVE_NATIVE_AMD64_ARM64; REQUIRED_CHECKS"
   },
   "completed_work": [
     "Подготовлен практический roadmap с этапами, критериями, рисками и оценками объёма",
@@ -190,11 +215,14 @@
     "Включена и повторно проверена защита main, включая администратора. Профиль исполнителя AI-Your-Bro проверен; приглашение write отправлено и OAuth вход запущен. CODEOWNERS и документы подготовлены локально; приглашение/авторизация ещё ожидаются.",
     "Наблюдено слияние PR #4 в main 8c392b8 с принятым HEAD 83e0076; выбранный баннер и P01 backlog находятся в основной ветке. ИИ не выполнял merge.",
     "OAuth исполнителя AI-Your-Bro завершён через GCM device flow; API подтвердил actor и write/push без admin. Приглашение принято, локальная Git identity/credential username переключены только в этом репозитории. Владелец отказался включать 2FA; API статус 2FA не вернул.",
-    "От AI-Your-Bro опубликован первый security commit fbbaef0 и PR #5; у Includeoyasi запрошено ревью. GitHub подтвердил автора/коммиттера исполнителя; исходный Documentation CI прошёл. CODEOWNERS в открытом PR, активация в main ожидает решения владельца."
+    "От AI-Your-Bro опубликован первый security commit fbbaef0 и PR #5; у Includeoyasi запрошено ревью. GitHub подтвердил автора/коммиттера исполнителя; исходный Documentation CI прошёл. CODEOWNERS в открытом PR, активация в main ожидает решения владельца.",
+    "PR #5 принят и слит владельцем; main d616a22 содержит действующий CODEOWNERS. Начата первая задача P01-01 отдельным PR по прямому поручению владельца.",
+    "Созданы модуль с tool directives/go.sum, три минимальные точки запуска, закреплённый Docker toolchain и Compose для инструментов. Локальные build/tidy/verify/goimports/govulncheck прошли временным Go; Go tests завершились с no test files. Контейнерные проверки ожидают CI.",
+    "P01-01 реализована и прошла полный Docker CI на нативных AMD64/ARM64. PR #6 от AI-Your-Bro переведён в ready, ревью запрошено у Includeoyasi. Issue #3 обновлён: проверено 1/8, принято владельцем 0/8; остальные задачи не начаты."
   ],
   "next_implementation_packet": {
     "id": "P01",
-    "status": "NOT_STARTED",
+    "status": "IN_PROGRESS",
     "goal": "Контейнерная основа трёх Go-сервисов: entrypoints, конфигурация, gRPC health, graceful shutdown, JSON-логи, toolchain, образы, минимальный Compose и Go CI",
     "approval_dependency": "G0 уже принят; повторное согласование G0 не требуется",
     "following_packets": [
@@ -205,19 +233,23 @@
     ],
     "decomposition_status": "DOCUMENTED_READY_FOR_IMPLEMENTATION",
     "specification": "docs/development/packets/P01.md",
-    "acceptance_status": "DOCUMENTED_NOT_EXECUTED",
+    "acceptance_status": "P01_01_IN_REVIEW_OTHER_TASKS_NOT_STARTED",
     "progress": {
-      "completed": 0,
-      "total": 8
+      "completed": 1,
+      "total": 8,
+      "owner_accepted": 0
     },
     "tasks": [
       {
         "id": "P01-01",
         "title": "Go-модуль и закреплённый toolchain",
         "depends_on": [],
-        "status": "NOT_STARTED",
-        "evidence": "NOT_RUN",
-        "acceptance_source": "docs/development/packets/P01.md"
+        "status": "IN_REVIEW",
+        "evidence": "PASS_NATIVE_LINUX_AMD64_ARM64_CONTAINER_BUILD_CHECK_BOOTSTRAP; LOCAL_WINDOWS_GO_PASS",
+        "acceptance_source": "docs/development/packets/P01.md",
+        "implementation": "VERIFIED",
+        "owner_acceptance": "PENDING",
+        "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/6"
       },
       {
         "id": "P01-02",
@@ -303,7 +335,8 @@
     "interval": "AFTER_G0_BEFORE_G1",
     "target_review_gate": "G1",
     "github_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/3",
-    "tracker_stage": "TODO"
+    "tracker_stage": "IN_PROGRESS",
+    "current_task": "P01-01"
   },
   "active_blockers": [],
   "open_review_comments": [],
@@ -326,8 +359,7 @@
   },
   "pending_implementation_choices": [
     "Обеспечить доступные Docker Desktop/Compose и снять фактические лимиты backend; контейнерный toolchain заменяет обязательную установку host Go. Windows-хост измерен, macOS пока нет.",
-    "Выбрать и закрепить версии Go, библиотек и контейнерных образов",
-    "Создать Go-модуль github.com/Includeoyasi/faultline-lab в P01; Git main/origin уже настроены",
+    "Go/tools и образы toolchain закреплены в P01-01. Закреплять gRPC/SQL/Kafka/Redis библиотеки при их первом использовании; runtime-образы остаются P01-06.",
     "Подготовить точные protobuf-схемы, error codes и SQL-модели в рамках G0",
     "Определить конкретную реализацию lease/version fencing, outbox ordering и durable job dispatch",
     "Откалибровать гипотетические SLO и ресурсные лимиты после работающего MVP"
@@ -338,10 +370,10 @@
     "user_timezone": "Europe/Moscow",
     "project_path_at_snapshot": null,
     "path_required_to_read_context": false,
-    "go_available": "NOT_FOUND_IN_CURRENT_SHELL_PATH",
-    "docker_available": "NOT_FOUND_IN_CURRENT_SHELL_PATH",
-    "tool_commands_checked_on": "2026-10-13",
-    "tool_check_scope": "Go/Docker не обнаружены в текущем PATH и проверенных стандартных расположениях. Команда WSL обнаружена, её работоспособность и конфигурация не проверялись. Другие установки Go/Docker не исключены.",
+    "go_available": "NOT_IN_HOST_PATH_PORTABLE_GO_USED_IN_IGNORED_LOCAL_DIRECTORY",
+    "docker_available": "NOT_FOUND_IN_CURRENT_PATH_OR_STANDARD_WINDOWS_LOCATION",
+    "tool_commands_checked_on": "2026-10-15",
+    "tool_check_scope": "Go/Docker отсутствуют в текущем PATH и стандартных проверенных Windows-путях. Вспомогательный официальный Go 1.27.2 скачан в .local и проверен по SHA256; не установлен в систему. Docker проверяется в Linux CI, не на Windows-хосте.",
     "powershell_version": "7.6.5",
     "cpu_ram_disk_budget": "HOST_SNAPSHOT_COLLECTED_DOCKER_BUDGET_NOT_MEASURED",
     "local_directory_name": "faultline-lab",
@@ -623,6 +655,81 @@
         "git diff --check"
       ],
       "detail": "23 Markdown-файла, 244 локальные ссылки, структура 56 Mermaid-блоков; ревизия 17, 21 встроенный документ и 24 fingerprints. Публикация PR #5 и авторство исполнителя отражены, CODEOWNERS в main не заявлен до merge, решение владельца о 2FA сохранено. Текущий HEAD/CI проверяются в PR; Go/runtime N/A."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "Local P01-01 Go checks",
+      "result": "PASS",
+      "commands": [
+        "go version",
+        "go mod tidy -diff",
+        "go mod verify",
+        "go build ./...",
+        "go test -count=1 ./...",
+        "go tool goimports -l cmd",
+        "go tool govulncheck ./..."
+      ],
+      "environment": "Temporary checksum-verified Go 1.27.2 windows/amd64; caches in ignored .local; no system Go installation",
+      "detail": "Сборка трёх пакетов проходит; tidy не требует изменений, verify PASS, goimports не вывел файлов, govulncheck: No vulnerabilities found. Go tests: no test files. Docker, Linux race/lint и bootstrap execution ожидают CI; macOS NOT_RUN."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "Initial Linux ARM64 container check",
+      "result": "FAIL",
+      "head_sha": "c1e7c7699660fedfb997d5bcaac38514b8723853",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38722835503",
+      "detail": "Образ собрался, версии инструментов/format/tidy/verify прошли. go build не смог получить Git VCS status из-за ownership bind mount. В образ добавлен точный safe.directory /workspace; Git metadata сохраняется. Повторный CI ожидается."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "Portable source embedding and initial documentation",
+      "result": "PASS",
+      "detail": "24 Markdown-файла, 275 локальных ссылок, структура 56 Mermaid; ревизия 18, 32 документа и 35 fingerprints. CheckOnly прошёл PS7 и Windows PS5.1. Documentation CI исходного коммита успешен."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "Linux AMD64/ARM64 Go checks and build-output permissions",
+      "result": "PARTIAL_PASS",
+      "head_sha": "1cc5d8c63a7263d677f277c989e6e2fcb051020a",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38723121526",
+      "detail": "На обеих архитектурах прошли версии, format/imports, tidy/verify, build, golangci-lint (0 issues), unit/race commands (no test files), govulncheck (no vulnerabilities). Bootstrap build не смог создать bin: cap_drop ALL лишил root возможности писать в bind mount runner с другим UID. Для временной среды сборки восстановлены стандартные Docker capabilities; privileged mode не включён, no-new-privileges сохранён. Повторный CI ожидается."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "P01-01 native Linux container checks",
+      "result": "PASS",
+      "head_sha": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
+      "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38723552125",
+      "commands": [
+        "docker compose build toolchain",
+        "docker compose run --rm toolchain check",
+        "docker compose run --rm toolchain bootstrap-smoke",
+        "invalid-command exits exactly 2",
+        "git diff --exit-code"
+      ],
+      "environments": [
+        "ubuntu-24.04 amd64",
+        "ubuntu-24.04-arm arm64"
+      ],
+      "detail": "Оба нативных job SUCCESS. Построен pinned Dockerfile, Go 1.27.2, линтер 2.14.0 (0 issues), format/imports/tidy/verify/build, unit/race commands (no test files), govulncheck (no vulnerabilities). Все три бинарника собраны и выполнены. VCS ownership и вывод bin исправлены и проверены. Windows Docker/macOS NOT_RUN; бизнес-проверок нет."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "Required Go checks activated",
+      "result": "PASS",
+      "detail": "После успешного Go CI PATCH добавил Go toolchain (amd64)/(arm64), GitHub Actions app 15368. Независимый GET подтвердил три required checks со strict=true и сохранённые owner review/CODEOWNERS/admin enforcement, запреты force push/deletion."
+    },
+    {
+      "date": "2026-10-15",
+      "check": "P01-01 final portable review packet",
+      "result": "PASS",
+      "commands": [
+        "node tools/check_docs.mjs",
+        "tools/update_context.ps1 -CheckOnly (PowerShell 7)",
+        "tools/update_context.ps1 -CheckOnly (Windows PowerShell 5.1)",
+        "git diff --check"
+      ],
+      "detail": "24 Markdown-файла, 276 локальных ссылок, структура 56 Mermaid-блоков; ревизия 21, 33 встроенных источника и 36 fingerprints. Исходники P01-01 включены с language-tagged fences. Проверено 1/8, принято владельцем 0/8; оставшиеся семь задач не начаты."
     }
   ],
   "source_documents": [
@@ -730,6 +837,77 @@
       "path": ".github/CODEOWNERS",
       "anchor": "appendix-codeowners",
       "title": "Подготовленный CODEOWNERS для человеческого ревью"
+    },
+    {
+      "path": "docs/development/TOOLCHAIN.md",
+      "anchor": "appendix-toolchain",
+      "title": "Контейнерный toolchain и команды"
+    },
+    {
+      "path": "go.mod",
+      "anchor": "appendix-go-mod",
+      "title": "Go-модуль и версии инструментов",
+      "language": "go"
+    },
+    {
+      "path": "go.sum",
+      "anchor": "appendix-go-sum",
+      "title": "Контрольные суммы модулей",
+      "language": "text"
+    },
+    {
+      "path": "cmd/orders/main.go",
+      "anchor": "appendix-orders-main",
+      "title": "Orders bootstrap entrypoint",
+      "language": "go"
+    },
+    {
+      "path": "cmd/inventory/main.go",
+      "anchor": "appendix-inventory-main",
+      "title": "Inventory bootstrap entrypoint",
+      "language": "go"
+    },
+    {
+      "path": "cmd/payments/main.go",
+      "anchor": "appendix-payments-main",
+      "title": "Payments bootstrap entrypoint",
+      "language": "go"
+    },
+    {
+      "path": "build/toolchain.Dockerfile",
+      "anchor": "appendix-toolchain-dockerfile",
+      "title": "Закреплённый образ инструментов",
+      "language": "dockerfile"
+    },
+    {
+      "path": "compose.yaml",
+      "anchor": "appendix-compose-toolchain",
+      "title": "Compose для временных инструментов",
+      "language": "yaml"
+    },
+    {
+      "path": "tools/go.sh",
+      "anchor": "appendix-go-commands",
+      "title": "Команды внутри Linux-контейнера",
+      "language": "sh"
+    },
+    {
+      "path": ".golangci.yml",
+      "anchor": "appendix-golangci-config",
+      "title": "Согласованные Go-линтеры",
+      "language": "yaml"
+    },
+    {
+      "path": ".github/workflows/go.yml",
+      "anchor": "appendix-go-workflow",
+      "title": "Проверки Go в нативном Linux CI",
+      "language": "yaml"
+    },
+    {
+      "path": ".dockerignore",
+      "anchor": "appendix-dockerignore",
+      "title": "Исключения Docker build context",
+      "language": "text"
     }
   ],
   "change_history": [
@@ -834,6 +1012,36 @@
       "date": "2026-10-13",
       "summary": "Первый PR нового порядка #5 создан от AI-Your-Bro к владельцу Includeoyasi. Сохранены реальная публикация, автор/коммиттер, requested review и исходный успешный CI. Main защищён; CODEOWNERS ещё не слит.",
       "trigger": "Завершение поручения по подключению исполнителя и защите main; handoff для человеческого ревью"
+    },
+    {
+      "revision": 18,
+      "date": "2026-10-15",
+      "summary": "Слияние security PR #5 учтено. Реализуется первая задача P01-01: модуль, bootstrap entrypoints, toolchain, Go CI и команды; остальные семь задач не начаты. Контекст расширен полными исходниками первой задачи.",
+      "trigger": "Владелец сообщил о merge PR #5 и поручил взять первую утверждённую задачу и создать PR для ревью"
+    },
+    {
+      "revision": 19,
+      "date": "2026-10-15",
+      "summary": "Создан draft PR #6 от исполнителя; первый ARM64 CI выявил Git ownership bind mount. Образ доверяет точному /workspace для VCS metadata; повторные Go-проверки ожидаются.",
+      "trigger": "Фактическая диагностика контейнерного CI первой задачи"
+    },
+    {
+      "revision": 20,
+      "date": "2026-10-15",
+      "summary": "Go quality checks прошли на AMD64/ARM64. Исправлена запись bootstrap-бинарников в bind mount: toolchain использует стандартные capabilities Docker. Добавлен полный .dockerignore в переносимый снимок.",
+      "trigger": "Фактическая проверка bootstrap build после исправления VCS"
+    },
+    {
+      "revision": 21,
+      "date": "2026-10-15",
+      "summary": "P01-01 проверена на обеих Linux-архитектурах и предъявлена в ready PR #6. Оба Go checks стали обязательными в main. Issue отражает 1/8 проверено, 0/8 принято. Контекст содержит точные источники и CI evidence; следующие задачи не выполнялись.",
+      "trigger": "Завершение первой задачи и передача владельцу на ревью"
+    },
+    {
+      "revision": 22,
+      "date": "2026-10-15",
+      "summary": "В итоговом self-review устранена устаревшая строка 0/8 реализации в конце спецификации; все активные сводки различают 1/8 проверено и 0/8 принято. Уточнены локальный runtime prerequisite и дата security snapshot. Go-код, инструменты и критерии не менялись.",
+      "trigger": "Сверка итоговых статусов перед передачей PR #6 владельцу"
     }
   ],
   "repository": {
@@ -858,22 +1066,30 @@
       "event": "push",
       "scope": "Документационный CI main после принятия правил; не является проверкой последующего handoff PR или Go-кода."
     },
-    "snapshot_ref": "chore/executor-security",
+    "snapshot_ref": "feat/p01-01-toolchain",
     "current_publication": {
-      "branch": "chore/executor-security",
-      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
+      "branch": "feat/p01-01-toolchain",
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/6",
       "author": "AI-Your-Bro",
-      "observed_commit": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
+      "draft": false,
       "merged": false,
-      "observed_ci": {
-        "workflow": "Documentation",
-        "head_sha": "fbbaef0a94e5d7477f4be5aa6f3f114ce03855f5",
-        "status": "COMPLETED",
-        "conclusion": "SUCCESS",
-        "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38413156014",
-        "event": "pull_request",
-        "scope": "Документационный CI исходного security PR; после коммита handoff проверять актуальный HEAD PR #5"
-      }
+      "observed_commit": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
+      "observed_ci": [
+        {
+          "name": "Documentation",
+          "head_sha": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38723552133"
+        },
+        {
+          "name": "Go toolchain",
+          "head_sha": "7ea4b89c1ce5c916da1d4293501a3f8f24b66c63",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Includeoyasi/faultline-lab/actions/runs/38723552125"
+        }
+      ]
     }
   },
   "review_policy": {
@@ -893,7 +1109,7 @@
     },
     "normal_change_delivery": "FOCUSED_BRANCH_AND_PR",
     "merge": "EXPLICIT_HUMAN_DECISION_AND_ACTION_AUTHORIZATION",
-    "go_checks_activation": "P01_WITH_FIRST_GO_MODULE",
+    "go_checks_activation": "ACTIVE_WITH_P01_01_FIRST_GO_MODULE; REQUIRED_NATIVE_AMD64_ARM64",
     "github_branch_protection": "ENABLED_AND_VERIFIED_2026_10_13",
     "pull_request": "https://github.com/Includeoyasi/faultline-lab/pull/1",
     "pull_request_author": "AI-Your-Bro",
@@ -902,7 +1118,7 @@
     "current_identity_transition_pr": "https://github.com/Includeoyasi/faultline-lab/pull/5"
   },
   "environment_strategy": {
-    "status": "USER_APPROVED_APPROACH_NOT_IMPLEMENTED",
+    "status": "PARTIALLY_IMPLEMENTED_TOOLCHAIN_VERIFIED; BUSINESS_RUNTIME_NOT_CREATED",
     "approved_on": "2026-10-13",
     "confirmation_evidence": "Владелец проекта описал работу на Windows и macOS, согласовал Docker-подход сообщением Да, давай так и сделаем",
     "documents": [
@@ -935,7 +1151,8 @@
     },
     "runtime_created": false,
     "windows_container_start_verified": false,
-    "macos_container_start_verified": false
+    "macos_container_start_verified": false,
+    "toolchain_status": "VERIFIED_NATIVE_LINUX_AMD64_ARM64_IN_CI; HOST_DOCKER_WINDOWS_MAC_NOT_RUN"
   },
   "branding_notes": {
     "status": "USER_SELECTED_MERGED_TO_MAIN",
@@ -988,22 +1205,34 @@
     "approved_on": "2026-10-13",
     "approval_evidence": "Прямое поручение владельца проекта: молодец, фиксируй изменения и заводи задачи",
     "current_packet_issue_number": 3,
-    "current_packet_stage": "TODO",
+    "current_packet_stage": "IN_PROGRESS",
     "progress": {
-      "completed": 0,
-      "total": 8
+      "completed": 1,
+      "total": 8,
+      "owner_accepted": 0
     },
     "last_issue_observation": {
-      "date": "2026-10-13",
+      "date": "2026-10-15",
       "number": 3,
       "state": "OPEN",
-      "unchecked_tasks": 8,
-      "acceptance_sections": 8,
-      "source": "GitHub REST create response"
+      "checked_tasks": 1,
+      "unchecked_tasks": 7,
+      "stage": "IN_PROGRESS",
+      "current_task": "P01-01",
+      "task_stage": "IN_REVIEW",
+      "source": "Executor PATCH response verified"
     },
     "documentation_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/4",
     "documentation_pr_closes_packet": false,
-    "documentation_pr_merged": true
+    "documentation_pr_merged": true,
+    "current_subtask": "P01-01",
+    "task_pr_granularity": {
+      "confirmed_on": "2026-10-15",
+      "rule": "По прямому поручению владельца первая задача P01-01 идёт отдельным PR; общая карточка P01 сохраняет восемь задач и ссылки на последовательные PR",
+      "whole_packet_acceptance": "NOT_COMPLETE_AFTER_ONLY_P01_01"
+    },
+    "current_task_pr_url": "https://github.com/Includeoyasi/faultline-lab/pull/6",
+    "current_subtask_stage": "IN_REVIEW"
   },
   "review_sequence": {
     "confirmed_on": "2026-10-13",
@@ -1018,10 +1247,15 @@
     ],
     "previous_packet_label": "G1-P01",
     "current_packet_label": "P01",
-    "note": "Переименование устраняет неоднозначность; объём кода, восемь задач и критерии не меняются. Старые метки в истории относятся к тому же пакету."
+    "note": "Переименование устраняет неоднозначность; объём кода, восемь задач и критерии не меняются. Старые метки в истории относятся к тому же пакету.",
+    "task_pr_granularity": {
+      "confirmed_on": "2026-10-15",
+      "rule": "По прямому поручению владельца первая задача P01-01 идёт отдельным PR; общая карточка P01 сохраняет восемь задач и ссылки на последовательные PR",
+      "whole_packet_acceptance": "NOT_COMPLETE_AFTER_ONLY_P01_01"
+    }
   },
   "repository_security": {
-    "observed_on": "2026-10-13",
+    "observed_on": "2026-10-15",
     "document": "docs/development/REPOSITORY_SECURITY.md",
     "main_protected": true,
     "source": "GitHub REST PUT branch protection followed by independent GET; branches/main confirms protected=true",
@@ -1031,6 +1265,14 @@
       "checks": [
         {
           "context": "Links and portable context",
+          "app_id": 15368
+        },
+        {
+          "context": "Go toolchain (amd64)",
+          "app_id": 15368
+        },
+        {
+          "context": "Go toolchain (arm64)",
           "app_id": 15368
         }
       ]
@@ -1047,12 +1289,13 @@
     "codeowners": {
       "path": ".github/CODEOWNERS",
       "owner": "Includeoyasi",
-      "status": "PUBLISHED_IN_OPEN_PR_NOT_IN_MAIN",
+      "status": "ACTIVE_IN_MAIN",
       "effective_after": "HUMAN_REVIEW_AND_MERGE_INTO_MAIN",
-      "interim_review": "One independent approval required; owner-specific CODEOWNERS rule has no file in main yet",
-      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/5"
+      "pull_request_url": "https://github.com/Includeoyasi/faultline-lab/pull/5",
+      "merge_commit": "d616a221566be4f7f7be89f6f3223501a539c45c",
+      "verified_on": "2026-10-15"
     },
-    "go_checks": "ADD_REQUIRED_CHECKS_AFTER_P01_WORKFLOW_EXISTS",
+    "go_checks": "REQUIRED_NATIVE_TOOLCHAIN_AMD64_AND_ARM64_FROM_2026_10_15",
     "bypasses_added": false,
     "destructive_probes": "NOT_PERFORMED_CONFIGURATION_READ_BACK_ONLY",
     "executor_has_admin": false
@@ -1110,5 +1353,21 @@
       "github_committer": "AI-Your-Bro",
       "verified": true
     }
+  },
+  "toolchain": {
+    "document": "docs/development/TOOLCHAIN.md",
+    "go": "1.27.2",
+    "goimports": "golang.org/x/tools v0.52.0",
+    "govulncheck": "golang.org/x/vuln v1.9.0",
+    "golangci_lint": "v2.14.0",
+    "go_image": "golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e",
+    "lint_image": "golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f",
+    "image_indexes": "VERIFIED_LINUX_AMD64_AND_ARM64",
+    "application_dependencies": "STANDARD_LIBRARY_ONLY; TOOL_MODULES_PINNED_IN_ROOT_GO_MOD",
+    "native_ci_runners": [
+      "ubuntu-24.04",
+      "ubuntu-24.04-arm"
+    ],
+    "bootstrap_behavior": "PRINT_MESSAGE_AND_EXIT; NO_HEALTH_OR_BUSINESS_SERVER"
   }
 }
