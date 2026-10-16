@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 43,
+  "context_revision": 44,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-16",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "511b9a85c7006cc7042263e0b87e7eb7fb8b116c",
+    "snapshot_ref": "8e49367c868af33023a6c1f7a8f94db447a828eb",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -2054,6 +2054,83 @@
       "title": "Unix orphan plugin lifecycle regression",
       "anchor": "source-smoke-exec-unix-test",
       "language": "go"
+    },
+    {
+      "path": "docs/development/evidence/go-smoke/go-equivalence-report.json",
+      "title": "Go smoke evidence: go-equivalence-report.json",
+      "anchor": "go-smoke-evidence-go-equivalence-report",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/go-smoke/go-smoke-equivalence.json",
+      "title": "Go smoke evidence: go-smoke-equivalence.json",
+      "anchor": "go-smoke-evidence-go-smoke-equivalence",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/go-smoke/go-smoke-preflight.json",
+      "title": "Go smoke evidence: go-smoke-preflight.json",
+      "anchor": "go-smoke-evidence-go-smoke-preflight",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/go-smoke/go-smoke-windows-interrupt.json",
+      "title": "Go smoke evidence: go-smoke-windows-interrupt.json",
+      "anchor": "go-smoke-evidence-go-smoke-windows-interrupt",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/go-smoke/no-backend-report.json",
+      "title": "Go smoke evidence: no-backend-report.json",
+      "anchor": "go-smoke-evidence-no-backend-report",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/go-smoke/node-baseline-report.json",
+      "title": "Go smoke evidence: node-baseline-report.json",
+      "anchor": "go-smoke-evidence-node-baseline-report",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/go-smoke/VALIDATION.md",
+      "title": "Go smoke evidence: VALIDATION.md",
+      "anchor": "go-smoke-evidence-VALIDATION"
+    },
+    {
+      "path": "docs/development/evidence/go-smoke/windows-cleanup.json",
+      "title": "Go smoke evidence: windows-cleanup.json",
+      "anchor": "go-smoke-evidence-windows-cleanup",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/go-smoke/windows-final-inventory.jsonl",
+      "title": "Go smoke evidence: windows-final-inventory.jsonl",
+      "anchor": "go-smoke-evidence-windows-final-inventory",
+      "language": "jsonl"
+    },
+    {
+      "path": "docs/development/evidence/go-smoke/windows-final-orders.jsonl",
+      "title": "Go smoke evidence: windows-final-orders.jsonl",
+      "anchor": "go-smoke-evidence-windows-final-orders",
+      "language": "jsonl"
+    },
+    {
+      "path": "docs/development/evidence/go-smoke/windows-final-payments.jsonl",
+      "title": "Go smoke evidence: windows-final-payments.jsonl",
+      "anchor": "go-smoke-evidence-windows-final-payments",
+      "language": "jsonl"
+    },
+    {
+      "path": "docs/development/evidence/go-smoke/windows-final-report.json",
+      "title": "Go smoke evidence: windows-final-report.json",
+      "anchor": "go-smoke-evidence-windows-final-report",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/go-smoke/windows-interrupt-report.json",
+      "title": "Go smoke evidence: windows-interrupt-report.json",
+      "anchor": "go-smoke-evidence-windows-interrupt-report",
+      "language": "json"
     }
   ],
   "change_history": [
@@ -2314,6 +2391,32 @@
       "date": "2026-10-16",
       "summary": "Владелец поручил issue9 и F02/F04/F07/F08. Контекст schema2 хранит решения, датированные доказательства и навигацию; live task board и счётчики удалены. Внешние материалы фиксируются существующим SHA. Статус выполнения и ревью — только в GitHub.",
       "trigger": "Direct owner implementation instruction; accepted audit directions"
+    },
+    {
+      "revision": 44,
+      "date": "2026-10-16",
+      "summary": "Реализованы Go smoke/F01 и F02/F04/F07/F08. Заключительный Windows smoke на чистом исходном коммите PASS; старый/новый runner функционально эквивалентны, отмена Windows проверена отдельно, cross-build пяти целей и Go quality PASS. Сохранены ограничения Mac/F03 и адресные доказательства выключения личной среды. Внешние материалы закреплены за существующим source SHA; live review/status только в GitHub.",
+      "trigger": "Выполнение выбранного владельцем пакета и проверка результата"
     }
-  ]
+  ],
+  "go_smoke_validation_2026_10_16": {
+    "date": "2026-10-16",
+    "source_commit": "8e49367c868af33023a6c1f7a8f94db447a828eb",
+    "source_dirty": false,
+    "windows_run": "609bf33e-2a05-f1d0-0f0c-2326b75f5f9f",
+    "windows_result": "PASS",
+    "cleanup": "PASS",
+    "linux_container_quality": "PASS: format/build/lint/unit/race/govulncheck",
+    "cross_compilation": [
+      "windows/amd64",
+      "linux/amd64",
+      "linux/arm64",
+      "darwin/amd64",
+      "darwin/arm64"
+    ],
+    "mac_runtime": "NOT_RUN",
+    "evidence": "docs/development/evidence/go-smoke/VALIDATION.md",
+    "personal_pc_cleanup": "Docker Desktop and Docker WSL VM stopped; autostart disabled; tools/images/caches preserved",
+    "live_review_and_host_CI": "GitHub PR and check runs, not cached in this snapshot"
+  }
 }

@@ -1,0 +1,13 @@
+{
+  "observed_at": "2026-10-16T14:05:21.6991190+03:00",
+  "containers_remaining": 0,
+  "desktop_stop_exit": 0,
+  "docker_vm_running": false,
+  "remaining_development_processes": [],
+  "docker_autostart": false,
+  "docker_run_entry_present": false,
+  "unrelated_workloads_preserved": true,
+  "installed_tools_preserved": true,
+  "images_and_build_cache_preserved": true,
+  "reboot_performed": false
+}
