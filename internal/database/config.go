@@ -142,6 +142,9 @@ func GenerateSecrets(cfg Config) error {
 			if _, err = cfg.Secret(user); err != nil {
 				return err
 			}
+			if err = os.Chmod(path, 0o644); err != nil {
+				return errors.New("cannot set secret file permissions")
+			}
 			continue
 		} else if !errors.Is(err, os.ErrNotExist) {
 			return errors.New("cannot inspect secret file")
@@ -155,7 +158,8 @@ func GenerateSecrets(cfg Config) error {
 			return errors.New("cannot create secret file")
 		}
 		_, writeErr := file.WriteString(hex.EncodeToString(value[:]) + "\n")
-		if closeErr := file.Close(); errors.Join(writeErr, closeErr) != nil {
+		permissionErr := file.Chmod(0o644) // Creation mode alone is restricted by POSIX umask.
+		if closeErr := file.Close(); errors.Join(writeErr, permissionErr, closeErr) != nil {
 			return errors.New("cannot save secret file")
 		}
 	}
