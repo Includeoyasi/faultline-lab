@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 51,
+  "context_revision": 52,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-16",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "1c54d9c6aee2be4da7c38b7775b6d862402caac1",
+    "snapshot_ref": "ae4c1c1df0fec5c5b0479f0a26d70dd6bf8af342",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -2311,6 +2311,12 @@
       "path": "docs/development/POSTGRES.md",
       "title": "docs/development/POSTGRES.md",
       "anchor": "p02-docs-development-postgres-md"
+    },
+    {
+      "path": "internal/database/config_unix_test.go",
+      "title": "POSIX restrictive umask credential regression",
+      "anchor": "p02-config-unix-tests",
+      "language": "go"
     }
   ],
   "change_history": [
@@ -2619,6 +2625,12 @@
       "date": "2026-10-16",
       "summary": "Закреплены внешние материалы PostgreSQL foundation за существующим исходным коммитом 1c54d9c6aee2be4da7c38b7775b6d862402caac1; переносимый контекст синхронизирован",
       "trigger": "Immutable snapshot contract F07 after source commit"
+    },
+    {
+      "revision": 52,
+      "date": "2026-10-16",
+      "summary": "Read-only usage review found restrictive umask could make secrets unreadable to non-root containers; explicit file permissions and real POSIX regression added, host-vs-container commands clarified",
+      "trigger": "Potential user/tester read-only documentation review; Windows secret and CLI tests passed after fix"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -2716,6 +2728,7 @@
       "cleanup": "0 containers, 0 run images, Docker Desktop/WSL stopped, autostart=false; preserve2sharedimages and2Go cache volumes",
       "source": "Working-tree validation on main base843e95e, not a claim of clean final-HEAD validation",
       "ci": "Final checks and artifacts in GitHub Actions; no duplicated live status"
-    }
+    },
+    "credential_permissions": "Directory0700 and explicit file chmod0644, including existing valid files; creation mode alone can be narrowed by POSIX umask. Native Windows secret/CLI tests passed; real POSIX umask077 regression runs in CI."
   }
 }
