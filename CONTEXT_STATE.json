@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 48,
+  "context_revision": 50,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-16",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "056d076dbbc1533de236dcb659fd09ff84ec86d3",
+    "snapshot_ref": "843e95ed2b65a44729fbf297b986363c588d51ca",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -67,6 +67,17 @@
       "implementation_and_review_pr_authorized": true,
       "P02_implementation_authorized": false,
       "other_audit_findings": "Follow their agreed future checkpoints in issue20"
+    },
+    {
+      "date": "2026-10-16",
+      "source": "Direct owner chat after PR21 merge: take issue12; explain additions and seed with interaction diagrams; remove obsolete Docker data",
+      "scope": [
+        "Issue12 PostgreSQL foundation",
+        "Detailed operational guide and diagrams",
+        "Scoped disposable-image cleanup"
+      ],
+      "implementation_and_review_pr_authorized": true,
+      "other_work": "Issue16 and remaining audit findings keep their agreed checkpoints"
     }
   ],
   "review_history": [
@@ -181,6 +192,21 @@
       "human_review": "NO_CODE_REVIEW; OWNER_OBJECTED_TO_PREMATURE_PR_CREATION",
       "scope": "P02 planning and observed P01 acceptance only",
       "observation_note": null
+    },
+    {
+      "number": 21,
+      "url": "https://github.com/Includeoyasi/faultline-lab/pull/21",
+      "author": "AI-Your-Bro",
+      "head_ref": "feat/go-smoke-audit",
+      "base_ref": "main",
+      "head_at_merge": "4f283b78dae1edf62fe53ada39d6c3350c0c7883",
+      "merge_commit": "843e95ed2b65a44729fbf297b986363c588d51ca",
+      "merged_at_utc": "2026-10-16T15:14:01Z",
+      "merged": true,
+      "merged_by": "Includeoyasi",
+      "human_review": "ACCEPTED_BY_PROJECT_OWNER_ACCOUNT_MERGE",
+      "scope": "Issue9/F01: Go smoke; audit F02/F04/F07/F08; review wording and agreed process documentation",
+      "observation_note": "Owner reported merge in chat; executor verified merged=true and actual merged_by via GitHub API. No acceptance of G1 or authorization of P02 implementation is inferred."
     }
   ],
   "review_policy": {
@@ -354,7 +380,7 @@
       "Stop this task containers and remove its network after checks",
       "Quit Docker Desktop and stop its WSL VM after work",
       "Keep Docker autostart disabled",
-      "Keep installed Go/Docker/WSL, reusable images and build/module caches",
+      "Keep installed tools, current reusable images and useful caches; remove disposable run-specific images and verify cleanup",
       "Stop only task-owned resources; preserve unrelated workloads"
     ],
     "configured_wsl_budget": {
@@ -1996,19 +2022,19 @@
       "language": "go"
     },
     {
-      "path": "internal/smoke/exec.go",
+      "path": "internal/command/exec.go",
       "title": "Bounded command output",
       "anchor": "go-smoke-exec",
       "language": "go"
     },
     {
-      "path": "internal/smoke/exec_unix.go",
+      "path": "internal/command/exec_unix.go",
       "title": "Unix command process groups",
       "anchor": "go-smoke-unix",
       "language": "go"
     },
     {
-      "path": "internal/smoke/exec_windows.go",
+      "path": "internal/command/exec_windows.go",
       "title": "Windows command jobs",
       "anchor": "go-smoke-windows",
       "language": "go"
@@ -2026,7 +2052,7 @@
       "language": "go"
     },
     {
-      "path": "internal/smoke/exec_test.go",
+      "path": "internal/command/exec_test.go",
       "title": "Command tree cancellation tests",
       "anchor": "go-smoke-exec-tests",
       "language": "go"
@@ -2050,7 +2076,7 @@
       "language": "go"
     },
     {
-      "path": "internal/smoke/exec_unix_test.go",
+      "path": "internal/command/exec_unix_test.go",
       "title": "Unix orphan plugin lifecycle regression",
       "anchor": "source-smoke-exec-unix-test",
       "language": "go"
@@ -2131,6 +2157,160 @@
       "title": "Go smoke evidence: windows-interrupt-report.json",
       "anchor": "go-smoke-evidence-windows-interrupt-report",
       "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p02/windows-runtime-report.json",
+      "title": "docs/development/evidence/p02/windows-runtime-report.json",
+      "anchor": "p02-docs-development-evidence-p02-windows-runtime-report-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p02/windows-cleanup.json",
+      "title": "docs/development/evidence/p02/windows-cleanup.json",
+      "anchor": "p02-docs-development-evidence-p02-windows-cleanup-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p02/windows-postgres-report.json",
+      "title": "docs/development/evidence/p02/windows-postgres-report.json",
+      "anchor": "p02-docs-development-evidence-p02-windows-postgres-report-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p02/postgres-image.json",
+      "title": "docs/development/evidence/p02/postgres-image.json",
+      "anchor": "p02-docs-development-evidence-p02-postgres-image-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p02/POSTGRES.md",
+      "title": "docs/development/evidence/p02/POSTGRES.md",
+      "anchor": "p02-docs-development-evidence-p02-postgres-md"
+    },
+    {
+      "path": "internal/command/command.go",
+      "title": "internal/command/command.go",
+      "anchor": "p02-internal-command-command-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/database/migrate.go",
+      "title": "internal/database/migrate.go",
+      "anchor": "p02-internal-database-migrate-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/database/integration_test.go",
+      "title": "internal/database/integration_test.go",
+      "anchor": "p02-internal-database-integration-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/database/fingerprint.go",
+      "title": "internal/database/fingerprint.go",
+      "anchor": "p02-internal-database-fingerprint-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/database/config_test.go",
+      "title": "internal/database/config_test.go",
+      "anchor": "p02-internal-database-config-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/database/config.go",
+      "title": "internal/database/config.go",
+      "anchor": "p02-internal-database-config-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/database/bootstrap.go",
+      "title": "internal/database/bootstrap.go",
+      "anchor": "p02-internal-database-bootstrap-go",
+      "language": "go"
+    },
+    {
+      "path": "configs/postgres/local.json",
+      "title": "configs/postgres/local.json",
+      "anchor": "p02-configs-postgres-local-json",
+      "language": "json"
+    },
+    {
+      "path": "cmd/labdata/main_test.go",
+      "title": "cmd/labdata/main_test.go",
+      "anchor": "p02-cmd-labdata-main-test-go",
+      "language": "go"
+    },
+    {
+      "path": "cmd/labdata/main.go",
+      "title": "cmd/labdata/main.go",
+      "anchor": "p02-cmd-labdata-main-go",
+      "language": "go"
+    },
+    {
+      "path": "migrations/inventory/0002_catalog.sql",
+      "title": "migrations/inventory/0002_catalog.sql",
+      "anchor": "p02-migrations-inventory-0002-catalog-sql",
+      "language": "sql"
+    },
+    {
+      "path": "migrations/inventory/0001_schema.sql",
+      "title": "migrations/inventory/0001_schema.sql",
+      "anchor": "p02-migrations-inventory-0001-schema-sql",
+      "language": "sql"
+    },
+    {
+      "path": "migrations/embed.go",
+      "title": "migrations/embed.go",
+      "anchor": "p02-migrations-embed-go",
+      "language": "go"
+    },
+    {
+      "path": "migrations/seed/inventory.sql",
+      "title": "migrations/seed/inventory.sql",
+      "anchor": "p02-migrations-seed-inventory-sql",
+      "language": "sql"
+    },
+    {
+      "path": "migrations/orders/0001_schema.sql",
+      "title": "migrations/orders/0001_schema.sql",
+      "anchor": "p02-migrations-orders-0001-schema-sql",
+      "language": "sql"
+    },
+    {
+      "path": "migrations/payments/0001_schema.sql",
+      "title": "migrations/payments/0001_schema.sql",
+      "anchor": "p02-migrations-payments-0001-schema-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/datalab/run_test.go",
+      "title": "internal/datalab/run_test.go",
+      "anchor": "p02-internal-datalab-run-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/datalab/run.go",
+      "title": "internal/datalab/run.go",
+      "anchor": "p02-internal-datalab-run-go",
+      "language": "go"
+    },
+    {
+      "path": "compose.postgres.yaml",
+      "title": "compose.postgres.yaml",
+      "anchor": "p02-compose-postgres-yaml",
+      "language": "yaml"
+    },
+    {
+      "path": "internal/smoke/exec_adapter.go",
+      "title": "internal/smoke/exec_adapter.go",
+      "anchor": "p02-internal-smoke-exec-adapter-go",
+      "language": "go"
+    },
+    {
+      "path": "docs/development/POSTGRES.md",
+      "title": "docs/development/POSTGRES.md",
+      "anchor": "p02-docs-development-postgres-md"
     }
   ],
   "change_history": [
@@ -2421,6 +2601,18 @@
       "date": "2026-10-16",
       "summary": "Внешние материалы переносимого снимка закреплены за существующим исходным коммитом после правок по ревью формулировок. Проверки генерации и документации выполнены локально; актуальные CI/review остаются в GitHub.",
       "trigger": "Обновление snapshot_ref после фиксации исходных материалов ревью"
+    },
+    {
+      "revision": 49,
+      "date": "2026-10-16",
+      "summary": "Владелец сообщил о слиянии PR21; GitHub API подтвердил owner merge принятого HEAD4f283b7 в843e95e. Сохранено датированное основание приёмки #9/F01/F02/F04/F07/F08, локальная main синхронизирована. Snapshot закреплён за merge-коммитом main, доступным после squash и удаления feature-ветки. Текущее выполнение остаётся только в GitHub; новые работы и приёмка G1 не заявлены.",
+      "trigger": "Прямое сообщение владельца: PR смержил; проверка GitHub merge evidence"
+    },
+    {
+      "revision": 50,
+      "date": "2026-10-16",
+      "summary": "PostgreSQL foundation: isolated DB roles, serialized checksummed migrations, repeatable Inventory seed, host smoke and CI, detailed diagrams/guide; scoped run-image cleanup",
+      "trigger": "Owner assigned issue12, requested detailed explanation and cleanup of obsolete Docker images"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -2490,5 +2682,34 @@
     ],
     "identity_exception": "Keep real GitHub logins in URLs, CODEOWNERS, account metadata, authentication checks and API evidence",
     "usage_docs": "Describe prerequisites and actions directly; migration rationale belongs in ADR and task materials. Keep role definitions in the workflow; omit repeated role paragraphs from the task-tracking guide."
+  },
+  "postgres_foundation": {
+    "recorded_on": "2026-10-16",
+    "scope": "Issue12; no business RPC or Kafka/Redis implementation",
+    "postgres": "18.6-bookworm",
+    "digest": "sha256:afc7e2d441324c0388fa80c3d24f733b4194a4eb7f47dd8ee2b08eb1a24a647c",
+    "client": "github.com/jackc/pgx/v5 v5.11.0",
+    "topology": "Separate Compose overlay; one private PostgreSQL, 3 service DBs, 6 distinct non-superuser roles; temporary dbtool",
+    "migration_contract": "Per-service transaction, advisory lock before journal, version/name/SHA-256 verification; errors roll back pending SQL and journal; no transaction control in migration files",
+    "seed_contract": "Three fixed Inventory SKU/catalog and stock fixtures; ON CONFLICT DO NOTHING preserves modified prices/stocks; repeat is not reset",
+    "reset_contract": "Explicit faultline-data-* project plus identical confirmation; disposable smoke deletes own volume and run image; ordinary down preserves data",
+    "configuration": "configs/postgres/local.json and ignored file-backed credentials; SCRAM auth, internal network, no host port; local plaintext profile only",
+    "guide": "docs/development/POSTGRES.md",
+    "validation": "docs/development/evidence/p02/POSTGRES.md",
+    "architecture_limits": "Single DB instance shares failures/resources; no service business DB clients yet; macOS runtime is NOT_RUN",
+    "personal_cleanup_refinement": "Owner observed historical image accumulation; remove run tags after success/error/cancel, including partial build; retain shared image layers/caches; no global prune",
+    "local_evidence": {
+      "date": "2026-10-16",
+      "windows_smoke": "PASS; project faultline-data-test-90eda236ac29dee2; 19:12:11–19:13:14 MSK",
+      "runtime_services_smoke": "PASS; run 5562c957-f2db-dcae-2c62-0ec73c2e8a91",
+      "migration_seed_rights": "PASS on real PostgreSQL",
+      "scoped_reset": "PASS; independent control volume preserved",
+      "cross_compile": "PASS windows/amd64 linux/amd64 linux/arm64 darwin/amd64 darwin/arm64; macOS runtime NOT_RUN",
+      "quality": "Container quality checks PASS; final HEAD CI records live validation",
+      "resource_sample": "23.43MiB of512MiB, CPU5.12%; single sample, not capacity",
+      "cleanup": "0 containers, 0 run images, Docker Desktop/WSL stopped, autostart=false; preserve2sharedimages and2Go cache volumes",
+      "source": "Working-tree validation on main base843e95e, not a claim of clean final-HEAD validation",
+      "ci": "Final checks and artifacts in GitHub Actions; no duplicated live status"
+    }
   }
 }

@@ -1,4 +1,4 @@
-package smoke
+package command
 
 import (
 	"context"

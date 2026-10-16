@@ -134,17 +134,19 @@ faultline-lab/
 │   ├── experiments/            # Experiment report template
 │   ├── adr/                    # Recorded decisions and approvals
 │   └── assets/                 # Repository visuals
-├── cmd/                        # Orders, Inventory and Payments entrypoints
+├── cmd/                        # Business service and host-tool entrypoints
 ├── internal/service/           # Shared configuration, logging and gRPC startup
-├── configs/env/                # Explicit local/container environment examples
+├── configs/                    # Explicit service and database configuration
+├── migrations/                 # Versioned SQL and repeatable Inventory seed
 ├── tests/smoke/                # Real process health and isolation checks
 ├── build/                      # Pinned toolchain image
-├── compose.yaml                # Temporary toolchain service
+├── compose.yaml                # Three services and temporary toolchain
+├── compose.postgres.yaml       # PostgreSQL and temporary dbtool overlay
 ├── tools/                      # Go commands, context and documentation checks
 └── .github/                    # Documentation CI and review templates
 ```
 
-Compose now defines three runtime services and the temporary toolchain profile; see the [runtime guide](docs/development/CONTAINER_RUNTIME.md). The [roadmap](docs/ROADMAP.md) contains the planned code layout.
+Compose now defines three runtime services and the temporary toolchain profile; see the [runtime guide](docs/development/CONTAINER_RUNTIME.md). The [PostgreSQL guide](docs/development/POSTGRES.md) explains roles, migrations, seed and reset with interaction diagrams. The [roadmap](docs/ROADMAP.md) contains the planned code layout.
 
 ## Working with this snapshot
 
