@@ -1,0 +1,3 @@
+{"time":"2026-10-16T11:02:26.441897119Z","level":"INFO","msg":"service started","service":"inventory","version":"(devel)","revision":"unknown","vcs_modified":"unknown","go_version":"go1.27.2","grpc_address":"[::]:50051"}
+{"time":"2026-10-16T11:02:42.489483535Z","level":"INFO","msg":"service stopping","service":"inventory","health":"NOT_SERVING","shutdown_timeout":"10s"}
+{"time":"2026-10-16T11:02:42.490028932Z","level":"INFO","msg":"service stopped","service":"inventory","stop_mode":"graceful"}

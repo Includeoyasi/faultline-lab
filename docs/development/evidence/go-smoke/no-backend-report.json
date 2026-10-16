@@ -1,0 +1,46 @@
+{
+  "schema_version": 2,
+  "run_id": "9dca928d-11b5-79c0-e9bc-81ea0e3e0475",
+  "project": "faultline-smoke-9dca928d",
+  "started_at": "2026-10-16T11:05:21.8245087Z",
+  "finished_at": "2026-10-16T11:05:22.0645715Z",
+  "result": "NOT_RUN",
+  "phase": "prerequisites",
+  "failed_phase": "prerequisites",
+  "error": "docker version --format {{.Server.Version}} failed (exit 1; process exited with code 1)",
+  "cancelled": false,
+  "cleanup": "NOT_NEEDED",
+  "host_platform": "windows",
+  "go_version": "go1.27.2",
+  "source_dirty": false,
+  "services": {},
+  "commands": [
+    {
+      "program": "docker",
+      "args": [
+        "version",
+        "--format",
+        "{{.Server.Version}}"
+      ],
+      "started_at": "2026-10-16T11:05:21.8263028Z",
+      "finished_at": "2026-10-16T11:05:22.0620351Z",
+      "exit_code": 1,
+      "error": "process exited with code 1"
+    }
+  ],
+  "recovery_command": [
+    "docker",
+    "compose",
+    "-f",
+    "compose.yaml",
+    "-p",
+    "faultline-smoke-9dca928d",
+    "down",
+    "--remove-orphans"
+  ],
+  "limitations": [
+    "No business operations or capacity measurement",
+    "docker_architecture describes the backend, not individual image platforms (F03)",
+    "SIGKILL or host failure requires recovery_command; signal cleanup cannot be guaranteed in those cases"
+  ]
+}

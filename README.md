@@ -20,21 +20,15 @@
   <a href="PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
-## Current state
+## Project guide
 
-**Architecture approved · container skeleton in progress.** G0 was accepted on **13 October 2026**; P01-01–04 are merged. P01-05–08 add bounded graceful shutdown, three minimal runtime images, Compose and smoke reports. [Build tools](docs/development/TOOLCHAIN.md) · [Runtime guide](docs/development/CONTAINER_RUNTIME.md). Business operations and experiment results are still to come.
+The repository contains three Go service processes with explicit configuration, gRPC health, JSON logs and bounded shutdown. The shop workflow, infrastructure and experiments follow the [roadmap](docs/ROADMAP.md); the architecture diagram below describes their intended boundaries.
 
-| Ready | Next | Later |
-| :--- | :--- | :--- |
-| Approved architecture and business invariants | Review runtime images and bounded shutdown | Repeatable load and failure experiments |
-| Detailed process diagrams and review gates | PostgreSQL ownership, migrations and gRPC contracts | Grafana dashboards, alerts and experiment reports |
-| Portable context with a freshness check | Durable workflows, Kafka and compensation | Scaling comparisons under equal resource budgets |
+[Build tools](docs/development/TOOLCHAIN.md) · [Runtime guide](docs/development/CONTAINER_RUNTIME.md) · [Go container smoke](docs/development/SMOKE.md).
 
-The first code [PR #6](https://github.com/Includeoyasi/faultline-lab/pull/6) covers **P01-01**, after G0 and before G1. [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) tracks all eight tasks; [the packet specification](docs/development/packets/P01.md) defines acceptance criteria. P01-01–04 are accepted and merged in PR #6/#7. P01-05–08 are ready for owner review in [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). All eight implementation checks are complete; four tasks are owner-accepted. [Windows container smoke](docs/development/evidence/p01/WINDOWS_SMOKE.md) and native Linux AMD64/ARM64 CI pass. The personal Mac remains untested.
+**Live work and review status:** [Issues](https://github.com/Includeoyasi/faultline-lab/issues), [pull requests](https://github.com/Includeoyasi/faultline-lab/pulls) and [milestones](https://github.com/Includeoyasi/faultline-lab/milestones). The repository keeps specifications and dated evidence, including the [Windows baseline](docs/development/evidence/p01/WINDOWS_SMOKE.md), rather than a second progress board. Performance claims require their own measurements.
 
-No capacity numbers or performance improvements are claimed before measurement. The [roadmap](docs/ROADMAP.md) distinguishes design hypotheses from acceptance criteria and observed results.
-
-The owner has agreed on container-based development for Windows and macOS and a reusable lab boundary with business adapters. The [environment plan](docs/development/ENVIRONMENT.md) and [boundary proposal](docs/architecture/LAB_BOUNDARY.md) record this direction; runtime containers are verified on Windows/WSL2 and native Linux AMD64/ARM64; a second business integration is still to come.
+The owner chose container-based development for Windows/macOS and a reusable lab boundary with business adapters. The [environment plan](docs/development/ENVIRONMENT.md) and [boundary design](docs/architecture/LAB_BOUNDARY.md) explain those decisions.
 
 ## What this project investigates
 
@@ -99,7 +93,7 @@ Reports retain offered versus actual load, unresolved outcomes, resource limits 
 
 ## Human-led AI development
 
-The **project owner** directs development and reviews changes. The AI acts as **implementer**: it prepares focused changes, runs available checks, documents evidence and addresses review comments. The human approves architecture and milestone transitions.
+The **project owner** directs development and reviews changes. The **executor, AI-Your-Bro (Codex)**, prepares focused changes, runs available checks, documents evidence and addresses review comments. The project owner approves architecture and milestone transitions.
 
 ```mermaid
 flowchart LR
@@ -110,17 +104,17 @@ flowchart LR
     Context --> Next["Next task / approved gate"]
 ```
 
-| Gate | Result | Status |
-| :--- | :--- | :--- |
-| **G0** | Architecture, invariants and development plan | Approved |
-| **G1** | Orders and Inventory foundation | Planned |
-| **G2** | End-to-end MVP and first experiment | Planned |
-| **G3** | Failure recovery and resilience | Planned |
-| **G4** | Reproducible engineering lab | Planned |
+| Gate | Result |
+| :--- | :--- |
+| **G0** | Architecture, invariants and development plan |
+| **G1** | Orders and Inventory foundation |
+| **G2** | End-to-end MVP and first experiment |
+| **G3** | Failure recovery and resilience |
+| **G4** | Reproducible engineering lab |
 
-The [code review standard](docs/development/CODE_REVIEW.md) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](docs/development/WORKFLOW.md). [AGENTS.md](AGENTS.md) gives implementers their working rules; [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) embeds the current state and source documents for agents without repository access.
+The [code review standard](docs/development/CODE_REVIEW.md) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](docs/development/WORKFLOW.md). [AGENTS.md](AGENTS.md) gives implementers their working rules; [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
 
-[Engineering decisions and review](docs/development/ENGINEERING_DECISIONS.md) traces owner feedback through the rationale, changes and verification. It also links the separate [Go smoke backlog task](https://github.com/Includeoyasi/faultline-lab/issues/9); that migration has not started.
+[Engineering decisions and review](docs/development/ENGINEERING_DECISIONS.md) traces owner feedback through the rationale, changes and verification. It also links the separate [Go smoke task](https://github.com/Includeoyasi/faultline-lab/issues/9); its execution and review are tracked in GitHub.
 
 ## Repository map
 

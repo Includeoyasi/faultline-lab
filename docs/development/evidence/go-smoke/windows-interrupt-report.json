@@ -1,0 +1,299 @@
+{
+  "schema_version": 2,
+  "run_id": "0d41daa4-2151-8b9e-8268-0a597b5164c0",
+  "project": "faultline-smoke-0d41daa4",
+  "started_at": "2026-10-16T10:49:59.829639Z",
+  "finished_at": "2026-10-16T10:50:15.8692974Z",
+  "result": "FAIL",
+  "phase": "check",
+  "failed_phase": "check",
+  "error": "docker compose -f compose.yaml -p faultline-smoke-0d41daa4 ps --all -q orders failed (exit 1; context canceled)",
+  "cancelled": true,
+  "cleanup": "PASS",
+  "host_platform": "windows",
+  "go_version": "go1.27.2",
+  "docker_version": "29.8.2",
+  "docker_architecture": "linux/x86_64",
+  "compose_version": "5.6.0",
+  "source_revision": "511b9a85c7006cc7042263e0b87e7eb7fb8b116c",
+  "source_dirty": true,
+  "services": {},
+  "commands": [
+    {
+      "program": "docker",
+      "args": [
+        "version",
+        "--format",
+        "{{.Server.Version}}"
+      ],
+      "started_at": "2026-10-16T10:49:59.8314426Z",
+      "finished_at": "2026-10-16T10:50:00.1633603Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "info",
+        "--format",
+        "{{.OSType}}/{{.Architecture}}"
+      ],
+      "started_at": "2026-10-16T10:50:00.1644835Z",
+      "finished_at": "2026-10-16T10:50:01.024469Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "version",
+        "--short"
+      ],
+      "started_at": "2026-10-16T10:50:01.0255365Z",
+      "finished_at": "2026-10-16T10:50:01.3847432Z",
+      "exit_code": 0
+    },
+    {
+      "program": "git",
+      "args": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "started_at": "2026-10-16T10:50:01.3858188Z",
+      "finished_at": "2026-10-16T10:50:01.4596761Z",
+      "exit_code": 0
+    },
+    {
+      "program": "git",
+      "args": [
+        "status",
+        "--porcelain"
+      ],
+      "started_at": "2026-10-16T10:50:01.4608542Z",
+      "finished_at": "2026-10-16T10:50:01.5528102Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-0d41daa4",
+        "config",
+        "--format",
+        "json"
+      ],
+      "started_at": "2026-10-16T10:50:01.5549608Z",
+      "finished_at": "2026-10-16T10:50:02.1193906Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-0d41daa4",
+        "build",
+        "orders",
+        "inventory",
+        "payments"
+      ],
+      "started_at": "2026-10-16T10:50:02.1210997Z",
+      "finished_at": "2026-10-16T10:50:04.8631976Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-0d41daa4",
+        "up",
+        "-d",
+        "--wait",
+        "--wait-timeout",
+        "60",
+        "orders",
+        "inventory",
+        "payments"
+      ],
+      "started_at": "2026-10-16T10:50:04.8648684Z",
+      "finished_at": "2026-10-16T10:50:11.0350184Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-0d41daa4",
+        "exec",
+        "-T",
+        "orders",
+        "/app/service",
+        "healthcheck"
+      ],
+      "started_at": "2026-10-16T10:50:11.0378213Z",
+      "finished_at": "2026-10-16T10:50:11.7853655Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-0d41daa4",
+        "ps",
+        "--all",
+        "-q",
+        "orders"
+      ],
+      "started_at": "2026-10-16T10:50:11.7874186Z",
+      "finished_at": "2026-10-16T10:50:12.0221344Z",
+      "exit_code": 1,
+      "error": "context canceled"
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-0d41daa4",
+        "logs",
+        "--no-color",
+        "--no-log-prefix",
+        "orders"
+      ],
+      "started_at": "2026-10-16T10:50:12.0238006Z",
+      "finished_at": "2026-10-16T10:50:12.6291675Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-0d41daa4",
+        "logs",
+        "--no-color",
+        "--no-log-prefix",
+        "inventory"
+      ],
+      "started_at": "2026-10-16T10:50:12.6323995Z",
+      "finished_at": "2026-10-16T10:50:13.2083822Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-0d41daa4",
+        "logs",
+        "--no-color",
+        "--no-log-prefix",
+        "payments"
+      ],
+      "started_at": "2026-10-16T10:50:13.2117141Z",
+      "finished_at": "2026-10-16T10:50:13.7669729Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-0d41daa4",
+        "down",
+        "--remove-orphans"
+      ],
+      "started_at": "2026-10-16T10:50:13.7687867Z",
+      "finished_at": "2026-10-16T10:50:14.663702Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "ps",
+        "--all",
+        "--quiet",
+        "--filter",
+        "label=com.docker.compose.project=faultline-smoke-0d41daa4"
+      ],
+      "started_at": "2026-10-16T10:50:14.6652611Z",
+      "finished_at": "2026-10-16T10:50:14.9379534Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "network",
+        "ls",
+        "--quiet",
+        "--filter",
+        "label=com.docker.compose.project=faultline-smoke-0d41daa4"
+      ],
+      "started_at": "2026-10-16T10:50:14.9388931Z",
+      "finished_at": "2026-10-16T10:50:15.1964348Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "ps",
+        "--all",
+        "--quiet",
+        "--filter",
+        "label=com.docker.compose.project=faultline-smoke-0d41daa4"
+      ],
+      "started_at": "2026-10-16T10:50:15.3983351Z",
+      "finished_at": "2026-10-16T10:50:15.6304179Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "network",
+        "ls",
+        "--quiet",
+        "--filter",
+        "label=com.docker.compose.project=faultline-smoke-0d41daa4"
+      ],
+      "started_at": "2026-10-16T10:50:15.6340613Z",
+      "finished_at": "2026-10-16T10:50:15.8681773Z",
+      "exit_code": 0
+    }
+  ],
+  "recovery_command": [
+    "docker",
+    "compose",
+    "-f",
+    "compose.yaml",
+    "-p",
+    "faultline-smoke-0d41daa4",
+    "down",
+    "--remove-orphans"
+  ],
+  "limitations": [
+    "No business operations or capacity measurement",
+    "docker_architecture describes the backend, not individual image platforms (F03)",
+    "SIGKILL or host failure requires recovery_command; signal cleanup cannot be guaranteed in those cases"
+  ]
+}

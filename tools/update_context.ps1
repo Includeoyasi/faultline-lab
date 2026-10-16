@@ -9,9 +9,13 @@ $introPath = Join-Path $PSScriptRoot 'context_intro.md'
 $outputPath = Join-Path $projectRoot 'PROJECT_CONTEXT.md'
 $stateText = [System.IO.File]::ReadAllText($statePath, [System.Text.Encoding]::UTF8)
 $state = $stateText | ConvertFrom-Json
-$snapshotRef = if ($state.repository.snapshot_ref) { $state.repository.snapshot_ref } else { 'main' }
+$snapshotRef = $state.repository.snapshot_ref
 
-if ($state.schema_version -ne 1) { throw 'Unsupported context schema version.' }
+if ($state.schema_version -ne 2) { throw 'Unsupported context schema version.' }
+if ($snapshotRef -notmatch '^[a-f0-9]{40}$') { throw 'repository.snapshot_ref must be a fixed 40-character source commit SHA, not a branch or tag.' }
+& git -C $projectRoot cat-file -e ($snapshotRef + '^{commit}')
+if ($LASTEXITCODE -ne 0) { throw 'The fixed source commit is unavailable in this checkout.' }
+$externalTargets = [System.Collections.Generic.HashSet[string]]::new()
 if ($state.context_revision -lt 1) { throw 'context_revision must be positive.' }
 foreach ($dateValue in @($state.context_created_on, $state.context_updated_on)) {
     [void][datetime]::ParseExact($dateValue, 'yyyy-MM-dd', [System.Globalization.CultureInfo]::InvariantCulture)
@@ -50,6 +54,10 @@ function Add-PortableDocument([string]$Content, [string]$SourceRelativePath, [ob
                 $rootPrefix = $projectRoot.TrimEnd('\', '/') + [System.IO.Path]::DirectorySeparatorChar
                 if (-not $resolvedTarget.StartsWith($rootPrefix, [System.StringComparison]::OrdinalIgnoreCase)) { throw ('Portable link leaves project: ' + $target) }
                 $repositoryRelative = $resolvedTarget.Substring($rootPrefix.Length).Replace('\', '/')
+                if ($externalTargets.Add($repositoryRelative)) {
+                    & git -C $projectRoot cat-file -e ($snapshotRef + ':' + $repositoryRelative)
+                    if ($LASTEXITCODE -ne 0) { throw ('Snapshot resource is absent from the source commit: ' + $repositoryRelative) }
+                }
                 $fragment = if ($targetParts.Count -eq 2) { '#' + $targetParts[1] } else { '' }
                 return $linkMatch.Groups['prefix'].Value + $state.repository.url + '/blob/' + $snapshotRef + '/' + $repositoryRelative + $fragment + $linkMatch.Groups['suffix'].Value
             })
@@ -89,21 +97,12 @@ foreach ($document in $documents) {
 $parts = [System.Collections.Generic.List[string]]::new()
 $parts.Add('# PROJECT_CONTEXT — Faultline Lab')
 $parts.Add('Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.')
-$parts.Add(('Ревизия: **{0}**. Состояние на: **{1}**, {2}. Фаза: **{3}**.' -f $state.context_revision, $state.context_updated_on, $state.user_timezone, $state.current_phase))
-$parts.Add('## Краткое текущее состояние')
-$summaryRows = [System.Collections.Generic.List[string]]::new()
-$summaryRows.Add('| Поле | Фактический статус |')
-$summaryRows.Add('|---|---|')
-$summaryRows.Add(('| Текущая задача | {0}: {1} |' -f $state.current_task.id, $state.current_task.status))
-foreach ($gate in $state.gates) { $summaryRows.Add(('| {0} | {1} |' -f $gate.id, $gate.status)) }
-$summaryRows.Add(('| Код бизнес-сервисов | {0} |' -f $state.implementation_status.business_service_code))
-$summaryRows.Add(('| Инфраструктура Compose | {0} |' -f $state.implementation_status.docker_compose))
-$summaryRows.Add(('| Эксперименты | {0} |' -f $state.implementation_status.experiments))
-$summaryRows.Add(('| Следующий пакет | {0}: {1} |' -f $state.next_implementation_packet.id, $state.next_implementation_packet.status))
-$parts.Add([string]::Join("`n", $summaryRows))
+$parts.Add(('Ревизия: **{0}**. Дата снимка: **{1}**, {2}. Исходный коммит внешних материалов: `{3}`.' -f $state.context_revision, $state.context_updated_on, $state.user_timezone, $snapshotRef))
+$parts.Add('## Выполнение задач')
+$parts.Add(('Актуальные статусы, блокеры и ревью ведутся только в GitHub: [Issues]({0}/issues), [Pull requests]({0}/pulls), [Milestones]({0}/milestones). Этот файл хранит спецификации, принятые решения и датированные доказательства; он не копирует текущую доску задач.' -f $state.repository.url))
 $parts.Add((Get-NormalizedText $introPath))
-$parts.Add('## Структурированное состояние, проверки и история')
-$parts.Add('JSON ниже является частью этого файла и достаточен для чтения без отдельного CONTEXT_STATE.json. Null/NOT_CHECKED/NOT_CREATED означают отсутствие подтверждённых сведений, а не нулевые значения или успешное завершение.')
+$parts.Add('## Решения, доказательства и история')
+$parts.Add('JSON ниже включён для автономного чтения решений и истории. Даты и исходные commit обязательны при использовании сохранённых наблюдений; они не означают актуальный статус задачи. Отсутствие измерения не является нулевым значением или успешной проверкой.')
 $parts.Add('```json' + "`n" + $stateText.Replace("`r`n", "`n").Replace("`r", "`n").Trim() + "`n" + '```')
 $parts.Add('## Реестр включённых источников')
 $parts.Add('SHA-256 относится к исходному файлу на момент сборки. Генерируемый PROJECT_CONTEXT.md исключён из реестра, чтобы не создавать циклическую контрольную сумму. Проверка CheckOnly сравнивает весь снимок с результатом повторной сборки из актуальных источников.')

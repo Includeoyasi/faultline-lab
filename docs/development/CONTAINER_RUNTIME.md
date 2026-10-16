@@ -2,7 +2,7 @@
 
 Этот пакет завершает реализацию P01-05–08: ограниченное graceful shutdown, отдельные runtime-образы трёх сервисов, Compose, CI и smoke с диагностикой. G0 принят; P01 выполняется до G1. Бизнес-операции и инфраструктура PostgreSQL/Kafka/Redis относятся к следующим пакетам.
 
-PR #7 принят владельцем. P01-05–08 подготовлены в [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8): Linux AMD64/ARM64 CI и [Windows container smoke](evidence/p01/WINDOWS_SMOKE.md) PASS. Реализация и проверки P01 — 8/8, принято владельцем 4/8; G1 ещё не достигнут.
+Исторический источник каркаса — [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8), принятый владельцем 16 октября 2026 года. Исходные Windows-проверки сохранены в [evidence](evidence/p01/WINDOWS_SMOKE.md); актуальное ревью — в GitHub.
 
 ## Состав и границы
 
@@ -27,12 +27,13 @@ flowchart TB
 
 ## Требования и запуск
 
-Нужны Git, Docker с Linux-контейнерами и Compose v2 с поддержкой up --wait. Для локальной публикации на loopback используйте Docker Engine 28+. Go и Bash на хосте не нужны. Node.js 20+ требуется только для автоматического smoke и уже используется проверкой документации.
+Нужны Git, Docker с Linux-контейнерами и Compose v2 с поддержкой up --wait. Для локальной публикации на loopback используйте Docker Engine 28+. Go и Bash на хосте не нужны. Готовый Go smoke не требует Node.js или Go SDK на хосте; [сборка и запуск](SMOKE.md).
 
 Из корня репозитория:
 
 ```text
 docker compose build orders inventory payments
+.\bin\smoke-windows-amd64.exe -check-config
 docker compose up -d --wait orders inventory payments
 docker compose ps
 docker compose exec -T orders /app/service healthcheck
@@ -66,27 +67,13 @@ Compose выбирает файл и передаёт окружение про�
 
 Управляемые unit-тесты проверяют завершение активного RPC, deadline, NOT_SERVING через реальный TCP endpoint до закрытия listener и отказ новых соединений. Синхронизация — каналы и ограниченные ожидания. Linux process tests проверяют SIGTERM/SIGINT для настоящих бинарников и forced exit 1 при открытом health Watch. Постоянный Watch может занять весь drain budget; Compose использует короткий unary Check.
 
-Default приложения — 10s; `stop_grace_period` Compose — 15s. При изменении бюджета приложения увеличьте grace period контейнера с запасом, иначе Docker может отправить SIGKILL раньше завершения приложения. Таймауты проверяют свойства завершения; это не результат исследования производительности.
+Default приложения — 10s; независимый `FL_STOP_GRACE_PERIOD` Compose — 15s. [Preflight Go CLI](SMOKE.md) до запуска проверяет внешний бюджет с минимум 2s запаса; несовместимый профиль отклоняется. Таймауты проверяют свойства завершения; это не результат исследования производительности.
 
 ## Автоматический smoke и отчёт
 
-```text
-node tools/smoke.mjs
-```
+[Go CLI](SMOKE.md) выполняет build → start → health/security → isolation → stop/logs → cleanup на собственном уникальном Compose project. Руководство описывает контейнерную сборку для пяти платформ, отмену дерева процессов, независимый cleanup, формат отчёта и адресное восстановление после аварии.
 
-[Smoke](../../tools/smoke.mjs) работает на хосте через Docker CLI, без shell-команд и передачи Docker socket в контейнер. Он создаёт уникальный проект `faultline-smoke-*`, явно выбирает compose.yaml и несекретный container.env.example; личные overrides не меняют тестовый профиль.
-
-Проверки по порядку:
-
-1. Доступность Linux Docker/Compose; запись версии и архитектуры backend.
-2. Сборка трёх образов, старт и ожидание healthy.
-3. Health CLI, UID, read-only root, capabilities, no-new-privileges, внутренняя сеть и отсутствие host ports/mounts.
-4. Остановка Orders: exit 0, JSON start → NOT_SERVING → graceful stop; Inventory/Payments продолжают отвечать.
-5. Остановка остальных, проверка их exit/logs и удаление только собственного уникального Compose-проекта в finally.
-
-В `artifacts/smoke/<run-id>/` сохраняются report.json, три JSONL-лога и диагностика ошибок команд. Отчёт содержит source revision/dirty, реальные image IDs, платформу, версии, исходы проверок и cleanup. Если prerequisites недоступны, результат NOT_RUN и exit 2; дефект прогона даёт FAIL и exit 1; PASS — exit 0. Секреты, полный inspect Env, hostnames и абсолютные персональные пути в отчёт не включаются.
-
-CI на нативных Linux AMD64/ARM64 выполняет этот smoke после Go format/build/lint/unit/race/tidy/verify/govulncheck и process smoke. Отчёты и логи сохраняются артефактами на 14 дней, отдельно для каждой архитектуры. Внутри образа `.git` отсутствует, поэтому runtime VCS revision может быть `unknown`; traceability обеспечивают реальные image IDs и source revision в отчёте, без подмены build metadata.
+CI выполняет Go quality checks и этот host-side smoke на нативных Linux AMD64/ARM64, сохраняя JSON/JSONL и диагностику на 14 дней. Сборка macOS не заменяет фактическую проверку на Mac.
 
 ## Локальная проверка Windows
 
@@ -100,11 +87,11 @@ WSL ограничен двумя CPU, memory=2GB и swap=1GB; Engine видит
 
 ```text
 docker desktop start --timeout 120
-node tools/smoke.mjs
+.\bin\smoke-windows-amd64.exe
 docker desktop stop --timeout 60
 wsl --shutdown
 ```
 
 Последняя команда относится к Windows и завершает виртуальную среду WSL. В этом профиле WSL использует только лаборатория; если появятся другие дистрибутивы с работающими задачами, учитывайте их перед общим shutdown. Smoke удаляет только собственные контейнеры и сеть. Docker Desktop и WSL VM после работы нужно остановить также при ошибке проверки, сохранив диагностику. Программы, образы, библиотеки и кеши оставляем для следующих запусков.
 
-После этого прогона подтверждены: контейнеров нет, Docker Desktop остановлен, wsl --shutdown выполнен, процессов Docker/vmmemWSL нет, автозапуск выключен. Личный Mac остаётся NOT_RUN; P01/G1 не объявляются принятыми без решения владельца.
+После этого прогона подтверждены: контейнеров нет, Docker Desktop остановлен, wsl --shutdown выполнен, процессов Docker/vmmemWSL нет, автозапуск выключен. Доказательства относятся к этой дате и исходному commit; новые проверки и приёмка изменений фиксируются отдельно.

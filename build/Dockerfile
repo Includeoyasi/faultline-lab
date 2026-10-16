@@ -15,7 +15,8 @@ CMD ["versions"]
 
 FROM toolchain AS service-build
 ARG SERVICE
-COPY . .
+COPY cmd ./cmd
+COPY internal ./internal
 RUN case "$SERVICE" in orders|inventory|payments) ;; *) exit 2 ;; esac \
     && CGO_ENABLED=0 go build -trimpath -o /out/service "./cmd/$SERVICE"
 
