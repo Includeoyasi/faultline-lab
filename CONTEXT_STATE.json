@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 50,
+  "context_revision": 51,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-16",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "843e95ed2b65a44729fbf297b986363c588d51ca",
+    "snapshot_ref": "1c54d9c6aee2be4da7c38b7775b6d862402caac1",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -2613,6 +2613,12 @@
       "date": "2026-10-16",
       "summary": "PostgreSQL foundation: isolated DB roles, serialized checksummed migrations, repeatable Inventory seed, host smoke and CI, detailed diagrams/guide; scoped run-image cleanup",
       "trigger": "Owner assigned issue12, requested detailed explanation and cleanup of obsolete Docker images"
+    },
+    {
+      "revision": 51,
+      "date": "2026-10-16",
+      "summary": "Закреплены внешние материалы PostgreSQL foundation за существующим исходным коммитом 1c54d9c6aee2be4da7c38b7775b6d862402caac1; переносимый контекст синхронизирован",
+      "trigger": "Immutable snapshot contract F07 after source commit"
     }
   ],
   "go_smoke_validation_2026_10_16": {
