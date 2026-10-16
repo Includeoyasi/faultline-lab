@@ -93,7 +93,7 @@ Reports retain offered versus actual load, unresolved outcomes, resource limits 
 
 ## Human-led AI development
 
-The **project owner** directs development and reviews changes. The sole developer is **AI-Your-Bro (Codex)**: it prepares focused changes, runs available checks, documents evidence and addresses review comments. The human approves architecture and milestone transitions.
+The **project owner** directs development and reviews changes. The **executor, AI-Your-Bro (Codex)**, prepares focused changes, runs available checks, documents evidence and addresses review comments. The project owner approves architecture and milestone transitions.
 
 ```mermaid
 flowchart LR

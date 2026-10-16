@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **44**. Дата снимка: **2026-10-16**, Europe/Moscow. Исходный коммит внешних материалов: `8e49367c868af33023a6c1f7a8f94db447a828eb`.
+Ревизия: **47**. Дата снимка: **2026-10-16**, Europe/Moscow. Исходный коммит внешних материалов: `8e49367c868af33023a6c1f7a8f94db447a828eb`.
 
 ## Выполнение задач
 
@@ -18,7 +18,7 @@
 
 Faultline Lab — лаборатория масштабирования, отказов и восстановления вокруг небольшой бизнес-системы. Публичный репозиторий: [Includeoyasi/faultline-lab](https://github.com/Includeoyasi/faultline-lab). Владелец выбрал MIT 13 октября 2026 года. Прежнее имя Microservices Lab обозначает тот же проект.
 
-Владелец проекта определяет направление, проводит ревью и принимает ключевые решения. Единственный разработчик — Codex, публикующий изменения от отдельного аккаунта **AI-Your-Bro**. Другие ИИ-агенты рассматриваются как потенциальные пользователи, подписчики или тестировщики. Передача контекста не даёт им поручения разрабатывать код.
+Владелец проекта определяет направление, проводит ревью и принимает ключевые решения. Исполнитель — Codex, публикующий изменения от отдельного аккаунта **AI-Your-Bro**. Другие ИИ-агенты рассматриваются как потенциальные пользователи, подписчики или тестировщики. Передача контекста не даёт им поручения разрабатывать код.
 
 Исполнитель не одобряет и не сливает собственные PR. Автор замечания из чата — владелец; исполнитель может пересказать решение со ссылкой на чат как источник, но не выдаёт его за GitHub approval. Требования защиты main и CODEOWNERS описаны в приложениях. Автор Git-коммита не заменяет проверку реально авторизованного API actor.
 
@@ -70,7 +70,7 @@ JSON ниже включён для автономного чтения реше
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 44,
+  "context_revision": 47,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-16",
   "user_timezone": "Europe/Moscow",
@@ -92,14 +92,14 @@ JSON ниже включён для автономного чтения реше
   "roles": {
     "human": "Владелец проекта; ревьюер при проверке кода",
     "ai": "Исполнитель разработки, проверок, экспериментов и документации",
-    "terminology_confirmed_on": "2026-10-13",
+    "terminology_confirmed_on": "2026-10-16",
     "authority_changed": false,
     "github_owner": "Includeoyasi",
     "github_executor": "AI-Your-Bro",
     "github_identity_transition_confirmed_on": "2026-10-13",
-    "sole_developer": "AI-Your-Bro (Codex)",
-    "other_ai_agents": "Potential users, subscribers or testers; not additional project developers",
-    "clarified_on": "2026-10-16"
+    "other_ai_agents": "Potential users, subscribers or testers; implementation is assigned to the executor",
+    "clarified_on": "2026-10-16",
+    "development_executor": "AI-Your-Bro (Codex)"
   },
   "tracker_navigation": {
     "authority": "GitHub is the only source of live issue, blocker and review status; no local progress cache",
@@ -292,7 +292,7 @@ JSON ниже включён для автономного чтения реше
       "Verification evidence",
       "Status and acceptance source"
     ],
-    "attribution_rule": "AI-Your-Bro publishes executor summaries; owner requirements from chat are identified as such. Do not fabricate GitHub comments or approvals by Includeoyasi.",
+    "attribution_rule": "AI-Your-Bro publishes executor summaries; owner requirements from chat are identified as such. Do not fabricate GitHub comments or approvals by the project owner.",
     "routine_fixes": "PR only; ADR reserved for significant decisions; approved scope remains autonomous",
     "cases": [
       {
@@ -1542,7 +1542,7 @@ JSON ниже включён для автономного чтения реше
         "report_priority": "P1",
         "priority_is_not_security_severity": true,
         "assessment": "P01 DONE отражён в нашей ветке документации; main по свежему API всё ещё 3ca290d с прежним IN_REVIEW/4 из8.",
-        "owner_decision": "GitHub — единственный источник актуальных статусов; контекст хранит решения и датированную историю. Единственный разработчик — AI-Your-Bro; остальные агенты — потенциальные пользователи, подписчики или тестировщики.",
+        "owner_decision": "GitHub — единственный источник актуальных статусов; контекст хранит решения и датированную историю. Исполнитель — AI-Your-Bro; остальные агенты — потенциальные пользователи, подписчики или тестировщики.",
         "tracking_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/20",
         "initial_proposal": "Довести уже подготовленное обновление статуса до main в согласованной публикации; не считать приёмкой G1.",
         "assessment_at_review": "ADDRESSED_IN_DOCS_BRANCH_MAIN_STILL_STALE"
@@ -1676,7 +1676,7 @@ JSON ниже включён для автономного чтения реше
       "author_of_summary": "AI-Your-Bro; not an owner GitHub approval",
       "selected_directions": {
         "F01": "Перенести smoke на Go по #9; исправление отмены, очистки и отчёта входит в перенос. Возможно объединение с небольшими исправлениями; точный состав PR ещё не выбран.",
-        "F02": "GitHub — единственный источник актуальных статусов; контекст хранит решения и датированную историю. Единственный разработчик — AI-Your-Bro; остальные агенты — потенциальные пользователи, подписчики или тестировщики.",
+        "F02": "GitHub — единственный источник актуальных статусов; контекст хранит решения и датированную историю. Исполнитель — AI-Your-Bro; остальные агенты — потенциальные пользователи, подписчики или тестировщики.",
         "F03": "Отложить выбор платформенных метаданных; открытый пункт #20, вернуться на ближайшем планировании P02 до performance-сравнений.",
         "F04": "Сохранить независимые app/container timeout; проверять совместимость и запас в профиле запуска.",
         "F05": "До постоянных Watch-клиентов завершать health-подписки отдельно, сохраняя graceful drain бизнес-RPC.",
@@ -2302,7 +2302,7 @@ JSON ниже включён для автономного чтения реше
     {
       "revision": 17,
       "date": "2026-10-13",
-      "summary": "Первый PR нового порядка #5 создан от AI-Your-Bro к владельцу Includeoyasi. Сохранены реальная публикация, автор/коммиттер, requested review и исходный успешный CI. Main защищён; CODEOWNERS ещё не слит.",
+      "summary": "Первый PR нового порядка #5 создан от AI-Your-Bro к владельцу проекта. Сохранены реальная публикация, автор/коммиттер, requested review и исходный успешный CI. Main защищён; CODEOWNERS ещё не слит.",
       "trigger": "Завершение поручения по подключению исполнителя и защите main; handoff для человеческого ревью"
     },
     {
@@ -2466,6 +2466,24 @@ JSON ниже включён для автономного чтения реше
       "date": "2026-10-16",
       "summary": "Реализованы Go smoke/F01 и F02/F04/F07/F08. Заключительный Windows smoke на чистом исходном коммите PASS; старый/новый runner функционально эквивалентны, отмена Windows проверена отдельно, cross-build пяти целей и Go quality PASS. Сохранены ограничения Mac/F03 и адресные доказательства выключения личной среды. Внешние материалы закреплены за существующим source SHA; live review/status только в GitHub.",
       "trigger": "Выполнение выбранного владельцем пакета и проверка результата"
+    },
+    {
+      "revision": 45,
+      "date": "2026-10-16",
+      "summary": "По прямому поручению владельца закреплено предварительное краткое описание объёма, проверок и возможных трудностей каждой следующей задачи, с обоснованным ориентиром времени и уточнением при существенных изменениях. Правило внесено в AGENTS и WORKFLOW; новый этап согласования не вводится.",
+      "trigger": "Обсуждение длительности задачи #9 и согласованное правило предварительной оценки"
+    },
+    {
+      "revision": 46,
+      "date": "2026-10-16",
+      "summary": "По поручению владельца в Codex создан ежедневный анализ процесса разработки в этом чате: основная попытка07:00 МСК, резерв19:00 при отсутствии готового отчёта, не чаще одного результата за24часа. Анализ опирается на факты, оценивает самостоятельность и достаточность живого общения; запуск стенда и внедрение рекомендаций не разрешены. Сохранено описание настройки, актуальные запуски управляются в Scheduled.",
+      "trigger": "Прямое поручение владельца о ежедневной ретроспективе и повторной попытке через12часов"
+    },
+    {
+      "revision": 47,
+      "date": "2026-10-16",
+      "summary": "По замечаниям владельца в PR21 унифицированы названия ролей во всех исходных документах и контексте. Реальные GitHub identifiers сохранены для авторизации и доказательств. Из инструкции smoke удалены отсылки к прежнему runtime; оставлены назначение, prerequisites и команды. Включены ранее согласованные правила предварительной оценки задач и описание ежедневного анализа процесса.",
+      "trigger": "PR21 review comments4295745781/4295759572 and browser note on redundant smoke instructions"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -2487,6 +2505,54 @@ JSON ниже включён для автономного чтения реше
     "evidence": "docs/development/evidence/go-smoke/VALIDATION.md",
     "personal_pc_cleanup": "Docker Desktop and Docker WSL VM stopped; autostart disabled; tools/images/caches preserved",
     "live_review_and_host_CI": "GitHub PR and check runs, not cached in this snapshot"
+  },
+  "task_start_communication": {
+    "confirmed_on": "2026-10-16",
+    "source": "Direct owner instruction in chat: в следующие задачи заранее обозначь ожидаемый объем работы и возможные трудности",
+    "before_each_task": [
+      "Expected result and scope boundaries",
+      "Main implementation and validation work",
+      "Likely difficulties, dependencies and uncertainty",
+      "Indicative elapsed-time range when supportable; distinguish build/CI waits"
+    ],
+    "update_on_material_change": true,
+    "additional_start_approval_required": false
+  },
+  "process_review_automation": {
+    "configured_on": "2026-10-16",
+    "source": "Direct owner request in chat for a daily development-process analysis with an evening retry",
+    "automation_id": "faultline-lab",
+    "management": "Codex Scheduled; this records configuration intent, not live run status",
+    "purpose": [
+      "What works well and where development loses time or quality",
+      "Executor autonomy and decisions needing more discussion",
+      "Whether live conversation with clear responsibilities is sufficient without elaborate prompts"
+    ],
+    "schedule": {
+      "timezone": "Europe/Moscow",
+      "primary": "07:00 daily",
+      "fallback": "19:00 if no eligible successful report",
+      "first_primary": "2026-10-17 07:00",
+      "maximum_report_frequency": "One successful report per 24-hour scheduled-slot interval; skip the next morning after evening success"
+    },
+    "delivery": "This project chat, Russian, normally 200–350 words with evidence and one or two improvements",
+    "sources": "Available project conversation, Git, GitHub PR/Issues/reviews, CI and saved evidence; state gaps explicitly",
+    "allowed_writes": "Only its own reports and period journal in ignored .local/process-analysis; no project/source/tracker changes",
+    "execution_limits": "Analysis only; no Docker/WSL/tests/builds, development or external publication; no automatic implementation of proposed process improvements",
+    "runtime_dependency": "Local scheduled runs require the host computer and Codex app to be running"
+  },
+  "role_wording_review": {
+    "date": "2026-10-16",
+    "source": "Owner review comments in PR21 and follow-up instruction in chat",
+    "owner_term": "владелец проекта / project owner",
+    "executor_term": "исполнитель / executor",
+    "authority_changed": false,
+    "review_comments": [
+      "https://github.com/Includeoyasi/faultline-lab/pull/21#discussion_r4295745781",
+      "https://github.com/Includeoyasi/faultline-lab/pull/21#discussion_r4295759572"
+    ],
+    "identity_exception": "Keep real GitHub logins in URLs, CODEOWNERS, account metadata, authentication checks and API evidence",
+    "usage_docs": "Describe prerequisites and actions directly; migration rationale belongs in ADR and task materials. Keep role definitions in the workflow; omit repeated role paragraphs from the task-tracking guide."
   }
 }
 ```
@@ -2497,29 +2563,29 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `839eb499808b8e41df59909555c7f2192255c068d08cfcdbdbc971f3091a349d` |
-| `tools/context_intro.md` | `6d132be4cb9af02348d2fb7d9e1cc4b0e5032bfd0daede4509b781c6d0479ac8` |
+| `CONTEXT_STATE.json` | `dbebcd1317013216a67ced39eec914713d58ddb16e973983f1fba53ac4fb80e1` |
+| `tools/context_intro.md` | `efa653b38275069b42953862f69f20c351002d21221d8c83123404a8411a56b9` |
 | `tools/update_context.ps1` | `73dff2e2da1f7ea7e8fc8fe2dc70bde722f4d697c1ca7c685d297214cd133e33` |
-| `README.md` | `38b16c7826fdd6059c7bb22eb7440a13941eb31184bce105c633b2f59f8e11ce` |
-| `README.ru.md` | `a508354f851572ba8d7d5428ca8b8a095a7284261dfba0fa180bab11425f0dc4` |
+| `README.md` | `a195f63ef987e873783461a597e7fa8a8e16054ca967b545d1e98a0a8a91d7ff` |
+| `README.ru.md` | `3cf3b461a730b5585a88126cec7a6404ebbda0e7a6e0b4ac3f64dce9d0a839c9` |
 | `docs/README.md` | `25cbaa5ee15f77235733d5900f75c1a49f42d54222152a00db7943d74acd6a55` |
 | `docs/ROADMAP.md` | `3881f7898db08cd56221d60fe1578b8642060c99bc53f3574bc59e8defcff637` |
 | `docs/architecture/DESIGN.md` | `74a141c2ce11d07cb568f01a6eb72b849f9556d7be85705544bb9e8a15806f2e` |
 | `docs/architecture/PROCESSES.md` | `dd6d00ee9d169236fe0f0d14de4b6f54d778a7cf79489f6b6a3354357e2e9ec6` |
-| `docs/development/WORKFLOW.md` | `886d5abb0881ac3424a091c4815054bc400d25cfd9a5d687537f6e4383665bac` |
+| `docs/development/WORKFLOW.md` | `a32d68ca2ae9085b7284101bd6d3bfc4cee2d3b50b4adefbea9c15c4fc78f97a` |
 | `docs/experiments/REPORT_TEMPLATE.md` | `4f569aab52ba34a68bb2e8b4551c6a3bf4932277c26c3b4206dbb505781a2cab` |
-| `AGENTS.md` | `79cc9f38d7769b193322583a29f7a70d38aed6a79cfd8ced8b633e33c6277389` |
+| `AGENTS.md` | `c51e04a2f6806f2662bee9b4c6d1204d17d9447acae527e9a81104cc5696ae60` |
 | `docs/adr/0001-approved-g0.md` | `b8518c5c49cdefea3dbf0bf2a79ab40459dba2b565e71a6c534a555cbafa20df` |
-| `CONTRIBUTING.md` | `1a798e29f0276f7f286588436536218512e9ad8e61554166e25a2954c463e2ca` |
+| `CONTRIBUTING.md` | `5d7fe456ad6e2967e3e324bb227f711dd23a735e4080db9ceb4d01760c94327e` |
 | `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
-| `docs/development/CODE_REVIEW.md` | `a4c304def6f22c3bd34065f67b6a787663e9f0f904690c8ae2653f9e89d50b73` |
+| `docs/development/CODE_REVIEW.md` | `ede879352cb1f36c935970fae3be8886132e5080c3327c422e43ddf2da1db5d9` |
 | `docs/architecture/LAB_BOUNDARY.md` | `94030566542a3e5fbda07593ed06cea7f95ec98985483de8ac0d66f4001ae326` |
 | `docs/development/ENVIRONMENT.md` | `68f5528d60a52bae9cf5111be90bfed11d1324a043728c3191eace4aaf847c16` |
 | `docs/development/RESOURCE_PROFILES.md` | `60212954c54085f2c8b74c4d3cf5c50f8ccf90192e8e9a502da357208645d44f` |
 | `docs/design/BANNER_OPTIONS.md` | `0b880a782a766f85c33fb5fba1a8c933a3d05f949d93b539d03b9a37b71efd0f` |
-| `docs/development/packets/P01.md` | `8f586b55ba67ccddb18329cf7b8cd665f5bc15775c74698a1622bccd7acb117d` |
-| `docs/development/TASK_TRACKING.md` | `dfdfaa059aab77e306a7b001ca96366e1ebcf7209c28dfc4730b73dddc021f34` |
-| `docs/development/REPOSITORY_SECURITY.md` | `b10363e3417429cc06376dff0277f257a92912dae03af12d7d9ff8252a80cb6e` |
+| `docs/development/packets/P01.md` | `82d62963046bde7289b9c22dde1a0fcc26adb6911e4bbf5bd792e068a6a22067` |
+| `docs/development/TASK_TRACKING.md` | `46baf95126af2e7e362d6751e957057e915a98f4b7606739178c57427aec61d8` |
+| `docs/development/REPOSITORY_SECURITY.md` | `e15d0de41447fcf81b76f4264a76483895940dc1c03f6ab809e3a626b9f8278a` |
 | `.github/CODEOWNERS` | `95de6cc3de1ba640d0ab9e2b9bfbdea79b7ce6641a8bcdb0bcef1f7607666415` |
 | `docs/development/TOOLCHAIN.md` | `604981e70518e77e5a9924f758fd20d31e75746970a3cf3dbbb833314bd7c841` |
 | `go.mod` | `26b5d46af3fc859ce69ba944b067468927cc97273e33ebfb1ec8dda7231ccc96` |
@@ -2555,12 +2621,12 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/evidence/p01/windows-2026-10-15/payments.jsonl` | `d3466907750bc5c137738ba0045f8d37f6c83e7fb4e3690a56896cbf9ad83c58` |
 | `docs/development/evidence/p01/windows-2026-10-15/environment.json` | `e32d9a5c383c6fcc426179fc716ab8ad39bece710670215b208405ee099bc90b` |
 | `docs/development/evidence/p01/windows-2026-10-15/cleanup.json` | `6c78a1ca41714a3ccb50e4777a2532ffeaca7d1cfb5fb561127e76e91fe0ad79` |
-| `docs/development/ENGINEERING_DECISIONS.md` | `3a6f9990287e160473abb4b1d8a32ad8b1beaef62ede54f681b8348097b06c29` |
-| `docs/adr/0002-record-review-decisions.md` | `aa70f1c5024f4511ed70cb0978608d1ebd0e42f5dcfbe7300c92aa2bead1de02` |
+| `docs/development/ENGINEERING_DECISIONS.md` | `a9cecf441f018fff6931935c01e7778a6212ab896f747ffd669f29ebc9de91c1` |
+| `docs/adr/0002-record-review-decisions.md` | `00ad82591791da40b82d0c98c4be2c098a069fee70a5ba495a658a3657ba305e` |
 | `docs/adr/0003-go-container-smoke.md` | `228110462151044ffc87a6048293b8ad12e2673bee74bb627c8675ec62347181` |
 | `docs/development/backlog/GO_SMOKE.md` | `158ba7ad889fa7562db4136fc4fa475e607c0485f6d80f7bc59ab504bf80a4d4` |
 | `docs/development/packets/P02.md` | `c58b3cc3a1288c61cc90ac47cbad752409230551c1de69366166d26529195364` |
-| `docs/development/SMOKE.md` | `9ea9bdbc2038510f662961cb623fb8667633ac163d749999b5a78ab113812dbf` |
+| `docs/development/SMOKE.md` | `4301b855792b99aa52c968c4e52fc8e0641c8e549e82e490db55d7391c36e315` |
 | `cmd/smoke/main.go` | `16ff87a9b0691547b5d4c79663efeab797ebccee1d8beb5b48df01ea0e13b0cd` |
 | `cmd/smoke/main_test.go` | `2970b74307c907e153f3eeeffb4b309c0ecc99652b4ed9bfe5f1e869c34e4154` |
 | `internal/smoke/run.go` | `61336fe2c29da884a758cd4e872a31715e43b10b4bf282eeca3d01dff4ebb312` |
@@ -2785,7 +2851,7 @@ Reports retain offered versus actual load, unresolved outcomes, resource limits 
 
 #### Human-led AI development
 
-The **project owner** directs development and reviews changes. The sole developer is **AI-Your-Bro (Codex)**: it prepares focused changes, runs available checks, documents evidence and addresses review comments. The human approves architecture and milestone transitions.
+The **project owner** directs development and reviews changes. The **executor, AI-Your-Bro (Codex)**, prepares focused changes, runs available checks, documents evidence and addresses review comments. The project owner approves architecture and milestone transitions.
 
 ```mermaid
 flowchart LR
@@ -2956,7 +3022,7 @@ flowchart LR
 
 #### Человек и ИИ
 
-**Владелец проекта** задаёт направление разработки и проводит код-ревью. Единственный разработчик — **AI-Your-Bro (Codex)**: готовит изменения, выполняет проверки, фиксирует доказательства и исправляет замечания. Человек принимает архитектуру и ключевые этапы.
+**Владелец проекта** задаёт направление разработки, проводит код-ревью, принимает архитектуру и ключевые этапы. **Исполнитель — AI-Your-Bro (Codex)**: готовит изменения, выполняет проверки, фиксирует доказательства и исправляет замечания.
 
 ```mermaid
 flowchart LR
@@ -4120,13 +4186,15 @@ G0 прошёл ветку согласования: пользователь п
 
 Единое название роли человека во всех материалах — «владелец проекта»; при описании проверки кода используется «ревьюер». Эти обозначения сохраняют прежние полномочия и порядок согласования.
 
-Codex (AI-Your-Bro) — единственный разработчик: готовит проектные решения, реализует согласованный объём, выполняет необходимые проверки, собирает доказательства корректности и эффективности, документирует результат и исправляет замечания.
+Codex (AI-Your-Bro) — исполнитель: готовит проектные решения, реализует согласованный объём, выполняет необходимые проверки, собирает доказательства корректности и эффективности, документирует результат и исправляет замечания.
 
 Это распределение ролей задано пользователем. Архитектура и процесс G0 полностью приняты владельцем проекта 13 октября 2026 года; контрольные точки ниже входят в текущий согласованный порядок работы и могут быть изменены владельцем проекта.
 
 #### Пакет изменений
 
 Каждый пакет имеет одну понятную цель: например, атомарный Reserve, durable payment job или приём конкретного Kafka-события. Работа внутри согласованного этапа выполняется самостоятельно. Размер пакета выбирается так, чтобы владелец проекта мог проверить бизнес-поведение и существенный diff за одно ревью.
+
+Перед началом каждой задачи исполнитель кратко обозначает ожидаемый результат и границы, основные части реализации и проверок, возможные трудности и зависимости. Если есть основания, даёт ориентировочный диапазон времени с допущениями, отдельно отмечая ожидание сборок и CI; при недостатке данных объясняет неопределённость. При существенном изменении объёма или появлении нового препятствия обновляет оценку и объясняет причину. Правило согласовано владельцем в чате 16 октября 2026 года; для уже порученной работы дополнительное согласование старта не требуется.
 
 Для каждого пакета Codex представляет:
 
@@ -4147,7 +4215,7 @@ Codex (AI-Your-Bro) — единственный разработчик: гот�
 
 После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; владелец проекта рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению владельца проекта или действие самого владельца проекта.
 
-По поручению владельца новые PR оформляются от исполнителя AI-Your-Bro, а Includeoyasi проводит ревью и принимает решение. Защита main уже включена; авторизация исполнителя и права write без admin проверены через GitHub API. Новые PR от владельца не создаются; Git author metadata не заменяет проверку API actor. PR #4, созданный до перехода, уже слит (merge 8c392b8); его переоформление не требуется. CODEOWNERS действует в main после owner merge PR #5 и назначает владельца ревьюером всех файлов. Точный статус — в [безопасности репозитория](#appendix-repository-security).
+По поручению владельца новые PR оформляются от исполнителя AI-Your-Bro, а владелец проекта проводит ревью и принимает решение. Защита main уже включена; авторизация исполнителя и права write без admin проверены через GitHub API. Новые PR от владельца не создаются; Git author metadata не заменяет проверку API actor. PR #4, созданный до перехода, уже слит (merge 8c392b8); его переоформление не требуется. CODEOWNERS действует в main после owner merge PR #5 и назначает владельца ревьюером всех файлов. Точный статус — в [безопасности репозитория](#appendix-repository-security).
 
 Принятие в чате фиксируется в контексте, но не заменяет GitHub approval защищённой ветки. Обязательны актуальные Documentation и Go toolchain (AMD64/ARM64) checks, независимое owner review и остальные требования защиты main.
 
@@ -4332,13 +4400,14 @@ PROJECT_CONTEXT.md — самостоятельный пакет для друг
 
 ### Instructions for this project
 
-- The human is the project owner and reviewer. Codex, authenticated as AI-Your-Bro, is the sole project developer. Other AI agents are positioned as potential users, subscribers or testers; do not assign them implementation work.
+- The human is the project owner and reviewer. Codex, authenticated as AI-Your-Bro, is the executor. Other AI agents are positioned as potential users, subscribers or testers; do not assign them implementation work.
 - Read PROJECT_CONTEXT.md for specifications, decisions and dated evidence, docs/development/WORKFLOW.md for review rules, and docs/ROADMAP.md for scope. Live task, blocker and review status belongs only in GitHub Issues/PRs/milestones; do not maintain duplicate progress boards in Markdown or JSON.
 - Follow the latest explicit owner instruction. A planning discussion alone does not authorize publication or implementation. On 2026-10-16 the owner explicitly selected issue #9 and F02/F04/F07/F08 from #20 for implementation and a review PR. The other audit findings retain their agreed checkpoints; P02 infrastructure implementation is not included in this instruction.
-- Verify the authenticated actor before every GitHub mutation/publication: it must be AI-Your-Bro. Git author metadata is insufficient. Use Includeoyasi credentials only for explicitly authorized repository administration, never to publish or approve executor changes.
+- Verify the authenticated actor before every GitHub mutation/publication: it must be AI-Your-Bro. Git author metadata is insufficient. Use the project owner's credentials only for explicitly authorized repository administration, never to publish or approve executor changes.
 - main requires independent owner approval, approval after the last push, dismissal of stale reviews, current successful Documentation and Go toolchain AMD64/ARM64 checks, resolved conversations and administrator enforcement. Do not weaken protection, force-push main or approve/merge your own changes. CODEOWNERS assigns Includeoyasi. See docs/development/REPOSITORY_SECURITY.md; the owner declined 2FA and must not be asked again without new cause.
 - G0 was fully approved on 2026-10-13, Europe/Moscow: “G0 полностью принят.” Approved service boundaries and invariants are in docs/architecture/DESIGN.md and PROCESSES.md. Do not ask for G0 approval again. G0–G4 are acceptance gates; P01–P05 are implementation packets. P01 is between G0 and G1; acceptance of a PR does not automatically accept a gate.
 - Work autonomously within the assigned scope. Prepare a concrete reviewable result, applicable checks and limitations before asking for gate approval. Significant changes to service boundaries, invariants, incompatible contracts or infrastructure scope require a concrete proposal and an owner decision.
+- Before starting each implementation task, give the owner a short scope estimate: intended result and boundaries, main implementation/checks, likely difficulties and dependencies, and a qualified elapsed-time range when supportable, distinguishing build/CI waits. State uncertainty instead of inventing precision; update the estimate when a material surprise changes it. This owner instruction was confirmed in chat on 2026-10-16 and does not add an approval step for already authorized work.
 - Keep exactly three business services: Orders, Inventory and Payments. Workflow orchestration lives inside Orders; do not add a business service for it. Lab tools and adapters are separate from the tested business.
 - Follow docs/development/CODE_REVIEW.md. Address lifecycle, errors/context, concurrency, data ownership and meaningful tests. Never report a test, measurement or approval that did not occur. Compile-only results do not establish runtime compatibility.
 - Addresses belong to deployment configuration. FL_GRPC_ADDR is required, with no hidden listen address or port fallback. Keep listener, peer DNS and host publication separate; host publication must bind loopback explicitly. Test loopback fixtures and observed addresses are not production defaults.
@@ -4401,7 +4470,7 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/8e49367c868af33023a6c1f7a8f94db447a828eb/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The project developer, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
+Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/8e49367c868af33023a6c1f7a8f94db447a828eb/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
@@ -4472,7 +4541,7 @@ SOFTWARE.
 
 ### Правила код-ревью Faultline Lab
 
-Приняты через слияние [PR #1](https://github.com/Includeoyasi/faultline-lab/pull/1) аккаунтом владельца проекта `Includeoyasi` 13 октября 2026 года, Europe/Moscow. Принятый HEAD: `214eb34`; merge commit: `c1e55fd`. Документ задаёт рабочий стандарт для Go-кода и распределённых процессов проекта. Принятие правил не является приёмкой G1.
+Приняты через слияние [PR #1](https://github.com/Includeoyasi/faultline-lab/pull/1) владельцем проекта 13 октября 2026 года, Europe/Moscow. Принятый HEAD: `214eb34`; merge commit: `c1e55fd`. Документ задаёт рабочий стандарт для Go-кода и распределённых процессов проекта. Принятие правил не является приёмкой G1.
 
 **Цель ревью:** понятное, корректное и сопровождаемое изменение с проверяемыми доказательствами. Сначала проверяем бизнес-поведение и отказные сценарии, затем устройство кода. Форматирование выполняют инструменты.
 
@@ -4485,7 +4554,7 @@ SOFTWARE.
 5. Слияние требует явного решения человека, успешных применимых проверок и актуального контекста. Не применять auto-merge до такого решения. Если человек поручает ИИ выполнить merge, это отдельное явное поручение.
 6. G0 уже принят. Обычный PR не заменяет приёмку G1–G4; переходы через эти точки регулирует [workflow](#appendix-development-process). Существенная смена принятой архитектуры требует решения владельца проекта и ADR.
 
-13 октября 2026 года по прямому поручению владельца включена и повторно проверена защита main: независимое approval, сброс устаревших ревью, одобрение после последнего push, актуальный успешный CI, закрытые обсуждения и применение к администратору; force push и удаление запрещены. Новые PR создаются от исполнителя AI-Your-Bro с подтверждённой авторизацией и правами write без admin; GitHub approval даёт владелец проекта Includeoyasi. Подробности и подготовленный CODEOWNERS — в [безопасности репозитория](#appendix-repository-security). Сообщение в чате сохраняет решение человека, но не заменяет обязательное GitHub approval. ИИ не выдаёт approval от владельца или от второго аккаунта своим изменениям.
+13 октября 2026 года по прямому поручению владельца включена и повторно проверена защита main: независимое approval, сброс устаревших ревью, одобрение после последнего push, актуальный успешный CI, закрытые обсуждения и применение к администратору; force push и удаление запрещены. Новые PR создаются от исполнителя AI-Your-Bro с подтверждённой авторизацией и правами write без admin; GitHub approval даёт владелец проекта. Подробности и подготовленный CODEOWNERS — в [безопасности репозитория](#appendix-repository-security). Сообщение в чате сохраняет решение человека, но не заменяет обязательное GitHub approval. ИИ не выдаёт approval от владельца или от второго аккаунта своим изменениям.
 
 #### 2. Как оформлять замечания
 
@@ -4926,7 +4995,7 @@ Docker рекомендует разделять ответственности 
 
 ### P01 — Go-каркас между G0 и G1
 
-Историческая приёмка: 16 октября 2026 года Includeoyasi слил [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8), принятый HEAD `56f3672`, merge `3ca290d`. Это свидетельство P01, а не текущая доска задач.
+Историческая приёмка: 16 октября 2026 года владелец проекта слил [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8), принятый HEAD `56f3672`, merge `3ca290d`. Это свидетельство P01, а не текущая доска задач.
 
 Основа: [первый пакет реализации](#appendix-design-review), [roadmap](#appendix-roadmap), [порядок ревью](#appendix-development-process), [стандарт Go](#appendix-code-review) и согласованный [Docker-подход](#appendix-environment).
 
@@ -5054,8 +5123,6 @@ P01 не достигает всей контрольной точки G1: ба�
 | ADR | Существенное решение, варианты, последствия и основание принятия |
 | [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/8e49367c868af33023a6c1f7a8f94db447a828eb/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
 
-Единственный разработчик — AI-Your-Bro (Codex), ревьюер — Includeoyasi. Другие ИИ-агенты выступают потенциальными пользователями, подписчиками или тестировщиками.
-
 #### Стадии в Issue
 
 | Стадия | Основание перехода |
@@ -5117,7 +5184,7 @@ P01 не достигает всей контрольной точки G1: ба�
 
 #### Разделение ролей и авторизации
 
-- Владелец: Includeoyasi, управление репозиторием, человеческое ревью и решение о merge.
+- Аккаунт владельца проекта: `Includeoyasi`; управление репозиторием, человеческое ревью и решение о merge.
 - Исполнитель: [AI-Your-Bro](https://github.com/AI-Your-Bro), отдельный machine account под контролем владельца, с подтверждённой авторизацией и правами write без admin. Он публикует ветки и PR; ИИ не использует его для одобрения собственных изменений.
 - Административная авторизация владельца использована только для прямо порученной настройки защиты. Новые PR от аккаунта владельца после этого поручения не создаются.
 
@@ -8167,7 +8234,7 @@ wsl --shutdown
 | Владелец поставил вопрос о Node.js в Go-проекте и поручил вынести перенос в backlog | Предложен Go CLI с сохранением smoke-проверок и отчёта; проверка документации остаётся отдельным Node.js-инструментом | Выбор Go согласован владельцем 16 октября; выполнение — в #9 | [Задача #9](https://github.com/Includeoyasi/faultline-lab/issues/9), [ADR 0003](#appendix-adr-0003), [критерии](#appendix-go-smoke-backlog) |
 | Владелец потребовал освобождать ресурсы личного ПК после работы | Исполнитель ограничил WSL до 2 CPU / memory=2GB / swap=1GB; после smoke выключил Docker Desktop/WSL VM и автозапуск, сохранив программы и кеши | Принято владельцем в PR #8 | [Windows evidence](#windows-smoke-proof), [cleanup.json](#windows-smoke-cleanup), [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8) |
 
-Замечания в этих примерах получены в чате с владельцем. Их пересказ и ссылки подготовлены исполнителем AI-Your-Bro. Авторство GitHub-комментариев видно в самих PR; пересказ не выдаётся за комментарий, написанный владельцем на GitHub. Принятие PR #7 подтверждено merge аккаунтом Includeoyasi; PR #8 также принят через merge Includeoyasi 16 октября, Europe/Moscow.
+Замечания в этих примерах получены в чате с владельцем. Их пересказ и ссылки подготовлены исполнителем AI-Your-Bro. Авторство GitHub-комментариев видно в самих PR; пересказ не выдаётся за комментарий, написанный владельцем на GitHub. Принятие PR #7 подтверждено слиянием владельцем проекта; PR #8 также принят через слияние владельцем проекта 16 октября, Europe/Moscow.
 
 #### Как сохраняем следующие обсуждения
 
@@ -8212,7 +8279,7 @@ flowchart LR
 - Статус решения: **accepted**.
 - Решение принял владелец проекта; запись подготовил исполнитель AI-Your-Bro.
 - Основание: после предложения использовать PR для обсуждений, ADR для существенных решений и обзорную страницу владелец ответил в чате: «Хорошо».
-- Публикация принята: Includeoyasi слил PR #8 16 октября 2026 года (Europe/Moscow), merge `3ca290d`. Согласие с порядком работы и фактическая приёмка PR зафиксированы отдельно.
+- Публикация принята: владелец проекта слил PR #8 16 октября 2026 года (Europe/Moscow), merge `3ca290d`. Согласие с порядком работы и фактическая приёмка PR зафиксированы отдельно.
 
 #### Контекст
 
@@ -8376,11 +8443,11 @@ flowchart LR
 
 ### Контейнерный smoke на Go
 
-[Issue #9](https://github.com/Includeoyasi/faultline-lab/issues/9) отслеживает перенос; F01/F04 из [аудита #20](https://github.com/Includeoyasi/faultline-lab/issues/20) задают отмену и согласованность бюджетов. Здесь описан интерфейс инструмента, а результаты конкретных запусков сохраняются отдельно.
+Smoke собирает и запускает три сервиса, проверяет health, изоляцию и остановку, сохраняет отчёт и удаляет ресурсы тестового запуска.
 
 #### Сборка без Go SDK на хосте
 
-Нужны Git, Docker с Linux backend и Compose. Node.js для smoke не требуется. Сборка выполняется закреплённым [toolchain](#appendix-toolchain), готовый бинарник запускается на хосте и обращается к Docker CLI без shell и Docker socket в контейнере.
+Нужны Git, Docker с Linux backend и Compose. Соберите бинарник для своей ОС через [контейнерный toolchain](#appendix-toolchain) и запустите его на хосте.
 
 Windows AMD64, из корня checkout:
 

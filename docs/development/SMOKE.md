@@ -1,10 +1,10 @@
 # Контейнерный smoke на Go
 
-[Issue #9](https://github.com/Includeoyasi/faultline-lab/issues/9) отслеживает перенос; F01/F04 из [аудита #20](https://github.com/Includeoyasi/faultline-lab/issues/20) задают отмену и согласованность бюджетов. Здесь описан интерфейс инструмента, а результаты конкретных запусков сохраняются отдельно.
+Smoke собирает и запускает три сервиса, проверяет health, изоляцию и остановку, сохраняет отчёт и удаляет ресурсы тестового запуска.
 
 ## Сборка без Go SDK на хосте
 
-Нужны Git, Docker с Linux backend и Compose. Node.js для smoke не требуется. Сборка выполняется закреплённым [toolchain](TOOLCHAIN.md), готовый бинарник запускается на хосте и обращается к Docker CLI без shell и Docker socket в контейнере.
+Нужны Git, Docker с Linux backend и Compose. Соберите бинарник для своей ОС через [контейнерный toolchain](TOOLCHAIN.md) и запустите его на хосте.
 
 Windows AMD64, из корня checkout:
 

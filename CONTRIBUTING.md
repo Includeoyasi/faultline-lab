@@ -4,7 +4,7 @@ This repository documents a project built with AI implementation and human techn
 
 ## Before changing anything
 
-Read the [decisions and evidence snapshot](PROJECT_CONTEXT.md), [approved design](docs/architecture/DESIGN.md) and [development workflow](docs/development/WORKFLOW.md). The project developer, AI-Your-Bro, follows [AGENTS.md](AGENTS.md).
+Read the [decisions and evidence snapshot](PROJECT_CONTEXT.md), [approved design](docs/architecture/DESIGN.md) and [development workflow](docs/development/WORKFLOW.md). The executor, AI-Your-Bro, follows [AGENTS.md](AGENTS.md).
 
 The [code review standard](docs/development/CODE_REVIEW.md) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 

@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 44,
+  "context_revision": 47,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-16",
   "user_timezone": "Europe/Moscow",
@@ -23,14 +23,14 @@
   "roles": {
     "human": "Владелец проекта; ревьюер при проверке кода",
     "ai": "Исполнитель разработки, проверок, экспериментов и документации",
-    "terminology_confirmed_on": "2026-10-13",
+    "terminology_confirmed_on": "2026-10-16",
     "authority_changed": false,
     "github_owner": "Includeoyasi",
     "github_executor": "AI-Your-Bro",
     "github_identity_transition_confirmed_on": "2026-10-13",
-    "sole_developer": "AI-Your-Bro (Codex)",
-    "other_ai_agents": "Potential users, subscribers or testers; not additional project developers",
-    "clarified_on": "2026-10-16"
+    "other_ai_agents": "Potential users, subscribers or testers; implementation is assigned to the executor",
+    "clarified_on": "2026-10-16",
+    "development_executor": "AI-Your-Bro (Codex)"
   },
   "tracker_navigation": {
     "authority": "GitHub is the only source of live issue, blocker and review status; no local progress cache",
@@ -223,7 +223,7 @@
       "Verification evidence",
       "Status and acceptance source"
     ],
-    "attribution_rule": "AI-Your-Bro publishes executor summaries; owner requirements from chat are identified as such. Do not fabricate GitHub comments or approvals by Includeoyasi.",
+    "attribution_rule": "AI-Your-Bro publishes executor summaries; owner requirements from chat are identified as such. Do not fabricate GitHub comments or approvals by the project owner.",
     "routine_fixes": "PR only; ADR reserved for significant decisions; approved scope remains autonomous",
     "cases": [
       {
@@ -1473,7 +1473,7 @@
         "report_priority": "P1",
         "priority_is_not_security_severity": true,
         "assessment": "P01 DONE отражён в нашей ветке документации; main по свежему API всё ещё 3ca290d с прежним IN_REVIEW/4 из8.",
-        "owner_decision": "GitHub — единственный источник актуальных статусов; контекст хранит решения и датированную историю. Единственный разработчик — AI-Your-Bro; остальные агенты — потенциальные пользователи, подписчики или тестировщики.",
+        "owner_decision": "GitHub — единственный источник актуальных статусов; контекст хранит решения и датированную историю. Исполнитель — AI-Your-Bro; остальные агенты — потенциальные пользователи, подписчики или тестировщики.",
         "tracking_issue_url": "https://github.com/Includeoyasi/faultline-lab/issues/20",
         "initial_proposal": "Довести уже подготовленное обновление статуса до main в согласованной публикации; не считать приёмкой G1.",
         "assessment_at_review": "ADDRESSED_IN_DOCS_BRANCH_MAIN_STILL_STALE"
@@ -1607,7 +1607,7 @@
       "author_of_summary": "AI-Your-Bro; not an owner GitHub approval",
       "selected_directions": {
         "F01": "Перенести smoke на Go по #9; исправление отмены, очистки и отчёта входит в перенос. Возможно объединение с небольшими исправлениями; точный состав PR ещё не выбран.",
-        "F02": "GitHub — единственный источник актуальных статусов; контекст хранит решения и датированную историю. Единственный разработчик — AI-Your-Bro; остальные агенты — потенциальные пользователи, подписчики или тестировщики.",
+        "F02": "GitHub — единственный источник актуальных статусов; контекст хранит решения и датированную историю. Исполнитель — AI-Your-Bro; остальные агенты — потенциальные пользователи, подписчики или тестировщики.",
         "F03": "Отложить выбор платформенных метаданных; открытый пункт #20, вернуться на ближайшем планировании P02 до performance-сравнений.",
         "F04": "Сохранить независимые app/container timeout; проверять совместимость и запас в профиле запуска.",
         "F05": "До постоянных Watch-клиентов завершать health-подписки отдельно, сохраняя graceful drain бизнес-RPC.",
@@ -2233,7 +2233,7 @@
     {
       "revision": 17,
       "date": "2026-10-13",
-      "summary": "Первый PR нового порядка #5 создан от AI-Your-Bro к владельцу Includeoyasi. Сохранены реальная публикация, автор/коммиттер, requested review и исходный успешный CI. Main защищён; CODEOWNERS ещё не слит.",
+      "summary": "Первый PR нового порядка #5 создан от AI-Your-Bro к владельцу проекта. Сохранены реальная публикация, автор/коммиттер, requested review и исходный успешный CI. Main защищён; CODEOWNERS ещё не слит.",
       "trigger": "Завершение поручения по подключению исполнителя и защите main; handoff для человеческого ревью"
     },
     {
@@ -2397,6 +2397,24 @@
       "date": "2026-10-16",
       "summary": "Реализованы Go smoke/F01 и F02/F04/F07/F08. Заключительный Windows smoke на чистом исходном коммите PASS; старый/новый runner функционально эквивалентны, отмена Windows проверена отдельно, cross-build пяти целей и Go quality PASS. Сохранены ограничения Mac/F03 и адресные доказательства выключения личной среды. Внешние материалы закреплены за существующим source SHA; live review/status только в GitHub.",
       "trigger": "Выполнение выбранного владельцем пакета и проверка результата"
+    },
+    {
+      "revision": 45,
+      "date": "2026-10-16",
+      "summary": "По прямому поручению владельца закреплено предварительное краткое описание объёма, проверок и возможных трудностей каждой следующей задачи, с обоснованным ориентиром времени и уточнением при существенных изменениях. Правило внесено в AGENTS и WORKFLOW; новый этап согласования не вводится.",
+      "trigger": "Обсуждение длительности задачи #9 и согласованное правило предварительной оценки"
+    },
+    {
+      "revision": 46,
+      "date": "2026-10-16",
+      "summary": "По поручению владельца в Codex создан ежедневный анализ процесса разработки в этом чате: основная попытка07:00 МСК, резерв19:00 при отсутствии готового отчёта, не чаще одного результата за24часа. Анализ опирается на факты, оценивает самостоятельность и достаточность живого общения; запуск стенда и внедрение рекомендаций не разрешены. Сохранено описание настройки, актуальные запуски управляются в Scheduled.",
+      "trigger": "Прямое поручение владельца о ежедневной ретроспективе и повторной попытке через12часов"
+    },
+    {
+      "revision": 47,
+      "date": "2026-10-16",
+      "summary": "По замечаниям владельца в PR21 унифицированы названия ролей во всех исходных документах и контексте. Реальные GitHub identifiers сохранены для авторизации и доказательств. Из инструкции smoke удалены отсылки к прежнему runtime; оставлены назначение, prerequisites и команды. Включены ранее согласованные правила предварительной оценки задач и описание ежедневного анализа процесса.",
+      "trigger": "PR21 review comments4295745781/4295759572 and browser note on redundant smoke instructions"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -2418,5 +2436,53 @@
     "evidence": "docs/development/evidence/go-smoke/VALIDATION.md",
     "personal_pc_cleanup": "Docker Desktop and Docker WSL VM stopped; autostart disabled; tools/images/caches preserved",
     "live_review_and_host_CI": "GitHub PR and check runs, not cached in this snapshot"
+  },
+  "task_start_communication": {
+    "confirmed_on": "2026-10-16",
+    "source": "Direct owner instruction in chat: в следующие задачи заранее обозначь ожидаемый объем работы и возможные трудности",
+    "before_each_task": [
+      "Expected result and scope boundaries",
+      "Main implementation and validation work",
+      "Likely difficulties, dependencies and uncertainty",
+      "Indicative elapsed-time range when supportable; distinguish build/CI waits"
+    ],
+    "update_on_material_change": true,
+    "additional_start_approval_required": false
+  },
+  "process_review_automation": {
+    "configured_on": "2026-10-16",
+    "source": "Direct owner request in chat for a daily development-process analysis with an evening retry",
+    "automation_id": "faultline-lab",
+    "management": "Codex Scheduled; this records configuration intent, not live run status",
+    "purpose": [
+      "What works well and where development loses time or quality",
+      "Executor autonomy and decisions needing more discussion",
+      "Whether live conversation with clear responsibilities is sufficient without elaborate prompts"
+    ],
+    "schedule": {
+      "timezone": "Europe/Moscow",
+      "primary": "07:00 daily",
+      "fallback": "19:00 if no eligible successful report",
+      "first_primary": "2026-10-17 07:00",
+      "maximum_report_frequency": "One successful report per 24-hour scheduled-slot interval; skip the next morning after evening success"
+    },
+    "delivery": "This project chat, Russian, normally 200–350 words with evidence and one or two improvements",
+    "sources": "Available project conversation, Git, GitHub PR/Issues/reviews, CI and saved evidence; state gaps explicitly",
+    "allowed_writes": "Only its own reports and period journal in ignored .local/process-analysis; no project/source/tracker changes",
+    "execution_limits": "Analysis only; no Docker/WSL/tests/builds, development or external publication; no automatic implementation of proposed process improvements",
+    "runtime_dependency": "Local scheduled runs require the host computer and Codex app to be running"
+  },
+  "role_wording_review": {
+    "date": "2026-10-16",
+    "source": "Owner review comments in PR21 and follow-up instruction in chat",
+    "owner_term": "владелец проекта / project owner",
+    "executor_term": "исполнитель / executor",
+    "authority_changed": false,
+    "review_comments": [
+      "https://github.com/Includeoyasi/faultline-lab/pull/21#discussion_r4295745781",
+      "https://github.com/Includeoyasi/faultline-lab/pull/21#discussion_r4295759572"
+    ],
+    "identity_exception": "Keep real GitHub logins in URLs, CODEOWNERS, account metadata, authentication checks and API evidence",
+    "usage_docs": "Describe prerequisites and actions directly; migration rationale belongs in ADR and task materials. Keep role definitions in the workflow; omit repeated role paragraphs from the task-tracking guide."
   }
 }
