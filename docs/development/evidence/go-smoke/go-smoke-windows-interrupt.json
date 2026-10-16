@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-16",
+  "platform": "windows/amd64",
+  "signal": "CTRL_BREAK_EVENT",
+  "interrupted_phase": "check",
+  "report_run_id": "0d41daa4-2151-8b9e-8268-0a597b5164c0",
+  "result": "FAIL",
+  "cancelled": true,
+  "cleanup": "PASS",
+  "owned_containers_remaining": 0,
+  "owned_networks_remaining": 0,
+  "independent_control_preserved": true,
+  "source_revision": "511b9a85c7006cc7042263e0b87e7eb7fb8b116c",
+  "source_dirty": true
+}

@@ -19,12 +19,15 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
+          fetch-depth: 0 # Verify immutable source commits referenced by the context.
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: '22'
           package-manager-cache: false
       - name: Check documentation structure
-        run: node tools/check_docs.mjs
+        run: |
+          node --test tools/doc_safety.test.mjs
+          node tools/check_docs.mjs
       - name: Check portable context freshness
         shell: pwsh
         run: ./tools/update_context.ps1 -CheckOnly

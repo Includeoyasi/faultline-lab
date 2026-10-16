@@ -1,0 +1,61 @@
+# Контейнерный smoke на Go
+
+[Issue #9](https://github.com/Includeoyasi/faultline-lab/issues/9) отслеживает перенос; F01/F04 из [аудита #20](https://github.com/Includeoyasi/faultline-lab/issues/20) задают отмену и согласованность бюджетов. Здесь описан интерфейс инструмента, а результаты конкретных запусков сохраняются отдельно.
+
+## Сборка без Go SDK на хосте
+
+Нужны Git, Docker с Linux backend и Compose. Node.js для smoke не требуется. Сборка выполняется закреплённым [toolchain](TOOLCHAIN.md), готовый бинарник запускается на хосте и обращается к Docker CLI без shell и Docker socket в контейнере.
+
+Windows AMD64, из корня checkout:
+
+```powershell
+docker compose build toolchain
+docker compose run --rm -e GOOS=windows -e GOARCH=amd64 toolchain smoke-build
+.\bin\smoke-windows-amd64.exe
+```
+
+Для macOS укажите `GOOS=darwin` и архитектуру хоста `arm64` либо `amd64`; для Linux — `GOOS=linux` и соответствующую архитектуру. Имена файлов: `bin/smoke-darwin-arm64`, `bin/smoke-darwin-amd64`, `bin/smoke-linux-arm64`, `bin/smoke-linux-amd64`. При необходимости на Unix выполните `chmod +x` для собранного бинарника. Команда `docker compose run --rm toolchain smoke-cross-check` собирает все пять вариантов; сборка не доказывает runtime-совместимость машины.
+
+Если подходящий Go уже установлен, допустим `go run ./cmd/smoke`. В CI используется готовый бинарник, собранный контейнерным toolchain.
+
+## Профили и таймауты
+
+Обычный запуск сервисов использует выбранный `FL_RUNTIME_ENV_FILE` и независимый `FL_STOP_GRACE_PERIOD` Compose. Перед `docker compose up` проверьте эффективный профиль:
+
+```powershell
+.\bin\smoke-windows-amd64.exe -check-config
+docker compose up -d --wait orders inventory payments
+```
+
+Проверка не запускает сервисы и не требует работающего backend. Она читает результат `docker compose config --format json` только в памяти: полный конфиг может содержать секреты и не выводится. У каждого сервиса `stop_grace_period` должен покрывать `FL_SHUTDOWN_TIMEOUT` и минимум две дополнительные секунды на завершение вне RPC-drain. Это минимальный запас каркаса, а не универсальная гарантия для будущих зависимостей. Для них бюджет пересматривается по наблюдениям. Значения 10s/15s допустимы; 20s/15s отклоняются.
+
+Для намеренно неправильного профиля эксперимента есть `-check-config -allow-unsafe-shutdown`: несогласованные бюджеты дают явные предупреждения. Некорректные duration и отсутствующие сервисы всё равно отклоняются. Обычный `docker compose up` сам Go-проверку не вызывает: оператор должен выполнить preflight; автоматический smoke делает это обязательно.
+
+Сам smoke всегда выбирает `configs/env/container.env.example` и grace=15s, независимо от личных env-файлов. `-root` задаёт checkout, остальные флаги смотрите через `-help`.
+
+## Проверяемый сценарий
+
+1. Проверить Linux Docker/Compose и Git; сохранить версии и исходный commit/dirty.
+2. Проверить бюджеты явного smoke-профиля, собрать и поднять три сервиса.
+3. Проверить health, UID, read-only root, capabilities, no-new-privileges, внутреннюю сеть и отсутствие host ports/mounts.
+4. Остановить Orders, проверить exit/logs; Inventory и Payments должны продолжать отвечать.
+5. Остановить остальные, проверить JSON start → NOT_SERVING → graceful stop и exit 0.
+6. Собрать диагностику, удалить только собственный Compose project и проверить отсутствие его контейнеров и сетей.
+
+## Отмена и восстановление
+
+Ctrl+C, а на Unix также SIGTERM, отменяет запуск. Новые этапы не начинаются. На Unix Docker CLI и плагины принадлежат отдельной группе процессов; на Windows — ненаследуемому Job Object, назначенному при создании процесса. Отмена завершает дерево команды до очистки. После выхода родителя Unix executor также завершает оставшихся участников своей группы, включая потомка с перенаправленным stdio. Windows использует уже закреплённый `golang.org/x/sys/windows` для Job API; дополнительный модуль не добавляется.
+
+У обычной команды бюджет 60s, у build — 10 минут. Очистка получает новый независимый контекст на 60s; завершение OS-процессов и чтение их потоков дополнительно ограничены. Отменённый основной контекст не блокирует `down`. Повторная отмена не прерывает этот ограниченный cleanup. Чужие проекты, образы и полезные кеши сохраняются.
+
+`artifacts/smoke/<run-id>/report.json` появляется до первого запуска Docker, затем обновляется по этапам и командам. После SIGKILL, завершения ОС или недоступности диска обработчик может не исполниться. Незаконченный отчёт и `recovery_command` позволяют убрать конкретный project, например `docker compose -f compose.yaml -p <project-from-report> down --remove-orphans`. Никогда не заменяйте адресную очистку глобальным prune.
+
+## Формат результата
+
+Коды сохраняются: **0=PASS, 1=FAIL, 2=NOT_RUN**. Недоступные prerequisites дают NOT_RUN; прерывание — FAIL с `cancelled=true`. Ошибка cleanup делает весь прогон FAIL.
+
+JSON schema version 2 сохраняет `run_id`, `project`, `result`, `services`, `commands`, `cleanup`, source revision/dirty и реальные image IDs. Вместо `node` записывается `go_version`; добавлены `phase`, `cancelled` и `recovery_command`. Поле архитектуры из сервиса удалено: `docker_architecture` обозначает только backend; выбор полного контракта платформ остаётся в F03. Итоговые JSONL и ошибки команд находятся рядом. Неизвестный OOM не записывается как false: наблюдённые exit/OOM/ID сохраняются также при неуспешной проверке.
+
+Отчёт не содержит полного inspect Env или разрешённого Compose-конфига. Пути checkout и домашнего каталога редактируются в диагностике. Smoke использует несекретный профиль; сторонние произвольные логи перед публикацией нужно проверять отдельно. Это проверка каркаса, а не измерение бизнес-корректности или capacity.
+
+После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.

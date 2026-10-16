@@ -1,6 +1,7 @@
 import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { containsMachinePath } from './doc_safety.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const excluded = new Set(['.git', 'node_modules', '.local', 'artifacts', 'tmp']);
@@ -28,7 +29,7 @@ for (const absolute of files) {
   try {
     const text = decoder.decode(await readFile(absolute));
     if (text.includes('\r')) errors.push(`${relative}: use LF line endings for reproducible fingerprints`);
-    if (/\b[A-Za-z]:[\\/]Users[\\/]/i.test(text)) errors.push(`${relative}: contains a machine-specific user path`);
+    if (containsMachinePath(text)) errors.push(`${relative}: contains a machine-specific user path`);
     if (/-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/.test(text)) errors.push(`${relative}: contains a private key`);
     if (relative.endsWith('.md')) markdown.set(relative, text);
     if (relative.endsWith('.json')) JSON.parse(text);

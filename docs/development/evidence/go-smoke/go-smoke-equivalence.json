@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-16",
+  "platform": "windows/amd64",
+  "legacy_run_id": "8e8a1be6-fb98-45c2-906f-ac267292eb74",
+  "go_run_id": "2c542d76-0c2a-d94f-8058-90277740c358",
+  "legacy_result": "PASS",
+  "go_result": "PASS",
+  "legacy_cleanup": "PASS",
+  "go_cleanup": "PASS",
+  "health_stop_exit_oom_mode_equal": true,
+  "same_image_ids": false,
+  "source_revision": "511b9a85c7006cc7042263e0b87e7eb7fb8b116c",
+  "source_dirty": true,
+  "scope": "Functional equivalence, not performance comparison"
+}

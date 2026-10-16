@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-16",
+  "app_timeout": "20s",
+  "invalid_container_grace": "15s",
+  "invalid_exit": 1,
+  "explicit_unsafe_exit": 0,
+  "valid_container_grace": "25s",
+  "valid_exit": 0,
+  "services_started": false
+}

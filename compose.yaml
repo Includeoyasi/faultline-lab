@@ -5,7 +5,7 @@ x-runtime: &runtime
   cap_drop: [ALL]
   security_opt:
     - no-new-privileges:true
-  stop_grace_period: 15s
+  stop_grace_period: ${FL_STOP_GRACE_PERIOD:-15s}
   networks: [runtime]
   healthcheck:
     test: [CMD, /app/service, healthcheck]

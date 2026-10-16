@@ -20,13 +20,13 @@
   <a href="PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
-## Состояние проекта
+## Навигация по проекту
 
-**Архитектура и контейнерный каркас приняты.** P01 завершён после merge PR #8 владельцем **16 октября 2026 года**, Europe/Moscow. Три сервиса имеют конфигурацию, health, JSON-логи, bounded shutdown и [runtime-контейнеры](docs/development/CONTAINER_RUNTIME.md). [Устройство и запуск](docs/development/SERVICE_RUNTIME.md) · [Команды проверок](docs/development/TOOLCHAIN.md). G1, бизнес-операции и результаты экспериментов ещё впереди.
+Репозиторий содержит три Go-процесса с явной конфигурацией, gRPC health, JSON-логами и ограниченным завершением. Бизнес-процесс, инфраструктура и эксперименты вводятся по [roadmap](docs/ROADMAP.md); схема ниже показывает принятые границы.
 
-Ближайший пакет **P02**: PostgreSQL/Kafka/Redis, базы и роли, миграции и seed. [Декомпозиция](docs/development/packets/P02.md) согласована и опубликована: две задачи, каждая под один будущий PR; разработка ещё не начата. [План среды](docs/development/ENVIRONMENT.md) объясняет состав контейнеров; [граница лаборатории](docs/architecture/LAB_BOUNDARY.md) сохраняет направление подключения других бизнесов. Производительность стенда пока не измерялась.
+[Команды сборки](docs/development/TOOLCHAIN.md) · [Запуск контейнеров](docs/development/CONTAINER_RUNTIME.md) · [Go smoke](docs/development/SMOKE.md).
 
-Все 8/8 задач P01 приняты в PR #6/#7/[#8](https://github.com/Includeoyasi/faultline-lab/pull/8); [Issue #3](https://github.com/Includeoyasi/faultline-lab/issues/3) закрыт. [Windows container smoke](docs/development/evidence/p01/WINDOWS_SMOKE.md) и Linux AMD64/ARM64 CI PASS; личный Mac пока не проверен. P02 ведётся в [milestone P02](https://github.com/Includeoyasi/faultline-lab/milestone/1): две задачи [#12](https://github.com/Includeoyasi/faultline-lab/issues/12) и [#16](https://github.com/Includeoyasi/faultline-lab/issues/16), стадия TODO / NOT_STARTED. P01–P05 предшествуют отдельной приёмке G1.
+**Актуальные задачи и ревью:** [Issues](https://github.com/Includeoyasi/faultline-lab/issues), [PR](https://github.com/Includeoyasi/faultline-lab/pulls) и [milestones](https://github.com/Includeoyasi/faultline-lab/milestones). Здесь хранятся спецификации и датированные доказательства, включая [Windows baseline](docs/development/evidence/p01/WINDOWS_SMOKE.md). Выводы об эффективности требуют отдельных измерений.
 
 ## Идея
 
@@ -88,7 +88,7 @@ flowchart LR
 
 ## Человек и ИИ
 
-**Владелец проекта** задаёт направление разработки и проводит код-ревью. ИИ — **исполнитель**: готовит изменения, выполняет проверки, фиксирует доказательства и исправляет замечания. Человек принимает архитектуру и ключевые этапы.
+**Владелец проекта** задаёт направление разработки и проводит код-ревью. Единственный разработчик — **AI-Your-Bro (Codex)**: готовит изменения, выполняет проверки, фиксирует доказательства и исправляет замечания. Человек принимает архитектуру и ключевые этапы.
 
 ```mermaid
 flowchart LR
@@ -99,11 +99,11 @@ flowchart LR
     C --> N["Следующая задача / этап"]
 ```
 
-**G0 принят.** G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Следующие контрольные точки ещё не достигнуты.
+G0 — архитектура; G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Порядок и критерии приёмки описаны в workflow; факты принятия сохраняются с датой и источником.
 
-[Правила код-ревью](docs/development/CODE_REVIEW.md) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](docs/development/WORKFLOW.md) описывает процесс и приёмку этапов. [AGENTS.md](AGENTS.md) задаёт правила исполнителю. [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) включает полные документы, статусы и согласования: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](docs/development/CODE_REVIEW.md) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](docs/development/WORKFLOW.md) описывает процесс и приёмку этапов. [AGENTS.md](AGENTS.md) задаёт правила исполнителю. [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
 
-[Инженерные решения и ревью](docs/development/ENGINEERING_DECISIONS.md) связывают замечания владельца с обоснованием, изменениями и проверками. Перенос контейнерного smoke на Go заведён отдельной [backlog-задачей #9](https://github.com/Includeoyasi/faultline-lab/issues/9); разработка ещё не начата.
+[Инженерные решения и ревью](docs/development/ENGINEERING_DECISIONS.md) связывают замечания владельца с обоснованием, изменениями и проверками. Выполнение переноса контейнерного smoke на Go и его ревью ведутся в [задаче #9](https://github.com/Includeoyasi/faultline-lab/issues/9).
 
 ## С чего начать
 

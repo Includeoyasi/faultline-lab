@@ -3,7 +3,7 @@
 set -eu
 
 if [ "$#" -gt 1 ]; then
-  echo "usage: lab-go {versions|build|check|format|service-smoke}" >&2
+  echo "usage: lab-go {versions|build|check|format|service-smoke|smoke-build|smoke-cross-check|smoke-cli-tests}" >&2
   exit 2
 fi
 
@@ -20,6 +20,19 @@ build() {
     CGO_ENABLED=0 go build -trimpath -o "bin/$service" "./cmd/$service"
     go version -m "bin/$service"
   done
+}
+
+smoke_build() {
+  target_os=${GOOS:-$(go env GOOS)}
+  target_arch=${GOARCH:-$(go env GOARCH)}
+  case "$target_os/$target_arch" in
+    windows/amd64|linux/amd64|linux/arm64|darwin/amd64|darwin/arm64) ;;
+    *) echo "unsupported smoke target" >&2; exit 2 ;;
+  esac
+  extension=
+  if [ "$target_os" = windows ]; then extension=.exe; fi
+  mkdir -p bin
+  CGO_ENABLED=0 GOOS="$target_os" GOARCH="$target_arch" go build -trimpath -o "bin/smoke-$target_os-$target_arch$extension" ./cmd/smoke
 }
 
 source_files() {
@@ -61,8 +74,20 @@ case "${1:-versions}" in
     build
     LAB_BIN_DIR=/workspace/bin go test -count=1 -v -timeout=2m ./tests/smoke
     ;;
+  smoke-build)
+    smoke_build
+    ;;
+  smoke-cross-check)
+    for target in windows/amd64 linux/amd64 linux/arm64 darwin/amd64 darwin/arm64; do
+      GOOS=${target%/*} GOARCH=${target#*/} smoke_build
+    done
+    ;;
+  smoke-cli-tests)
+    mkdir -p bin
+    CGO_ENABLED=0 go test -c -o bin/smoke-cli-tests ./tests/smokecli
+    ;;
   *)
-    echo "usage: lab-go {versions|build|check|format|service-smoke}" >&2
+    echo "usage: lab-go {versions|build|check|format|service-smoke|smoke-build|smoke-cross-check|smoke-cli-tests}" >&2
     exit 2
     ;;
 esac
