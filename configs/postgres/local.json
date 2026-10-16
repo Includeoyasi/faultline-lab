@@ -1,0 +1,13 @@
+{
+  "host": "postgres",
+  "port": 5432,
+  "sslmode": "disable",
+  "timeout": "10s",
+  "admin_database": "postgres",
+  "admin_user": "postgres",
+  "services": [
+    { "name": "orders", "database": "orders_db", "app_user": "orders_app", "migration_user": "orders_migrator" },
+    { "name": "inventory", "database": "inventory_db", "app_user": "inventory_app", "migration_user": "inventory_migrator" },
+    { "name": "payments", "database": "payments_db", "app_user": "payments_app", "migration_user": "payments_migrator" }
+  ]
+}

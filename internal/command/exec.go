@@ -1,8 +1,7 @@
-package smoke
+package command
 
 import (
 	"bytes"
-	"context"
 )
 
 const outputLimit = 8 << 20
@@ -11,8 +10,6 @@ type commandOutput struct {
 	stdout, stderr string
 	exitCode       int
 }
-
-type executeFunc func(context.Context, string, []string) (commandOutput, error)
 
 // processExecutor owns the command tree, including Docker CLI plugins.
 type processExecutor struct {

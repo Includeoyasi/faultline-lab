@@ -129,6 +129,8 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 
 После изменения источников обнови `CONTEXT_STATE.json`, увеличь ревизию и выполни `pwsh -NoProfile -File tools/update_context.ps1`, затем проверки. Настройки сервисов и process smoke описаны в [инструкции запуска](docs/development/SERVICE_RUNTIME.md).
 
+Подготовка баз, права, миграции, повторяемый seed и явный сброс описаны в [инструкции PostgreSQL со схемами](docs/development/POSTGRES.md).
+
 ## Лицензия
 
 [MIT](LICENSE) · Copyright © 2026 Dmitrii Morozov.

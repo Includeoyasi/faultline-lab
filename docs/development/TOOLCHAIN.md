@@ -15,7 +15,7 @@
 
 Версии проверены по официальным источникам 15 октября 2026 года: [Go releases](https://go.dev/dl/), [golangci-lint releases](https://github.com/golangci/golangci-lint/releases/tag/v2.14.0), Go module proxy и Docker Registry. Оба закреплённых digest относятся к multi-platform индексам, а не к одному варианту CPU.
 
-gRPC v1.84.0 добавлен для реального health API в P01-04; версия проверена через официальный Go proxy. JSON-логи использует стандартный log/slog. Инструменты закреплены через [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools). SQL/Kafka/Redis библиотеки добавляются при первом использовании.
+gRPC v1.84.0 добавлен для реального health API в P01-04; версия проверена через официальный Go proxy. JSON-логи использует стандартный log/slog. Инструменты закреплены через [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools). PostgreSQL использует pgx v5.11.0; Kafka/Redis библиотеки добавляются при первом использовании.
 
 ## Основной путь Windows и macOS
 
@@ -34,6 +34,8 @@ docker compose run --rm toolchain service-smoke
 `build` создаёт Linux-бинарники bin/orders, bin/inventory, bin/payments для архитектуры toolchain-контейнера и выводит build metadata. Они игнорируются Git. На Windows эти Linux-бинарники не запускаются напрямую. `service-smoke` собирает и проверяет три отдельных процесса: health, JSON-диагностику ошибок, выход и независимость. Unit/process tests, graceful drain и runtime-контейнеры реализованы и проверены; бизнес-процессы остаются следующими пакетами. Прежний bootstrap-smoke удалён: сервисы больше не завершаются сразу после запуска.
 
 Для осознанного исправления форматирования: `docker compose run --rm toolchain format`. Эта команда меняет Go-исходники в рабочей копии; check их не меняет. Неподдерживаемая команда и лишние аргументы дают exit code 2.
+
+`data-build` собирает host CLI для [подготовки PostgreSQL](POSTGRES.md); `data-cross-check` проверяет компиляцию для Windows AMD64, Linux AMD64/ARM64 и macOS AMD64/ARM64. Host OS/архитектура задаются через GOOS/GOARCH.
 
 Toolchain — временный сервис профиля tools. Явный `compose run toolchain` активирует его; команды не поднимают PostgreSQL/Kafka/Redis или runtime сервисов. Shell-скрипт выполняется внутри Linux-контейнера. Исходники подключаются из относительного пути, кеши модулей и сборки — в отдельных named volumes. Используются стандартные capabilities Docker для записи в bind mount; privileged mode и Docker socket не включены, no-new-privileges включён. Ограничения runtime-контейнеров сервисов описаны отдельно в [контейнерном каркасе](CONTAINER_RUNTIME.md).
 

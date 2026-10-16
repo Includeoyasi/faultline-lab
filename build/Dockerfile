@@ -17,6 +17,7 @@ FROM toolchain AS service-build
 ARG SERVICE
 COPY cmd ./cmd
 COPY internal ./internal
+COPY migrations ./migrations
 RUN case "$SERVICE" in orders|inventory|payments) ;; *) exit 2 ;; esac \
     && CGO_ENABLED=0 go build -trimpath -o /out/service "./cmd/$SERVICE"
 
@@ -25,3 +26,16 @@ COPY --from=service-build /out/service /app/service
 USER 65532:65532
 STOPSIGNAL SIGTERM
 ENTRYPOINT ["/app/service"]
+
+FROM toolchain AS labdata-build
+COPY cmd ./cmd
+COPY internal ./internal
+COPY migrations ./migrations
+RUN CGO_ENABLED=0 go build -trimpath -o /out/labdata ./cmd/labdata \
+    && CGO_ENABLED=0 go test -c -o /out/database.test ./internal/database
+
+FROM scratch AS labdata
+COPY --from=labdata-build /out/labdata /app/labdata
+COPY --from=labdata-build /out/database.test /app/database.test
+USER 65532:65532
+ENTRYPOINT ["/app/labdata"]
