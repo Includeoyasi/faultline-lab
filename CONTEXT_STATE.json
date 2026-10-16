@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 52,
+  "context_revision": 53,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-16",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "ae4c1c1df0fec5c5b0479f0a26d70dd6bf8af342",
+    "snapshot_ref": "b120a06dde9d82598a3d03456787be7131356e5e",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -2631,6 +2631,12 @@
       "date": "2026-10-16",
       "summary": "Read-only usage review found restrictive umask could make secrets unreadable to non-root containers; explicit file permissions and real POSIX regression added, host-vs-container commands clarified",
       "trigger": "Potential user/tester read-only documentation review; Windows secret and CLI tests passed after fix"
+    },
+    {
+      "revision": 53,
+      "date": "2026-10-16",
+      "summary": "Linux CI detected dbtool image retained by down without active tools profile; helper and regression now model explicit profile activation for cleanup and reset",
+      "trigger": "Real CI cleanup verification on AMD64/ARM64; data/RBAC/migrations/restart had passed before cleanup failure"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -2729,6 +2735,7 @@
       "source": "Working-tree validation on main base843e95e, not a claim of clean final-HEAD validation",
       "ci": "Final checks and artifacts in GitHub Actions; no duplicated live status"
     },
-    "credential_permissions": "Directory0700 and explicit file chmod0644, including existing valid files; creation mode alone can be narrowed by POSIX umask. Native Windows secret/CLI tests passed; real POSIX umask077 regression runs in CI."
+    "credential_permissions": "Directory0700 and explicit file chmod0644, including existing valid files; creation mode alone can be narrowed by POSIX umask. Native Windows secret/CLI tests passed; real POSIX umask077 regression runs in CI.",
+    "compose_cleanup_profile": "Explicit --profile tools is included in all datalab Compose calls, because targeting dbtool earlier does not retain profile activation for down. Explicit postgres/dbtool targets prevent starting other tools. CI on both architectures detected retained image tags after otherwise successful PG checks; checks were retained and cleanup corrected."
   }
 }
