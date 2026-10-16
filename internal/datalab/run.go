@@ -22,7 +22,9 @@ import (
 var projectName = regexp.MustCompile(`^faultline-data-[a-z0-9][a-z0-9-]{0,47}$`)
 
 func composeArgs(project string, args ...string) []string {
-	return append([]string{"compose", "-f", "compose.yaml", "-f", "compose.postgres.yaml", "-p", project}, args...)
+	// Profile activation by an earlier explicit run is not retained by down.
+	// All starts/builds below retain explicit service targets.
+	return append([]string{"compose", "-f", "compose.yaml", "-f", "compose.postgres.yaml", "-p", project, "--profile", "tools"}, args...)
 }
 
 // Reset requires an exact explicit project confirmation; ordinary down preserves data.

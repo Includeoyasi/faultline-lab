@@ -43,9 +43,16 @@ func TestRunCleanupAndReports(t *testing.T) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
 			cleaned := false
+			imageExists := false
 			execute := func(commandCtx context.Context, program string, args []string) (command.Output, error) {
 				if program != "docker" {
 					t.Fatal("unexpected executable")
+				}
+				if slices.Contains(args, "build") {
+					imageExists = true
+				}
+				if args[0] == "image" && imageExists {
+					return command.Output{Stdout: "owned-dbtool-image"}, nil
 				}
 				if slices.Contains(args, "build") && (scenario == "partial-build" || scenario == "cancel-build") {
 					if scenario == "cancel-build" {
@@ -72,6 +79,9 @@ func TestRunCleanupAndReports(t *testing.T) {
 					cleaned = true
 					if scenario == "cleanup-failure" {
 						return command.Output{ExitCode: 1}, errors.New("cleanup unavailable")
+					}
+					if slices.Contains(args, "--profile") && slices.Contains(args, "tools") {
+						imageExists = false
 					}
 				}
 				return command.Output{}, nil
