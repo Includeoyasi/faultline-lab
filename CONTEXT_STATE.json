@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 47,
+  "context_revision": 48,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-16",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "8e49367c868af33023a6c1f7a8f94db447a828eb",
+    "snapshot_ref": "056d076dbbc1533de236dcb659fd09ff84ec86d3",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -2415,6 +2415,12 @@
       "date": "2026-10-16",
       "summary": "По замечаниям владельца в PR21 унифицированы названия ролей во всех исходных документах и контексте. Реальные GitHub identifiers сохранены для авторизации и доказательств. Из инструкции smoke удалены отсылки к прежнему runtime; оставлены назначение, prerequisites и команды. Включены ранее согласованные правила предварительной оценки задач и описание ежедневного анализа процесса.",
       "trigger": "PR21 review comments4295745781/4295759572 and browser note on redundant smoke instructions"
+    },
+    {
+      "revision": 48,
+      "date": "2026-10-16",
+      "summary": "Внешние материалы переносимого снимка закреплены за существующим исходным коммитом после правок по ревью формулировок. Проверки генерации и документации выполнены локально; актуальные CI/review остаются в GitHub.",
+      "trigger": "Обновление snapshot_ref после фиксации исходных материалов ревью"
     }
   ],
   "go_smoke_validation_2026_10_16": {
