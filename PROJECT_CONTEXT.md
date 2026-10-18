@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **48**. Дата снимка: **2026-10-16**, Europe/Moscow. Исходный коммит внешних материалов: `056d076dbbc1533de236dcb659fd09ff84ec86d3`.
+Ревизия: **56**. Дата снимка: **2026-10-18**, Europe/Moscow. Исходный коммит внешних материалов: `a7a468e72c7cc697463893d0090a382931d4da77`.
 
 ## Выполнение задач
 
@@ -25,6 +25,7 @@ Faultline Lab — лаборатория масштабирования, отк�
 ## Как читать и проверять сведения
 
 1. Для понимания проекта прочитайте README, принятый дизайн и атлас процессов.
+   Цели владельца и примеры использования сохраняются отдельно в `docs/PRODUCT_INTENT.md`; они помогают оценивать решения, но не заменяют технические критерии.
 2. Для поведения системы используйте полные спецификации и соответствующие исходники, а не предположение по дереву каталогов.
 3. Для выполнения задачи, блокеров и ревью откройте GitHub. При отсутствии доступа явно укажите это ограничение; не восстанавливайте актуальный прогресс из старой истории.
 4. Для анализа измерений проверьте дату, исходный commit, бюджет среды, команды и ограничения доказательства.
@@ -70,9 +71,9 @@ JSON ниже включён для автономного чтения реше
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 48,
+  "context_revision": 56,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-16",
+  "context_updated_on": "2026-10-18",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -86,7 +87,7 @@ JSON ниже включён для автономного чтения реше
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "056d076dbbc1533de236dcb659fd09ff84ec86d3",
+    "snapshot_ref": "a7a468e72c7cc697463893d0090a382931d4da77",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -136,6 +137,17 @@ JSON ниже включён для автономного чтения реше
       "implementation_and_review_pr_authorized": true,
       "P02_implementation_authorized": false,
       "other_audit_findings": "Follow their agreed future checkpoints in issue20"
+    },
+    {
+      "date": "2026-10-16",
+      "source": "Direct owner chat after PR21 merge: take issue12; explain additions and seed with interaction diagrams; remove obsolete Docker data",
+      "scope": [
+        "Issue12 PostgreSQL foundation",
+        "Detailed operational guide and diagrams",
+        "Scoped disposable-image cleanup"
+      ],
+      "implementation_and_review_pr_authorized": true,
+      "other_work": "Issue16 and remaining audit findings keep their agreed checkpoints"
     }
   ],
   "review_history": [
@@ -250,6 +262,21 @@ JSON ниже включён для автономного чтения реше
       "human_review": "NO_CODE_REVIEW; OWNER_OBJECTED_TO_PREMATURE_PR_CREATION",
       "scope": "P02 planning and observed P01 acceptance only",
       "observation_note": null
+    },
+    {
+      "number": 21,
+      "url": "https://github.com/Includeoyasi/faultline-lab/pull/21",
+      "author": "AI-Your-Bro",
+      "head_ref": "feat/go-smoke-audit",
+      "base_ref": "main",
+      "head_at_merge": "4f283b78dae1edf62fe53ada39d6c3350c0c7883",
+      "merge_commit": "843e95ed2b65a44729fbf297b986363c588d51ca",
+      "merged_at_utc": "2026-10-16T15:14:01Z",
+      "merged": true,
+      "merged_by": "Includeoyasi",
+      "human_review": "ACCEPTED_BY_PROJECT_OWNER_ACCOUNT_MERGE",
+      "scope": "Issue9/F01: Go smoke; audit F02/F04/F07/F08; review wording and agreed process documentation",
+      "observation_note": "Owner reported merge in chat; executor verified merged=true and actual merged_by via GitHub API. No acceptance of G1 or authorization of P02 implementation is inferred."
     }
   ],
   "review_policy": {
@@ -423,7 +450,7 @@ JSON ниже включён для автономного чтения реше
       "Stop this task containers and remove its network after checks",
       "Quit Docker Desktop and stop its WSL VM after work",
       "Keep Docker autostart disabled",
-      "Keep installed Go/Docker/WSL, reusable images and build/module caches",
+      "Keep installed tools, current reusable images and useful caches; remove disposable run-specific images and verify cleanup",
       "Stop only task-owned resources; preserve unrelated workloads"
     ],
     "configured_wsl_budget": {
@@ -2065,19 +2092,19 @@ JSON ниже включён для автономного чтения реше
       "language": "go"
     },
     {
-      "path": "internal/smoke/exec.go",
+      "path": "internal/command/exec.go",
       "title": "Bounded command output",
       "anchor": "go-smoke-exec",
       "language": "go"
     },
     {
-      "path": "internal/smoke/exec_unix.go",
+      "path": "internal/command/exec_unix.go",
       "title": "Unix command process groups",
       "anchor": "go-smoke-unix",
       "language": "go"
     },
     {
-      "path": "internal/smoke/exec_windows.go",
+      "path": "internal/command/exec_windows.go",
       "title": "Windows command jobs",
       "anchor": "go-smoke-windows",
       "language": "go"
@@ -2095,7 +2122,7 @@ JSON ниже включён для автономного чтения реше
       "language": "go"
     },
     {
-      "path": "internal/smoke/exec_test.go",
+      "path": "internal/command/exec_test.go",
       "title": "Command tree cancellation tests",
       "anchor": "go-smoke-exec-tests",
       "language": "go"
@@ -2119,7 +2146,7 @@ JSON ниже включён для автономного чтения реше
       "language": "go"
     },
     {
-      "path": "internal/smoke/exec_unix_test.go",
+      "path": "internal/command/exec_unix_test.go",
       "title": "Unix orphan plugin lifecycle regression",
       "anchor": "source-smoke-exec-unix-test",
       "language": "go"
@@ -2200,6 +2227,279 @@ JSON ниже включён для автономного чтения реше
       "title": "Go smoke evidence: windows-interrupt-report.json",
       "anchor": "go-smoke-evidence-windows-interrupt-report",
       "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p02/windows-runtime-report.json",
+      "title": "docs/development/evidence/p02/windows-runtime-report.json",
+      "anchor": "p02-docs-development-evidence-p02-windows-runtime-report-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p02/windows-cleanup.json",
+      "title": "docs/development/evidence/p02/windows-cleanup.json",
+      "anchor": "p02-docs-development-evidence-p02-windows-cleanup-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p02/windows-postgres-report.json",
+      "title": "docs/development/evidence/p02/windows-postgres-report.json",
+      "anchor": "p02-docs-development-evidence-p02-windows-postgres-report-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p02/postgres-image.json",
+      "title": "docs/development/evidence/p02/postgres-image.json",
+      "anchor": "p02-docs-development-evidence-p02-postgres-image-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p02/POSTGRES.md",
+      "title": "docs/development/evidence/p02/POSTGRES.md",
+      "anchor": "p02-docs-development-evidence-p02-postgres-md"
+    },
+    {
+      "path": "internal/command/command.go",
+      "title": "internal/command/command.go",
+      "anchor": "p02-internal-command-command-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/database/migrate.go",
+      "title": "internal/database/migrate.go",
+      "anchor": "p02-internal-database-migrate-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/database/integration_test.go",
+      "title": "internal/database/integration_test.go",
+      "anchor": "p02-internal-database-integration-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/database/checksum.go",
+      "title": "Data checksum",
+      "anchor": "p02-internal-database-checksum-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/database/config_test.go",
+      "title": "internal/database/config_test.go",
+      "anchor": "p02-internal-database-config-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/database/config.go",
+      "title": "internal/database/config.go",
+      "anchor": "p02-internal-database-config-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/database/bootstrap.go",
+      "title": "internal/database/bootstrap.go",
+      "anchor": "p02-internal-database-bootstrap-go",
+      "language": "go"
+    },
+    {
+      "path": "configs/postgres/local.json",
+      "title": "configs/postgres/local.json",
+      "anchor": "p02-configs-postgres-local-json",
+      "language": "json"
+    },
+    {
+      "path": "cmd/labdata/main_test.go",
+      "title": "cmd/labdata/main_test.go",
+      "anchor": "p02-cmd-labdata-main-test-go",
+      "language": "go"
+    },
+    {
+      "path": "cmd/labdata/main.go",
+      "title": "cmd/labdata/main.go",
+      "anchor": "p02-cmd-labdata-main-go",
+      "language": "go"
+    },
+    {
+      "path": "migrations/inventory/0002_catalog.sql",
+      "title": "migrations/inventory/0002_catalog.sql",
+      "anchor": "p02-migrations-inventory-0002-catalog-sql",
+      "language": "sql"
+    },
+    {
+      "path": "migrations/inventory/0001_schema.sql",
+      "title": "migrations/inventory/0001_schema.sql",
+      "anchor": "p02-migrations-inventory-0001-schema-sql",
+      "language": "sql"
+    },
+    {
+      "path": "migrations/embed.go",
+      "title": "migrations/embed.go",
+      "anchor": "p02-migrations-embed-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/database/sql/seed/inventory.sql",
+      "title": "internal/database/sql/seed/inventory.sql",
+      "anchor": "p02-internal-database-sql-seed-inventory-sql",
+      "language": "sql"
+    },
+    {
+      "path": "migrations/orders/0001_schema.sql",
+      "title": "migrations/orders/0001_schema.sql",
+      "anchor": "p02-migrations-orders-0001-schema-sql",
+      "language": "sql"
+    },
+    {
+      "path": "migrations/payments/0001_schema.sql",
+      "title": "migrations/payments/0001_schema.sql",
+      "anchor": "p02-migrations-payments-0001-schema-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/datalab/run_test.go",
+      "title": "internal/datalab/run_test.go",
+      "anchor": "p02-internal-datalab-run-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/datalab/run.go",
+      "title": "internal/datalab/run.go",
+      "anchor": "p02-internal-datalab-run-go",
+      "language": "go"
+    },
+    {
+      "path": "compose.postgres.yaml",
+      "title": "compose.postgres.yaml",
+      "anchor": "p02-compose-postgres-yaml",
+      "language": "yaml"
+    },
+    {
+      "path": "internal/smoke/exec_adapter.go",
+      "title": "internal/smoke/exec_adapter.go",
+      "anchor": "p02-internal-smoke-exec-adapter-go",
+      "language": "go"
+    },
+    {
+      "path": "docs/development/POSTGRES.md",
+      "title": "docs/development/POSTGRES.md",
+      "anchor": "p02-docs-development-postgres-md"
+    },
+    {
+      "path": "internal/database/config_unix_test.go",
+      "title": "POSIX restrictive umask credential regression",
+      "anchor": "p02-config-unix-tests",
+      "language": "go"
+    },
+    {
+      "path": "docs/PRODUCT_INTENT.md",
+      "title": "docs/PRODUCT_INTENT.md",
+      "anchor": "p02-review-docs-product-intent-md"
+    },
+    {
+      "path": "internal/database/migration_files.go",
+      "title": "internal/database/migration_files.go",
+      "anchor": "p02-review-internal-database-migration-files-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/database/scripts.go",
+      "title": "internal/database/scripts.go",
+      "anchor": "p02-review-internal-database-scripts-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/database/seed.go",
+      "title": "internal/database/seed.go",
+      "anchor": "p02-review-internal-database-seed-go",
+      "language": "go"
+    },
+    {
+      "path": "docs/development/evidence/p02/windows-sql-review-report.json",
+      "title": "docs/development/evidence/p02/windows-sql-review-report.json",
+      "anchor": "p02-review-docs-development-evidence-p02-windows-sql-review-report-json",
+      "language": "json"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/01_lock.sql",
+      "title": "internal/database/sql/bootstrap/01_lock.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-01-lock-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/02_create_role.sql",
+      "title": "internal/database/sql/bootstrap/02_create_role.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-02-create-role-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/03_configure_role.sql",
+      "title": "internal/database/sql/bootstrap/03_configure_role.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-03-configure-role-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/04_role_memberships.sql",
+      "title": "internal/database/sql/bootstrap/04_role_memberships.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-04-role-memberships-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/05_database_owner.sql",
+      "title": "internal/database/sql/bootstrap/05_database_owner.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-05-database-owner-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/06_create_database.sql",
+      "title": "internal/database/sql/bootstrap/06_create_database.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-06-create-database-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/07_database_access.sql",
+      "title": "internal/database/sql/bootstrap/07_database_access.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-07-database-access-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/08_public_schema.sql",
+      "title": "internal/database/sql/bootstrap/08_public_schema.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-08-public-schema-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/09_maintenance_access.sql",
+      "title": "internal/database/sql/bootstrap/09_maintenance_access.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-09-maintenance-access-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/migrate/01_lock.sql",
+      "title": "internal/database/sql/migrate/01_lock.sql",
+      "anchor": "p02-review-internal-database-sql-migrate-01-lock-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/migrate/02_journal.sql",
+      "title": "internal/database/sql/migrate/02_journal.sql",
+      "anchor": "p02-review-internal-database-sql-migrate-02-journal-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/migrate/03_history.sql",
+      "title": "internal/database/sql/migrate/03_history.sql",
+      "anchor": "p02-review-internal-database-sql-migrate-03-history-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/migrate/04_record.sql",
+      "title": "internal/database/sql/migrate/04_record.sql",
+      "anchor": "p02-review-internal-database-sql-migrate-04-record-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/migrate/05_application_access.sql",
+      "title": "internal/database/sql/migrate/05_application_access.sql",
+      "anchor": "p02-review-internal-database-sql-migrate-05-application-access-sql",
+      "language": "sql"
     }
   ],
   "change_history": [
@@ -2490,6 +2790,42 @@ JSON ниже включён для автономного чтения реше
       "date": "2026-10-16",
       "summary": "Внешние материалы переносимого снимка закреплены за существующим исходным коммитом после правок по ревью формулировок. Проверки генерации и документации выполнены локально; актуальные CI/review остаются в GitHub.",
       "trigger": "Обновление snapshot_ref после фиксации исходных материалов ревью"
+    },
+    {
+      "revision": 49,
+      "date": "2026-10-16",
+      "summary": "Владелец сообщил о слиянии PR21; GitHub API подтвердил owner merge принятого HEAD4f283b7 в843e95e. Сохранено датированное основание приёмки #9/F01/F02/F04/F07/F08, локальная main синхронизирована. Snapshot закреплён за merge-коммитом main, доступным после squash и удаления feature-ветки. Текущее выполнение остаётся только в GitHub; новые работы и приёмка G1 не заявлены.",
+      "trigger": "Прямое сообщение владельца: PR смержил; проверка GitHub merge evidence"
+    },
+    {
+      "revision": 50,
+      "date": "2026-10-16",
+      "summary": "PostgreSQL foundation: isolated DB roles, serialized checksummed migrations, repeatable Inventory seed, host smoke and CI, detailed diagrams/guide; scoped run-image cleanup",
+      "trigger": "Owner assigned issue12, requested detailed explanation and cleanup of obsolete Docker images"
+    },
+    {
+      "revision": 51,
+      "date": "2026-10-16",
+      "summary": "Закреплены внешние материалы PostgreSQL foundation за существующим исходным коммитом 1c54d9c6aee2be4da7c38b7775b6d862402caac1; переносимый контекст синхронизирован",
+      "trigger": "Immutable snapshot contract F07 after source commit"
+    },
+    {
+      "revision": 52,
+      "date": "2026-10-16",
+      "summary": "Read-only usage review found restrictive umask could make secrets unreadable to non-root containers; explicit file permissions and real POSIX regression added, host-vs-container commands clarified",
+      "trigger": "Potential user/tester read-only documentation review; Windows secret and CLI tests passed after fix"
+    },
+    {
+      "revision": 53,
+      "date": "2026-10-16",
+      "summary": "Linux CI detected dbtool image retained by down without active tools profile; helper and regression now model explicit profile activation for cleanup and reset",
+      "trigger": "Real CI cleanup verification on AMD64/ARM64; data/RBAC/migrations/restart had passed before cleanup failure"
+    },
+    {
+      "revision": 54,
+      "date": "2026-10-18",
+      "summary": "Owner selected checksum as CLI command name; code/function/file/smoke and help/guide renamed without changing SHA-256 computation; archived evidence preserved",
+      "trigger": "PR22 naming review in chat: fingerprint was unclear; owner explicitly chose checksum"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -2559,6 +2895,38 @@ JSON ниже включён для автономного чтения реше
     ],
     "identity_exception": "Keep real GitHub logins in URLs, CODEOWNERS, account metadata, authentication checks and API evidence",
     "usage_docs": "Describe prerequisites and actions directly; migration rationale belongs in ADR and task materials. Keep role definitions in the workflow; omit repeated role paragraphs from the task-tracking guide."
+  },
+  "postgres_foundation": {
+    "recorded_on": "2026-10-16",
+    "scope": "Issue12; no business RPC or Kafka/Redis implementation",
+    "postgres": "18.6-bookworm",
+    "digest": "sha256:afc7e2d441324c0388fa80c3d24f733b4194a4eb7f47dd8ee2b08eb1a24a647c",
+    "client": "github.com/jackc/pgx/v5 v5.11.0",
+    "guide": "docs/development/POSTGRES.md",
+    "validation": "docs/development/evidence/p02/POSTGRES.md",
+    "personal_cleanup_refinement": "Owner observed historical image accumulation; remove run tags after success/error/cancel, including partial build; retain shared image layers/caches; no global prune",
+    "credential_permissions": "Directory0700 and explicit file chmod0644, including existing valid files; creation mode alone can be narrowed by POSIX umask. Native Windows secret/CLI tests passed; real POSIX umask077 regression runs in CI.",
+    "compose_cleanup_profile": "Explicit --profile tools is included in all datalab Compose calls, because targeting dbtool earlier does not retain profile activation for down. Explicit postgres/dbtool targets prevent starting other tools. CI on both architectures detected retained image tags after otherwise successful PG checks; checks were retained and cleanup corrected.",
+    "checksum_command": {
+      "name": "checksum",
+      "confirmed_on": "2026-10-18",
+      "source": "Direct owner review instruction in chat: давай оставим просто checksum",
+      "purpose": "Read-only SHA-256 of ordered migration history and Inventory product-stock pairs, compared by smoke before/after restart",
+      "local_validation": "Windows affected Go package tests and CLI build/help passed; retired command rejected with exit2; no Docker/WSL started",
+      "historical_evidence": "Archived reports retain original fingerprint stage names; unrelated portable-source fingerprints are unchanged"
+    },
+    "sql_review": {
+      "agreed_on": "2026-10-18",
+      "owner_comment": "https://github.com/Includeoyasi/faultline-lab/pull/22#discussion_r4307441625",
+      "chat_authorization": "Owner requested both SQL-first structure and separate preparation/migration/seed responsibilities",
+      "source": "docs/development/POSTGRES.md",
+      "evidence": "docs/development/evidence/p02/POSTGRES.md"
+    }
+  },
+  "owner_intent_notes": {
+    "agreed_on": "2026-10-18",
+    "source": "Owner voice discussion; docs/PRODUCT_INTENT.md",
+    "workflow": "Owner requested concise per-task findings in the existing GitHub Issue/PR; see docs/development/WORKFLOW.md"
   }
 }
 ```
@@ -2569,41 +2937,41 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `53e3ce1784f95cf127148d285004492e692cde332e9f784f138097edc87510bb` |
-| `tools/context_intro.md` | `efa653b38275069b42953862f69f20c351002d21221d8c83123404a8411a56b9` |
+| `CONTEXT_STATE.json` | `57553598074be42a5a02630af2e763168aa96164de1df1355de266a77bc88392` |
+| `tools/context_intro.md` | `91fb656b2ec7b4dcd798be45f7b78ec2452763455476ebcd55762b465ad25d2b` |
 | `tools/update_context.ps1` | `73dff2e2da1f7ea7e8fc8fe2dc70bde722f4d697c1ca7c685d297214cd133e33` |
-| `README.md` | `a195f63ef987e873783461a597e7fa8a8e16054ca967b545d1e98a0a8a91d7ff` |
-| `README.ru.md` | `3cf3b461a730b5585a88126cec7a6404ebbda0e7a6e0b4ac3f64dce9d0a839c9` |
-| `docs/README.md` | `25cbaa5ee15f77235733d5900f75c1a49f42d54222152a00db7943d74acd6a55` |
+| `README.md` | `2251b4268c6b3fd5f3c03ac37d47d01ab53f1b0f2b121f4e4e99ee3b4887d5fa` |
+| `README.ru.md` | `98032f7bda43cb6cbd1f8bd3c7ada83a07e334ee7e7ed190db0d455d44dbccc7` |
+| `docs/README.md` | `80e9146e50c22fe2ece85a24fcc56dbca33f18aef01973210881b37b7388453d` |
 | `docs/ROADMAP.md` | `3881f7898db08cd56221d60fe1578b8642060c99bc53f3574bc59e8defcff637` |
 | `docs/architecture/DESIGN.md` | `74a141c2ce11d07cb568f01a6eb72b849f9556d7be85705544bb9e8a15806f2e` |
 | `docs/architecture/PROCESSES.md` | `dd6d00ee9d169236fe0f0d14de4b6f54d778a7cf79489f6b6a3354357e2e9ec6` |
-| `docs/development/WORKFLOW.md` | `a32d68ca2ae9085b7284101bd6d3bfc4cee2d3b50b4adefbea9c15c4fc78f97a` |
+| `docs/development/WORKFLOW.md` | `db64e33c94566d5ce8b128e81a030443980817f63d75355803aec2acef040516` |
 | `docs/experiments/REPORT_TEMPLATE.md` | `4f569aab52ba34a68bb2e8b4551c6a3bf4932277c26c3b4206dbb505781a2cab` |
-| `AGENTS.md` | `c51e04a2f6806f2662bee9b4c6d1204d17d9447acae527e9a81104cc5696ae60` |
+| `AGENTS.md` | `1da40d3c215d4c1db7862e73c24b4fd771e46f2bf09495bdb7b751b7a88d6b24` |
 | `docs/adr/0001-approved-g0.md` | `b8518c5c49cdefea3dbf0bf2a79ab40459dba2b565e71a6c534a555cbafa20df` |
 | `CONTRIBUTING.md` | `5d7fe456ad6e2967e3e324bb227f711dd23a735e4080db9ceb4d01760c94327e` |
 | `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
 | `docs/development/CODE_REVIEW.md` | `ede879352cb1f36c935970fae3be8886132e5080c3327c422e43ddf2da1db5d9` |
 | `docs/architecture/LAB_BOUNDARY.md` | `94030566542a3e5fbda07593ed06cea7f95ec98985483de8ac0d66f4001ae326` |
-| `docs/development/ENVIRONMENT.md` | `68f5528d60a52bae9cf5111be90bfed11d1324a043728c3191eace4aaf847c16` |
+| `docs/development/ENVIRONMENT.md` | `097735b23b23cc8b7606491682f17df2f7230c95d5166743bb234238ddf7df8c` |
 | `docs/development/RESOURCE_PROFILES.md` | `60212954c54085f2c8b74c4d3cf5c50f8ccf90192e8e9a502da357208645d44f` |
 | `docs/design/BANNER_OPTIONS.md` | `0b880a782a766f85c33fb5fba1a8c933a3d05f949d93b539d03b9a37b71efd0f` |
 | `docs/development/packets/P01.md` | `82d62963046bde7289b9c22dde1a0fcc26adb6911e4bbf5bd792e068a6a22067` |
 | `docs/development/TASK_TRACKING.md` | `46baf95126af2e7e362d6751e957057e915a98f4b7606739178c57427aec61d8` |
 | `docs/development/REPOSITORY_SECURITY.md` | `e15d0de41447fcf81b76f4264a76483895940dc1c03f6ab809e3a626b9f8278a` |
 | `.github/CODEOWNERS` | `95de6cc3de1ba640d0ab9e2b9bfbdea79b7ce6641a8bcdb0bcef1f7607666415` |
-| `docs/development/TOOLCHAIN.md` | `604981e70518e77e5a9924f758fd20d31e75746970a3cf3dbbb833314bd7c841` |
-| `go.mod` | `26b5d46af3fc859ce69ba944b067468927cc97273e33ebfb1ec8dda7231ccc96` |
-| `go.sum` | `9f863b08d769d3d2d631ac9534db6bbd7f8d8fa5c59ee9f5bfa762763d310cc7` |
+| `docs/development/TOOLCHAIN.md` | `e5325b03c3caee54ad63252f8bc24e608caf33b269c60e9129da584b9decac16` |
+| `go.mod` | `32aa5667a8f832ad567ec8af3dc68f7952b1ef14ec40f8176d7e19633feba4a1` |
+| `go.sum` | `fdcd4f5c8dac3b2c90899b2da40284659a1503f5ce01faf3b432576cd1708502` |
 | `cmd/orders/main.go` | `131626df0bae0819d49c3d46793809c839cacb6dbd71a93b4bc1740a04ea3e6c` |
 | `cmd/inventory/main.go` | `3a8d1959cf1530e56c786e7e26ac0a0d04c145e9cf5266f95f6a766e57fb5f39` |
 | `cmd/payments/main.go` | `3ceb9fe70d25948079c3682ad409c4970918d30036f74afb6451858725c351c1` |
-| `build/Dockerfile` | `e9956d801624765590e3cf41f8313e4f1eeb867d9644042f873d8a9447335ead` |
+| `build/Dockerfile` | `05266b15d55807239775e1895c5456896126670f8b6def76989523e1a1edae1f` |
 | `compose.yaml` | `76cabf52d3c42c963c0ed56bc486b8e68686159ad32e680f23c2574bfa2fb6ed` |
-| `tools/go.sh` | `5c7759b865bad7afe67c92beaf22f2754cd5939d2eb8866954c8fc417d78ebea` |
+| `tools/go.sh` | `40fdab41afd4022715a929a0c9e1252037e9896f8abeb288fa286d591a0a2697` |
 | `.golangci.yml` | `44651a36c889767cd425bc12b46e07c8bffc924024de23af1176057f78f3a74a` |
-| `.github/workflows/go.yml` | `d39d65ba90a9dcdbc2809cdfa15b62372323d57585d201aaef38baf953805899` |
+| `.github/workflows/go.yml` | `269203aa9d9aec1b0c6c4d4df68ee6b704cc44dffc6debccde73849c374c28bc` |
 | `.dockerignore` | `e75b314d79f67eec6dafc763b1e4c118597186f106f91a73749750d4ab0cf045` |
 | `docs/development/SERVICE_RUNTIME.md` | `85d5e127812af0a6ccfdd29c3fd54dbbe4d2203cfa5c3e08cc4923f9fa3fbbd6` |
 | `internal/service/config.go` | `a5cd706cc41d0fb88ea96b0ffaeff4f7ecf32bf31394ec5398efb39fba240a89` |
@@ -2627,28 +2995,28 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/evidence/p01/windows-2026-10-15/payments.jsonl` | `d3466907750bc5c137738ba0045f8d37f6c83e7fb4e3690a56896cbf9ad83c58` |
 | `docs/development/evidence/p01/windows-2026-10-15/environment.json` | `e32d9a5c383c6fcc426179fc716ab8ad39bece710670215b208405ee099bc90b` |
 | `docs/development/evidence/p01/windows-2026-10-15/cleanup.json` | `6c78a1ca41714a3ccb50e4777a2532ffeaca7d1cfb5fb561127e76e91fe0ad79` |
-| `docs/development/ENGINEERING_DECISIONS.md` | `a9cecf441f018fff6931935c01e7778a6212ab896f747ffd669f29ebc9de91c1` |
+| `docs/development/ENGINEERING_DECISIONS.md` | `c553ac968846968b3c2109d7938ca80c47464b82393f82fceb2182bef66cb335` |
 | `docs/adr/0002-record-review-decisions.md` | `00ad82591791da40b82d0c98c4be2c098a069fee70a5ba495a658a3657ba305e` |
 | `docs/adr/0003-go-container-smoke.md` | `228110462151044ffc87a6048293b8ad12e2673bee74bb627c8675ec62347181` |
 | `docs/development/backlog/GO_SMOKE.md` | `158ba7ad889fa7562db4136fc4fa475e607c0485f6d80f7bc59ab504bf80a4d4` |
 | `docs/development/packets/P02.md` | `c58b3cc3a1288c61cc90ac47cbad752409230551c1de69366166d26529195364` |
-| `docs/development/SMOKE.md` | `4301b855792b99aa52c968c4e52fc8e0641c8e549e82e490db55d7391c36e315` |
+| `docs/development/SMOKE.md` | `f9952d1b7033d7e2ffecec19e23f118b6c154194a86e8162d0bbc8d4aba0e043` |
 | `cmd/smoke/main.go` | `16ff87a9b0691547b5d4c79663efeab797ebccee1d8beb5b48df01ea0e13b0cd` |
 | `cmd/smoke/main_test.go` | `2970b74307c907e153f3eeeffb4b309c0ecc99652b4ed9bfe5f1e869c34e4154` |
-| `internal/smoke/run.go` | `61336fe2c29da884a758cd4e872a31715e43b10b4bf282eeca3d01dff4ebb312` |
+| `internal/smoke/run.go` | `c190e71b9c47c9c950be8334e5302a41f63ddcb592bcfaa9186ea00b792231db` |
 | `internal/smoke/report.go` | `0f16b8801b83b1d61142f180776de2e38c8830fa137d9d0bf76b6c28a96f428c` |
 | `internal/smoke/checks.go` | `cb2ad73b3a258531f21c15b99f853bff819a3fc58feccad725c7be969dc32253` |
 | `internal/smoke/config.go` | `ac4fffa46895f9d2108866a9614b217f72c637dc55bc7eefcdf40c8471e1f557` |
-| `internal/smoke/exec.go` | `4d25089c0bc8f840f5e136ca5b86017cd21a1a796b7e372029c2519ef21e7ed5` |
-| `internal/smoke/exec_unix.go` | `658b156afc9e2591dda00312afeede8a386449d3934dfd0f1bff7ff11db804ed` |
-| `internal/smoke/exec_windows.go` | `a7e218c01abe147f296fe00a6e82dd70349879856c2463a817fc517fdb9aced9` |
-| `internal/smoke/run_test.go` | `54554db55169b676a243c0224ed259de63c8aa11777a2fff50967ea5467fad34` |
+| `internal/command/exec.go` | `69aa0f4eef3cb8cef8518b528980751c5ed62104563e6778f8adeae5dbfc7d4f` |
+| `internal/command/exec_unix.go` | `46f04c817063ac9b643ce92fe793059f3b285ce19fc005d68e9142733f9fae93` |
+| `internal/command/exec_windows.go` | `12300ad8ef2126568fa4ac4d79a1c48f90f294226c46eda7fcb8298ea22872a9` |
+| `internal/smoke/run_test.go` | `2a71a2eab90c3b36a510ed12acaf85f9adf5672bf418242d0ed66b89f304d37f` |
 | `internal/smoke/config_test.go` | `770d8d3161ac428cc70c141585ab6925c7780daca683dea8b1db2b17729adf64` |
-| `internal/smoke/exec_test.go` | `e49f0c4b4c9986e60ea6116534ce9ee87484509ea2bdeff1f427172362e82be2` |
+| `internal/command/exec_test.go` | `310e08549e9027c2fb6a0efb4be346567c848aabe42e0c766527ea63aff0f25e` |
 | `tools/doc_safety.mjs` | `785ca466148638927a73eaeb3ca55dfbc6af65069739e5820d264dc646da1dc9` |
 | `tools/doc_safety.test.mjs` | `14e2666906c021e8ae739aaa4d6c164f63b4b931f5a1726e2d42180d9b973ab7` |
-| `tests/smokecli/interrupt_test.go` | `ec9d3486827ccddb7caf9edd2d95b3bac01c70482030376deed77a5995c5c73c` |
-| `internal/smoke/exec_unix_test.go` | `7ef7f8ca92a448baf09b485c0bfeeab64539b606a85dbf83504e6f845490d2ff` |
+| `tests/smokecli/interrupt_test.go` | `250cde8480adedd046523adc112070b8a33b6838321b30a2b4de8519da0c8f2d` |
+| `internal/command/exec_unix_test.go` | `a6ab1fe31b20421193d944d1445ef15329d6d21096ba1e56e582b1788801e513` |
 | `docs/development/evidence/go-smoke/go-equivalence-report.json` | `e7a68953b8101343ba23868864e02a6cb293d2a7679edcb56748fae954936af5` |
 | `docs/development/evidence/go-smoke/go-smoke-equivalence.json` | `da1916fc24b5629dbb3b820797e4544a0e641b7a38536077293220b99e4bff3a` |
 | `docs/development/evidence/go-smoke/go-smoke-preflight.json` | `812ecdf057b99863dee5dc0e20be998535a4fdb1d1fc81369cb8b15cb3c19da2` |
@@ -2662,6 +3030,52 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/evidence/go-smoke/windows-final-payments.jsonl` | `5d1c49d32c8eb80ec390e15736245290181c7a95a8178e1acc5002056494971d` |
 | `docs/development/evidence/go-smoke/windows-final-report.json` | `d528361131d3eb0a2d553afd9e801de7f69caf999a7e1f6d95caffc77c1211ac` |
 | `docs/development/evidence/go-smoke/windows-interrupt-report.json` | `e20bdf2620358046854ed57c8b4f831a42854c38688d9d92aa257a26feba12ae` |
+| `docs/development/evidence/p02/windows-runtime-report.json` | `46f24a541852560d584ced05e0d7b8032bdf01f5c2553f1fc38251652f4fec2c` |
+| `docs/development/evidence/p02/windows-cleanup.json` | `82000dcc8920ec8742fea39b1dc91b691acf056d61d335cabea759dac710db6f` |
+| `docs/development/evidence/p02/windows-postgres-report.json` | `d50cfc21f7e9259c5c6e71a178d792482ab93ce8e34c8b77939b59445b0847bb` |
+| `docs/development/evidence/p02/postgres-image.json` | `8298b566f5b86090978a88d7e1734fe8576e315529661b58a5f38a9b66a18c8f` |
+| `docs/development/evidence/p02/POSTGRES.md` | `816dfe301836a56669dd8818d28e4e2f769d883f06447354b2eabbec06ae03bf` |
+| `internal/command/command.go` | `3eb0aa422d5b40ba355479ca534c2f7c22ec9c118212beafbbf477ee5da28af3` |
+| `internal/database/migrate.go` | `bc58c9f7c8a53fb36d4d452d22b02f4bc65034be4b941a76bb96ad969da3bf00` |
+| `internal/database/integration_test.go` | `2a9c0fb5bc0771aac0dac93105ce5fa05e625059877cf88b6c73388b07ae98ff` |
+| `internal/database/checksum.go` | `5c79a23790b3f726a9467b5bdb4fb1574fa9ca3a119da9a2e6d2f21400d9aa2b` |
+| `internal/database/config_test.go` | `99b8d5b78e2de98e1448952f470cbce68fd7e4ab05f3747e50529828d8d732f5` |
+| `internal/database/config.go` | `347c25f171131fbe847601aa81a7dcd7e9958d45d48f9c80787b23fb7edbc926` |
+| `internal/database/bootstrap.go` | `b6c53cd8e603e1523951e781e20c462bd77f54d3578a20c43545807b1207fb3d` |
+| `configs/postgres/local.json` | `8a935f46a670b33b9b0c66d6617f87b356506c5449cb8835cbb9f185b4b9bcc8` |
+| `cmd/labdata/main_test.go` | `2d8392be252b0d370b98358cee5f57b55b114cbcd8fbf972ad78bf854d955436` |
+| `cmd/labdata/main.go` | `fa53da12582a09f7b1e511adb8bc50dcc2e14e3a4ebc74a3998a9f8f96d8f680` |
+| `migrations/inventory/0002_catalog.sql` | `cecccb789616eede86cd6cea63162264a24f023c62a7f6ddfb182e2aed387d97` |
+| `migrations/inventory/0001_schema.sql` | `60a1389cfff22a0a79566c1264ed338cb6049b761398af8dc6224c3d87fe32ac` |
+| `migrations/embed.go` | `a5bba8535f804c7c35a7800f0006a73e8a81d6481f367ea0cb7e8dd5aac5b843` |
+| `internal/database/sql/seed/inventory.sql` | `61b9efdd980a8508fd1f36e4c4e2d0a72f907cb2c5ae0a8c9afe8c75de0deb2d` |
+| `migrations/orders/0001_schema.sql` | `7a2abc0f03d1dac75ea31f86a6abfadae9532eaee42416167be45aee5d5ab16f` |
+| `migrations/payments/0001_schema.sql` | `2856144143bedd41e0380818034ae85025f18b3f40baa295c4eace2d48519af4` |
+| `internal/datalab/run_test.go` | `f2661ab897184cef5a77d8f5c876fa8657a3069dfd478370f2e0e7102bdefa55` |
+| `internal/datalab/run.go` | `bd7a88c531d0364b7c70e718c84417795dbb509e74d63c9a5c1da148e0384cbc` |
+| `compose.postgres.yaml` | `f8e28373a62b0135d30f9b568f1b548eb4f7d8322d9296dbd909708a52a8ef4d` |
+| `internal/smoke/exec_adapter.go` | `5f903f8c590d90655b333d6988139d9276ca5e6dbb400bfff10b0af0dda0c4ba` |
+| `docs/development/POSTGRES.md` | `3fdfe8cf94f8adc5ceb61a7d08a50fdeca0ae46db0ce2a418491a4d417c73e5a` |
+| `internal/database/config_unix_test.go` | `c8e157471af06e5ca233c8ee8e005c9ffe43166066019a53504aef5f408a2e27` |
+| `docs/PRODUCT_INTENT.md` | `277f3b947d5773e3bb80660eeaa667397d195b88fee4e3e71b09dfede1f5ec3b` |
+| `internal/database/migration_files.go` | `046b6a55f44422e4acc6c7d15d10dafd7775802c69223f00ac09e79cf1d93225` |
+| `internal/database/scripts.go` | `356df339e76503a33eab693e7650d6fd4a2671adf9d0e4cf837c4198a5c3beac` |
+| `internal/database/seed.go` | `e17c467418157ee13dd1b6a0d21175de490d33e2f240a6bb13bb08223dbb5c65` |
+| `docs/development/evidence/p02/windows-sql-review-report.json` | `051c90c8298ff000bac16a4912fcd4ac0082839a94ea9de6685fc145a258a60a` |
+| `internal/database/sql/bootstrap/01_lock.sql` | `3b15941dd60a8f097e3d0df4fca112ea36eb19794d8ef23594df7d89a3c37ccf` |
+| `internal/database/sql/bootstrap/02_create_role.sql` | `544d6f4331b8b86a1a39d2f541a6e16be30fd90cf5f217af5f8d0e4481347da1` |
+| `internal/database/sql/bootstrap/03_configure_role.sql` | `ec0bbe680b0d96cc5225e6c330e48aebfa17a476bdb84cd3710228ebe7e5b8dd` |
+| `internal/database/sql/bootstrap/04_role_memberships.sql` | `c3329baa717456a81252b1d1e3177a213dce07a320d0b1a47fac9c7dfa4db6cb` |
+| `internal/database/sql/bootstrap/05_database_owner.sql` | `6228ccb95caa0b658fbda4cf44c4b597175145854c481da1c817e538d837ef4b` |
+| `internal/database/sql/bootstrap/06_create_database.sql` | `bd9c4b7b8c392ec22d51c0b6128edb86b59b869810d3286bdf0e1ac785c20883` |
+| `internal/database/sql/bootstrap/07_database_access.sql` | `b2a7b4e4f69aca5e78d83ae2608b68a0e773a8d20d27d114a8116b8ab6f053da` |
+| `internal/database/sql/bootstrap/08_public_schema.sql` | `7208fd144196943b8ec304ce6bb013fce0547dc85942fecc6d99a79f3e28155e` |
+| `internal/database/sql/bootstrap/09_maintenance_access.sql` | `08cdbe9fceaaa853d90c26b505cff2930a55f72d0d9b9c4179870c4c1d116491` |
+| `internal/database/sql/migrate/01_lock.sql` | `929ae9b7a47487787374a460c91dd57e6a2baa1b46d50507e3f8c29323cc9cd9` |
+| `internal/database/sql/migrate/02_journal.sql` | `b267b8e35d8ada0eaf958f90a6c37b5b7cb86a1fc7b1e4012f278f894a04cfea` |
+| `internal/database/sql/migrate/03_history.sql` | `103260f406b5760b772e1200b94715519d84238759e6fe91666afbcaf526d934` |
+| `internal/database/sql/migrate/04_record.sql` | `936081fca0ec5c20fd8240d922510f28517d6d7daeb62f77603d140ff826831b` |
+| `internal/database/sql/migrate/05_application_access.sql` | `bbb80d3b0d6d0bf540311747de37cf0ca033ec065c9b6cd09fa843840e098e37` |
 
 ## Полные самостоятельные приложения
 
@@ -2732,16 +3146,16 @@ SHA-256 относится к исходному файлу на момент с
 - [Smoke report](#go-smoke-report) — `internal/smoke/report.go`
 - [Smoke container checks](#go-smoke-checks) — `internal/smoke/checks.go`
 - [Compose shutdown preflight](#go-smoke-config) — `internal/smoke/config.go`
-- [Bounded command output](#go-smoke-exec) — `internal/smoke/exec.go`
-- [Unix command process groups](#go-smoke-unix) — `internal/smoke/exec_unix.go`
-- [Windows command jobs](#go-smoke-windows) — `internal/smoke/exec_windows.go`
+- [Bounded command output](#go-smoke-exec) — `internal/command/exec.go`
+- [Unix command process groups](#go-smoke-unix) — `internal/command/exec_unix.go`
+- [Windows command jobs](#go-smoke-windows) — `internal/command/exec_windows.go`
 - [Smoke failure and cancellation tests](#go-smoke-run-tests) — `internal/smoke/run_test.go`
 - [Shutdown budget tests](#go-smoke-config-tests) — `internal/smoke/config_test.go`
-- [Command tree cancellation tests](#go-smoke-exec-tests) — `internal/smoke/exec_test.go`
+- [Command tree cancellation tests](#go-smoke-exec-tests) — `internal/command/exec_test.go`
 - [Documentation path hygiene](#doc-path-hygiene) — `tools/doc_safety.mjs`
 - [Path hygiene examples](#doc-path-hygiene-tests) — `tools/doc_safety.test.mjs`
 - [Host CLI SIGINT regression](#go-smoke-cli-interrupt) — `tests/smokecli/interrupt_test.go`
-- [Unix orphan plugin lifecycle regression](#source-smoke-exec-unix-test) — `internal/smoke/exec_unix_test.go`
+- [Unix orphan plugin lifecycle regression](#source-smoke-exec-unix-test) — `internal/command/exec_unix_test.go`
 - [Go smoke evidence: go-equivalence-report.json](#go-smoke-evidence-go-equivalence-report) — `docs/development/evidence/go-smoke/go-equivalence-report.json`
 - [Go smoke evidence: go-smoke-equivalence.json](#go-smoke-evidence-go-smoke-equivalence) — `docs/development/evidence/go-smoke/go-smoke-equivalence.json`
 - [Go smoke evidence: go-smoke-preflight.json](#go-smoke-evidence-go-smoke-preflight) — `docs/development/evidence/go-smoke/go-smoke-preflight.json`
@@ -2755,6 +3169,52 @@ SHA-256 относится к исходному файлу на момент с
 - [Go smoke evidence: windows-final-payments.jsonl](#go-smoke-evidence-windows-final-payments) — `docs/development/evidence/go-smoke/windows-final-payments.jsonl`
 - [Go smoke evidence: windows-final-report.json](#go-smoke-evidence-windows-final-report) — `docs/development/evidence/go-smoke/windows-final-report.json`
 - [Go smoke evidence: windows-interrupt-report.json](#go-smoke-evidence-windows-interrupt-report) — `docs/development/evidence/go-smoke/windows-interrupt-report.json`
+- [docs/development/evidence/p02/windows-runtime-report.json](#p02-docs-development-evidence-p02-windows-runtime-report-json) — `docs/development/evidence/p02/windows-runtime-report.json`
+- [docs/development/evidence/p02/windows-cleanup.json](#p02-docs-development-evidence-p02-windows-cleanup-json) — `docs/development/evidence/p02/windows-cleanup.json`
+- [docs/development/evidence/p02/windows-postgres-report.json](#p02-docs-development-evidence-p02-windows-postgres-report-json) — `docs/development/evidence/p02/windows-postgres-report.json`
+- [docs/development/evidence/p02/postgres-image.json](#p02-docs-development-evidence-p02-postgres-image-json) — `docs/development/evidence/p02/postgres-image.json`
+- [docs/development/evidence/p02/POSTGRES.md](#p02-docs-development-evidence-p02-postgres-md) — `docs/development/evidence/p02/POSTGRES.md`
+- [internal/command/command.go](#p02-internal-command-command-go) — `internal/command/command.go`
+- [internal/database/migrate.go](#p02-internal-database-migrate-go) — `internal/database/migrate.go`
+- [internal/database/integration_test.go](#p02-internal-database-integration-test-go) — `internal/database/integration_test.go`
+- [Data checksum](#p02-internal-database-checksum-go) — `internal/database/checksum.go`
+- [internal/database/config_test.go](#p02-internal-database-config-test-go) — `internal/database/config_test.go`
+- [internal/database/config.go](#p02-internal-database-config-go) — `internal/database/config.go`
+- [internal/database/bootstrap.go](#p02-internal-database-bootstrap-go) — `internal/database/bootstrap.go`
+- [configs/postgres/local.json](#p02-configs-postgres-local-json) — `configs/postgres/local.json`
+- [cmd/labdata/main_test.go](#p02-cmd-labdata-main-test-go) — `cmd/labdata/main_test.go`
+- [cmd/labdata/main.go](#p02-cmd-labdata-main-go) — `cmd/labdata/main.go`
+- [migrations/inventory/0002_catalog.sql](#p02-migrations-inventory-0002-catalog-sql) — `migrations/inventory/0002_catalog.sql`
+- [migrations/inventory/0001_schema.sql](#p02-migrations-inventory-0001-schema-sql) — `migrations/inventory/0001_schema.sql`
+- [migrations/embed.go](#p02-migrations-embed-go) — `migrations/embed.go`
+- [internal/database/sql/seed/inventory.sql](#p02-internal-database-sql-seed-inventory-sql) — `internal/database/sql/seed/inventory.sql`
+- [migrations/orders/0001_schema.sql](#p02-migrations-orders-0001-schema-sql) — `migrations/orders/0001_schema.sql`
+- [migrations/payments/0001_schema.sql](#p02-migrations-payments-0001-schema-sql) — `migrations/payments/0001_schema.sql`
+- [internal/datalab/run_test.go](#p02-internal-datalab-run-test-go) — `internal/datalab/run_test.go`
+- [internal/datalab/run.go](#p02-internal-datalab-run-go) — `internal/datalab/run.go`
+- [compose.postgres.yaml](#p02-compose-postgres-yaml) — `compose.postgres.yaml`
+- [internal/smoke/exec_adapter.go](#p02-internal-smoke-exec-adapter-go) — `internal/smoke/exec_adapter.go`
+- [docs/development/POSTGRES.md](#p02-docs-development-postgres-md) — `docs/development/POSTGRES.md`
+- [POSIX restrictive umask credential regression](#p02-config-unix-tests) — `internal/database/config_unix_test.go`
+- [docs/PRODUCT_INTENT.md](#p02-review-docs-product-intent-md) — `docs/PRODUCT_INTENT.md`
+- [internal/database/migration_files.go](#p02-review-internal-database-migration-files-go) — `internal/database/migration_files.go`
+- [internal/database/scripts.go](#p02-review-internal-database-scripts-go) — `internal/database/scripts.go`
+- [internal/database/seed.go](#p02-review-internal-database-seed-go) — `internal/database/seed.go`
+- [docs/development/evidence/p02/windows-sql-review-report.json](#p02-review-docs-development-evidence-p02-windows-sql-review-report-json) — `docs/development/evidence/p02/windows-sql-review-report.json`
+- [internal/database/sql/bootstrap/01_lock.sql](#p02-review-internal-database-sql-bootstrap-01-lock-sql) — `internal/database/sql/bootstrap/01_lock.sql`
+- [internal/database/sql/bootstrap/02_create_role.sql](#p02-review-internal-database-sql-bootstrap-02-create-role-sql) — `internal/database/sql/bootstrap/02_create_role.sql`
+- [internal/database/sql/bootstrap/03_configure_role.sql](#p02-review-internal-database-sql-bootstrap-03-configure-role-sql) — `internal/database/sql/bootstrap/03_configure_role.sql`
+- [internal/database/sql/bootstrap/04_role_memberships.sql](#p02-review-internal-database-sql-bootstrap-04-role-memberships-sql) — `internal/database/sql/bootstrap/04_role_memberships.sql`
+- [internal/database/sql/bootstrap/05_database_owner.sql](#p02-review-internal-database-sql-bootstrap-05-database-owner-sql) — `internal/database/sql/bootstrap/05_database_owner.sql`
+- [internal/database/sql/bootstrap/06_create_database.sql](#p02-review-internal-database-sql-bootstrap-06-create-database-sql) — `internal/database/sql/bootstrap/06_create_database.sql`
+- [internal/database/sql/bootstrap/07_database_access.sql](#p02-review-internal-database-sql-bootstrap-07-database-access-sql) — `internal/database/sql/bootstrap/07_database_access.sql`
+- [internal/database/sql/bootstrap/08_public_schema.sql](#p02-review-internal-database-sql-bootstrap-08-public-schema-sql) — `internal/database/sql/bootstrap/08_public_schema.sql`
+- [internal/database/sql/bootstrap/09_maintenance_access.sql](#p02-review-internal-database-sql-bootstrap-09-maintenance-access-sql) — `internal/database/sql/bootstrap/09_maintenance_access.sql`
+- [internal/database/sql/migrate/01_lock.sql](#p02-review-internal-database-sql-migrate-01-lock-sql) — `internal/database/sql/migrate/01_lock.sql`
+- [internal/database/sql/migrate/02_journal.sql](#p02-review-internal-database-sql-migrate-02-journal-sql) — `internal/database/sql/migrate/02_journal.sql`
+- [internal/database/sql/migrate/03_history.sql](#p02-review-internal-database-sql-migrate-03-history-sql) — `internal/database/sql/migrate/03_history.sql`
+- [internal/database/sql/migrate/04_record.sql](#p02-review-internal-database-sql-migrate-04-record-sql) — `internal/database/sql/migrate/04_record.sql`
+- [internal/database/sql/migrate/05_application_access.sql](#p02-review-internal-database-sql-migrate-05-application-access-sql) — `internal/database/sql/migrate/05_application_access.sql`
 
 <a id="appendix-readme-en"></a>
 
@@ -2763,7 +3223,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
 </p>
 
 <p align="center">
@@ -2781,7 +3241,7 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Project guide
@@ -2876,7 +3336,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience |
 | **G4** | Reproducible engineering lab |
 
-The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
 
 [Engineering decisions and review](#appendix-engineering-decisions) traces owner feedback through the rationale, changes and verification. It also links the separate [Go smoke task](https://github.com/Includeoyasi/faultline-lab/issues/9); its execution and review are tracked in GitHub.
 
@@ -2898,17 +3358,19 @@ faultline-lab/
 │   ├── experiments/            # Experiment report template
 │   ├── adr/                    # Recorded decisions and approvals
 │   └── assets/                 # Repository visuals
-├── cmd/                        # Orders, Inventory and Payments entrypoints
+├── cmd/                        # Business service and host-tool entrypoints
 ├── internal/service/           # Shared configuration, logging and gRPC startup
-├── configs/env/                # Explicit local/container environment examples
+├── configs/                    # Explicit service and database configuration
+├── migrations/                 # Versioned SQL and repeatable Inventory seed
 ├── tests/smoke/                # Real process health and isolation checks
 ├── build/                      # Pinned toolchain image
-├── compose.yaml                # Temporary toolchain service
+├── compose.yaml                # Three services and temporary toolchain
+├── compose.postgres.yaml       # PostgreSQL and temporary dbtool overlay
 ├── tools/                      # Go commands, context and documentation checks
 └── .github/                    # Documentation CI and review templates
 ```
 
-Compose now defines three runtime services and the temporary toolchain profile; see the [runtime guide](#appendix-container-runtime). The [roadmap](#appendix-roadmap) contains the planned code layout.
+Compose now defines three runtime services and the temporary toolchain profile; see the [runtime guide](#appendix-container-runtime). The [PostgreSQL guide](#p02-docs-development-postgres-md) explains roles, migrations, seed and reset with interaction diagrams. The [roadmap](#appendix-roadmap) contains the planned code layout.
 
 #### Working with this snapshot
 
@@ -2939,7 +3401,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
 </p>
 
 <p align="center">
@@ -2957,7 +3419,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Навигация по проекту
@@ -3041,7 +3503,7 @@ flowchart LR
 
 G0 — архитектура; G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Порядок и критерии приёмки описаны в workflow; факты принятия сохраняются с датой и источником.
 
-[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
 
 [Инженерные решения и ревью](#appendix-engineering-decisions) связывают замечания владельца с обоснованием, изменениями и проверками. Выполнение переноса контейнерного smoke на Go и его ревью ведутся в [задаче #9](https://github.com/Includeoyasi/faultline-lab/issues/9).
 
@@ -3069,6 +3531,8 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 
 После изменения источников обнови `CONTEXT_STATE.json`, увеличь ревизию и выполни `pwsh -NoProfile -File tools/update_context.ps1`, затем проверки. Настройки сервисов и process smoke описаны в [инструкции запуска](#appendix-service-runtime).
 
+Подготовка баз, права, миграции, повторяемый seed и явный сброс описаны в [инструкции PostgreSQL со схемами](#p02-docs-development-postgres-md).
+
 #### Лицензия
 
 [MIT](#appendix-license) · Copyright © 2026 Dmitrii Morozov.
@@ -3088,12 +3552,14 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Задача читателя | Маршрут |
 | :--- | :--- |
 | Быстро оценить проект | [README](#appendix-readme-ru) → [Дизайн](#appendix-design-review) → [Roadmap](#appendix-roadmap) |
+| Понять цели владельца | [Заметки об использовании](#p02-review-docs-product-intent-md) — цели, примеры и ограничения из обсуждений |
 | Проверить распределённый процесс | [Атлас G0](#appendix-g0-processes) → [Принятие G0](#appendix-adr-0001) |
 | Разобрать подключение другого бизнеса | [Граница лаборатории](#appendix-lab-boundary) — согласованное направление и детализация для ревью |
 | Подготовить среду Windows/macOS | [Контейнерная среда](#appendix-environment) — состав, профили и статус проверок |
 | Собрать и проверить первые Go-бинарники | [Toolchain P01-01](#appendix-toolchain) — версии, Docker-команды и границы проверок |
 | Запустить и проверить три процесса | [Запуск сервисов](#appendix-service-runtime) — настройки, JSON, health и границы shutdown |
 | Поднять три runtime-контейнера | [Контейнерный каркас](#appendix-container-runtime) — сборка, health, остановка и smoke с отчётом |
+| Подготовить базы и исходные данные | [PostgreSQL](#p02-docs-development-postgres-md) — роли, миграции, seed, схемы взаимодействий и reset |
 | Проверить Windows smoke | [Отчёт P01](#windows-smoke-proof) — исходные JSON/JSONL, бюджет и остановка среды |
 | Проверить исходные ресурсы | [Профили сред](#appendix-resource-profiles) — Windows, macOS и возможный будущий сервер |
 | Посмотреть оформление | [Концепции баннера](#appendix-banner-options) — три варианта и выбранное решение |
@@ -3105,7 +3571,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Проверить отдельный backlog | [Перенос smoke на Go](#appendix-go-smoke-backlog) — задача #9, границы и критерии |
 | Проверить права и защиту main | [Безопасность репозитория](#appendix-repository-security) — действующая защита и переход на аккаунт исполнителя |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
@@ -3120,7 +3586,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
 - [ADR 0002](#appendix-adr-0002): согласованный порядок фиксации решений в PR, ADR и обзорной странице.
 - [ADR 0003](#appendix-adr-0003): принятое решение о Go smoke и его последствия.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -4213,11 +4679,13 @@ Codex (AI-Your-Bro) — исполнитель: готовит проектны�
 
 Обычные исправления по ревью выполняются в рамках того же пакета. После исправлений повторяются проверки, затронутые изменением. Невыполненные проверки явно обозначаются как невыполненные; объясняется причина и что необходимо для их запуска.
 
+Найденные по ходу работы недостатки фиксируются коротким списком в текущем Issue или PR: что обнаружено, какое действие нужно, статус и ссылка на результат с проверкой. Этот порядок поручен владельцем в голосовом обсуждении 18 октября 2026 года. Для небольшой находки внутри задачи отдельный Issue не требуется; обновляется существующая запись. Статусы различают обнаружение, план исправления, работу и проверенное исправление. Находка за пределами согласованного объёма отмечается отдельно и не расширяет задачу автоматически. Рабочий список остаётся в GitHub и не дублируется в переносимом контексте.
+
 [Спецификации пакетов](#appendix-p02) описывают границы и критерии. Актуальные задачи, блокеры и ревью ведутся только в [GitHub](https://github.com/Includeoyasi/faultline-lab/issues); документы не дублируют текущий прогресс.
 
 #### Стандарт код-ревью
 
-[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/.github/pull_request_template.md) содержит краткий применимый чек-лист.
 
 После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; владелец проекта рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению владельца проекта или действие самого владельца проекта.
 
@@ -4408,7 +4876,7 @@ PROJECT_CONTEXT.md — самостоятельный пакет для друг
 
 - The human is the project owner and reviewer. Codex, authenticated as AI-Your-Bro, is the executor. Other AI agents are positioned as potential users, subscribers or testers; do not assign them implementation work.
 - Read PROJECT_CONTEXT.md for specifications, decisions and dated evidence, docs/development/WORKFLOW.md for review rules, and docs/ROADMAP.md for scope. Live task, blocker and review status belongs only in GitHub Issues/PRs/milestones; do not maintain duplicate progress boards in Markdown or JSON.
-- Follow the latest explicit owner instruction. A planning discussion alone does not authorize publication or implementation. On 2026-10-16 the owner explicitly selected issue #9 and F02/F04/F07/F08 from #20 for implementation and a review PR. The other audit findings retain their agreed checkpoints; P02 infrastructure implementation is not included in this instruction.
+- Follow the latest explicit owner instruction. A planning discussion alone does not authorize publication or implementation. On 2026-10-16, after merging PR #21, the owner explicitly assigned issue #12 (PostgreSQL foundation) and requested detailed explanations and interaction diagrams. The owner also requested removal of obsolete test images and prevention of their accumulation. Issue #16 and the remaining audit findings retain their agreed checkpoints.
 - Verify the authenticated actor before every GitHub mutation/publication: it must be AI-Your-Bro. Git author metadata is insufficient. Use the project owner's credentials only for explicitly authorized repository administration, never to publish or approve executor changes.
 - main requires independent owner approval, approval after the last push, dismissal of stale reviews, current successful Documentation and Go toolchain AMD64/ARM64 checks, resolved conversations and administrator enforcement. Do not weaken protection, force-push main or approve/merge your own changes. CODEOWNERS assigns Includeoyasi. See docs/development/REPOSITORY_SECURITY.md; the owner declined 2FA and must not be asked again without new cause.
 - G0 was fully approved on 2026-10-13, Europe/Moscow: “G0 полностью принят.” Approved service boundaries and invariants are in docs/architecture/DESIGN.md and PROCESSES.md. Do not ask for G0 approval again. G0–G4 are acceptance gates; P01–P05 are implementation packets. P01 is between G0 and G1; acceptance of a PR does not automatically accept a gate.
@@ -4418,11 +4886,12 @@ PROJECT_CONTEXT.md — самостоятельный пакет для друг
 - Follow docs/development/CODE_REVIEW.md. Address lifecycle, errors/context, concurrency, data ownership and meaningful tests. Never report a test, measurement or approval that did not occur. Compile-only results do not establish runtime compatibility.
 - Addresses belong to deployment configuration. FL_GRPC_ADDR is required, with no hidden listen address or port fallback. Keep listener, peer DNS and host publication separate; host publication must bind loopback explicitly. Test loopback fixtures and observed addresses are not production defaults.
 - Use clear PR headings such as “Что было сделано”, “Проверки” and “На что обратить внимание”. Explain observable behavior and evidence. Do not use the rejected question-style heading.
+- Record findings discovered during a task in a concise list in its existing GitHub Issue/PR: observation, required action, status and verified result. Update one list instead of creating an Issue for every small finding. Do not call planned work completed or silently expand scope. This owner instruction comes from voice chat on 2026-10-18.
 - Working review discussion belongs in PRs, substantial decisions in ADRs and selected examples in docs/development/ENGINEERING_DECISIONS.md. Attribute chat requirements to the owner and identify chat as their source; do not impersonate owner GitHub comments or approval.
 - After a substantive decision, implementation result or environment check, update the canonical specifications and dated evidence in CONTEXT_STATE.json, increment its revision and regenerate PROJECT_CONTEXT.md with tools/update_context.ps1, then run -CheckOnly. Do not edit only the generated file. Do not copy live task stages, counters or assignments into context.
 - Snapshot resource links use repository.snapshot_ref, an existing full source commit SHA. Keep live navigation separate. Commit source materials first, then record their SHA and regenerate the context; do not invent a future self-referencing commit hash.
 - Context supplied to an offline user/tester is a dated snapshot. They must not infer live task status from it or claim changes/checks on the source machine. New evidence is reconciled by revision and provenance.
-- On the owner's personal Windows computer, stop task-owned containers, quit Docker Desktop and stop its WSL VM after checks. Keep Docker autostart disabled, verify shutdown, preserve unrelated workloads, installed tools, images and useful caches. Never use global prune as test cleanup.
+- On the owner's personal Windows computer, stop task-owned containers, quit Docker Desktop and stop its WSL VM after checks. Keep Docker autostart disabled and verify shutdown. Remove disposable run-specific images, including after build failure/cancellation; verify their tags are gone. Preserve unrelated workloads, installed tools, current reusable images and useful caches. Never use global prune as test cleanup. This cleanup refinement follows the owner's explicit instruction on 2026-10-16.
 
 <a id="appendix-adr-0001"></a>
 
@@ -4476,7 +4945,7 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
+Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
@@ -4675,7 +5144,7 @@ Go-модуль, закреплённые инструменты и нативн
 - Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
 - Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
 
-Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
 
 <a id="appendix-lab-boundary"></a>
 
@@ -4892,9 +5361,9 @@ Docker рекомендует разделять ответственности 
 
 #### Что известно о текущем компьютере
 
-Последняя проверка 15 октября: Windows x64, PowerShell 7.6.5; Go1.27.2, Docker Desktop4.95/Engine29.8.2/Compose5.6 и WSL2.7.13 установлены. Windows container smoke P01 PASS; после него Docker/WSL выключены. Подготовка плана P02 не запускает runtime.
+Установка проверена 15 октября: Windows x64, PowerShell 7.6.5; Go1.27.2, Docker Desktop4.95/Engine29.8.2/Compose5.6 и WSL2.7.13 установлены. Windows container smoke P01 PASS; после него Docker/WSL выключены. 16 октября выполнен [полный PostgreSQL smoke](#p02-docs-development-evidence-p02-postgres-md) в том же WSL-бюджете.
 
-Характеристики Windows-хоста и подтверждённый WSL-бюджет 2 CPU / memory=2GB / swap=1GB сохранены в [ресурсных профилях](#appendix-resource-profiles). Достаточность этого бюджета для P02 ещё не измерена; macOS-окружение также не проверено. Возможный арендуемый сервер рассматривается позже при необходимости; он не выбран. Docker делает сборку и конфигурацию переносимыми, но одинаковой производительности разных компьютеров не обещает.
+Характеристики Windows-хоста и подтверждённый WSL-бюджет 2 CPU / memory=2GB / swap=1GB сохранены в [ресурсных профилях](#appendix-resource-profiles). PostgreSQL foundation прошёл функциональные проверки в этом бюджете; полный состав Kafka/Redis и нагрузочные эксперименты ещё не измерены; macOS-окружение также не проверено. Возможный арендуемый сервер рассматривается позже при необходимости; он не выбран. Docker делает сборку и конфигурацию переносимыми, но одинаковой производительности разных компьютеров не обещает.
 
 Для A/B по умолчанию используется одна машина с одинаковым бюджетом и нативной архитектурой. Сравнение между Windows и macOS возможно как отдельный эксперимент с явными ограничениями. В manifest сохраняются архитектура CPU, аппаратные ресурсы, OS, Docker, volumes, image digests и фактические лимиты.
 
@@ -4902,7 +5371,7 @@ Docker рекомендует разделять ответственности 
 
 ##### Личный компьютер после проверки
 
-По поручению владельца среда запускается по необходимости. После smoke контейнеры/сеть удалены, Docker Desktop и WSL VM остановлены; автозапуск Docker выключен. Go, Docker, WSL, образы и полезные кеши сохранены. WSL ограничен 2 CPU, memory=2GB, swap=1GB. Нового измерения бизнес-производительности это не заменяет.
+По поручению владельца среда запускается по необходимости. После smoke контейнеры/сеть удалены, Docker Desktop и WSL VM остановлены; автозапуск Docker выключен. Go, Docker, WSL, актуальные общие образы и полезные кеши сохраняются. По уточнению владельца 16 октября образы одноразовых smoke-прогонов удаляются, их отсутствие проверяется; общий prune не применяется. WSL ограничен 2 CPU, memory=2GB, swap=1GB. Нового измерения бизнес-производительности это не заменяет.
 
 <a id="appendix-resource-profiles"></a>
 
@@ -4967,13 +5436,13 @@ Docker рекомендует разделять ответственности 
 
 ### Баннер Faultline Lab
 
-Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/docs/assets/banner.svg).
+Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/assets/banner.svg).
 
 #### Задание
 
 Подготовить три альтернативных варианта с акцентом на технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее. Сделаны векторные композиции с читаемым названием, тёмным текстом на светлом фоне и встроенными title/description. Внешних шрифтов, скриптов и удалённых графических зависимостей нет.
 
-![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/docs/assets/banner-concepts/comparison.png)
+![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/assets/banner-concepts/comparison.png)
 
 | Вариант | Образ | Палитра | Статус |
 | :--- | :--- | :--- | :--- |
@@ -4983,13 +5452,13 @@ Docker рекомендует разделять ответственности 
 
 #### Выбранное решение
 
-![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/docs/assets/banner-concepts/02-experiment-flow.png)
+![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/assets/banner-concepts/02-experiment-flow.png)
 
 Абстрактные линии проходят через область наблюдения. Это метафора исследования поведения системы и сравнения изменений; линии не являются графиком измеренных результатов. Композиция не зависит от домена магазина и подходит будущим подключаемым бизнесам.
 
 Размер SVG — 1280 × 420; README задаёт ширину 100%. Исходник масштабируется, PNG служит предварительным просмотром. Основная подпись: **Explore how systems behave.** Нижняя последовательность: **Hypothesis → Experiment → Evidence**.
 
-Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
+Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
 
 Баннеры отрендерены локально и визуально просмотрены на общем листе. Проверены отсутствие обрезанного текста и соответствие композиций заданию. Отдельный preview выбранного варианта используется для проверки основного баннера. Выбранный вариант слит в main через [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4), merge commit 8c392b8. Проверка отрисовки нового README на GitHub пока не выполнялась.
 
@@ -5127,7 +5596,7 @@ P01 не достигает всей контрольной точки G1: ба�
 | GitHub Issue | Текущая стадия, исполнитель, критерии выполнения, блокеры и связь с PR |
 | GitHub PR | Diff, результаты проверок, замечания и решение владельца по HEAD |
 | ADR | Существенное решение, варианты, последствия и основание принятия |
-| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
+| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
 
 #### Стадии в Issue
 
@@ -5244,7 +5713,7 @@ GitHub разрешает machine account, зарегистрированный 
 
 Версии проверены по официальным источникам 15 октября 2026 года: [Go releases](https://go.dev/dl/), [golangci-lint releases](https://github.com/golangci/golangci-lint/releases/tag/v2.14.0), Go module proxy и Docker Registry. Оба закреплённых digest относятся к multi-platform индексам, а не к одному варианту CPU.
 
-gRPC v1.84.0 добавлен для реального health API в P01-04; версия проверена через официальный Go proxy. JSON-логи использует стандартный log/slog. Инструменты закреплены через [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools). SQL/Kafka/Redis библиотеки добавляются при первом использовании.
+gRPC v1.84.0 добавлен для реального health API в P01-04; версия проверена через официальный Go proxy. JSON-логи использует стандартный log/slog. Инструменты закреплены через [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools). PostgreSQL использует pgx v5.11.0; Kafka/Redis библиотеки добавляются при первом использовании.
 
 #### Основной путь Windows и macOS
 
@@ -5263,6 +5732,8 @@ docker compose run --rm toolchain service-smoke
 `build` создаёт Linux-бинарники bin/orders, bin/inventory, bin/payments для архитектуры toolchain-контейнера и выводит build metadata. Они игнорируются Git. На Windows эти Linux-бинарники не запускаются напрямую. `service-smoke` собирает и проверяет три отдельных процесса: health, JSON-диагностику ошибок, выход и независимость. Unit/process tests, graceful drain и runtime-контейнеры реализованы и проверены; бизнес-процессы остаются следующими пакетами. Прежний bootstrap-smoke удалён: сервисы больше не завершаются сразу после запуска.
 
 Для осознанного исправления форматирования: `docker compose run --rm toolchain format`. Эта команда меняет Go-исходники в рабочей копии; check их не меняет. Неподдерживаемая команда и лишние аргументы дают exit code 2.
+
+`data-build` собирает host CLI для [подготовки PostgreSQL](#p02-docs-development-postgres-md); `data-cross-check` проверяет компиляцию для Windows AMD64, Linux AMD64/ARM64 и macOS AMD64/ARM64. Host OS/архитектура задаются через GOOS/GOARCH.
 
 Toolchain — временный сервис профиля tools. Явный `compose run toolchain` активирует его; команды не поднимают PostgreSQL/Kafka/Redis или runtime сервисов. Shell-скрипт выполняется внутри Linux-контейнера. Исходники подключаются из относительного пути, кеши модулей и сборки — в отдельных named volumes. Используются стандартные capabilities Docker для записи в bind mount; privileged mode и Docker socket не включены, no-new-privileges включён. Ограничения runtime-контейнеров сервисов описаны отдельно в [контейнерном каркасе](#appendix-container-runtime).
 
@@ -5293,11 +5764,14 @@ tool (
 )
 
 require (
+	github.com/jackc/pgx/v5 v5.11.0
 	golang.org/x/sys v0.49.0
 	google.golang.org/grpc v1.84.0
 )
 
 require (
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	golang.org/x/mod v0.42.0 // indirect
 	golang.org/x/net v0.61.0 // indirect
 	golang.org/x/sync v0.24.0 // indirect
@@ -5317,6 +5791,9 @@ require (
 Полный исходный документ: `go.sum`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```text
+github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
+github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/golang/protobuf v1.5.4 h1:i7eJL8qZTpSEXOPTxNKhASYpMn+8e5Q6AdndVa1dWek=
 github.com/golang/protobuf v1.5.4/go.mod h1:lnTiLA8Wa4RWRcIUkrtSVa5nRhsEGBg48fD6rSs7xps=
 github.com/google/go-cmdtest v0.4.1-0.20220921163831-55ab3332a786 h1:rcv+Ippz6RAtvaGgKxc+8FQIpxHgsF+HBzPyYL2cyVU=
@@ -5325,6 +5802,21 @@ github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
 github.com/google/go-cmp v0.7.0/go.mod h1:pXiqmnSA92OHEEa9HXL2W4E7lf9JzCmGVUdgjX3N/iU=
 github.com/google/renameio v0.1.0 h1:GOZbcHa3HfsPKPlmyPyN2KEohoMXOhdMbHrvbpl2QaA=
 github.com/google/renameio v0.1.0/go.mod h1:KWCgfxg9yswjAJkECMjeO8J8rahYeXnNhOm40UhjYkI=
+github.com/jackc/pgpassfile v1.0.0 h1:/6Hmqy13Ss2zCq62VdNG8tM1wchn8zjSGOBJ6icpsIM=
+github.com/jackc/pgpassfile v1.0.0/go.mod h1:CEx0iS5ambNFdcRtxPj5JhEz+xB6uRky5eyVu/W2HEg=
+github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 h1:iCEnooe7UlwOQYpKFhBabPMi4aNAfoODPEFNiAnClxo=
+github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761/go.mod h1:5TJZWKEWniPve33vlWYSoGYefn3gLQRzjfDlhSJ9ZKM=
+github.com/jackc/pgx/v5 v5.11.0 h1:IzBBtyK9AHqf98cctWFifYSci2hgQR/cd56wB4p+ogg=
+github.com/jackc/pgx/v5 v5.11.0/go.mod h1:mal1tBGAFfLHvZzaYh77YS/eC6IX9OWbRV1QIIM0Jn4=
+github.com/jackc/puddle/v2 v2.2.2 h1:PR8nw+E/1w0GLuRFSmiioY6UooMp6KJv0/61nB7icHo=
+github.com/jackc/puddle/v2 v2.2.2/go.mod h1:vriiEXHvEE654aYKXXjOvZM39qJ0q+azkZFrfEOc3H4=
+github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
+github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
+github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
+github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
+github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu7U=
+github.com/stretchr/testify v1.11.1/go.mod h1:wZwfW3scLgRK+23gO65QZefKpKQRnfz6sD981Nm4B6U=
 golang.org/x/mod v0.42.0 h1:ICeL3t2L30ljSPHHxDnR4fqVcBt/zR2zJAb9juavmQg=
 golang.org/x/mod v0.42.0/go.mod h1:u5fzIrRInkL8MaO1cbRkUHT64v303YIT5KEqpNr7jRs=
 golang.org/x/net v0.61.0 h1:RR+6j/BTBCrggOLugxa+66R8FvoN6MHlzDlZIbN9YFw=
@@ -5353,6 +5845,10 @@ google.golang.org/grpc v1.84.0 h1:soMyaPJ8pAak5PIQ0DGBUir0XRo2fRoMqhNWMLlLxO0=
 google.golang.org/grpc v1.84.0/go.mod h1:ljCht0DrxQrXBDRTZp52Qxh3Ffk8CdYm2sj4O2QN2C0=
 google.golang.org/protobuf v1.36.11 h1:fV6ZwhNocDyBLK0dj+fg8ektcVegBBuEolpbTQyBNVE=
 google.golang.org/protobuf v1.36.11/go.mod h1:HTf+CrKn2C3g5S8VImy6tdcUvCska2kB7j23XfzDpco=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
+gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
+gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
+gopkg.in/yaml.v3 v3.0.1/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
 ```
 
 <a id="appendix-orders-main"></a>
@@ -5459,6 +5955,7 @@ FROM toolchain AS service-build
 ARG SERVICE
 COPY cmd ./cmd
 COPY internal ./internal
+COPY migrations ./migrations
 RUN case "$SERVICE" in orders|inventory|payments) ;; *) exit 2 ;; esac \
     && CGO_ENABLED=0 go build -trimpath -o /out/service "./cmd/$SERVICE"
 
@@ -5467,6 +5964,19 @@ COPY --from=service-build /out/service /app/service
 USER 65532:65532
 STOPSIGNAL SIGTERM
 ENTRYPOINT ["/app/service"]
+
+FROM toolchain AS labdata-build
+COPY cmd ./cmd
+COPY internal ./internal
+COPY migrations ./migrations
+RUN CGO_ENABLED=0 go build -trimpath -o /out/labdata ./cmd/labdata \
+    && CGO_ENABLED=0 go test -c -o /out/database.test ./internal/database
+
+FROM scratch AS labdata
+COPY --from=labdata-build /out/labdata /app/labdata
+COPY --from=labdata-build /out/database.test /app/database.test
+USER 65532:65532
+ENTRYPOINT ["/app/labdata"]
 ```
 
 <a id="appendix-compose-toolchain"></a>
@@ -5551,7 +6061,7 @@ networks:
 set -eu
 
 if [ "$#" -gt 1 ]; then
-  echo "usage: lab-go {versions|build|check|format|service-smoke|smoke-build|smoke-cross-check|smoke-cli-tests}" >&2
+  echo "usage: lab-go {versions|build|check|format|service-smoke|smoke-build|smoke-cross-check|smoke-cli-tests|data-build|data-cross-check}" >&2
   exit 2
 fi
 
@@ -5570,7 +6080,8 @@ build() {
   done
 }
 
-smoke_build() {
+host_build() {
+  command_name=$1
   target_os=${GOOS:-$(go env GOOS)}
   target_arch=${GOARCH:-$(go env GOARCH)}
   case "$target_os/$target_arch" in
@@ -5580,7 +6091,7 @@ smoke_build() {
   extension=
   if [ "$target_os" = windows ]; then extension=.exe; fi
   mkdir -p bin
-  CGO_ENABLED=0 GOOS="$target_os" GOARCH="$target_arch" go build -trimpath -o "bin/smoke-$target_os-$target_arch$extension" ./cmd/smoke
+  CGO_ENABLED=0 GOOS="$target_os" GOARCH="$target_arch" go build -trimpath -o "bin/$command_name-$target_os-$target_arch$extension" "./cmd/$command_name"
 }
 
 source_files() {
@@ -5623,11 +6134,19 @@ case "${1:-versions}" in
     LAB_BIN_DIR=/workspace/bin go test -count=1 -v -timeout=2m ./tests/smoke
     ;;
   smoke-build)
-    smoke_build
+    host_build smoke
     ;;
   smoke-cross-check)
     for target in windows/amd64 linux/amd64 linux/arm64 darwin/amd64 darwin/arm64; do
-      GOOS=${target%/*} GOARCH=${target#*/} smoke_build
+      GOOS=${target%/*} GOARCH=${target#*/} host_build smoke
+    done
+    ;;
+  data-build)
+    host_build labdata
+    ;;
+  data-cross-check)
+    for target in windows/amd64 linux/amd64 linux/arm64 darwin/amd64 darwin/arm64; do
+      GOOS=${target%/*} GOARCH=${target#*/} host_build labdata
     done
     ;;
   smoke-cli-tests)
@@ -5635,7 +6154,7 @@ case "${1:-versions}" in
     CGO_ENABLED=0 go test -c -o bin/smoke-cli-tests ./tests/smokecli
     ;;
   *)
-    echo "usage: lab-go {versions|build|check|format|service-smoke|smoke-build|smoke-cross-check|smoke-cli-tests}" >&2
+    echo "usage: lab-go {versions|build|check|format|service-smoke|smoke-build|smoke-cross-check|smoke-cli-tests|data-build|data-cross-check}" >&2
     exit 2
     ;;
 esac
@@ -5726,12 +6245,27 @@ jobs:
       - name: Cross-compile smoke for supported host platforms
         if: matrix.arch == 'amd64'
         run: docker compose run --rm toolchain smoke-cross-check
+      - name: Verify PostgreSQL roles, migrations, seed and persistence
+        run: |
+          docker compose run --rm toolchain data-build
+          bin/labdata-linux-${{ matrix.arch }} smoke
+      - name: Cross-compile data tool for supported hosts
+        if: matrix.arch == 'amd64'
+        run: docker compose run --rm toolchain data-cross-check
       - name: Retain smoke reports and diagnostics
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: runtime-smoke-${{ matrix.arch }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: artifacts/smoke/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Retain PostgreSQL evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: postgres-${{ matrix.arch }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/postgres/**/report.json
           if-no-files-found: warn
           retention-days: 14
       - name: Ensure checks did not change source files
@@ -8242,6 +8776,10 @@ wsl --shutdown
 
 Замечания в этих примерах получены в чате с владельцем. Их пересказ и ссылки подготовлены исполнителем AI-Your-Bro. Авторство GitHub-комментариев видно в самих PR; пересказ не выдаётся за комментарий, написанный владельцем на GitHub. Принятие PR #7 подтверждено слиянием владельцем проекта; PR #8 также принят через слияние владельцем проекта 16 октября, Europe/Moscow.
 
+#### Очистка образов после экспериментов
+
+16 октября владелец в чате заметил рост списка Docker images. Причина: уникальный Compose project изолировал каждый smoke-прогон, но `down` удалял только контейнеры и сеть. Исправление сохраняет изоляцию и добавляет `--rmi local`, проверку отсутствия тегов своего прогона и cleanup после частичной сборки. Исторические 21 smoke-образ удалены адресно после проверки отсутствия контейнеров, использующих их; общие PostgreSQL/toolchain и полезные кеши сохранены. Общий `prune` не используется. Методика и результаты — в [отчёте PostgreSQL](#p02-docs-development-evidence-p02-postgres-md); это дополнение поручено владельцем вместе с #12.
+
 #### Как сохраняем следующие обсуждения
 
 ```mermaid
@@ -8495,9 +9033,9 @@ docker compose up -d --wait orders inventory payments
 
 Ctrl+C, а на Unix также SIGTERM, отменяет запуск. Новые этапы не начинаются. На Unix Docker CLI и плагины принадлежат отдельной группе процессов; на Windows — ненаследуемому Job Object, назначенному при создании процесса. Отмена завершает дерево команды до очистки. После выхода родителя Unix executor также завершает оставшихся участников своей группы, включая потомка с перенаправленным stdio. Windows использует уже закреплённый `golang.org/x/sys/windows` для Job API; дополнительный модуль не добавляется.
 
-У обычной команды бюджет 60s, у build — 10 минут. Очистка получает новый независимый контекст на 60s; завершение OS-процессов и чтение их потоков дополнительно ограничены. Отменённый основной контекст не блокирует `down`. Повторная отмена не прерывает этот ограниченный cleanup. Чужие проекты, образы и полезные кеши сохраняются.
+У обычной команды бюджет 60s, у build — 10 минут. Очистка получает новый независимый контекст на 60s; завершение OS-процессов и чтение их потоков дополнительно ограничены. Отменённый основной контекст не блокирует `down`. Повторная отмена не прерывает этот ограниченный cleanup. Образы с уникальными именами своего прогона удаляются через `down --rmi local`, также после ошибки или отмены сборки. Cleanup проверяет отсутствие контейнеров, сетей и тегов образов прогона. Чужие проекты и полезные общие кеши сохраняются.
 
-`artifacts/smoke/<run-id>/report.json` появляется до первого запуска Docker, затем обновляется по этапам и командам. После SIGKILL, завершения ОС или недоступности диска обработчик может не исполниться. Незаконченный отчёт и `recovery_command` позволяют убрать конкретный project, например `docker compose -f compose.yaml -p <project-from-report> down --remove-orphans`. Никогда не заменяйте адресную очистку глобальным prune.
+`artifacts/smoke/<run-id>/report.json` появляется до первого запуска Docker, затем обновляется по этапам и командам. После SIGKILL, завершения ОС или недоступности диска обработчик может не исполниться. Незаконченный отчёт и `recovery_command` позволяют убрать конкретный project, например `docker compose -f compose.yaml -p <project-from-report> down --remove-orphans --rmi local`. Никогда не заменяйте адресную очистку глобальным prune.
 
 #### Формат результата
 
@@ -8507,7 +9045,7 @@ JSON schema version 2 сохраняет `run_id`, `project`, `result`, `service
 
 Отчёт не содержит полного inspect Env или разрешённого Compose-конфига. Пути checkout и домашнего каталога редактируются в диагностике. Smoke использует несекретный профиль; сторонние произвольные логи перед публикацией нужно проверять отдельно. Это проверка каркаса, а не измерение бизнес-корректности или capacity.
 
-После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/056d076dbbc1533de236dcb659fd09ff84ec86d3/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
+После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
 
 <a id="go-smoke-main"></a>
 
@@ -8749,7 +9287,7 @@ func newRunner(options Options, execute executeFunc) (*runner, error) {
 	return &runner{options: options, directory: directory, execute: execute, redact: strings.NewReplacer(pairs...), report: Report{
 		SchemaVersion: 2, RunID: id, Project: project, StartedAt: time.Now().UTC(), Result: "FAIL", Phase: "prerequisites", Cleanup: "PENDING",
 		HostPlatform: runtime.GOOS, GoVersion: runtime.Version(), Services: map[string]serviceReport{}, Commands: []commandReport{},
-		Recovery:    []string{"docker", "compose", "-f", "compose.yaml", "-p", project, "down", "--remove-orphans"},
+		Recovery:    []string{"docker", "compose", "-f", "compose.yaml", "-p", project, "down", "--remove-orphans", "--rmi", "local"},
 		Limitations: []string{"No business operations or capacity measurement", "docker_architecture describes the backend, not individual image platforms (F03)", "SIGKILL or host failure requires recovery_command; signal cleanup cannot be guaranteed in those cases"},
 	}}, nil
 }
@@ -8801,6 +9339,7 @@ func (r *runner) exercise(ctx context.Context) error {
 		{"prerequisites", r.prerequisites},
 		{"configuration", r.configuration},
 		{"build", func(ctx context.Context) error {
+			r.resourcesMayExist = true // A partial build can leave run-specific images.
 			_, err := r.command(ctx, "docker", r.composeArgs(append([]string{"build"}, services...)...), r.options.BuildTimeout, false)
 			return err
 		}},
@@ -8885,13 +9424,14 @@ func (r *runner) cleanup(ctx context.Context) error {
 	// Recheck engine state after the joined up command and scoped down. A second
 	// observation catches resources still being finalized by the Docker engine.
 	for {
-		if _, err := r.compose(ctx, "down", "--remove-orphans"); err != nil {
+		if _, err := r.compose(ctx, "down", "--remove-orphans", "--rmi", "local"); err != nil {
 			return err
 		}
 		for attempt := 0; attempt < 2; attempt++ {
 			for _, args := range [][]string{
 				{"ps", "--all", "--quiet", "--filter", "label=com.docker.compose.project=" + r.report.Project},
 				{"network", "ls", "--quiet", "--filter", "label=com.docker.compose.project=" + r.report.Project},
+				{"image", "ls", "--quiet", "--filter", "reference=" + r.report.Project + "-*:latest"},
 			} {
 				remaining, err := r.docker(ctx, args...)
 				if err != nil {
@@ -9310,14 +9850,13 @@ func validateConfig(data []byte, allowUnsafe bool) ([]string, error) {
 
 ## Приложение: Bounded command output
 
-Полный исходный документ: `internal/smoke/exec.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+Полный исходный документ: `internal/command/exec.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```go
-package smoke
+package command
 
 import (
 	"bytes"
-	"context"
 )
 
 const outputLimit = 8 << 20
@@ -9326,8 +9865,6 @@ type commandOutput struct {
 	stdout, stderr string
 	exitCode       int
 }
-
-type executeFunc func(context.Context, string, []string) (commandOutput, error)
 
 // processExecutor owns the command tree, including Docker CLI plugins.
 type processExecutor struct {
@@ -9359,12 +9896,12 @@ func (b *boundedBuffer) Write(p []byte) (int, error) {
 
 ## Приложение: Unix command process groups
 
-Полный исходный документ: `internal/smoke/exec_unix.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+Полный исходный документ: `internal/command/exec_unix.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```go
 //go:build !windows
 
-package smoke
+package command
 
 import (
 	"context"
@@ -9410,10 +9947,10 @@ func (p processExecutor) execute(ctx context.Context, program string, args []str
 
 ## Приложение: Windows command jobs
 
-Полный исходный документ: `internal/smoke/exec_windows.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+Полный исходный документ: `internal/command/exec_windows.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```go
-package smoke
+package command
 
 import (
 	"context"
@@ -9571,11 +10108,6 @@ func waitJob(ctx context.Context, job, process windows.Handle) error {
 	defer ticker.Stop()
 	waitCtx := ctx
 	var cancel context.CancelFunc
-	defer func() {
-		if cancel != nil {
-			cancel()
-		}
-	}()
 	for {
 		var accounting jobAccounting
 		if err := windows.QueryInformationJobObject(job, windows.JobObjectBasicAccountingInformation, uintptr(unsafe.Pointer(&accounting)), uint32(unsafe.Sizeof(accounting)), nil); err != nil {
@@ -9597,6 +10129,9 @@ func waitJob(ctx context.Context, job, process windows.Handle) error {
 				return err
 			}
 			waitCtx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
+			// This branch runs once: a second timeout returns above. Keep the
+			// release next to its creation, including every later error path.
+			defer cancel()
 		case <-ticker.C:
 		}
 	}
@@ -9633,6 +10168,8 @@ type dockerFixture struct {
 	cancel            context.CancelFunc
 	project           string
 	owned, foreign    bool
+	images            bool
+	stickyImages      bool
 	stopped           map[string]bool
 	operations        []string
 	unsafe, oom       bool
@@ -9664,6 +10201,9 @@ func (f *dockerFixture) execute(ctx context.Context, program string, args []stri
 	f.operations = append(f.operations, op)
 	if op == "up" {
 		f.owned = true
+	}
+	if op == "build" {
+		f.images = true
 	}
 	if op == f.cancelAt {
 		f.cancel()
@@ -9728,11 +10268,22 @@ func (f *dockerFixture) execute(ctx context.Context, program string, args []stri
 		name := args[len(args)-1]
 		return commandOutput{stdout: fmt.Sprintf("{\"service\":%q,\"time\":\"2026-10-16T00:00:00Z\",\"level\":\"INFO\",\"msg\":\"service started\"}\n{\"service\":%q,\"time\":\"2026-10-16T00:00:01Z\",\"level\":\"INFO\",\"msg\":\"service stopping\",\"health\":\"NOT_SERVING\"}\n{\"service\":%q,\"time\":\"2026-10-16T00:00:02Z\",\"level\":\"INFO\",\"msg\":\"service stopped\",\"stop_mode\":\"graceful\"}\n", name, name, name)}, nil
 	case "down":
+		if !slices.Contains(args, "--rmi") || args[len(args)-1] != "local" {
+			f.t.Fatal("cleanup must remove only run-local images")
+		}
 		if f.cleanupBlocks {
 			<-ctx.Done()
 			return commandOutput{exitCode: -1}, ctx.Err()
 		}
 		f.owned = false
+		if !f.stickyImages {
+			f.images = false
+		}
+		return commandOutput{}, nil
+	case "image":
+		if f.images {
+			return commandOutput{stdout: "owned-image"}, nil
+		}
 		return commandOutput{}, nil
 	default:
 		f.t.Fatalf("unexpected Docker operation %s %v", op, args)
@@ -9790,7 +10341,7 @@ func TestCancellationStopsStagesAndCleansOwnProject(t *testing.T) {
 			if err == nil || !report.Cancelled || report.ExitCode() != 1 || f.owned || !f.foreign {
 				t.Fatalf("cancel report=%+v err=%v", report, err)
 			}
-			if op == "build" && report.Cleanup != "NOT_NEEDED" || op != "build" && report.Cleanup != "PASS" {
+			if report.Cleanup != "PASS" || f.images {
 				t.Fatalf("cleanup=%s", report.Cleanup)
 			}
 			if op == "up" && slices.Contains(f.operations, "exec") {
@@ -9799,6 +10350,17 @@ func TestCancellationStopsStagesAndCleansOwnProject(t *testing.T) {
 			verifySavedReport(t, options, report)
 		})
 	}
+}
+
+func TestImageRemovalConflictFailsCleanup(t *testing.T) {
+	f, options := fixture(t)
+	f.stickyImages = true
+	options.CleanupTimeout = 80 * time.Millisecond
+	report, err := run(context.Background(), options, f.execute)
+	if err == nil || report.Cleanup != "FAIL" || !f.images || !f.foreign || !slices.Contains(report.Recovery, "--rmi") {
+		t.Fatalf("unremoved images hidden: %+v %v", report, err)
+	}
+	verifySavedReport(t, options, report)
 }
 
 func TestCommandFailuresAndCleanupDeadline(t *testing.T) {
@@ -9933,10 +10495,10 @@ func TestShutdownBudgets(t *testing.T) {
 
 ## Приложение: Command tree cancellation tests
 
-Полный исходный документ: `internal/smoke/exec_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+Полный исходный документ: `internal/command/exec_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```go
-package smoke
+package command
 
 import (
 	"context"
@@ -10186,7 +10748,7 @@ func TestSIGINTCleansRunningProject(t *testing.T) {
 	t.Cleanup(func() {
 		cleanupCtx, stop := context.WithTimeout(context.Background(), time.Minute)
 		defer stop()
-		cleanup := exec.CommandContext(cleanupCtx, "docker", "compose", "-f", filepath.Join(root, "compose.yaml"), "-p", project, "down", "--remove-orphans")
+		cleanup := exec.CommandContext(cleanupCtx, "docker", "compose", "-f", filepath.Join(root, "compose.yaml"), "-p", project, "down", "--remove-orphans", "--rmi", "local")
 		if output, err := cleanup.CombinedOutput(); err != nil {
 			t.Errorf("test recovery failed: %v; %s", err, output)
 		}
@@ -10227,6 +10789,7 @@ func TestSIGINTCleansRunningProject(t *testing.T) {
 	for _, args := range [][]string{
 		{"ps", "--all", "--quiet", "--filter", "label=com.docker.compose.project=" + project},
 		{"network", "ls", "--quiet", "--filter", "label=com.docker.compose.project=" + project},
+		{"image", "ls", "--quiet", "--filter", "reference=" + project + "-*:latest"},
 	} {
 		output, err := exec.CommandContext(ctx, "docker", args...).Output()
 		if err != nil || strings.TrimSpace(string(output)) != "" {
@@ -10240,12 +10803,12 @@ func TestSIGINTCleansRunningProject(t *testing.T) {
 
 ## Приложение: Unix orphan plugin lifecycle regression
 
-Полный исходный документ: `internal/smoke/exec_unix_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+Полный исходный документ: `internal/command/exec_unix_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```go
 //go:build !windows
 
-package smoke
+package command
 
 import (
 	"context"
@@ -13154,4 +13717,3429 @@ Linux host smoke и настоящий SIGINT запускаются отдел�
     "SIGKILL or host failure requires recovery_command; signal cleanup cannot be guaranteed in those cases"
   ]
 }
+```
+
+<a id="p02-docs-development-evidence-p02-windows-runtime-report-json"></a>
+
+## Приложение: docs/development/evidence/p02/windows-runtime-report.json
+
+Полный исходный документ: `docs/development/evidence/p02/windows-runtime-report.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "schema_version": 2,
+  "run_id": "5562c957-f2db-dcae-2c62-0ec73c2e8a91",
+  "project": "faultline-smoke-5562c957",
+  "started_at": "2026-10-16T16:13:18.2802558Z",
+  "finished_at": "2026-10-16T16:15:07.6836875Z",
+  "result": "PASS",
+  "phase": "stop",
+  "cancelled": false,
+  "cleanup": "PASS",
+  "host_platform": "windows",
+  "go_version": "go1.27.2",
+  "docker_version": "29.8.2",
+  "docker_architecture": "linux/x86_64",
+  "compose_version": "5.6.0",
+  "source_revision": "843e95ed2b65a44729fbf297b986363c588d51ca",
+  "source_dirty": true,
+  "isolation_after_orders_stop": "PASS",
+  "services": {
+    "inventory": {
+      "id": "644de19c878f17aca005976d38e2d97e7eafa3f5e8a6755ef16ce8a082d16eb4",
+      "image_id": "sha256:ff5317081044d8eb1a830157220cb1ddfed80d641e84a66a00ad80b1f98b407a",
+      "healthy": true,
+      "stopped": true,
+      "exit_code": 0,
+      "oom_killed": false,
+      "status": "exited",
+      "stop_mode": "graceful",
+      "security": {
+        "capabilities_dropped": true,
+        "host_ports": [],
+        "internal_network": true,
+        "mounts": [],
+        "no_new_privileges": true,
+        "read_only": true,
+        "user": "65532:65532"
+      }
+    },
+    "orders": {
+      "id": "09392ec030f308b80f50dbf6219b73e0ca479ba27ec514c0d768b6d24668b24c",
+      "image_id": "sha256:6a5ee48e44cf9e56088f49e9d51c79060c104f7049862e9118b15d99ad88ee01",
+      "healthy": true,
+      "stopped": true,
+      "exit_code": 0,
+      "oom_killed": false,
+      "status": "exited",
+      "stop_mode": "graceful",
+      "security": {
+        "capabilities_dropped": true,
+        "host_ports": [],
+        "internal_network": true,
+        "mounts": [],
+        "no_new_privileges": true,
+        "read_only": true,
+        "user": "65532:65532"
+      }
+    },
+    "payments": {
+      "id": "b689b51321ea12943d358eb138c9af42df46ecc045f01f455dd66f425b3e67f8",
+      "image_id": "sha256:524f361a5e6cfd7478cff626cb95d703a288da2321fbed121500204344235c3a",
+      "healthy": true,
+      "stopped": true,
+      "exit_code": 0,
+      "oom_killed": false,
+      "status": "exited",
+      "stop_mode": "graceful",
+      "security": {
+        "capabilities_dropped": true,
+        "host_ports": [],
+        "internal_network": true,
+        "mounts": [],
+        "no_new_privileges": true,
+        "read_only": true,
+        "user": "65532:65532"
+      }
+    }
+  },
+  "commands": [
+    {
+      "program": "docker",
+      "args": [
+        "version",
+        "--format",
+        "{{.Server.Version}}"
+      ],
+      "started_at": "2026-10-16T16:13:18.2829842Z",
+      "finished_at": "2026-10-16T16:13:18.5890779Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "info",
+        "--format",
+        "{{.OSType}}/{{.Architecture}}"
+      ],
+      "started_at": "2026-10-16T16:13:18.5901195Z",
+      "finished_at": "2026-10-16T16:13:20.3082358Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "version",
+        "--short"
+      ],
+      "started_at": "2026-10-16T16:13:20.3098121Z",
+      "finished_at": "2026-10-16T16:13:20.7366132Z",
+      "exit_code": 0
+    },
+    {
+      "program": "git",
+      "args": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "started_at": "2026-10-16T16:13:20.7373355Z",
+      "finished_at": "2026-10-16T16:13:20.8154235Z",
+      "exit_code": 0
+    },
+    {
+      "program": "git",
+      "args": [
+        "status",
+        "--porcelain"
+      ],
+      "started_at": "2026-10-16T16:13:20.8171969Z",
+      "finished_at": "2026-10-16T16:13:20.9311169Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "config",
+        "--format",
+        "json"
+      ],
+      "started_at": "2026-10-16T16:13:20.9331637Z",
+      "finished_at": "2026-10-16T16:13:21.5216634Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "build",
+        "orders",
+        "inventory",
+        "payments"
+      ],
+      "started_at": "2026-10-16T16:13:21.5267703Z",
+      "finished_at": "2026-10-16T16:14:41.3349157Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "up",
+        "-d",
+        "--wait",
+        "--wait-timeout",
+        "60",
+        "orders",
+        "inventory",
+        "payments"
+      ],
+      "started_at": "2026-10-16T16:14:41.3400836Z",
+      "finished_at": "2026-10-16T16:14:48.0541367Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "exec",
+        "-T",
+        "orders",
+        "/app/service",
+        "healthcheck"
+      ],
+      "started_at": "2026-10-16T16:14:48.0562843Z",
+      "finished_at": "2026-10-16T16:14:48.7619294Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "ps",
+        "--all",
+        "-q",
+        "orders"
+      ],
+      "started_at": "2026-10-16T16:14:48.7641022Z",
+      "finished_at": "2026-10-16T16:14:49.4464479Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "inspect",
+        "09392ec030f308b80f50dbf6219b73e0ca479ba27ec514c0d768b6d24668b24c"
+      ],
+      "started_at": "2026-10-16T16:14:49.4503083Z",
+      "finished_at": "2026-10-16T16:14:49.7276956Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "network",
+        "inspect",
+        "b875a819cf10b612795177065d8ac30ca4ec40468fc9a9111815c7e3c87377ce"
+      ],
+      "started_at": "2026-10-16T16:14:49.7287347Z",
+      "finished_at": "2026-10-16T16:14:50.0018181Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "exec",
+        "-T",
+        "inventory",
+        "/app/service",
+        "healthcheck"
+      ],
+      "started_at": "2026-10-16T16:14:50.005557Z",
+      "finished_at": "2026-10-16T16:14:50.6381462Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "ps",
+        "--all",
+        "-q",
+        "inventory"
+      ],
+      "started_at": "2026-10-16T16:14:50.6397081Z",
+      "finished_at": "2026-10-16T16:14:51.2315804Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "inspect",
+        "644de19c878f17aca005976d38e2d97e7eafa3f5e8a6755ef16ce8a082d16eb4"
+      ],
+      "started_at": "2026-10-16T16:14:51.2337506Z",
+      "finished_at": "2026-10-16T16:14:51.5016289Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "network",
+        "inspect",
+        "b875a819cf10b612795177065d8ac30ca4ec40468fc9a9111815c7e3c87377ce"
+      ],
+      "started_at": "2026-10-16T16:14:51.5045374Z",
+      "finished_at": "2026-10-16T16:14:51.7751067Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "exec",
+        "-T",
+        "payments",
+        "/app/service",
+        "healthcheck"
+      ],
+      "started_at": "2026-10-16T16:14:51.776127Z",
+      "finished_at": "2026-10-16T16:14:52.4067784Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "ps",
+        "--all",
+        "-q",
+        "payments"
+      ],
+      "started_at": "2026-10-16T16:14:52.4083153Z",
+      "finished_at": "2026-10-16T16:14:53.0207251Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "inspect",
+        "b689b51321ea12943d358eb138c9af42df46ecc045f01f455dd66f425b3e67f8"
+      ],
+      "started_at": "2026-10-16T16:14:53.0218701Z",
+      "finished_at": "2026-10-16T16:14:53.2907252Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "network",
+        "inspect",
+        "b875a819cf10b612795177065d8ac30ca4ec40468fc9a9111815c7e3c87377ce"
+      ],
+      "started_at": "2026-10-16T16:14:53.2918639Z",
+      "finished_at": "2026-10-16T16:14:53.5679535Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "stop",
+        "orders"
+      ],
+      "started_at": "2026-10-16T16:14:53.5701404Z",
+      "finished_at": "2026-10-16T16:14:54.2851639Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "ps",
+        "--all",
+        "-q",
+        "orders"
+      ],
+      "started_at": "2026-10-16T16:14:54.2872939Z",
+      "finished_at": "2026-10-16T16:14:54.8733926Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "inspect",
+        "09392ec030f308b80f50dbf6219b73e0ca479ba27ec514c0d768b6d24668b24c"
+      ],
+      "started_at": "2026-10-16T16:14:54.8745041Z",
+      "finished_at": "2026-10-16T16:14:55.1413054Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "logs",
+        "--no-color",
+        "--no-log-prefix",
+        "orders"
+      ],
+      "started_at": "2026-10-16T16:14:55.1453533Z",
+      "finished_at": "2026-10-16T16:14:55.7769553Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "exec",
+        "-T",
+        "inventory",
+        "/app/service",
+        "healthcheck"
+      ],
+      "started_at": "2026-10-16T16:14:55.7790284Z",
+      "finished_at": "2026-10-16T16:14:56.4059657Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "ps",
+        "--all",
+        "-q",
+        "inventory"
+      ],
+      "started_at": "2026-10-16T16:14:56.4080812Z",
+      "finished_at": "2026-10-16T16:14:57.000445Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "inspect",
+        "644de19c878f17aca005976d38e2d97e7eafa3f5e8a6755ef16ce8a082d16eb4"
+      ],
+      "started_at": "2026-10-16T16:14:57.0016884Z",
+      "finished_at": "2026-10-16T16:14:57.272168Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "network",
+        "inspect",
+        "b875a819cf10b612795177065d8ac30ca4ec40468fc9a9111815c7e3c87377ce"
+      ],
+      "started_at": "2026-10-16T16:14:57.2746073Z",
+      "finished_at": "2026-10-16T16:14:57.5486864Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "exec",
+        "-T",
+        "payments",
+        "/app/service",
+        "healthcheck"
+      ],
+      "started_at": "2026-10-16T16:14:57.5498305Z",
+      "finished_at": "2026-10-16T16:14:58.1625596Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "ps",
+        "--all",
+        "-q",
+        "payments"
+      ],
+      "started_at": "2026-10-16T16:14:58.1657216Z",
+      "finished_at": "2026-10-16T16:14:58.7317792Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "inspect",
+        "b689b51321ea12943d358eb138c9af42df46ecc045f01f455dd66f425b3e67f8"
+      ],
+      "started_at": "2026-10-16T16:14:58.7358853Z",
+      "finished_at": "2026-10-16T16:14:59.0352535Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "network",
+        "inspect",
+        "b875a819cf10b612795177065d8ac30ca4ec40468fc9a9111815c7e3c87377ce"
+      ],
+      "started_at": "2026-10-16T16:14:59.0368331Z",
+      "finished_at": "2026-10-16T16:14:59.3222731Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "stop",
+        "inventory",
+        "payments"
+      ],
+      "started_at": "2026-10-16T16:14:59.3298208Z",
+      "finished_at": "2026-10-16T16:15:00.1251358Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "ps",
+        "--all",
+        "-q",
+        "inventory"
+      ],
+      "started_at": "2026-10-16T16:15:00.1264533Z",
+      "finished_at": "2026-10-16T16:15:00.7662995Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "inspect",
+        "644de19c878f17aca005976d38e2d97e7eafa3f5e8a6755ef16ce8a082d16eb4"
+      ],
+      "started_at": "2026-10-16T16:15:00.7683632Z",
+      "finished_at": "2026-10-16T16:15:01.0351817Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "logs",
+        "--no-color",
+        "--no-log-prefix",
+        "inventory"
+      ],
+      "started_at": "2026-10-16T16:15:01.0368127Z",
+      "finished_at": "2026-10-16T16:15:01.6481027Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "ps",
+        "--all",
+        "-q",
+        "payments"
+      ],
+      "started_at": "2026-10-16T16:15:01.6520038Z",
+      "finished_at": "2026-10-16T16:15:02.2409544Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "inspect",
+        "b689b51321ea12943d358eb138c9af42df46ecc045f01f455dd66f425b3e67f8"
+      ],
+      "started_at": "2026-10-16T16:15:02.2420895Z",
+      "finished_at": "2026-10-16T16:15:02.5110147Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "logs",
+        "--no-color",
+        "--no-log-prefix",
+        "payments"
+      ],
+      "started_at": "2026-10-16T16:15:02.5115283Z",
+      "finished_at": "2026-10-16T16:15:03.1179026Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "logs",
+        "--no-color",
+        "--no-log-prefix",
+        "orders"
+      ],
+      "started_at": "2026-10-16T16:15:03.1195078Z",
+      "finished_at": "2026-10-16T16:15:03.7469717Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "logs",
+        "--no-color",
+        "--no-log-prefix",
+        "inventory"
+      ],
+      "started_at": "2026-10-16T16:15:03.7497576Z",
+      "finished_at": "2026-10-16T16:15:04.3971364Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "logs",
+        "--no-color",
+        "--no-log-prefix",
+        "payments"
+      ],
+      "started_at": "2026-10-16T16:15:04.4025292Z",
+      "finished_at": "2026-10-16T16:15:05.0339073Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "compose.yaml",
+        "-p",
+        "faultline-smoke-5562c957",
+        "down",
+        "--remove-orphans",
+        "--rmi",
+        "local"
+      ],
+      "started_at": "2026-10-16T16:15:05.0355312Z",
+      "finished_at": "2026-10-16T16:15:05.8296656Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "ps",
+        "--all",
+        "--quiet",
+        "--filter",
+        "label=com.docker.compose.project=faultline-smoke-5562c957"
+      ],
+      "started_at": "2026-10-16T16:15:05.8327177Z",
+      "finished_at": "2026-10-16T16:15:06.1021426Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "network",
+        "ls",
+        "--quiet",
+        "--filter",
+        "label=com.docker.compose.project=faultline-smoke-5562c957"
+      ],
+      "started_at": "2026-10-16T16:15:06.1031938Z",
+      "finished_at": "2026-10-16T16:15:06.3765194Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "image",
+        "ls",
+        "--quiet",
+        "--filter",
+        "reference=faultline-smoke-5562c957-*:latest"
+      ],
+      "started_at": "2026-10-16T16:15:06.3790039Z",
+      "finished_at": "2026-10-16T16:15:06.6576401Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "ps",
+        "--all",
+        "--quiet",
+        "--filter",
+        "label=com.docker.compose.project=faultline-smoke-5562c957"
+      ],
+      "started_at": "2026-10-16T16:15:06.8591973Z",
+      "finished_at": "2026-10-16T16:15:07.1309866Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "network",
+        "ls",
+        "--quiet",
+        "--filter",
+        "label=com.docker.compose.project=faultline-smoke-5562c957"
+      ],
+      "started_at": "2026-10-16T16:15:07.1320467Z",
+      "finished_at": "2026-10-16T16:15:07.4000639Z",
+      "exit_code": 0
+    },
+    {
+      "program": "docker",
+      "args": [
+        "image",
+        "ls",
+        "--quiet",
+        "--filter",
+        "reference=faultline-smoke-5562c957-*:latest"
+      ],
+      "started_at": "2026-10-16T16:15:07.4024797Z",
+      "finished_at": "2026-10-16T16:15:07.6815516Z",
+      "exit_code": 0
+    }
+  ],
+  "recovery_command": [
+    "docker",
+    "compose",
+    "-f",
+    "compose.yaml",
+    "-p",
+    "faultline-smoke-5562c957",
+    "down",
+    "--remove-orphans",
+    "--rmi",
+    "local"
+  ],
+  "limitations": [
+    "No business operations or capacity measurement",
+    "docker_architecture describes the backend, not individual image platforms (F03)",
+    "SIGKILL or host failure requires recovery_command; signal cleanup cannot be guaranteed in those cases"
+  ]
+}
+```
+
+<a id="p02-docs-development-evidence-p02-windows-cleanup-json"></a>
+
+## Приложение: docs/development/evidence/p02/windows-cleanup.json
+
+Полный исходный документ: `docs/development/evidence/p02/windows-cleanup.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "observed_at": "2026-10-16T19:22:00.0959015+03:00",
+  "containers_remaining": 0,
+  "run_images_remaining": 0,
+  "remaining_images": [
+    {
+      "Repository": "faultline-lab-toolchain",
+      "Tag": "latest",
+      "ID": "c7cd1c13080d"
+    },
+    {
+      "Repository": "postgres",
+      "Tag": "<none>",
+      "ID": "afc7e2d44132"
+    }
+  ],
+  "remaining_volumes": [
+    "faultline-lab_go-build",
+    "faultline-lab_go-modules"
+  ],
+  "docker_autostart": false,
+  "historical_smoke_images_removed": 21,
+  "global_prune_used": false,
+  "desktop_stop_exit": 0,
+  "wsl_terminate_exit": 0,
+  "running_wsl": "",
+  "remaining_docker_processes": []
+}
+```
+
+<a id="p02-docs-development-evidence-p02-windows-postgres-report-json"></a>
+
+## Приложение: docs/development/evidence/p02/windows-postgres-report.json
+
+Полный исходный документ: `docs/development/evidence/p02/windows-postgres-report.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "project": "faultline-data-test-90eda236ac29dee2",
+  "started_at": "2026-10-16T16:12:11.1591171Z",
+  "finished_at": "2026-10-16T16:13:14.6017804Z",
+  "result": "PASS",
+  "cleanup": "PASS",
+  "events": [
+    {
+      "stage": "prerequisites",
+      "output": "29.8.2\n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "build dbtool",
+      "output": "#1 [internal] load local bake definitions\n#1 reading from stdin 679B 0.0s done\n#1 DONE 0.0s\n\n#2 [internal] load build definition from Dockerfile\n#2 transferring dockerfile: 1.49kB done\n#2 DONE 0.0s\n\n#3 [internal] load metadata for docker.io/library/golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e\n#3 DONE 0.0s\n\n#4 [internal] load metadata for docker.io/golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f\n#4 DONE 0.1s\n\n#5 [internal] load .dockerignore\n#5 transferring context: 172B done\n#5 DONE 0.0s\n\n#6 [toolchain 1/6] FROM docker.io/library/golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e\n#6 resolve docker.io/library/golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e 0.0s done\n#6 DONE 0.0s\n\n#7 [lint 1/1] FROM docker.io/golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f\n#7 resolve docker.io/golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f 0.0s done\n#7 DONE 0.0s\n\n#8 [internal] load build context\n#8 transferring context: 19.98kB done\n#8 DONE 0.0s\n\n#9 [toolchain 3/6] COPY --from=lint /usr/bin/golangci-lint /usr/local/bin/golangci-lint\n#9 CACHED\n\n#10 [toolchain 5/6] RUN git config --system --add safe.directory /workspace     \u0026\u0026 go mod download \u0026\u0026 go install tool\n#10 CACHED\n\n#11 [toolchain 2/6] WORKDIR /workspace\n#11 CACHED\n\n#12 [toolchain 4/6] COPY go.mod go.sum ./\n#12 CACHED\n\n#13 [toolchain 6/6] COPY --chmod=0755 tools/go.sh /usr/local/bin/lab-go\n#13 CACHED\n\n#14 [labdata-build 1/4] COPY cmd ./cmd\n#14 DONE 0.0s\n\n#15 [labdata-build 2/4] COPY internal ./internal\n#15 DONE 0.0s\n\n#16 [labdata-build 3/4] COPY migrations ./migrations\n#16 DONE 0.0s\n\n#17 [labdata-build 4/4] RUN CGO_ENABLED=0 go build -trimpath -o /out/labdata ./cmd/labdata     \u0026\u0026 CGO_ENABLED=0 go test -c -o /out/database.test ./internal/database\n#17 DONE 32.6s\n\n#18 [labdata 1/2] COPY --from=labdata-build /out/labdata /app/labdata\n#18 DONE 0.0s\n\n#19 [labdata 2/2] COPY --from=labdata-build /out/database.test /app/database.test\n#19 DONE 0.1s\n\n#20 exporting to image\n#20 exporting layers\n#20 exporting layers 0.6s done\n#20 exporting manifest sha256:4f6a2734b813e35e9ee271f0457db11898fd5ed94633b9e73dc06eb3fa0d1982\n#20 exporting manifest sha256:4f6a2734b813e35e9ee271f0457db11898fd5ed94633b9e73dc06eb3fa0d1982 0.0s done\n#20 exporting config sha256:38329ed58f971fe607196f92eec4155b639aeb8160b488c7f75aa2bc336b6c41 0.0s done\n#20 exporting attestation manifest sha256:f3f289782cd254f18b91727f7e2118c8d1b013517e6363a243f4878103b54e9d 0.0s done\n#20 exporting manifest list sha256:250ab652b2723be95dc55e3ee4e400147d220ef8ed9d6b473d1dc19bbee3b66e 0.0s done\n#20 naming to docker.io/library/faultline-data-test-90eda236ac29dee2-dbtool:latest done\n#20 unpacking to docker.io/library/faultline-data-test-90eda236ac29dee2-dbtool:latest\n#20 unpacking to docker.io/library/faultline-data-test-90eda236ac29dee2-dbtool:latest 0.2s done\n#20 DONE 0.9s\n\n#21 resolving provenance for metadata file\n#21 DONE 0.0s\n Image faultline-data-test-90eda236ac29dee2-dbtool Building \n Image faultline-data-test-90eda236ac29dee2-dbtool Built \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "start PostgreSQL",
+      "output": " Network faultline-data-test-90eda236ac29dee2_data Creating \n Network faultline-data-test-90eda236ac29dee2_data Creating \n Volume faultline-data-test-90eda236ac29dee2_postgres-data Creating \n Volume faultline-data-test-90eda236ac29dee2_postgres-data Creating \n Volume faultline-data-test-90eda236ac29dee2_postgres-data Created \n Volume faultline-data-test-90eda236ac29dee2_postgres-data Created \n Network faultline-data-test-90eda236ac29dee2_data Created \n Network faultline-data-test-90eda236ac29dee2_data Created \n Container faultline-data-test-90eda236ac29dee2-postgres-1 Creating \n Container faultline-data-test-90eda236ac29dee2-postgres-1 Created \n Container faultline-data-test-90eda236ac29dee2-postgres-1 Starting \n Container faultline-data-test-90eda236ac29dee2-postgres-1 Started \n Container faultline-data-test-90eda236ac29dee2-postgres-1 Waiting \n Container faultline-data-test-90eda236ac29dee2-postgres-1 Healthy \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "bootstrap",
+      "output": "bootstrap: PASS\n Container faultline-data-test-90eda236ac29dee2-dbtool-run-ee0c5b992210 Creating \n Container faultline-data-test-90eda236ac29dee2-dbtool-run-ee0c5b992210 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "bootstrap",
+      "output": "bootstrap: PASS\n Container faultline-data-test-90eda236ac29dee2-dbtool-run-75f6c25d8e83 Creating \n Container faultline-data-test-90eda236ac29dee2-dbtool-run-75f6c25d8e83 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "rights, migrations and seed",
+      "output": "=== RUN   TestPostgresFoundation\n=== RUN   TestPostgresFoundation/concurrent_migrations_and_immutable_history\n=== RUN   TestPostgresFoundation/role_isolation_and_denied_DDL\n=== RUN   TestPostgresFoundation/failed_migration_rollback_and_checksum_drift\n=== RUN   TestPostgresFoundation/repeat_seed_preserves_catalog_and_modified_stock\n--- PASS: TestPostgresFoundation (0.89s)\n    --- PASS: TestPostgresFoundation/concurrent_migrations_and_immutable_history (0.30s)\n    --- PASS: TestPostgresFoundation/role_isolation_and_denied_DDL (0.47s)\n    --- PASS: TestPostgresFoundation/failed_migration_rollback_and_checksum_drift (0.03s)\n    --- PASS: TestPostgresFoundation/repeat_seed_preserves_catalog_and_modified_stock (0.08s)\nPASS\n Container faultline-data-test-90eda236ac29dee2-dbtool-run-b590a77d5301 Creating \n Container faultline-data-test-90eda236ac29dee2-dbtool-run-b590a77d5301 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "fingerprint before restart",
+      "output": "6bd627a0b8eff5f313bc0f372ce2714f586efe3fed6d7bdbf7f78f826ac2d408\n Container faultline-data-test-90eda236ac29dee2-dbtool-run-dcb0b6dc0438 Creating \n Container faultline-data-test-90eda236ac29dee2-dbtool-run-dcb0b6dc0438 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "restart PostgreSQL",
+      "output": " Container faultline-data-test-90eda236ac29dee2-postgres-1 Restarting \n Container faultline-data-test-90eda236ac29dee2-postgres-1 Started \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "wait after restart",
+      "output": " Container faultline-data-test-90eda236ac29dee2-postgres-1 Running \n Container faultline-data-test-90eda236ac29dee2-postgres-1 Waiting \n Container faultline-data-test-90eda236ac29dee2-postgres-1 Healthy \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "repeat bootstrap",
+      "output": "bootstrap: PASS\n Container faultline-data-test-90eda236ac29dee2-dbtool-run-eb397cba85da Creating \n Container faultline-data-test-90eda236ac29dee2-dbtool-run-eb397cba85da Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "repeat migrate",
+      "output": "migrate: PASS\n Container faultline-data-test-90eda236ac29dee2-dbtool-run-3546396728d9 Creating \n Container faultline-data-test-90eda236ac29dee2-dbtool-run-3546396728d9 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "repeat seed",
+      "output": "seed: PASS\n Container faultline-data-test-90eda236ac29dee2-dbtool-run-66da6ca1c68f Creating \n Container faultline-data-test-90eda236ac29dee2-dbtool-run-66da6ca1c68f Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "fingerprint after restart",
+      "output": "6bd627a0b8eff5f313bc0f372ce2714f586efe3fed6d7bdbf7f78f826ac2d408\n Container faultline-data-test-90eda236ac29dee2-dbtool-run-4b47419947d6 Creating \n Container faultline-data-test-90eda236ac29dee2-dbtool-run-4b47419947d6 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "resource snapshot",
+      "output": "{\"BlockIO\":\"991kB / 766kB\",\"CPUPerc\":\"5.12%\",\"Container\":\"faultline-data-test-90eda236ac29dee2-postgres-1\",\"ID\":\"1aaba13b0ff1\",\"MemPerc\":\"4.58%\",\"MemUsage\":\"23.43MiB / 512MiB\",\"Name\":\"faultline-data-test-90eda236ac29dee2-postgres-1\",\"NetIO\":\"25.6kB / 23kB\",\"PIDs\":\"9\"}\n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "PostgreSQL logs",
+      "output": "postgres-1  | The files belonging to this database system will be owned by user \"postgres\".\npostgres-1  | This user must also own the server process.\npostgres-1  | \npostgres-1  | The database cluster will be initialized with locale \"en_US.utf8\".\npostgres-1  | The default database encoding has accordingly been set to \"UTF8\".\npostgres-1  | The default text search configuration will be set to \"english\".\npostgres-1  | \npostgres-1  | Data page checksums are enabled.\npostgres-1  | \npostgres-1  | fixing permissions on existing directory /var/lib/postgresql/18/docker ... ok\npostgres-1  | creating subdirectories ... ok\npostgres-1  | selecting dynamic shared memory implementation ... posix\npostgres-1  | selecting default \"max_connections\" ... 100\npostgres-1  | selecting default \"shared_buffers\" ... 128MB\npostgres-1  | selecting default time zone ... Etc/UTC\npostgres-1  | creating configuration files ... ok\npostgres-1  | running bootstrap script ... ok\npostgres-1  | performing post-bootstrap initialization ... ok\npostgres-1  | syncing data to disk ... ok\npostgres-1  | \npostgres-1  | Success. You can now start the database server using:\npostgres-1  | \npostgres-1  |     pg_ctl -D /var/lib/postgresql/18/docker -l logfile start\npostgres-1  | \npostgres-1  | waiting for server to start....2026-10-16 16:12:49.302 UTC [37] LOG:  starting PostgreSQL 18.6 (Debian 18.6-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit\npostgres-1  | 2026-10-16 16:12:49.302 UTC [37] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\npostgres-1  | 2026-10-16 16:12:49.311 UTC [43] LOG:  database system was shut down at 2026-10-16 16:12:49 UTC\npostgres-1  | 2026-10-16 16:12:49.322 UTC [37] LOG:  database system is ready to accept connections\npostgres-1  |  done\npostgres-1  | server started\npostgres-1  | \npostgres-1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*\npostgres-1  | \npostgres-1  | waiting for server to shut down....2026-10-16 16:12:49.457 UTC [37] LOG:  received fast shutdown request\npostgres-1  | 2026-10-16 16:12:49.460 UTC [37] LOG:  aborting any active transactions\npostgres-1  | 2026-10-16 16:12:49.463 UTC [37] LOG:  background worker \"logical replication launcher\" (PID 46) exited with exit code 1\npostgres-1  | 2026-10-16 16:12:49.464 UTC [41] LOG:  shutting down\npostgres-1  | 2026-10-16 16:12:49.467 UTC [41] LOG:  checkpoint starting: shutdown immediate\npostgres-1  | 2026-10-16 16:12:49.481 UTC [41] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.002 s, total=0.018 s; sync files=2, longest=0.002 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/1759450, redo lsn=0/1759450\npostgres-1  | 2026-10-16 16:12:49.494 UTC [37] LOG:  database system is shut down\npostgres-1  |  done\npostgres-1  | server stopped\npostgres-1  | \npostgres-1  | PostgreSQL init process complete; ready for start up.\npostgres-1  | \npostgres-1  | 2026-10-16 16:12:49.583 UTC [1] LOG:  starting PostgreSQL 18.6 (Debian 18.6-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit\npostgres-1  | 2026-10-16 16:12:49.583 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\npostgres-1  | 2026-10-16 16:12:49.583 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\npostgres-1  | 2026-10-16 16:12:49.585 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\npostgres-1  | 2026-10-16 16:12:49.593 UTC [57] LOG:  database system was shut down at 2026-10-16 16:12:49 UTC\npostgres-1  | 2026-10-16 16:12:49.597 UTC [1] LOG:  database system is ready to accept connections\npostgres-1  | 2026-10-16 16:12:57.001 UTC [105] FATAL:  permission denied for database \"inventory_db\"\npostgres-1  | 2026-10-16 16:12:57.001 UTC [105] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.007 UTC [106] FATAL:  permission denied for database \"payments_db\"\npostgres-1  | 2026-10-16 16:12:57.007 UTC [106] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.063 UTC [108] FATAL:  permission denied for database \"inventory_db\"\npostgres-1  | 2026-10-16 16:12:57.063 UTC [108] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.072 UTC [109] FATAL:  permission denied for database \"payments_db\"\npostgres-1  | 2026-10-16 16:12:57.072 UTC [109] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.080 UTC [116] ERROR:  permission denied for database orders_db\npostgres-1  | 2026-10-16 16:12:57.081 UTC [116] ERROR:  permission denied for schema public at character 14\npostgres-1  | 2026-10-16 16:12:57.082 UTC [116] ERROR:  permission denied to create temporary tables in database \"orders_db\" at character 19\npostgres-1  | 2026-10-16 16:12:57.082 UTC [116] ERROR:  permission denied to set role \"orders_migrator\"\npostgres-1  | 2026-10-16 16:12:57.082 UTC [116] ERROR:  permission denied for schema lab_migrations at character 13\npostgres-1  | 2026-10-16 16:12:57.101 UTC [116] ERROR:  must be owner of table privilege_probe\npostgres-1  | 2026-10-16 16:12:57.102 UTC [116] ERROR:  permission denied for table privilege_probe\npostgres-1  | 2026-10-16 16:12:57.169 UTC [118] FATAL:  permission denied for database \"postgres\"\npostgres-1  | 2026-10-16 16:12:57.169 UTC [118] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.186 UTC [119] FATAL:  permission denied for database \"template1\"\npostgres-1  | 2026-10-16 16:12:57.186 UTC [119] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.192 UTC [121] FATAL:  permission denied for database \"orders_db\"\npostgres-1  | 2026-10-16 16:12:57.192 UTC [121] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.273 UTC [123] FATAL:  permission denied for database \"payments_db\"\npostgres-1  | 2026-10-16 16:12:57.273 UTC [123] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.283 UTC [124] FATAL:  permission denied for database \"orders_db\"\npostgres-1  | 2026-10-16 16:12:57.283 UTC [124] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.297 UTC [126] FATAL:  permission denied for database \"payments_db\"\npostgres-1  | 2026-10-16 16:12:57.297 UTC [126] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.303 UTC [127] ERROR:  permission denied for database inventory_db\npostgres-1  | 2026-10-16 16:12:57.303 UTC [127] ERROR:  permission denied for schema public at character 14\npostgres-1  | 2026-10-16 16:12:57.304 UTC [127] ERROR:  permission denied to create temporary tables in database \"inventory_db\" at character 19\npostgres-1  | 2026-10-16 16:12:57.304 UTC [127] ERROR:  permission denied to set role \"inventory_migrator\"\npostgres-1  | 2026-10-16 16:12:57.304 UTC [127] ERROR:  permission denied for schema lab_migrations at character 13\npostgres-1  | 2026-10-16 16:12:57.317 UTC [127] ERROR:  must be owner of table privilege_probe\npostgres-1  | 2026-10-16 16:12:57.318 UTC [127] ERROR:  permission denied for table privilege_probe\npostgres-1  | 2026-10-16 16:12:57.325 UTC [129] FATAL:  permission denied for database \"postgres\"\npostgres-1  | 2026-10-16 16:12:57.325 UTC [129] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.360 UTC [130] FATAL:  permission denied for database \"template1\"\npostgres-1  | 2026-10-16 16:12:57.360 UTC [130] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.368 UTC [131] FATAL:  permission denied for database \"orders_db\"\npostgres-1  | 2026-10-16 16:12:57.368 UTC [131] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.373 UTC [132] FATAL:  permission denied for database \"inventory_db\"\npostgres-1  | 2026-10-16 16:12:57.373 UTC [132] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.384 UTC [134] FATAL:  permission denied for database \"orders_db\"\npostgres-1  | 2026-10-16 16:12:57.384 UTC [134] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.391 UTC [135] FATAL:  permission denied for database \"inventory_db\"\npostgres-1  | 2026-10-16 16:12:57.391 UTC [135] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.403 UTC [137] ERROR:  permission denied for database payments_db\npostgres-1  | 2026-10-16 16:12:57.403 UTC [137] ERROR:  permission denied for schema public at character 14\npostgres-1  | 2026-10-16 16:12:57.403 UTC [137] ERROR:  permission denied to create temporary tables in database \"payments_db\" at character 19\npostgres-1  | 2026-10-16 16:12:57.403 UTC [137] ERROR:  permission denied to set role \"payments_migrator\"\npostgres-1  | 2026-10-16 16:12:57.404 UTC [137] ERROR:  permission denied for schema lab_migrations at character 13\npostgres-1  | 2026-10-16 16:12:57.417 UTC [137] ERROR:  must be owner of table privilege_probe\npostgres-1  | 2026-10-16 16:12:57.417 UTC [137] ERROR:  permission denied for table privilege_probe\npostgres-1  | 2026-10-16 16:12:57.424 UTC [139] FATAL:  permission denied for database \"postgres\"\npostgres-1  | 2026-10-16 16:12:57.424 UTC [139] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.458 UTC [140] FATAL:  permission denied for database \"template1\"\npostgres-1  | 2026-10-16 16:12:57.458 UTC [140] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-16 16:12:57.482 UTC [142] ERROR:  division by zero\npostgres-1  | 2026-10-16 16:12:57.575 UTC [145] ERROR:  new row for relation \"stock\" violates check constraint \"stock_available_check\"\npostgres-1  | 2026-10-16 16:12:57.575 UTC [145] DETAIL:  Failing row contains (SKU-001, -1).\npostgres-1  | 2026-10-16 16:12:57.576 UTC [145] ERROR:  new row for relation \"products\" violates check constraint \"products_price_minor_check\"\npostgres-1  | 2026-10-16 16:12:57.576 UTC [145] DETAIL:  Failing row contains (SKU-001, Notebook, -1, RUB).\npostgres-1  | 2026-10-16 16:12:57.576 UTC [145] ERROR:  new row for relation \"products\" violates check constraint \"products_currency_check\"\npostgres-1  | 2026-10-16 16:12:57.576 UTC [145] DETAIL:  Failing row contains (SKU-001, Notebook, 99900, rub).\npostgres-1  | 2026-10-16 16:12:57.576 UTC [145] ERROR:  insert or update on table \"stock\" violates foreign key constraint \"stock_sku_fkey\"\npostgres-1  | 2026-10-16 16:12:57.576 UTC [145] DETAIL:  Key (sku)=(missing) is not present in table \"products\".\npostgres-1  | 2026-10-16 16:12:59.429 UTC [1] LOG:  received fast shutdown request\npostgres-1  | 2026-10-16 16:12:59.431 UTC [1] LOG:  aborting any active transactions\npostgres-1  | 2026-10-16 16:12:59.435 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 60) exited with exit code 1\npostgres-1  | 2026-10-16 16:12:59.435 UTC [55] LOG:  shutting down\npostgres-1  | 2026-10-16 16:12:59.437 UTC [55] LOG:  checkpoint starting: shutdown immediate\npostgres-1  | 2026-10-16 16:12:59.576 UTC [55] LOG:  checkpoint complete: wrote 2868 buffers (35.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.046 s, sync=0.084 s, total=0.141 s; sync files=933, longest=0.004 s, average=0.001 s; distance=13179 kB, estimate=13179 kB; lsn=0/24380A0, redo lsn=0/24380A0\npostgres-1  | 2026-10-16 16:12:59.590 UTC [1] LOG:  database system is shut down\npostgres-1  | \npostgres-1  | PostgreSQL Database directory appears to contain a database; Skipping initialization\npostgres-1  | \npostgres-1  | 2026-10-16 16:12:59.890 UTC [1] LOG:  starting PostgreSQL 18.6 (Debian 18.6-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit\npostgres-1  | 2026-10-16 16:12:59.890 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\npostgres-1  | 2026-10-16 16:12:59.890 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\npostgres-1  | 2026-10-16 16:12:59.894 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\npostgres-1  | 2026-10-16 16:12:59.908 UTC [19] LOG:  database system was shut down at 2026-10-16 16:12:59 UTC\npostgres-1  | 2026-10-16 16:12:59.917 UTC [1] LOG:  database system is ready to accept connections\n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "cleanup",
+      "output": " Container faultline-data-test-90eda236ac29dee2-postgres-1 Stopping \n Container faultline-data-test-90eda236ac29dee2-postgres-1 Stopped \n Container faultline-data-test-90eda236ac29dee2-postgres-1 Removing \n Container faultline-data-test-90eda236ac29dee2-postgres-1 Removed \n Volume faultline-data-test-90eda236ac29dee2_postgres-data Removing \n Network faultline-data-test-90eda236ac29dee2_data Removing \n Volume faultline-data-test-90eda236ac29dee2_postgres-data Removed \n Image faultline-data-test-90eda236ac29dee2-dbtool:latest Removing \n Image faultline-data-test-90eda236ac29dee2-dbtool:latest Removed \n Network faultline-data-test-90eda236ac29dee2_data Removed \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    }
+  ]
+}
+```
+
+<a id="p02-docs-development-evidence-p02-postgres-image-json"></a>
+
+## Приложение: docs/development/evidence/p02/postgres-image.json
+
+Полный исходный документ: `docs/development/evidence/p02/postgres-image.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "image": "postgres:18.6-bookworm",
+  "digest": "sha256:afc7e2d441324c0388fa80c3d24f733b4194a4eb7f47dd8ee2b08eb1a24a647c",
+  "platforms": [
+    "linux/amd64",
+    "linux/arm",
+    "linux/arm64",
+    "linux/386",
+    "linux/ppc64le"
+  ]
+}
+```
+
+<a id="p02-docs-development-evidence-p02-postgres-md"></a>
+
+## Приложение: docs/development/evidence/p02/POSTGRES.md
+
+Полный исходный документ: `docs/development/evidence/p02/POSTGRES.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### PostgreSQL — проверка основы данных
+
+Задача: [#12](https://github.com/Includeoyasi/faultline-lab/issues/12). Дата: 16 октября 2026 года, Europe/Moscow. Методика и команды — в [инструкции](#p02-docs-development-postgres-md).
+
+Среда: Windows AMD64, Go 1.27.2, Docker Desktop 4.95 / Engine 29.8.2 / Compose 5.6, WSL2 с лимитами 2 CPU / 2 GiB RAM / 1 GiB swap. PostgreSQL 18.6-bookworm закреплён по [digest и списку платформ](#p02-docs-development-evidence-p02-postgres-image-json). Исходная база ветки — `843e95ed2b65a44729fbf297b986363c588d51ca`; локальные проверки выполнялись с изменениями рабочего дерева. Они не выдаются за прогон на чистом финальном коммите: его проверяет CI PR.
+
+#### Результаты
+
+| Проверка | Результат |
+| :--- | :--- |
+| Контейнерный `toolchain check` | PASS: формат/imports, tidy/verify, build, lint без замечаний, unit/race и govulncheck без найденных уязвимостей. Доработанные Windows CLI/cleanup дополнительно проверены native Go tests; финальный HEAD проверяет CI. |
+| Реальный PostgreSQL | PASS: конкурентные миграции, неизменность истории, положительная/отрицательная матрица ролей, DDL/TEMP/SET ROLE/journal запреты, default grants, откат ошибки, checksum drift, повтор seed и ограничения таблиц. |
+| Полный Windows `labdata smoke` | PASS, [исходный очищенный отчёт](#p02-docs-development-evidence-p02-windows-postgres-report-json), project `faultline-data-test-90eda236ac29dee2`; 19:12:11–19:13:14 MSK. |
+| Перезапуск и повторная подготовка | PASS: `bootstrap/migrate/seed` после restart сохранили полную историю и изменённый каталог/остатки. SHA-256 до/после: `6bd627a0b8eff5f313bc0f372ce2714f586efe3fed6d7bdbf7f78f826ac2d408`. |
+| Явный reset | PASS: `faultline-data-local` удалён адресно; отдельно созданный `faultline-p02-cleanup-control` volume сохранился и затем удалён собственной командой. |
+| Native Windows unit/process tests | PASS: `internal/command`, `internal/smoke`, `internal/datalab`, `cmd/labdata`; в том числе Job Object, отмена/ошибка partial build, неудачная очистка, read-only каталог и exit 1 при ошибке команды миграции. |
+| Регрессия runtime smoke трёх сервисов | PASS, [отчёт](#p02-docs-development-evidence-p02-windows-runtime-report-json); health, изоляция, нормальное завершение, cleanup. Проверено отсутствие тегов образов своего прогона. |
+| `data-cross-check` | PASS: Windows AMD64, Linux AMD64/ARM64, macOS AMD64/ARM64. Это сборки, не пять реальных runtime-сред. |
+| Linux AMD64/ARM64 runtime и SIGINT | Выполняются workflow PR; результаты и артефакты в [GitHub Actions](https://github.com/Includeoyasi/faultline-lab/actions). Локальные Windows результаты их не заменяют. |
+| Личный Mac | NOT_RUN: доступа к машине не было. |
+
+Первый полный прогон выявил read-only атрибут пустого временного каталога credentials в OneDrive. Он завершился FAIL вместо ложного PASS. Исправление восстанавливает права только каталога своего прогона перед удалением семи известных файлов и каталога; регрессия покрывает этот случай. Успешный окончательный отчёт приведён выше. SQL/init ошибки также не скрывались: неверная YAML-запись tmpfs была исправлена до полного прогона.
+
+#### Ресурсы и завершение
+
+В момент снимка PostgreSQL после функциональных тестов: **23.43 MiB / 512 MiB**, **5.12% CPU**. Это одиночный снимок из отчёта, не peak, baseline нагрузки или предел производительности; генератора бизнес-нагрузки ещё нет. Функциональная проверка укладывается в текущий WSL-бюджет; весь состав Kafka/Redis/наблюдаемости пока не измерен.
+
+По замечанию владельца удалены 21 исторический smoke-образ, не использовавшийся контейнерами. Общие слои объясняют небольшой фактически освобождённый объём около 76 MB, несмотря на множество строк в UI. Исправленный runtime cleanup использует scoped `down --rmi local` и проверяет исчезновение тегов, включая отменённую/неудачную сборку. Fixture проверяет случай, когда Docker оставляет image, несмотря на успешный `down`.
+
+[Подтверждение завершения](#p02-docs-development-evidence-p02-windows-cleanup-json): контейнеров 0, образов отдельных прогонов 0; остались актуальный toolchain и закреплённый PostgreSQL, volumes только для кешей Go. Docker Desktop остановлен, Docker WSL VM завершена, запущенных WSL-дистрибутивов и Docker-процессов нет; автозапуск выключен. Общий prune не использовался.
+
+#### Повторная проверка после ревью 18 октября
+
+По [замечанию владельца](https://github.com/Includeoyasi/faultline-lab/pull/22#discussion_r4307441625) и поручению из голосового чата SQL подготовки и служебных шагов вынесен в отдельные файлы; загрузка начальных данных отделена от миграций. Бизнес-миграции `0001/0002` не изменены, их история и контрольные суммы совместимы с предыдущей версией. Подстановка настраиваемых имён и паролей выполняется PostgreSQL `format` через `%I/%L`.
+
+Проверки выполнены на Windows AMD64 в рабочем дереве с базой `e6912537f053ca7447e4417128e31a10a6d1c579`:
+
+- `go test -count=1 ./...` — PASS; PostgreSQL-интеграция в этой команде пропускается и проверена отдельным прогоном ниже.
+- Windows `go vet ./...` — PASS после явного освобождения timeout-контекста в process runner; повторные тесты `internal/command`, `internal/database`, `internal/datalab`, `cmd/labdata` — PASS. Первое замечание анализатора не выдаётся за доказанную утечку.
+- Реальный PostgreSQL smoke — PASS, 18:35:28–18:36:48 MSK; [исходный отчёт](#p02-review-docs-development-evidence-p02-windows-sql-review-report-json). Сохранены конкурентные миграции, RBAC, откат, контроль истории, повтор seed и сравнение после restart. Новая регрессия подтверждает восстановление отозванного доступа приложения при нуле новых версий, без изменения данных и истории.
+- Cleanup — PASS: удалены контейнер, сеть, volume, образ и файлы паролей своего прогона; Docker Desktop остановлен, WSL не содержит запущенных дистрибутивов. Общие образы и кеши сохранены; глобальная очистка не выполнялась.
+
+Это локальная регрессия, а не заявление о CI будущего коммита. Linux AMD64/ARM64 проверяются workflow предъявленного PR; macOS runtime остаётся NOT_RUN. Разделение SQL и Go не разделяет секреты между режимами контейнера dbtool: граница полномочий описана в инструкции.
+
+<a id="p02-internal-command-command-go"></a>
+
+## Приложение: internal/command/command.go
+
+Полный исходный документ: `internal/command/command.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+// Package command executes bounded commands with ownership of their process tree.
+package command
+
+import "context"
+
+// Executor owns child processes and their bounded output for one explicit cwd/env.
+type Executor struct {
+	Directory string
+	Env       []string
+}
+
+// Output captures both streams and the observed process exit code.
+type Output struct {
+	Stdout, Stderr string
+	ExitCode       int
+}
+
+// Execute starts a program directly and joins its process tree before returning.
+func (e Executor) Execute(ctx context.Context, program string, args []string) (Output, error) {
+	inner := processExecutor{directory: e.Directory, env: e.Env}
+	output, err := inner.execute(ctx, program, args)
+	return Output{output.stdout, output.stderr, output.exitCode}, err
+}
+```
+
+<a id="p02-internal-database-migrate-go"></a>
+
+## Приложение: internal/database/migrate.go
+
+Полный исходный документ: `internal/database/migrate.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package database
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"io/fs"
+	"time"
+
+	"github.com/Includeoyasi/faultline-lab/migrations"
+	"github.com/jackc/pgx/v5"
+)
+
+// Migrate atomically applies pending SQL and verifies immutable service history.
+func Migrate(ctx context.Context, cfg Config, service Service) error {
+	return migrate(ctx, cfg, service, migrations.Files)
+}
+
+func rollback(tx pgx.Tx) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	_ = tx.Rollback(ctx)
+}
+
+func migrate(ctx context.Context, cfg Config, service Service, files fs.FS) error {
+	items, err := loadMigrations(files, service.Name)
+	if err != nil {
+		return err
+	}
+	conn, err := Connect(ctx, cfg, service.Database, service.MigrationUser)
+	if err != nil {
+		return err
+	}
+	defer Close(conn)
+	tx, err := conn.BeginTx(ctx, pgx.TxOptions{IsoLevel: pgx.ReadCommitted})
+	if err != nil {
+		return SafeError("migration transaction", err)
+	}
+	defer rollback(tx)
+	// Lock before creating or reading the journal. It is local to this database.
+	if _, err = tx.Exec(ctx, migrationLockSQL); err != nil {
+		return SafeError("migration lock", err)
+	}
+	if _, err = tx.Exec(ctx, migrationJournalSQL); err != nil {
+		return SafeError("migration journal", err)
+	}
+	rows, err := tx.Query(ctx, migrationHistorySQL)
+	if err != nil {
+		return SafeError("migration history", err)
+	}
+	var applied []migration
+	for rows.Next() {
+		var item migration
+		if err = rows.Scan(&item.version, &item.name, &item.checksum); err != nil {
+			rows.Close()
+			return SafeError("migration history", err)
+		}
+		applied = append(applied, item)
+	}
+	rows.Close()
+	if err = rows.Err(); err != nil {
+		return SafeError("migration history", err)
+	}
+	if len(applied) > len(items) {
+		return errors.New("database migration history is ahead of this tool")
+	}
+	for index, item := range items {
+		if index < len(applied) {
+			if old := applied[index]; old.version != item.version || old.name != item.name || old.checksum != item.checksum {
+				return fmt.Errorf("migration history/checksum mismatch at version %d", item.version)
+			}
+			continue
+		}
+		if _, err = tx.Exec(ctx, item.sql); err != nil {
+			return SafeError(fmt.Sprintf("migration %d", item.version), err)
+		}
+		if _, err = tx.Exec(ctx, migrationRecordSQL, item.version, item.name, item.checksum); err != nil {
+			return SafeError("migration recording", err)
+		}
+	}
+	if err = executeDDL(ctx, tx, applicationAccessSQL, service.Name, service.AppUser); err != nil {
+		return SafeError("application grants", err)
+	}
+	if err = tx.Commit(ctx); err != nil {
+		return SafeError("migration commit", err)
+	}
+	return nil
+}
+```
+
+<a id="p02-internal-database-integration-test-go"></a>
+
+## Приложение: internal/database/integration_test.go
+
+Полный исходный документ: `internal/database/integration_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package database
+
+import (
+	"context"
+	"errors"
+	"io/fs"
+	"os"
+	"strings"
+	"sync"
+	"testing"
+	"testing/fstest"
+	"time"
+
+	"github.com/Includeoyasi/faultline-lab/migrations"
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
+)
+
+// These tests change their dedicated dataset. Only the isolated host smoke opts in.
+func TestPostgresFoundation(t *testing.T) {
+	if os.Getenv("FL_DATA_INTEGRATION") != "1" {
+		t.Skip("requires isolated PostgreSQL smoke")
+	}
+	cfg, err := Load(os.Getenv("FL_DATA_CONFIG"), os.Getenv("FL_DATA_SECRETS"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+	defer cancel()
+	connect := func(t *testing.T, db, user string) *pgx.Conn {
+		t.Helper()
+		conn, e := Connect(ctx, cfg, db, user)
+		if e != nil {
+			t.Fatal(e)
+		}
+		t.Cleanup(func() { Close(conn) })
+		return conn
+	}
+	scalar := func(t *testing.T, conn *pgx.Conn, query string) int {
+		t.Helper()
+		var value int
+		if e := conn.QueryRow(ctx, query).Scan(&value); e != nil {
+			t.Fatal(SafeError("test query", e))
+		}
+		return value
+	}
+	denied := func(t *testing.T, conn *pgx.Conn, sql string) {
+		t.Helper()
+		_, e := conn.Exec(ctx, sql)
+		var pgerr *pgconn.PgError
+		if !errors.As(e, &pgerr) || pgerr.Code != "42501" {
+			t.Fatalf("expected permission denial, got %v", SafeError("negative permission test", e))
+		}
+	}
+	t.Run("concurrent migrations and immutable history", func(t *testing.T) {
+		for _, service := range cfg.Services {
+			var wg sync.WaitGroup
+			results := make(chan error, 2)
+			for attempt := 0; attempt < 2; attempt++ {
+				wg.Go(func() { results <- Migrate(ctx, cfg, service) })
+			}
+			wg.Wait()
+			close(results)
+			for e := range results {
+				if e != nil {
+					t.Fatal(e)
+				}
+			}
+			conn := connect(t, service.Database, service.MigrationUser)
+			want := 1
+			if service.Name == "inventory" {
+				want = 2
+			}
+			if got := scalar(t, conn, "SELECT count(*) FROM lab_migrations.versions"); got != want {
+				t.Fatalf("versions=%d want=%d", got, want)
+			}
+		}
+		before, e := Checksum(ctx, cfg)
+		if e != nil {
+			t.Fatal(e)
+		}
+		for _, service := range cfg.Services {
+			if e = Migrate(ctx, cfg, service); e != nil {
+				t.Fatal(e)
+			}
+		}
+		after, e := Checksum(ctx, cfg)
+		if e != nil || before != after {
+			t.Fatal("repeat modified history", e)
+		}
+	})
+	t.Run("repeat migrations restore application access", func(t *testing.T) {
+		service, _ := cfg.Service("inventory")
+		conn := connect(t, service.Database, service.MigrationUser)
+		app := connect(t, service.Database, service.AppUser)
+		if _, e := conn.Exec(ctx, "REVOKE ALL ON SCHEMA inventory FROM "+identifierSQL(service.AppUser)); e != nil {
+			t.Fatal(SafeError("revoke application access", e))
+		}
+		denied(t, app, "SELECT count(*) FROM inventory.products")
+		if e := Migrate(ctx, cfg, service); e != nil {
+			t.Fatal(e)
+		}
+		if got := scalar(t, conn, "SELECT count(*) FROM lab_migrations.versions"); got != 2 {
+			t.Fatal("grant repair changed migration history")
+		}
+		if got := scalar(t, app, "SELECT count(*) FROM inventory.products"); got != 0 {
+			t.Fatal("grant repair changed inventory data")
+		}
+	})
+	t.Run("role isolation and denied DDL", func(t *testing.T) {
+		for _, service := range cfg.Services {
+			for _, user := range []string{service.AppUser, service.MigrationUser} {
+				for _, target := range cfg.Services {
+					conn, e := Connect(ctx, cfg, target.Database, user)
+					if target.Name == service.Name {
+						if e != nil {
+							t.Fatal(e)
+						}
+						Close(conn)
+					} else {
+						if conn != nil {
+							Close(conn)
+						}
+						if e == nil || !strings.Contains(e.Error(), "42501") {
+							t.Fatalf("cross-database access allowed or wrong error: %v", e)
+						}
+					}
+				}
+			}
+			app := connect(t, service.Database, service.AppUser)
+			for _, sql := range []string{"CREATE SCHEMA forbidden", "CREATE TABLE public.forbidden(id int)", "CREATE TEMP TABLE forbidden(id int)", "SET ROLE " + identifierSQL(service.MigrationUser), "DELETE FROM lab_migrations.versions"} {
+				denied(t, app, sql)
+			}
+			if got := scalar(t, app, `SELECT count(*) FROM pg_roles WHERE rolname=current_user AND (rolsuper OR rolcreatedb OR rolcreaterole OR rolreplication OR rolbypassrls)`); got != 0 {
+				t.Fatal("elevated app role")
+			}
+			migration := connect(t, service.Database, service.MigrationUser)
+			table := identifierSQL(service.Name) + ".privilege_probe"
+			if _, e := migration.Exec(ctx, "CREATE TABLE "+table+"(id int PRIMARY KEY)"); e != nil {
+				t.Fatal(SafeError("probe create", e))
+			}
+			for _, sql := range []string{"INSERT INTO " + table + " VALUES(1)", "UPDATE " + table + " SET id=2", "DELETE FROM " + table + " WHERE id=2"} {
+				if _, e := app.Exec(ctx, sql); e != nil {
+					t.Fatal(SafeError("app DML", e))
+				}
+			}
+			denied(t, app, "ALTER TABLE "+table+" ADD COLUMN forbidden int")
+			denied(t, app, "TRUNCATE "+table)
+			if _, e := migration.Exec(ctx, "DROP TABLE "+table); e != nil {
+				t.Fatal(SafeError("probe drop", e))
+			}
+			for _, maintenance := range []string{cfg.AdminDatabase, "template1"} {
+				conn, e := Connect(ctx, cfg, maintenance, service.AppUser)
+				if conn != nil {
+					Close(conn)
+				}
+				if e == nil || !strings.Contains(e.Error(), "42501") {
+					t.Fatalf("maintenance access: %v", e)
+				}
+			}
+		}
+	})
+	t.Run("failed migration rollback and checksum drift", func(t *testing.T) {
+		service, _ := cfg.Service("inventory")
+		conn := connect(t, service.Database, service.MigrationUser)
+		files := fstest.MapFS{}
+		entries, e := fs.ReadDir(migrations.Files, "inventory")
+		if e != nil {
+			t.Fatal(e)
+		}
+		for _, entry := range entries {
+			data, e := fs.ReadFile(migrations.Files, "inventory/"+entry.Name())
+			if e != nil {
+				t.Fatal(e)
+			}
+			files["inventory/"+entry.Name()] = &fstest.MapFile{Data: data}
+		}
+		files["inventory/0003_failure.sql"] = &fstest.MapFile{Data: []byte("CREATE TABLE inventory.must_rollback(id int); SELECT 1/0;")}
+		if e = migrate(ctx, cfg, service, files); e == nil || !strings.Contains(e.Error(), "22012") {
+			t.Fatalf("expected failed migration: %v", e)
+		}
+		if scalar(t, conn, "SELECT count(*) FROM lab_migrations.versions") != 2 || scalar(t, conn, "SELECT count(*) FROM information_schema.tables WHERE table_schema='inventory' AND table_name='must_rollback'") != 0 {
+			t.Fatal("failed migration persisted")
+		}
+		delete(files, "inventory/0003_failure.sql")
+		files["inventory/0001_schema.sql"].Data = []byte("CREATE SCHEMA inventory; -- changed")
+		if e = migrate(ctx, cfg, service, files); e == nil || !strings.Contains(e.Error(), "checksum") {
+			t.Fatal("accepted changed migration", e)
+		}
+	})
+	t.Run("repeat seed preserves catalog and modified stock", func(t *testing.T) {
+		if e := Seed(ctx, cfg); e != nil {
+			t.Fatal(e)
+		}
+		service, _ := cfg.Service("inventory")
+		conn := connect(t, service.Database, service.AppUser)
+		if scalar(t, conn, "SELECT count(*) FROM inventory.products") != 3 || scalar(t, conn, "SELECT available FROM inventory.stock WHERE sku='SKU-001'") != 100 {
+			t.Fatal("unexpected initial catalog")
+		}
+		if _, e := conn.Exec(ctx, "UPDATE inventory.stock SET available=7 WHERE sku='SKU-001'; UPDATE inventory.products SET price_minor=99900 WHERE sku='SKU-001'"); e != nil {
+			t.Fatal(SafeError("test update", e))
+		}
+		if e := Seed(ctx, cfg); e != nil {
+			t.Fatal(e)
+		}
+		if scalar(t, conn, "SELECT count(*) FROM inventory.products") != 3 || scalar(t, conn, "SELECT available FROM inventory.stock WHERE sku='SKU-001'") != 7 || scalar(t, conn, "SELECT price_minor FROM inventory.products WHERE sku='SKU-001'") != 99900 {
+			t.Fatal("repeat seed overwrote data")
+		}
+		for _, sql := range []string{"UPDATE inventory.stock SET available=-1 WHERE sku='SKU-001'", "UPDATE inventory.products SET price_minor=-1 WHERE sku='SKU-001'", "UPDATE inventory.products SET currency='rub' WHERE sku='SKU-001'", "INSERT INTO inventory.stock VALUES('missing',1)"} {
+			if _, e := conn.Exec(ctx, sql); e == nil {
+				t.Fatal("invalid inventory data accepted")
+			}
+		}
+	})
+}
+```
+
+<a id="p02-internal-database-checksum-go"></a>
+
+## Приложение: Data checksum
+
+Полный исходный документ: `internal/database/checksum.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package database
+
+import (
+	"context"
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
+	"errors"
+)
+
+// Checksum covers ordered migration history and Inventory product-stock pairs.
+// It is evidence of persistence for this foundation, not a general backup tool.
+func Checksum(ctx context.Context, cfg Config) (string, error) {
+	var values []string
+	for _, service := range cfg.Services {
+		conn, err := Connect(ctx, cfg, service.Database, service.MigrationUser)
+		if err != nil {
+			return "", err
+		}
+		var history string
+		err = conn.QueryRow(ctx, `SELECT coalesce(json_agg(v ORDER BY version)::text,'[]') FROM lab_migrations.versions v`).Scan(&history)
+		Close(conn)
+		if err != nil {
+			return "", SafeError("history checksum", err)
+		}
+		values = append(values, service.Name, history)
+	}
+	service, err := cfg.Service("inventory")
+	if err != nil {
+		return "", err
+	}
+	conn, err := Connect(ctx, cfg, service.Database, service.AppUser)
+	if err != nil {
+		return "", err
+	}
+	defer Close(conn)
+	var catalog string
+	err = conn.QueryRow(ctx, `SELECT coalesce(json_agg(v ORDER BY sku)::text,'[]') FROM (SELECT p.*,s.available FROM inventory.products p JOIN inventory.stock s USING(sku)) v`).Scan(&catalog)
+	if err != nil {
+		return "", SafeError("catalog checksum", err)
+	}
+	values = append(values, catalog)
+	data, err := json.Marshal(values)
+	if err != nil {
+		return "", errors.New("cannot encode checksum")
+	}
+	sum := sha256.Sum256(data)
+	return hex.EncodeToString(sum[:]), nil
+}
+```
+
+<a id="p02-internal-database-config-test-go"></a>
+
+## Приложение: internal/database/config_test.go
+
+Полный исходный документ: `internal/database/config_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package database
+
+import (
+	"context"
+	"errors"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+	"testing/fstest"
+
+	"github.com/jackc/pgx/v5/pgconn"
+)
+
+func testConfig(t *testing.T) Config {
+	t.Helper()
+	cfg, err := Load("../../configs/postgres/local.json", t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	return cfg
+}
+func TestConfigValidation(t *testing.T) {
+	for _, timeout := range []string{"0", "-1s", "500us", "61s", "invalid"} {
+		t.Run(timeout, func(t *testing.T) {
+			cfg := testConfig(t)
+			cfg.Timeout = timeout
+			if cfg.Validate() == nil {
+				t.Fatal("accepted invalid budget")
+			}
+		})
+	}
+	cfg := testConfig(t)
+	cfg.Services[0].AppUser = cfg.Services[1].AppUser
+	if cfg.Validate() == nil {
+		t.Fatal("accepted shared role")
+	}
+	cfg = testConfig(t)
+	cfg.Services[0].Database = "db; DROP"
+	if cfg.Validate() == nil {
+		t.Fatal("accepted SQL identifier")
+	}
+	path := filepath.Join(t.TempDir(), "config.json")
+	if err := os.WriteFile(path, []byte(`{"unknown":true}`), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Load(path, t.TempDir()); err == nil {
+		t.Fatal("accepted unknown settings")
+	}
+}
+func TestSecretsPreservedAndMalformedRejected(t *testing.T) {
+	cfg := testConfig(t)
+	if err := GenerateSecrets(cfg); err != nil {
+		t.Fatal(err)
+	}
+	first, err := cfg.Secret(cfg.AdminUser)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = GenerateSecrets(cfg); err != nil {
+		t.Fatal(err)
+	}
+	second, _ := cfg.Secret(cfg.AdminUser)
+	if first != second {
+		t.Fatal("credentials rotated unexpectedly")
+	}
+	if err = os.WriteFile(filepath.Join(cfg.Secrets, cfg.AdminUser+".password"), []byte("malformed-sensitive-value"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if err = GenerateSecrets(cfg); err == nil || strings.Contains(err.Error(), "malformed-sensitive-value") {
+		t.Fatal("malformed secret accepted or exposed")
+	}
+}
+func TestSafeError(t *testing.T) {
+	for _, err := range []error{&pgconn.PgError{Code: "42501", Message: "secret DSN", Detail: "password"}, errors.New("password"), errors.Join(context.Canceled, errors.New("password"))} {
+		safe := SafeError("operation", err)
+		if strings.Contains(safe.Error(), "password") || strings.Contains(safe.Error(), "DSN") {
+			t.Fatal("sensitive diagnostics leaked")
+		}
+	}
+	if !errors.Is(SafeError("operation", context.DeadlineExceeded), context.DeadlineExceeded) {
+		t.Fatal("deadline lost")
+	}
+}
+func TestMigrationFiles(t *testing.T) {
+	for _, files := range []fstest.MapFS{
+		{"orders/0000_invalid.sql": {Data: []byte("SELECT 1")}},
+		{"orders/0001_a.sql": {Data: []byte("SELECT 1")}, "orders/0001_b.sql": {Data: []byte("SELECT 2")}},
+		{"orders/unversioned.sql": {Data: []byte("SELECT 1")}},
+		{"orders/0001_empty.sql": {Data: []byte{}}},
+	} {
+		if _, err := loadMigrations(files, "orders"); err == nil {
+			t.Fatal("invalid migration set accepted")
+		}
+	}
+	files := fstest.MapFS{"orders/0001_a.sql": {Data: []byte("SELECT 1")}}
+	before, err := loadMigrations(files, "orders")
+	if err != nil {
+		t.Fatal(err)
+	}
+	files["orders/0001_a.sql"].Data = []byte("SELECT 2")
+	after, err := loadMigrations(files, "orders")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if before[0].checksum == after[0].checksum {
+		t.Fatal("SQL edit did not alter checksum")
+	}
+}
+```
+
+<a id="p02-internal-database-config-go"></a>
+
+## Приложение: internal/database/config.go
+
+Полный исходный документ: `internal/database/config.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+// Package database prepares the lab's PostgreSQL databases without business RPCs.
+package database
+
+import (
+	"context"
+	"crypto/rand"
+	"encoding/hex"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"io"
+	"net"
+	"net/url"
+	"os"
+	"path/filepath"
+	"regexp"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
+)
+
+// Service assigns database and role ownership to one business service.
+type Service struct {
+	Name          string `json:"name"`
+	Database      string `json:"database"`
+	AppUser       string `json:"app_user"`
+	MigrationUser string `json:"migration_user"`
+}
+
+// Config contains the explicit local connection profile; credentials stay in files.
+type Config struct {
+	Host          string    `json:"host"`
+	Port          uint16    `json:"port"`
+	SSLMode       string    `json:"sslmode"`
+	Timeout       string    `json:"timeout"`
+	AdminDatabase string    `json:"admin_database"`
+	AdminUser     string    `json:"admin_user"`
+	Services      []Service `json:"services"`
+	Secrets       string    `json:"-"`
+}
+
+var identifier = regexp.MustCompile(`^[a-z][a-z0-9_]{0,62}$`)
+var secretValue = regexp.MustCompile(`^[a-f0-9]{64}$`)
+
+// Load reads a strict JSON profile and validates it before any connection.
+func Load(path, secrets string) (Config, error) {
+	var cfg Config
+	file, err := os.Open(path)
+	if err != nil {
+		return cfg, errors.New("cannot open database configuration")
+	}
+	defer func() { _ = file.Close() }()
+	decoder := json.NewDecoder(io.LimitReader(file, 64<<10))
+	decoder.DisallowUnknownFields()
+	if err = decoder.Decode(&cfg); err != nil {
+		return cfg, errors.New("invalid database configuration")
+	}
+	var extra any
+	if err = decoder.Decode(&extra); !errors.Is(err, io.EOF) {
+		return cfg, errors.New("database configuration contains trailing data")
+	}
+	cfg.Secrets = secrets
+	return cfg, cfg.Validate()
+}
+
+// Validate rejects incomplete profiles, shared identities and unbounded timeouts.
+func (c Config) Validate() error {
+	budget, err := time.ParseDuration(c.Timeout)
+	if err != nil || budget < time.Millisecond || budget > time.Minute || c.Host == "" || c.Port == 0 || c.SSLMode != "disable" || c.Secrets == "" {
+		return errors.New("database configuration requires host, port, local sslmode=disable, secrets directory and timeout in [1ms,1m]")
+	}
+	if !identifier.MatchString(c.AdminDatabase) || !identifier.MatchString(c.AdminUser) || len(c.Services) != 3 {
+		return errors.New("invalid administrator or service configuration")
+	}
+	names, databases, users := map[string]bool{}, map[string]bool{c.AdminDatabase: true}, map[string]bool{c.AdminUser: true}
+	for _, service := range c.Services {
+		if (service.Name != "orders" && service.Name != "inventory" && service.Name != "payments") || names[service.Name] || !identifier.MatchString(service.Database) || databases[service.Database] {
+			return errors.New("configuration must contain three distinct service databases")
+		}
+		names[service.Name], databases[service.Database] = true, true
+		for _, user := range []string{service.AppUser, service.MigrationUser} {
+			if !identifier.MatchString(user) || users[user] {
+				return errors.New("database roles must be valid and distinct")
+			}
+			users[user] = true
+		}
+	}
+	return nil
+}
+
+// Service finds one of the three configured service identities.
+func (c Config) Service(name string) (Service, error) {
+	for _, service := range c.Services {
+		if service.Name == name {
+			return service, nil
+		}
+	}
+	return Service{}, errors.New("unknown service")
+}
+
+// Secret reads a generated hex password without including its value in errors.
+func (c Config) Secret(user string) (string, error) {
+	if !identifier.MatchString(user) {
+		return "", errors.New("invalid secret identifier")
+	}
+	data, err := os.ReadFile(filepath.Join(c.Secrets, user+".password"))
+	if err != nil || !secretValue.MatchString(strings.TrimSpace(string(data))) {
+		return "", errors.New("database secret is unavailable or malformed")
+	}
+	return strings.TrimSpace(string(data)), nil
+}
+
+// GenerateSecrets preserves existing credentials. The private directory protects
+// host access; readable files allow non-root containers to consume bind secrets.
+func GenerateSecrets(cfg Config) error {
+	if err := cfg.Validate(); err != nil {
+		return err
+	}
+	if err := os.MkdirAll(cfg.Secrets, 0o700); err != nil {
+		return errors.New("cannot create private secret directory")
+	}
+	info, err := os.Lstat(cfg.Secrets)
+	if err != nil || !info.IsDir() || info.Mode()&os.ModeSymlink != 0 {
+		return errors.New("secret directory must be a regular directory")
+	}
+	if err = os.Chmod(cfg.Secrets, 0o700); err != nil {
+		return errors.New("cannot protect secret directory")
+	}
+	users := []string{cfg.AdminUser}
+	for _, service := range cfg.Services {
+		users = append(users, service.AppUser, service.MigrationUser)
+	}
+	for _, user := range users {
+		path := filepath.Join(cfg.Secrets, user+".password")
+		if info, err := os.Lstat(path); err == nil {
+			if !info.Mode().IsRegular() {
+				return errors.New("secret must be a regular file")
+			}
+			if _, err = cfg.Secret(user); err != nil {
+				return err
+			}
+			if err = os.Chmod(path, 0o644); err != nil {
+				return errors.New("cannot set secret file permissions")
+			}
+			continue
+		} else if !errors.Is(err, os.ErrNotExist) {
+			return errors.New("cannot inspect secret file")
+		}
+		var value [32]byte
+		if _, err := rand.Read(value[:]); err != nil {
+			return errors.New("cannot generate database secret")
+		}
+		file, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0o644)
+		if err != nil {
+			return errors.New("cannot create secret file")
+		}
+		_, writeErr := file.WriteString(hex.EncodeToString(value[:]) + "\n")
+		permissionErr := file.Chmod(0o644) // Creation mode alone is restricted by POSIX umask.
+		if closeErr := file.Close(); errors.Join(writeErr, permissionErr, closeErr) != nil {
+			return errors.New("cannot save secret file")
+		}
+	}
+	return nil
+}
+
+// Connect uses explicit credentials, SCRAM authentication and bounded SQL waits.
+func Connect(ctx context.Context, cfg Config, database, user string) (*pgx.Conn, error) {
+	password, err := cfg.Secret(user)
+	if err != nil {
+		return nil, err
+	}
+	address := url.URL{Scheme: "postgres", Host: net.JoinHostPort(cfg.Host, strconv.Itoa(int(cfg.Port))), Path: database, User: url.UserPassword(user, password)}
+	query := url.Values{"sslmode": {cfg.SSLMode}, "require_auth": {"scram-sha-256"}}
+	address.RawQuery = query.Encode()
+	connection, err := pgx.ParseConfig(address.String())
+	if err != nil {
+		return nil, errors.New("cannot configure database connection")
+	}
+	connection.ConnectTimeout, _ = time.ParseDuration(cfg.Timeout)
+	connection.RuntimeParams["statement_timeout"] = strconv.FormatInt(connection.ConnectTimeout.Milliseconds(), 10)
+	connection.RuntimeParams["lock_timeout"] = strconv.FormatInt(connection.ConnectTimeout.Milliseconds(), 10)
+	connection.RuntimeParams["timezone"] = "UTC"
+	conn, err := pgx.ConnectConfig(ctx, connection)
+	if err != nil {
+		return nil, SafeError("database connection", err)
+	}
+	return conn, nil
+}
+
+// Close bounds connection cleanup independently of the operation's context.
+func Close(conn *pgx.Conn) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	_ = conn.Close(ctx)
+}
+
+// SafeError excludes SQL, parameters, connection strings and server details.
+func SafeError(stage string, err error) error {
+	var databaseError *pgconn.PgError
+	if errors.As(err, &databaseError) {
+		return fmt.Errorf("%s failed (SQLSTATE %s)", stage, databaseError.Code)
+	}
+	if errors.Is(err, context.Canceled) {
+		return fmt.Errorf("%s: %w", stage, context.Canceled)
+	}
+	if errors.Is(err, context.DeadlineExceeded) {
+		return fmt.Errorf("%s: %w", stage, context.DeadlineExceeded)
+	}
+	return fmt.Errorf("%s failed", stage)
+}
+```
+
+<a id="p02-internal-database-bootstrap-go"></a>
+
+## Приложение: internal/database/bootstrap.go
+
+Полный исходный документ: `internal/database/bootstrap.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package database
+
+import (
+	"context"
+	"errors"
+
+	"github.com/jackc/pgx/v5"
+)
+
+func identifierSQL(value string) string { return pgx.Identifier{value}.Sanitize() }
+
+// Bootstrap is repeatable after partial failure. CREATE DATABASE cannot be part
+// of one transaction, so a session lock serializes this dedicated lab bootstrap.
+func Bootstrap(ctx context.Context, cfg Config) error {
+	admin, err := Connect(ctx, cfg, cfg.AdminDatabase, cfg.AdminUser)
+	if err != nil {
+		return err
+	}
+	defer Close(admin)
+	if _, err = admin.Exec(ctx, bootstrapLockSQL); err != nil {
+		return SafeError("bootstrap lock", err)
+	}
+	for _, service := range cfg.Services {
+		for _, role := range []string{service.MigrationUser, service.AppUser} {
+			if err = executeDDL(ctx, admin, createRoleSQL, role); err != nil {
+				return SafeError("role creation", err)
+			}
+			password, err := cfg.Secret(role)
+			if err != nil {
+				return err
+			}
+			// Statement/parameter logging is disabled by the lab deployment.
+			if err = executeDDL(ctx, admin, configureRoleSQL, role, password); err != nil {
+				return SafeError("role configuration", err)
+			}
+			var memberships int
+			if err = admin.QueryRow(ctx, roleMembershipsSQL, role).Scan(&memberships); err != nil {
+				return SafeError("role membership check", err)
+			}
+			if memberships != 0 {
+				return errors.New("managed roles must not inherit other roles")
+			}
+		}
+		var owner string
+		err = admin.QueryRow(ctx, databaseOwnerSQL, service.Database).Scan(&owner)
+		if errors.Is(err, pgx.ErrNoRows) {
+			err = executeDDL(ctx, admin, createDatabaseSQL, service.Database, service.MigrationUser)
+			owner = service.MigrationUser
+		}
+		if err != nil {
+			return SafeError("database preparation", err)
+		}
+		if owner != service.MigrationUser {
+			return errors.New("existing database has an unexpected owner; no ownership takeover performed")
+		}
+		if err = executeDDL(ctx, admin, databaseAccessSQL, service.Database, service.MigrationUser, service.AppUser); err != nil {
+			return SafeError("database privileges", err)
+		}
+		conn, err := Connect(ctx, cfg, service.Database, cfg.AdminUser)
+		if err != nil {
+			return err
+		}
+		_, err = conn.Exec(ctx, publicSchemaSQL)
+		Close(conn)
+		if err != nil {
+			return SafeError("public schema privileges", err)
+		}
+	}
+	for _, database := range []string{cfg.AdminDatabase, "template1"} {
+		if err = executeDDL(ctx, admin, maintenanceAccessSQL, database); err != nil {
+			return SafeError("maintenance database privileges", err)
+		}
+	}
+	return nil
+}
+```
+
+<a id="p02-configs-postgres-local-json"></a>
+
+## Приложение: configs/postgres/local.json
+
+Полный исходный документ: `configs/postgres/local.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "host": "postgres",
+  "port": 5432,
+  "sslmode": "disable",
+  "timeout": "10s",
+  "admin_database": "postgres",
+  "admin_user": "postgres",
+  "services": [
+    { "name": "orders", "database": "orders_db", "app_user": "orders_app", "migration_user": "orders_migrator" },
+    { "name": "inventory", "database": "inventory_db", "app_user": "inventory_app", "migration_user": "inventory_migrator" },
+    { "name": "payments", "database": "payments_db", "app_user": "payments_app", "migration_user": "payments_migrator" }
+  ]
+}
+```
+
+<a id="p02-cmd-labdata-main-test-go"></a>
+
+## Приложение: cmd/labdata/main_test.go
+
+Полный исходный документ: `cmd/labdata/main_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package main
+
+import (
+	"bytes"
+	"context"
+	"strings"
+	"testing"
+)
+
+func TestOperationErrorsExitNonzero(t *testing.T) {
+	var out, errs bytes.Buffer
+	code := run(context.Background(), []string{"migrate", "-config", "../../configs/postgres/local.json", "-secrets", t.TempDir(), "-service", "unknown"}, &out, &errs)
+	if code != 1 || !strings.Contains(errs.String(), "unknown service") || strings.Contains(out.String(), "PASS") {
+		t.Fatalf("code=%d out=%q err=%q", code, out.String(), errs.String())
+	}
+}
+
+func TestUsageAndSecrets(t *testing.T) {
+	for _, test := range []struct {
+		args []string
+		code int
+	}{
+		{nil, 2}, {[]string{"unknown"}, 2}, {[]string{"secrets", "-help"}, 0},
+		{[]string{"secrets", "-config", "../../configs/postgres/local.json", "-secrets", t.TempDir()}, 0},
+	} {
+		var out, errs bytes.Buffer
+		if code := run(context.Background(), test.args, &out, &errs); code != test.code {
+			t.Fatalf("args=%v code=%d err=%s", test.args, code, errs.String())
+		}
+	}
+}
+```
+
+<a id="p02-cmd-labdata-main-go"></a>
+
+## Приложение: cmd/labdata/main.go
+
+Полный исходный документ: `cmd/labdata/main.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+// Command labdata prepares and verifies the isolated PostgreSQL foundation.
+package main
+
+import (
+	"context"
+	"errors"
+	"flag"
+	"fmt"
+	"io"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
+	"github.com/Includeoyasi/faultline-lab/internal/database"
+	"github.com/Includeoyasi/faultline-lab/internal/datalab"
+)
+
+func main() {
+	os.Exit(mainCode())
+}
+
+func mainCode() int {
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer stop()
+	return run(ctx, os.Args[1:], os.Stdout, os.Stderr)
+}
+func setting(key, fallback string) string {
+	if value := os.Getenv(key); value != "" {
+		return value
+	}
+	return fallback
+}
+func run(ctx context.Context, args []string, out, errs io.Writer) int {
+	if len(args) == 0 {
+		_, _ = fmt.Fprintln(errs, "usage: labdata {secrets|bootstrap|migrate|seed|checksum|smoke|reset} [flags]")
+		return 2
+	}
+	flags := flag.NewFlagSet("labdata "+args[0], flag.ContinueOnError)
+	flags.SetOutput(errs)
+	if args[0] == "checksum" {
+		flags.Usage = func() {
+			_, _ = fmt.Fprint(errs, "Usage: labdata checksum [flags]\n\nPrint SHA-256 of migration history and Inventory product-stock data without changing it.\n\n")
+			flags.PrintDefaults()
+		}
+	}
+	config := flags.String("config", setting("FL_DATA_CONFIG", "configs/postgres/local.json"), "public database configuration")
+	secrets := flags.String("secrets", setting("FL_DATA_SECRETS", ".local/postgres"), "private credentials directory")
+	service := flags.String("service", "", "single migration service; empty applies all")
+	project := flags.String("project", "", "isolated Compose project for explicit reset")
+	confirm := flags.String("confirm", "", "repeat the project name to confirm data deletion")
+	if err := flags.Parse(args[1:]); err != nil {
+		if errors.Is(err, flag.ErrHelp) {
+			return 0
+		}
+		return 2
+	}
+	if flags.NArg() != 0 {
+		return 2
+	}
+	var err error
+	switch args[0] {
+	case "smoke":
+		err = datalab.Run(ctx, out)
+	case "reset":
+		err = datalab.Reset(ctx, *project, *confirm, out)
+	case "secrets", "bootstrap", "migrate", "seed", "checksum":
+		var cfg database.Config
+		cfg, err = database.Load(*config, *secrets)
+		if err != nil {
+			break
+		}
+		operationCtx, cancel := context.WithTimeout(ctx, time.Minute)
+		defer cancel()
+		switch args[0] {
+		case "secrets":
+			err = database.GenerateSecrets(cfg)
+		case "bootstrap":
+			err = database.Bootstrap(operationCtx, cfg)
+		case "migrate":
+			selected := cfg.Services
+			if *service != "" {
+				var item database.Service
+				item, err = cfg.Service(*service)
+				selected = []database.Service{item}
+			}
+			if err == nil {
+				for _, item := range selected {
+					if err = database.Migrate(operationCtx, cfg, item); err != nil {
+						break
+					}
+				}
+			}
+		case "seed":
+			err = database.Seed(operationCtx, cfg)
+		case "checksum":
+			var value string
+			value, err = database.Checksum(operationCtx, cfg)
+			if err == nil {
+				_, err = fmt.Fprintln(out, value)
+			}
+		}
+	default:
+		_, _ = fmt.Fprintln(errs, "unknown command; use labdata without arguments for usage")
+		return 2
+	}
+	if err != nil {
+		_, _ = fmt.Fprintln(errs, err)
+		return 1
+	}
+	if args[0] != "checksum" {
+		_, _ = fmt.Fprintln(out, args[0]+": PASS")
+	}
+	return 0
+}
+```
+
+<a id="p02-migrations-inventory-0002-catalog-sql"></a>
+
+## Приложение: migrations/inventory/0002_catalog.sql
+
+Полный исходный документ: `migrations/inventory/0002_catalog.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+CREATE TABLE inventory.products (
+    sku text PRIMARY KEY CHECK (length(sku) BETWEEN 1 AND 64),
+    title text NOT NULL CHECK (length(title) BETWEEN 1 AND 200),
+    price_minor bigint NOT NULL CHECK (price_minor >= 0),
+    currency text NOT NULL CHECK (currency ~ '^[A-Z]{3}$')
+);
+
+CREATE TABLE inventory.stock (
+    sku text PRIMARY KEY REFERENCES inventory.products(sku),
+    available bigint NOT NULL CHECK (available >= 0)
+);
+```
+
+<a id="p02-migrations-inventory-0001-schema-sql"></a>
+
+## Приложение: migrations/inventory/0001_schema.sql
+
+Полный исходный документ: `migrations/inventory/0001_schema.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+CREATE SCHEMA inventory;
+```
+
+<a id="p02-migrations-embed-go"></a>
+
+## Приложение: migrations/embed.go
+
+Полный исходный документ: `migrations/embed.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+// Package migrations contains the reviewed, transactional database migrations.
+package migrations
+
+import "embed"
+
+// Files is the immutable migration input shipped with the database tool.
+//
+//go:embed orders/*.sql inventory/*.sql payments/*.sql
+var Files embed.FS
+```
+
+<a id="p02-internal-database-sql-seed-inventory-sql"></a>
+
+## Приложение: internal/database/sql/seed/inventory.sql
+
+Полный исходный документ: `internal/database/sql/seed/inventory.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+INSERT INTO inventory.products (sku, title, price_minor, currency) VALUES
+    ('SKU-001', 'Notebook', 19900, 'RUB'),
+    ('SKU-002', 'Coffee', 45000, 'RUB'),
+    ('SKU-003', 'Headphones', 399000, 'RUB')
+ON CONFLICT (sku) DO NOTHING;
+
+INSERT INTO inventory.stock (sku, available) VALUES
+    ('SKU-001', 100), ('SKU-002', 50), ('SKU-003', 25)
+ON CONFLICT (sku) DO NOTHING;
+```
+
+<a id="p02-migrations-orders-0001-schema-sql"></a>
+
+## Приложение: migrations/orders/0001_schema.sql
+
+Полный исходный документ: `migrations/orders/0001_schema.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+CREATE SCHEMA orders;
+```
+
+<a id="p02-migrations-payments-0001-schema-sql"></a>
+
+## Приложение: migrations/payments/0001_schema.sql
+
+Полный исходный документ: `migrations/payments/0001_schema.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+CREATE SCHEMA payments;
+```
+
+<a id="p02-internal-datalab-run-test-go"></a>
+
+## Приложение: internal/datalab/run_test.go
+
+Полный исходный документ: `internal/datalab/run_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package datalab
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"io"
+	"os"
+	"path/filepath"
+	"slices"
+	"strings"
+	"testing"
+
+	"github.com/Includeoyasi/faultline-lab/internal/command"
+)
+
+func TestResetRejectsAmbiguousTargets(t *testing.T) {
+	for _, test := range []struct{ project, confirm string }{
+		{"", ""}, {"faultline-lab", "faultline-lab"}, {"foreign", "foreign"},
+		{"faultline-data-local", ""}, {"faultline-data-local", "faultline-data-other"},
+		{"faultline-data-../other", "faultline-data-../other"},
+	} {
+		if err := Reset(context.Background(), test.project, test.confirm, io.Discard); err == nil {
+			t.Fatalf("accepted unsafe reset target %q", test.project)
+		}
+	}
+}
+
+func TestRunCleanupAndReports(t *testing.T) {
+	for _, scenario := range []string{"success", "read-only-directory", "partial-build", "cancel-build", "cleanup-failure"} {
+		t.Run(scenario, func(t *testing.T) {
+			root := t.TempDir()
+			config, e := os.ReadFile("../../configs/postgres/local.json")
+			if e != nil {
+				t.Fatal(e)
+			}
+			if e = os.MkdirAll(filepath.Join(root, "configs/postgres"), 0o700); e != nil {
+				t.Fatal(e)
+			}
+			if e = os.WriteFile(filepath.Join(root, "configs/postgres/local.json"), config, 0o600); e != nil {
+				t.Fatal(e)
+			}
+			ctx, cancel := context.WithCancel(context.Background())
+			defer cancel()
+			cleaned := false
+			imageExists := false
+			execute := func(commandCtx context.Context, program string, args []string) (command.Output, error) {
+				if program != "docker" {
+					t.Fatal("unexpected executable")
+				}
+				if slices.Contains(args, "build") {
+					imageExists = true
+				}
+				if args[0] == "image" && imageExists {
+					return command.Output{Stdout: "owned-dbtool-image"}, nil
+				}
+				if slices.Contains(args, "build") && (scenario == "partial-build" || scenario == "cancel-build") {
+					if scenario == "cancel-build" {
+						cancel()
+					}
+					return command.Output{ExitCode: 1}, errors.New("controlled failure in " + root)
+				}
+				if slices.Contains(args, "down") {
+					if scenario == "read-only-directory" {
+						paths, e := filepath.Glob(filepath.Join(root, "artifacts/postgres/*/secrets"))
+						if e != nil || len(paths) != 1 {
+							t.Fatal("secret directory missing", e)
+						}
+						if e = os.Chmod(paths[0], 0o500); e != nil {
+							t.Fatal(e)
+						}
+					}
+					if commandCtx.Err() != nil {
+						t.Fatal("cleanup reused canceled context")
+					}
+					if !slices.Contains(args, "--volumes") || !slices.Contains(args, "--rmi") || args[len(args)-1] != "local" {
+						t.Fatal("wrong cleanup scope")
+					}
+					cleaned = true
+					if scenario == "cleanup-failure" {
+						return command.Output{ExitCode: 1}, errors.New("cleanup unavailable")
+					}
+					if slices.Contains(args, "--profile") && slices.Contains(args, "tools") {
+						imageExists = false
+					}
+				}
+				return command.Output{}, nil
+			}
+			err := run(ctx, io.Discard, root, execute)
+			wantSuccess := scenario == "success" || scenario == "read-only-directory"
+			if !cleaned || wantSuccess != (err == nil) {
+				t.Fatalf("cleanup=%t err=%v", cleaned, err)
+			}
+			paths, e := filepath.Glob(filepath.Join(root, "artifacts/postgres/*/report.json"))
+			if e != nil || len(paths) != 1 {
+				t.Fatal("report missing", e)
+			}
+			data, e := os.ReadFile(paths[0])
+			if e != nil {
+				t.Fatal(e)
+			}
+			var saved report
+			if e = json.Unmarshal(data, &saved); e != nil {
+				t.Fatal(e)
+			}
+			if strings.Contains(string(data), root) {
+				t.Fatal("report exposes host path")
+			}
+			if _, e = os.Stat(filepath.Join(filepath.Dir(paths[0]), "secrets")); !errors.Is(e, os.ErrNotExist) {
+				t.Fatal("temporary credentials remain")
+			}
+			if wantSuccess && saved.Result != "PASS" || !wantSuccess && saved.Result != "FAIL" {
+				t.Fatal("wrong verdict")
+			}
+			if (scenario == "cleanup-failure") != (saved.Cleanup == "FAIL") {
+				t.Fatal("wrong cleanup verdict")
+			}
+		})
+	}
+}
+```
+
+<a id="p02-internal-datalab-run-go"></a>
+
+## Приложение: internal/datalab/run.go
+
+Полный исходный документ: `internal/datalab/run.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+// Package datalab runs checks on its own disposable Compose project.
+package datalab
+
+import (
+	"context"
+	"crypto/rand"
+	"encoding/hex"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"io"
+	"os"
+	"path/filepath"
+	"regexp"
+	"strings"
+	"time"
+
+	"github.com/Includeoyasi/faultline-lab/internal/command"
+	"github.com/Includeoyasi/faultline-lab/internal/database"
+)
+
+var projectName = regexp.MustCompile(`^faultline-data-[a-z0-9][a-z0-9-]{0,47}$`)
+
+func composeArgs(project string, args ...string) []string {
+	// Profile activation by an earlier explicit run is not retained by down.
+	// All starts/builds below retain explicit service targets.
+	return append([]string{"compose", "-f", "compose.yaml", "-f", "compose.postgres.yaml", "-p", project, "--profile", "tools"}, args...)
+}
+
+// Reset requires an exact explicit project confirmation; ordinary down preserves data.
+func Reset(ctx context.Context, project, confirm string, out io.Writer) error {
+	if !projectName.MatchString(project) || project != confirm {
+		return errors.New("reset requires a faultline-data-* project and identical -confirm value")
+	}
+	root, err := os.Getwd()
+	if err != nil {
+		return errors.New("cannot locate checkout")
+	}
+	executor := command.Executor{Directory: root, Env: os.Environ()}
+	bounded, cancel := context.WithTimeout(ctx, time.Minute)
+	defer cancel()
+	result, err := executor.Execute(bounded, "docker", composeArgs(project, "down", "--volumes", "--remove-orphans", "--rmi", "local"))
+	if err != nil {
+		return errors.New("scoped reset failed; inspect Docker for the named project")
+	}
+	_, err = io.WriteString(out, result.Stdout)
+	return err
+}
+
+type event struct {
+	Stage    string `json:"stage"`
+	Output   string `json:"output,omitempty"`
+	Passed   bool   `json:"passed"`
+	Error    string `json:"error,omitempty"`
+	ExitCode int    `json:"exit_code"`
+}
+type report struct {
+	Project  string    `json:"project"`
+	Started  time.Time `json:"started_at"`
+	Finished time.Time `json:"finished_at"`
+	Result   string    `json:"result"`
+	Cleanup  string    `json:"cleanup"`
+	Events   []event   `json:"events"`
+}
+
+func Run(ctx context.Context, out io.Writer) (finalErr error) {
+	root, err := os.Getwd()
+	if err != nil {
+		return errors.New("cannot locate checkout")
+	}
+	return run(ctx, out, root, nil)
+}
+
+func run(ctx context.Context, out io.Writer, root string, execute func(context.Context, string, []string) (command.Output, error)) (finalErr error) {
+	var err error
+	var token [8]byte
+	if _, err = rand.Read(token[:]); err != nil {
+		return errors.New("cannot generate project ID")
+	}
+	project := "faultline-data-test-" + hex.EncodeToString(token[:])
+	dir := filepath.Join(root, "artifacts", "postgres", project)
+	if err = os.MkdirAll(dir, 0o700); err != nil {
+		return errors.New("cannot create report directory")
+	}
+	cfg, err := database.Load(filepath.Join(root, "configs/postgres/local.json"), filepath.Join(dir, "secrets"))
+	if err != nil {
+		return err
+	}
+	removeCredentials := func() error {
+		var result error
+		// Windows/OneDrive can mark a bind-source directory read-only.
+		// Restore write access only to this run's owned credential directory.
+		if e := os.Chmod(cfg.Secrets, 0o700); e != nil && !errors.Is(e, os.ErrNotExist) {
+			result = errors.Join(result, errors.New("cannot restore temporary directory permissions"))
+		}
+		for _, role := range append([]string{cfg.AdminUser}, roleNames(cfg)...) {
+			if e := os.Remove(filepath.Join(cfg.Secrets, role+".password")); e != nil && !errors.Is(e, os.ErrNotExist) {
+				result = errors.Join(result, errors.New("cannot remove temporary credential"))
+			}
+		}
+		if e := os.Remove(cfg.Secrets); e != nil && !errors.Is(e, os.ErrNotExist) {
+			result = errors.Join(result, errors.New("cannot remove temporary credential directory"))
+		}
+		return result
+	}
+	defer func() { finalErr = errors.Join(finalErr, removeCredentials()) }()
+	if err = database.GenerateSecrets(cfg); err != nil {
+		return err
+	}
+	pairs := []string{root, "[workspace]", filepath.ToSlash(root), "[workspace]"}
+	if home, e := os.UserHomeDir(); e == nil && home != "" {
+		pairs = append(pairs, home, "[home]", filepath.ToSlash(home), "[home]")
+	}
+	for _, role := range append([]string{cfg.AdminUser}, roleNames(cfg)...) {
+		value, e := cfg.Secret(role)
+		if e != nil {
+			return e
+		}
+		pairs = append(pairs, value, "[secret]")
+	}
+	redact := strings.NewReplacer(pairs...)
+	env := []string{}
+	for _, item := range os.Environ() {
+		key, _, _ := strings.Cut(item, "=")
+		if !strings.EqualFold(key, "FL_PG_SECRETS_DIR") {
+			env = append(env, item)
+		}
+	}
+	env = append(env, "FL_PG_SECRETS_DIR="+cfg.Secrets)
+	executor := command.Executor{Directory: root, Env: env}
+	if execute == nil {
+		execute = executor.Execute
+	}
+	evidence := report{Project: project, Started: time.Now().UTC(), Result: "FAIL", Cleanup: "PENDING", Events: []event{}}
+	save := func() error {
+		data, e := json.MarshalIndent(evidence, "", "  ")
+		if e != nil {
+			return e
+		}
+		return os.WriteFile(filepath.Join(dir, "report.json"), append(data, '\n'), 0o600)
+	}
+	if err = save(); err != nil {
+		return errors.New("cannot save initial report")
+	}
+	call := func(parent context.Context, stage string, budget time.Duration, args ...string) (string, error) {
+		_, _ = fmt.Fprintln(out, "PostgreSQL smoke:", stage)
+		commandCtx, cancel := context.WithTimeout(parent, budget)
+		defer cancel()
+		result, e := execute(commandCtx, "docker", args)
+		observation := event{Stage: stage, Output: redact.Replace(result.Stdout + result.Stderr), Passed: e == nil, ExitCode: result.ExitCode}
+		if e != nil {
+			observation.Error = redact.Replace(e.Error())
+			if commandCtx.Err() != nil {
+				observation.Error = redact.Replace(errors.Join(commandCtx.Err(), e).Error())
+			}
+			e = fmt.Errorf("%s failed: %s; see redacted report", stage, observation.Error)
+		}
+		evidence.Events = append(evidence.Events, observation)
+		return result.Stdout, errors.Join(e, save())
+	}
+	mayExist := false
+	defer func() {
+		if mayExist {
+			cleanupCtx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+			defer cancel()
+			_, e := call(cleanupCtx, "cleanup", 60*time.Second, composeArgs(project, "down", "--volumes", "--remove-orphans", "--rmi", "local")...)
+			if e == nil {
+				for _, args := range [][]string{
+					{"ps", "-aq", "--filter", "label=com.docker.compose.project=" + project},
+					{"network", "ls", "-q", "--filter", "label=com.docker.compose.project=" + project},
+					{"volume", "ls", "-q", "--filter", "label=com.docker.compose.project=" + project},
+					{"image", "ls", "-q", "--filter", "reference=" + project + "-*:latest"},
+				} {
+					var remaining string
+					remaining, e = call(cleanupCtx, "verify cleanup", 5*time.Second, args...)
+					if e != nil || strings.TrimSpace(remaining) != "" {
+						e = errors.New("owned resources remain after cleanup")
+						break
+					}
+				}
+			}
+			evidence.Cleanup = "PASS"
+			if e != nil {
+				evidence.Cleanup = "FAIL"
+			}
+			finalErr = errors.Join(finalErr, e)
+		} else {
+			evidence.Cleanup = "NOT_NEEDED"
+		}
+		credentialErr := removeCredentials()
+		if credentialErr != nil {
+			evidence.Cleanup = "FAIL"
+		}
+		finalErr = errors.Join(finalErr, credentialErr)
+		evidence.Finished = time.Now().UTC()
+		if finalErr == nil {
+			evidence.Result = "PASS"
+		}
+		finalErr = errors.Join(finalErr, save())
+		_, _ = fmt.Fprintf(out, "%s: artifacts/postgres/%s/report.json\n", evidence.Result, project)
+	}()
+	if _, err = call(ctx, "prerequisites", 15*time.Second, "version", "--format", "{{.Server.Version}}"); err != nil {
+		return err
+	}
+	mayExist = true
+	if _, err = call(ctx, "build dbtool", 10*time.Minute, composeArgs(project, "build", "dbtool")...); err != nil {
+		return err
+	}
+	if _, err = call(ctx, "start PostgreSQL", 90*time.Second, composeArgs(project, "up", "-d", "--wait", "--wait-timeout", "75", "postgres")...); err != nil {
+		return err
+	}
+	defer func() {
+		logCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		_, _ = call(logCtx, "PostgreSQL logs", 5*time.Second, composeArgs(project, "logs", "--no-color", "postgres")...)
+	}()
+	tool := func(stage string, args ...string) (string, error) {
+		return call(ctx, stage, 90*time.Second, composeArgs(project, append([]string{"run", "--rm", "--no-deps", "dbtool"}, args...)...)...)
+	}
+	for attempt := 0; attempt < 2; attempt++ {
+		if _, err = tool("bootstrap", "bootstrap"); err != nil {
+			return err
+		}
+	}
+	if _, err = call(ctx, "rights, migrations and seed", 3*time.Minute, composeArgs(project, "run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "--entrypoint", "/app/database.test", "dbtool", "-test.run=^TestPostgresFoundation$", "-test.v", "-test.timeout=150s")...); err != nil {
+		return err
+	}
+	before, err := tool("checksum before restart", "checksum")
+	if err != nil {
+		return err
+	}
+	if _, err = call(ctx, "restart PostgreSQL", 60*time.Second, composeArgs(project, "restart", "postgres")...); err != nil {
+		return err
+	}
+	if _, err = call(ctx, "wait after restart", 60*time.Second, composeArgs(project, "up", "-d", "--wait", "--wait-timeout", "45", "postgres")...); err != nil {
+		return err
+	}
+	for _, operation := range []string{"bootstrap", "migrate", "seed"} {
+		if _, err = tool("repeat "+operation, operation); err != nil {
+			return err
+		}
+	}
+	after, err := tool("checksum after restart", "checksum")
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(before) != strings.TrimSpace(after) {
+		return errors.New("data or migration history changed across restart/repeat")
+	}
+	_, err = call(ctx, "resource snapshot", 15*time.Second, "stats", "--no-stream", "--format", "{{json .}}", project+"-postgres-1")
+	return err
+}
+func roleNames(cfg database.Config) []string {
+	var result []string
+	for _, service := range cfg.Services {
+		result = append(result, service.AppUser, service.MigrationUser)
+	}
+	return result
+}
+```
+
+<a id="p02-compose-postgres-yaml"></a>
+
+## Приложение: compose.postgres.yaml
+
+Полный исходный документ: `compose.postgres.yaml`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```yaml
+services:
+  postgres:
+    image: postgres:18.6-bookworm@sha256:afc7e2d441324c0388fa80c3d24f733b4194a4eb7f47dd8ee2b08eb1a24a647c
+    user: "999:999"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres.password
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256 --auth-local=scram-sha-256
+    secrets:
+      - source: postgres-password
+        target: postgres.password
+    command:
+      - postgres
+      - -c
+      - shared_buffers=64MB
+      - -c
+      - max_connections=30
+      - -c
+      - log_statement=none
+      - -c
+      - log_min_error_statement=panic
+      - -c
+      - log_parameter_max_length=0
+      - -c
+      - log_parameter_max_length_on_error=0
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    tmpfs:
+      - /var/run/postgresql:uid=999,gid=999,mode=0770
+      - /tmp:mode=1777,size=32m
+    mem_limit: 512m
+    cpus: 0.5
+    stop_grace_period: 30s
+    networks: [data]
+    healthcheck:
+      test: [CMD, pg_isready, -U, postgres, -d, postgres]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+      start_period: 5s
+  dbtool:
+    profiles: [tools]
+    build:
+      context: .
+      dockerfile: build/Dockerfile
+      target: labdata
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    environment:
+      FL_DATA_CONFIG: /etc/faultline/postgres.json
+      FL_DATA_SECRETS: /run/secrets
+    volumes:
+      - ./configs/postgres/local.json:/etc/faultline/postgres.json:ro
+    secrets:
+      - {source: postgres-password, target: postgres.password}
+      - {source: orders-app-password, target: orders_app.password}
+      - {source: orders-migrator-password, target: orders_migrator.password}
+      - {source: inventory-app-password, target: inventory_app.password}
+      - {source: inventory-migrator-password, target: inventory_migrator.password}
+      - {source: payments-app-password, target: payments_app.password}
+      - {source: payments-migrator-password, target: payments_migrator.password}
+    tmpfs: ["/tmp:mode=1777,size=32m"]
+    networks: [data]
+    mem_limit: 256m
+    cpus: 1
+volumes:
+  postgres-data:
+networks:
+  data:
+    internal: true
+secrets:
+  postgres-password:
+    file: ${FL_PG_SECRETS_DIR:-.local/postgres}/postgres.password
+  orders-app-password:
+    file: ${FL_PG_SECRETS_DIR:-.local/postgres}/orders_app.password
+  orders-migrator-password:
+    file: ${FL_PG_SECRETS_DIR:-.local/postgres}/orders_migrator.password
+  inventory-app-password:
+    file: ${FL_PG_SECRETS_DIR:-.local/postgres}/inventory_app.password
+  inventory-migrator-password:
+    file: ${FL_PG_SECRETS_DIR:-.local/postgres}/inventory_migrator.password
+  payments-app-password:
+    file: ${FL_PG_SECRETS_DIR:-.local/postgres}/payments_app.password
+  payments-migrator-password:
+    file: ${FL_PG_SECRETS_DIR:-.local/postgres}/payments_migrator.password
+```
+
+<a id="p02-internal-smoke-exec-adapter-go"></a>
+
+## Приложение: internal/smoke/exec_adapter.go
+
+Полный исходный документ: `internal/smoke/exec_adapter.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package smoke
+
+import (
+	"context"
+
+	"github.com/Includeoyasi/faultline-lab/internal/command"
+)
+
+type commandOutput struct {
+	stdout, stderr string
+	exitCode       int
+}
+
+type executeFunc func(context.Context, string, []string) (commandOutput, error)
+
+type processExecutor struct {
+	directory string
+	env       []string
+}
+
+func (p processExecutor) execute(ctx context.Context, program string, args []string) (commandOutput, error) {
+	output, err := (command.Executor{Directory: p.directory, Env: p.env}).Execute(ctx, program, args)
+	return commandOutput{output.Stdout, output.Stderr, output.ExitCode}, err
+}
+```
+
+<a id="p02-docs-development-postgres-md"></a>
+
+## Приложение: docs/development/POSTGRES.md
+
+Полный исходный документ: `docs/development/POSTGRES.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### PostgreSQL: подготовка данных и проверка изоляции
+
+Основа данных для [задачи #12](https://github.com/Includeoyasi/faultline-lab/issues/12): один PostgreSQL, три отдельные базы, прикладная и миграционная роль для каждой базы, миграции и небольшой каталог Inventory. Команды выполняются из корня checkout. Фактические проверки и ограничения среды сохраняются в [отчёте](#p02-docs-development-evidence-p02-postgres-md).
+
+#### Состав и взаимодействия
+
+```mermaid
+flowchart LR
+    Operator[Оператор / CI] --> CLI[labdata на хосте]
+    CLI -->|Docker CLI| Compose[Docker Compose]
+    Compose --> Tool[Временный dbtool]
+    Compose --> PG[PostgreSQL 18.6]
+    Secrets[Локальные файлы паролей] -->|read-only secrets| Tool
+    Secrets -->|только пароль postgres| PG
+    Config[Публичный JSON конфигурации] --> Tool
+    Tool -->|bootstrap: администратор| PG
+    Tool -->|migrate: роль своего сервиса| PG
+    Tool -->|seed: inventory_app| PG
+    PG --> Volume[(Постоянный volume)]
+    CLI --> Report[JSON-отчёт проверок]
+```
+
+`dbtool` и PostgreSQL соединены внутренней сетью `data`: порт базы на хост не публикуется. PostgreSQL работает от UID 999, dbtool — от UID 65532; файловая система контейнеров read-only, запись разрешена только в volume/tmpfs. У PostgreSQL лимит 512 MiB и 0.5 CPU; у временного dbtool — 256 MiB и 1 CPU. Это ограничения локального стенда, не измеренная производственная ёмкость.
+
+Три бизнес-сервиса пока сохраняют свой gRPC-каркас. Подключение их бизнес-операций к базам будет следующим изменением. Kafka/Redis относятся к отдельной [задаче #16](https://github.com/Includeoyasi/faultline-lab/issues/16).
+
+PostgreSQL добавляется через `compose.postgres.yaml`. Базовый `compose.yaml` и существующий smoke трёх сервисов запускаются независимо от подготовки паролей базы.
+
+#### Кто что может делать
+
+| Роль | Доступ | Назначение |
+| :--- | :--- | :--- |
+| `postgres` | Административный доступ к выделенному экземпляру | Создание баз и ролей, настройка прав; используется только инструментом подготовки |
+| `orders_migrator` / `inventory_migrator` / `payments_migrator` | Владелец только своей базы | Создание и изменение схемы, журнал миграций |
+| `orders_app` / `inventory_app` / `payments_app` | CONNECT к своей базе, USAGE своей схемы, SELECT/INSERT/UPDATE/DELETE бизнес-таблиц | Будущая работа приложений; Inventory seed использует эти же ограниченные права |
+
+У прикладных ролей нет SUPERUSER, CREATEDB, CREATEROLE, REPLICATION, BYPASSRLS, членства в миграционных ролях и DDL/TEMP/TRUNCATE. Доступ к чужим базам, `postgres`, `template1` запрещён. Стандартные права PUBLIC отозваны явно. Журнал `lab_migrations.versions` находится вне бизнес-схемы и прикладной роли недоступен. Права на будущие таблицы выдаются через `ALTER DEFAULT PRIVILEGES` от миграционной роли.
+
+Таблица описывает SQL-подключения команд. Сам контейнер dbtool в текущей конфигурации получает все семь секретов, включая административный: разделения полномочий между его режимами на уровне контейнера нет. Это привилегированный инструмент подготовки; бизнес-сервисам эти секреты и доступ к чужим базам не передаются.
+
+Один экземпляр PostgreSQL выбран для экономии ресурсов личного компьютера. Базы логически изолированы, но делят CPU, память и отказ экземпляра. Это позволяет проверять права и миграции; для эксперимента с независимыми отказами самих БД потребуется отдельная конфигурация.
+
+#### Подготовка стенда
+
+Сначала собирается host-бинарник средствами контейнерного toolchain. Для Windows AMD64:
+
+```powershell
+docker compose build toolchain
+docker compose run --rm -e GOOS=windows -e GOARCH=amd64 toolchain data-build
+.\bin\labdata-windows-amd64.exe secrets
+docker compose -f compose.yaml -f compose.postgres.yaml -p faultline-data-local build dbtool
+docker compose -f compose.yaml -f compose.postgres.yaml -p faultline-data-local up -d --wait postgres
+docker compose -f compose.yaml -f compose.postgres.yaml -p faultline-data-local run --rm --no-deps dbtool bootstrap
+docker compose -f compose.yaml -f compose.postgres.yaml -p faultline-data-local run --rm --no-deps dbtool migrate
+docker compose -f compose.yaml -f compose.postgres.yaml -p faultline-data-local run --rm --no-deps dbtool seed
+```
+
+Для macOS в команде сборки задаются `GOOS=darwin` и `GOARCH=arm64` либо `amd64`, для Linux — `GOOS=linux` и архитектура хоста. Имя результата: `bin/labdata-<os>-<arch>`; на Unix перед запуском при необходимости выполнить `chmod +x`. `data-cross-check` собирает все пять вариантов; компиляция не подтверждает работу Docker на конкретном компьютере. При установленном Go host-команды можно выполнять как `go run ./cmd/labdata secrets`, `go run ./cmd/labdata smoke` и `go run ./cmd/labdata reset ...`. Команды `bootstrap/migrate/seed/checksum` штатного профиля выполняются через dbtool внутри Docker-сети: DNS-имя `postgres` с хоста недоступно, порт базы не опубликован.
+
+`secrets` создаёт семь криптографически случайных паролей в `.local/postgres`, без вывода значений. Повторный вызов сохраняет их; повреждённый существующий файл отклоняется. Конфигурация адреса, порта, имён баз и ролей — в [local.json](#p02-configs-postgres-local-json). Пароли не входят в конфигурацию. `FL_PG_SECRETS_DIR` позволяет передать Compose другой каталог; `labdata secrets -secrets <каталог>` должен использовать тот же путь. В контейнере настройки читаются через `FL_DATA_CONFIG` и `FL_DATA_SECRETS`.
+
+На POSIX каталог паролей имеет режим 0700, файлы — явно выставленный режим 0644 независимо от umask для чтения непривилегированным контейнером; доступ с хоста ограничен каталогом. На Windows доступ зависит от ACL профиля пользователя: `chmod` не заменяет настройку Windows ACL. Эти файлы и артефакты исключены из Git, CI публикует только очищенный `report.json`.
+
+Подготовка использует SCRAM-SHA-256. TLS отключён в конфигурации внутренней Docker-сети локального стенда. Для удалённого развёртывания потребуется отдельный профиль TLS, секретов и сетевого доступа; этот профиль для публикации PostgreSQL в интернет не предназначен. Серверное логирование SQL и параметров отключено, включая SQL при ошибках: это предотвращает попадание пароля из `ALTER ROLE` в журнал.
+
+#### Порядок подготовки
+
+```mermaid
+sequenceDiagram
+    actor Operator as Оператор
+    participant Host as labdata на хосте
+    participant DB as PostgreSQL
+    participant Admin as dbtool bootstrap
+    participant Migrator as dbtool migrate
+    participant Seed as dbtool seed
+    Operator->>Host: secrets
+    Host-->>Operator: Сохранены локальные пароли
+    Operator->>DB: compose up postgres
+    Operator->>Admin: bootstrap
+    Admin->>DB: Session lock → роли → базы → права
+    Operator->>Migrator: migrate [по всем сервисам]
+    Migrator->>DB: BEGIN → advisory lock → проверка истории
+    Migrator->>DB: SQL + версии + SHA-256 → COMMIT
+    Operator->>Seed: seed
+    Seed->>DB: BEGIN → INSERT ON CONFLICT DO NOTHING → COMMIT
+```
+
+Bootstrap повторяем после частичного сбоя: создание баз не может быть одной транзакцией PostgreSQL. Session lock сериализует подготовку, существующая база с неожиданным владельцем отклоняется, данные не удаляются. Пароли не меняются при обычном повторе подготовки.
+
+##### Где читать SQL
+
+```text
+internal/database/sql/
+  bootstrap/01_*.sql ... 09_*.sql   подготовка ролей, баз и базовых прав
+  migrate/01_lock.sql             блокировка в своей базе
+  migrate/02_journal.sql          создание служебного журнала
+  migrate/03_history.sql          проверка уже применённых версий
+  migrate/04_record.sql           запись каждой новой версии после её SQL
+  migrate/05_application_access.sql  повторяемая выдача app-прав
+  seed/inventory.sql             начальные данные, отдельная команда
+migrations/
+  orders/0001_schema.sql
+  inventory/0001_schema.sql
+  inventory/0002_catalog.sql
+  payments/0001_schema.sql
+```
+
+При подготовке для каждой роли выполняются шаги `02–04`, для каждой базы — `05–08`; шаг `09` ограничивает доступ к служебным базам. При миграции после чтения истории выполняются недостающие файлы своего сервиса по номеру и запись каждой версии; затем выдаются app-права и фиксируется транзакция. Начальные данные выполняются отдельно от этой последовательности.
+
+SQL подготовки, миграционного механизма и seed находится в отдельных файлах. Для имён из конфигурации PostgreSQL `format` использует `%I` (идентификатор), для пароля — `%L` (значение). Параметризованный запрос возвращает готовую DDL-команду, которую инструмент исполняет; Go управляет подключениями, транзакциями и ошибками. Это сохраняет настраиваемые имена без сборки SQL конкатенацией и без нового языка шаблонов. Команды с паролями не выводятся в отчёты или логи.
+
+Модули Go разделены по ответственности: `bootstrap.go` — подготовка, `migration_files.go` — порядок и SHA-256 файлов, `migrate.go` — применение и история, `seed.go` — начальные данные. SQL подготовки и app-прав повторяемый; он не считается бизнес-миграцией и не получает запись версии. Уже применённые файлы в `migrations/<service>` при этом не меняются.
+
+Миграции лежат в `migrations/<service>/NNNN_name.sql` и встроены в dbtool. Их версии, имена, SHA-256 и время применения записываются в каждой базе. Изменение уже применённого SQL останавливает команду; исправление оформляется следующей миграцией. Параллельные команды сериализуются advisory lock до чтения журнала. Все новые миграции одного сервиса и записи их истории применяются в одной транзакции; ошибка откатывает весь этот набор. Разные базы применяются независимо: ошибка Payments не откатывает уже подготовленную Inventory. Повторная команда завершает оставшуюся работу.
+
+Это небольшой транзакционный механизм для SQL данного стенда. Миграции не должны содержать `BEGIN/COMMIT/ROLLBACK` или команды, требующие выполнения вне транзакции, например `CREATE INDEX CONCURRENTLY`. Автоматического down/удаления схемы нет. Для запуска одного сервиса: `dbtool migrate -service inventory`.
+
+#### Что такое seed и зачем повторяемость
+
+Здесь **seed — начальные тестовые данные**, а не случайное число:
+
+| SKU | Товар | Цена в копейках | Валюта | Начальный остаток |
+| :--- | :--- | ---: | :--- | ---: |
+| SKU-001 | Notebook | 19900 | RUB | 100 |
+| SKU-002 | Coffee | 45000 | RUB | 50 |
+| SKU-003 | Headphones | 399000 | RUB | 25 |
+
+Фиксированные SKU и значения дают известную исходную точку: тест может проверить конкретный товар, цену и остаток. Цены хранятся целыми числами в минимальных денежных единицах. Ограничения БД запрещают отрицательные цены/остатки, формат валюты, отличный от трёх заглавных букв и остаток без товара.
+
+Повторяемость имеет два свойства:
+
+1. На пустой базе seed создаёт одинаковый каталог.
+2. На существующей базе повтор seed не создаёт дубликаты и не возвращает изменённые значения к исходным. Например, остаток 100 → 7 остаётся 7; изменённая цена также сохраняется. Это обеспечивается первичным ключом SKU и `ON CONFLICT DO NOTHING`.
+
+**Повтор seed не равен сбросу эксперимента.** Для новой чистой исходной точки нужен отдельный набор данных/стенд или явный reset с повторной подготовкой. Нельзя запускать seed и считать уже использованную базу начальной: это исказит сравнение решений. Добавленный вручную товар не удаляется.
+
+Числовой seed **будущего генератора нагрузки** задаёт воспроизводимый план операций; это отдельное решение F12 из [аудита #20](https://github.com/Includeoyasi/faultline-lab/issues/20). В #12 реализованы только начальные данные Inventory.
+
+#### Остановка и явное удаление данных
+
+Штатная остановка сохраняет volume:
+
+```text
+docker compose -f compose.yaml -f compose.postgres.yaml -p faultline-data-local down --remove-orphans
+```
+
+Reset удаляет данные **указанного** выделенного проекта. Имя должно начинаться с `faultline-data-` и быть повторено в подтверждении:
+
+```powershell
+.\bin\labdata-windows-amd64.exe reset -project faultline-data-local -confirm faultline-data-local
+```
+
+Reset удаляет контейнеры, сети, volume и локальный образ dbtool данного проекта; общий PostgreSQL, toolchain и кеши сборки сохраняются. Команда ограничена минутой. Обычная остановка никогда не вызывает reset. Каталог `.local/postgres` не удаляется reset: существующие учётные данные пригодны для следующей подготовки. Для полной смены паролей нужен отдельный согласованный порядок ротации.
+
+#### Автоматическая проверка
+
+```powershell
+.\bin\labdata-windows-amd64.exe smoke
+```
+
+Smoke создаёт свой `faultline-data-test-<случайный ID>`, временные пароли и отчёт до первого Docker-вызова. Он собирает dbtool, поднимает PostgreSQL, дважды запускает bootstrap и проверяет:
+
+- конкурентные миграции с нуля, отсутствие повторных версий и неизменность истории при повторе;
+- матрицу подключения прикладных/миграционных ролей к трём базам, запреты DDL/TEMP/SET ROLE/журнала, разрешённые DML и права будущих таблиц;
+- откат ошибочного SQL вместе с записью версии и обнаружение изменённого checksum;
+- исходный каталог, отсутствие дубликатов, сохранение изменённых цен и остатков при повторе seed, ограничения таблиц;
+- совпадение контрольной суммы каталога, остатков и полной истории миграций до и после перезапуска и повторной подготовки.
+
+Команда `checksum` читает журнал миграций трёх баз и пары «товар — остаток» Inventory, упорядочивает данные и выводит SHA-256. Она не изменяет данные и сама не выполняет сравнение. Пример для подготовленного стенда:
+
+```text
+docker compose -f compose.yaml -f compose.postgres.yaml -p faultline-data-local run --rm --no-deps dbtool checksum
+```
+
+Smoke сравнивает контрольные суммы до и после перезапуска. Они сравниваются внутри одного набора данных: новый стенд имеет другие времена применения миграций и может получить другую сумму. Это проверка сохранности выбранных данных; схема и права проверяются отдельно. Она не заменяет backup и не является будущей контрольной суммой плана нагрузки.
+
+После успеха, ошибки или перехваченной отмены cleanup получает новый контекст на 60s и удаляет только ресурсы своего одноразового проекта, включая volume и образ dbtool. Для очистки явно активируется профиль `tools`: выбор dbtool в предыдущем `compose run` не переносится на следующую команду `down`. Затем проверяется отсутствие ресурсов и удаляются временные пароли. [Семантика профилей Compose](https://docs.docker.com/compose/how-tos/profiles/#stop-application-and-services-with-specific-profiles). SIGKILL, авария ОС и недоступный Docker могут помешать очистке; для такого одноразового набора восстановление означает адресное удаление оставшихся ресурсов, а не восстановление данных. Для повторного Compose cleanup можно заново создать файлы паролей в каталоге прогона командой `secrets -secrets <каталог>` и передать его через `FL_PG_SECRETS_DIR`, затем вызвать reset с точным project из отчёта.
+
+`artifacts/postgres/<project>/report.json` содержит этапы, exit codes, очищенные stdout/stderr и причины ошибок, логи PostgreSQL, отпечатки данных, Docker resource snapshot и итог cleanup. Пароли и домашние пути скрываются. Результаты проверок прав/seed записаны в выводе реальных Go integration tests. CI выполняет тот же host smoke на Linux AMD64 и ARM64; один успешный Windows-прогон не доказывает совместимость macOS.
+
+На личном компьютере после проверок останавливаются Docker Desktop и его WSL VM. Образы отдельных smoke-прогонов не сохраняются; закреплённый PostgreSQL, актуальный toolchain и полезные общие кеши используются повторно.
+
+<a id="p02-config-unix-tests"></a>
+
+## Приложение: POSIX restrictive umask credential regression
+
+Полный исходный документ: `internal/database/config_unix_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+//go:build linux || darwin
+
+package database
+
+import (
+	"os"
+	"path/filepath"
+	"syscall"
+	"testing"
+)
+
+func TestSecretsReadableByContainerDespiteRestrictiveUmask(t *testing.T) {
+	previous := syscall.Umask(0o077)
+	defer syscall.Umask(previous)
+	cfg := testConfig(t)
+	if err := GenerateSecrets(cfg); err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(cfg.Secrets, cfg.AdminUser+".password")
+	value, err := cfg.Secret(cfg.AdminUser)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, mode := range []os.FileMode{0o644, 0o600} {
+		if mode == 0o600 {
+			if err = os.Chmod(path, mode); err != nil {
+				t.Fatal(err)
+			}
+			if err = GenerateSecrets(cfg); err != nil {
+				t.Fatal(err)
+			}
+		}
+		info, err := os.Stat(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if info.Mode().Perm() != 0o644 {
+			t.Fatalf("container cannot read secret: mode=%o", info.Mode().Perm())
+		}
+		after, err := cfg.Secret(cfg.AdminUser)
+		if err != nil || after != value {
+			t.Fatal("credentials changed", err)
+		}
+	}
+}
+```
+
+<a id="p02-review-docs-product-intent-md"></a>
+
+## Приложение: docs/PRODUCT_INTENT.md
+
+Полный исходный документ: `docs/PRODUCT_INTENT.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Как владелец проекта собирается использовать Faultline Lab
+
+Краткие заметки из обсуждений с владельцем проекта. Они сохраняют цели и примеры использования; технические решения и критерии находятся в [архитектуре](#appendix-design-review), [границе лаборатории](#appendix-lab-boundary) и [roadmap](#appendix-roadmap). Новая идея в разговоре становится требованием после подтверждения владельцем.
+
+#### Подтверждённые ориентиры
+
+- Воспроизводить проблемы масштабирования и устойчивости, пробовать решения и оценивать результат по измерениям и корректности бизнес-процессов.
+- Получать отчёт, позволяющий понять, помогло ли изменение и какой ценой по ресурсам.
+- Использовать мини-магазин с тремя самостоятельными сервисами как первый пример. Магазин должен сохранять самостоятельность относительно лаборатории и её служебных инструментов.
+- В перспективе подключать другие готовые системы для исследования производительности и устойчивости. Их операции, данные и смысловые проверки не должны быть зашиты в общий механизм лаборатории.
+- Работать на личных Windows- и macOS-компьютерах; перенос на сервер рассматривать при реальной необходимости в ресурсах. Временные компоненты и данные проверок не должны накапливаться на личном компьютере.
+- Показывать репозиторий как пример разработки Go-проекта в сотрудничестве с ИИ. Владелец определяет направление, проводит ревью и принимает ключевые решения.
+
+Эти ориентиры пересказывают сообщения владельца из чата; они не означают, что соответствующие возможности уже реализованы или приняты на контрольной точке.
+
+#### Обсуждение 18 октября 2026 года
+
+Владелец предложил сохранять своё видение использования проекта отдельными короткими заметками, чтобы исполнитель лучше учитывал его при архитектурных решениях. Особое внимание в текущем ревью — самостоятельности сервисов и границе между бизнесом, подготовкой данных и лабораторией.
+
+Проект интересен владельцу для развития как Go-разработчика и бэкенд-инженера. Он уточнил порядок: сначала закончить рабочий каркас лаборатории, затем использовать эксперименты для постановки вопросов, проверки предположений и изучения решений. Это не меняет требований к корректности и ревью каркаса и не означает, что нужно превращать каждую подготовительную задачу в отдельное учебное занятие. Точная граница первого рабочего цикла определяется roadmap и согласованными критериями, а не этой заметкой.
+
+Следующие записи должны добавлять конкретные примеры использования, ограничения и подтверждённые приоритеты. Предложения исполнителя и открытые вопросы отмечаются явно. При изменении принятого решения обновляется его основной документ, а здесь остаётся ссылка и причина со стороны владельца.
+
+<a id="p02-review-internal-database-migration-files-go"></a>
+
+## Приложение: internal/database/migration_files.go
+
+Полный исходный документ: `internal/database/migration_files.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package database
+
+import (
+	"crypto/sha256"
+	"encoding/hex"
+	"errors"
+	"io/fs"
+	"regexp"
+	"strconv"
+)
+
+type migration struct {
+	version             int
+	name, checksum, sql string
+}
+
+var migrationName = regexp.MustCompile(`^([0-9]{4})_[a-z0-9_]+\.sql$`)
+
+func loadMigrations(files fs.FS, service string) ([]migration, error) {
+	entries, err := fs.ReadDir(files, service)
+	if err != nil {
+		return nil, errors.New("cannot read migrations")
+	}
+	var result []migration
+	previous := 0
+	for _, entry := range entries {
+		match := migrationName.FindStringSubmatch(entry.Name())
+		if entry.IsDir() || match == nil {
+			return nil, errors.New("invalid migration filename")
+		}
+		version, _ := strconv.Atoi(match[1])
+		if version <= previous {
+			return nil, errors.New("migration versions must be positive and strictly increasing")
+		}
+		data, err := fs.ReadFile(files, service+"/"+entry.Name())
+		if err != nil || len(data) == 0 {
+			return nil, errors.New("cannot read nonempty migration")
+		}
+		hash := sha256.Sum256(data)
+		result = append(result, migration{version, entry.Name(), hex.EncodeToString(hash[:]), string(data)})
+		previous = version
+	}
+	if len(result) == 0 {
+		return nil, errors.New("service has no migrations")
+	}
+	return result, nil
+}
+```
+
+<a id="p02-review-internal-database-scripts-go"></a>
+
+## Приложение: internal/database/scripts.go
+
+Полный исходный документ: `internal/database/scripts.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package database
+
+import (
+	"context"
+	_ "embed"
+
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
+)
+
+// SQL remains in reviewable scripts. These bindings fail at build time if a
+// required script is missing; credentials are never written into SQL files.
+var (
+	//go:embed sql/bootstrap/01_lock.sql
+	bootstrapLockSQL string
+	//go:embed sql/bootstrap/02_create_role.sql
+	createRoleSQL string
+	//go:embed sql/bootstrap/03_configure_role.sql
+	configureRoleSQL string
+	//go:embed sql/bootstrap/04_role_memberships.sql
+	roleMembershipsSQL string
+	//go:embed sql/bootstrap/05_database_owner.sql
+	databaseOwnerSQL string
+	//go:embed sql/bootstrap/06_create_database.sql
+	createDatabaseSQL string
+	//go:embed sql/bootstrap/07_database_access.sql
+	databaseAccessSQL string
+	//go:embed sql/bootstrap/08_public_schema.sql
+	publicSchemaSQL string
+	//go:embed sql/bootstrap/09_maintenance_access.sql
+	maintenanceAccessSQL string
+	//go:embed sql/migrate/01_lock.sql
+	migrationLockSQL string
+	//go:embed sql/migrate/02_journal.sql
+	migrationJournalSQL string
+	//go:embed sql/migrate/03_history.sql
+	migrationHistorySQL string
+	//go:embed sql/migrate/04_record.sql
+	migrationRecordSQL string
+	//go:embed sql/migrate/05_application_access.sql
+	applicationAccessSQL string
+	//go:embed sql/seed/inventory.sql
+	inventorySeedSQL string
+)
+
+type sqlConnection interface {
+	Exec(context.Context, string, ...any) (pgconn.CommandTag, error)
+	QueryRow(context.Context, string, ...any) pgx.Row
+}
+
+// executeDDL runs the command produced by a parameterized SELECT format(...).
+// PostgreSQL quotes names with %I and passwords with %L; Go never concatenates
+// them into SQL. CREATE DATABASE remains outside a transaction.
+func executeDDL(ctx context.Context, conn sqlConnection, query string, args ...any) error {
+	var statement string
+	if err := conn.QueryRow(ctx, query, args...).Scan(&statement); err != nil {
+		return err
+	}
+	if statement == "" {
+		return nil
+	}
+	_, err := conn.Exec(ctx, statement)
+	return err
+}
+```
+
+<a id="p02-review-internal-database-seed-go"></a>
+
+## Приложение: internal/database/seed.go
+
+Полный исходный документ: `internal/database/seed.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package database
+
+import "context"
+
+// Seed inserts missing Inventory fixtures without overwriting existing values.
+func Seed(ctx context.Context, cfg Config) error {
+	service, err := cfg.Service("inventory")
+	if err != nil {
+		return err
+	}
+	conn, err := Connect(ctx, cfg, service.Database, service.AppUser)
+	if err != nil {
+		return err
+	}
+	defer Close(conn)
+	tx, err := conn.Begin(ctx)
+	if err != nil {
+		return SafeError("seed transaction", err)
+	}
+	defer rollback(tx)
+	if _, err = tx.Exec(ctx, inventorySeedSQL); err != nil {
+		return SafeError("inventory seed", err)
+	}
+	if err = tx.Commit(ctx); err != nil {
+		return SafeError("seed commit", err)
+	}
+	return nil
+}
+```
+
+<a id="p02-review-docs-development-evidence-p02-windows-sql-review-report-json"></a>
+
+## Приложение: docs/development/evidence/p02/windows-sql-review-report.json
+
+Полный исходный документ: `docs/development/evidence/p02/windows-sql-review-report.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "project": "faultline-data-test-f6daa54637bbcc11",
+  "started_at": "2026-10-18T15:35:28.62606Z",
+  "finished_at": "2026-10-18T15:36:48.598585Z",
+  "result": "PASS",
+  "cleanup": "PASS",
+  "events": [
+    {
+      "stage": "prerequisites",
+      "output": "29.8.2\n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "build dbtool",
+      "output": "#1 [internal] load local bake definitions\n#1 reading from stdin 679B 0.0s done\n#1 DONE 0.0s\n\n#2 [internal] load build definition from Dockerfile\n#2 transferring dockerfile: 1.49kB 0.0s done\n#2 DONE 0.0s\n\n#3 [internal] load metadata for docker.io/golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f\n#3 ...\n\n#4 [internal] load metadata for docker.io/library/golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e\n#4 DONE 2.5s\n\n#3 [internal] load metadata for docker.io/golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f\n#3 DONE 3.1s\n\n#5 [internal] load .dockerignore\n#5 transferring context: 172B 0.0s done\n#5 DONE 0.0s\n\n#6 [lint 1/1] FROM docker.io/golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f\n#6 resolve docker.io/golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f 0.0s done\n#6 DONE 0.0s\n\n#7 [toolchain 1/6] FROM docker.io/library/golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e\n#7 resolve docker.io/library/golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e 0.0s done\n#7 DONE 0.0s\n\n#8 [internal] load build context\n#8 transferring context: 58.44kB 0.0s done\n#8 DONE 0.1s\n\n#9 [toolchain 4/6] COPY go.mod go.sum ./\n#9 CACHED\n\n#10 [toolchain 5/6] RUN git config --system --add safe.directory /workspace     \u0026\u0026 go mod download \u0026\u0026 go install tool\n#10 CACHED\n\n#11 [toolchain 2/6] WORKDIR /workspace\n#11 CACHED\n\n#12 [toolchain 3/6] COPY --from=lint /usr/bin/golangci-lint /usr/local/bin/golangci-lint\n#12 CACHED\n\n#13 [toolchain 6/6] COPY --chmod=0755 tools/go.sh /usr/local/bin/lab-go\n#13 CACHED\n\n#14 [labdata-build 1/4] COPY cmd ./cmd\n#14 DONE 0.1s\n\n#15 [labdata-build 2/4] COPY internal ./internal\n#15 DONE 0.1s\n\n#16 [labdata-build 3/4] COPY migrations ./migrations\n#16 DONE 0.1s\n\n#17 [labdata-build 4/4] RUN CGO_ENABLED=0 go build -trimpath -o /out/labdata ./cmd/labdata     \u0026\u0026 CGO_ENABLED=0 go test -c -o /out/database.test ./internal/database\n#17 DONE 39.9s\n\n#18 [labdata 1/2] COPY --from=labdata-build /out/labdata /app/labdata\n#18 DONE 0.0s\n\n#19 [labdata 2/2] COPY --from=labdata-build /out/database.test /app/database.test\n#19 DONE 0.1s\n\n#20 exporting to image\n#20 exporting layers\n#20 exporting layers 0.7s done\n#20 exporting manifest sha256:028cd85f3d9cfd804982d9a010cf1a87f11f54847882d9e10ed443ed872131a6 0.0s done\n#20 exporting config sha256:4e380a45a7844b69bc8b0534dd0ddb11cb2bdc68f13654e0403f78d9e462ae5a 0.0s done\n#20 exporting attestation manifest sha256:f4b7ac62e7de04b2081588ff16aa4fb0143b916947c2c922f46e75c89a63c779 0.0s done\n#20 exporting manifest list sha256:008406dd263ae7004dae856764d2df2bb800937c82c4f1f5ccb1ea223cb787a1 0.0s done\n#20 naming to docker.io/library/faultline-data-test-f6daa54637bbcc11-dbtool:latest done\n#20 unpacking to docker.io/library/faultline-data-test-f6daa54637bbcc11-dbtool:latest\n#20 unpacking to docker.io/library/faultline-data-test-f6daa54637bbcc11-dbtool:latest 0.2s done\n#20 DONE 1.0s\n\n#21 resolving provenance for metadata file\n#21 DONE 0.0s\n Image faultline-data-test-f6daa54637bbcc11-dbtool Building \n Image faultline-data-test-f6daa54637bbcc11-dbtool Built \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "start PostgreSQL",
+      "output": " Network faultline-data-test-f6daa54637bbcc11_data Creating \n Network faultline-data-test-f6daa54637bbcc11_data Creating \n Volume faultline-data-test-f6daa54637bbcc11_postgres-data Creating \n Volume faultline-data-test-f6daa54637bbcc11_postgres-data Creating \n Volume faultline-data-test-f6daa54637bbcc11_postgres-data Created \n Volume faultline-data-test-f6daa54637bbcc11_postgres-data Created \n Network faultline-data-test-f6daa54637bbcc11_data Created \n Network faultline-data-test-f6daa54637bbcc11_data Created \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Creating \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Created \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Starting \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Started \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Waiting \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Healthy \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "bootstrap",
+      "output": "bootstrap: PASS\n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-7243109164a2 Creating \n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-7243109164a2 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "bootstrap",
+      "output": "bootstrap: PASS\n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-ecd10d0ab4cf Creating \n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-ecd10d0ab4cf Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "rights, migrations and seed",
+      "output": "=== RUN   TestPostgresFoundation\n=== RUN   TestPostgresFoundation/concurrent_migrations_and_immutable_history\n=== RUN   TestPostgresFoundation/repeat_migrations_restore_application_access\n=== RUN   TestPostgresFoundation/role_isolation_and_denied_DDL\n=== RUN   TestPostgresFoundation/failed_migration_rollback_and_checksum_drift\n=== RUN   TestPostgresFoundation/repeat_seed_preserves_catalog_and_modified_stock\n--- PASS: TestPostgresFoundation (1.15s)\n    --- PASS: TestPostgresFoundation/concurrent_migrations_and_immutable_history (0.41s)\n    --- PASS: TestPostgresFoundation/repeat_migrations_restore_application_access (0.03s)\n    --- PASS: TestPostgresFoundation/role_isolation_and_denied_DDL (0.51s)\n    --- PASS: TestPostgresFoundation/failed_migration_rollback_and_checksum_drift (0.15s)\n    --- PASS: TestPostgresFoundation/repeat_seed_preserves_catalog_and_modified_stock (0.03s)\nPASS\n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-09f6b1c9b9a6 Creating \n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-09f6b1c9b9a6 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "checksum before restart",
+      "output": "18b6b40b48b83392a0c3f74f311e1bccf3aa930b50b63b9b8fb4a03f603d1594\n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-e9bca3171ca4 Creating \n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-e9bca3171ca4 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "restart PostgreSQL",
+      "output": " Container faultline-data-test-f6daa54637bbcc11-postgres-1 Restarting \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Started \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "wait after restart",
+      "output": " Container faultline-data-test-f6daa54637bbcc11-postgres-1 Running \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Waiting \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Healthy \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "repeat bootstrap",
+      "output": "bootstrap: PASS\n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-c75818ebbe04 Creating \n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-c75818ebbe04 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "repeat migrate",
+      "output": "migrate: PASS\n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-4cdf21e764b9 Creating \n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-4cdf21e764b9 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "repeat seed",
+      "output": "seed: PASS\n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-694e6122a27a Creating \n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-694e6122a27a Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "checksum after restart",
+      "output": "18b6b40b48b83392a0c3f74f311e1bccf3aa930b50b63b9b8fb4a03f603d1594\n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-120de31ed4d5 Creating \n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-120de31ed4d5 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "resource snapshot",
+      "output": "{\"BlockIO\":\"57.3kB / 766kB\",\"CPUPerc\":\"5.11%\",\"Container\":\"faultline-data-test-f6daa54637bbcc11-postgres-1\",\"ID\":\"d6818af047a6\",\"MemPerc\":\"4.49%\",\"MemUsage\":\"22.97MiB / 512MiB\",\"Name\":\"faultline-data-test-f6daa54637bbcc11-postgres-1\",\"NetIO\":\"31.2kB / 26.8kB\",\"PIDs\":\"9\"}\n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "PostgreSQL logs",
+      "output": "postgres-1  | The files belonging to this database system will be owned by user \"postgres\".\npostgres-1  | This user must also own the server process.\npostgres-1  | \npostgres-1  | The database cluster will be initialized with locale \"en_US.utf8\".\npostgres-1  | The default database encoding has accordingly been set to \"UTF8\".\npostgres-1  | The default text search configuration will be set to \"english\".\npostgres-1  | \npostgres-1  | Data page checksums are enabled.\npostgres-1  | \npostgres-1  | fixing permissions on existing directory /var/lib/postgresql/18/docker ... ok\npostgres-1  | creating subdirectories ... ok\npostgres-1  | selecting dynamic shared memory implementation ... posix\npostgres-1  | selecting default \"max_connections\" ... 100\npostgres-1  | selecting default \"shared_buffers\" ... 128MB\npostgres-1  | selecting default time zone ... Etc/UTC\npostgres-1  | creating configuration files ... ok\npostgres-1  | running bootstrap script ... ok\npostgres-1  | performing post-bootstrap initialization ... ok\npostgres-1  | syncing data to disk ... ok\npostgres-1  | \npostgres-1  | Success. You can now start the database server using:\npostgres-1  | \npostgres-1  |     pg_ctl -D /var/lib/postgresql/18/docker -l logfile start\npostgres-1  | \npostgres-1  | waiting for server to start....2026-10-18 15:36:21.552 UTC [37] LOG:  starting PostgreSQL 18.6 (Debian 18.6-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit\npostgres-1  | 2026-10-18 15:36:21.552 UTC [37] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\npostgres-1  | 2026-10-18 15:36:21.582 UTC [43] LOG:  database system was shut down at 2026-10-18 15:36:21 UTC\npostgres-1  | 2026-10-18 15:36:21.591 UTC [37] LOG:  database system is ready to accept connections\npostgres-1  |  done\npostgres-1  | server started\npostgres-1  | \npostgres-1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*\npostgres-1  | \npostgres-1  | waiting for server to shut down....2026-10-18 15:36:21.712 UTC [37] LOG:  received fast shutdown request\npostgres-1  | 2026-10-18 15:36:21.715 UTC [37] LOG:  aborting any active transactions\npostgres-1  | 2026-10-18 15:36:21.718 UTC [37] LOG:  background worker \"logical replication launcher\" (PID 46) exited with exit code 1\npostgres-1  | 2026-10-18 15:36:21.718 UTC [41] LOG:  shutting down\npostgres-1  | 2026-10-18 15:36:21.721 UTC [41] LOG:  checkpoint starting: shutdown immediate\npostgres-1  | 2026-10-18 15:36:21.734 UTC [41] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.002 s, total=0.016 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/1759450, redo lsn=0/1759450\npostgres-1  | 2026-10-18 15:36:21.748 UTC [37] LOG:  database system is shut down\npostgres-1  |  done\npostgres-1  | server stopped\npostgres-1  | \npostgres-1  | PostgreSQL init process complete; ready for start up.\npostgres-1  | \npostgres-1  | 2026-10-18 15:36:21.835 UTC [1] LOG:  starting PostgreSQL 18.6 (Debian 18.6-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit\npostgres-1  | 2026-10-18 15:36:21.836 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\npostgres-1  | 2026-10-18 15:36:21.836 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\npostgres-1  | 2026-10-18 15:36:21.840 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\npostgres-1  | 2026-10-18 15:36:21.847 UTC [57] LOG:  database system was shut down at 2026-10-18 15:36:21 UTC\npostgres-1  | 2026-10-18 15:36:21.854 UTC [1] LOG:  database system is ready to accept connections\npostgres-1  | 2026-10-18 15:36:30.009 UTC [111] ERROR:  permission denied for schema inventory at character 22\npostgres-1  | 2026-10-18 15:36:30.080 UTC [114] FATAL:  permission denied for database \"inventory_db\"\npostgres-1  | 2026-10-18 15:36:30.080 UTC [114] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.087 UTC [115] FATAL:  permission denied for database \"payments_db\"\npostgres-1  | 2026-10-18 15:36:30.087 UTC [115] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.103 UTC [117] FATAL:  permission denied for database \"inventory_db\"\npostgres-1  | 2026-10-18 15:36:30.103 UTC [117] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.110 UTC [118] FATAL:  permission denied for database \"payments_db\"\npostgres-1  | 2026-10-18 15:36:30.110 UTC [118] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.117 UTC [119] ERROR:  permission denied for database orders_db\npostgres-1  | 2026-10-18 15:36:30.118 UTC [119] ERROR:  permission denied for schema public at character 14\npostgres-1  | 2026-10-18 15:36:30.118 UTC [119] ERROR:  permission denied to create temporary tables in database \"orders_db\" at character 19\npostgres-1  | 2026-10-18 15:36:30.118 UTC [119] ERROR:  permission denied to set role \"orders_migrator\"\npostgres-1  | 2026-10-18 15:36:30.119 UTC [119] ERROR:  permission denied for schema lab_migrations at character 13\npostgres-1  | 2026-10-18 15:36:30.142 UTC [119] ERROR:  must be owner of table privilege_probe\npostgres-1  | 2026-10-18 15:36:30.142 UTC [119] ERROR:  permission denied for table privilege_probe\npostgres-1  | 2026-10-18 15:36:30.149 UTC [121] FATAL:  permission denied for database \"postgres\"\npostgres-1  | 2026-10-18 15:36:30.149 UTC [121] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.177 UTC [122] FATAL:  permission denied for database \"template1\"\npostgres-1  | 2026-10-18 15:36:30.177 UTC [122] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.184 UTC [123] FATAL:  permission denied for database \"orders_db\"\npostgres-1  | 2026-10-18 15:36:30.184 UTC [123] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.206 UTC [125] FATAL:  permission denied for database \"payments_db\"\npostgres-1  | 2026-10-18 15:36:30.206 UTC [125] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.217 UTC [126] FATAL:  permission denied for database \"orders_db\"\npostgres-1  | 2026-10-18 15:36:30.217 UTC [126] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.279 UTC [128] FATAL:  permission denied for database \"payments_db\"\npostgres-1  | 2026-10-18 15:36:30.279 UTC [128] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.289 UTC [129] ERROR:  permission denied for database inventory_db\npostgres-1  | 2026-10-18 15:36:30.289 UTC [129] ERROR:  permission denied for schema public at character 14\npostgres-1  | 2026-10-18 15:36:30.290 UTC [129] ERROR:  permission denied to create temporary tables in database \"inventory_db\" at character 19\npostgres-1  | 2026-10-18 15:36:30.290 UTC [129] ERROR:  permission denied to set role \"inventory_migrator\"\npostgres-1  | 2026-10-18 15:36:30.291 UTC [129] ERROR:  permission denied for schema lab_migrations at character 13\npostgres-1  | 2026-10-18 15:36:30.316 UTC [129] ERROR:  must be owner of table privilege_probe\npostgres-1  | 2026-10-18 15:36:30.317 UTC [129] ERROR:  permission denied for table privilege_probe\npostgres-1  | 2026-10-18 15:36:30.328 UTC [131] FATAL:  permission denied for database \"postgres\"\npostgres-1  | 2026-10-18 15:36:30.328 UTC [131] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.341 UTC [132] FATAL:  permission denied for database \"template1\"\npostgres-1  | 2026-10-18 15:36:30.341 UTC [132] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.381 UTC [133] FATAL:  permission denied for database \"orders_db\"\npostgres-1  | 2026-10-18 15:36:30.381 UTC [133] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.391 UTC [134] FATAL:  permission denied for database \"inventory_db\"\npostgres-1  | 2026-10-18 15:36:30.391 UTC [134] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.409 UTC [136] FATAL:  permission denied for database \"orders_db\"\npostgres-1  | 2026-10-18 15:36:30.409 UTC [136] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.418 UTC [137] FATAL:  permission denied for database \"inventory_db\"\npostgres-1  | 2026-10-18 15:36:30.418 UTC [137] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.439 UTC [139] ERROR:  permission denied for database payments_db\npostgres-1  | 2026-10-18 15:36:30.440 UTC [139] ERROR:  permission denied for schema public at character 14\npostgres-1  | 2026-10-18 15:36:30.440 UTC [139] ERROR:  permission denied to create temporary tables in database \"payments_db\" at character 19\npostgres-1  | 2026-10-18 15:36:30.440 UTC [139] ERROR:  permission denied to set role \"payments_migrator\"\npostgres-1  | 2026-10-18 15:36:30.441 UTC [139] ERROR:  permission denied for schema lab_migrations at character 13\npostgres-1  | 2026-10-18 15:36:30.504 UTC [139] ERROR:  must be owner of table privilege_probe\npostgres-1  | 2026-10-18 15:36:30.505 UTC [139] ERROR:  permission denied for table privilege_probe\npostgres-1  | 2026-10-18 15:36:30.521 UTC [141] FATAL:  permission denied for database \"postgres\"\npostgres-1  | 2026-10-18 15:36:30.521 UTC [141] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.532 UTC [142] FATAL:  permission denied for database \"template1\"\npostgres-1  | 2026-10-18 15:36:30.532 UTC [142] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.591 UTC [144] ERROR:  division by zero\npostgres-1  | 2026-10-18 15:36:30.717 UTC [147] ERROR:  new row for relation \"stock\" violates check constraint \"stock_available_check\"\npostgres-1  | 2026-10-18 15:36:30.717 UTC [147] DETAIL:  Failing row contains (SKU-001, -1).\npostgres-1  | 2026-10-18 15:36:30.718 UTC [147] ERROR:  new row for relation \"products\" violates check constraint \"products_price_minor_check\"\npostgres-1  | 2026-10-18 15:36:30.718 UTC [147] DETAIL:  Failing row contains (SKU-001, Notebook, -1, RUB).\npostgres-1  | 2026-10-18 15:36:30.718 UTC [147] ERROR:  new row for relation \"products\" violates check constraint \"products_currency_check\"\npostgres-1  | 2026-10-18 15:36:30.718 UTC [147] DETAIL:  Failing row contains (SKU-001, Notebook, 99900, rub).\npostgres-1  | 2026-10-18 15:36:30.718 UTC [147] ERROR:  insert or update on table \"stock\" violates foreign key constraint \"stock_sku_fkey\"\npostgres-1  | 2026-10-18 15:36:30.718 UTC [147] DETAIL:  Key (sku)=(missing) is not present in table \"products\".\npostgres-1  | 2026-10-18 15:36:33.098 UTC [1] LOG:  received fast shutdown request\npostgres-1  | 2026-10-18 15:36:33.100 UTC [1] LOG:  aborting any active transactions\npostgres-1  | 2026-10-18 15:36:33.105 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 60) exited with exit code 1\npostgres-1  | 2026-10-18 15:36:33.106 UTC [55] LOG:  shutting down\npostgres-1  | 2026-10-18 15:36:33.107 UTC [55] LOG:  checkpoint starting: shutdown immediate\npostgres-1  | 2026-10-18 15:36:33.332 UTC [55] LOG:  checkpoint complete: wrote 2868 buffers (35.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.091 s, sync=0.120 s, total=0.227 s; sync files=933, longest=0.005 s, average=0.001 s; distance=13179 kB, estimate=13179 kB; lsn=0/2438368, redo lsn=0/2438368\npostgres-1  | 2026-10-18 15:36:33.353 UTC [1] LOG:  database system is shut down\npostgres-1  | \npostgres-1  | PostgreSQL Database directory appears to contain a database; Skipping initialization\npostgres-1  | \npostgres-1  | 2026-10-18 15:36:33.665 UTC [1] LOG:  starting PostgreSQL 18.6 (Debian 18.6-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit\npostgres-1  | 2026-10-18 15:36:33.665 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\npostgres-1  | 2026-10-18 15:36:33.665 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\npostgres-1  | 2026-10-18 15:36:33.669 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\npostgres-1  | 2026-10-18 15:36:33.678 UTC [19] LOG:  database system was shut down at 2026-10-18 15:36:33 UTC\npostgres-1  | 2026-10-18 15:36:33.687 UTC [1] LOG:  database system is ready to accept connections\n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "cleanup",
+      "output": " Container faultline-data-test-f6daa54637bbcc11-postgres-1 Stopping \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Stopped \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Removing \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Removed \n Volume faultline-data-test-f6daa54637bbcc11_postgres-data Removing \n Network faultline-data-test-f6daa54637bbcc11_data Removing \n Volume faultline-data-test-f6daa54637bbcc11_postgres-data Removed \n Image faultline-data-test-f6daa54637bbcc11-dbtool:latest Removing \n Network faultline-data-test-f6daa54637bbcc11_data Removed \n Image faultline-data-test-f6daa54637bbcc11-dbtool:latest Removed \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    }
+  ]
+}
+```
+
+<a id="p02-review-internal-database-sql-bootstrap-01-lock-sql"></a>
+
+## Приложение: internal/database/sql/bootstrap/01_lock.sql
+
+Полный исходный документ: `internal/database/sql/bootstrap/01_lock.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+SELECT pg_advisory_lock(706020120);
+```
+
+<a id="p02-review-internal-database-sql-bootstrap-02-create-role-sql"></a>
+
+## Приложение: internal/database/sql/bootstrap/02_create_role.sql
+
+Полный исходный документ: `internal/database/sql/bootstrap/02_create_role.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+-- $1: role name. Empty output means the role already exists.
+SELECT CASE
+    WHEN EXISTS (SELECT FROM pg_roles WHERE rolname = $1::text) THEN ''
+    ELSE format('CREATE ROLE %I', $1::text)
+END;
+```
+
+<a id="p02-review-internal-database-sql-bootstrap-03-configure-role-sql"></a>
+
+## Приложение: internal/database/sql/bootstrap/03_configure_role.sql
+
+Полный исходный документ: `internal/database/sql/bootstrap/03_configure_role.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+-- $1: role name; $2: password. %I quotes an identifier, %L quotes a value.
+SELECT format(
+    'ALTER ROLE %I WITH LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE '
+    'NOREPLICATION NOBYPASSRLS NOINHERIT PASSWORD %L',
+    $1::text, $2::text
+);
+```
+
+<a id="p02-review-internal-database-sql-bootstrap-04-role-memberships-sql"></a>
+
+## Приложение: internal/database/sql/bootstrap/04_role_memberships.sql
+
+Полный исходный документ: `internal/database/sql/bootstrap/04_role_memberships.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+SELECT count(*)
+FROM pg_auth_members AS membership
+JOIN pg_roles AS role ON role.oid = membership.member
+WHERE role.rolname = $1;
+```
+
+<a id="p02-review-internal-database-sql-bootstrap-05-database-owner-sql"></a>
+
+## Приложение: internal/database/sql/bootstrap/05_database_owner.sql
+
+Полный исходный документ: `internal/database/sql/bootstrap/05_database_owner.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+SELECT pg_get_userbyid(datdba)
+FROM pg_database
+WHERE datname = $1;
+```
+
+<a id="p02-review-internal-database-sql-bootstrap-06-create-database-sql"></a>
+
+## Приложение: internal/database/sql/bootstrap/06_create_database.sql
+
+Полный исходный документ: `internal/database/sql/bootstrap/06_create_database.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+-- $1: database name; $2: migration role. Execute outside a transaction.
+SELECT format('CREATE DATABASE %I OWNER %I', $1::text, $2::text);
+```
+
+<a id="p02-review-internal-database-sql-bootstrap-07-database-access-sql"></a>
+
+## Приложение: internal/database/sql/bootstrap/07_database_access.sql
+
+Полный исходный документ: `internal/database/sql/bootstrap/07_database_access.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+-- $1: database; $2: migration role; $3: application role.
+SELECT format($sql$
+REVOKE ALL ON DATABASE %1$I FROM PUBLIC;
+GRANT CONNECT ON DATABASE %1$I TO %2$I, %3$I;
+$sql$, $1::text, $2::text, $3::text);
+```
+
+<a id="p02-review-internal-database-sql-bootstrap-08-public-schema-sql"></a>
+
+## Приложение: internal/database/sql/bootstrap/08_public_schema.sql
+
+Полный исходный документ: `internal/database/sql/bootstrap/08_public_schema.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+```
+
+<a id="p02-review-internal-database-sql-bootstrap-09-maintenance-access-sql"></a>
+
+## Приложение: internal/database/sql/bootstrap/09_maintenance_access.sql
+
+Полный исходный документ: `internal/database/sql/bootstrap/09_maintenance_access.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+-- $1: maintenance database name.
+SELECT format('REVOKE ALL ON DATABASE %I FROM PUBLIC', $1::text);
+```
+
+<a id="p02-review-internal-database-sql-migrate-01-lock-sql"></a>
+
+## Приложение: internal/database/sql/migrate/01_lock.sql
+
+Полный исходный документ: `internal/database/sql/migrate/01_lock.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+SELECT pg_advisory_xact_lock(706020121);
+```
+
+<a id="p02-review-internal-database-sql-migrate-02-journal-sql"></a>
+
+## Приложение: internal/database/sql/migrate/02_journal.sql
+
+Полный исходный документ: `internal/database/sql/migrate/02_journal.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+CREATE SCHEMA IF NOT EXISTS lab_migrations;
+
+CREATE TABLE IF NOT EXISTS lab_migrations.versions (
+    version integer PRIMARY KEY,
+    name text NOT NULL,
+    checksum text NOT NULL,
+    applied_at timestamptz NOT NULL DEFAULT now()
+);
+```
+
+<a id="p02-review-internal-database-sql-migrate-03-history-sql"></a>
+
+## Приложение: internal/database/sql/migrate/03_history.sql
+
+Полный исходный документ: `internal/database/sql/migrate/03_history.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+SELECT version, name, checksum
+FROM lab_migrations.versions
+ORDER BY version;
+```
+
+<a id="p02-review-internal-database-sql-migrate-04-record-sql"></a>
+
+## Приложение: internal/database/sql/migrate/04_record.sql
+
+Полный исходный документ: `internal/database/sql/migrate/04_record.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+INSERT INTO lab_migrations.versions (version, name, checksum)
+VALUES ($1, $2, $3);
+```
+
+<a id="p02-review-internal-database-sql-migrate-05-application-access-sql"></a>
+
+## Приложение: internal/database/sql/migrate/05_application_access.sql
+
+Полный исходный документ: `internal/database/sql/migrate/05_application_access.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+-- Reapply after migrations, including a run with no pending versions.
+-- $1: business schema; $2: application role. The journal has no app grants.
+SELECT format($sql$
+GRANT USAGE ON SCHEMA %1$I TO %2$I;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA %1$I TO %2$I;
+ALTER DEFAULT PRIVILEGES IN SCHEMA %1$I
+    GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO %2$I;
+$sql$, $1::text, $2::text);
 ```

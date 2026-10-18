@@ -1,0 +1,125 @@
+{
+  "project": "faultline-data-test-f6daa54637bbcc11",
+  "started_at": "2026-10-18T15:35:28.62606Z",
+  "finished_at": "2026-10-18T15:36:48.598585Z",
+  "result": "PASS",
+  "cleanup": "PASS",
+  "events": [
+    {
+      "stage": "prerequisites",
+      "output": "29.8.2\n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "build dbtool",
+      "output": "#1 [internal] load local bake definitions\n#1 reading from stdin 679B 0.0s done\n#1 DONE 0.0s\n\n#2 [internal] load build definition from Dockerfile\n#2 transferring dockerfile: 1.49kB 0.0s done\n#2 DONE 0.0s\n\n#3 [internal] load metadata for docker.io/golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f\n#3 ...\n\n#4 [internal] load metadata for docker.io/library/golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e\n#4 DONE 2.5s\n\n#3 [internal] load metadata for docker.io/golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f\n#3 DONE 3.1s\n\n#5 [internal] load .dockerignore\n#5 transferring context: 172B 0.0s done\n#5 DONE 0.0s\n\n#6 [lint 1/1] FROM docker.io/golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f\n#6 resolve docker.io/golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f 0.0s done\n#6 DONE 0.0s\n\n#7 [toolchain 1/6] FROM docker.io/library/golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e\n#7 resolve docker.io/library/golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e 0.0s done\n#7 DONE 0.0s\n\n#8 [internal] load build context\n#8 transferring context: 58.44kB 0.0s done\n#8 DONE 0.1s\n\n#9 [toolchain 4/6] COPY go.mod go.sum ./\n#9 CACHED\n\n#10 [toolchain 5/6] RUN git config --system --add safe.directory /workspace     \u0026\u0026 go mod download \u0026\u0026 go install tool\n#10 CACHED\n\n#11 [toolchain 2/6] WORKDIR /workspace\n#11 CACHED\n\n#12 [toolchain 3/6] COPY --from=lint /usr/bin/golangci-lint /usr/local/bin/golangci-lint\n#12 CACHED\n\n#13 [toolchain 6/6] COPY --chmod=0755 tools/go.sh /usr/local/bin/lab-go\n#13 CACHED\n\n#14 [labdata-build 1/4] COPY cmd ./cmd\n#14 DONE 0.1s\n\n#15 [labdata-build 2/4] COPY internal ./internal\n#15 DONE 0.1s\n\n#16 [labdata-build 3/4] COPY migrations ./migrations\n#16 DONE 0.1s\n\n#17 [labdata-build 4/4] RUN CGO_ENABLED=0 go build -trimpath -o /out/labdata ./cmd/labdata     \u0026\u0026 CGO_ENABLED=0 go test -c -o /out/database.test ./internal/database\n#17 DONE 39.9s\n\n#18 [labdata 1/2] COPY --from=labdata-build /out/labdata /app/labdata\n#18 DONE 0.0s\n\n#19 [labdata 2/2] COPY --from=labdata-build /out/database.test /app/database.test\n#19 DONE 0.1s\n\n#20 exporting to image\n#20 exporting layers\n#20 exporting layers 0.7s done\n#20 exporting manifest sha256:028cd85f3d9cfd804982d9a010cf1a87f11f54847882d9e10ed443ed872131a6 0.0s done\n#20 exporting config sha256:4e380a45a7844b69bc8b0534dd0ddb11cb2bdc68f13654e0403f78d9e462ae5a 0.0s done\n#20 exporting attestation manifest sha256:f4b7ac62e7de04b2081588ff16aa4fb0143b916947c2c922f46e75c89a63c779 0.0s done\n#20 exporting manifest list sha256:008406dd263ae7004dae856764d2df2bb800937c82c4f1f5ccb1ea223cb787a1 0.0s done\n#20 naming to docker.io/library/faultline-data-test-f6daa54637bbcc11-dbtool:latest done\n#20 unpacking to docker.io/library/faultline-data-test-f6daa54637bbcc11-dbtool:latest\n#20 unpacking to docker.io/library/faultline-data-test-f6daa54637bbcc11-dbtool:latest 0.2s done\n#20 DONE 1.0s\n\n#21 resolving provenance for metadata file\n#21 DONE 0.0s\n Image faultline-data-test-f6daa54637bbcc11-dbtool Building \n Image faultline-data-test-f6daa54637bbcc11-dbtool Built \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "start PostgreSQL",
+      "output": " Network faultline-data-test-f6daa54637bbcc11_data Creating \n Network faultline-data-test-f6daa54637bbcc11_data Creating \n Volume faultline-data-test-f6daa54637bbcc11_postgres-data Creating \n Volume faultline-data-test-f6daa54637bbcc11_postgres-data Creating \n Volume faultline-data-test-f6daa54637bbcc11_postgres-data Created \n Volume faultline-data-test-f6daa54637bbcc11_postgres-data Created \n Network faultline-data-test-f6daa54637bbcc11_data Created \n Network faultline-data-test-f6daa54637bbcc11_data Created \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Creating \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Created \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Starting \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Started \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Waiting \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Healthy \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "bootstrap",
+      "output": "bootstrap: PASS\n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-7243109164a2 Creating \n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-7243109164a2 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "bootstrap",
+      "output": "bootstrap: PASS\n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-ecd10d0ab4cf Creating \n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-ecd10d0ab4cf Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "rights, migrations and seed",
+      "output": "=== RUN   TestPostgresFoundation\n=== RUN   TestPostgresFoundation/concurrent_migrations_and_immutable_history\n=== RUN   TestPostgresFoundation/repeat_migrations_restore_application_access\n=== RUN   TestPostgresFoundation/role_isolation_and_denied_DDL\n=== RUN   TestPostgresFoundation/failed_migration_rollback_and_checksum_drift\n=== RUN   TestPostgresFoundation/repeat_seed_preserves_catalog_and_modified_stock\n--- PASS: TestPostgresFoundation (1.15s)\n    --- PASS: TestPostgresFoundation/concurrent_migrations_and_immutable_history (0.41s)\n    --- PASS: TestPostgresFoundation/repeat_migrations_restore_application_access (0.03s)\n    --- PASS: TestPostgresFoundation/role_isolation_and_denied_DDL (0.51s)\n    --- PASS: TestPostgresFoundation/failed_migration_rollback_and_checksum_drift (0.15s)\n    --- PASS: TestPostgresFoundation/repeat_seed_preserves_catalog_and_modified_stock (0.03s)\nPASS\n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-09f6b1c9b9a6 Creating \n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-09f6b1c9b9a6 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "checksum before restart",
+      "output": "18b6b40b48b83392a0c3f74f311e1bccf3aa930b50b63b9b8fb4a03f603d1594\n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-e9bca3171ca4 Creating \n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-e9bca3171ca4 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "restart PostgreSQL",
+      "output": " Container faultline-data-test-f6daa54637bbcc11-postgres-1 Restarting \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Started \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "wait after restart",
+      "output": " Container faultline-data-test-f6daa54637bbcc11-postgres-1 Running \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Waiting \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Healthy \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "repeat bootstrap",
+      "output": "bootstrap: PASS\n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-c75818ebbe04 Creating \n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-c75818ebbe04 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "repeat migrate",
+      "output": "migrate: PASS\n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-4cdf21e764b9 Creating \n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-4cdf21e764b9 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "repeat seed",
+      "output": "seed: PASS\n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-694e6122a27a Creating \n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-694e6122a27a Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "checksum after restart",
+      "output": "18b6b40b48b83392a0c3f74f311e1bccf3aa930b50b63b9b8fb4a03f603d1594\n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-120de31ed4d5 Creating \n Container faultline-data-test-f6daa54637bbcc11-dbtool-run-120de31ed4d5 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "resource snapshot",
+      "output": "{\"BlockIO\":\"57.3kB / 766kB\",\"CPUPerc\":\"5.11%\",\"Container\":\"faultline-data-test-f6daa54637bbcc11-postgres-1\",\"ID\":\"d6818af047a6\",\"MemPerc\":\"4.49%\",\"MemUsage\":\"22.97MiB / 512MiB\",\"Name\":\"faultline-data-test-f6daa54637bbcc11-postgres-1\",\"NetIO\":\"31.2kB / 26.8kB\",\"PIDs\":\"9\"}\n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "PostgreSQL logs",
+      "output": "postgres-1  | The files belonging to this database system will be owned by user \"postgres\".\npostgres-1  | This user must also own the server process.\npostgres-1  | \npostgres-1  | The database cluster will be initialized with locale \"en_US.utf8\".\npostgres-1  | The default database encoding has accordingly been set to \"UTF8\".\npostgres-1  | The default text search configuration will be set to \"english\".\npostgres-1  | \npostgres-1  | Data page checksums are enabled.\npostgres-1  | \npostgres-1  | fixing permissions on existing directory /var/lib/postgresql/18/docker ... ok\npostgres-1  | creating subdirectories ... ok\npostgres-1  | selecting dynamic shared memory implementation ... posix\npostgres-1  | selecting default \"max_connections\" ... 100\npostgres-1  | selecting default \"shared_buffers\" ... 128MB\npostgres-1  | selecting default time zone ... Etc/UTC\npostgres-1  | creating configuration files ... ok\npostgres-1  | running bootstrap script ... ok\npostgres-1  | performing post-bootstrap initialization ... ok\npostgres-1  | syncing data to disk ... ok\npostgres-1  | \npostgres-1  | Success. You can now start the database server using:\npostgres-1  | \npostgres-1  |     pg_ctl -D /var/lib/postgresql/18/docker -l logfile start\npostgres-1  | \npostgres-1  | waiting for server to start....2026-10-18 15:36:21.552 UTC [37] LOG:  starting PostgreSQL 18.6 (Debian 18.6-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit\npostgres-1  | 2026-10-18 15:36:21.552 UTC [37] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\npostgres-1  | 2026-10-18 15:36:21.582 UTC [43] LOG:  database system was shut down at 2026-10-18 15:36:21 UTC\npostgres-1  | 2026-10-18 15:36:21.591 UTC [37] LOG:  database system is ready to accept connections\npostgres-1  |  done\npostgres-1  | server started\npostgres-1  | \npostgres-1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*\npostgres-1  | \npostgres-1  | waiting for server to shut down....2026-10-18 15:36:21.712 UTC [37] LOG:  received fast shutdown request\npostgres-1  | 2026-10-18 15:36:21.715 UTC [37] LOG:  aborting any active transactions\npostgres-1  | 2026-10-18 15:36:21.718 UTC [37] LOG:  background worker \"logical replication launcher\" (PID 46) exited with exit code 1\npostgres-1  | 2026-10-18 15:36:21.718 UTC [41] LOG:  shutting down\npostgres-1  | 2026-10-18 15:36:21.721 UTC [41] LOG:  checkpoint starting: shutdown immediate\npostgres-1  | 2026-10-18 15:36:21.734 UTC [41] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.002 s, total=0.016 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/1759450, redo lsn=0/1759450\npostgres-1  | 2026-10-18 15:36:21.748 UTC [37] LOG:  database system is shut down\npostgres-1  |  done\npostgres-1  | server stopped\npostgres-1  | \npostgres-1  | PostgreSQL init process complete; ready for start up.\npostgres-1  | \npostgres-1  | 2026-10-18 15:36:21.835 UTC [1] LOG:  starting PostgreSQL 18.6 (Debian 18.6-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit\npostgres-1  | 2026-10-18 15:36:21.836 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\npostgres-1  | 2026-10-18 15:36:21.836 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\npostgres-1  | 2026-10-18 15:36:21.840 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\npostgres-1  | 2026-10-18 15:36:21.847 UTC [57] LOG:  database system was shut down at 2026-10-18 15:36:21 UTC\npostgres-1  | 2026-10-18 15:36:21.854 UTC [1] LOG:  database system is ready to accept connections\npostgres-1  | 2026-10-18 15:36:30.009 UTC [111] ERROR:  permission denied for schema inventory at character 22\npostgres-1  | 2026-10-18 15:36:30.080 UTC [114] FATAL:  permission denied for database \"inventory_db\"\npostgres-1  | 2026-10-18 15:36:30.080 UTC [114] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.087 UTC [115] FATAL:  permission denied for database \"payments_db\"\npostgres-1  | 2026-10-18 15:36:30.087 UTC [115] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.103 UTC [117] FATAL:  permission denied for database \"inventory_db\"\npostgres-1  | 2026-10-18 15:36:30.103 UTC [117] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.110 UTC [118] FATAL:  permission denied for database \"payments_db\"\npostgres-1  | 2026-10-18 15:36:30.110 UTC [118] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.117 UTC [119] ERROR:  permission denied for database orders_db\npostgres-1  | 2026-10-18 15:36:30.118 UTC [119] ERROR:  permission denied for schema public at character 14\npostgres-1  | 2026-10-18 15:36:30.118 UTC [119] ERROR:  permission denied to create temporary tables in database \"orders_db\" at character 19\npostgres-1  | 2026-10-18 15:36:30.118 UTC [119] ERROR:  permission denied to set role \"orders_migrator\"\npostgres-1  | 2026-10-18 15:36:30.119 UTC [119] ERROR:  permission denied for schema lab_migrations at character 13\npostgres-1  | 2026-10-18 15:36:30.142 UTC [119] ERROR:  must be owner of table privilege_probe\npostgres-1  | 2026-10-18 15:36:30.142 UTC [119] ERROR:  permission denied for table privilege_probe\npostgres-1  | 2026-10-18 15:36:30.149 UTC [121] FATAL:  permission denied for database \"postgres\"\npostgres-1  | 2026-10-18 15:36:30.149 UTC [121] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.177 UTC [122] FATAL:  permission denied for database \"template1\"\npostgres-1  | 2026-10-18 15:36:30.177 UTC [122] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.184 UTC [123] FATAL:  permission denied for database \"orders_db\"\npostgres-1  | 2026-10-18 15:36:30.184 UTC [123] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.206 UTC [125] FATAL:  permission denied for database \"payments_db\"\npostgres-1  | 2026-10-18 15:36:30.206 UTC [125] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.217 UTC [126] FATAL:  permission denied for database \"orders_db\"\npostgres-1  | 2026-10-18 15:36:30.217 UTC [126] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.279 UTC [128] FATAL:  permission denied for database \"payments_db\"\npostgres-1  | 2026-10-18 15:36:30.279 UTC [128] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.289 UTC [129] ERROR:  permission denied for database inventory_db\npostgres-1  | 2026-10-18 15:36:30.289 UTC [129] ERROR:  permission denied for schema public at character 14\npostgres-1  | 2026-10-18 15:36:30.290 UTC [129] ERROR:  permission denied to create temporary tables in database \"inventory_db\" at character 19\npostgres-1  | 2026-10-18 15:36:30.290 UTC [129] ERROR:  permission denied to set role \"inventory_migrator\"\npostgres-1  | 2026-10-18 15:36:30.291 UTC [129] ERROR:  permission denied for schema lab_migrations at character 13\npostgres-1  | 2026-10-18 15:36:30.316 UTC [129] ERROR:  must be owner of table privilege_probe\npostgres-1  | 2026-10-18 15:36:30.317 UTC [129] ERROR:  permission denied for table privilege_probe\npostgres-1  | 2026-10-18 15:36:30.328 UTC [131] FATAL:  permission denied for database \"postgres\"\npostgres-1  | 2026-10-18 15:36:30.328 UTC [131] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.341 UTC [132] FATAL:  permission denied for database \"template1\"\npostgres-1  | 2026-10-18 15:36:30.341 UTC [132] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.381 UTC [133] FATAL:  permission denied for database \"orders_db\"\npostgres-1  | 2026-10-18 15:36:30.381 UTC [133] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.391 UTC [134] FATAL:  permission denied for database \"inventory_db\"\npostgres-1  | 2026-10-18 15:36:30.391 UTC [134] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.409 UTC [136] FATAL:  permission denied for database \"orders_db\"\npostgres-1  | 2026-10-18 15:36:30.409 UTC [136] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.418 UTC [137] FATAL:  permission denied for database \"inventory_db\"\npostgres-1  | 2026-10-18 15:36:30.418 UTC [137] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.439 UTC [139] ERROR:  permission denied for database payments_db\npostgres-1  | 2026-10-18 15:36:30.440 UTC [139] ERROR:  permission denied for schema public at character 14\npostgres-1  | 2026-10-18 15:36:30.440 UTC [139] ERROR:  permission denied to create temporary tables in database \"payments_db\" at character 19\npostgres-1  | 2026-10-18 15:36:30.440 UTC [139] ERROR:  permission denied to set role \"payments_migrator\"\npostgres-1  | 2026-10-18 15:36:30.441 UTC [139] ERROR:  permission denied for schema lab_migrations at character 13\npostgres-1  | 2026-10-18 15:36:30.504 UTC [139] ERROR:  must be owner of table privilege_probe\npostgres-1  | 2026-10-18 15:36:30.505 UTC [139] ERROR:  permission denied for table privilege_probe\npostgres-1  | 2026-10-18 15:36:30.521 UTC [141] FATAL:  permission denied for database \"postgres\"\npostgres-1  | 2026-10-18 15:36:30.521 UTC [141] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.532 UTC [142] FATAL:  permission denied for database \"template1\"\npostgres-1  | 2026-10-18 15:36:30.532 UTC [142] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 15:36:30.591 UTC [144] ERROR:  division by zero\npostgres-1  | 2026-10-18 15:36:30.717 UTC [147] ERROR:  new row for relation \"stock\" violates check constraint \"stock_available_check\"\npostgres-1  | 2026-10-18 15:36:30.717 UTC [147] DETAIL:  Failing row contains (SKU-001, -1).\npostgres-1  | 2026-10-18 15:36:30.718 UTC [147] ERROR:  new row for relation \"products\" violates check constraint \"products_price_minor_check\"\npostgres-1  | 2026-10-18 15:36:30.718 UTC [147] DETAIL:  Failing row contains (SKU-001, Notebook, -1, RUB).\npostgres-1  | 2026-10-18 15:36:30.718 UTC [147] ERROR:  new row for relation \"products\" violates check constraint \"products_currency_check\"\npostgres-1  | 2026-10-18 15:36:30.718 UTC [147] DETAIL:  Failing row contains (SKU-001, Notebook, 99900, rub).\npostgres-1  | 2026-10-18 15:36:30.718 UTC [147] ERROR:  insert or update on table \"stock\" violates foreign key constraint \"stock_sku_fkey\"\npostgres-1  | 2026-10-18 15:36:30.718 UTC [147] DETAIL:  Key (sku)=(missing) is not present in table \"products\".\npostgres-1  | 2026-10-18 15:36:33.098 UTC [1] LOG:  received fast shutdown request\npostgres-1  | 2026-10-18 15:36:33.100 UTC [1] LOG:  aborting any active transactions\npostgres-1  | 2026-10-18 15:36:33.105 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 60) exited with exit code 1\npostgres-1  | 2026-10-18 15:36:33.106 UTC [55] LOG:  shutting down\npostgres-1  | 2026-10-18 15:36:33.107 UTC [55] LOG:  checkpoint starting: shutdown immediate\npostgres-1  | 2026-10-18 15:36:33.332 UTC [55] LOG:  checkpoint complete: wrote 2868 buffers (35.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.091 s, sync=0.120 s, total=0.227 s; sync files=933, longest=0.005 s, average=0.001 s; distance=13179 kB, estimate=13179 kB; lsn=0/2438368, redo lsn=0/2438368\npostgres-1  | 2026-10-18 15:36:33.353 UTC [1] LOG:  database system is shut down\npostgres-1  | \npostgres-1  | PostgreSQL Database directory appears to contain a database; Skipping initialization\npostgres-1  | \npostgres-1  | 2026-10-18 15:36:33.665 UTC [1] LOG:  starting PostgreSQL 18.6 (Debian 18.6-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit\npostgres-1  | 2026-10-18 15:36:33.665 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\npostgres-1  | 2026-10-18 15:36:33.665 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\npostgres-1  | 2026-10-18 15:36:33.669 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\npostgres-1  | 2026-10-18 15:36:33.678 UTC [19] LOG:  database system was shut down at 2026-10-18 15:36:33 UTC\npostgres-1  | 2026-10-18 15:36:33.687 UTC [1] LOG:  database system is ready to accept connections\n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "cleanup",
+      "output": " Container faultline-data-test-f6daa54637bbcc11-postgres-1 Stopping \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Stopped \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Removing \n Container faultline-data-test-f6daa54637bbcc11-postgres-1 Removed \n Volume faultline-data-test-f6daa54637bbcc11_postgres-data Removing \n Network faultline-data-test-f6daa54637bbcc11_data Removing \n Volume faultline-data-test-f6daa54637bbcc11_postgres-data Removed \n Image faultline-data-test-f6daa54637bbcc11-dbtool:latest Removing \n Network faultline-data-test-f6daa54637bbcc11_data Removed \n Image faultline-data-test-f6daa54637bbcc11-dbtool:latest Removed \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    }
+  ]
+}

@@ -7,12 +7,14 @@
 | Задача читателя | Маршрут |
 | :--- | :--- |
 | Быстро оценить проект | [README](../README.ru.md) → [Дизайн](architecture/DESIGN.md) → [Roadmap](ROADMAP.md) |
+| Понять цели владельца | [Заметки об использовании](PRODUCT_INTENT.md) — цели, примеры и ограничения из обсуждений |
 | Проверить распределённый процесс | [Атлас G0](architecture/PROCESSES.md) → [Принятие G0](adr/0001-approved-g0.md) |
 | Разобрать подключение другого бизнеса | [Граница лаборатории](architecture/LAB_BOUNDARY.md) — согласованное направление и детализация для ревью |
 | Подготовить среду Windows/macOS | [Контейнерная среда](development/ENVIRONMENT.md) — состав, профили и статус проверок |
 | Собрать и проверить первые Go-бинарники | [Toolchain P01-01](development/TOOLCHAIN.md) — версии, Docker-команды и границы проверок |
 | Запустить и проверить три процесса | [Запуск сервисов](development/SERVICE_RUNTIME.md) — настройки, JSON, health и границы shutdown |
 | Поднять три runtime-контейнера | [Контейнерный каркас](development/CONTAINER_RUNTIME.md) — сборка, health, остановка и smoke с отчётом |
+| Подготовить базы и исходные данные | [PostgreSQL](development/POSTGRES.md) — роли, миграции, seed, схемы взаимодействий и reset |
 | Проверить Windows smoke | [Отчёт P01](development/evidence/p01/WINDOWS_SMOKE.md) — исходные JSON/JSONL, бюджет и остановка среды |
 | Проверить исходные ресурсы | [Профили сред](development/RESOURCE_PROFILES.md) — Windows, macOS и возможный будущий сервер |
 | Посмотреть оформление | [Концепции баннера](design/BANNER_OPTIONS.md) — три варианта и выбранное решение |

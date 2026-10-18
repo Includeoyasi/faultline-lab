@@ -1,0 +1,28 @@
+{
+  "observed_at": "2026-10-16T19:22:00.0959015+03:00",
+  "containers_remaining": 0,
+  "run_images_remaining": 0,
+  "remaining_images": [
+    {
+      "Repository": "faultline-lab-toolchain",
+      "Tag": "latest",
+      "ID": "c7cd1c13080d"
+    },
+    {
+      "Repository": "postgres",
+      "Tag": "<none>",
+      "ID": "afc7e2d44132"
+    }
+  ],
+  "remaining_volumes": [
+    "faultline-lab_go-build",
+    "faultline-lab_go-modules"
+  ],
+  "docker_autostart": false,
+  "historical_smoke_images_removed": 21,
+  "global_prune_used": false,
+  "desktop_stop_exit": 0,
+  "wsl_terminate_exit": 0,
+  "running_wsl": "",
+  "remaining_docker_processes": []
+}

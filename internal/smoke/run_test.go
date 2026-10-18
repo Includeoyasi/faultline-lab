@@ -21,6 +21,8 @@ type dockerFixture struct {
 	cancel            context.CancelFunc
 	project           string
 	owned, foreign    bool
+	images            bool
+	stickyImages      bool
 	stopped           map[string]bool
 	operations        []string
 	unsafe, oom       bool
@@ -52,6 +54,9 @@ func (f *dockerFixture) execute(ctx context.Context, program string, args []stri
 	f.operations = append(f.operations, op)
 	if op == "up" {
 		f.owned = true
+	}
+	if op == "build" {
+		f.images = true
 	}
 	if op == f.cancelAt {
 		f.cancel()
@@ -116,11 +121,22 @@ func (f *dockerFixture) execute(ctx context.Context, program string, args []stri
 		name := args[len(args)-1]
 		return commandOutput{stdout: fmt.Sprintf("{\"service\":%q,\"time\":\"2026-10-16T00:00:00Z\",\"level\":\"INFO\",\"msg\":\"service started\"}\n{\"service\":%q,\"time\":\"2026-10-16T00:00:01Z\",\"level\":\"INFO\",\"msg\":\"service stopping\",\"health\":\"NOT_SERVING\"}\n{\"service\":%q,\"time\":\"2026-10-16T00:00:02Z\",\"level\":\"INFO\",\"msg\":\"service stopped\",\"stop_mode\":\"graceful\"}\n", name, name, name)}, nil
 	case "down":
+		if !slices.Contains(args, "--rmi") || args[len(args)-1] != "local" {
+			f.t.Fatal("cleanup must remove only run-local images")
+		}
 		if f.cleanupBlocks {
 			<-ctx.Done()
 			return commandOutput{exitCode: -1}, ctx.Err()
 		}
 		f.owned = false
+		if !f.stickyImages {
+			f.images = false
+		}
+		return commandOutput{}, nil
+	case "image":
+		if f.images {
+			return commandOutput{stdout: "owned-image"}, nil
+		}
 		return commandOutput{}, nil
 	default:
 		f.t.Fatalf("unexpected Docker operation %s %v", op, args)
@@ -178,7 +194,7 @@ func TestCancellationStopsStagesAndCleansOwnProject(t *testing.T) {
 			if err == nil || !report.Cancelled || report.ExitCode() != 1 || f.owned || !f.foreign {
 				t.Fatalf("cancel report=%+v err=%v", report, err)
 			}
-			if op == "build" && report.Cleanup != "NOT_NEEDED" || op != "build" && report.Cleanup != "PASS" {
+			if report.Cleanup != "PASS" || f.images {
 				t.Fatalf("cleanup=%s", report.Cleanup)
 			}
 			if op == "up" && slices.Contains(f.operations, "exec") {
@@ -187,6 +203,17 @@ func TestCancellationStopsStagesAndCleansOwnProject(t *testing.T) {
 			verifySavedReport(t, options, report)
 		})
 	}
+}
+
+func TestImageRemovalConflictFailsCleanup(t *testing.T) {
+	f, options := fixture(t)
+	f.stickyImages = true
+	options.CleanupTimeout = 80 * time.Millisecond
+	report, err := run(context.Background(), options, f.execute)
+	if err == nil || report.Cleanup != "FAIL" || !f.images || !f.foreign || !slices.Contains(report.Recovery, "--rmi") {
+		t.Fatalf("unremoved images hidden: %+v %v", report, err)
+	}
+	verifySavedReport(t, options, report)
 }
 
 func TestCommandFailuresAndCleanupDeadline(t *testing.T) {

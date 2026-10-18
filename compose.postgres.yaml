@@ -1,0 +1,88 @@
+services:
+  postgres:
+    image: postgres:18.6-bookworm@sha256:afc7e2d441324c0388fa80c3d24f733b4194a4eb7f47dd8ee2b08eb1a24a647c
+    user: "999:999"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres.password
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256 --auth-local=scram-sha-256
+    secrets:
+      - source: postgres-password
+        target: postgres.password
+    command:
+      - postgres
+      - -c
+      - shared_buffers=64MB
+      - -c
+      - max_connections=30
+      - -c
+      - log_statement=none
+      - -c
+      - log_min_error_statement=panic
+      - -c
+      - log_parameter_max_length=0
+      - -c
+      - log_parameter_max_length_on_error=0
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    tmpfs:
+      - /var/run/postgresql:uid=999,gid=999,mode=0770
+      - /tmp:mode=1777,size=32m
+    mem_limit: 512m
+    cpus: 0.5
+    stop_grace_period: 30s
+    networks: [data]
+    healthcheck:
+      test: [CMD, pg_isready, -U, postgres, -d, postgres]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+      start_period: 5s
+  dbtool:
+    profiles: [tools]
+    build:
+      context: .
+      dockerfile: build/Dockerfile
+      target: labdata
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    environment:
+      FL_DATA_CONFIG: /etc/faultline/postgres.json
+      FL_DATA_SECRETS: /run/secrets
+    volumes:
+      - ./configs/postgres/local.json:/etc/faultline/postgres.json:ro
+    secrets:
+      - {source: postgres-password, target: postgres.password}
+      - {source: orders-app-password, target: orders_app.password}
+      - {source: orders-migrator-password, target: orders_migrator.password}
+      - {source: inventory-app-password, target: inventory_app.password}
+      - {source: inventory-migrator-password, target: inventory_migrator.password}
+      - {source: payments-app-password, target: payments_app.password}
+      - {source: payments-migrator-password, target: payments_migrator.password}
+    tmpfs: ["/tmp:mode=1777,size=32m"]
+    networks: [data]
+    mem_limit: 256m
+    cpus: 1
+volumes:
+  postgres-data:
+networks:
+  data:
+    internal: true
+secrets:
+  postgres-password:
+    file: ${FL_PG_SECRETS_DIR:-.local/postgres}/postgres.password
+  orders-app-password:
+    file: ${FL_PG_SECRETS_DIR:-.local/postgres}/orders_app.password
+  orders-migrator-password:
+    file: ${FL_PG_SECRETS_DIR:-.local/postgres}/orders_migrator.password
+  inventory-app-password:
+    file: ${FL_PG_SECRETS_DIR:-.local/postgres}/inventory_app.password
+  inventory-migrator-password:
+    file: ${FL_PG_SECRETS_DIR:-.local/postgres}/inventory_migrator.password
+  payments-app-password:
+    file: ${FL_PG_SECRETS_DIR:-.local/postgres}/payments_app.password
+  payments-migrator-password:
+    file: ${FL_PG_SECRETS_DIR:-.local/postgres}/payments_migrator.password

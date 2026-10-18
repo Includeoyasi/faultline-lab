@@ -136,7 +136,7 @@ func newRunner(options Options, execute executeFunc) (*runner, error) {
 	return &runner{options: options, directory: directory, execute: execute, redact: strings.NewReplacer(pairs...), report: Report{
 		SchemaVersion: 2, RunID: id, Project: project, StartedAt: time.Now().UTC(), Result: "FAIL", Phase: "prerequisites", Cleanup: "PENDING",
 		HostPlatform: runtime.GOOS, GoVersion: runtime.Version(), Services: map[string]serviceReport{}, Commands: []commandReport{},
-		Recovery:    []string{"docker", "compose", "-f", "compose.yaml", "-p", project, "down", "--remove-orphans"},
+		Recovery:    []string{"docker", "compose", "-f", "compose.yaml", "-p", project, "down", "--remove-orphans", "--rmi", "local"},
 		Limitations: []string{"No business operations or capacity measurement", "docker_architecture describes the backend, not individual image platforms (F03)", "SIGKILL or host failure requires recovery_command; signal cleanup cannot be guaranteed in those cases"},
 	}}, nil
 }
@@ -188,6 +188,7 @@ func (r *runner) exercise(ctx context.Context) error {
 		{"prerequisites", r.prerequisites},
 		{"configuration", r.configuration},
 		{"build", func(ctx context.Context) error {
+			r.resourcesMayExist = true // A partial build can leave run-specific images.
 			_, err := r.command(ctx, "docker", r.composeArgs(append([]string{"build"}, services...)...), r.options.BuildTimeout, false)
 			return err
 		}},
@@ -272,13 +273,14 @@ func (r *runner) cleanup(ctx context.Context) error {
 	// Recheck engine state after the joined up command and scoped down. A second
 	// observation catches resources still being finalized by the Docker engine.
 	for {
-		if _, err := r.compose(ctx, "down", "--remove-orphans"); err != nil {
+		if _, err := r.compose(ctx, "down", "--remove-orphans", "--rmi", "local"); err != nil {
 			return err
 		}
 		for attempt := 0; attempt < 2; attempt++ {
 			for _, args := range [][]string{
 				{"ps", "--all", "--quiet", "--filter", "label=com.docker.compose.project=" + r.report.Project},
 				{"network", "ls", "--quiet", "--filter", "label=com.docker.compose.project=" + r.report.Project},
+				{"image", "ls", "--quiet", "--filter", "reference=" + r.report.Project + "-*:latest"},
 			} {
 				remaining, err := r.docker(ctx, args...)
 				if err != nil {

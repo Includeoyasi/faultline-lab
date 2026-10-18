@@ -68,7 +68,7 @@ func TestSIGINTCleansRunningProject(t *testing.T) {
 	t.Cleanup(func() {
 		cleanupCtx, stop := context.WithTimeout(context.Background(), time.Minute)
 		defer stop()
-		cleanup := exec.CommandContext(cleanupCtx, "docker", "compose", "-f", filepath.Join(root, "compose.yaml"), "-p", project, "down", "--remove-orphans")
+		cleanup := exec.CommandContext(cleanupCtx, "docker", "compose", "-f", filepath.Join(root, "compose.yaml"), "-p", project, "down", "--remove-orphans", "--rmi", "local")
 		if output, err := cleanup.CombinedOutput(); err != nil {
 			t.Errorf("test recovery failed: %v; %s", err, output)
 		}
@@ -109,6 +109,7 @@ func TestSIGINTCleansRunningProject(t *testing.T) {
 	for _, args := range [][]string{
 		{"ps", "--all", "--quiet", "--filter", "label=com.docker.compose.project=" + project},
 		{"network", "ls", "--quiet", "--filter", "label=com.docker.compose.project=" + project},
+		{"image", "ls", "--quiet", "--filter", "reference=" + project + "-*:latest"},
 	} {
 		output, err := exec.CommandContext(ctx, "docker", args...).Output()
 		if err != nil || strings.TrimSpace(string(output)) != "" {
