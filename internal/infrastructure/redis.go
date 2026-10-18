@@ -35,7 +35,7 @@ func checkRedis(ctx context.Context, cfg Config) error {
 	client := redisClient(cfg, cfg.RedisUser, password)
 	defer func() { _ = client.Close() }()
 	if err = client.Ping(ctx).Err(); err != nil {
-		return safeError("Redis authenticated ping", err)
+		return safeError("redis authenticated ping", err)
 	}
 	for _, auth := range []struct{ user, password, code string }{
 		{"", "", "NOAUTH"}, {cfg.RedisUser, "invalid-password", "WRONGPASS"},
@@ -44,42 +44,42 @@ func checkRedis(ctx context.Context, cfg Config) error {
 		err = denied.Ping(ctx).Err()
 		_ = denied.Close()
 		if !redisErrorCode(err, auth.code) {
-			return errors.New("Redis did not return the expected authentication denial")
+			return errors.New("redis did not return the expected authentication denial")
 		}
 	}
 	if !redisErrorCode(client.Do(ctx, "CONFIG", "GET", "bind").Err(), "NOPERM") {
-		return errors.New("Redis administrative command was not denied")
+		return errors.New("redis administrative command was not denied")
 	}
 	if !redisErrorCode(client.Set(ctx, "outside:"+cfg.KeyPrefix+"probe", "forbidden", 0).Err(), "NOPERM") {
-		return errors.New("Redis access outside the allowed key prefix was not denied")
+		return errors.New("redis access outside the allowed key prefix was not denied")
 	}
 	ttl, _ := time.ParseDuration(cfg.ProbeTTL)
 	key, value := cfg.KeyPrefix+"ttl-probe", "infrastructure-check"
 	if err = client.Set(ctx, key, value, ttl).Err(); err != nil {
-		return safeError("Redis write", err)
+		return safeError("redis write", err)
 	}
 	got, err := client.Get(ctx, key).Result()
 	if err != nil || got != value {
-		return errors.New("Redis read did not match the written value")
+		return errors.New("redis read did not match the written value")
 	}
 	remaining, err := client.Do(ctx, "PTTL", key).Int64()
 	if err != nil || remaining <= 0 {
-		return errors.New("Redis key has no positive TTL")
+		return errors.New("redis key has no positive TTL")
 	}
 	ticker := time.NewTicker(20 * time.Millisecond)
 	defer ticker.Stop()
 	for {
 		select {
 		case <-ctx.Done():
-			return safeError("Redis TTL expiration", ctx.Err())
+			return safeError("redis TTL expiration", ctx.Err())
 		case <-ticker.C:
 			remaining, err = client.Do(ctx, "PTTL", key).Int64()
 			if err != nil {
-				return safeError("Redis TTL read", err)
+				return safeError("redis TTL read", err)
 			}
 			if remaining == -2 {
 				if !errors.Is(client.Get(ctx, key).Err(), redis.Nil) {
-					return errors.New("Redis expired key is still readable")
+					return errors.New("redis expired key is still readable")
 				}
 				return nil
 			}

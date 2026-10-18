@@ -24,6 +24,7 @@ func TestConfigRejectsUnsafeProfiles(t *testing.T) {
 		func(c *Config) { c.KafkaBrokers = nil },
 		func(c *Config) { c.RedisAddress = "redis" },
 		func(c *Config) { c.RedisUser = "lab on nopass" },
+		func(c *Config) { c.RedisUser = "default" },
 		func(c *Config) { c.KeyPrefix = "*" },
 	} {
 		cfg := testConfig(t)

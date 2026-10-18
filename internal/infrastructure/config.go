@@ -59,7 +59,7 @@ func (c Config) Validate() error {
 	if err != nil || ttl < 100*time.Millisecond || ttl >= budget {
 		return errors.New("probe TTL must be at least 100ms and below the operation timeout")
 	}
-	if len(c.KafkaBrokers) != 1 || !address(c.KafkaBrokers[0]) || !address(c.RedisAddress) || !topicName.MatchString(c.KafkaTopic) || !name.MatchString(c.RedisUser) || !keyPrefix.MatchString(c.KeyPrefix) || c.Secrets == "" {
+	if len(c.KafkaBrokers) != 1 || !address(c.KafkaBrokers[0]) || !address(c.RedisAddress) || !topicName.MatchString(c.KafkaTopic) || !name.MatchString(c.RedisUser) || c.RedisUser == "default" || !keyPrefix.MatchString(c.KeyPrefix) || c.Secrets == "" {
 		return errors.New("infrastructure requires one broker, Redis address/user, topic, key prefix and secrets directory")
 	}
 	return nil

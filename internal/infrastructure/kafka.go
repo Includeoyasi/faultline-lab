@@ -40,7 +40,7 @@ func prepareKafka(ctx context.Context, cfg Config) (Checkpoint, error) {
 	var checkpoint Checkpoint
 	client, err := kafkaClient(ctx, cfg)
 	if err != nil {
-		return checkpoint, safeError("Kafka client configuration", err)
+		return checkpoint, safeError("kafka client configuration", err)
 	}
 	defer client.Close()
 	request := kmsg.NewPtrCreateTopicsRequest()
@@ -50,11 +50,11 @@ func prepareKafka(ctx context.Context, cfg Config) (Checkpoint, error) {
 	request.Topics = []kmsg.CreateTopicsRequestTopic{topic}
 	response, err := client.Request(ctx, request)
 	if err != nil {
-		return checkpoint, safeError("Kafka topic creation", err)
+		return checkpoint, safeError("kafka topic creation", err)
 	}
 	created, ok := response.(*kmsg.CreateTopicsResponse)
 	if !ok || len(created.Topics) != 1 || created.Topics[0].ErrorCode != 0 {
-		return checkpoint, errors.New("Kafka check requires a newly created isolated topic")
+		return checkpoint, errors.New("kafka check requires a newly created isolated topic")
 	}
 	var marker [16]byte
 	if _, err = rand.Read(marker[:]); err != nil {
@@ -62,7 +62,7 @@ func prepareKafka(ctx context.Context, cfg Config) (Checkpoint, error) {
 	}
 	record := &kgo.Record{Topic: cfg.KafkaTopic, Key: []byte("checkpoint"), Value: []byte(hex.EncodeToString(marker[:]))}
 	if err = client.ProduceSync(ctx, record).FirstErr(); err != nil {
-		return checkpoint, safeError("Kafka produce", err)
+		return checkpoint, safeError("kafka produce", err)
 	}
 	checkpoint = Checkpoint{1, record.Topic, record.Partition, record.Offset, string(record.Key), string(record.Value)}
 	return checkpoint, readKafka(ctx, cfg, checkpoint)
@@ -73,22 +73,22 @@ func readKafka(ctx context.Context, cfg Config, expected Checkpoint) error {
 		expected.Topic: {expected.Partition: kgo.NewOffset().At(expected.Offset)},
 	}))
 	if err != nil {
-		return safeError("Kafka consumer configuration", err)
+		return safeError("kafka consumer configuration", err)
 	}
 	defer client.Close()
 	for ctx.Err() == nil {
 		fetches := client.PollFetches(ctx)
 		if len(fetches.Errors()) != 0 {
-			return safeError("Kafka fetch", ctx.Err())
+			return safeError("kafka fetch", ctx.Err())
 		}
 		for _, record := range fetches.Records() {
 			if record.Topic != expected.Topic || record.Partition != expected.Partition || record.Offset != expected.Offset || string(record.Key) != expected.Key || string(record.Value) != expected.Value {
-				return errors.New("Kafka checkpoint record does not match")
+				return errors.New("kafka checkpoint record does not match")
 			}
 			return nil
 		}
 	}
-	return safeError("Kafka fetch", ctx.Err())
+	return safeError("kafka fetch", ctx.Err())
 }
 
 func verifyKafka(ctx context.Context, cfg Config, expected Checkpoint) error {
@@ -97,15 +97,15 @@ func verifyKafka(ctx context.Context, cfg Config, expected Checkpoint) error {
 	}
 	client, err := kafkaClient(ctx, cfg)
 	if err != nil {
-		return safeError("Kafka producer configuration", err)
+		return safeError("kafka producer configuration", err)
 	}
 	defer client.Close()
 	record := &kgo.Record{Topic: expected.Topic, Key: []byte(expected.Key), Value: []byte(expected.Value + ":after")}
 	if err = client.ProduceSync(ctx, record).FirstErr(); err != nil {
-		return safeError("Kafka produce after restart", err)
+		return safeError("kafka produce after restart", err)
 	}
 	if record.Partition != expected.Partition || record.Offset <= expected.Offset {
-		return errors.New("Kafka new record did not follow the persisted checkpoint")
+		return errors.New("kafka new record did not follow the persisted checkpoint")
 	}
 	return readKafka(ctx, cfg, Checkpoint{1, record.Topic, record.Partition, record.Offset, string(record.Key), string(record.Value)})
 }

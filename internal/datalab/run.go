@@ -22,10 +22,6 @@ import (
 
 var projectName = regexp.MustCompile(`^faultline-data-[a-z0-9][a-z0-9-]{0,47}$`)
 
-func composeArgs(project string, args ...string) []string {
-	return composeModeArgs(project, false, args...)
-}
-
 func composeModeArgs(project string, fullStack bool, args ...string) []string {
 	// Profile activation by an earlier explicit run is not retained by down.
 	// All starts/builds below retain explicit service targets.

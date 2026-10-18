@@ -22,11 +22,11 @@ func Password(cfg Config) (string, error) {
 	path := filepath.Join(cfg.Secrets, "redis.password")
 	info, err := os.Lstat(path)
 	if err != nil || !info.Mode().IsRegular() {
-		return "", errors.New("Redis credential must be a regular file")
+		return "", errors.New("redis credential must be a regular file")
 	}
 	data, err := os.ReadFile(path)
 	if err != nil || !passwordValue.MatchString(strings.TrimSpace(string(data))) {
-		return "", errors.New("Redis credential is unavailable or malformed")
+		return "", errors.New("redis credential is unavailable or malformed")
 	}
 	return strings.TrimSpace(string(data)), nil
 }

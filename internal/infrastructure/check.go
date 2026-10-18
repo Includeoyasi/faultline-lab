@@ -20,7 +20,7 @@ func Check(ctx context.Context, cfg Config, stage, saved string) (Checkpoint, er
 	}
 	if stage == "after-restart" {
 		if len(saved) > 2048 {
-			return checkpoint, errors.New("Kafka checkpoint is too large")
+			return checkpoint, errors.New("kafka checkpoint is too large")
 		}
 		decoder := json.NewDecoder(strings.NewReader(saved))
 		decoder.DisallowUnknownFields()
@@ -29,10 +29,10 @@ func Check(ctx context.Context, cfg Config, stage, saved string) (Checkpoint, er
 		}
 		var extra any
 		if err := decoder.Decode(&extra); !errors.Is(err, io.EOF) {
-			return checkpoint, errors.New("Kafka checkpoint has trailing data")
+			return checkpoint, errors.New("kafka checkpoint has trailing data")
 		}
 		if checkpoint.Version != 1 || checkpoint.Topic != cfg.KafkaTopic || checkpoint.Partition != 0 || checkpoint.Offset < 0 || checkpoint.Key == "" || len(checkpoint.Key) > 64 || checkpoint.Value == "" || len(checkpoint.Value) > 256 {
-			return checkpoint, errors.New("Kafka checkpoint does not match the configured probe")
+			return checkpoint, errors.New("kafka checkpoint does not match the configured probe")
 		}
 	} else if saved != "" {
 		return checkpoint, errors.New("before-restart must create a new checkpoint")
