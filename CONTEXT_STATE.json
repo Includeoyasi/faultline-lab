@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 57,
+  "context_revision": 58,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-18",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "6935806d53d5a31037711853dc2e7fde6106b45f",
+    "snapshot_ref": "f7e43fcfc91fba5bad1b35ceacffbf756a7cebdb",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -2909,6 +2909,12 @@
       "date": "2026-10-18",
       "summary": "After verified PR22 merge, added Kafka/Redis Compose and real joint smoke, narrow checker credentials, Redis ACL/TTL and Kafka restart checkpoint, context-bound probes and lifecycle regressions; recorded Windows evidence and F09 proposal",
       "trigger": "Owner instruction to proceed to the next approved task; Issue16 criteria"
+    },
+    {
+      "revision": 58,
+      "date": "2026-10-18",
+      "summary": "Address initial CI lint without weakening checks; reject Redis default-user profile; clarify toolchain exception to dependency runtime hardening",
+      "trigger": "Issue16 CI diagnostics and read-only documentation review"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -3013,7 +3019,7 @@
   },
   "infrastructure_foundation": {
     "recorded_on": "2026-10-18",
-    "source_commit": "6935806d53d5a31037711853dc2e7fde6106b45f",
+    "source_commit": "f7e43fcfc91fba5bad1b35ceacffbf756a7cebdb",
     "scope": "Issue16; Kafka/Redis infrastructure probes and joint PostgreSQL run; no business consumers or outbox implementation",
     "guide": "docs/development/INFRASTRUCTURE.md",
     "evidence": "docs/development/evidence/p02/INFRASTRUCTURE.md",
@@ -3054,6 +3060,7 @@
       "ordering": "One unacknowledged version per stream per Kafka transaction; next version only after confirmed Kafka commit and durable SQL mark; cross-stream batching allowed",
       "limits": "Contenders can fence a live publisher and hurt availability; client automatic epoch recovery must be excluded for stale lease; PostgreSQL/Kafka boundary still permits duplicate event IDs",
       "future_checks": "A pause/resume and B takeover, delayed init/CAS, lost commit/SQL mark, retry/reinit, read_committed, inbox/version guards; F09 remains open until implemented and verified"
-    }
+    },
+    "ci_refinement": "Initial Linux CI stopped at staticcheck ST1005 and an unused Compose wrapper; lower-case error messages and removal retain all checks. Redis default username is now rejected before ACL generation; affected Windows tests/vet pass. Actual final-HEAD CI results belong in PR/Actions."
   }
 }
