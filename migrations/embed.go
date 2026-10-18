@@ -5,5 +5,5 @@ import "embed"
 
 // Files is the immutable migration input shipped with the database tool.
 //
-//go:embed orders/*.sql inventory/*.sql payments/*.sql seed/*.sql
+//go:embed orders/*.sql inventory/*.sql payments/*.sql
 var Files embed.FS

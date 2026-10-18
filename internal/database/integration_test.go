@@ -89,6 +89,24 @@ func TestPostgresFoundation(t *testing.T) {
 			t.Fatal("repeat modified history", e)
 		}
 	})
+	t.Run("repeat migrations restore application access", func(t *testing.T) {
+		service, _ := cfg.Service("inventory")
+		conn := connect(t, service.Database, service.MigrationUser)
+		app := connect(t, service.Database, service.AppUser)
+		if _, e := conn.Exec(ctx, "REVOKE ALL ON SCHEMA inventory FROM "+identifierSQL(service.AppUser)); e != nil {
+			t.Fatal(SafeError("revoke application access", e))
+		}
+		denied(t, app, "SELECT count(*) FROM inventory.products")
+		if e := Migrate(ctx, cfg, service); e != nil {
+			t.Fatal(e)
+		}
+		if got := scalar(t, conn, "SELECT count(*) FROM lab_migrations.versions"); got != 2 {
+			t.Fatal("grant repair changed migration history")
+		}
+		if got := scalar(t, app, "SELECT count(*) FROM inventory.products"); got != 0 {
+			t.Fatal("grant repair changed inventory data")
+		}
+	})
 	t.Run("role isolation and denied DDL", func(t *testing.T) {
 		for _, service := range cfg.Services {
 			for _, user := range []string{service.AppUser, service.MigrationUser} {

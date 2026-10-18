@@ -156,11 +156,6 @@ func waitJob(ctx context.Context, job, process windows.Handle) error {
 	defer ticker.Stop()
 	waitCtx := ctx
 	var cancel context.CancelFunc
-	defer func() {
-		if cancel != nil {
-			cancel()
-		}
-	}()
 	for {
 		var accounting jobAccounting
 		if err := windows.QueryInformationJobObject(job, windows.JobObjectBasicAccountingInformation, uintptr(unsafe.Pointer(&accounting)), uint32(unsafe.Sizeof(accounting)), nil); err != nil {
@@ -182,6 +177,9 @@ func waitJob(ctx context.Context, job, process windows.Handle) error {
 				return err
 			}
 			waitCtx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
+			// This branch runs once: a second timeout returns above. Keep the
+			// release next to its creation, including every later error path.
+			defer cancel()
 		case <-ticker.C:
 		}
 	}
