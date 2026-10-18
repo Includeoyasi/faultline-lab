@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 56,
+  "context_revision": 57,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-18",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "a7a468e72c7cc697463893d0090a382931d4da77",
+    "snapshot_ref": "6935806d53d5a31037711853dc2e7fde6106b45f",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -78,6 +78,16 @@
       ],
       "implementation_and_review_pr_authorized": true,
       "other_work": "Issue16 and remaining audit findings keep their agreed checkpoints"
+    },
+    {
+      "date": "2026-10-18",
+      "source": "Direct owner chat after accepting PR22: proceed to the next task; executor verified merge and selected the approved next Issue16",
+      "scope": [
+        "Issue16 Kafka/Redis foundation",
+        "F09 design proposal and future takeover checks"
+      ],
+      "implementation_and_review_pr_authorized": true,
+      "other_work": "Outbox implementation, gate acceptance and other audit findings keep their agreed checkpoints"
     }
   ],
   "review_history": [
@@ -207,6 +217,20 @@
       "human_review": "ACCEPTED_BY_PROJECT_OWNER_ACCOUNT_MERGE",
       "scope": "Issue9/F01: Go smoke; audit F02/F04/F07/F08; review wording and agreed process documentation",
       "observation_note": "Owner reported merge in chat; executor verified merged=true and actual merged_by via GitHub API. No acceptance of G1 or authorization of P02 implementation is inferred."
+    },
+    {
+      "number": 22,
+      "url": "https://github.com/Includeoyasi/faultline-lab/pull/22",
+      "author": "AI-Your-Bro",
+      "head_ref": "feat/p02-postgres",
+      "base_ref": "main",
+      "head_at_merge": "b401f20dd598aafa85c8adc710dc51d0f50e6657",
+      "merge_commit": "7d3e4d57e6081f9fe5669a481aaaa2b7f880f29c",
+      "merged_at_utc": "2026-10-18T16:21:53Z",
+      "merged": true,
+      "human_review": "OWNER_CHAT_ACCEPTANCE_AND_VERIFIED_MERGE",
+      "scope": "Issue12 PostgreSQL foundation and SQL-first review refactor",
+      "observation_note": "Owner accepted the MR in chat; merged=true, merge SHA and owner APPROVED review were read via GitHub. This does not accept G1."
     }
   ],
   "review_policy": {
@@ -2430,6 +2454,129 @@
       "title": "internal/database/sql/migrate/05_application_access.sql",
       "anchor": "p02-review-internal-database-sql-migrate-05-application-access-sql",
       "language": "sql"
+    },
+    {
+      "path": "compose.infrastructure.yaml",
+      "title": "compose.infrastructure.yaml",
+      "anchor": "p02-infra-compose-infrastructure-yaml",
+      "language": "yaml"
+    },
+    {
+      "path": "configs/infrastructure/local.json",
+      "title": "configs/infrastructure/local.json",
+      "anchor": "p02-infra-configs-infrastructure-local-json",
+      "language": "json"
+    },
+    {
+      "path": "configs/kafka/server.properties",
+      "title": "configs/kafka/server.properties",
+      "anchor": "p02-infra-configs-kafka-server-properties",
+      "language": "properties"
+    },
+    {
+      "path": "configs/kafka/start.sh",
+      "title": "configs/kafka/start.sh",
+      "anchor": "p02-infra-configs-kafka-start-sh",
+      "language": "sh"
+    },
+    {
+      "path": "configs/redis/redis.conf",
+      "title": "configs/redis/redis.conf",
+      "anchor": "p02-infra-configs-redis-redis-conf",
+      "language": "text"
+    },
+    {
+      "path": "docs/architecture/KAFKA_PUBLISHING.md",
+      "title": "docs/architecture/KAFKA_PUBLISHING.md",
+      "anchor": "p02-infra-docs-architecture-kafka-publishing-md"
+    },
+    {
+      "path": "docs/development/INFRASTRUCTURE.md",
+      "title": "docs/development/INFRASTRUCTURE.md",
+      "anchor": "p02-infra-docs-development-infrastructure-md"
+    },
+    {
+      "path": "docs/development/evidence/p02/INFRASTRUCTURE.md",
+      "title": "docs/development/evidence/p02/INFRASTRUCTURE.md",
+      "anchor": "p02-infra-docs-development-evidence-p02-infrastructure-md"
+    },
+    {
+      "path": "docs/development/evidence/p02/infrastructure-images.json",
+      "title": "docs/development/evidence/p02/infrastructure-images.json",
+      "anchor": "p02-infra-docs-development-evidence-p02-infrastructure-images-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p02/windows-infrastructure-cleanup.json",
+      "title": "docs/development/evidence/p02/windows-infrastructure-cleanup.json",
+      "anchor": "p02-infra-docs-development-evidence-p02-windows-infrastructure-cleanup-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p02/windows-infrastructure-report.json",
+      "title": "docs/development/evidence/p02/windows-infrastructure-report.json",
+      "anchor": "p02-infra-docs-development-evidence-p02-windows-infrastructure-report-json",
+      "language": "json"
+    },
+    {
+      "path": "internal/datalab/infrastructure_test.go",
+      "title": "internal/datalab/infrastructure_test.go",
+      "anchor": "p02-infra-internal-datalab-infrastructure-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/check.go",
+      "title": "internal/infrastructure/check.go",
+      "anchor": "p02-infra-internal-infrastructure-check-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/config.go",
+      "title": "internal/infrastructure/config.go",
+      "anchor": "p02-infra-internal-infrastructure-config-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/config_test.go",
+      "title": "internal/infrastructure/config_test.go",
+      "anchor": "p02-infra-internal-infrastructure-config-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/deadline_test.go",
+      "title": "internal/infrastructure/deadline_test.go",
+      "anchor": "p02-infra-internal-infrastructure-deadline-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/kafka.go",
+      "title": "internal/infrastructure/kafka.go",
+      "anchor": "p02-infra-internal-infrastructure-kafka-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/kafka_deadline_test.go",
+      "title": "internal/infrastructure/kafka_deadline_test.go",
+      "anchor": "p02-infra-internal-infrastructure-kafka-deadline-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/redis.go",
+      "title": "internal/infrastructure/redis.go",
+      "anchor": "p02-infra-internal-infrastructure-redis-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/secrets.go",
+      "title": "internal/infrastructure/secrets.go",
+      "anchor": "p02-infra-internal-infrastructure-secrets-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/secrets_unix_test.go",
+      "title": "internal/infrastructure/secrets_unix_test.go",
+      "anchor": "p02-infra-internal-infrastructure-secrets-unix-test-go",
+      "language": "go"
     }
   ],
   "change_history": [
@@ -2756,6 +2903,12 @@
       "date": "2026-10-18",
       "summary": "Owner selected checksum as CLI command name; code/function/file/smoke and help/guide renamed without changing SHA-256 computation; archived evidence preserved",
       "trigger": "PR22 naming review in chat: fingerprint was unclear; owner explicitly chose checksum"
+    },
+    {
+      "revision": 57,
+      "date": "2026-10-18",
+      "summary": "After verified PR22 merge, added Kafka/Redis Compose and real joint smoke, narrow checker credentials, Redis ACL/TTL and Kafka restart checkpoint, context-bound probes and lifecycle regressions; recorded Windows evidence and F09 proposal",
+      "trigger": "Owner instruction to proceed to the next approved task; Issue16 criteria"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -2857,5 +3010,50 @@
     "agreed_on": "2026-10-18",
     "source": "Owner voice discussion; docs/PRODUCT_INTENT.md",
     "workflow": "Owner requested concise per-task findings in the existing GitHub Issue/PR; see docs/development/WORKFLOW.md"
+  },
+  "infrastructure_foundation": {
+    "recorded_on": "2026-10-18",
+    "source_commit": "6935806d53d5a31037711853dc2e7fde6106b45f",
+    "scope": "Issue16; Kafka/Redis infrastructure probes and joint PostgreSQL run; no business consumers or outbox implementation",
+    "guide": "docs/development/INFRASTRUCTURE.md",
+    "evidence": "docs/development/evidence/p02/INFRASTRUCTURE.md",
+    "image_manifest": "docs/development/evidence/p02/infrastructure-images.json",
+    "clients": {
+      "kafka": "github.com/twmb/franz-go v1.22.2",
+      "redis": "github.com/redis/go-redis/v9 v9.23.0"
+    },
+    "access": "Private data network, no published dependency ports; infrastructure-check has only Redis password, no PostgreSQL credentials; Redis default off, hashed ACL and restricted commands/key prefix",
+    "checks": "Redis auth/ACL/set/get/positive PTTL/real expiration; Kafka acknowledged topic/partition/offset/key/value re-read by new client after restart, then new produce/read; prior PG RBAC/migrations/seed/checksum preserved",
+    "probe_cancellation": "Context-bound Kafka client, client metrics disabled, explicit in-flight cancellation for nontransactional disposable probe only; lost-ACK protocol fixture passes; do not reuse as transactional outbox policy",
+    "windows_evidence": {
+      "result": "PASS",
+      "report": "docs/development/evidence/p02/windows-infrastructure-report.json",
+      "project": "faultline-data-test-791179b8fecb8da4",
+      "interval_msk": "2026-10-18 19:53:08–19:59:49",
+      "execution_tree": "Windows AMD64 working tree based on 7d3e4d57e6081f9fe5669a481aaaa2b7f880f29c; not a final clean-HEAD CI run",
+      "backend_budget": {
+        "cpus": 2,
+        "memory_bytes": 1996603392,
+        "wsl_configured_memory": "2GiB",
+        "wsl_configured_swap": "1GiB"
+      },
+      "memory_snapshot_mib": {
+        "postgres": 39.35,
+        "kafka": 288.4,
+        "redis": 12.47
+      },
+      "interpretation": "One functional run, not peak/capacity/steady-state idle; no observability stack or business load",
+      "cleanup": "PASS: owned containers/networks/volumes/images/credentials removed; Desktop/WSL stopped; autostart remains false"
+    },
+    "macos_runtime": "NOT_RUN",
+    "ci": "Native Linux AMD64/ARM64 quality/race/vulnerability, existing smoke and new combined checks are defined by .github/workflows/go.yml; actual head results belong in PR/Actions",
+    "f09": {
+      "kind": "PROPOSED_DESIGN_NOT_IMPLEMENTED",
+      "source": "docs/architecture/KAFKA_PUBLISHING.md",
+      "protocol": "Read monotonic lease generation G -> initialize transactional producer using stable lane ID -> claim lease only by CAS on that same G; no producer reuse after failed CAS and no reinit under old generation",
+      "ordering": "One unacknowledged version per stream per Kafka transaction; next version only after confirmed Kafka commit and durable SQL mark; cross-stream batching allowed",
+      "limits": "Contenders can fence a live publisher and hurt availability; client automatic epoch recovery must be excluded for stale lease; PostgreSQL/Kafka boundary still permits duplicate event IDs",
+      "future_checks": "A pause/resume and B takeover, delayed init/CAS, lost commit/SQL mark, retry/reinit, read_committed, inbox/version guards; F09 remains open until implemented and verified"
+    }
   }
 }

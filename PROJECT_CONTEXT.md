@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **56**. Дата снимка: **2026-10-18**, Europe/Moscow. Исходный коммит внешних материалов: `a7a468e72c7cc697463893d0090a382931d4da77`.
+Ревизия: **57**. Дата снимка: **2026-10-18**, Europe/Moscow. Исходный коммит внешних материалов: `6935806d53d5a31037711853dc2e7fde6106b45f`.
 
 ## Выполнение задач
 
@@ -71,7 +71,7 @@ JSON ниже включён для автономного чтения реше
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 56,
+  "context_revision": 57,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-18",
   "user_timezone": "Europe/Moscow",
@@ -87,7 +87,7 @@ JSON ниже включён для автономного чтения реше
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "a7a468e72c7cc697463893d0090a382931d4da77",
+    "snapshot_ref": "6935806d53d5a31037711853dc2e7fde6106b45f",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -148,6 +148,16 @@ JSON ниже включён для автономного чтения реше
       ],
       "implementation_and_review_pr_authorized": true,
       "other_work": "Issue16 and remaining audit findings keep their agreed checkpoints"
+    },
+    {
+      "date": "2026-10-18",
+      "source": "Direct owner chat after accepting PR22: proceed to the next task; executor verified merge and selected the approved next Issue16",
+      "scope": [
+        "Issue16 Kafka/Redis foundation",
+        "F09 design proposal and future takeover checks"
+      ],
+      "implementation_and_review_pr_authorized": true,
+      "other_work": "Outbox implementation, gate acceptance and other audit findings keep their agreed checkpoints"
     }
   ],
   "review_history": [
@@ -277,6 +287,20 @@ JSON ниже включён для автономного чтения реше
       "human_review": "ACCEPTED_BY_PROJECT_OWNER_ACCOUNT_MERGE",
       "scope": "Issue9/F01: Go smoke; audit F02/F04/F07/F08; review wording and agreed process documentation",
       "observation_note": "Owner reported merge in chat; executor verified merged=true and actual merged_by via GitHub API. No acceptance of G1 or authorization of P02 implementation is inferred."
+    },
+    {
+      "number": 22,
+      "url": "https://github.com/Includeoyasi/faultline-lab/pull/22",
+      "author": "AI-Your-Bro",
+      "head_ref": "feat/p02-postgres",
+      "base_ref": "main",
+      "head_at_merge": "b401f20dd598aafa85c8adc710dc51d0f50e6657",
+      "merge_commit": "7d3e4d57e6081f9fe5669a481aaaa2b7f880f29c",
+      "merged_at_utc": "2026-10-18T16:21:53Z",
+      "merged": true,
+      "human_review": "OWNER_CHAT_ACCEPTANCE_AND_VERIFIED_MERGE",
+      "scope": "Issue12 PostgreSQL foundation and SQL-first review refactor",
+      "observation_note": "Owner accepted the MR in chat; merged=true, merge SHA and owner APPROVED review were read via GitHub. This does not accept G1."
     }
   ],
   "review_policy": {
@@ -2500,6 +2524,129 @@ JSON ниже включён для автономного чтения реше
       "title": "internal/database/sql/migrate/05_application_access.sql",
       "anchor": "p02-review-internal-database-sql-migrate-05-application-access-sql",
       "language": "sql"
+    },
+    {
+      "path": "compose.infrastructure.yaml",
+      "title": "compose.infrastructure.yaml",
+      "anchor": "p02-infra-compose-infrastructure-yaml",
+      "language": "yaml"
+    },
+    {
+      "path": "configs/infrastructure/local.json",
+      "title": "configs/infrastructure/local.json",
+      "anchor": "p02-infra-configs-infrastructure-local-json",
+      "language": "json"
+    },
+    {
+      "path": "configs/kafka/server.properties",
+      "title": "configs/kafka/server.properties",
+      "anchor": "p02-infra-configs-kafka-server-properties",
+      "language": "properties"
+    },
+    {
+      "path": "configs/kafka/start.sh",
+      "title": "configs/kafka/start.sh",
+      "anchor": "p02-infra-configs-kafka-start-sh",
+      "language": "sh"
+    },
+    {
+      "path": "configs/redis/redis.conf",
+      "title": "configs/redis/redis.conf",
+      "anchor": "p02-infra-configs-redis-redis-conf",
+      "language": "text"
+    },
+    {
+      "path": "docs/architecture/KAFKA_PUBLISHING.md",
+      "title": "docs/architecture/KAFKA_PUBLISHING.md",
+      "anchor": "p02-infra-docs-architecture-kafka-publishing-md"
+    },
+    {
+      "path": "docs/development/INFRASTRUCTURE.md",
+      "title": "docs/development/INFRASTRUCTURE.md",
+      "anchor": "p02-infra-docs-development-infrastructure-md"
+    },
+    {
+      "path": "docs/development/evidence/p02/INFRASTRUCTURE.md",
+      "title": "docs/development/evidence/p02/INFRASTRUCTURE.md",
+      "anchor": "p02-infra-docs-development-evidence-p02-infrastructure-md"
+    },
+    {
+      "path": "docs/development/evidence/p02/infrastructure-images.json",
+      "title": "docs/development/evidence/p02/infrastructure-images.json",
+      "anchor": "p02-infra-docs-development-evidence-p02-infrastructure-images-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p02/windows-infrastructure-cleanup.json",
+      "title": "docs/development/evidence/p02/windows-infrastructure-cleanup.json",
+      "anchor": "p02-infra-docs-development-evidence-p02-windows-infrastructure-cleanup-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/p02/windows-infrastructure-report.json",
+      "title": "docs/development/evidence/p02/windows-infrastructure-report.json",
+      "anchor": "p02-infra-docs-development-evidence-p02-windows-infrastructure-report-json",
+      "language": "json"
+    },
+    {
+      "path": "internal/datalab/infrastructure_test.go",
+      "title": "internal/datalab/infrastructure_test.go",
+      "anchor": "p02-infra-internal-datalab-infrastructure-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/check.go",
+      "title": "internal/infrastructure/check.go",
+      "anchor": "p02-infra-internal-infrastructure-check-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/config.go",
+      "title": "internal/infrastructure/config.go",
+      "anchor": "p02-infra-internal-infrastructure-config-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/config_test.go",
+      "title": "internal/infrastructure/config_test.go",
+      "anchor": "p02-infra-internal-infrastructure-config-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/deadline_test.go",
+      "title": "internal/infrastructure/deadline_test.go",
+      "anchor": "p02-infra-internal-infrastructure-deadline-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/kafka.go",
+      "title": "internal/infrastructure/kafka.go",
+      "anchor": "p02-infra-internal-infrastructure-kafka-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/kafka_deadline_test.go",
+      "title": "internal/infrastructure/kafka_deadline_test.go",
+      "anchor": "p02-infra-internal-infrastructure-kafka-deadline-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/redis.go",
+      "title": "internal/infrastructure/redis.go",
+      "anchor": "p02-infra-internal-infrastructure-redis-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/secrets.go",
+      "title": "internal/infrastructure/secrets.go",
+      "anchor": "p02-infra-internal-infrastructure-secrets-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/infrastructure/secrets_unix_test.go",
+      "title": "internal/infrastructure/secrets_unix_test.go",
+      "anchor": "p02-infra-internal-infrastructure-secrets-unix-test-go",
+      "language": "go"
     }
   ],
   "change_history": [
@@ -2826,6 +2973,12 @@ JSON ниже включён для автономного чтения реше
       "date": "2026-10-18",
       "summary": "Owner selected checksum as CLI command name; code/function/file/smoke and help/guide renamed without changing SHA-256 computation; archived evidence preserved",
       "trigger": "PR22 naming review in chat: fingerprint was unclear; owner explicitly chose checksum"
+    },
+    {
+      "revision": 57,
+      "date": "2026-10-18",
+      "summary": "After verified PR22 merge, added Kafka/Redis Compose and real joint smoke, narrow checker credentials, Redis ACL/TTL and Kafka restart checkpoint, context-bound probes and lifecycle regressions; recorded Windows evidence and F09 proposal",
+      "trigger": "Owner instruction to proceed to the next approved task; Issue16 criteria"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -2927,6 +3080,51 @@ JSON ниже включён для автономного чтения реше
     "agreed_on": "2026-10-18",
     "source": "Owner voice discussion; docs/PRODUCT_INTENT.md",
     "workflow": "Owner requested concise per-task findings in the existing GitHub Issue/PR; see docs/development/WORKFLOW.md"
+  },
+  "infrastructure_foundation": {
+    "recorded_on": "2026-10-18",
+    "source_commit": "6935806d53d5a31037711853dc2e7fde6106b45f",
+    "scope": "Issue16; Kafka/Redis infrastructure probes and joint PostgreSQL run; no business consumers or outbox implementation",
+    "guide": "docs/development/INFRASTRUCTURE.md",
+    "evidence": "docs/development/evidence/p02/INFRASTRUCTURE.md",
+    "image_manifest": "docs/development/evidence/p02/infrastructure-images.json",
+    "clients": {
+      "kafka": "github.com/twmb/franz-go v1.22.2",
+      "redis": "github.com/redis/go-redis/v9 v9.23.0"
+    },
+    "access": "Private data network, no published dependency ports; infrastructure-check has only Redis password, no PostgreSQL credentials; Redis default off, hashed ACL and restricted commands/key prefix",
+    "checks": "Redis auth/ACL/set/get/positive PTTL/real expiration; Kafka acknowledged topic/partition/offset/key/value re-read by new client after restart, then new produce/read; prior PG RBAC/migrations/seed/checksum preserved",
+    "probe_cancellation": "Context-bound Kafka client, client metrics disabled, explicit in-flight cancellation for nontransactional disposable probe only; lost-ACK protocol fixture passes; do not reuse as transactional outbox policy",
+    "windows_evidence": {
+      "result": "PASS",
+      "report": "docs/development/evidence/p02/windows-infrastructure-report.json",
+      "project": "faultline-data-test-791179b8fecb8da4",
+      "interval_msk": "2026-10-18 19:53:08–19:59:49",
+      "execution_tree": "Windows AMD64 working tree based on 7d3e4d57e6081f9fe5669a481aaaa2b7f880f29c; not a final clean-HEAD CI run",
+      "backend_budget": {
+        "cpus": 2,
+        "memory_bytes": 1996603392,
+        "wsl_configured_memory": "2GiB",
+        "wsl_configured_swap": "1GiB"
+      },
+      "memory_snapshot_mib": {
+        "postgres": 39.35,
+        "kafka": 288.4,
+        "redis": 12.47
+      },
+      "interpretation": "One functional run, not peak/capacity/steady-state idle; no observability stack or business load",
+      "cleanup": "PASS: owned containers/networks/volumes/images/credentials removed; Desktop/WSL stopped; autostart remains false"
+    },
+    "macos_runtime": "NOT_RUN",
+    "ci": "Native Linux AMD64/ARM64 quality/race/vulnerability, existing smoke and new combined checks are defined by .github/workflows/go.yml; actual head results belong in PR/Actions",
+    "f09": {
+      "kind": "PROPOSED_DESIGN_NOT_IMPLEMENTED",
+      "source": "docs/architecture/KAFKA_PUBLISHING.md",
+      "protocol": "Read monotonic lease generation G -> initialize transactional producer using stable lane ID -> claim lease only by CAS on that same G; no producer reuse after failed CAS and no reinit under old generation",
+      "ordering": "One unacknowledged version per stream per Kafka transaction; next version only after confirmed Kafka commit and durable SQL mark; cross-stream batching allowed",
+      "limits": "Contenders can fence a live publisher and hurt availability; client automatic epoch recovery must be excluded for stale lease; PostgreSQL/Kafka boundary still permits duplicate event IDs",
+      "future_checks": "A pause/resume and B takeover, delayed init/CAS, lost commit/SQL mark, retry/reinit, read_committed, inbox/version guards; F09 remains open until implemented and verified"
+    }
   }
 }
 ```
@@ -2937,33 +3135,33 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `57553598074be42a5a02630af2e763168aa96164de1df1355de266a77bc88392` |
+| `CONTEXT_STATE.json` | `0e73afbc2ccec4d067824a455a7111766769add7eb230c3d5b2f9b06abcf7d0a` |
 | `tools/context_intro.md` | `91fb656b2ec7b4dcd798be45f7b78ec2452763455476ebcd55762b465ad25d2b` |
 | `tools/update_context.ps1` | `73dff2e2da1f7ea7e8fc8fe2dc70bde722f4d697c1ca7c685d297214cd133e33` |
-| `README.md` | `2251b4268c6b3fd5f3c03ac37d47d01ab53f1b0f2b121f4e4e99ee3b4887d5fa` |
-| `README.ru.md` | `98032f7bda43cb6cbd1f8bd3c7ada83a07e334ee7e7ed190db0d455d44dbccc7` |
-| `docs/README.md` | `80e9146e50c22fe2ece85a24fcc56dbca33f18aef01973210881b37b7388453d` |
+| `README.md` | `22ffdce45845f796e45b53a5531d249c6b8a9cc3991bf2bdcf996e0286eb5d29` |
+| `README.ru.md` | `8f67c7fb034f71fb6a1a5e264ad975a22ea2ddb8f117c92a34bccd030332332f` |
+| `docs/README.md` | `276e34e3dcd11549ab99edfb7d9e7da902fd1cb37e9f9a94b1288440e8cd7ada` |
 | `docs/ROADMAP.md` | `3881f7898db08cd56221d60fe1578b8642060c99bc53f3574bc59e8defcff637` |
 | `docs/architecture/DESIGN.md` | `74a141c2ce11d07cb568f01a6eb72b849f9556d7be85705544bb9e8a15806f2e` |
 | `docs/architecture/PROCESSES.md` | `dd6d00ee9d169236fe0f0d14de4b6f54d778a7cf79489f6b6a3354357e2e9ec6` |
 | `docs/development/WORKFLOW.md` | `db64e33c94566d5ce8b128e81a030443980817f63d75355803aec2acef040516` |
 | `docs/experiments/REPORT_TEMPLATE.md` | `4f569aab52ba34a68bb2e8b4551c6a3bf4932277c26c3b4206dbb505781a2cab` |
-| `AGENTS.md` | `1da40d3c215d4c1db7862e73c24b4fd771e46f2bf09495bdb7b751b7a88d6b24` |
+| `AGENTS.md` | `29eed5b2d899a15d230a5865117686bb67dd1765fb16afc4a03bd9b29f895091` |
 | `docs/adr/0001-approved-g0.md` | `b8518c5c49cdefea3dbf0bf2a79ab40459dba2b565e71a6c534a555cbafa20df` |
 | `CONTRIBUTING.md` | `5d7fe456ad6e2967e3e324bb227f711dd23a735e4080db9ceb4d01760c94327e` |
 | `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
 | `docs/development/CODE_REVIEW.md` | `ede879352cb1f36c935970fae3be8886132e5080c3327c422e43ddf2da1db5d9` |
 | `docs/architecture/LAB_BOUNDARY.md` | `94030566542a3e5fbda07593ed06cea7f95ec98985483de8ac0d66f4001ae326` |
-| `docs/development/ENVIRONMENT.md` | `097735b23b23cc8b7606491682f17df2f7230c95d5166743bb234238ddf7df8c` |
-| `docs/development/RESOURCE_PROFILES.md` | `60212954c54085f2c8b74c4d3cf5c50f8ccf90192e8e9a502da357208645d44f` |
+| `docs/development/ENVIRONMENT.md` | `e37315e20c941271540ffe43a3a121d7bd293ee572cee49e65c4e149fd83605a` |
+| `docs/development/RESOURCE_PROFILES.md` | `885d48daf029ee6544d4c954016edce02e5dcfa55dd670fd83e7c582f3090c8b` |
 | `docs/design/BANNER_OPTIONS.md` | `0b880a782a766f85c33fb5fba1a8c933a3d05f949d93b539d03b9a37b71efd0f` |
 | `docs/development/packets/P01.md` | `82d62963046bde7289b9c22dde1a0fcc26adb6911e4bbf5bd792e068a6a22067` |
 | `docs/development/TASK_TRACKING.md` | `46baf95126af2e7e362d6751e957057e915a98f4b7606739178c57427aec61d8` |
 | `docs/development/REPOSITORY_SECURITY.md` | `e15d0de41447fcf81b76f4264a76483895940dc1c03f6ab809e3a626b9f8278a` |
 | `.github/CODEOWNERS` | `95de6cc3de1ba640d0ab9e2b9bfbdea79b7ce6641a8bcdb0bcef1f7607666415` |
-| `docs/development/TOOLCHAIN.md` | `e5325b03c3caee54ad63252f8bc24e608caf33b269c60e9129da584b9decac16` |
-| `go.mod` | `32aa5667a8f832ad567ec8af3dc68f7952b1ef14ec40f8176d7e19633feba4a1` |
-| `go.sum` | `fdcd4f5c8dac3b2c90899b2da40284659a1503f5ce01faf3b432576cd1708502` |
+| `docs/development/TOOLCHAIN.md` | `6fac6d277e965dba62a5ee994c8f718954bf4cdb8acd0c510241ab24299af43a` |
+| `go.mod` | `b9df9282e212b4b3acfd39b3ff10cf1b95e30aa1f62df71d2eef9c0eba92216b` |
+| `go.sum` | `52fcef4f812d457d5baac85703c0e4e6ba61d4097561d223031e4e141db86307` |
 | `cmd/orders/main.go` | `131626df0bae0819d49c3d46793809c839cacb6dbd71a93b4bc1740a04ea3e6c` |
 | `cmd/inventory/main.go` | `3a8d1959cf1530e56c786e7e26ac0a0d04c145e9cf5266f95f6a766e57fb5f39` |
 | `cmd/payments/main.go` | `3ceb9fe70d25948079c3682ad409c4970918d30036f74afb6451858725c351c1` |
@@ -2971,7 +3169,7 @@ SHA-256 относится к исходному файлу на момент с
 | `compose.yaml` | `76cabf52d3c42c963c0ed56bc486b8e68686159ad32e680f23c2574bfa2fb6ed` |
 | `tools/go.sh` | `40fdab41afd4022715a929a0c9e1252037e9896f8abeb288fa286d591a0a2697` |
 | `.golangci.yml` | `44651a36c889767cd425bc12b46e07c8bffc924024de23af1176057f78f3a74a` |
-| `.github/workflows/go.yml` | `269203aa9d9aec1b0c6c4d4df68ee6b704cc44dffc6debccde73849c374c28bc` |
+| `.github/workflows/go.yml` | `10f6a32cee9a43bcf73213f0c5e30735d395146fa9e178f060829c49e3a99b35` |
 | `.dockerignore` | `e75b314d79f67eec6dafc763b1e4c118597186f106f91a73749750d4ab0cf045` |
 | `docs/development/SERVICE_RUNTIME.md` | `85d5e127812af0a6ccfdd29c3fd54dbbe4d2203cfa5c3e08cc4923f9fa3fbbd6` |
 | `internal/service/config.go` | `a5cd706cc41d0fb88ea96b0ffaeff4f7ecf32bf31394ec5398efb39fba240a89` |
@@ -3043,8 +3241,8 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/database/config.go` | `347c25f171131fbe847601aa81a7dcd7e9958d45d48f9c80787b23fb7edbc926` |
 | `internal/database/bootstrap.go` | `b6c53cd8e603e1523951e781e20c462bd77f54d3578a20c43545807b1207fb3d` |
 | `configs/postgres/local.json` | `8a935f46a670b33b9b0c66d6617f87b356506c5449cb8835cbb9f185b4b9bcc8` |
-| `cmd/labdata/main_test.go` | `2d8392be252b0d370b98358cee5f57b55b114cbcd8fbf972ad78bf854d955436` |
-| `cmd/labdata/main.go` | `fa53da12582a09f7b1e511adb8bc50dcc2e14e3a4ebc74a3998a9f8f96d8f680` |
+| `cmd/labdata/main_test.go` | `79e3cd5acaf07b84916e23458f240c39ca7d279e915c311b2da3b06b027b89fc` |
+| `cmd/labdata/main.go` | `701d7e01a037afbe73d4c45679ff94cb8a58a5a97a320f17f781420f6e9fd905` |
 | `migrations/inventory/0002_catalog.sql` | `cecccb789616eede86cd6cea63162264a24f023c62a7f6ddfb182e2aed387d97` |
 | `migrations/inventory/0001_schema.sql` | `60a1389cfff22a0a79566c1264ed338cb6049b761398af8dc6224c3d87fe32ac` |
 | `migrations/embed.go` | `a5bba8535f804c7c35a7800f0006a73e8a81d6481f367ea0cb7e8dd5aac5b843` |
@@ -3052,7 +3250,7 @@ SHA-256 относится к исходному файлу на момент с
 | `migrations/orders/0001_schema.sql` | `7a2abc0f03d1dac75ea31f86a6abfadae9532eaee42416167be45aee5d5ab16f` |
 | `migrations/payments/0001_schema.sql` | `2856144143bedd41e0380818034ae85025f18b3f40baa295c4eace2d48519af4` |
 | `internal/datalab/run_test.go` | `f2661ab897184cef5a77d8f5c876fa8657a3069dfd478370f2e0e7102bdefa55` |
-| `internal/datalab/run.go` | `bd7a88c531d0364b7c70e718c84417795dbb509e74d63c9a5c1da148e0384cbc` |
+| `internal/datalab/run.go` | `87899b7be3546aa94f96aa702c7deb8b32dde7ecc62b468ff682567e7e1fa173` |
 | `compose.postgres.yaml` | `f8e28373a62b0135d30f9b568f1b548eb4f7d8322d9296dbd909708a52a8ef4d` |
 | `internal/smoke/exec_adapter.go` | `5f903f8c590d90655b333d6988139d9276ca5e6dbb400bfff10b0af0dda0c4ba` |
 | `docs/development/POSTGRES.md` | `3fdfe8cf94f8adc5ceb61a7d08a50fdeca0ae46db0ce2a418491a4d417c73e5a` |
@@ -3076,6 +3274,27 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/database/sql/migrate/03_history.sql` | `103260f406b5760b772e1200b94715519d84238759e6fe91666afbcaf526d934` |
 | `internal/database/sql/migrate/04_record.sql` | `936081fca0ec5c20fd8240d922510f28517d6d7daeb62f77603d140ff826831b` |
 | `internal/database/sql/migrate/05_application_access.sql` | `bbb80d3b0d6d0bf540311747de37cf0ca033ec065c9b6cd09fa843840e098e37` |
+| `compose.infrastructure.yaml` | `6881a7db58a9f6be98023c1e2873dbfe7bee8c02108066feec887ae3494b304e` |
+| `configs/infrastructure/local.json` | `d518c9a985b66d35642efee34ea478747d091ade92c4403b192edc91c8033566` |
+| `configs/kafka/server.properties` | `57b6d202650fff467f94c84c8bd41f1575807209e2f9f5fc4ea95b526291644b` |
+| `configs/kafka/start.sh` | `3b4d8fea3474105c4c36d425f78f7d3152fed6d41929fe6bc941574ba2c827cf` |
+| `configs/redis/redis.conf` | `029a2c2bb179d718ccee7f551dc74b09c3fabe7195d41fae3d31619e072aeb12` |
+| `docs/architecture/KAFKA_PUBLISHING.md` | `e992728c34309a47b2d6da3ad33e52770e66685e71b1e5704bad76665d3967b1` |
+| `docs/development/INFRASTRUCTURE.md` | `044cf404f03200ad54f6495cf873554bbfc8e2e337e9bb98e7f2bf5f7acb9ed3` |
+| `docs/development/evidence/p02/INFRASTRUCTURE.md` | `33c9b4fc4e04b8909f2097ca36915df78ae7e0309fcf639d9fc5f5b85b899d70` |
+| `docs/development/evidence/p02/infrastructure-images.json` | `99f4762612ea8763059ec8354c6b7fe1dba1bb92760e02bd3cf66ca4e7c24783` |
+| `docs/development/evidence/p02/windows-infrastructure-cleanup.json` | `2f7ff1d247b962053e55c83ab2857b138db6ececd44ef79d2e0a8d15769cce4f` |
+| `docs/development/evidence/p02/windows-infrastructure-report.json` | `04252a7eb6e4bd0faad678ec377f06c75c1d4e93ca5869311aa850c054a8a522` |
+| `internal/datalab/infrastructure_test.go` | `e42ab73e7de30d5837a4db953e6448b05b1a7ab96db6cf4930bc6f1df9ba019a` |
+| `internal/infrastructure/check.go` | `067ff193b0b5c06983400fa9f1ecbde138e944b208cfd22fbccfd0981d4d49d9` |
+| `internal/infrastructure/config.go` | `fa3647c0a1d0bdf31a72abf197fc846a23ac601d3f6abb1f7ba498719c0174a2` |
+| `internal/infrastructure/config_test.go` | `5743f7d365c92d8a69279fe8c63b1c66658d8127a83d2ee9a4587337c0859b59` |
+| `internal/infrastructure/deadline_test.go` | `e3609a269ad43ce551b75a06996f0fb05ba7beb6027b10a1797d00463a38894e` |
+| `internal/infrastructure/kafka.go` | `0cd68a3d58ca54a1e03d0e4de430aa6732b3a75648d6ca8c4821303a3797e1c1` |
+| `internal/infrastructure/kafka_deadline_test.go` | `848800c298d7be535bd9b722a659d853f64af1aeb77b06cff6634781ab0262e3` |
+| `internal/infrastructure/redis.go` | `68bfeaacb9e89fd1a00eb3954890a83f34927cdcdad251276c0e45da194f59f2` |
+| `internal/infrastructure/secrets.go` | `a133153d913a2869b7b929fce5483c92e327967ad70d4c2ae5c668751bf6278a` |
+| `internal/infrastructure/secrets_unix_test.go` | `12beb16c108d1f477d5d78153dd36691953601c77a16cbbfe0ed92cdf97647a2` |
 
 ## Полные самостоятельные приложения
 
@@ -3215,6 +3434,27 @@ SHA-256 относится к исходному файлу на момент с
 - [internal/database/sql/migrate/03_history.sql](#p02-review-internal-database-sql-migrate-03-history-sql) — `internal/database/sql/migrate/03_history.sql`
 - [internal/database/sql/migrate/04_record.sql](#p02-review-internal-database-sql-migrate-04-record-sql) — `internal/database/sql/migrate/04_record.sql`
 - [internal/database/sql/migrate/05_application_access.sql](#p02-review-internal-database-sql-migrate-05-application-access-sql) — `internal/database/sql/migrate/05_application_access.sql`
+- [compose.infrastructure.yaml](#p02-infra-compose-infrastructure-yaml) — `compose.infrastructure.yaml`
+- [configs/infrastructure/local.json](#p02-infra-configs-infrastructure-local-json) — `configs/infrastructure/local.json`
+- [configs/kafka/server.properties](#p02-infra-configs-kafka-server-properties) — `configs/kafka/server.properties`
+- [configs/kafka/start.sh](#p02-infra-configs-kafka-start-sh) — `configs/kafka/start.sh`
+- [configs/redis/redis.conf](#p02-infra-configs-redis-redis-conf) — `configs/redis/redis.conf`
+- [docs/architecture/KAFKA_PUBLISHING.md](#p02-infra-docs-architecture-kafka-publishing-md) — `docs/architecture/KAFKA_PUBLISHING.md`
+- [docs/development/INFRASTRUCTURE.md](#p02-infra-docs-development-infrastructure-md) — `docs/development/INFRASTRUCTURE.md`
+- [docs/development/evidence/p02/INFRASTRUCTURE.md](#p02-infra-docs-development-evidence-p02-infrastructure-md) — `docs/development/evidence/p02/INFRASTRUCTURE.md`
+- [docs/development/evidence/p02/infrastructure-images.json](#p02-infra-docs-development-evidence-p02-infrastructure-images-json) — `docs/development/evidence/p02/infrastructure-images.json`
+- [docs/development/evidence/p02/windows-infrastructure-cleanup.json](#p02-infra-docs-development-evidence-p02-windows-infrastructure-cleanup-json) — `docs/development/evidence/p02/windows-infrastructure-cleanup.json`
+- [docs/development/evidence/p02/windows-infrastructure-report.json](#p02-infra-docs-development-evidence-p02-windows-infrastructure-report-json) — `docs/development/evidence/p02/windows-infrastructure-report.json`
+- [internal/datalab/infrastructure_test.go](#p02-infra-internal-datalab-infrastructure-test-go) — `internal/datalab/infrastructure_test.go`
+- [internal/infrastructure/check.go](#p02-infra-internal-infrastructure-check-go) — `internal/infrastructure/check.go`
+- [internal/infrastructure/config.go](#p02-infra-internal-infrastructure-config-go) — `internal/infrastructure/config.go`
+- [internal/infrastructure/config_test.go](#p02-infra-internal-infrastructure-config-test-go) — `internal/infrastructure/config_test.go`
+- [internal/infrastructure/deadline_test.go](#p02-infra-internal-infrastructure-deadline-test-go) — `internal/infrastructure/deadline_test.go`
+- [internal/infrastructure/kafka.go](#p02-infra-internal-infrastructure-kafka-go) — `internal/infrastructure/kafka.go`
+- [internal/infrastructure/kafka_deadline_test.go](#p02-infra-internal-infrastructure-kafka-deadline-test-go) — `internal/infrastructure/kafka_deadline_test.go`
+- [internal/infrastructure/redis.go](#p02-infra-internal-infrastructure-redis-go) — `internal/infrastructure/redis.go`
+- [internal/infrastructure/secrets.go](#p02-infra-internal-infrastructure-secrets-go) — `internal/infrastructure/secrets.go`
+- [internal/infrastructure/secrets_unix_test.go](#p02-infra-internal-infrastructure-secrets-unix-test-go) — `internal/infrastructure/secrets_unix_test.go`
 
 <a id="appendix-readme-en"></a>
 
@@ -3223,7 +3463,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
 </p>
 
 <p align="center">
@@ -3241,7 +3481,7 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Project guide
@@ -3336,7 +3576,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience |
 | **G4** | Reproducible engineering lab |
 
-The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
 
 [Engineering decisions and review](#appendix-engineering-decisions) traces owner feedback through the rationale, changes and verification. It also links the separate [Go smoke task](https://github.com/Includeoyasi/faultline-lab/issues/9); its execution and review are tracked in GitHub.
 
@@ -3366,11 +3606,14 @@ faultline-lab/
 ├── build/                      # Pinned toolchain image
 ├── compose.yaml                # Three services and temporary toolchain
 ├── compose.postgres.yaml       # PostgreSQL and temporary dbtool overlay
+├── compose.infrastructure.yaml # Kafka, Redis and temporary checker overlay
 ├── tools/                      # Go commands, context and documentation checks
 └── .github/                    # Documentation CI and review templates
 ```
 
 Compose now defines three runtime services and the temporary toolchain profile; see the [runtime guide](#appendix-container-runtime). The [PostgreSQL guide](#p02-docs-development-postgres-md) explains roles, migrations, seed and reset with interaction diagrams. The [roadmap](#appendix-roadmap) contains the planned code layout.
+
+The [combined infrastructure smoke](#p02-infra-docs-development-infrastructure-md) checks PostgreSQL, Kafka restart persistence and Redis ACL/TTL, then removes only its own run resources.
 
 #### Working with this snapshot
 
@@ -3401,7 +3644,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
 </p>
 
 <p align="center">
@@ -3419,7 +3662,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Навигация по проекту
@@ -3503,7 +3746,7 @@ flowchart LR
 
 G0 — архитектура; G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Порядок и критерии приёмки описаны в workflow; факты принятия сохраняются с датой и источником.
 
-[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
 
 [Инженерные решения и ревью](#appendix-engineering-decisions) связывают замечания владельца с обоснованием, изменениями и проверками. Выполнение переноса контейнерного smoke на Go и его ревью ведутся в [задаче #9](https://github.com/Includeoyasi/faultline-lab/issues/9).
 
@@ -3533,6 +3776,8 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 
 Подготовка баз, права, миграции, повторяемый seed и явный сброс описаны в [инструкции PostgreSQL со схемами](#p02-docs-development-postgres-md).
 
+[Совместный smoke PostgreSQL, Kafka и Redis](#p02-infra-docs-development-infrastructure-md) проверяет сохранность сообщений после restart, доступ к кешу и TTL, сохраняя отчёт и удаляя ресурсы своего запуска.
+
 #### Лицензия
 
 [MIT](#appendix-license) · Copyright © 2026 Dmitrii Morozov.
@@ -3560,6 +3805,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Запустить и проверить три процесса | [Запуск сервисов](#appendix-service-runtime) — настройки, JSON, health и границы shutdown |
 | Поднять три runtime-контейнера | [Контейнерный каркас](#appendix-container-runtime) — сборка, health, остановка и smoke с отчётом |
 | Подготовить базы и исходные данные | [PostgreSQL](#p02-docs-development-postgres-md) — роли, миграции, seed, схемы взаимодействий и reset |
+| Запустить инфраструктуру вместе | [Kafka и Redis](#p02-infra-docs-development-infrastructure-md) — общий smoke, ACL, TTL, сохранность Kafka и очистка |
 | Проверить Windows smoke | [Отчёт P01](#windows-smoke-proof) — исходные JSON/JSONL, бюджет и остановка среды |
 | Проверить исходные ресурсы | [Профили сред](#appendix-resource-profiles) — Windows, macOS и возможный будущий сервер |
 | Посмотреть оформление | [Концепции баннера](#appendix-banner-options) — три варианта и выбранное решение |
@@ -3571,7 +3817,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Проверить отдельный backlog | [Перенос smoke на Go](#appendix-go-smoke-backlog) — задача #9, границы и критерии |
 | Проверить права и защиту main | [Безопасность репозитория](#appendix-repository-security) — действующая защита и переход на аккаунт исполнителя |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
@@ -3586,7 +3832,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
 - [ADR 0002](#appendix-adr-0002): согласованный порядок фиксации решений в PR, ADR и обзорной странице.
 - [ADR 0003](#appendix-adr-0003): принятое решение о Go smoke и его последствия.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -4685,7 +4931,7 @@ Codex (AI-Your-Bro) — исполнитель: готовит проектны�
 
 #### Стандарт код-ревью
 
-[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/.github/pull_request_template.md) содержит краткий применимый чек-лист.
 
 После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; владелец проекта рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению владельца проекта или действие самого владельца проекта.
 
@@ -4876,7 +5122,7 @@ PROJECT_CONTEXT.md — самостоятельный пакет для друг
 
 - The human is the project owner and reviewer. Codex, authenticated as AI-Your-Bro, is the executor. Other AI agents are positioned as potential users, subscribers or testers; do not assign them implementation work.
 - Read PROJECT_CONTEXT.md for specifications, decisions and dated evidence, docs/development/WORKFLOW.md for review rules, and docs/ROADMAP.md for scope. Live task, blocker and review status belongs only in GitHub Issues/PRs/milestones; do not maintain duplicate progress boards in Markdown or JSON.
-- Follow the latest explicit owner instruction. A planning discussion alone does not authorize publication or implementation. On 2026-10-16, after merging PR #21, the owner explicitly assigned issue #12 (PostgreSQL foundation) and requested detailed explanations and interaction diagrams. The owner also requested removal of obsolete test images and prevention of their accumulation. Issue #16 and the remaining audit findings retain their agreed checkpoints.
+- Follow the latest explicit owner instruction. A planning discussion alone does not authorize publication or implementation. On 2026-10-18, after accepting PR #22, the owner authorized the next task: issue #16 (Kafka/Redis foundation). F09 in that task is design only; outbox implementation and other audit findings retain their agreed checkpoints. The owner requested detailed explanations and architecture diagrams, plus removal of obsolete test images and prevention of their accumulation.
 - Verify the authenticated actor before every GitHub mutation/publication: it must be AI-Your-Bro. Git author metadata is insufficient. Use the project owner's credentials only for explicitly authorized repository administration, never to publish or approve executor changes.
 - main requires independent owner approval, approval after the last push, dismissal of stale reviews, current successful Documentation and Go toolchain AMD64/ARM64 checks, resolved conversations and administrator enforcement. Do not weaken protection, force-push main or approve/merge your own changes. CODEOWNERS assigns Includeoyasi. See docs/development/REPOSITORY_SECURITY.md; the owner declined 2FA and must not be asked again without new cause.
 - G0 was fully approved on 2026-10-13, Europe/Moscow: “G0 полностью принят.” Approved service boundaries and invariants are in docs/architecture/DESIGN.md and PROCESSES.md. Do not ask for G0 approval again. G0–G4 are acceptance gates; P01–P05 are implementation packets. P01 is between G0 and G1; acceptance of a PR does not automatically accept a gate.
@@ -4945,7 +5191,7 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
+Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
@@ -5144,7 +5390,7 @@ Go-модуль, закреплённые инструменты и нативн
 - Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
 - Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
 
-Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
 
 <a id="appendix-lab-boundary"></a>
 
@@ -5363,7 +5609,7 @@ Docker рекомендует разделять ответственности 
 
 Установка проверена 15 октября: Windows x64, PowerShell 7.6.5; Go1.27.2, Docker Desktop4.95/Engine29.8.2/Compose5.6 и WSL2.7.13 установлены. Windows container smoke P01 PASS; после него Docker/WSL выключены. 16 октября выполнен [полный PostgreSQL smoke](#p02-docs-development-evidence-p02-postgres-md) в том же WSL-бюджете.
 
-Характеристики Windows-хоста и подтверждённый WSL-бюджет 2 CPU / memory=2GB / swap=1GB сохранены в [ресурсных профилях](#appendix-resource-profiles). PostgreSQL foundation прошёл функциональные проверки в этом бюджете; полный состав Kafka/Redis и нагрузочные эксперименты ещё не измерены; macOS-окружение также не проверено. Возможный арендуемый сервер рассматривается позже при необходимости; он не выбран. Docker делает сборку и конфигурацию переносимыми, но одинаковой производительности разных компьютеров не обещает.
+Характеристики Windows-хоста и подтверждённый WSL-бюджет 2 CPU / memory=2GB / swap=1GB сохранены в [ресурсных профилях](#appendix-resource-profiles). 18 октября [совместный PostgreSQL/Kafka/Redis smoke](#p02-infra-docs-development-evidence-p02-infrastructure-md) прошёл в этом бюджете; сохранён одиночный снимок ресурсов. Нагрузочная ёмкость и macOS-окружение не проверены. Возможный арендуемый сервер рассматривается позже при необходимости; он не выбран. Docker делает сборку и конфигурацию переносимыми, но одинаковой производительности разных компьютеров не обещает.
 
 Для A/B по умолчанию используется одна машина с одинаковым бюджетом и нативной архитектурой. Сравнение между Windows и macOS возможно как отдельный эксперимент с явными ограничениями. В manifest сохраняются архитектура CPU, аппаратные ресурсы, OS, Docker, volumes, image digests и фактические лимиты.
 
@@ -5424,6 +5670,8 @@ Docker рекомендует разделять ответственности 
 
 #### Следующее измерение
 
+18 октября выполнена [совместная функциональная проверка PostgreSQL/Kafka/Redis](#p02-infra-docs-development-evidence-p02-infrastructure-md) в сохранённом WSL-бюджете. Снимок после проверок: 39.35 MiB, 288.4 MiB и 12.47 MiB соответственно; он не является peak или оценкой под бизнес-нагрузкой. Docker Desktop/WSL после прогона остановлены.
+
 После подготовки каркаса и доступности Docker: проверить daemon/Compose → снять фактический бюджет → запустить минимальный профиль → измерить простой → добавить инфраструктуру → проверить ресурсы под контролируемой нагрузкой. Каждый прогон сохраняет свой снимок условий в manifest; текущая таблица не заменяет данные будущих запусков.
 
 15 октября установка завершена; VirtualMachinePlatform Enabled, гипервизор и Linux backend работают. Перезагрузка не выполнялась. Пиковые CPU/RAM и бизнес-throughput не измерялись.
@@ -5436,13 +5684,13 @@ Docker рекомендует разделять ответственности 
 
 ### Баннер Faultline Lab
 
-Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/assets/banner.svg).
+Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/docs/assets/banner.svg).
 
 #### Задание
 
 Подготовить три альтернативных варианта с акцентом на технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее. Сделаны векторные композиции с читаемым названием, тёмным текстом на светлом фоне и встроенными title/description. Внешних шрифтов, скриптов и удалённых графических зависимостей нет.
 
-![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/assets/banner-concepts/comparison.png)
+![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/docs/assets/banner-concepts/comparison.png)
 
 | Вариант | Образ | Палитра | Статус |
 | :--- | :--- | :--- | :--- |
@@ -5452,13 +5700,13 @@ Docker рекомендует разделять ответственности 
 
 #### Выбранное решение
 
-![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/assets/banner-concepts/02-experiment-flow.png)
+![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/docs/assets/banner-concepts/02-experiment-flow.png)
 
 Абстрактные линии проходят через область наблюдения. Это метафора исследования поведения системы и сравнения изменений; линии не являются графиком измеренных результатов. Композиция не зависит от домена магазина и подходит будущим подключаемым бизнесам.
 
 Размер SVG — 1280 × 420; README задаёт ширину 100%. Исходник масштабируется, PNG служит предварительным просмотром. Основная подпись: **Explore how systems behave.** Нижняя последовательность: **Hypothesis → Experiment → Evidence**.
 
-Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
+Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
 
 Баннеры отрендерены локально и визуально просмотрены на общем листе. Проверены отсутствие обрезанного текста и соответствие композиций заданию. Отдельный preview выбранного варианта используется для проверки основного баннера. Выбранный вариант слит в main через [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4), merge commit 8c392b8. Проверка отрисовки нового README на GitHub пока не выполнялась.
 
@@ -5596,7 +5844,7 @@ P01 не достигает всей контрольной точки G1: ба�
 | GitHub Issue | Текущая стадия, исполнитель, критерии выполнения, блокеры и связь с PR |
 | GitHub PR | Diff, результаты проверок, замечания и решение владельца по HEAD |
 | ADR | Существенное решение, варианты, последствия и основание принятия |
-| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
+| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
 
 #### Стадии в Issue
 
@@ -5713,7 +5961,7 @@ GitHub разрешает machine account, зарегистрированный 
 
 Версии проверены по официальным источникам 15 октября 2026 года: [Go releases](https://go.dev/dl/), [golangci-lint releases](https://github.com/golangci/golangci-lint/releases/tag/v2.14.0), Go module proxy и Docker Registry. Оба закреплённых digest относятся к multi-platform индексам, а не к одному варианту CPU.
 
-gRPC v1.84.0 добавлен для реального health API в P01-04; версия проверена через официальный Go proxy. JSON-логи использует стандартный log/slog. Инструменты закреплены через [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools). PostgreSQL использует pgx v5.11.0; Kafka/Redis библиотеки добавляются при первом использовании.
+gRPC v1.84.0 добавлен для реального health API в P01-04; версия проверена через официальный Go proxy. JSON-логи использует стандартный log/slog. Инструменты закреплены через [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools). PostgreSQL использует pgx v5.11.0; инфраструктурные проверки — franz-go v1.22.2 и go-redis v9.23.0, закреплённые в go.mod/go.sum.
 
 #### Основной путь Windows и macOS
 
@@ -5765,13 +6013,20 @@ tool (
 
 require (
 	github.com/jackc/pgx/v5 v5.11.0
+	github.com/redis/go-redis/v9 v9.23.0
+	github.com/twmb/franz-go v1.22.2
+	github.com/twmb/franz-go/pkg/kmsg v1.15.0
 	golang.org/x/sys v0.49.0
 	google.golang.org/grpc v1.84.0
 )
 
 require (
+	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
+	github.com/klauspost/compress v1.20.3 // indirect
+	github.com/pierrec/lz4/v4 v4.1.33 // indirect
+	go.uber.org/atomic v1.12.0 // indirect
 	golang.org/x/mod v0.42.0 // indirect
 	golang.org/x/net v0.61.0 // indirect
 	golang.org/x/sync v0.24.0 // indirect
@@ -5791,9 +6046,13 @@ require (
 Полный исходный документ: `go.sum`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```text
+github.com/bsm/ginkgo/v2 v2.12.0 h1:Ny8MWAHyOepLGlLKYmXG4IEkioBysk6GpaRTLC8zwWs=
+github.com/bsm/ginkgo/v2 v2.12.0/go.mod h1:SwYbGRRDovPVboqFv0tPTcG1sN61LM1Z4ARdbAV9g4c=
+github.com/bsm/gomega v1.27.10 h1:yeMWxP2pV2fG3FgAODIY8EiRE3dy0aeFYt4l7wh6yKA=
+github.com/bsm/gomega v1.27.10/go.mod h1:JyEr/xRbxbtgWNi8tIEVPUYZ5Dzef52k01W3YH0H+O0=
+github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
+github.com/cespare/xxhash/v2 v2.3.0/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
-github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/golang/protobuf v1.5.4 h1:i7eJL8qZTpSEXOPTxNKhASYpMn+8e5Q6AdndVa1dWek=
 github.com/golang/protobuf v1.5.4/go.mod h1:lnTiLA8Wa4RWRcIUkrtSVa5nRhsEGBg48fD6rSs7xps=
 github.com/google/go-cmdtest v0.4.1-0.20220921163831-55ab3332a786 h1:rcv+Ippz6RAtvaGgKxc+8FQIpxHgsF+HBzPyYL2cyVU=
@@ -5810,13 +6069,30 @@ github.com/jackc/pgx/v5 v5.11.0 h1:IzBBtyK9AHqf98cctWFifYSci2hgQR/cd56wB4p+ogg=
 github.com/jackc/pgx/v5 v5.11.0/go.mod h1:mal1tBGAFfLHvZzaYh77YS/eC6IX9OWbRV1QIIM0Jn4=
 github.com/jackc/puddle/v2 v2.2.2 h1:PR8nw+E/1w0GLuRFSmiioY6UooMp6KJv0/61nB7icHo=
 github.com/jackc/puddle/v2 v2.2.2/go.mod h1:vriiEXHvEE654aYKXXjOvZM39qJ0q+azkZFrfEOc3H4=
-github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
+github.com/klauspost/compress v1.20.3 h1:zWNoFqq/lSuYQRim3dUXlXeA0IqwuZGicdG5ZTfY5j4=
+github.com/klauspost/compress v1.20.3/go.mod h1:LUdAzn7YLVvxLpc7y3V1m40wESHTgc1422pwwBSKYuI=
+github.com/klauspost/cpuid/v2 v2.4.0 h1:S6Hrbc7+ywsr0r+RLapfGBHfyefhCTwEh3A0tV913Dw=
+github.com/klauspost/cpuid/v2 v2.4.0/go.mod h1:19jmZ9mjzoF//ddRSUsv0zfBTJWh3QJh9FNxZTMrGxU=
+github.com/pierrec/lz4/v4 v4.1.33 h1:GjG1TJ1V4IzKP8L96muuuDNpTwd7D+l2ccXrjAbe014=
+github.com/pierrec/lz4/v4 v4.1.33/go.mod h1:7SE9MC2STkNtL4PIwGhjmyVwvILaGI9/COYQNBhKM/c=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+github.com/redis/go-redis/v9 v9.23.0 h1:/TTVdJa8BRNsybwwGGnmiYktHNlUXtbOQxlWpHBPL3s=
+github.com/redis/go-redis/v9 v9.23.0/go.mod h1:EWP2UUk+XDaI1s5nQB5mablZN6vccXlmBQTyfnF87D0=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
-github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu7U=
-github.com/stretchr/testify v1.11.1/go.mod h1:wZwfW3scLgRK+23gO65QZefKpKQRnfz6sD981Nm4B6U=
+github.com/stretchr/testify v1.12.1 h1:EuwCh5fleGS7H32xRwO3wRGT7DxrDhLAT6FF8MpWDWE=
+github.com/stretchr/testify v1.12.1/go.mod h1:MDEgiDPPsNp5cuIrHPPCyornHKgEVbtFUmoNlxoYthg=
+github.com/twmb/franz-go v1.22.2 h1:EdwIHGzD/4mgCpl/sNS0C74JYn6cL/r2KYS+8UC96Ww=
+github.com/twmb/franz-go v1.22.2/go.mod h1:HzZMc00pBWNfe0hNcNK4NxnsDNyKOoXnlTBkB4SUTjI=
+github.com/twmb/franz-go/pkg/kmsg v1.15.0 h1:mILdOQm4JkWojbSYVQ7KJNJ1qMdYNsLrdNOBUVKM6IA=
+github.com/twmb/franz-go/pkg/kmsg v1.15.0/go.mod h1:sGkGxKexpRLBThFHJLjjywcyfkK09qB/g+X+wFWZQ/A=
+github.com/zeebo/xxh3 v1.1.0 h1:s7DLGDK45Dyfg7++yxI0khrfwq9661w9EN78eP/UZVs=
+github.com/zeebo/xxh3 v1.1.0/go.mod h1:IisAie1LELR4xhVinxWS5+zf1lA4p0MW4T+w+W07F5s=
+go.uber.org/atomic v1.12.0 h1:BvcXdFKuviU4fTL/f+SxdQ5qJX/Jix8pAkgdUcb3XOE=
+go.uber.org/atomic v1.12.0/go.mod h1:I6c4cg+6HCxRjfjSsYtApoFILnpc0CGUdGkXVqbYVNk=
+go.yaml.in/yaml/v3 v3.0.5 h1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=
+go.yaml.in/yaml/v3 v3.0.5/go.mod h1:HVTZu1O7/Vkt2N+BFy8Zza+lnLsABggaTM2ZpNIGuKg=
 golang.org/x/mod v0.42.0 h1:ICeL3t2L30ljSPHHxDnR4fqVcBt/zR2zJAb9juavmQg=
 golang.org/x/mod v0.42.0/go.mod h1:u5fzIrRInkL8MaO1cbRkUHT64v303YIT5KEqpNr7jRs=
 golang.org/x/net v0.61.0 h1:RR+6j/BTBCrggOLugxa+66R8FvoN6MHlzDlZIbN9YFw=
@@ -5847,8 +6123,6 @@ google.golang.org/protobuf v1.36.11 h1:fV6ZwhNocDyBLK0dj+fg8ektcVegBBuEolpbTQyBN
 google.golang.org/protobuf v1.36.11/go.mod h1:HTf+CrKn2C3g5S8VImy6tdcUvCska2kB7j23XfzDpco=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
-gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
-gopkg.in/yaml.v3 v3.0.1/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
 ```
 
 <a id="appendix-orders-main"></a>
@@ -6249,6 +6523,8 @@ jobs:
         run: |
           docker compose run --rm toolchain data-build
           bin/labdata-linux-${{ matrix.arch }} smoke
+      - name: Verify PostgreSQL, Kafka and Redis together
+        run: bin/labdata-linux-${{ matrix.arch }} smoke -infrastructure
       - name: Cross-compile data tool for supported hosts
         if: matrix.arch == 'amd64'
         run: docker compose run --rm toolchain data-cross-check
@@ -6266,6 +6542,14 @@ jobs:
         with:
           name: postgres-${{ matrix.arch }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: artifacts/postgres/**/report.json
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Retain combined infrastructure evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: infrastructure-${{ matrix.arch }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/infrastructure/**/report.json
           if-no-files-found: warn
           retention-days: 14
       - name: Ensure checks did not change source files
@@ -9045,7 +9329,7 @@ JSON schema version 2 сохраняет `run_id`, `project`, `result`, `service
 
 Отчёт не содержит полного inspect Env или разрешённого Compose-конфига. Пути checkout и домашнего каталога редактируются в диагностике. Smoke использует несекретный профиль; сторонние произвольные логи перед публикацией нужно проверять отдельно. Это проверка каркаса, а не измерение бизнес-корректности или capacity.
 
-После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/a7a468e72c7cc697463893d0090a382931d4da77/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
+После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
 
 <a id="go-smoke-main"></a>
 
@@ -15657,6 +15941,14 @@ func TestUsageAndSecrets(t *testing.T) {
 		}
 	}
 }
+
+func TestInfrastructureCheckDoesNotLoadPostgresCredentials(t *testing.T) {
+	var out, errs bytes.Buffer
+	code := run(t.Context(), []string{"check-infrastructure", "-config", "missing-postgres.json", "-infrastructure-config", "../../configs/infrastructure/local.json", "-infrastructure-secrets", t.TempDir(), "-stage", "invalid"}, &out, &errs)
+	if code != 1 || !strings.Contains(errs.String(), "stage must be") || strings.Contains(errs.String(), "PostgreSQL") || out.Len() != 0 {
+		t.Fatalf("code=%d out=%q err=%q", code, out.String(), errs.String())
+	}
+}
 ```
 
 <a id="p02-cmd-labdata-main-go"></a>
@@ -15666,11 +15958,12 @@ func TestUsageAndSecrets(t *testing.T) {
 Полный исходный документ: `cmd/labdata/main.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```go
-// Command labdata prepares and verifies the isolated PostgreSQL foundation.
+// Command labdata prepares and verifies the lab's isolated infrastructure.
 package main
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"flag"
 	"fmt"
@@ -15682,6 +15975,7 @@ import (
 
 	"github.com/Includeoyasi/faultline-lab/internal/database"
 	"github.com/Includeoyasi/faultline-lab/internal/datalab"
+	"github.com/Includeoyasi/faultline-lab/internal/infrastructure"
 )
 
 func main() {
@@ -15701,7 +15995,7 @@ func setting(key, fallback string) string {
 }
 func run(ctx context.Context, args []string, out, errs io.Writer) int {
 	if len(args) == 0 {
-		_, _ = fmt.Fprintln(errs, "usage: labdata {secrets|bootstrap|migrate|seed|checksum|smoke|reset} [flags]")
+		_, _ = fmt.Fprintln(errs, "usage: labdata {secrets|bootstrap|migrate|seed|checksum|smoke|reset|check-infrastructure} [flags]")
 		return 2
 	}
 	flags := flag.NewFlagSet("labdata "+args[0], flag.ContinueOnError)
@@ -15717,6 +16011,11 @@ func run(ctx context.Context, args []string, out, errs io.Writer) int {
 	service := flags.String("service", "", "single migration service; empty applies all")
 	project := flags.String("project", "", "isolated Compose project for explicit reset")
 	confirm := flags.String("confirm", "", "repeat the project name to confirm data deletion")
+	fullStack := flags.Bool("infrastructure", false, "include Kafka and Redis in secrets, smoke or reset")
+	infraConfig := flags.String("infrastructure-config", setting("FL_INFRA_CONFIG", "configs/infrastructure/local.json"), "public Kafka/Redis configuration")
+	infraSecrets := flags.String("infrastructure-secrets", setting("FL_INFRA_SECRETS", ".local/infrastructure"), "private Redis credentials directory")
+	stage := flags.String("stage", "", "infrastructure check: before-restart or after-restart")
+	checkpoint := flags.String("checkpoint", "", "acknowledged Kafka checkpoint JSON from before-restart")
 	if err := flags.Parse(args[1:]); err != nil {
 		if errors.Is(err, flag.ErrHelp) {
 			return 0
@@ -15729,9 +16028,29 @@ func run(ctx context.Context, args []string, out, errs io.Writer) int {
 	var err error
 	switch args[0] {
 	case "smoke":
-		err = datalab.Run(ctx, out)
+		if *fullStack {
+			err = datalab.RunInfrastructure(ctx, out)
+		} else {
+			err = datalab.Run(ctx, out)
+		}
 	case "reset":
-		err = datalab.Reset(ctx, *project, *confirm, out)
+		if *fullStack {
+			err = datalab.ResetInfrastructure(ctx, *project, *confirm, out)
+		} else {
+			err = datalab.Reset(ctx, *project, *confirm, out)
+		}
+	case "check-infrastructure":
+		var cfg infrastructure.Config
+		cfg, err = infrastructure.Load(*infraConfig, *infraSecrets)
+		if err == nil {
+			operationCtx, cancel := context.WithTimeout(ctx, time.Minute)
+			defer cancel()
+			var result infrastructure.Checkpoint
+			result, err = infrastructure.Check(operationCtx, cfg, *stage, *checkpoint)
+			if err == nil {
+				err = json.NewEncoder(out).Encode(result)
+			}
+		}
 	case "secrets", "bootstrap", "migrate", "seed", "checksum":
 		var cfg database.Config
 		cfg, err = database.Load(*config, *secrets)
@@ -15743,6 +16062,13 @@ func run(ctx context.Context, args []string, out, errs io.Writer) int {
 		switch args[0] {
 		case "secrets":
 			err = database.GenerateSecrets(cfg)
+			if err == nil && *fullStack {
+				var infraCfg infrastructure.Config
+				infraCfg, err = infrastructure.Load(*infraConfig, *infraSecrets)
+				if err == nil {
+					err = infrastructure.GenerateSecrets(infraCfg)
+				}
+			}
 		case "bootstrap":
 			err = database.Bootstrap(operationCtx, cfg)
 		case "migrate":
@@ -15776,7 +16102,7 @@ func run(ctx context.Context, args []string, out, errs io.Writer) int {
 		_, _ = fmt.Fprintln(errs, err)
 		return 1
 	}
-	if args[0] != "checksum" {
+	if args[0] != "checksum" && args[0] != "check-infrastructure" {
 		_, _ = fmt.Fprintln(out, args[0]+": PASS")
 	}
 	return 0
@@ -16024,18 +16350,36 @@ import (
 
 	"github.com/Includeoyasi/faultline-lab/internal/command"
 	"github.com/Includeoyasi/faultline-lab/internal/database"
+	"github.com/Includeoyasi/faultline-lab/internal/infrastructure"
 )
 
 var projectName = regexp.MustCompile(`^faultline-data-[a-z0-9][a-z0-9-]{0,47}$`)
 
 func composeArgs(project string, args ...string) []string {
+	return composeModeArgs(project, false, args...)
+}
+
+func composeModeArgs(project string, fullStack bool, args ...string) []string {
 	// Profile activation by an earlier explicit run is not retained by down.
 	// All starts/builds below retain explicit service targets.
-	return append([]string{"compose", "-f", "compose.yaml", "-f", "compose.postgres.yaml", "-p", project, "--profile", "tools"}, args...)
+	base := []string{"compose", "-f", "compose.yaml", "-f", "compose.postgres.yaml"}
+	if fullStack {
+		base = append(base, "-f", "compose.infrastructure.yaml")
+	}
+	return append(append(base, "-p", project, "--profile", "tools"), args...)
 }
 
 // Reset requires an exact explicit project confirmation; ordinary down preserves data.
 func Reset(ctx context.Context, project, confirm string, out io.Writer) error {
+	return reset(ctx, project, confirm, out, false)
+}
+
+// ResetInfrastructure includes Kafka's persistent volume in the explicit reset.
+func ResetInfrastructure(ctx context.Context, project, confirm string, out io.Writer) error {
+	return reset(ctx, project, confirm, out, true)
+}
+
+func reset(ctx context.Context, project, confirm string, out io.Writer, fullStack bool) error {
 	if !projectName.MatchString(project) || project != confirm {
 		return errors.New("reset requires a faultline-data-* project and identical -confirm value")
 	}
@@ -16046,7 +16390,7 @@ func Reset(ctx context.Context, project, confirm string, out io.Writer) error {
 	executor := command.Executor{Directory: root, Env: os.Environ()}
 	bounded, cancel := context.WithTimeout(ctx, time.Minute)
 	defer cancel()
-	result, err := executor.Execute(bounded, "docker", composeArgs(project, "down", "--volumes", "--remove-orphans", "--rmi", "local"))
+	result, err := executor.Execute(bounded, "docker", composeModeArgs(project, fullStack, "down", "--volumes", "--remove-orphans", "--rmi", "local"))
 	if err != nil {
 		return errors.New("scoped reset failed; inspect Docker for the named project")
 	}
@@ -16071,21 +16415,38 @@ type report struct {
 }
 
 func Run(ctx context.Context, out io.Writer) (finalErr error) {
+	return runHost(ctx, out, false)
+}
+
+// RunInfrastructure verifies PostgreSQL, Kafka and Redis together.
+func RunInfrastructure(ctx context.Context, out io.Writer) error {
+	return runHost(ctx, out, true)
+}
+
+func runHost(ctx context.Context, out io.Writer, fullStack bool) error {
 	root, err := os.Getwd()
 	if err != nil {
 		return errors.New("cannot locate checkout")
 	}
-	return run(ctx, out, root, nil)
+	return runMode(ctx, out, root, nil, fullStack)
 }
 
 func run(ctx context.Context, out io.Writer, root string, execute func(context.Context, string, []string) (command.Output, error)) (finalErr error) {
+	return runMode(ctx, out, root, execute, false)
+}
+
+func runMode(ctx context.Context, out io.Writer, root string, execute func(context.Context, string, []string) (command.Output, error), fullStack bool) (finalErr error) {
 	var err error
 	var token [8]byte
 	if _, err = rand.Read(token[:]); err != nil {
 		return errors.New("cannot generate project ID")
 	}
 	project := "faultline-data-test-" + hex.EncodeToString(token[:])
-	dir := filepath.Join(root, "artifacts", "postgres", project)
+	artifactKind := "postgres"
+	if fullStack {
+		artifactKind = "infrastructure"
+	}
+	dir := filepath.Join(root, "artifacts", artifactKind, project)
 	if err = os.MkdirAll(dir, 0o700); err != nil {
 		return errors.New("cannot create report directory")
 	}
@@ -16093,6 +16454,14 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 	if err != nil {
 		return err
 	}
+	var infraCfg infrastructure.Config
+	if fullStack {
+		infraCfg, err = infrastructure.Load(filepath.Join(root, "configs/infrastructure/local.json"), filepath.Join(dir, "infrastructure-secrets"))
+		if err != nil {
+			return err
+		}
+	}
+	compose := func(args ...string) []string { return composeModeArgs(project, fullStack, args...) }
 	removeCredentials := func() error {
 		var result error
 		// Windows/OneDrive can mark a bind-source directory read-only.
@@ -16108,11 +16477,29 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 		if e := os.Remove(cfg.Secrets); e != nil && !errors.Is(e, os.ErrNotExist) {
 			result = errors.Join(result, errors.New("cannot remove temporary credential directory"))
 		}
+		if fullStack {
+			if e := os.Chmod(infraCfg.Secrets, 0o700); e != nil && !errors.Is(e, os.ErrNotExist) {
+				result = errors.Join(result, errors.New("cannot restore infrastructure credential directory permissions"))
+			}
+			for _, name := range infrastructure.CredentialFiles {
+				if e := os.Remove(filepath.Join(infraCfg.Secrets, name)); e != nil && !errors.Is(e, os.ErrNotExist) {
+					result = errors.Join(result, errors.New("cannot remove infrastructure credential"))
+				}
+			}
+			if e := os.Remove(infraCfg.Secrets); e != nil && !errors.Is(e, os.ErrNotExist) {
+				result = errors.Join(result, errors.New("cannot remove infrastructure credential directory"))
+			}
+		}
 		return result
 	}
 	defer func() { finalErr = errors.Join(finalErr, removeCredentials()) }()
 	if err = database.GenerateSecrets(cfg); err != nil {
 		return err
+	}
+	if fullStack {
+		if err = infrastructure.GenerateSecrets(infraCfg); err != nil {
+			return err
+		}
 	}
 	pairs := []string{root, "[workspace]", filepath.ToSlash(root), "[workspace]"}
 	if home, e := os.UserHomeDir(); e == nil && home != "" {
@@ -16125,15 +16512,25 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 		}
 		pairs = append(pairs, value, "[secret]")
 	}
+	if fullStack {
+		value, e := infrastructure.Password(infraCfg)
+		if e != nil {
+			return e
+		}
+		pairs = append(pairs, value, "[secret]", infrastructure.PasswordHash(value), "[secret hash]")
+	}
 	redact := strings.NewReplacer(pairs...)
 	env := []string{}
 	for _, item := range os.Environ() {
 		key, _, _ := strings.Cut(item, "=")
-		if !strings.EqualFold(key, "FL_PG_SECRETS_DIR") {
+		if !strings.EqualFold(key, "FL_PG_SECRETS_DIR") && !strings.EqualFold(key, "FL_INFRA_SECRETS_DIR") {
 			env = append(env, item)
 		}
 	}
 	env = append(env, "FL_PG_SECRETS_DIR="+cfg.Secrets)
+	if fullStack {
+		env = append(env, "FL_INFRA_SECRETS_DIR="+infraCfg.Secrets)
+	}
 	executor := command.Executor{Directory: root, Env: env}
 	if execute == nil {
 		execute = executor.Execute
@@ -16150,7 +16547,7 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 		return errors.New("cannot save initial report")
 	}
 	call := func(parent context.Context, stage string, budget time.Duration, args ...string) (string, error) {
-		_, _ = fmt.Fprintln(out, "PostgreSQL smoke:", stage)
+		_, _ = fmt.Fprintln(out, artifactKind+" smoke:", stage)
 		commandCtx, cancel := context.WithTimeout(parent, budget)
 		defer cancel()
 		result, e := execute(commandCtx, "docker", args)
@@ -16170,7 +16567,7 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 		if mayExist {
 			cleanupCtx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 			defer cancel()
-			_, e := call(cleanupCtx, "cleanup", 60*time.Second, composeArgs(project, "down", "--volumes", "--remove-orphans", "--rmi", "local")...)
+			_, e := call(cleanupCtx, "cleanup", 60*time.Second, compose("down", "--volumes", "--remove-orphans", "--rmi", "local")...)
 			if e == nil {
 				for _, args := range [][]string{
 					{"ps", "-aq", "--filter", "label=com.docker.compose.project=" + project},
@@ -16204,42 +16601,68 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 			evidence.Result = "PASS"
 		}
 		finalErr = errors.Join(finalErr, save())
-		_, _ = fmt.Fprintf(out, "%s: artifacts/postgres/%s/report.json\n", evidence.Result, project)
+		_, _ = fmt.Fprintf(out, "%s: artifacts/%s/%s/report.json\n", evidence.Result, artifactKind, project)
 	}()
 	if _, err = call(ctx, "prerequisites", 15*time.Second, "version", "--format", "{{.Server.Version}}"); err != nil {
 		return err
 	}
 	mayExist = true
-	if _, err = call(ctx, "build dbtool", 10*time.Minute, composeArgs(project, "build", "dbtool")...); err != nil {
-		return err
+	services := []string{"postgres"}
+	buildServices := []string{"dbtool"}
+	if fullStack {
+		services = append(services, "kafka", "redis")
+		buildServices = append(buildServices, "infrastructure-check")
 	}
-	if _, err = call(ctx, "start PostgreSQL", 90*time.Second, composeArgs(project, "up", "-d", "--wait", "--wait-timeout", "75", "postgres")...); err != nil {
-		return err
-	}
+	// Register before build/start, so partial startup failures retain diagnostics.
 	defer func() {
 		logCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
-		_, _ = call(logCtx, "PostgreSQL logs", 5*time.Second, composeArgs(project, "logs", "--no-color", "postgres")...)
+		_, _ = call(logCtx, "dependency logs", 5*time.Second, compose(append([]string{"logs", "--no-color", "--tail", "200"}, services...)...)...)
 	}()
+	if _, err = call(ctx, "build dbtool", 10*time.Minute, compose(append([]string{"build"}, buildServices...)...)...); err != nil {
+		return err
+	}
+	if _, err = call(ctx, "start dependencies", 2*time.Minute, compose(append([]string{"up", "-d", "--wait", "--wait-timeout", "100"}, services...)...)...); err != nil {
+		return err
+	}
+	if fullStack {
+		if _, err = call(ctx, "Docker backend budget", 10*time.Second, "info", "--format", `{"os":{{json .OSType}},"architecture":{{json .Architecture}},"cpus":{{json .NCPU}},"memory_bytes":{{json .MemTotal}}}`); err != nil {
+			return err
+		}
+		if _, err = call(ctx, "dependency limits and image IDs", 10*time.Second, "inspect", "--format", "name={{.Name}} image_id={{.Image}} configured_image={{.Config.Image}} memory_bytes={{.HostConfig.Memory}} nano_cpus={{.HostConfig.NanoCpus}}", project+"-postgres-1", project+"-kafka-1", project+"-redis-1"); err != nil {
+			return err
+		}
+	}
 	tool := func(stage string, args ...string) (string, error) {
-		return call(ctx, stage, 90*time.Second, composeArgs(project, append([]string{"run", "--rm", "--no-deps", "dbtool"}, args...)...)...)
+		return call(ctx, stage, 90*time.Second, compose(append([]string{"run", "--rm", "--no-deps", "dbtool"}, args...)...)...)
 	}
 	for attempt := 0; attempt < 2; attempt++ {
 		if _, err = tool("bootstrap", "bootstrap"); err != nil {
 			return err
 		}
 	}
-	if _, err = call(ctx, "rights, migrations and seed", 3*time.Minute, composeArgs(project, "run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "--entrypoint", "/app/database.test", "dbtool", "-test.run=^TestPostgresFoundation$", "-test.v", "-test.timeout=150s")...); err != nil {
+	if _, err = call(ctx, "rights, migrations and seed", 3*time.Minute, compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "--entrypoint", "/app/database.test", "dbtool", "-test.run=^TestPostgresFoundation$", "-test.v", "-test.timeout=150s")...); err != nil {
 		return err
 	}
 	before, err := tool("checksum before restart", "checksum")
 	if err != nil {
 		return err
 	}
-	if _, err = call(ctx, "restart PostgreSQL", 60*time.Second, composeArgs(project, "restart", "postgres")...); err != nil {
+	var checkpoint string
+	if fullStack {
+		checkpoint, err = call(ctx, "Kafka and Redis before restart", 60*time.Second, compose("run", "--rm", "--no-deps", "infrastructure-check", "check-infrastructure", "-stage", "before-restart")...)
+		if err != nil {
+			return err
+		}
+		var plan infrastructure.Checkpoint
+		if err = json.Unmarshal([]byte(checkpoint), &plan); err != nil || plan.Version != 1 {
+			return errors.New("infrastructure checker returned an invalid checkpoint")
+		}
+	}
+	if _, err = call(ctx, "restart dependencies", 90*time.Second, compose(append([]string{"restart"}, services...)...)...); err != nil {
 		return err
 	}
-	if _, err = call(ctx, "wait after restart", 60*time.Second, composeArgs(project, "up", "-d", "--wait", "--wait-timeout", "45", "postgres")...); err != nil {
+	if _, err = call(ctx, "wait after restart", 2*time.Minute, compose(append([]string{"up", "-d", "--wait", "--wait-timeout", "100"}, services...)...)...); err != nil {
 		return err
 	}
 	for _, operation := range []string{"bootstrap", "migrate", "seed"} {
@@ -16254,7 +16677,16 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 	if strings.TrimSpace(before) != strings.TrimSpace(after) {
 		return errors.New("data or migration history changed across restart/repeat")
 	}
-	_, err = call(ctx, "resource snapshot", 15*time.Second, "stats", "--no-stream", "--format", "{{json .}}", project+"-postgres-1")
+	if fullStack {
+		if _, err = call(ctx, "Kafka and Redis after restart", 60*time.Second, compose("run", "--rm", "--no-deps", "infrastructure-check", "check-infrastructure", "-stage", "after-restart", "-checkpoint", strings.TrimSpace(checkpoint))...); err != nil {
+			return err
+		}
+	}
+	statArgs := []string{"stats", "--no-stream", "--format", "{{json .}}"}
+	for _, service := range services {
+		statArgs = append(statArgs, project+"-"+service+"-1")
+	}
+	_, err = call(ctx, "resource snapshot", 15*time.Second, statArgs...)
 	return err
 }
 func roleNames(cfg database.Config) []string {
@@ -17142,4 +17574,1632 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA %1$I TO %2$I;
 ALTER DEFAULT PRIVILEGES IN SCHEMA %1$I
     GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO %2$I;
 $sql$, $1::text, $2::text);
+```
+
+<a id="p02-infra-compose-infrastructure-yaml"></a>
+
+## Приложение: compose.infrastructure.yaml
+
+Полный исходный документ: `compose.infrastructure.yaml`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```yaml
+services:
+  kafka:
+    image: apache/kafka:4.3.1@sha256:77e3df9054047a88b520d0cc46e16696d3b22022e1d580aeccd2632df6532837
+    user: appuser
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    entrypoint: [/bin/bash, /etc/faultline/start.sh]
+    environment:
+      # Local single-node identity, not an authentication credential.
+      FL_KAFKA_CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+      KAFKA_HEAP_OPTS: -Xms128m -Xmx256m
+      LOG_DIR: /opt/kafka/logs
+    volumes:
+      - ./configs/kafka/server.properties:/etc/faultline/kafka.properties:ro
+      - ./configs/kafka/start.sh:/etc/faultline/start.sh:ro
+      - kafka-data:/var/lib/kafka/data
+    tmpfs:
+      - /tmp:uid=1000,gid=1000,mode=1777,size=64m
+      - /opt/kafka/logs:uid=1000,gid=1000,mode=0750,size=32m
+      - /etc/kafka/secrets:uid=1000,gid=1000,mode=0700,size=1m
+      - /mnt/shared/config:uid=1000,gid=1000,mode=0700,size=1m
+    mem_limit: 640m
+    cpus: 0.75
+    stop_grace_period: 30s
+    networks: [data]
+    healthcheck:
+      test: [CMD-SHELL, "KAFKA_HEAP_OPTS='-Xms16m -Xmx64m' /opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server kafka:9092 >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 15s
+  redis:
+    image: redis:8.2.10-alpine@sha256:b51665e66f00759be7c3152ad5ac3c66fb2f619c13ef62dea7cc1f9914524635
+    user: "999:999"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    command: [redis-server, /etc/faultline/redis.conf]
+    volumes:
+      - ./configs/redis/redis.conf:/etc/faultline/redis.conf:ro
+    secrets:
+      - {source: redis-acl, target: redis.acl}
+    tmpfs:
+      - /data:uid=999,gid=999,mode=0700,size=96m
+      - /tmp:mode=1777,size=8m
+    mem_limit: 128m
+    cpus: 0.25
+    stop_grace_period: 15s
+    networks: [data]
+    healthcheck:
+      # Ready only when Redis responds and still requires authentication.
+      test: [CMD-SHELL, "redis-cli -h redis -p 6379 ping 2>&1 | grep -q NOAUTH"]
+      interval: 3s
+      timeout: 2s
+      retries: 15
+      start_period: 3s
+  infrastructure-check:
+    profiles: [tools]
+    build:
+      context: .
+      dockerfile: build/Dockerfile
+      target: labdata
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    environment:
+      FL_INFRA_CONFIG: /etc/faultline/infrastructure.json
+      FL_INFRA_SECRETS: /run/secrets
+    volumes:
+      - ./configs/infrastructure/local.json:/etc/faultline/infrastructure.json:ro
+    secrets:
+      - {source: redis-password, target: redis.password}
+    tmpfs: ["/tmp:mode=1777,size=16m"]
+    networks: [data]
+    mem_limit: 256m
+    cpus: 0.5
+volumes:
+  kafka-data:
+secrets:
+  redis-password:
+    file: ${FL_INFRA_SECRETS_DIR:-.local/infrastructure}/redis.password
+  redis-acl:
+    file: ${FL_INFRA_SECRETS_DIR:-.local/infrastructure}/redis.acl
+```
+
+<a id="p02-infra-configs-infrastructure-local-json"></a>
+
+## Приложение: configs/infrastructure/local.json
+
+Полный исходный документ: `configs/infrastructure/local.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "kafka_brokers": ["kafka:9092"],
+  "kafka_topic": "faultline-smoke",
+  "redis_address": "redis:6379",
+  "redis_user": "lab",
+  "key_prefix": "faultline:smoke:",
+  "timeout": "5s",
+  "probe_ttl": "1s"
+}
+```
+
+<a id="p02-infra-configs-kafka-server-properties"></a>
+
+## Приложение: configs/kafka/server.properties
+
+Полный исходный документ: `configs/kafka/server.properties`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```properties
+process.roles=broker,controller
+node.id=1
+controller.quorum.voters=1@kafka:9093
+listeners=BROKER://:9092,CONTROLLER://:9093
+advertised.listeners=BROKER://kafka:9092
+listener.security.protocol.map=BROKER:PLAINTEXT,CONTROLLER:PLAINTEXT
+inter.broker.listener.name=BROKER
+controller.listener.names=CONTROLLER
+
+log.dirs=/var/lib/kafka/data
+num.partitions=1
+default.replication.factor=1
+min.insync.replicas=1
+auto.create.topics.enable=false
+offsets.topic.replication.factor=1
+offsets.topic.num.partitions=1
+transaction.state.log.replication.factor=1
+transaction.state.log.min.isr=1
+transaction.state.log.num.partitions=1
+group.initial.rebalance.delay.ms=0
+
+num.network.threads=2
+num.io.threads=2
+log.cleaner.threads=1
+log.cleaner.dedupe.buffer.size=16777216
+socket.request.max.bytes=10485760
+log.segment.bytes=16777216
+log.retention.bytes=67108864
+log.retention.hours=24
+```
+
+<a id="p02-infra-configs-kafka-start-sh"></a>
+
+## Приложение: configs/kafka/start.sh
+
+Полный исходный документ: `configs/kafka/start.sh`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sh
+#!/usr/bin/env bash
+set -euo pipefail
+
+/opt/kafka/bin/kafka-storage.sh format --ignore-formatted \
+  --cluster-id "$FL_KAFKA_CLUSTER_ID" --config /etc/faultline/kafka.properties
+exec /opt/kafka/bin/kafka-server-start.sh /etc/faultline/kafka.properties
+```
+
+<a id="p02-infra-configs-redis-redis-conf"></a>
+
+## Приложение: configs/redis/redis.conf
+
+Полный исходный документ: `configs/redis/redis.conf`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```text
+bind 0.0.0.0
+port 6379
+protected-mode yes
+daemonize no
+aclfile /run/secrets/redis.acl
+dir /data
+save ""
+appendonly no
+maxmemory 64mb
+maxmemory-policy allkeys-lru
+maxclients 32
+loglevel notice
+logfile ""
+```
+
+<a id="p02-infra-docs-architecture-kafka-publishing-md"></a>
+
+## Приложение: docs/architecture/KAFKA_PUBLISHING.md
+
+Полный исходный документ: `docs/architecture/KAFKA_PUBLISHING.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Порядок Kafka-событий и смена publisher: F09
+
+Проектное предложение для ревью в [#16](https://github.com/Includeoyasi/faultline-lab/issues/16), по находке F09 из [аудита #20](https://github.com/Includeoyasi/faultline-lab/issues/20). Здесь определены требования к будущему outbox и способ проверки. Outbox, lease и transactional publisher пока не реализованы; текущий инфраструктурный smoke проверяет обычную запись/чтение и штатный restart. F09 целиком этим пакетом не закрывается.
+
+#### Какой порядок нужен
+
+Порядок относится к событиям **одного агрегата одного владельца**: например, последовательность версий резерва Inventory. Ключ потока включает владельца, тип и ID агрегата. Все события потока попадают в одну партицию одного топика. Нет общего порядка между топиками, агрегатами или версиями Orders и Inventory; связь между ними задаётся контрактами и состояниями бизнес-процесса.
+
+Изменение агрегата и добавление outbox-записи происходят в одной PostgreSQL-транзакции своего сервиса. Запись содержит стабильные event ID, stream key и монотонную версию. Publisher не отправляет следующую версию, пока предыдущая не получила подтверждённый Kafka commit **и долговечную SQL-отметку**. В пределах потока допустим повтор той же версии/event ID; пропуск версии и публикация старой версии после более новой недопустимы. Изменение числа партиций требует отдельного порядка переноса потоков; не меняется незаметно во время эксперимента.
+
+#### Почему одного SQL lease недостаточно
+
+Процесс A может остановиться после проверки lease. PostgreSQL передаст lease процессу B, но Kafka не знает номер SQL lease и может принять позднюю отправку A. Проверка lease перед `send` оставляет окно между двумя системами. Идемпотентность producer удаляет некоторые повторы одного producer; она не удостоверяет владение SQL lease.
+
+Kafka умеет блокировать прежний producer через стабильный `transactional.id` и producer epoch. Новый producer с тем же ID завершает/прерывает прежнюю транзакцию; старый epoch не может успешно продолжать её. Потребители должны читать с `read_committed`. Основа механизма описана в [официальном API KafkaProducer](https://kafka.apache.org/41/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html#initTransactions()). Это свойство Kafka, а не общая транзакция Kafka–PostgreSQL.
+
+#### Предлагаемый протокол владения
+
+Единица владения — стабильная линия публикации своего сервиса: фиксированный набор потоков, закреплённый за партицией. Её `transactional.id` включает ID изолированного набора данных, сервис и линию, но **не** PID, случайный ID процесса или номер попытки. Для одного набора данных ID не меняется при рестарте. SQL lease содержит owner и монотонное поколение; продление, освобождение и отметка outbox выполняются через CAS по этому поколению.
+
+Порядок активации принципиален:
+
+1. Кандидат читает существующее поколение lease **G до инициализации producer**. Если lease занят, ждёт. Затем создаёт новый transactional producer и получает broker producer ID/epoch. В franz-go это требует реального `ProducerID(ctx)`; один `NewClient` или `BeginTransaction` не доказывает инициализацию брокером.
+2. Кандидат атомарно получает свободный/истёкший SQL lease **только CAS по прочитанному G**, увеличивая поколение. Условие проверяет G и срок lease по времени PostgreSQL. Без успешного CAS он ничего не публикует и закрывает producer. После отказа нельзя перечитать G и использовать прежнюю инициализацию: весь цикл начинается заново. Поколение не сбрасывается и не переиспользуется за жизнь набора данных.
+3. Получив lease, процесс использует только этот экземпляр producer. Он читает минимальные неподтверждённые версии и отправляет **не более одной версии каждого потока** в Kafka-транзакции; batch разных потоков допустим. После подтверждённого commit он помечает записи в PostgreSQL, только если всё ещё владеет тем же lease. Следующая версия потока разрешена лишь после долговечной SQL-отметки предыдущей; при неизвестном SQL-результате сначала перечитывается отметка. Продление ограничено сроком; потеря владения прекращает работу.
+4. При fencing, потере lease или неизвестном результате commit процесс прекращает публикацию и закрывает producer. Он **не** создаёт новый producer и не переинициализирует старый под прежним поколением lease. Новая попытка начинается с шага 1 и нового захвата; освобождение старого lease не может снять lease B.
+
+Почему нужен весь порядок `read G → broker init → CAS G`: если B успешно заменил поколение A, оно уже существовало в момент чтения B, а producer A был инициализирован ещё до его получения. Поэтому инициализация B fence старый producer A. Если между чтением G и CAS успел получить lease другой кандидат, G изменился и поздняя попытка отклоняется. Задержавшаяся инициализация A может помешать B, но её старый CAS уже не пройдёт. Повторная инициализация под старым поколением запрещена.
+
+Просто `init → claim` этого не гарантирует: B может получить epoch 1 и зависнуть до claim, A — получить epoch 2 и lease G=1, а B после истечения lease — захватить G=2 со своим старым epoch. A остаётся нефенсированным. Именно CAS по поколению, прочитанному **перед** init, исключает этот случай; проверка кешированного `ProducerID` после claim его не заменяет.
+
+**Цена решения — доступность:** неудачный конкурент с тем же transactional ID способен fence действующего publisher ещё до захвата lease. Он не должен записывать события, но действующему владельцу придётся завершить попытку и восстановиться. Нужны backoff с jitter, наблюдаемость лишних fencing и отсутствие цикла непрерывной переинициализации. Это осознанный компромисс предложения, который надо оценить при реализации outbox; рост числа worker не означает рост числа конкурентов одной линии.
+
+Проверка lease сама по себе не делает commit атомарным с SQL. Если Kafka commit прошёл, а подтверждение/SQL-отметка потерялись, B повторно отправит событие. Inbox по event ID и контроль версий у потребителя остаются обязательными. Более высокая версия при пропуске предыдущей не применяется молча: требуется отложенная обработка/диагностика по контракту. Межсистемный exactly-once не заявляется.
+
+#### Требования к Go-клиенту
+
+Для инфраструктурных проверок выбран чистый Go-клиент **franz-go v1.22.2**: [релиз](https://github.com/twmb/franz-go/releases/tag/v1.22.2), [transaction API и правила восстановления](https://github.com/twmb/franz-go/blob/v1.22.2/pkg/kgo/txn.go), [ProducerID](https://github.com/twmb/franz-go/blob/v1.22.2/pkg/kgo/producer.go). При реализации outbox нужно отдельно подтвердить:
+
+- стабильный transactional ID, настоящую предварительную инициализацию, broker fencing и `read_committed`;
+- проверку всех результатов produce до commit: успешный commit не должен скрывать ошибку части записей;
+- отсутствие автоматического восстановления **устаревшего** producer epoch под тем же SQL lease, включая внутренние пути библиотеки. В 1.22.2 поведение зависит от версии transaction protocol и типа ошибки; generic retry loop вокруг `BeginTransaction` неприемлем;
+- закрытие/прерывание при потере lease и ограниченные сроки операций; неопределённый commit не равен доказанному abort;
+- сериализацию работы одной линии и фиксированную стратегию партиционирования потока.
+
+Текущий smoke включает `AllowIdempotentProduceCancellation` только для одноразовой нетранзакционной пробы. Опция несовместима с transactional ID и **не переносится** в outbox. Переиспользование probe-конфигурации без отдельного transactional профиля запрещает выполнение этих требований.
+
+#### Обязательные будущие проверки
+
+| Остановка A | Действие B | Проверяемый результат после возобновления A |
+| :--- | :--- | :--- |
+| После захвата lease, до produce | Инициализация producer → новый lease → публикация | Старый producer A fenced; старый lease не даёт права на новую инициализацию/отметку |
+| После produce, до commit | То же | Незавершённая транзакция A не видна `read_committed`; последовательность B корректна |
+| После commit версии 10, до SQL-отметки; версия 11 уже есть в outbox | Повторная доставка минимальной версии | Видимый порядок `10,10,11`, а не `10,11,10,11`; бизнес-эффект один, версии не пропущены |
+| До первой broker-инициализации | B успевает полностью активироваться | Поздний A может fence B, но не захватить занятый lease и не публиковать; восстановление ограничено и наблюдаемо |
+| После init, до CAS; за паузу другой кандидат получил и потерял lease | Новое поколение уже существует, даже если срок истёк | Старый CAS отклоняется; запрещены перечитывание поколения и claim с прежним producer |
+| После fencing | Ошибка провоцирует retry/recreate клиента | В прежнем поколении нет нового InitProducerID/commit; новая попытка требует нового lease |
+
+Тесты должны синхронизировать фазы явными барьерами, а не случайными sleep; фиксировать SQL-поколения, broker epochs и видимые записи. Потребуются также потерянный ACK/commit, истечение lease, отмена, смена координатора и повторный запуск. До этих проверок это **проектное предложение**, а не подтверждённая гарантия готовой системы. Если выбранная версия клиента не позволяет исключить восстановление старого epoch, нужен пересмотр протокола или клиента на ревью до реализации outbox.
+
+<a id="p02-infra-docs-development-infrastructure-md"></a>
+
+## Приложение: docs/development/INFRASTRUCTURE.md
+
+Полный исходный документ: `docs/development/INFRASTRUCTURE.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Kafka и Redis: совместная проверка инфраструктуры
+
+[Задача #16](https://github.com/Includeoyasi/faultline-lab/issues/16) добавляет Kafka и Redis к [PostgreSQL](#p02-docs-development-postgres-md). Три бизнес-сервиса остаются отдельными gRPC-процессами; этот пакет проверяет инфраструктуру до подключения бизнес-обработчиков. Результаты конкретных запусков и ограничения среды — в [отчёте](#p02-infra-docs-development-evidence-p02-infrastructure-md).
+
+#### Состав и границы доступа
+
+```mermaid
+flowchart TB
+    Operator[Оператор / CI] --> Host[labdata на хосте]
+    Host -->|Docker CLI| Compose[Docker Compose: отдельный project]
+    Host --> Report[Очищенный JSON-отчёт]
+    Compose --> DBTool[Временный dbtool]
+    Compose --> Check[Временный infrastructure-check]
+    subgraph Data[Внутренняя Docker-сеть data: без публикации портов]
+        PG[PostgreSQL: три базы]
+        Kafka[Kafka: один broker/controller]
+        Redis[Redis: отдельный ACL-пользователь]
+    end
+    DBTool -->|Роли / миграции / seed / checksum| PG
+    Check -->|Producer и consumer| Kafka
+    Check -->|AUTH / команды / ключи / TTL| Redis
+    PG --> PGVolume[(postgres-data)]
+    Kafka --> KafkaVolume[(kafka-data)]
+    Redis --> RAM[Временные данные в памяти]
+    Passwords[Пароли PostgreSQL] --> DBTool
+    Passwords -->|Только пароль администратора| PG
+    RedisPassword[Пароль Redis] --> Check
+    ACL[ACL с SHA-256 пароля] --> Redis
+```
+
+Временный `infrastructure-check` использует образ labdata, но не получает конфигурацию и пароли PostgreSQL. Постоянного четвёртого бизнес-сервиса нет. Отключение проверок не является остановкой инфраструктуры.
+
+Состав задают `compose.yaml`, `compose.postgres.yaml` и `compose.infrastructure.yaml`. Последний файл добавляет два постоянных контейнера и временную проверку. Базовый smoke сервисов и PostgreSQL-only `labdata smoke` сохраняют самостоятельный запуск.
+
+| Компонент | Лимит памяти / CPU | Данные и ограничения |
+| :--- | :--- | :--- |
+| PostgreSQL | 512 MiB / 0.5 | Постоянный volume; три логически изолированные базы |
+| Kafka | 640 MiB / 0.75 | Постоянный volume; JVM heap 128–256 MiB; одна партиция и RF=1 |
+| Redis | 128 MiB / 0.25 | `maxmemory=64mb`, `allkeys-lru`, без AOF/RDB; содержимое кеша не обязано переживать restart |
+| dbtool | 256 MiB / 1 | Временная подготовка и проверки PostgreSQL |
+| infrastructure-check | 256 MiB / 0.5 | Временные проверки Kafka/Redis; запускается отдельно от dbtool |
+
+Это ограничения локального функционального стенда. Лимиты постоянных контейнеров составляют 1280 MiB; JVM native memory, health-процессы, файловый кеш и Docker/WSL также расходуют память. Фактический снимок не доказывает достаточность ресурсов под нагрузкой.
+
+Kafka работает в KRaft с явными broker/controller listeners, статическим quorum и постоянным cluster ID. Автоматическое создание топиков выключено. Один broker не обеспечивает репликационную доступность: `acks=all` здесь означает подтверждение единственным ISR. Сохраняется проверка штатного restart, а не аварии диска/хоста.
+
+Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/6935806d53d5a31037711853dc2e7fde6106b45f/docs/development/POSTGRES.md#подготовка-стенда).
+
+Все контейнеры непривилегированные, с read-only root, без capabilities и с `no-new-privileges`; запись разрешена в явные volume/tmpfs. Порты доступны через DNS внутренней сети: `postgres`, `kafka:9092`, `redis:6379`. Kafka PLAINTEXT и Redis без TLS допустимы только в этом изолированном локальном профиле; удалённое размещение требует отдельного профиля аутентификации, TLS и сетевых правил.
+
+#### Автоматический прогон
+
+Из корня checkout на Windows AMD64:
+
+```powershell
+docker compose build toolchain
+docker compose run --rm -e GOOS=windows -e GOARCH=amd64 toolchain data-build
+.\bin\labdata-windows-amd64.exe smoke -infrastructure
+```
+
+Для macOS/Linux задаются соответствующие `GOOS` и `GOARCH`, результат — `bin/labdata-<os>-<arch>`. Реальный запуск на личном Mac должен подтверждаться отдельно. При установленном Go допустим `go run ./cmd/labdata smoke -infrastructure`.
+
+Прогон создаёт собственный `faultline-data-test-<ID>`, временные секреты и отчёт. Внутри последовательно выполняются:
+
+1. Сборка инструментов, готовность PostgreSQL/Kafka/Redis, фиксация бюджета Docker и лимитов контейнеров.
+2. Существующие проверки прав, миграций и seed PostgreSQL; контрольная сумма истории и данных.
+3. Redis: правильный пароль; точные отказы `NOAUTH`, `WRONGPASS`, `NOPERM`; разрешённые SET/GET, положительный PTTL, затем реальное истечение ключа и отсутствие значения.
+4. Kafka: создание нового изолированного топика, отправка и чтение записи. Сохраняются её фактические topic, partition, offset, key и value.
+5. Штатный restart всех трёх зависимостей с прежними volumes. Повторная подготовка PostgreSQL не меняет контрольную сумму. Новый consumer Kafka читает **ту же запись по сохранённому offset**, затем проверяется новая запись. Redis снова проходит проверки, без требования сохранности кеша.
+6. Снимок ресурсов, ограниченный сбор логов и удаление контейнеров, сетей, volumes, временных образов и секретов **только этого запуска**. Ошибка или отмена также приводит к cleanup с отдельным контекстом.
+
+Отчёт находится в `artifacts/infrastructure/<project>/report.json`. Он содержит стадии, очищенный вывод, итог и результат cleanup. CI публикует только `report.json`. Диагностика регистрируется перед сборкой/запуском, поэтому доступна и после частичного startup failure. Пароли, их хеши и домашние пути редактируются до записи.
+
+`timeout` и `probe_ttl` задаются в [публичном профиле](#p02-infra-configs-infrastructure-local-json). У клиентов нет бесконечных повторов; короткий внешний deadline проверяется на TCP-соединении, которое принимает запрос, но не отвечает. Настройки адресов и Redis ACL проверяются до подключения.
+
+У probe-producer явно разрешена отмена in-flight идемпотентной записи: при потере подтверждения тест завершается ошибкой и удаляет свой стенд, не повторяя запись приложением. Это ограничивает ожидание, но не позволяет считать неизвестный результат отсутствием записи. Политика бизнес-outbox должна отдельно учитывать этот исход.
+
+#### Постоянный локальный стенд
+
+Подготовить пароли и запустить инфраструктуру без автоматического удаления данных:
+
+```powershell
+.\bin\labdata-windows-amd64.exe secrets -infrastructure
+$infraCompose = @('compose', '-f', 'compose.yaml', '-f', 'compose.postgres.yaml', '-f', 'compose.infrastructure.yaml', '-p', 'faultline-data-local')
+docker @infraCompose build dbtool infrastructure-check
+docker @infraCompose up -d --wait postgres kafka redis
+docker @infraCompose run --rm --no-deps dbtool bootstrap
+docker @infraCompose run --rm --no-deps dbtool migrate
+docker @infraCompose run --rm --no-deps dbtool seed
+```
+
+`secrets -infrastructure` сохраняет существующие корректные пароли; Redis ACL должен соответствовать профилю и паролю. Несовпадение отклоняется, а не исправляется неявной ротацией. `FL_INFRA_SECRETS_DIR` задаёт Compose каталог, который должен совпадать с `-infrastructure-secrets` при подготовке. Файлы Kafka/Redis находятся в `configs/kafka` и `configs/redis`.
+
+`check-infrastructure` — внутренняя двухфазная команда smoke. `before-restart` требует нового топика; `after-restart` принимает сохранённый JSON через `-checkpoint`. Её нельзя повторно запускать на занятом топике и считать результат новой проверкой. Для регулярных проверок используйте изолированный `smoke -infrastructure`.
+
+Обычная остановка сохраняет оба постоянных volume:
+
+```powershell
+docker @infraCompose down --remove-orphans
+```
+
+Явное удаление данных указанного стенда требует повторить имя проекта:
+
+```powershell
+.\bin\labdata-windows-amd64.exe reset -infrastructure -project faultline-data-local -confirm faultline-data-local
+```
+
+Пароли постоянного стенда сохраняются в `.local`. Общие образы зависимостей и полезные build caches не удаляются. После локальных проверок на личном компьютере нужно выключить Docker Desktop и его WSL VM; автоматический smoke удаляет свои ресурсы, но не останавливает Docker других пользователей/задач самостоятельно.
+
+#### Границы следующего этапа
+
+В этом пакете нет бизнес-событий, обработчиков Orders/Inventory/Payments, outbox/inbox, отказоустойчивого Kafka-кластера или универсального генератора нагрузки. [Проектирование порядка и fencing F09](#p02-infra-docs-architecture-kafka-publishing-md) задаёт отдельные требования для будущего outbox; текущий producer/consumer smoke их не доказывает.
+
+<a id="p02-infra-docs-development-evidence-p02-infrastructure-md"></a>
+
+## Приложение: docs/development/evidence/p02/INFRASTRUCTURE.md
+
+Полный исходный документ: `docs/development/evidence/p02/INFRASTRUCTURE.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Совместная проверка PostgreSQL, Kafka и Redis
+
+Задача: [#16](https://github.com/Includeoyasi/faultline-lab/issues/16). Дата: **18 октября 2026 года**, Europe/Moscow. Команды и схема — в [инструкции](#p02-infra-docs-development-infrastructure-md). Версии, digests и платформенные манифесты — в [manifest](#p02-infra-docs-development-evidence-p02-infrastructure-images-json).
+
+Среда: Windows AMD64, Go 1.27.2; Docker Desktop 4.95 / Engine 29.8.2 / Compose 5.6, Linux backend WSL2. Лимит WSL сохранён: 2 CPU / 2 GiB RAM / 1 GiB swap. Docker сообщил 2 CPU и 1 996 603 392 доступных байт памяти. Это бюджет VM, отдельно от памяти физического Windows-хоста и лимитов контейнеров.
+
+Исходная база — merge `7d3e4d57e6081f9fe5669a481aaaa2b7f880f29c` из PR #22. Локальные проверки выполнялись с изменениями рабочего дерева, а не на чистом финальном HEAD; его проверяет CI предъявленного PR.
+
+| Проверка | Результат |
+| :--- | :--- |
+| Native Windows `go test ./...` и `go vet ./...` | PASS; PostgreSQL-интеграция отдельно выполнена контейнерным прогоном ниже |
+| Kafka/Redis deadlines | PASS: TCP fixture принимает соединение без ответа; отдельная Kafka fixture завершает metadata и producer initialization, принимает Produce и теряет ACK. Отмена возвращает ошибку, не ложный успех |
+| Runner lifecycle | PASS: успех, startup failure, ошибки до/после restart, некорректный checkpoint, отмена, ошибка cleanup; логи собираются и после неудачного старта; секрет и его ACL-хеш из вывода редактируются |
+| Совместный Windows `labdata smoke -infrastructure` | PASS: **19:53:08–19:59:49 MSK**, включая сборку; [исходный очищенный отчёт](#p02-infra-docs-development-evidence-p02-windows-infrastructure-report-json) |
+| PostgreSQL | PASS: прежние проверки прав/миграций/seed, неизменная контрольная сумма после restart и повторной подготовки |
+| Kafka | PASS: создание нового топика, producer/consumer, сохранение `topic=faultline-smoke`, `partition=0`, `offset=0` и точного key/value после restart с прежним volume; новая запись также отправлена и прочитана |
+| Redis | PASS до и после restart: правильная авторизация; `NOAUTH`, `WRONGPASS`, `NOPERM`; разрешённые SET/GET, PTTL>0, реальное истечение и отсутствие ключа |
+| Очистка своего запуска | PASS: контейнеры, сеть, volumes, временные образы и файлы секретов удалены; четыре адресные проверки отсутствия ресурсов прошли |
+| Linux AMD64/ARM64 | Реальные runtime, quality/race/vulnerability и новые проверки выполняет workflow PR; проверяются по предъявленному HEAD в GitHub Actions |
+| Личный Mac | **NOT_RUN**: реальной проверки на macOS не было; кросс-компиляция её не заменяет |
+
+Обычный PostgreSQL-only smoke сохранён. Дополнительная команда checker не требует PostgreSQL-конфигурации и её паролей; это подтверждено CLI regression. Клиенты закреплены: franz-go v1.22.2, go-redis v9.23.0. Kafka cancellation-настройка одноразовой пробы не является политикой будущего transactional outbox.
+
+#### Ресурсы и ограничения
+
+Одновременный снимок после функциональных проверок:
+
+| Контейнер | Память / лимит | CPU в снимке |
+| :--- | :--- | ---: |
+| PostgreSQL | 39.35 MiB / 512 MiB | 0.06% |
+| Kafka | 288.4 MiB / 640 MiB | 74.66% |
+| Redis | 12.47 MiB / 128 MiB | 3.60% |
+
+Один функциональный прогон прошёл в текущем бюджете без его увеличения. Это не peak, steady-state idle или capacity под бизнес-нагрузкой; Kafka health использует отдельный короткоживущий JVM-процесс. Потребление инструментов и VM нельзя выводить из суммы трёх показаний. Наблюдаемость и генератор нагрузки здесь не запускались.
+
+Kafka содержит один broker/controller с RF=1. Проверка доказывает сохранность при штатном restart, не доступность при отказе узла и не сохранность при потере диска. Redis — недолговечный кеш, сохранность его значений после restart не проверяется как требование.
+
+Cleanup в [отчёте](#p02-infra-docs-development-evidence-p02-windows-infrastructure-report-json) относится только к `faultline-data-test-791179b8fecb8da4`; общего prune не было. После него контейнеров и образов отдельных прогонов не осталось. Отдельно подтверждены 0 Docker-процессов, 0 запущенных WSL-дистрибутивов и `AutoStart=false`; [запись завершения](#p02-infra-docs-development-evidence-p02-windows-infrastructure-cleanup-json). Установленные программы, закреплённые общие образы и полезные кеши сохранены.
+
+#### Найденные ограничения и исправления
+
+1. Логи раньше регистрировались после успешного startup. Теперь сбор зарегистрирован до build/up; partial failure имеет диагностику, а cleanup — независимый контекст.
+2. Idempotent Kafka produce с неизвестным результатом мог пережить переданный deadline. Для disposable probe client привязан к context, клиентские metrics отключены, in-flight cancellation разрешена явно. Тест воспроизводит именно потерянный Produce ACK. При неизвестном результате probe не повторяет запись приложением.
+3. [F09](#p02-infra-docs-architecture-kafka-publishing-md) остаётся проектным предложением: определены порядок, fencing и будущие takeover/crash-проверки. Реализация outbox и доказательство этого протокола в текущий прогон не входят.
+
+<a id="p02-infra-docs-development-evidence-p02-infrastructure-images-json"></a>
+
+## Приложение: docs/development/evidence/p02/infrastructure-images.json
+
+Полный исходный документ: `docs/development/evidence/p02/infrastructure-images.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "verified_on": "2026-10-18",
+  "source": "Docker Hub tag API; image indexes pinned in compose.infrastructure.yaml",
+  "images": [
+    {
+      "image": "apache/kafka:4.3.1",
+      "source_url": "https://hub.docker.com/v2/repositories/apache/kafka/tags/4.3.1",
+      "index_digest": "sha256:77e3df9054047a88b520d0cc46e16696d3b22022e1d580aeccd2632df6532837",
+      "platforms": {
+        "linux/amd64": "sha256:ccd1314e47ec76909e01f86308b4dcf2064f19f7c89759234322314b0e319e26",
+        "linux/arm64": "sha256:c2b5172ab20d66381ec1729796a410fd611135821994526d4d42d2f256054af3"
+      }
+    },
+    {
+      "image": "redis:8.2.10-alpine",
+      "source_url": "https://hub.docker.com/v2/repositories/library/redis/tags/8.2.10-alpine",
+      "index_digest": "sha256:b51665e66f00759be7c3152ad5ac3c66fb2f619c13ef62dea7cc1f9914524635",
+      "platforms": {
+        "linux/amd64": "sha256:c4206b4e79e4bcc8b30679eeece996d98b27ffb1f0a15fd567338ed4d0880258",
+        "linux/arm64": "sha256:0f16771e42330c740f93cc57e2ebd1d60c75569b6e4e2aa90ff4bc8f65618078"
+      }
+    }
+  ],
+  "clients": {
+    "github.com/twmb/franz-go": "v1.22.2",
+    "github.com/redis/go-redis/v9": "v9.23.0"
+  }
+}
+```
+
+<a id="p02-infra-docs-development-evidence-p02-windows-infrastructure-cleanup-json"></a>
+
+## Приложение: docs/development/evidence/p02/windows-infrastructure-cleanup.json
+
+Полный исходный документ: `docs/development/evidence/p02/windows-infrastructure-cleanup.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "verified_on": "2026-10-18",
+  "project": "faultline-data-test-791179b8fecb8da4",
+  "run_cleanup": "PASS",
+  "run_containers_remaining": 0,
+  "run_networks_remaining": 0,
+  "run_volumes_remaining": 0,
+  "run_images_remaining": 0,
+  "temporary_credentials_remaining": 0,
+  "docker_processes_remaining": 0,
+  "wsl_running_distributions": 0,
+  "docker_autostart": false,
+  "global_prune_used": false,
+  "shared_images_and_caches_preserved": true
+}
+```
+
+<a id="p02-infra-docs-development-evidence-p02-windows-infrastructure-report-json"></a>
+
+## Приложение: docs/development/evidence/p02/windows-infrastructure-report.json
+
+Полный исходный документ: `docs/development/evidence/p02/windows-infrastructure-report.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "project": "faultline-data-test-791179b8fecb8da4",
+  "started_at": "2026-10-18T16:53:08.9813569Z",
+  "finished_at": "2026-10-18T16:59:49.5032614Z",
+  "result": "PASS",
+  "cleanup": "PASS",
+  "events": [
+    {
+      "stage": "prerequisites",
+      "output": "29.8.2\n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "build dbtool",
+      "output": "#1 [internal] load local bake definitions\n#1 reading from stdin 1.33kB 0.0s done\n#1 DONE 0.0s\n\n#2 [infrastructure-check internal] load build definition from Dockerfile\n#2 DONE 0.0s\n\n#2 [dbtool internal] load build definition from Dockerfile\n#2 transferring dockerfile: 1.49kB 0.0s done\n#2 DONE 0.1s\n\n#3 [infrastructure-check internal] load metadata for docker.io/golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f\n#3 ...\n\n#4 [infrastructure-check internal] load metadata for docker.io/library/golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e\n#4 DONE 2.8s\n\n#3 [infrastructure-check internal] load metadata for docker.io/golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f\n#3 DONE 2.9s\n\n#5 [infrastructure-check internal] load .dockerignore\n#5 transferring context: 172B 0.0s done\n#5 DONE 0.1s\n\n#6 [dbtool internal] load build context\n#6 DONE 0.0s\n\n#7 [infrastructure-check lint 1/1] FROM docker.io/golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f\n#7 resolve docker.io/golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f\n#7 resolve docker.io/golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f 0.1s done\n#7 resolve docker.io/golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f 0.1s done\n#7 DONE 0.1s\n\n#8 [dbtool toolchain 1/6] FROM docker.io/library/golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e\n#8 resolve docker.io/library/golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e 0.1s done\n#8 DONE 0.1s\n\n#6 [dbtool internal] load build context\n#6 transferring context: 139.90kB 0.2s done\n#6 DONE 0.2s\n\n#9 [infrastructure-check toolchain 2/6] WORKDIR /workspace\n#9 CACHED\n\n#10 [infrastructure-check toolchain 3/6] COPY --from=lint /usr/bin/golangci-lint /usr/local/bin/golangci-lint\n#10 CACHED\n\n#11 [infrastructure-check toolchain 4/6] COPY go.mod go.sum ./\n#11 ...\n\n#9 [dbtool toolchain 2/6] WORKDIR /workspace\n#9 CACHED\n\n#10 [dbtool toolchain 3/6] COPY --from=lint /usr/bin/golangci-lint /usr/local/bin/golangci-lint\n#10 CACHED\n\n#11 [dbtool toolchain 4/6] COPY go.mod go.sum ./\n#11 DONE 0.4s\n\n#12 [infrastructure-check toolchain 5/6] RUN git config --system --add safe.directory /workspace     \u0026\u0026 go mod download \u0026\u0026 go install tool\n#12 DONE 187.0s\n\n#13 [infrastructure-check toolchain 6/6] COPY --chmod=0755 tools/go.sh /usr/local/bin/lab-go\n#13 DONE 0.2s\n\n#14 [dbtool labdata-build 1/4] COPY cmd ./cmd\n#14 DONE 0.1s\n\n#15 [infrastructure-check labdata-build 2/4] COPY internal ./internal\n#15 DONE 0.1s\n\n#16 [dbtool labdata-build 3/4] COPY migrations ./migrations\n#16 DONE 0.1s\n\n#17 [dbtool labdata-build 4/4] RUN CGO_ENABLED=0 go build -trimpath -o /out/labdata ./cmd/labdata     \u0026\u0026 CGO_ENABLED=0 go test -c -o /out/database.test ./internal/database\n#17 DONE 85.5s\n\n#18 [dbtool labdata 1/2] COPY --from=labdata-build /out/labdata /app/labdata\n#18 DONE 0.1s\n\n#19 [dbtool labdata 2/2] COPY --from=labdata-build /out/database.test /app/database.test\n#19 DONE 0.1s\n\n#20 [infrastructure-check] exporting to image\n#20 exporting layers\n#20 exporting layers 1.5s done\n#20 exporting manifest sha256:c365002d13c1ec96d27b9677986f94f10bbe420e8d28e24d27434321ab58b339 0.0s done\n#20 exporting config sha256:35f408d01dc1496565a7f1d044bc316790a2fc9a4be8a5bb6e3606d4b2c12904 0.0s done\n#20 exporting attestation manifest sha256:a5a2bdd92b36513a392f9f142faca7cd2263d933b9896d16c7c5ed28f48adf42\n#20 exporting attestation manifest sha256:a5a2bdd92b36513a392f9f142faca7cd2263d933b9896d16c7c5ed28f48adf42 0.0s done\n#20 exporting manifest list sha256:74592ad0667697a6d7969abc5f6370bcf0e1b6f7811d20fbb43d17d31a4cedff 0.0s done\n#20 naming to docker.io/library/faultline-data-test-791179b8fecb8da4-infrastructure-check:latest 0.0s done\n#20 unpacking to docker.io/library/faultline-data-test-791179b8fecb8da4-infrastructure-check:latest\n#20 unpacking to docker.io/library/faultline-data-test-791179b8fecb8da4-infrastructure-check:latest 0.4s done\n#20 DONE 2.2s\n\n#21 [dbtool] exporting to image\n#21 exporting layers 1.5s done\n#21 exporting manifest sha256:a9154db9d85131de4ffeb5e457ca71131e1229cd769e3a9177cc139a0e143fff 0.0s done\n#21 exporting config sha256:2bb03763445a609bf0e93d914d5b46c2b4ae1322e78241a10911c0454805072b 0.0s done\n#21 exporting attestation manifest sha256:7cf52536f7e6bff38a2c9f14dd26357c7f60cd449585dc39d80cbe44338d9cad 0.0s done\n#21 exporting manifest list sha256:4dcdad37070464b911016b93d0c00cb2109ce95f912673230ea86d3d57f1cac9 0.0s done\n#21 naming to docker.io/library/faultline-data-test-791179b8fecb8da4-dbtool:latest done\n#21 unpacking to docker.io/library/faultline-data-test-791179b8fecb8da4-dbtool:latest 0.4s done\n#21 DONE 2.2s\n\n#22 [dbtool] resolving provenance for metadata file\n#22 DONE 0.1s\n\n#23 [infrastructure-check] resolving provenance for metadata file\n#23 DONE 0.0s\n Image faultline-data-test-791179b8fecb8da4-dbtool Building \n Image faultline-data-test-791179b8fecb8da4-infrastructure-check Building \n Image faultline-data-test-791179b8fecb8da4-dbtool Built \n Image faultline-data-test-791179b8fecb8da4-infrastructure-check Built \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "start dependencies",
+      "output": " Volume faultline-data-test-791179b8fecb8da4_postgres-data Creating \n Volume faultline-data-test-791179b8fecb8da4_postgres-data Creating \n Volume faultline-data-test-791179b8fecb8da4_kafka-data Creating \n Network faultline-data-test-791179b8fecb8da4_data Creating \n Volume faultline-data-test-791179b8fecb8da4_kafka-data Creating \n Network faultline-data-test-791179b8fecb8da4_data Creating \n Volume faultline-data-test-791179b8fecb8da4_postgres-data Created \n Volume faultline-data-test-791179b8fecb8da4_postgres-data Created \n Volume faultline-data-test-791179b8fecb8da4_kafka-data Created \n Volume faultline-data-test-791179b8fecb8da4_kafka-data Created \n Network faultline-data-test-791179b8fecb8da4_data Created \n Network faultline-data-test-791179b8fecb8da4_data Created \n Container faultline-data-test-791179b8fecb8da4-redis-1 Creating \n Container faultline-data-test-791179b8fecb8da4-postgres-1 Creating \n Container faultline-data-test-791179b8fecb8da4-kafka-1 Creating \n Container faultline-data-test-791179b8fecb8da4-kafka-1 Created \n Container faultline-data-test-791179b8fecb8da4-redis-1 Created \n Container faultline-data-test-791179b8fecb8da4-postgres-1 Created \n Container faultline-data-test-791179b8fecb8da4-postgres-1 Starting \n Container faultline-data-test-791179b8fecb8da4-redis-1 Starting \n Container faultline-data-test-791179b8fecb8da4-kafka-1 Starting \n Container faultline-data-test-791179b8fecb8da4-postgres-1 Started \n Container faultline-data-test-791179b8fecb8da4-redis-1 Started \n Container faultline-data-test-791179b8fecb8da4-kafka-1 Started \n Container faultline-data-test-791179b8fecb8da4-kafka-1 Waiting \n Container faultline-data-test-791179b8fecb8da4-redis-1 Waiting \n Container faultline-data-test-791179b8fecb8da4-postgres-1 Waiting \n Container faultline-data-test-791179b8fecb8da4-redis-1 Healthy \n Container faultline-data-test-791179b8fecb8da4-postgres-1 Healthy \n Container faultline-data-test-791179b8fecb8da4-kafka-1 Healthy \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "Docker backend budget",
+      "output": "{\"os\":\"linux\",\"architecture\":\"x86_64\",\"cpus\":2,\"memory_bytes\":1996603392}\n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "dependency limits and image IDs",
+      "output": "name=/faultline-data-test-791179b8fecb8da4-postgres-1 image_id=sha256:afc7e2d441324c0388fa80c3d24f733b4194a4eb7f47dd8ee2b08eb1a24a647c configured_image=postgres:18.6-bookworm@sha256:afc7e2d441324c0388fa80c3d24f733b4194a4eb7f47dd8ee2b08eb1a24a647c memory_bytes=536870912 nano_cpus=500000000\nname=/faultline-data-test-791179b8fecb8da4-kafka-1 image_id=sha256:77e3df9054047a88b520d0cc46e16696d3b22022e1d580aeccd2632df6532837 configured_image=apache/kafka:4.3.1@sha256:77e3df9054047a88b520d0cc46e16696d3b22022e1d580aeccd2632df6532837 memory_bytes=671088640 nano_cpus=750000000\nname=/faultline-data-test-791179b8fecb8da4-redis-1 image_id=sha256:b51665e66f00759be7c3152ad5ac3c66fb2f619c13ef62dea7cc1f9914524635 configured_image=redis:8.2.10-alpine@sha256:b51665e66f00759be7c3152ad5ac3c66fb2f619c13ef62dea7cc1f9914524635 memory_bytes=134217728 nano_cpus=250000000\n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "bootstrap",
+      "output": "bootstrap: PASS\n Container faultline-data-test-791179b8fecb8da4-dbtool-run-72211d6f8329 Creating \n Container faultline-data-test-791179b8fecb8da4-dbtool-run-72211d6f8329 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "bootstrap",
+      "output": "bootstrap: PASS\n Container faultline-data-test-791179b8fecb8da4-dbtool-run-37f1df620e37 Creating \n Container faultline-data-test-791179b8fecb8da4-dbtool-run-37f1df620e37 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "rights, migrations and seed",
+      "output": "=== RUN   TestPostgresFoundation\n=== RUN   TestPostgresFoundation/concurrent_migrations_and_immutable_history\n=== RUN   TestPostgresFoundation/repeat_migrations_restore_application_access\n=== RUN   TestPostgresFoundation/role_isolation_and_denied_DDL\n=== RUN   TestPostgresFoundation/failed_migration_rollback_and_checksum_drift\n=== RUN   TestPostgresFoundation/repeat_seed_preserves_catalog_and_modified_stock\n--- PASS: TestPostgresFoundation (1.29s)\n    --- PASS: TestPostgresFoundation/concurrent_migrations_and_immutable_history (0.51s)\n    --- PASS: TestPostgresFoundation/repeat_migrations_restore_application_access (0.07s)\n    --- PASS: TestPostgresFoundation/role_isolation_and_denied_DDL (0.42s)\n    --- PASS: TestPostgresFoundation/failed_migration_rollback_and_checksum_drift (0.15s)\n    --- PASS: TestPostgresFoundation/repeat_seed_preserves_catalog_and_modified_stock (0.13s)\nPASS\n Container faultline-data-test-791179b8fecb8da4-dbtool-run-dc5eaf3df9d3 Creating \n Container faultline-data-test-791179b8fecb8da4-dbtool-run-dc5eaf3df9d3 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "checksum before restart",
+      "output": "65177f2851adf8c9988d9ca0ee0a39216c270e80b49854df4d5c666837d05df4\n Container faultline-data-test-791179b8fecb8da4-dbtool-run-0cd56ccf6f6c Creating \n Container faultline-data-test-791179b8fecb8da4-dbtool-run-0cd56ccf6f6c Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "Kafka and Redis before restart",
+      "output": "{\"version\":1,\"topic\":\"faultline-smoke\",\"partition\":0,\"offset\":0,\"key\":\"checkpoint\",\"value\":\"363f5ee7c862391a9e49b155c3a187e1\"}\n Container faultline-data-test-791179b8fecb8da4-infrastructure-check-run-507eb120005c Creating \n Container faultline-data-test-791179b8fecb8da4-infrastructure-check-run-507eb120005c Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "restart dependencies",
+      "output": " Container faultline-data-test-791179b8fecb8da4-redis-1 Restarting \n Container faultline-data-test-791179b8fecb8da4-kafka-1 Restarting \n Container faultline-data-test-791179b8fecb8da4-postgres-1 Restarting \n Container faultline-data-test-791179b8fecb8da4-redis-1 Started \n Container faultline-data-test-791179b8fecb8da4-postgres-1 Started \n Container faultline-data-test-791179b8fecb8da4-kafka-1 Started \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "wait after restart",
+      "output": " Container faultline-data-test-791179b8fecb8da4-postgres-1 Running \n Container faultline-data-test-791179b8fecb8da4-redis-1 Running \n Container faultline-data-test-791179b8fecb8da4-kafka-1 Running \n Container faultline-data-test-791179b8fecb8da4-redis-1 Waiting \n Container faultline-data-test-791179b8fecb8da4-kafka-1 Waiting \n Container faultline-data-test-791179b8fecb8da4-postgres-1 Waiting \n Container faultline-data-test-791179b8fecb8da4-redis-1 Healthy \n Container faultline-data-test-791179b8fecb8da4-postgres-1 Healthy \n Container faultline-data-test-791179b8fecb8da4-kafka-1 Healthy \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "repeat bootstrap",
+      "output": "bootstrap: PASS\n Container faultline-data-test-791179b8fecb8da4-dbtool-run-fda884214f38 Creating \n Container faultline-data-test-791179b8fecb8da4-dbtool-run-fda884214f38 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "repeat migrate",
+      "output": "migrate: PASS\n Container faultline-data-test-791179b8fecb8da4-dbtool-run-4ab58db54d63 Creating \n Container faultline-data-test-791179b8fecb8da4-dbtool-run-4ab58db54d63 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "repeat seed",
+      "output": "seed: PASS\n Container faultline-data-test-791179b8fecb8da4-dbtool-run-54f7cd1a3578 Creating \n Container faultline-data-test-791179b8fecb8da4-dbtool-run-54f7cd1a3578 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "checksum after restart",
+      "output": "65177f2851adf8c9988d9ca0ee0a39216c270e80b49854df4d5c666837d05df4\n Container faultline-data-test-791179b8fecb8da4-dbtool-run-14c40dd07a25 Creating \n Container faultline-data-test-791179b8fecb8da4-dbtool-run-14c40dd07a25 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "Kafka and Redis after restart",
+      "output": "{\"version\":1,\"topic\":\"faultline-smoke\",\"partition\":0,\"offset\":0,\"key\":\"checkpoint\",\"value\":\"363f5ee7c862391a9e49b155c3a187e1\"}\n Container faultline-data-test-791179b8fecb8da4-infrastructure-check-run-db51446df010 Creating \n Container faultline-data-test-791179b8fecb8da4-infrastructure-check-run-db51446df010 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "resource snapshot",
+      "output": "{\"BlockIO\":\"15.1MB / 799kB\",\"CPUPerc\":\"0.06%\",\"Container\":\"faultline-data-test-791179b8fecb8da4-postgres-1\",\"ID\":\"8bdf42f05a1d\",\"MemPerc\":\"7.69%\",\"MemUsage\":\"39.35MiB / 512MiB\",\"Name\":\"faultline-data-test-791179b8fecb8da4-postgres-1\",\"NetIO\":\"32.6kB / 27.3kB\",\"PIDs\":\"9\"}\n{\"BlockIO\":\"19.1MB / 246kB\",\"CPUPerc\":\"74.66%\",\"Container\":\"faultline-data-test-791179b8fecb8da4-kafka-1\",\"ID\":\"2b6db680ea6d\",\"MemPerc\":\"45.06%\",\"MemUsage\":\"288.4MiB / 640MiB\",\"Name\":\"faultline-data-test-791179b8fecb8da4-kafka-1\",\"NetIO\":\"7.6kB / 11.8kB\",\"PIDs\":\"109\"}\n{\"BlockIO\":\"7.95MB / 0B\",\"CPUPerc\":\"3.60%\",\"Container\":\"faultline-data-test-791179b8fecb8da4-redis-1\",\"ID\":\"909ba6272249\",\"MemPerc\":\"9.74%\",\"MemUsage\":\"12.47MiB / 128MiB\",\"Name\":\"faultline-data-test-791179b8fecb8da4-redis-1\",\"NetIO\":\"10.3kB / 6.33kB\",\"PIDs\":\"6\"}\n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "dependency logs",
+      "output": "redis-1     | Starting Redis Server\nkafka-1     | \tmetrics.num.samples = 2\npostgres-1  | The files belonging to this database system will be owned by user \"postgres\".\npostgres-1  | This user must also own the server process.\npostgres-1  | \nkafka-1     | \tmetrics.recording.level = INFO\npostgres-1  | The database cluster will be initialized with locale \"en_US.utf8\".\npostgres-1  | The default database encoding has accordingly been set to \"UTF8\".\nredis-1     | 1:C 18 Oct 2026 16:58:02.530 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo\npostgres-1  | The default text search configuration will be set to \"english\".\npostgres-1  | \npostgres-1  | Data page checksums are enabled.\npostgres-1  | \nredis-1     | 1:C 18 Oct 2026 16:58:02.532 * Redis version=8.2.10, bits=64, commit=00000000, modified=1, pid=1, just started\nredis-1     | 1:C 18 Oct 2026 16:58:02.532 * Configuration loaded\nredis-1     | 1:M 18 Oct 2026 16:58:02.535 * monotonic clock: POSIX clock_gettime\nredis-1     | 1:M 18 Oct 2026 16:58:02.589 * Running mode=standalone, port=6379.\npostgres-1  | fixing permissions on existing directory /var/lib/postgresql/18/docker ... ok\nredis-1     | 1:M 18 Oct 2026 16:58:02.595 * \u003cbf\u003e RedisBloom version 8.2.16 (Git=unknown)\npostgres-1  | creating subdirectories ... ok\nredis-1     | 1:M 18 Oct 2026 16:58:02.596 * \u003cbf\u003e Registering configuration options: [\nredis-1     | 1:M 18 Oct 2026 16:58:02.596 * \u003cbf\u003e \t{ bf-error-rate       :      0.01 }\nredis-1     | 1:M 18 Oct 2026 16:58:02.596 * \u003cbf\u003e \t{ bf-initial-size     :       100 }\nredis-1     | 1:M 18 Oct 2026 16:58:02.596 * \u003cbf\u003e \t{ bf-expansion-factor :         2 }\npostgres-1  | selecting dynamic shared memory implementation ... posix\npostgres-1  | selecting default \"max_connections\" ... 100\npostgres-1  | selecting default \"shared_buffers\" ... 128MB\nredis-1     | 1:M 18 Oct 2026 16:58:02.596 * \u003cbf\u003e \t{ cf-bucket-size      :         2 }\nkafka-1     | \tmetrics.sample.window.ms = 30000\nredis-1     | 1:M 18 Oct 2026 16:58:02.596 * \u003cbf\u003e \t{ cf-initial-size     :      1024 }\nredis-1     | 1:M 18 Oct 2026 16:58:02.596 * \u003cbf\u003e \t{ cf-max-iterations   :        20 }\nredis-1     | 1:M 18 Oct 2026 16:58:02.596 * \u003cbf\u003e \t{ cf-expansion-factor :         1 }\nkafka-1     | \tmin.insync.replicas = 1\nredis-1     | 1:M 18 Oct 2026 16:58:02.596 * \u003cbf\u003e \t{ cf-max-expansions   :        32 }\nkafka-1     | \tnode.id = 1\nredis-1     | 1:M 18 Oct 2026 16:58:02.596 * \u003cbf\u003e ]\nredis-1     | 1:M 18 Oct 2026 16:58:02.597 * Module 'bf' loaded from /usr/local/lib/redis/modules//redisbloom.so\nredis-1     | 1:M 18 Oct 2026 16:58:02.643 * \u003csearch\u003e Redis version found by RedisSearch : 8.2.10 - oss\npostgres-1  | selecting default time zone ... Etc/UTC\nredis-1     | 1:M 18 Oct 2026 16:58:02.643 * \u003csearch\u003e RediSearch version 8.2.13 (Git=e9cf9bf)\nredis-1     | 1:M 18 Oct 2026 16:58:02.643 * \u003csearch\u003e Low level api version 1 initialized successfully\nredis-1     | 1:M 18 Oct 2026 16:58:02.643 * \u003csearch\u003e gc: ON, prefix min length: 2, min word length to stem: 4, prefix max expansions: 200, query timeout (ms): 500, timeout policy: return, cursor read size: 1000, cursor max idle (ms): 300000, max doctable size: 1000000, max number of search results:  1000000, default scorer: BM25STD, \npostgres-1  | creating configuration files ... ok\npostgres-1  | running bootstrap script ... ok\npostgres-1  | performing post-bootstrap initialization ... ok\nredis-1     | 1:M 18 Oct 2026 16:58:02.643 * \u003csearch\u003e Initialized thread pools!\nkafka-1     | \tnum.io.threads = 2\npostgres-1  | syncing data to disk ... ok\npostgres-1  | \npostgres-1  | Success. You can now start the database server using:\npostgres-1  | \npostgres-1  |     pg_ctl -D /var/lib/postgresql/18/docker -l logfile start\npostgres-1  | \npostgres-1  | waiting for server to start....2026-10-18 16:58:04.463 UTC [37] LOG:  starting PostgreSQL 18.6 (Debian 18.6-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit\npostgres-1  | 2026-10-18 16:58:04.463 UTC [37] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\npostgres-1  | 2026-10-18 16:58:04.479 UTC [43] LOG:  database system was shut down at 2026-10-18 16:58:04 UTC\npostgres-1  | 2026-10-18 16:58:04.495 UTC [37] LOG:  database system is ready to accept connections\npostgres-1  |  done\nredis-1     | 1:M 18 Oct 2026 16:58:02.644 * \u003csearch\u003e Disabled workers threadpool of size 0\nkafka-1     | \tnum.network.threads = 2\nredis-1     | 1:M 18 Oct 2026 16:58:02.644 * \u003csearch\u003e Subscribe to config changes\nkafka-1     | \tnum.partitions = 1\nredis-1     | 1:M 18 Oct 2026 16:58:02.644 * \u003csearch\u003e Enabled role change notification\nredis-1     | 1:M 18 Oct 2026 16:58:02.644 # \u003csearch\u003e Could not create command: _FT.DROP\nredis-1     | 1:M 18 Oct 2026 16:58:02.644 * \u003csearch\u003e Registered command _FT.DROP with flags: write\nkafka-1     | \tnum.recovery.threads.per.data.dir = 2\npostgres-1  | server started\npostgres-1  | \npostgres-1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*\npostgres-1  | \nredis-1     | 1:M 18 Oct 2026 16:58:02.644 # \u003csearch\u003e Could not create command: _FT.DROPINDEX\npostgres-1  | waiting for server to shut down....2026-10-18 16:58:04.652 UTC [37] LOG:  received fast shutdown request\nredis-1     | 1:M 18 Oct 2026 16:58:02.644 * \u003csearch\u003e Registered command _FT.DROPINDEX with flags: write\nkafka-1     | \tnum.replica.alter.log.dirs.threads = null\nredis-1     | 1:M 18 Oct 2026 16:58:02.644 # \u003csearch\u003e Could not create command: _FT._DROPIFX\npostgres-1  | 2026-10-18 16:58:04.656 UTC [37] LOG:  aborting any active transactions\npostgres-1  | 2026-10-18 16:58:04.662 UTC [37] LOG:  background worker \"logical replication launcher\" (PID 46) exited with exit code 1\npostgres-1  | 2026-10-18 16:58:04.663 UTC [41] LOG:  shutting down\nredis-1     | 1:M 18 Oct 2026 16:58:02.644 * \u003csearch\u003e Registered command _FT._DROPIFX with flags: write\nkafka-1     | \tnum.replica.fetchers = 1\nredis-1     | 1:M 18 Oct 2026 16:58:02.644 # \u003csearch\u003e Could not create command: _FT._DROPINDEXIFX\nredis-1     | 1:M 18 Oct 2026 16:58:02.644 * \u003csearch\u003e Registered command _FT._DROPINDEXIFX with flags: write\nredis-1     | 1:M 18 Oct 2026 16:58:02.644 * \u003csearch\u003e Cluster configuration: AUTO partitions, type: 0, coordinator timeout: 0ms\npostgres-1  | 2026-10-18 16:58:04.669 UTC [41] LOG:  checkpoint starting: shutdown immediate\nkafka-1     | \toffset.metadata.max.bytes = 4096\nredis-1     | 1:M 18 Oct 2026 16:58:02.644 * \u003csearch\u003e Register write commands\npostgres-1  | 2026-10-18 16:58:04.690 UTC [41] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.004 s, total=0.027 s; sync files=2, longest=0.003 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/1759450, redo lsn=0/1759450\npostgres-1  | 2026-10-18 16:58:04.704 UTC [37] LOG:  database system is shut down\nredis-1     | 1:M 18 Oct 2026 16:58:02.644 * Module 'search' loaded from /usr/local/lib/redis/modules//redisearch.so\npostgres-1  |  done\nredis-1     | 1:M 18 Oct 2026 16:58:02.649 * \u003ctimeseries\u003e RedisTimeSeries version 80214, git_sha=a51a80c51c8c40601b87b5a5674da0cb12989d58\npostgres-1  | server stopped\nredis-1     | 1:M 18 Oct 2026 16:58:02.650 * \u003ctimeseries\u003e Redis version found by RedisTimeSeries : 8.2.10 - oss\nredis-1     | 1:M 18 Oct 2026 16:58:02.650 * \u003ctimeseries\u003e Registering configuration options: [\npostgres-1  | \nredis-1     | 1:M 18 Oct 2026 16:58:02.650 * \u003ctimeseries\u003e \t{ ts-compaction-policy   :              }\nredis-1     | 1:M 18 Oct 2026 16:58:02.650 * \u003ctimeseries\u003e \t{ ts-num-threads         :            3 }\npostgres-1  | PostgreSQL init process complete; ready for start up.\npostgres-1  | \npostgres-1  | 2026-10-18 16:58:04.788 UTC [1] LOG:  starting PostgreSQL 18.6 (Debian 18.6-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit\nredis-1     | 1:M 18 Oct 2026 16:58:02.650 * \u003ctimeseries\u003e \t{ ts-retention-policy    :            0 }\npostgres-1  | 2026-10-18 16:58:04.789 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\npostgres-1  | 2026-10-18 16:58:04.789 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\npostgres-1  | 2026-10-18 16:58:04.792 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\nredis-1     | 1:M 18 Oct 2026 16:58:02.650 * \u003ctimeseries\u003e \t{ ts-duplicate-policy    :        block }\npostgres-1  | 2026-10-18 16:58:04.801 UTC [57] LOG:  database system was shut down at 2026-10-18 16:58:04 UTC\nredis-1     | 1:M 18 Oct 2026 16:58:02.651 * \u003ctimeseries\u003e \t{ ts-chunk-size-bytes    :         4096 }\nredis-1     | 1:M 18 Oct 2026 16:58:02.651 * \u003ctimeseries\u003e \t{ ts-encoding            :   compressed }\npostgres-1  | 2026-10-18 16:58:04.808 UTC [1] LOG:  database system is ready to accept connections\nredis-1     | 1:M 18 Oct 2026 16:58:02.651 * \u003ctimeseries\u003e \t{ ts-ignore-max-time-diff:            0 }\nkafka-1     | \toffsets.commit.timeout.ms = 5000\nredis-1     | 1:M 18 Oct 2026 16:58:02.651 * \u003ctimeseries\u003e \t{ ts-ignore-max-val-diff :     0.000000 }\nkafka-1     | \toffsets.load.buffer.size = 5242880\nkafka-1     | \toffsets.retention.check.interval.ms = 600000\nkafka-1     | \toffsets.retention.minutes = 10080\nkafka-1     | \toffsets.topic.compression.codec = 0\npostgres-1  | 2026-10-18 16:58:35.926 UTC [190] ERROR:  permission denied for schema inventory at character 22\npostgres-1  | 2026-10-18 16:58:35.964 UTC [193] FATAL:  permission denied for database \"inventory_db\"\npostgres-1  | 2026-10-18 16:58:35.964 UTC [193] DETAIL:  User does not have CONNECT privilege.\nkafka-1     | \toffsets.topic.num.partitions = 1\npostgres-1  | 2026-10-18 16:58:35.974 UTC [194] FATAL:  permission denied for database \"payments_db\"\nkafka-1     | \toffsets.topic.replication.factor = 1\npostgres-1  | 2026-10-18 16:58:35.974 UTC [194] DETAIL:  User does not have CONNECT privilege.\nredis-1     | 1:M 18 Oct 2026 16:58:02.651 * \u003ctimeseries\u003e ]\nredis-1     | 1:M 18 Oct 2026 16:58:02.651 * \u003ctimeseries\u003e Detected redis oss\nredis-1     | 1:M 18 Oct 2026 16:58:02.651 * \u003ctimeseries\u003e Enabled diskless replication\nredis-1     | 1:M 18 Oct 2026 16:58:02.651 * Module 'timeseries' loaded from /usr/local/lib/redis/modules//redistimeseries.so\nredis-1     | 1:M 18 Oct 2026 16:58:02.665 * \u003cReJSON\u003e Created new data type 'ReJSON-RL'\nredis-1     | 1:M 18 Oct 2026 16:58:02.666 * \u003cReJSON\u003e version: 80209 git sha: unknown branch: unknown\nredis-1     | 1:M 18 Oct 2026 16:58:02.666 * \u003cReJSON\u003e Exported RedisJSON_V1 API\nkafka-1     | \toffsets.topic.segment.bytes = 104857600\nkafka-1     | \tprincipal.builder.class = class org.apache.kafka.common.security.authenticator.DefaultKafkaPrincipalBuilder\nredis-1     | 1:M 18 Oct 2026 16:58:02.666 * \u003cReJSON\u003e Exported RedisJSON_V2 API\nredis-1     | 1:M 18 Oct 2026 16:58:02.666 * \u003cReJSON\u003e Exported RedisJSON_V3 API\npostgres-1  | 2026-10-18 16:58:36.021 UTC [196] FATAL:  permission denied for database \"inventory_db\"\npostgres-1  | 2026-10-18 16:58:36.021 UTC [196] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 16:58:36.030 UTC [197] FATAL:  permission denied for database \"payments_db\"\npostgres-1  | 2026-10-18 16:58:36.030 UTC [197] DETAIL:  User does not have CONNECT privilege.\nredis-1     | 1:M 18 Oct 2026 16:58:02.666 * \u003cReJSON\u003e Exported RedisJSON_V4 API\nredis-1     | 1:M 18 Oct 2026 16:58:02.666 * \u003cReJSON\u003e Exported RedisJSON_V5 API\npostgres-1  | 2026-10-18 16:58:36.041 UTC [198] ERROR:  permission denied for database orders_db\nredis-1     | 1:M 18 Oct 2026 16:58:02.666 * \u003cReJSON\u003e Enabled diskless replication\npostgres-1  | 2026-10-18 16:58:36.041 UTC [198] ERROR:  permission denied for schema public at character 14\npostgres-1  | 2026-10-18 16:58:36.042 UTC [198] ERROR:  permission denied to create temporary tables in database \"orders_db\" at character 19\npostgres-1  | 2026-10-18 16:58:36.042 UTC [198] ERROR:  permission denied to set role \"orders_migrator\"\nkafka-1     | \tprocess.roles = [broker, controller]\nkafka-1     | \tproducer.id.expiration.check.interval.ms = 600000\nkafka-1     | \tproducer.id.expiration.ms = 86400000\nkafka-1     | \tproducer.purgatory.purge.interval.requests = 1000\npostgres-1  | 2026-10-18 16:58:36.042 UTC [198] ERROR:  permission denied for schema lab_migrations at character 13\nkafka-1     | \tqueued.max.request.bytes = -1\nredis-1     | 1:M 18 Oct 2026 16:58:02.666 * \u003cReJSON\u003e Initialized shared string cache, thread safe: true.\nkafka-1     | \tqueued.max.requests = 500\nredis-1     | 1:M 18 Oct 2026 16:58:02.666 * Module 'ReJSON' loaded from /usr/local/lib/redis/modules//rejson.so\nkafka-1     | \tquota.window.num = 11\nkafka-1     | \tquota.window.size.seconds = 1\npostgres-1  | 2026-10-18 16:58:36.067 UTC [198] ERROR:  must be owner of table privilege_probe\npostgres-1  | 2026-10-18 16:58:36.067 UTC [198] ERROR:  permission denied for table privilege_probe\nkafka-1     | \tremote.fetch.max.wait.ms = 500\nredis-1     | 1:M 18 Oct 2026 16:58:02.666 * \u003csearch\u003e Acquired RedisJSON_V5 API\nkafka-1     | \tremote.list.offsets.request.timeout.ms = 30000\nkafka-1     | \tremote.log.index.file.cache.total.size.bytes = 1073741824\nkafka-1     | \tremote.log.index.file.cache.ttl.ms = 900000\nkafka-1     | \tremote.log.manager.copier.thread.pool.size = 10\nkafka-1     | \tremote.log.manager.copy.max.bytes.per.second = 9223372036854775807\nkafka-1     | \tremote.log.manager.copy.quota.window.num = 11\npostgres-1  | 2026-10-18 16:58:36.076 UTC [200] FATAL:  permission denied for database \"postgres\"\nredis-1     | 1:M 18 Oct 2026 16:58:02.680 * Server initialized\npostgres-1  | 2026-10-18 16:58:36.076 UTC [200] DETAIL:  User does not have CONNECT privilege.\nkafka-1     | \tremote.log.manager.copy.quota.window.size.seconds = 1\nkafka-1     | \tremote.log.manager.expiration.thread.pool.size = 10\npostgres-1  | 2026-10-18 16:58:36.086 UTC [201] FATAL:  permission denied for database \"template1\"\nkafka-1     | \tremote.log.manager.fetch.max.bytes.per.second = 9223372036854775807\nkafka-1     | \tremote.log.manager.fetch.quota.window.num = 11\nredis-1     | 1:M 18 Oct 2026 16:58:02.681 * Ready to accept connections tcp\nredis-1     | 1:signal-handler (1792342723) Received SIGTERM scheduling shutdown...\nredis-1     | 1:M 18 Oct 2026 16:58:43.722 * User requested shutdown...\nredis-1     | 1:M 18 Oct 2026 16:58:43.722 # Redis is now ready to exit, bye bye...\npostgres-1  | 2026-10-18 16:58:36.086 UTC [201] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 16:58:36.115 UTC [202] FATAL:  permission denied for database \"orders_db\"\npostgres-1  | 2026-10-18 16:58:36.115 UTC [202] DETAIL:  User does not have CONNECT privilege.\nkafka-1     | \tremote.log.manager.fetch.quota.window.size.seconds = 1\npostgres-1  | 2026-10-18 16:58:36.129 UTC [204] FATAL:  permission denied for database \"payments_db\"\nkafka-1     | \tremote.log.manager.follower.thread.pool.size = 2\nredis-1     | Starting Redis Server\npostgres-1  | 2026-10-18 16:58:36.129 UTC [204] DETAIL:  User does not have CONNECT privilege.\nredis-1     | 1:C 18 Oct 2026 16:58:44.142 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo\npostgres-1  | 2026-10-18 16:58:36.136 UTC [205] FATAL:  permission denied for database \"orders_db\"\npostgres-1  | 2026-10-18 16:58:36.136 UTC [205] DETAIL:  User does not have CONNECT privilege.\nkafka-1     | \tremote.log.manager.task.interval.ms = 30000\npostgres-1  | 2026-10-18 16:58:36.153 UTC [207] FATAL:  permission denied for database \"payments_db\"\nkafka-1     | \tremote.log.manager.task.retry.backoff.max.ms = 30000\npostgres-1  | 2026-10-18 16:58:36.153 UTC [207] DETAIL:  User does not have CONNECT privilege.\nkafka-1     | \tremote.log.manager.task.retry.backoff.ms = 500\nredis-1     | 1:C 18 Oct 2026 16:58:44.142 * Redis version=8.2.10, bits=64, commit=00000000, modified=1, pid=1, just started\nredis-1     | 1:C 18 Oct 2026 16:58:44.142 * Configuration loaded\nredis-1     | 1:M 18 Oct 2026 16:58:44.142 * monotonic clock: POSIX clock_gettime\nkafka-1     | \tremote.log.manager.task.retry.jitter = 0.2\nredis-1     | 1:M 18 Oct 2026 16:58:44.145 * Running mode=standalone, port=6379.\nkafka-1     | \tremote.log.manager.thread.pool.size = 2\nredis-1     | 1:M 18 Oct 2026 16:58:44.146 * \u003cbf\u003e RedisBloom version 8.2.16 (Git=unknown)\nredis-1     | 1:M 18 Oct 2026 16:58:44.147 * \u003cbf\u003e Registering configuration options: [\nredis-1     | 1:M 18 Oct 2026 16:58:44.147 * \u003cbf\u003e \t{ bf-error-rate       :      0.01 }\nredis-1     | 1:M 18 Oct 2026 16:58:44.147 * \u003cbf\u003e \t{ bf-initial-size     :       100 }\nredis-1     | 1:M 18 Oct 2026 16:58:44.147 * \u003cbf\u003e \t{ bf-expansion-factor :         2 }\nkafka-1     | \tremote.log.metadata.custom.metadata.max.bytes = 128\nredis-1     | 1:M 18 Oct 2026 16:58:44.147 * \u003cbf\u003e \t{ cf-bucket-size      :         2 }\nredis-1     | 1:M 18 Oct 2026 16:58:44.147 * \u003cbf\u003e \t{ cf-initial-size     :      1024 }\nredis-1     | 1:M 18 Oct 2026 16:58:44.147 * \u003cbf\u003e \t{ cf-max-iterations   :        20 }\npostgres-1  | 2026-10-18 16:58:36.160 UTC [208] ERROR:  permission denied for database inventory_db\npostgres-1  | 2026-10-18 16:58:36.161 UTC [208] ERROR:  permission denied for schema public at character 14\npostgres-1  | 2026-10-18 16:58:36.161 UTC [208] ERROR:  permission denied to create temporary tables in database \"inventory_db\" at character 19\npostgres-1  | 2026-10-18 16:58:36.161 UTC [208] ERROR:  permission denied to set role \"inventory_migrator\"\nredis-1     | 1:M 18 Oct 2026 16:58:44.147 * \u003cbf\u003e \t{ cf-expansion-factor :         1 }\npostgres-1  | 2026-10-18 16:58:36.161 UTC [208] ERROR:  permission denied for schema lab_migrations at character 13\npostgres-1  | 2026-10-18 16:58:36.226 UTC [208] ERROR:  must be owner of table privilege_probe\nredis-1     | 1:M 18 Oct 2026 16:58:44.147 * \u003cbf\u003e \t{ cf-max-expansions   :        32 }\nkafka-1     | \tremote.log.metadata.manager.class.name = org.apache.kafka.server.log.remote.metadata.storage.TopicBasedRemoteLogMetadataManager\nkafka-1     | \tremote.log.metadata.manager.class.path = null\nredis-1     | 1:M 18 Oct 2026 16:58:44.147 * \u003cbf\u003e ]\nredis-1     | 1:M 18 Oct 2026 16:58:44.148 * Module 'bf' loaded from /usr/local/lib/redis/modules//redisbloom.so\nredis-1     | 1:M 18 Oct 2026 16:58:44.158 * \u003csearch\u003e Redis version found by RedisSearch : 8.2.10 - oss\nkafka-1     | \tremote.log.metadata.manager.impl.prefix = rlmm.config.\npostgres-1  | 2026-10-18 16:58:36.227 UTC [208] ERROR:  permission denied for table privilege_probe\nkafka-1     | \tremote.log.metadata.manager.listener.name = null\npostgres-1  | 2026-10-18 16:58:36.236 UTC [210] FATAL:  permission denied for database \"postgres\"\nkafka-1     | \tremote.log.reader.max.pending.tasks = 100\nredis-1     | 1:M 18 Oct 2026 16:58:44.159 * \u003csearch\u003e RediSearch version 8.2.13 (Git=e9cf9bf)\nkafka-1     | \tremote.log.reader.threads = 10\nkafka-1     | \tremote.log.storage.manager.class.name = null\nkafka-1     | \tremote.log.storage.manager.class.path = null\nredis-1     | 1:M 18 Oct 2026 16:58:44.160 * \u003csearch\u003e Low level api version 1 initialized successfully\nkafka-1     | \tremote.log.storage.manager.impl.prefix = rsm.config.\npostgres-1  | 2026-10-18 16:58:36.236 UTC [210] DETAIL:  User does not have CONNECT privilege.\nkafka-1     | \tremote.log.storage.system.enable = false\npostgres-1  | 2026-10-18 16:58:36.245 UTC [211] FATAL:  permission denied for database \"template1\"\npostgres-1  | 2026-10-18 16:58:36.245 UTC [211] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 16:58:36.254 UTC [212] FATAL:  permission denied for database \"orders_db\"\nkafka-1     | \treplica.fetch.backoff.ms = 1000\nkafka-1     | \treplica.fetch.max.bytes = 1048576\nkafka-1     | \treplica.fetch.min.bytes = 1\nkafka-1     | \treplica.fetch.response.max.bytes = 10485760\npostgres-1  | 2026-10-18 16:58:36.254 UTC [212] DETAIL:  User does not have CONNECT privilege.\nredis-1     | 1:M 18 Oct 2026 16:58:44.160 * \u003csearch\u003e gc: ON, prefix min length: 2, min word length to stem: 4, prefix max expansions: 200, query timeout (ms): 500, timeout policy: return, cursor read size: 1000, cursor max idle (ms): 300000, max doctable size: 1000000, max number of search results:  1000000, default scorer: BM25STD, \npostgres-1  | 2026-10-18 16:58:36.262 UTC [213] FATAL:  permission denied for database \"inventory_db\"\npostgres-1  | 2026-10-18 16:58:36.262 UTC [213] DETAIL:  User does not have CONNECT privilege.\nredis-1     | 1:M 18 Oct 2026 16:58:44.160 * \u003csearch\u003e Initialized thread pools!\npostgres-1  | 2026-10-18 16:58:36.283 UTC [215] FATAL:  permission denied for database \"orders_db\"\nredis-1     | 1:M 18 Oct 2026 16:58:44.160 * \u003csearch\u003e Disabled workers threadpool of size 0\npostgres-1  | 2026-10-18 16:58:36.283 UTC [215] DETAIL:  User does not have CONNECT privilege.\nredis-1     | 1:M 18 Oct 2026 16:58:44.160 * \u003csearch\u003e Subscribe to config changes\npostgres-1  | 2026-10-18 16:58:36.314 UTC [216] FATAL:  permission denied for database \"inventory_db\"\npostgres-1  | 2026-10-18 16:58:36.314 UTC [216] DETAIL:  User does not have CONNECT privilege.\nredis-1     | 1:M 18 Oct 2026 16:58:44.160 * \u003csearch\u003e Enabled role change notification\nredis-1     | 1:M 18 Oct 2026 16:58:44.160 # \u003csearch\u003e Could not create command: _FT.DROP\nredis-1     | 1:M 18 Oct 2026 16:58:44.161 * \u003csearch\u003e Registered command _FT.DROP with flags: write\nkafka-1     | \treplica.fetch.wait.max.ms = 500\nredis-1     | 1:M 18 Oct 2026 16:58:44.161 # \u003csearch\u003e Could not create command: _FT.DROPINDEX\nredis-1     | 1:M 18 Oct 2026 16:58:44.161 * \u003csearch\u003e Registered command _FT.DROPINDEX with flags: write\npostgres-1  | 2026-10-18 16:58:36.331 UTC [218] ERROR:  permission denied for database payments_db\nredis-1     | 1:M 18 Oct 2026 16:58:44.161 # \u003csearch\u003e Could not create command: _FT._DROPIFX\nredis-1     | 1:M 18 Oct 2026 16:58:44.161 * \u003csearch\u003e Registered command _FT._DROPIFX with flags: write\nredis-1     | 1:M 18 Oct 2026 16:58:44.161 # \u003csearch\u003e Could not create command: _FT._DROPINDEXIFX\nredis-1     | 1:M 18 Oct 2026 16:58:44.161 * \u003csearch\u003e Registered command _FT._DROPINDEXIFX with flags: write\npostgres-1  | 2026-10-18 16:58:36.331 UTC [218] ERROR:  permission denied for schema public at character 14\npostgres-1  | 2026-10-18 16:58:36.331 UTC [218] ERROR:  permission denied to create temporary tables in database \"payments_db\" at character 19\npostgres-1  | 2026-10-18 16:58:36.332 UTC [218] ERROR:  permission denied to set role \"payments_migrator\"\npostgres-1  | 2026-10-18 16:58:36.332 UTC [218] ERROR:  permission denied for schema lab_migrations at character 13\npostgres-1  | 2026-10-18 16:58:36.352 UTC [218] ERROR:  must be owner of table privilege_probe\nkafka-1     | \treplica.high.watermark.checkpoint.interval.ms = 5000\nkafka-1     | \treplica.lag.time.max.ms = 30000\npostgres-1  | 2026-10-18 16:58:36.352 UTC [218] ERROR:  permission denied for table privilege_probe\nkafka-1     | \treplica.selector.class = null\nkafka-1     | \treplica.socket.receive.buffer.bytes = 65536\npostgres-1  | 2026-10-18 16:58:36.363 UTC [220] FATAL:  permission denied for database \"postgres\"\npostgres-1  | 2026-10-18 16:58:36.363 UTC [220] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 16:58:36.370 UTC [221] FATAL:  permission denied for database \"template1\"\nkafka-1     | \treplica.socket.timeout.ms = 30000\npostgres-1  | 2026-10-18 16:58:36.370 UTC [221] DETAIL:  User does not have CONNECT privilege.\npostgres-1  | 2026-10-18 16:58:36.432 UTC [224] ERROR:  division by zero\nredis-1     | 1:M 18 Oct 2026 16:58:44.161 * \u003csearch\u003e Cluster configuration: AUTO partitions, type: 0, coordinator timeout: 0ms\nredis-1     | 1:M 18 Oct 2026 16:58:44.161 * \u003csearch\u003e Register write commands\nredis-1     | 1:M 18 Oct 2026 16:58:44.162 * Module 'search' loaded from /usr/local/lib/redis/modules//redisearch.so\nkafka-1     | \treplication.quota.window.num = 11\nkafka-1     | \treplication.quota.window.size.seconds = 1\nkafka-1     | \trequest.timeout.ms = 30000\npostgres-1  | 2026-10-18 16:58:36.649 UTC [232] ERROR:  new row for relation \"stock\" violates check constraint \"stock_available_check\"\npostgres-1  | 2026-10-18 16:58:36.649 UTC [232] DETAIL:  Failing row contains (SKU-001, -1).\npostgres-1  | 2026-10-18 16:58:36.649 UTC [232] ERROR:  new row for relation \"products\" violates check constraint \"products_price_minor_check\"\npostgres-1  | 2026-10-18 16:58:36.649 UTC [232] DETAIL:  Failing row contains (SKU-001, Notebook, -1, RUB).\nredis-1     | 1:M 18 Oct 2026 16:58:44.163 * \u003ctimeseries\u003e RedisTimeSeries version 80214, git_sha=a51a80c51c8c40601b87b5a5674da0cb12989d58\npostgres-1  | 2026-10-18 16:58:36.650 UTC [232] ERROR:  new row for relation \"products\" violates check constraint \"products_currency_check\"\nredis-1     | 1:M 18 Oct 2026 16:58:44.164 * \u003ctimeseries\u003e Redis version found by RedisTimeSeries : 8.2.10 - oss\nredis-1     | 1:M 18 Oct 2026 16:58:44.164 * \u003ctimeseries\u003e Registering configuration options: [\nredis-1     | 1:M 18 Oct 2026 16:58:44.164 * \u003ctimeseries\u003e \t{ ts-compaction-policy   :              }\npostgres-1  | 2026-10-18 16:58:36.650 UTC [232] DETAIL:  Failing row contains (SKU-001, Notebook, 99900, rub).\nredis-1     | 1:M 18 Oct 2026 16:58:44.164 * \u003ctimeseries\u003e \t{ ts-num-threads         :            3 }\npostgres-1  | 2026-10-18 16:58:36.651 UTC [232] ERROR:  insert or update on table \"stock\" violates foreign key constraint \"stock_sku_fkey\"\npostgres-1  | 2026-10-18 16:58:36.651 UTC [232] DETAIL:  Key (sku)=(missing) is not present in table \"products\".\nredis-1     | 1:M 18 Oct 2026 16:58:44.164 * \u003ctimeseries\u003e \t{ ts-retention-policy    :            0 }\nredis-1     | 1:M 18 Oct 2026 16:58:44.164 * \u003ctimeseries\u003e \t{ ts-duplicate-policy    :        block }\nredis-1     | 1:M 18 Oct 2026 16:58:44.164 * \u003ctimeseries\u003e \t{ ts-chunk-size-bytes    :         4096 }\nkafka-1     | \tsasl.client.callback.handler.class = null\nkafka-1     | \tsasl.enabled.mechanisms = [GSSAPI]\npostgres-1  | 2026-10-18 16:58:43.679 UTC [1] LOG:  received fast shutdown request\npostgres-1  | 2026-10-18 16:58:43.683 UTC [1] LOG:  aborting any active transactions\npostgres-1  | 2026-10-18 16:58:43.694 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 60) exited with exit code 1\npostgres-1  | 2026-10-18 16:58:43.698 UTC [55] LOG:  shutting down\nkafka-1     | \tsasl.jaas.config = null\nkafka-1     | \tsasl.kerberos.kinit.cmd = /usr/bin/kinit\npostgres-1  | 2026-10-18 16:58:43.703 UTC [55] LOG:  checkpoint starting: shutdown immediate\nredis-1     | 1:M 18 Oct 2026 16:58:44.164 * \u003ctimeseries\u003e \t{ ts-encoding            :   compressed }\nredis-1     | 1:M 18 Oct 2026 16:58:44.164 * \u003ctimeseries\u003e \t{ ts-ignore-max-time-diff:            0 }\npostgres-1  | 2026-10-18 16:58:44.038 UTC [55] LOG:  checkpoint complete: wrote 2868 buffers (35.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.121 s, sync=0.197 s, total=0.341 s; sync files=933, longest=0.009 s, average=0.001 s; distance=13179 kB, estimate=13179 kB; lsn=0/24383D8, redo lsn=0/24383D8\npostgres-1  | 2026-10-18 16:58:44.153 UTC [1] LOG:  database system is shut down\npostgres-1  | \nredis-1     | 1:M 18 Oct 2026 16:58:44.164 * \u003ctimeseries\u003e \t{ ts-ignore-max-val-diff :     0.000000 }\npostgres-1  | PostgreSQL Database directory appears to contain a database; Skipping initialization\nredis-1     | 1:M 18 Oct 2026 16:58:44.164 * \u003ctimeseries\u003e ]\npostgres-1  | \npostgres-1  | 2026-10-18 16:58:44.838 UTC [1] LOG:  starting PostgreSQL 18.6 (Debian 18.6-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit\nredis-1     | 1:M 18 Oct 2026 16:58:44.164 * \u003ctimeseries\u003e Detected redis oss\nredis-1     | 1:M 18 Oct 2026 16:58:44.165 * \u003ctimeseries\u003e Enabled diskless replication\nredis-1     | 1:M 18 Oct 2026 16:58:44.165 * Module 'timeseries' loaded from /usr/local/lib/redis/modules//redistimeseries.so\nredis-1     | 1:M 18 Oct 2026 16:58:44.166 * \u003cReJSON\u003e Created new data type 'ReJSON-RL'\npostgres-1  | 2026-10-18 16:58:44.838 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\nredis-1     | 1:M 18 Oct 2026 16:58:44.167 * \u003cReJSON\u003e version: 80209 git sha: unknown branch: unknown\npostgres-1  | 2026-10-18 16:58:44.839 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\nkafka-1     | \tsasl.kerberos.min.time.before.relogin = 60000\nkafka-1     | \tsasl.kerberos.principal.to.local.rules = [DEFAULT]\npostgres-1  | 2026-10-18 16:58:44.848 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\nkafka-1     | \tsasl.kerberos.service.name = null\npostgres-1  | 2026-10-18 16:58:44.909 UTC [19] LOG:  database system was shut down at 2026-10-18 16:58:44 UTC\npostgres-1  | 2026-10-18 16:58:44.933 UTC [1] LOG:  database system is ready to accept connections\nkafka-1     | \tsasl.kerberos.ticket.renew.jitter = 0.05\nkafka-1     | \tsasl.kerberos.ticket.renew.window.factor = 0.8\nredis-1     | 1:M 18 Oct 2026 16:58:44.167 * \u003cReJSON\u003e Exported RedisJSON_V1 API\nkafka-1     | \tsasl.login.callback.handler.class = null\nkafka-1     | \tsasl.login.class = null\nredis-1     | 1:M 18 Oct 2026 16:58:44.167 * \u003cReJSON\u003e Exported RedisJSON_V2 API\nredis-1     | 1:M 18 Oct 2026 16:58:44.167 * \u003cReJSON\u003e Exported RedisJSON_V3 API\nredis-1     | 1:M 18 Oct 2026 16:58:44.167 * \u003cReJSON\u003e Exported RedisJSON_V4 API\nkafka-1     | \tsasl.login.connect.timeout.ms = null\nredis-1     | 1:M 18 Oct 2026 16:58:44.167 * \u003cReJSON\u003e Exported RedisJSON_V5 API\nredis-1     | 1:M 18 Oct 2026 16:58:44.167 * \u003cReJSON\u003e Enabled diskless replication\nredis-1     | 1:M 18 Oct 2026 16:58:44.167 * \u003cReJSON\u003e Initialized shared string cache, thread safe: true.\nkafka-1     | \tsasl.login.read.timeout.ms = null\nredis-1     | 1:M 18 Oct 2026 16:58:44.167 * Module 'ReJSON' loaded from /usr/local/lib/redis/modules//rejson.so\nkafka-1     | \tsasl.login.refresh.buffer.seconds = 300\nredis-1     | 1:M 18 Oct 2026 16:58:44.167 * \u003csearch\u003e Acquired RedisJSON_V5 API\nredis-1     | 1:M 18 Oct 2026 16:58:44.170 * Server initialized\nredis-1     | 1:M 18 Oct 2026 16:58:44.172 * Ready to accept connections tcp\nkafka-1     | \tsasl.login.refresh.min.period.seconds = 60\nkafka-1     | \tsasl.login.refresh.window.factor = 0.8\nkafka-1     | \tsasl.login.refresh.window.jitter = 0.05\nkafka-1     | \tsasl.login.retry.backoff.max.ms = 10000\nkafka-1     | \tsasl.login.retry.backoff.ms = 100\nkafka-1     | \tsasl.mechanism.controller.protocol = GSSAPI\nkafka-1     | \tsasl.mechanism.inter.broker.protocol = GSSAPI\nkafka-1     | \tsasl.oauthbearer.assertion.algorithm = RS256\nkafka-1     | \tsasl.oauthbearer.assertion.claim.aud = null\nkafka-1     | \tsasl.oauthbearer.assertion.claim.exp.seconds = 300\nkafka-1     | \tsasl.oauthbearer.assertion.claim.iss = null\nkafka-1     | \tsasl.oauthbearer.assertion.claim.jti.include = false\nkafka-1     | \tsasl.oauthbearer.assertion.claim.nbf.seconds = 60\nkafka-1     | \tsasl.oauthbearer.assertion.claim.sub = null\nkafka-1     | \tsasl.oauthbearer.assertion.file = null\nkafka-1     | \tsasl.oauthbearer.assertion.private.key.file = null\nkafka-1     | \tsasl.oauthbearer.assertion.private.key.passphrase = null\nkafka-1     | \tsasl.oauthbearer.assertion.template.file = null\nkafka-1     | \tsasl.oauthbearer.client.credentials.client.id = null\nkafka-1     | \tsasl.oauthbearer.client.credentials.client.secret = null\nkafka-1     | \tsasl.oauthbearer.clock.skew.seconds = 30\nkafka-1     | \tsasl.oauthbearer.expected.audience = []\nkafka-1     | \tsasl.oauthbearer.expected.issuer = null\nkafka-1     | \tsasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000\nkafka-1     | \tsasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000\nkafka-1     | \tsasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100\nkafka-1     | \tsasl.oauthbearer.jwks.endpoint.url = null\nkafka-1     | \tsasl.oauthbearer.jwt.retriever.class = class org.apache.kafka.common.security.oauthbearer.DefaultJwtRetriever\nkafka-1     | \tsasl.oauthbearer.jwt.validator.class = class org.apache.kafka.common.security.oauthbearer.DefaultJwtValidator\nkafka-1     | \tsasl.oauthbearer.scope = null\nkafka-1     | \tsasl.oauthbearer.scope.claim.name = scope\nkafka-1     | \tsasl.oauthbearer.sub.claim.name = sub\nkafka-1     | \tsasl.oauthbearer.token.endpoint.url = null\nkafka-1     | \tsasl.server.callback.handler.class = null\nkafka-1     | \tsasl.server.max.receive.size = 524288\nkafka-1     | \tsecurity.inter.broker.protocol = PLAINTEXT\nkafka-1     | \tsecurity.providers = null\nkafka-1     | \tserver.max.startup.time.ms = 9223372036854775807\nkafka-1     | \tshare.coordinator.append.linger.ms = -1\nkafka-1     | \tshare.coordinator.cached.buffer.max.bytes = 1048588\nkafka-1     | \tshare.coordinator.cold.partition.snapshot.interval.ms = 300000\nkafka-1     | \tshare.coordinator.load.buffer.size = 5242880\nkafka-1     | \tshare.coordinator.snapshot.update.records.per.snapshot = 500\nkafka-1     | \tshare.coordinator.state.topic.compression.codec = 0\nkafka-1     | \tshare.coordinator.state.topic.min.isr = 2\nkafka-1     | \tshare.coordinator.state.topic.num.partitions = 50\nkafka-1     | \tshare.coordinator.state.topic.prune.interval.ms = 300000\nkafka-1     | \tshare.coordinator.state.topic.replication.factor = 3\nkafka-1     | \tshare.coordinator.state.topic.segment.bytes = 104857600\nkafka-1     | \tshare.coordinator.threads = 1\nkafka-1     | \tshare.coordinator.write.timeout.ms = 5000\nkafka-1     | \tshare.fetch.purgatory.purge.interval.requests = 1000\nkafka-1     | \tsocket.connection.setup.timeout.max.ms = 30000\nkafka-1     | \tsocket.connection.setup.timeout.ms = 10000\nkafka-1     | \tsocket.listen.backlog.size = 50\nkafka-1     | \tsocket.receive.buffer.bytes = 102400\nkafka-1     | \tsocket.request.max.bytes = 10485760\nkafka-1     | \tsocket.send.buffer.bytes = 102400\nkafka-1     | \tssl.allow.dn.changes = false\nkafka-1     | \tssl.allow.san.changes = false\nkafka-1     | \tssl.cipher.suites = []\nkafka-1     | \tssl.client.auth = none\nkafka-1     | \tssl.enabled.protocols = [TLSv1.2, TLSv1.3]\nkafka-1     | \tssl.endpoint.identification.algorithm = https\nkafka-1     | \tssl.engine.factory.class = null\nkafka-1     | \tssl.key.password = null\nkafka-1     | \tssl.keymanager.algorithm = SunX509\nkafka-1     | \tssl.keystore.certificate.chain = null\nkafka-1     | \tssl.keystore.key = null\nkafka-1     | \tssl.keystore.location = null\nkafka-1     | \tssl.keystore.password = null\nkafka-1     | \tssl.keystore.type = JKS\nkafka-1     | \tssl.principal.mapping.rules = DEFAULT\nkafka-1     | \tssl.protocol = TLSv1.3\nkafka-1     | \tssl.provider = null\nkafka-1     | \tssl.secure.random.implementation = null\nkafka-1     | \tssl.trustmanager.algorithm = PKIX\nkafka-1     | \tssl.truststore.certificates = null\nkafka-1     | \tssl.truststore.location = null\nkafka-1     | \tssl.truststore.password = null\nkafka-1     | \tssl.truststore.type = JKS\nkafka-1     | \ttelemetry.max.bytes = 1048576\nkafka-1     | \ttransaction.abort.timed.out.transaction.cleanup.interval.ms = 10000\nkafka-1     | \ttransaction.max.timeout.ms = 900000\nkafka-1     | \ttransaction.partition.verification.enable = true\nkafka-1     | \ttransaction.remove.expired.transaction.cleanup.interval.ms = 3600000\nkafka-1     | \ttransaction.state.log.load.buffer.size = 5242880\nkafka-1     | \ttransaction.state.log.min.isr = 1\nkafka-1     | \ttransaction.state.log.num.partitions = 1\nkafka-1     | \ttransaction.state.log.replication.factor = 1\nkafka-1     | \ttransaction.state.log.segment.bytes = 104857600\nkafka-1     | \ttransaction.two.phase.commit.enable = false\nkafka-1     | \ttransactional.id.expiration.ms = 604800000\nkafka-1     | \tunclean.leader.election.enable = false\nkafka-1     | \tunclean.leader.election.interval.ms = 300000\nkafka-1     | \tunstable.api.versions.enable = false\nkafka-1     | \tunstable.feature.versions.enable = false\nkafka-1     |  (org.apache.kafka.common.config.AbstractConfig)\nkafka-1     | [2026-10-18 16:59:09,616] INFO [BrokerServer id=1] Waiting for the broker to be unfenced (kafka.server.BrokerServer)\nkafka-1     | [2026-10-18 16:59:09,696] INFO [BrokerLifecycleManager id=1] The broker is in RECOVERY. (org.apache.kafka.server.BrokerLifecycleManager)\nkafka-1     | [2026-10-18 16:59:09,824] INFO [BrokerLifecycleManager id=1] The broker has been unfenced. Transitioning from RECOVERY to RUNNING. (org.apache.kafka.server.BrokerLifecycleManager)\nkafka-1     | [2026-10-18 16:59:09,824] INFO [BrokerServer id=1] Finished waiting for the broker to be unfenced (kafka.server.BrokerServer)\nkafka-1     | [2026-10-18 16:59:09,825] INFO authorizerStart completed for endpoint BROKER. Endpoint is now READY. (org.apache.kafka.server.network.EndpointReadyFutures)\nkafka-1     | [2026-10-18 16:59:09,884] INFO [SocketServer listenerType=BROKER, nodeId=1] Enabling request processing. (kafka.network.SocketServer)\nkafka-1     | [2026-10-18 16:59:09,887] INFO Awaiting socket connections on 0.0.0.0:9092. (kafka.network.DataPlaneAcceptor)\nkafka-1     | [2026-10-18 16:59:09,892] INFO [ReplicaFetcherManager on broker 1] Removed fetcher for partitions Set(faultline-smoke-0) (kafka.server.ReplicaFetcherManager)\nkafka-1     | [2026-10-18 16:59:09,895] INFO [BrokerServer id=1] Waiting for all of the authorizer futures to be completed (kafka.server.BrokerServer)\nkafka-1     | [2026-10-18 16:59:09,896] INFO [BrokerServer id=1] Finished waiting for all of the authorizer futures to be completed (kafka.server.BrokerServer)\nkafka-1     | [2026-10-18 16:59:09,896] INFO [BrokerServer id=1] Waiting for all of the SocketServer Acceptors to be started (kafka.server.BrokerServer)\nkafka-1     | [2026-10-18 16:59:09,896] INFO [BrokerServer id=1] Finished waiting for all of the SocketServer Acceptors to be started (kafka.server.BrokerServer)\nkafka-1     | [2026-10-18 16:59:09,897] INFO [BrokerServer id=1] Transition from STARTING to STARTED (kafka.server.BrokerServer)\nkafka-1     | [2026-10-18 16:59:09,899] INFO Kafka version: 4.3.1 (org.apache.kafka.common.utils.AppInfoParser)\nkafka-1     | [2026-10-18 16:59:09,899] INFO Kafka commitId: 26b251a451ce941d (org.apache.kafka.common.utils.AppInfoParser)\nkafka-1     | [2026-10-18 16:59:09,899] INFO Kafka startTimeMs: 1792342749897 (org.apache.kafka.common.utils.AppInfoParser)\nkafka-1     | [2026-10-18 16:59:09,914] INFO [KafkaRaftServer nodeId=1] Kafka Server started (kafka.server.KafkaRaftServer)\n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "cleanup",
+      "output": " Container faultline-data-test-791179b8fecb8da4-kafka-1 Stopping \n Container faultline-data-test-791179b8fecb8da4-redis-1 Stopping \n Container faultline-data-test-791179b8fecb8da4-postgres-1 Stopping \n Container faultline-data-test-791179b8fecb8da4-postgres-1 Stopped \n Container faultline-data-test-791179b8fecb8da4-postgres-1 Removing \n Container faultline-data-test-791179b8fecb8da4-postgres-1 Removed \n Container faultline-data-test-791179b8fecb8da4-redis-1 Stopped \n Container faultline-data-test-791179b8fecb8da4-redis-1 Removing \n Container faultline-data-test-791179b8fecb8da4-redis-1 Removed \n Container faultline-data-test-791179b8fecb8da4-kafka-1 Stopped \n Container faultline-data-test-791179b8fecb8da4-kafka-1 Removing \n Container faultline-data-test-791179b8fecb8da4-kafka-1 Removed \n Volume faultline-data-test-791179b8fecb8da4_postgres-data Removing \n Volume faultline-data-test-791179b8fecb8da4_kafka-data Removing \n Network faultline-data-test-791179b8fecb8da4_data Removing \n Volume faultline-data-test-791179b8fecb8da4_postgres-data Removed \n Volume faultline-data-test-791179b8fecb8da4_kafka-data Removed \n Network faultline-data-test-791179b8fecb8da4_data Removed \n Image faultline-data-test-791179b8fecb8da4-infrastructure-check:latest Removing \n Image faultline-data-test-791179b8fecb8da4-dbtool:latest Removing \n Image faultline-data-test-791179b8fecb8da4-infrastructure-check:latest Removed \n Image faultline-data-test-791179b8fecb8da4-dbtool:latest Removed \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    }
+  ]
+}
+```
+
+<a id="p02-infra-internal-datalab-infrastructure-test-go"></a>
+
+## Приложение: internal/datalab/infrastructure_test.go
+
+Полный исходный документ: `internal/datalab/infrastructure_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package datalab
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"io"
+	"os"
+	"path/filepath"
+	"slices"
+	"strings"
+	"testing"
+
+	"github.com/Includeoyasi/faultline-lab/internal/command"
+	"github.com/Includeoyasi/faultline-lab/internal/infrastructure"
+)
+
+func TestCombinedInfrastructureLifecycle(t *testing.T) {
+	for _, scenario := range []string{"success", "start-failure", "before-failure", "invalid-checkpoint", "after-failure", "cancel-before", "cleanup-failure"} {
+		t.Run(scenario, func(t *testing.T) {
+			root := t.TempDir()
+			for _, path := range []string{"configs/postgres/local.json", "configs/infrastructure/local.json"} {
+				data, err := os.ReadFile(filepath.Join("../..", path))
+				if err != nil {
+					t.Fatal(err)
+				}
+				destination := filepath.Join(root, path)
+				if err = os.MkdirAll(filepath.Dir(destination), 0o700); err != nil {
+					t.Fatal(err)
+				}
+				if err = os.WriteFile(destination, data, 0o600); err != nil {
+					t.Fatal(err)
+				}
+			}
+			ctx, cancel := context.WithCancel(t.Context())
+			defer cancel()
+			cleaned, logged, afterCalled := false, false, false
+			var password, passwordHash string
+			checkpoint := `{"version":1,"topic":"faultline-smoke","partition":0,"offset":7,"key":"checkpoint","value":"expected"}`
+			execute := func(commandCtx context.Context, program string, args []string) (command.Output, error) {
+				if program != "docker" {
+					t.Fatal("unexpected executable")
+				}
+				if args[0] == "compose" && !slices.Contains(args, "compose.infrastructure.yaml") {
+					t.Fatal("combined command lost its overlay")
+				}
+				if slices.Contains(args, "logs") {
+					logged = true
+					return command.Output{Stdout: "diagnostic " + password + " " + passwordHash + " " + root}, nil
+				}
+				if slices.Contains(args, "build") {
+					paths, err := filepath.Glob(filepath.Join(root, "artifacts/infrastructure/*/infrastructure-secrets"))
+					if err != nil || len(paths) != 1 {
+						t.Fatal("missing isolated infrastructure credentials")
+					}
+					cfg, err := infrastructure.Load(filepath.Join(root, "configs/infrastructure/local.json"), paths[0])
+					if err != nil {
+						t.Fatal(err)
+					}
+					password, err = infrastructure.Password(cfg)
+					if err != nil {
+						t.Fatal(err)
+					}
+					passwordHash = infrastructure.PasswordHash(password)
+				}
+				if slices.Contains(args, "down") {
+					if commandCtx.Err() != nil || !slices.Contains(args, "--volumes") || !slices.Contains(args, "--profile") {
+						t.Fatal("cleanup has incorrect scope or canceled context")
+					}
+					cleaned = true
+					if scenario == "cleanup-failure" {
+						return command.Output{ExitCode: 1}, errors.New("controlled cleanup failure")
+					}
+				}
+				if slices.Contains(args, "up") {
+					for _, name := range []string{"postgres", "kafka", "redis"} {
+						if !slices.Contains(args, name) {
+							t.Fatal("combined start omitted a dependency")
+						}
+					}
+					if scenario == "start-failure" {
+						return command.Output{ExitCode: 1}, errors.New("controlled startup failure")
+					}
+				}
+				if slices.Contains(args, "before-restart") {
+					if scenario == "invalid-checkpoint" {
+						return command.Output{Stdout: `{"version":0}`}, nil
+					}
+					if scenario == "before-failure" || scenario == "cancel-before" {
+						if scenario == "cancel-before" {
+							cancel()
+						}
+						return command.Output{ExitCode: 1}, errors.New("controlled check failure")
+					}
+					return command.Output{Stdout: checkpoint}, nil
+				}
+				if slices.Contains(args, "after-restart") {
+					afterCalled = true
+					index := slices.Index(args, "-checkpoint")
+					if index < 0 || args[index+1] != checkpoint {
+						t.Fatal("after-restart did not reuse the saved checkpoint")
+					}
+					if scenario == "after-failure" {
+						return command.Output{ExitCode: 1}, errors.New("controlled re-read failure")
+					}
+				}
+				return command.Output{}, nil
+			}
+			err := runMode(ctx, io.Discard, root, execute, true)
+			if !cleaned || !logged || (err == nil) != (scenario == "success") {
+				t.Fatal("incorrect combined lifecycle result")
+			}
+			if (scenario == "start-failure" || scenario == "before-failure" || scenario == "cancel-before" || scenario == "invalid-checkpoint") && afterCalled {
+				t.Fatal("continued after an earlier failure")
+			}
+			paths, err := filepath.Glob(filepath.Join(root, "artifacts/infrastructure/*/report.json"))
+			if err != nil || len(paths) != 1 {
+				t.Fatal("combined report missing")
+			}
+			data, err := os.ReadFile(paths[0])
+			if err != nil || strings.Contains(string(data), root) {
+				t.Fatal("combined report unavailable or exposes host path")
+			}
+			if password == "" || strings.Contains(string(data), password) || strings.Contains(string(data), passwordHash) || !strings.Contains(string(data), "[secret hash]") {
+				t.Fatal("report did not redact actual credential output")
+			}
+			var saved report
+			if json.Unmarshal(data, &saved) != nil || (saved.Result == "PASS") != (scenario == "success") {
+				t.Fatal("incorrect saved verdict")
+			}
+			for _, name := range []string{"secrets", "infrastructure-secrets"} {
+				if _, err = os.Stat(filepath.Join(filepath.Dir(paths[0]), name)); !errors.Is(err, os.ErrNotExist) {
+					t.Fatal("temporary credentials remain")
+				}
+			}
+		})
+	}
+}
+```
+
+<a id="p02-infra-internal-infrastructure-check-go"></a>
+
+## Приложение: internal/infrastructure/check.go
+
+Полный исходный документ: `internal/infrastructure/check.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package infrastructure
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"io"
+	"strings"
+)
+
+// Check verifies Redis ACL/TTL and creates or re-reads a Kafka restart checkpoint.
+func Check(ctx context.Context, cfg Config, stage, saved string) (Checkpoint, error) {
+	var checkpoint Checkpoint
+	if err := cfg.Validate(); err != nil {
+		return checkpoint, err
+	}
+	if stage != "before-restart" && stage != "after-restart" {
+		return checkpoint, errors.New("infrastructure stage must be before-restart or after-restart")
+	}
+	if stage == "after-restart" {
+		if len(saved) > 2048 {
+			return checkpoint, errors.New("Kafka checkpoint is too large")
+		}
+		decoder := json.NewDecoder(strings.NewReader(saved))
+		decoder.DisallowUnknownFields()
+		if err := decoder.Decode(&checkpoint); err != nil {
+			return checkpoint, errors.New("invalid Kafka checkpoint")
+		}
+		var extra any
+		if err := decoder.Decode(&extra); !errors.Is(err, io.EOF) {
+			return checkpoint, errors.New("Kafka checkpoint has trailing data")
+		}
+		if checkpoint.Version != 1 || checkpoint.Topic != cfg.KafkaTopic || checkpoint.Partition != 0 || checkpoint.Offset < 0 || checkpoint.Key == "" || len(checkpoint.Key) > 64 || checkpoint.Value == "" || len(checkpoint.Value) > 256 {
+			return checkpoint, errors.New("Kafka checkpoint does not match the configured probe")
+		}
+	} else if saved != "" {
+		return checkpoint, errors.New("before-restart must create a new checkpoint")
+	}
+	if err := checkRedis(ctx, cfg); err != nil {
+		return checkpoint, err
+	}
+	ctx, cancel := context.WithTimeout(ctx, cfg.budget())
+	defer cancel()
+	if stage == "before-restart" {
+		return prepareKafka(ctx, cfg)
+	}
+	return checkpoint, verifyKafka(ctx, cfg, checkpoint)
+}
+
+func safeError(stage string, err error) error {
+	for _, sentinel := range []error{context.Canceled, context.DeadlineExceeded} {
+		if errors.Is(err, sentinel) {
+			return fmt.Errorf("%s: %w", stage, sentinel)
+		}
+	}
+	return errors.New(stage + " failed")
+}
+```
+
+<a id="p02-infra-internal-infrastructure-config-go"></a>
+
+## Приложение: internal/infrastructure/config.go
+
+Полный исходный документ: `internal/infrastructure/config.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+// Package infrastructure verifies the lab's Kafka and Redis dependencies.
+package infrastructure
+
+import (
+	"encoding/json"
+	"errors"
+	"io"
+	"net"
+	"os"
+	"regexp"
+	"strconv"
+	"time"
+)
+
+// Config is the explicit local profile; passwords are file-backed separately.
+type Config struct {
+	KafkaBrokers []string `json:"kafka_brokers"`
+	KafkaTopic   string   `json:"kafka_topic"`
+	RedisAddress string   `json:"redis_address"`
+	RedisUser    string   `json:"redis_user"`
+	KeyPrefix    string   `json:"key_prefix"`
+	Timeout      string   `json:"timeout"`
+	ProbeTTL     string   `json:"probe_ttl"`
+	Secrets      string   `json:"-"`
+}
+
+var name = regexp.MustCompile(`^[a-z][a-z0-9_-]{0,62}$`)
+var topicName = regexp.MustCompile(`^[a-z][a-z0-9._-]{0,100}$`)
+var keyPrefix = regexp.MustCompile(`^[a-z][a-z0-9:._-]{0,79}:$`)
+
+// Load reads and validates a strict JSON connection profile.
+func Load(path, secrets string) (Config, error) {
+	var cfg Config
+	file, err := os.Open(path)
+	if err != nil {
+		return cfg, errors.New("cannot open infrastructure configuration")
+	}
+	defer func() { _ = file.Close() }()
+	decoder := json.NewDecoder(io.LimitReader(file, 64<<10))
+	decoder.DisallowUnknownFields()
+	if err = decoder.Decode(&cfg); err != nil {
+		return cfg, errors.New("invalid infrastructure configuration")
+	}
+	var extra any
+	if err = decoder.Decode(&extra); !errors.Is(err, io.EOF) {
+		return cfg, errors.New("infrastructure configuration contains trailing data")
+	}
+	cfg.Secrets = secrets
+	return cfg, cfg.Validate()
+}
+
+// Validate bounds timeouts and rejects missing addresses or unsafe ACL patterns.
+func (c Config) Validate() error {
+	budget, err := time.ParseDuration(c.Timeout)
+	if err != nil || budget < 50*time.Millisecond || budget > 30*time.Second {
+		return errors.New("infrastructure timeout must be in [50ms,30s]")
+	}
+	ttl, err := time.ParseDuration(c.ProbeTTL)
+	if err != nil || ttl < 100*time.Millisecond || ttl >= budget {
+		return errors.New("probe TTL must be at least 100ms and below the operation timeout")
+	}
+	if len(c.KafkaBrokers) != 1 || !address(c.KafkaBrokers[0]) || !address(c.RedisAddress) || !topicName.MatchString(c.KafkaTopic) || !name.MatchString(c.RedisUser) || !keyPrefix.MatchString(c.KeyPrefix) || c.Secrets == "" {
+		return errors.New("infrastructure requires one broker, Redis address/user, topic, key prefix and secrets directory")
+	}
+	return nil
+}
+
+func address(value string) bool {
+	host, port, err := net.SplitHostPort(value)
+	if err != nil || host == "" {
+		return false
+	}
+	number, err := strconv.ParseUint(port, 10, 16)
+	return err == nil && number != 0
+}
+
+func (c Config) budget() time.Duration {
+	duration, _ := time.ParseDuration(c.Timeout)
+	return duration
+}
+```
+
+<a id="p02-infra-internal-infrastructure-config-test-go"></a>
+
+## Приложение: internal/infrastructure/config_test.go
+
+Полный исходный документ: `internal/infrastructure/config_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package infrastructure
+
+import (
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+func testConfig(t *testing.T) Config {
+	t.Helper()
+	cfg, err := Load("../../configs/infrastructure/local.json", t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	return cfg
+}
+
+func TestConfigRejectsUnsafeProfiles(t *testing.T) {
+	for _, change := range []func(*Config){
+		func(c *Config) { c.Timeout = "0s" },
+		func(c *Config) { c.Timeout = "31s" },
+		func(c *Config) { c.ProbeTTL = c.Timeout },
+		func(c *Config) { c.KafkaBrokers = nil },
+		func(c *Config) { c.RedisAddress = "redis" },
+		func(c *Config) { c.RedisUser = "lab on nopass" },
+		func(c *Config) { c.KeyPrefix = "*" },
+	} {
+		cfg := testConfig(t)
+		change(&cfg)
+		if cfg.Validate() == nil {
+			t.Fatal("accepted unsafe profile")
+		}
+	}
+	path := filepath.Join(t.TempDir(), "config.json")
+	if err := os.WriteFile(path, []byte(`{"unknown":true}`), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Load(path, t.TempDir()); err == nil {
+		t.Fatal("accepted unknown configuration")
+	}
+}
+
+func TestCredentialsPreservedAndACLRestricted(t *testing.T) {
+	cfg := testConfig(t)
+	if err := GenerateSecrets(cfg); err != nil {
+		t.Fatal(err)
+	}
+	password, err := Password(cfg)
+	if err != nil {
+		t.Fatal(err)
+	}
+	acl, err := os.ReadFile(filepath.Join(cfg.Secrets, "redis.acl"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.Contains(string(acl), password) || !strings.Contains(string(acl), "#"+PasswordHash(password)) || !strings.Contains(string(acl), "user default off") || !strings.Contains(string(acl), "~"+cfg.KeyPrefix+"* -@all") {
+		t.Fatal("ACL exposes plaintext or does not restrict commands/keys")
+	}
+	if err = GenerateSecrets(cfg); err != nil {
+		t.Fatal(err)
+	}
+	again, _ := Password(cfg)
+	if again != password {
+		t.Fatal("repeat changed password")
+	}
+	if err = os.WriteFile(filepath.Join(cfg.Secrets, "redis.acl"), []byte("unexpected configuration"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if GenerateSecrets(cfg) == nil {
+		t.Fatal("silently replaced an inconsistent ACL")
+	}
+}
+
+func TestInvalidCheckpointFailsBeforeConnections(t *testing.T) {
+	cfg := testConfig(t)
+	for _, saved := range []string{"", `{}`, `{"version":1,"topic":"foreign"}`, `{"unknown":true}`, strings.Repeat("x", 2049)} {
+		if _, err := Check(t.Context(), cfg, "after-restart", saved); err == nil || strings.Contains(err.Error(), "credential") {
+			t.Fatal("invalid checkpoint reached credential loading")
+		}
+	}
+}
+```
+
+<a id="p02-infra-internal-infrastructure-deadline-test-go"></a>
+
+## Приложение: internal/infrastructure/deadline_test.go
+
+Полный исходный документ: `internal/infrastructure/deadline_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package infrastructure
+
+import (
+	"context"
+	"net"
+	"sync"
+	"testing"
+	"time"
+)
+
+// Accept connections but never reply, so refusal/DNS does not mask a missing deadline.
+func blackhole(t *testing.T) string {
+	t.Helper()
+	listener, err := net.Listen("tcp", "127.0.0.1:0")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var mu sync.Mutex
+	var connections []net.Conn
+	done := make(chan struct{})
+	go func() {
+		defer close(done)
+		for {
+			conn, err := listener.Accept()
+			if err != nil {
+				return
+			}
+			mu.Lock()
+			connections = append(connections, conn)
+			mu.Unlock()
+		}
+	}()
+	t.Cleanup(func() {
+		_ = listener.Close()
+		<-done
+		mu.Lock()
+		defer mu.Unlock()
+		for _, conn := range connections {
+			_ = conn.Close()
+		}
+	})
+	return listener.Addr().String()
+}
+
+func TestConnectionDeadlines(t *testing.T) {
+	for _, dependency := range []string{"redis", "kafka"} {
+		t.Run(dependency, func(t *testing.T) {
+			cfg := testConfig(t)
+			endpoint := blackhole(t)
+			ctx, cancel := context.WithTimeout(t.Context(), 100*time.Millisecond)
+			defer cancel()
+			started := time.Now()
+			var err error
+			if dependency == "redis" {
+				cfg.RedisAddress = endpoint
+				client := redisClient(cfg, "lab", "unusable")
+				err = client.Ping(ctx).Err()
+				_ = client.Close()
+			} else {
+				cfg.KafkaBrokers = []string{endpoint}
+				client, e := kafkaClient(ctx, cfg)
+				if e != nil {
+					t.Fatal(e)
+				}
+				err = client.Ping(ctx)
+				client.Close()
+			}
+			if err == nil || ctx.Err() == nil || time.Since(started) > time.Second {
+				t.Fatal("dependency operation did not obey its short deadline")
+			}
+		})
+	}
+}
+```
+
+<a id="p02-infra-internal-infrastructure-kafka-go"></a>
+
+## Приложение: internal/infrastructure/kafka.go
+
+Полный исходный документ: `internal/infrastructure/kafka.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package infrastructure
+
+import (
+	"context"
+	"crypto/rand"
+	"encoding/hex"
+	"errors"
+	"time"
+
+	"github.com/twmb/franz-go/pkg/kgo"
+	"github.com/twmb/franz-go/pkg/kmsg"
+)
+
+// Checkpoint identifies the acknowledged record that must survive a restart.
+type Checkpoint struct {
+	Version   int    `json:"version"`
+	Topic     string `json:"topic"`
+	Partition int32  `json:"partition"`
+	Offset    int64  `json:"offset"`
+	Key       string `json:"key"`
+	Value     string `json:"value"`
+}
+
+func kafkaClient(ctx context.Context, cfg Config, options ...kgo.Opt) (*kgo.Client, error) {
+	base := []kgo.Opt{
+		kgo.WithContext(ctx), kgo.DisableClientMetrics(),
+		kgo.SeedBrokers(cfg.KafkaBrokers...), kgo.DialTimeout(cfg.budget()),
+		kgo.RequestTimeoutOverhead(time.Second), kgo.RequiredAcks(kgo.AllISRAcks()),
+		kgo.RecordDeliveryTimeout(cfg.budget()), kgo.MaxProduceRequestsInflightPerBroker(1),
+		// A lost acknowledgement must fail this disposable probe within its budget.
+		// It is never retried by the application; this is not an outbox policy.
+		kgo.AllowIdempotentProduceCancellation(),
+		kgo.ProducerBatchCompression(kgo.NoCompression()),
+		kgo.FetchMaxWait(100 * time.Millisecond), kgo.FetchMaxBytes(1 << 20),
+	}
+	return kgo.NewClient(append(base, options...)...)
+}
+
+func prepareKafka(ctx context.Context, cfg Config) (Checkpoint, error) {
+	var checkpoint Checkpoint
+	client, err := kafkaClient(ctx, cfg)
+	if err != nil {
+		return checkpoint, safeError("Kafka client configuration", err)
+	}
+	defer client.Close()
+	request := kmsg.NewPtrCreateTopicsRequest()
+	request.TimeoutMillis = int32(cfg.budget().Milliseconds())
+	topic := kmsg.NewCreateTopicsRequestTopic()
+	topic.Topic, topic.NumPartitions, topic.ReplicationFactor = cfg.KafkaTopic, 1, 1
+	request.Topics = []kmsg.CreateTopicsRequestTopic{topic}
+	response, err := client.Request(ctx, request)
+	if err != nil {
+		return checkpoint, safeError("Kafka topic creation", err)
+	}
+	created, ok := response.(*kmsg.CreateTopicsResponse)
+	if !ok || len(created.Topics) != 1 || created.Topics[0].ErrorCode != 0 {
+		return checkpoint, errors.New("Kafka check requires a newly created isolated topic")
+	}
+	var marker [16]byte
+	if _, err = rand.Read(marker[:]); err != nil {
+		return checkpoint, errors.New("cannot generate Kafka checkpoint")
+	}
+	record := &kgo.Record{Topic: cfg.KafkaTopic, Key: []byte("checkpoint"), Value: []byte(hex.EncodeToString(marker[:]))}
+	if err = client.ProduceSync(ctx, record).FirstErr(); err != nil {
+		return checkpoint, safeError("Kafka produce", err)
+	}
+	checkpoint = Checkpoint{1, record.Topic, record.Partition, record.Offset, string(record.Key), string(record.Value)}
+	return checkpoint, readKafka(ctx, cfg, checkpoint)
+}
+
+func readKafka(ctx context.Context, cfg Config, expected Checkpoint) error {
+	client, err := kafkaClient(ctx, cfg, kgo.ConsumePartitions(map[string]map[int32]kgo.Offset{
+		expected.Topic: {expected.Partition: kgo.NewOffset().At(expected.Offset)},
+	}))
+	if err != nil {
+		return safeError("Kafka consumer configuration", err)
+	}
+	defer client.Close()
+	for ctx.Err() == nil {
+		fetches := client.PollFetches(ctx)
+		if len(fetches.Errors()) != 0 {
+			return safeError("Kafka fetch", ctx.Err())
+		}
+		for _, record := range fetches.Records() {
+			if record.Topic != expected.Topic || record.Partition != expected.Partition || record.Offset != expected.Offset || string(record.Key) != expected.Key || string(record.Value) != expected.Value {
+				return errors.New("Kafka checkpoint record does not match")
+			}
+			return nil
+		}
+	}
+	return safeError("Kafka fetch", ctx.Err())
+}
+
+func verifyKafka(ctx context.Context, cfg Config, expected Checkpoint) error {
+	if err := readKafka(ctx, cfg, expected); err != nil {
+		return err
+	}
+	client, err := kafkaClient(ctx, cfg)
+	if err != nil {
+		return safeError("Kafka producer configuration", err)
+	}
+	defer client.Close()
+	record := &kgo.Record{Topic: expected.Topic, Key: []byte(expected.Key), Value: []byte(expected.Value + ":after")}
+	if err = client.ProduceSync(ctx, record).FirstErr(); err != nil {
+		return safeError("Kafka produce after restart", err)
+	}
+	if record.Partition != expected.Partition || record.Offset <= expected.Offset {
+		return errors.New("Kafka new record did not follow the persisted checkpoint")
+	}
+	return readKafka(ctx, cfg, Checkpoint{1, record.Topic, record.Partition, record.Offset, string(record.Key), string(record.Value)})
+}
+```
+
+<a id="p02-infra-internal-infrastructure-kafka-deadline-test-go"></a>
+
+## Приложение: internal/infrastructure/kafka_deadline_test.go
+
+Полный исходный документ: `internal/infrastructure/kafka_deadline_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package infrastructure
+
+import (
+	"context"
+	"encoding/binary"
+	"io"
+	"net"
+	"strconv"
+	"sync"
+	"testing"
+	"time"
+
+	"github.com/twmb/franz-go/pkg/kgo"
+	"github.com/twmb/franz-go/pkg/kmsg"
+	"github.com/twmb/franz-go/pkg/kversion"
+)
+
+// This fixture completes metadata and producer initialization, accepts Produce,
+// then loses its acknowledgement. A connection-only blackhole cannot test this.
+func TestKafkaProduceCancellationAfterWrite(t *testing.T) {
+	listener, err := net.Listen("tcp", "127.0.0.1:0")
+	if err != nil {
+		t.Fatal(err)
+	}
+	host, portText, _ := net.SplitHostPort(listener.Addr().String())
+	port, _ := strconv.Atoi(portText)
+	var connections []net.Conn
+	var mu sync.Mutex
+	var workers sync.WaitGroup
+	accepted := make(chan struct{})
+	acceptLoopDone := make(chan struct{})
+	var acceptOnce sync.Once
+	workers.Go(func() {
+		defer close(acceptLoopDone)
+		for {
+			conn, err := listener.Accept()
+			if err != nil {
+				return
+			}
+			mu.Lock()
+			connections = append(connections, conn)
+			mu.Unlock()
+			workers.Go(func() {
+				defer func() { _ = conn.Close() }()
+				for {
+					var size [4]byte
+					if _, err := io.ReadFull(conn, size[:]); err != nil {
+						return
+					}
+					length := binary.BigEndian.Uint32(size[:])
+					if length < 10 || length > 1<<20 {
+						return
+					}
+					request := make([]byte, length)
+					if _, err := io.ReadFull(conn, request); err != nil {
+						return
+					}
+					key := binary.BigEndian.Uint16(request)
+					version := int16(binary.BigEndian.Uint16(request[2:]))
+					var response kmsg.Response
+					switch key {
+					case 0: // Produce was written; deliberately withhold the response.
+						acceptOnce.Do(func() { close(accepted) })
+						continue
+					case 18:
+						api := kmsg.NewPtrApiVersionsResponse()
+						for _, pair := range [][2]int16{{0, 3}, {3, 4}, {18, 1}, {22, 0}} {
+							entry := kmsg.NewApiVersionsResponseApiKey()
+							entry.ApiKey, entry.MaxVersion = pair[0], pair[1]
+							api.ApiKeys = append(api.ApiKeys, entry)
+						}
+						response = api
+					case 3:
+						metadata := kmsg.NewPtrMetadataResponse()
+						broker := kmsg.NewMetadataResponseBroker()
+						broker.NodeID, broker.Host, broker.Port = 1, host, int32(port)
+						metadata.Brokers, metadata.ControllerID = []kmsg.MetadataResponseBroker{broker}, 1
+						name := "deadline"
+						topic := kmsg.NewMetadataResponseTopic()
+						topic.Topic = &name
+						partition := kmsg.NewMetadataResponseTopicPartition()
+						partition.Leader, partition.Replicas, partition.ISR = 1, []int32{1}, []int32{1}
+						topic.Partitions = []kmsg.MetadataResponseTopicPartition{partition}
+						metadata.Topics = []kmsg.MetadataResponseTopic{topic}
+						response = metadata
+					case 22:
+						producer := kmsg.NewPtrInitProducerIDResponse()
+						producer.ProducerID = 1
+						response = producer
+					default:
+						t.Errorf("unexpected fixture request key %d", key)
+						return
+					}
+					response.SetVersion(version)
+					body := response.AppendTo(append([]byte(nil), request[4:8]...))
+					binary.BigEndian.PutUint32(size[:], uint32(len(body)))
+					if _, err := conn.Write(append(size[:], body...)); err != nil {
+						return
+					}
+				}
+			})
+		}
+	})
+	t.Cleanup(func() {
+		_ = listener.Close()
+		<-acceptLoopDone
+		mu.Lock()
+		for _, conn := range connections {
+			_ = conn.Close()
+		}
+		mu.Unlock()
+		workers.Wait()
+	})
+	cfg := testConfig(t)
+	cfg.KafkaBrokers = []string{listener.Addr().String()}
+	ctx, cancel := context.WithCancel(t.Context())
+	defer cancel()
+	client, err := kafkaClient(ctx, cfg, kgo.MaxVersions(kversion.V0_11_0()))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer client.Close()
+	done := make(chan error, 1)
+	go func() {
+		done <- client.ProduceSync(ctx, &kgo.Record{Topic: "deadline", Value: []byte("probe")}).FirstErr()
+	}()
+	select {
+	case <-accepted:
+	case <-time.After(3 * time.Second):
+		t.Fatal("fixture never received Produce")
+	}
+	cancel()
+	select {
+	case err := <-done:
+		if err == nil {
+			t.Fatal("lost acknowledgement was reported as success")
+		}
+	case <-time.After(time.Second):
+		t.Fatal("in-flight Produce ignored cancellation")
+	}
+}
+```
+
+<a id="p02-infra-internal-infrastructure-redis-go"></a>
+
+## Приложение: internal/infrastructure/redis.go
+
+Полный исходный документ: `internal/infrastructure/redis.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package infrastructure
+
+import (
+	"context"
+	"errors"
+	"strings"
+	"time"
+
+	"github.com/redis/go-redis/v9"
+	"github.com/redis/go-redis/v9/maintnotifications"
+)
+
+func redisClient(cfg Config, user, password string) *redis.Client {
+	return redis.NewClient(&redis.Options{
+		Addr: cfg.RedisAddress, Username: user, Password: password,
+		Protocol: 2, DisableIdentity: true, ContextTimeoutEnabled: true,
+		DialTimeout: cfg.budget(), ReadTimeout: cfg.budget(), WriteTimeout: cfg.budget(), PoolTimeout: cfg.budget(),
+		MaxRetries: -1, DialerRetries: 1, PoolSize: 2, MaxActiveConns: 2,
+		MaintNotificationsConfig: &maintnotifications.Config{Mode: maintnotifications.ModeDisabled},
+	})
+}
+
+func redisErrorCode(err error, code string) bool {
+	var serverError redis.Error
+	return errors.As(err, &serverError) && strings.HasPrefix(serverError.Error(), code+" ")
+}
+
+func checkRedis(ctx context.Context, cfg Config) error {
+	password, err := Password(cfg)
+	if err != nil {
+		return err
+	}
+	ctx, cancel := context.WithTimeout(ctx, cfg.budget())
+	defer cancel()
+	client := redisClient(cfg, cfg.RedisUser, password)
+	defer func() { _ = client.Close() }()
+	if err = client.Ping(ctx).Err(); err != nil {
+		return safeError("Redis authenticated ping", err)
+	}
+	for _, auth := range []struct{ user, password, code string }{
+		{"", "", "NOAUTH"}, {cfg.RedisUser, "invalid-password", "WRONGPASS"},
+	} {
+		denied := redisClient(cfg, auth.user, auth.password)
+		err = denied.Ping(ctx).Err()
+		_ = denied.Close()
+		if !redisErrorCode(err, auth.code) {
+			return errors.New("Redis did not return the expected authentication denial")
+		}
+	}
+	if !redisErrorCode(client.Do(ctx, "CONFIG", "GET", "bind").Err(), "NOPERM") {
+		return errors.New("Redis administrative command was not denied")
+	}
+	if !redisErrorCode(client.Set(ctx, "outside:"+cfg.KeyPrefix+"probe", "forbidden", 0).Err(), "NOPERM") {
+		return errors.New("Redis access outside the allowed key prefix was not denied")
+	}
+	ttl, _ := time.ParseDuration(cfg.ProbeTTL)
+	key, value := cfg.KeyPrefix+"ttl-probe", "infrastructure-check"
+	if err = client.Set(ctx, key, value, ttl).Err(); err != nil {
+		return safeError("Redis write", err)
+	}
+	got, err := client.Get(ctx, key).Result()
+	if err != nil || got != value {
+		return errors.New("Redis read did not match the written value")
+	}
+	remaining, err := client.Do(ctx, "PTTL", key).Int64()
+	if err != nil || remaining <= 0 {
+		return errors.New("Redis key has no positive TTL")
+	}
+	ticker := time.NewTicker(20 * time.Millisecond)
+	defer ticker.Stop()
+	for {
+		select {
+		case <-ctx.Done():
+			return safeError("Redis TTL expiration", ctx.Err())
+		case <-ticker.C:
+			remaining, err = client.Do(ctx, "PTTL", key).Int64()
+			if err != nil {
+				return safeError("Redis TTL read", err)
+			}
+			if remaining == -2 {
+				if !errors.Is(client.Get(ctx, key).Err(), redis.Nil) {
+					return errors.New("Redis expired key is still readable")
+				}
+				return nil
+			}
+		}
+	}
+}
+```
+
+<a id="p02-infra-internal-infrastructure-secrets-go"></a>
+
+## Приложение: internal/infrastructure/secrets.go
+
+Полный исходный документ: `internal/infrastructure/secrets.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package infrastructure
+
+import (
+	"bytes"
+	"crypto/rand"
+	"crypto/sha256"
+	"encoding/hex"
+	"errors"
+	"os"
+	"path/filepath"
+	"regexp"
+	"strings"
+)
+
+// CredentialFiles are the only files owned by infrastructure secret generation.
+var CredentialFiles = [...]string{"redis.password", "redis.acl"}
+
+var passwordValue = regexp.MustCompile(`^[a-f0-9]{64}$`)
+
+// Password reads the generated credential without exposing values in errors.
+func Password(cfg Config) (string, error) {
+	path := filepath.Join(cfg.Secrets, "redis.password")
+	info, err := os.Lstat(path)
+	if err != nil || !info.Mode().IsRegular() {
+		return "", errors.New("Redis credential must be a regular file")
+	}
+	data, err := os.ReadFile(path)
+	if err != nil || !passwordValue.MatchString(strings.TrimSpace(string(data))) {
+		return "", errors.New("Redis credential is unavailable or malformed")
+	}
+	return strings.TrimSpace(string(data)), nil
+}
+
+// PasswordHash is the Redis ACL SHA-256 verifier, not a plaintext password.
+func PasswordHash(password string) string {
+	hash := sha256.Sum256([]byte(password))
+	return hex.EncodeToString(hash[:])
+}
+
+// GenerateSecrets preserves credentials and rejects an inconsistent ACL file.
+func GenerateSecrets(cfg Config) error {
+	if err := cfg.Validate(); err != nil {
+		return err
+	}
+	if err := os.MkdirAll(cfg.Secrets, 0o700); err != nil {
+		return errors.New("cannot create infrastructure credentials directory")
+	}
+	info, err := os.Lstat(cfg.Secrets)
+	if err != nil || !info.IsDir() || info.Mode()&os.ModeSymlink != 0 {
+		return errors.New("credentials directory must be a regular directory")
+	}
+	if err = os.Chmod(cfg.Secrets, 0o700); err != nil {
+		return errors.New("cannot protect infrastructure credentials directory")
+	}
+	path := filepath.Join(cfg.Secrets, "redis.password")
+	if _, err = os.Lstat(path); errors.Is(err, os.ErrNotExist) {
+		var value [32]byte
+		if _, err = rand.Read(value[:]); err != nil {
+			return errors.New("cannot generate Redis credential")
+		}
+		if err = preserveFile(path, []byte(hex.EncodeToString(value[:])+"\n")); err != nil {
+			return err
+		}
+	}
+	password, err := Password(cfg)
+	if err != nil {
+		return err
+	}
+	if err = os.Chmod(path, 0o644); err != nil {
+		return errors.New("cannot set Redis credential permissions")
+	}
+	acl := "user default off\nuser " + cfg.RedisUser + " on #" + PasswordHash(password) + " ~" + cfg.KeyPrefix + "* -@all +ping +get +set +del +pttl +hello\n"
+	return preserveFile(filepath.Join(cfg.Secrets, "redis.acl"), []byte(acl))
+}
+
+func preserveFile(path string, data []byte) error {
+	if info, err := os.Lstat(path); err == nil {
+		if !info.Mode().IsRegular() {
+			return errors.New("infrastructure credential must be a regular file")
+		}
+		current, err := os.ReadFile(path)
+		if err != nil || !bytes.Equal(current, data) {
+			return errors.New("infrastructure credential file differs from its expected configuration")
+		}
+	} else if errors.Is(err, os.ErrNotExist) {
+		file, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0o644)
+		if err != nil {
+			return errors.New("cannot create infrastructure credential")
+		}
+		_, writeErr := file.Write(data)
+		if errors.Join(writeErr, file.Close()) != nil {
+			return errors.New("cannot write infrastructure credential")
+		}
+	} else {
+		return errors.New("cannot inspect infrastructure credential")
+	}
+	if err := os.Chmod(path, 0o644); err != nil {
+		return errors.New("cannot set infrastructure credential permissions")
+	}
+	return nil
+}
+```
+
+<a id="p02-infra-internal-infrastructure-secrets-unix-test-go"></a>
+
+## Приложение: internal/infrastructure/secrets_unix_test.go
+
+Полный исходный документ: `internal/infrastructure/secrets_unix_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+//go:build !windows
+
+package infrastructure
+
+import (
+	"os"
+	"path/filepath"
+	"syscall"
+	"testing"
+)
+
+func TestSecretPermissionsUnderRestrictiveUmask(t *testing.T) {
+	previous := syscall.Umask(0o077)
+	defer syscall.Umask(previous)
+	cfg := testConfig(t)
+	if err := GenerateSecrets(cfg); err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range CredentialFiles {
+		info, err := os.Stat(filepath.Join(cfg.Secrets, name))
+		if err != nil || info.Mode().Perm() != 0o644 {
+			t.Fatal("credential cannot be consumed by its non-root container")
+		}
+	}
+}
 ```
