@@ -131,6 +131,8 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 
 Подготовка баз, права, миграции, повторяемый seed и явный сброс описаны в [инструкции PostgreSQL со схемами](docs/development/POSTGRES.md).
 
+[Совместный smoke PostgreSQL, Kafka и Redis](docs/development/INFRASTRUCTURE.md) проверяет сохранность сообщений после restart, доступ к кешу и TTL, сохраняя отчёт и удаляя ресурсы своего запуска.
+
 ## Лицензия
 
 [MIT](LICENSE) · Copyright © 2026 Dmitrii Morozov.

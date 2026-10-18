@@ -1,0 +1,84 @@
+services:
+  kafka:
+    image: apache/kafka:4.3.1@sha256:77e3df9054047a88b520d0cc46e16696d3b22022e1d580aeccd2632df6532837
+    user: appuser
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    entrypoint: [/bin/bash, /etc/faultline/start.sh]
+    environment:
+      # Local single-node identity, not an authentication credential.
+      FL_KAFKA_CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+      KAFKA_HEAP_OPTS: -Xms128m -Xmx256m
+      LOG_DIR: /opt/kafka/logs
+    volumes:
+      - ./configs/kafka/server.properties:/etc/faultline/kafka.properties:ro
+      - ./configs/kafka/start.sh:/etc/faultline/start.sh:ro
+      - kafka-data:/var/lib/kafka/data
+    tmpfs:
+      - /tmp:uid=1000,gid=1000,mode=1777,size=64m
+      - /opt/kafka/logs:uid=1000,gid=1000,mode=0750,size=32m
+      - /etc/kafka/secrets:uid=1000,gid=1000,mode=0700,size=1m
+      - /mnt/shared/config:uid=1000,gid=1000,mode=0700,size=1m
+    mem_limit: 640m
+    cpus: 0.75
+    stop_grace_period: 30s
+    networks: [data]
+    healthcheck:
+      test: [CMD-SHELL, "KAFKA_HEAP_OPTS='-Xms16m -Xmx64m' /opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server kafka:9092 >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 15s
+  redis:
+    image: redis:8.2.10-alpine@sha256:b51665e66f00759be7c3152ad5ac3c66fb2f619c13ef62dea7cc1f9914524635
+    user: "999:999"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    command: [redis-server, /etc/faultline/redis.conf]
+    volumes:
+      - ./configs/redis/redis.conf:/etc/faultline/redis.conf:ro
+    secrets:
+      - {source: redis-acl, target: redis.acl}
+    tmpfs:
+      - /data:uid=999,gid=999,mode=0700,size=96m
+      - /tmp:mode=1777,size=8m
+    mem_limit: 128m
+    cpus: 0.25
+    stop_grace_period: 15s
+    networks: [data]
+    healthcheck:
+      # Ready only when Redis responds and still requires authentication.
+      test: [CMD-SHELL, "redis-cli -h redis -p 6379 ping 2>&1 | grep -q NOAUTH"]
+      interval: 3s
+      timeout: 2s
+      retries: 15
+      start_period: 3s
+  infrastructure-check:
+    profiles: [tools]
+    build:
+      context: .
+      dockerfile: build/Dockerfile
+      target: labdata
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    environment:
+      FL_INFRA_CONFIG: /etc/faultline/infrastructure.json
+      FL_INFRA_SECRETS: /run/secrets
+    volumes:
+      - ./configs/infrastructure/local.json:/etc/faultline/infrastructure.json:ro
+    secrets:
+      - {source: redis-password, target: redis.password}
+    tmpfs: ["/tmp:mode=1777,size=16m"]
+    networks: [data]
+    mem_limit: 256m
+    cpus: 0.5
+volumes:
+  kafka-data:
+secrets:
+  redis-password:
+    file: ${FL_INFRA_SECRETS_DIR:-.local/infrastructure}/redis.password
+  redis-acl:
+    file: ${FL_INFRA_SECRETS_DIR:-.local/infrastructure}/redis.acl

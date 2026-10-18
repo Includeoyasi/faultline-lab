@@ -1,0 +1,15 @@
+{
+  "verified_on": "2026-10-18",
+  "project": "faultline-data-test-791179b8fecb8da4",
+  "run_cleanup": "PASS",
+  "run_containers_remaining": 0,
+  "run_networks_remaining": 0,
+  "run_volumes_remaining": 0,
+  "run_images_remaining": 0,
+  "temporary_credentials_remaining": 0,
+  "docker_processes_remaining": 0,
+  "wsl_running_distributions": 0,
+  "docker_autostart": false,
+  "global_prune_used": false,
+  "shared_images_and_caches_preserved": true
+}

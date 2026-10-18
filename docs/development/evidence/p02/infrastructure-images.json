@@ -1,0 +1,28 @@
+{
+  "verified_on": "2026-10-18",
+  "source": "Docker Hub tag API; image indexes pinned in compose.infrastructure.yaml",
+  "images": [
+    {
+      "image": "apache/kafka:4.3.1",
+      "source_url": "https://hub.docker.com/v2/repositories/apache/kafka/tags/4.3.1",
+      "index_digest": "sha256:77e3df9054047a88b520d0cc46e16696d3b22022e1d580aeccd2632df6532837",
+      "platforms": {
+        "linux/amd64": "sha256:ccd1314e47ec76909e01f86308b4dcf2064f19f7c89759234322314b0e319e26",
+        "linux/arm64": "sha256:c2b5172ab20d66381ec1729796a410fd611135821994526d4d42d2f256054af3"
+      }
+    },
+    {
+      "image": "redis:8.2.10-alpine",
+      "source_url": "https://hub.docker.com/v2/repositories/library/redis/tags/8.2.10-alpine",
+      "index_digest": "sha256:b51665e66f00759be7c3152ad5ac3c66fb2f619c13ef62dea7cc1f9914524635",
+      "platforms": {
+        "linux/amd64": "sha256:c4206b4e79e4bcc8b30679eeece996d98b27ffb1f0a15fd567338ed4d0880258",
+        "linux/arm64": "sha256:0f16771e42330c740f93cc57e2ebd1d60c75569b6e4e2aa90ff4bc8f65618078"
+      }
+    }
+  ],
+  "clients": {
+    "github.com/twmb/franz-go": "v1.22.2",
+    "github.com/redis/go-redis/v9": "v9.23.0"
+  }
+}

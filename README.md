@@ -142,11 +142,14 @@ faultline-lab/
 ├── build/                      # Pinned toolchain image
 ├── compose.yaml                # Three services and temporary toolchain
 ├── compose.postgres.yaml       # PostgreSQL and temporary dbtool overlay
+├── compose.infrastructure.yaml # Kafka, Redis and temporary checker overlay
 ├── tools/                      # Go commands, context and documentation checks
 └── .github/                    # Documentation CI and review templates
 ```
 
 Compose now defines three runtime services and the temporary toolchain profile; see the [runtime guide](docs/development/CONTAINER_RUNTIME.md). The [PostgreSQL guide](docs/development/POSTGRES.md) explains roles, migrations, seed and reset with interaction diagrams. The [roadmap](docs/ROADMAP.md) contains the planned code layout.
+
+The [combined infrastructure smoke](docs/development/INFRASTRUCTURE.md) checks PostgreSQL, Kafka restart persistence and Redis ACL/TTL, then removes only its own run resources.
 
 ## Working with this snapshot
 

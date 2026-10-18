@@ -1,0 +1,44 @@
+# Совместная проверка PostgreSQL, Kafka и Redis
+
+Задача: [#16](https://github.com/Includeoyasi/faultline-lab/issues/16). Дата: **18 октября 2026 года**, Europe/Moscow. Команды и схема — в [инструкции](../../INFRASTRUCTURE.md). Версии, digests и платформенные манифесты — в [manifest](infrastructure-images.json).
+
+Среда: Windows AMD64, Go 1.27.2; Docker Desktop 4.95 / Engine 29.8.2 / Compose 5.6, Linux backend WSL2. Лимит WSL сохранён: 2 CPU / 2 GiB RAM / 1 GiB swap. Docker сообщил 2 CPU и 1 996 603 392 доступных байт памяти. Это бюджет VM, отдельно от памяти физического Windows-хоста и лимитов контейнеров.
+
+Исходная база — merge `7d3e4d57e6081f9fe5669a481aaaa2b7f880f29c` из PR #22. Локальные проверки выполнялись с изменениями рабочего дерева, а не на чистом финальном HEAD; его проверяет CI предъявленного PR.
+
+| Проверка | Результат |
+| :--- | :--- |
+| Native Windows `go test ./...` и `go vet ./...` | PASS; PostgreSQL-интеграция отдельно выполнена контейнерным прогоном ниже |
+| Kafka/Redis deadlines | PASS: TCP fixture принимает соединение без ответа; отдельная Kafka fixture завершает metadata и producer initialization, принимает Produce и теряет ACK. Отмена возвращает ошибку, не ложный успех |
+| Runner lifecycle | PASS: успех, startup failure, ошибки до/после restart, некорректный checkpoint, отмена, ошибка cleanup; логи собираются и после неудачного старта; секрет и его ACL-хеш из вывода редактируются |
+| Совместный Windows `labdata smoke -infrastructure` | PASS: **19:53:08–19:59:49 MSK**, включая сборку; [исходный очищенный отчёт](windows-infrastructure-report.json) |
+| PostgreSQL | PASS: прежние проверки прав/миграций/seed, неизменная контрольная сумма после restart и повторной подготовки |
+| Kafka | PASS: создание нового топика, producer/consumer, сохранение `topic=faultline-smoke`, `partition=0`, `offset=0` и точного key/value после restart с прежним volume; новая запись также отправлена и прочитана |
+| Redis | PASS до и после restart: правильная авторизация; `NOAUTH`, `WRONGPASS`, `NOPERM`; разрешённые SET/GET, PTTL>0, реальное истечение и отсутствие ключа |
+| Очистка своего запуска | PASS: контейнеры, сеть, volumes, временные образы и файлы секретов удалены; четыре адресные проверки отсутствия ресурсов прошли |
+| Linux AMD64/ARM64 | Реальные runtime, quality/race/vulnerability и новые проверки выполняет workflow PR; проверяются по предъявленному HEAD в GitHub Actions |
+| Личный Mac | **NOT_RUN**: реальной проверки на macOS не было; кросс-компиляция её не заменяет |
+
+Обычный PostgreSQL-only smoke сохранён. Дополнительная команда checker не требует PostgreSQL-конфигурации и её паролей; это подтверждено CLI regression. Клиенты закреплены: franz-go v1.22.2, go-redis v9.23.0. Kafka cancellation-настройка одноразовой пробы не является политикой будущего transactional outbox.
+
+## Ресурсы и ограничения
+
+Одновременный снимок после функциональных проверок:
+
+| Контейнер | Память / лимит | CPU в снимке |
+| :--- | :--- | ---: |
+| PostgreSQL | 39.35 MiB / 512 MiB | 0.06% |
+| Kafka | 288.4 MiB / 640 MiB | 74.66% |
+| Redis | 12.47 MiB / 128 MiB | 3.60% |
+
+Один функциональный прогон прошёл в текущем бюджете без его увеличения. Это не peak, steady-state idle или capacity под бизнес-нагрузкой; Kafka health использует отдельный короткоживущий JVM-процесс. Потребление инструментов и VM нельзя выводить из суммы трёх показаний. Наблюдаемость и генератор нагрузки здесь не запускались.
+
+Kafka содержит один broker/controller с RF=1. Проверка доказывает сохранность при штатном restart, не доступность при отказе узла и не сохранность при потере диска. Redis — недолговечный кеш, сохранность его значений после restart не проверяется как требование.
+
+Cleanup в [отчёте](windows-infrastructure-report.json) относится только к `faultline-data-test-791179b8fecb8da4`; общего prune не было. После него контейнеров и образов отдельных прогонов не осталось. Отдельно подтверждены 0 Docker-процессов, 0 запущенных WSL-дистрибутивов и `AutoStart=false`; [запись завершения](windows-infrastructure-cleanup.json). Установленные программы, закреплённые общие образы и полезные кеши сохранены.
+
+## Найденные ограничения и исправления
+
+1. Логи раньше регистрировались после успешного startup. Теперь сбор зарегистрирован до build/up; partial failure имеет диагностику, а cleanup — независимый контекст.
+2. Idempotent Kafka produce с неизвестным результатом мог пережить переданный deadline. Для disposable probe client привязан к context, клиентские metrics отключены, in-flight cancellation разрешена явно. Тест воспроизводит именно потерянный Produce ACK. При неизвестном результате probe не повторяет запись приложением.
+3. [F09](../../../architecture/KAFKA_PUBLISHING.md) остаётся проектным предложением: определены порядок, fencing и будущие takeover/crash-проверки. Реализация outbox и доказательство этого протокола в текущий прогон не входят.
