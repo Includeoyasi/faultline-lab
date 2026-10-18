@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 54,
+  "context_revision": 55,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-18",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "d097b567a819b798e88d6c8bf5df1c9d726edd0c",
+    "snapshot_ref": "02717b04a053f01c07d15ceab14c69ed7d0e962a",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -2266,9 +2266,9 @@
       "language": "go"
     },
     {
-      "path": "migrations/seed/inventory.sql",
-      "title": "migrations/seed/inventory.sql",
-      "anchor": "p02-migrations-seed-inventory-sql",
+      "path": "internal/database/sql/seed/inventory.sql",
+      "title": "internal/database/sql/seed/inventory.sql",
+      "anchor": "p02-internal-database-sql-seed-inventory-sql",
       "language": "sql"
     },
     {
@@ -2317,6 +2317,119 @@
       "title": "POSIX restrictive umask credential regression",
       "anchor": "p02-config-unix-tests",
       "language": "go"
+    },
+    {
+      "path": "docs/PRODUCT_INTENT.md",
+      "title": "docs/PRODUCT_INTENT.md",
+      "anchor": "p02-review-docs-product-intent-md"
+    },
+    {
+      "path": "internal/database/migration_files.go",
+      "title": "internal/database/migration_files.go",
+      "anchor": "p02-review-internal-database-migration-files-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/database/scripts.go",
+      "title": "internal/database/scripts.go",
+      "anchor": "p02-review-internal-database-scripts-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/database/seed.go",
+      "title": "internal/database/seed.go",
+      "anchor": "p02-review-internal-database-seed-go",
+      "language": "go"
+    },
+    {
+      "path": "docs/development/evidence/p02/windows-sql-review-report.json",
+      "title": "docs/development/evidence/p02/windows-sql-review-report.json",
+      "anchor": "p02-review-docs-development-evidence-p02-windows-sql-review-report-json",
+      "language": "json"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/01_lock.sql",
+      "title": "internal/database/sql/bootstrap/01_lock.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-01-lock-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/02_create_role.sql",
+      "title": "internal/database/sql/bootstrap/02_create_role.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-02-create-role-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/03_configure_role.sql",
+      "title": "internal/database/sql/bootstrap/03_configure_role.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-03-configure-role-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/04_role_memberships.sql",
+      "title": "internal/database/sql/bootstrap/04_role_memberships.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-04-role-memberships-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/05_database_owner.sql",
+      "title": "internal/database/sql/bootstrap/05_database_owner.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-05-database-owner-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/06_create_database.sql",
+      "title": "internal/database/sql/bootstrap/06_create_database.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-06-create-database-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/07_database_access.sql",
+      "title": "internal/database/sql/bootstrap/07_database_access.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-07-database-access-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/08_public_schema.sql",
+      "title": "internal/database/sql/bootstrap/08_public_schema.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-08-public-schema-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/bootstrap/09_maintenance_access.sql",
+      "title": "internal/database/sql/bootstrap/09_maintenance_access.sql",
+      "anchor": "p02-review-internal-database-sql-bootstrap-09-maintenance-access-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/migrate/01_lock.sql",
+      "title": "internal/database/sql/migrate/01_lock.sql",
+      "anchor": "p02-review-internal-database-sql-migrate-01-lock-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/migrate/02_journal.sql",
+      "title": "internal/database/sql/migrate/02_journal.sql",
+      "anchor": "p02-review-internal-database-sql-migrate-02-journal-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/migrate/03_history.sql",
+      "title": "internal/database/sql/migrate/03_history.sql",
+      "anchor": "p02-review-internal-database-sql-migrate-03-history-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/migrate/04_record.sql",
+      "title": "internal/database/sql/migrate/04_record.sql",
+      "anchor": "p02-review-internal-database-sql-migrate-04-record-sql",
+      "language": "sql"
+    },
+    {
+      "path": "internal/database/sql/migrate/05_application_access.sql",
+      "title": "internal/database/sql/migrate/05_application_access.sql",
+      "anchor": "p02-review-internal-database-sql-migrate-05-application-access-sql",
+      "language": "sql"
     }
   ],
   "change_history": [
@@ -2719,28 +2832,9 @@
     "postgres": "18.6-bookworm",
     "digest": "sha256:afc7e2d441324c0388fa80c3d24f733b4194a4eb7f47dd8ee2b08eb1a24a647c",
     "client": "github.com/jackc/pgx/v5 v5.11.0",
-    "topology": "Separate Compose overlay; one private PostgreSQL, 3 service DBs, 6 distinct non-superuser roles; temporary dbtool",
-    "migration_contract": "Per-service transaction, advisory lock before journal, version/name/SHA-256 verification; errors roll back pending SQL and journal; no transaction control in migration files",
-    "seed_contract": "Three fixed Inventory SKU/catalog and stock fixtures; ON CONFLICT DO NOTHING preserves modified prices/stocks; repeat is not reset",
-    "reset_contract": "Explicit faultline-data-* project plus identical confirmation; disposable smoke deletes own volume and run image; ordinary down preserves data",
-    "configuration": "configs/postgres/local.json and ignored file-backed credentials; SCRAM auth, internal network, no host port; local plaintext profile only",
     "guide": "docs/development/POSTGRES.md",
     "validation": "docs/development/evidence/p02/POSTGRES.md",
-    "architecture_limits": "Single DB instance shares failures/resources; no service business DB clients yet; macOS runtime is NOT_RUN",
     "personal_cleanup_refinement": "Owner observed historical image accumulation; remove run tags after success/error/cancel, including partial build; retain shared image layers/caches; no global prune",
-    "local_evidence": {
-      "date": "2026-10-16",
-      "windows_smoke": "PASS; project faultline-data-test-90eda236ac29dee2; 19:12:11–19:13:14 MSK",
-      "runtime_services_smoke": "PASS; run 5562c957-f2db-dcae-2c62-0ec73c2e8a91",
-      "migration_seed_rights": "PASS on real PostgreSQL",
-      "scoped_reset": "PASS; independent control volume preserved",
-      "cross_compile": "PASS windows/amd64 linux/amd64 linux/arm64 darwin/amd64 darwin/arm64; macOS runtime NOT_RUN",
-      "quality": "Container quality checks PASS; final HEAD CI records live validation",
-      "resource_sample": "23.43MiB of512MiB, CPU5.12%; single sample, not capacity",
-      "cleanup": "0 containers, 0 run images, Docker Desktop/WSL stopped, autostart=false; preserve2sharedimages and2Go cache volumes",
-      "source": "Working-tree validation on main base843e95e, not a claim of clean final-HEAD validation",
-      "ci": "Final checks and artifacts in GitHub Actions; no duplicated live status"
-    },
     "credential_permissions": "Directory0700 and explicit file chmod0644, including existing valid files; creation mode alone can be narrowed by POSIX umask. Native Windows secret/CLI tests passed; real POSIX umask077 regression runs in CI.",
     "compose_cleanup_profile": "Explicit --profile tools is included in all datalab Compose calls, because targeting dbtool earlier does not retain profile activation for down. Explicit postgres/dbtool targets prevent starting other tools. CI on both architectures detected retained image tags after otherwise successful PG checks; checks were retained and cleanup corrected.",
     "checksum_command": {
@@ -2750,6 +2844,18 @@
       "purpose": "Read-only SHA-256 of ordered migration history and Inventory product-stock pairs, compared by smoke before/after restart",
       "local_validation": "Windows affected Go package tests and CLI build/help passed; retired command rejected with exit2; no Docker/WSL started",
       "historical_evidence": "Archived reports retain original fingerprint stage names; unrelated portable-source fingerprints are unchanged"
+    },
+    "sql_review": {
+      "agreed_on": "2026-10-18",
+      "owner_comment": "https://github.com/Includeoyasi/faultline-lab/pull/22#discussion_r4307441625",
+      "chat_authorization": "Owner requested both SQL-first structure and separate preparation/migration/seed responsibilities",
+      "source": "docs/development/POSTGRES.md",
+      "evidence": "docs/development/evidence/p02/POSTGRES.md"
     }
+  },
+  "owner_intent_notes": {
+    "agreed_on": "2026-10-18",
+    "source": "Owner voice discussion; docs/PRODUCT_INTENT.md",
+    "workflow": "Owner requested concise per-task findings in the existing GitHub Issue/PR; see docs/development/WORKFLOW.md"
   }
 }
