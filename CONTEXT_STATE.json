@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 53,
+  "context_revision": 54,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-16",
+  "context_updated_on": "2026-10-18",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "b120a06dde9d82598a3d03456787be7131356e5e",
+    "snapshot_ref": "d097b567a819b798e88d6c8bf5df1c9d726edd0c",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -2206,9 +2206,9 @@
       "language": "go"
     },
     {
-      "path": "internal/database/fingerprint.go",
-      "title": "internal/database/fingerprint.go",
-      "anchor": "p02-internal-database-fingerprint-go",
+      "path": "internal/database/checksum.go",
+      "title": "Data checksum",
+      "anchor": "p02-internal-database-checksum-go",
       "language": "go"
     },
     {
@@ -2637,6 +2637,12 @@
       "date": "2026-10-16",
       "summary": "Linux CI detected dbtool image retained by down without active tools profile; helper and regression now model explicit profile activation for cleanup and reset",
       "trigger": "Real CI cleanup verification on AMD64/ARM64; data/RBAC/migrations/restart had passed before cleanup failure"
+    },
+    {
+      "revision": 54,
+      "date": "2026-10-18",
+      "summary": "Owner selected checksum as CLI command name; code/function/file/smoke and help/guide renamed without changing SHA-256 computation; archived evidence preserved",
+      "trigger": "PR22 naming review in chat: fingerprint was unclear; owner explicitly chose checksum"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -2736,6 +2742,14 @@
       "ci": "Final checks and artifacts in GitHub Actions; no duplicated live status"
     },
     "credential_permissions": "Directory0700 and explicit file chmod0644, including existing valid files; creation mode alone can be narrowed by POSIX umask. Native Windows secret/CLI tests passed; real POSIX umask077 regression runs in CI.",
-    "compose_cleanup_profile": "Explicit --profile tools is included in all datalab Compose calls, because targeting dbtool earlier does not retain profile activation for down. Explicit postgres/dbtool targets prevent starting other tools. CI on both architectures detected retained image tags after otherwise successful PG checks; checks were retained and cleanup corrected."
+    "compose_cleanup_profile": "Explicit --profile tools is included in all datalab Compose calls, because targeting dbtool earlier does not retain profile activation for down. Explicit postgres/dbtool targets prevent starting other tools. CI on both architectures detected retained image tags after otherwise successful PG checks; checks were retained and cleanup corrected.",
+    "checksum_command": {
+      "name": "checksum",
+      "confirmed_on": "2026-10-18",
+      "source": "Direct owner review instruction in chat: давай оставим просто checksum",
+      "purpose": "Read-only SHA-256 of ordered migration history and Inventory product-stock pairs, compared by smoke before/after restart",
+      "local_validation": "Windows affected Go package tests and CLI build/help passed; retired command rejected with exit2; no Docker/WSL started",
+      "historical_evidence": "Archived reports retain original fingerprint stage names; unrelated portable-source fingerprints are unchanged"
+    }
   }
 }

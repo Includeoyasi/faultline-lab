@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **53**. Дата снимка: **2026-10-16**, Europe/Moscow. Исходный коммит внешних материалов: `b120a06dde9d82598a3d03456787be7131356e5e`.
+Ревизия: **54**. Дата снимка: **2026-10-18**, Europe/Moscow. Исходный коммит внешних материалов: `d097b567a819b798e88d6c8bf5df1c9d726edd0c`.
 
 ## Выполнение задач
 
@@ -70,9 +70,9 @@ JSON ниже включён для автономного чтения реше
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 53,
+  "context_revision": 54,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-16",
+  "context_updated_on": "2026-10-18",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -86,7 +86,7 @@ JSON ниже включён для автономного чтения реше
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "b120a06dde9d82598a3d03456787be7131356e5e",
+    "snapshot_ref": "d097b567a819b798e88d6c8bf5df1c9d726edd0c",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -2275,9 +2275,9 @@ JSON ниже включён для автономного чтения реше
       "language": "go"
     },
     {
-      "path": "internal/database/fingerprint.go",
-      "title": "internal/database/fingerprint.go",
-      "anchor": "p02-internal-database-fingerprint-go",
+      "path": "internal/database/checksum.go",
+      "title": "Data checksum",
+      "anchor": "p02-internal-database-checksum-go",
       "language": "go"
     },
     {
@@ -2706,6 +2706,12 @@ JSON ниже включён для автономного чтения реше
       "date": "2026-10-16",
       "summary": "Linux CI detected dbtool image retained by down without active tools profile; helper and regression now model explicit profile activation for cleanup and reset",
       "trigger": "Real CI cleanup verification on AMD64/ARM64; data/RBAC/migrations/restart had passed before cleanup failure"
+    },
+    {
+      "revision": 54,
+      "date": "2026-10-18",
+      "summary": "Owner selected checksum as CLI command name; code/function/file/smoke and help/guide renamed without changing SHA-256 computation; archived evidence preserved",
+      "trigger": "PR22 naming review in chat: fingerprint was unclear; owner explicitly chose checksum"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -2805,7 +2811,15 @@ JSON ниже включён для автономного чтения реше
       "ci": "Final checks and artifacts in GitHub Actions; no duplicated live status"
     },
     "credential_permissions": "Directory0700 and explicit file chmod0644, including existing valid files; creation mode alone can be narrowed by POSIX umask. Native Windows secret/CLI tests passed; real POSIX umask077 regression runs in CI.",
-    "compose_cleanup_profile": "Explicit --profile tools is included in all datalab Compose calls, because targeting dbtool earlier does not retain profile activation for down. Explicit postgres/dbtool targets prevent starting other tools. CI on both architectures detected retained image tags after otherwise successful PG checks; checks were retained and cleanup corrected."
+    "compose_cleanup_profile": "Explicit --profile tools is included in all datalab Compose calls, because targeting dbtool earlier does not retain profile activation for down. Explicit postgres/dbtool targets prevent starting other tools. CI on both architectures detected retained image tags after otherwise successful PG checks; checks were retained and cleanup corrected.",
+    "checksum_command": {
+      "name": "checksum",
+      "confirmed_on": "2026-10-18",
+      "source": "Direct owner review instruction in chat: давай оставим просто checksum",
+      "purpose": "Read-only SHA-256 of ordered migration history and Inventory product-stock pairs, compared by smoke before/after restart",
+      "local_validation": "Windows affected Go package tests and CLI build/help passed; retired command rejected with exit2; no Docker/WSL started",
+      "historical_evidence": "Archived reports retain original fingerprint stage names; unrelated portable-source fingerprints are unchanged"
+    }
   }
 }
 ```
@@ -2816,7 +2830,7 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `ecaf4c8ef73c8730b6f241cc274e56f432e7cc70ea10c5b6e2d0697704ee17f7` |
+| `CONTEXT_STATE.json` | `dbb22bb10ae80ca53b20149b287a079a2ee78089f6dfd04d9e30bc32f955c370` |
 | `tools/context_intro.md` | `efa653b38275069b42953862f69f20c351002d21221d8c83123404a8411a56b9` |
 | `tools/update_context.ps1` | `73dff2e2da1f7ea7e8fc8fe2dc70bde722f4d697c1ca7c685d297214cd133e33` |
 | `README.md` | `2251b4268c6b3fd5f3c03ac37d47d01ab53f1b0f2b121f4e4e99ee3b4887d5fa` |
@@ -2916,14 +2930,14 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/evidence/p02/POSTGRES.md` | `50a36e94eeb9ff6bb4e1a8afa5fccec7804bd5e35ef4c643aeaf58b8216a9c70` |
 | `internal/command/command.go` | `3eb0aa422d5b40ba355479ca534c2f7c22ec9c118212beafbbf477ee5da28af3` |
 | `internal/database/migrate.go` | `0c42150be719f33bd2f743dfc1220864f1ee215a92f4b4138c7ae549948c7373` |
-| `internal/database/integration_test.go` | `d6301720392b4442d0ad87e739d2367579eaf7ca56763847c73a2b7f717c236a` |
-| `internal/database/fingerprint.go` | `35544189197803be0ddd88fae70fceff8c83776ad8c31655545ecfe00eaa9ef5` |
+| `internal/database/integration_test.go` | `2ef9cd84e70719e05d0cf0548d41fb49ee713dde3ba1cbdafccaf1a48e444ae1` |
+| `internal/database/checksum.go` | `5c79a23790b3f726a9467b5bdb4fb1574fa9ca3a119da9a2e6d2f21400d9aa2b` |
 | `internal/database/config_test.go` | `99b8d5b78e2de98e1448952f470cbce68fd7e4ab05f3747e50529828d8d732f5` |
 | `internal/database/config.go` | `347c25f171131fbe847601aa81a7dcd7e9958d45d48f9c80787b23fb7edbc926` |
 | `internal/database/bootstrap.go` | `48eefda101b01a2eaf99e44f35a0645ed9fdddc02768cc7b2b148affccb36e51` |
 | `configs/postgres/local.json` | `8a935f46a670b33b9b0c66d6617f87b356506c5449cb8835cbb9f185b4b9bcc8` |
 | `cmd/labdata/main_test.go` | `2d8392be252b0d370b98358cee5f57b55b114cbcd8fbf972ad78bf854d955436` |
-| `cmd/labdata/main.go` | `879941426bc549ec6b4579aca23f887dde83652f5ef779162c11cab40615e8fe` |
+| `cmd/labdata/main.go` | `fa53da12582a09f7b1e511adb8bc50dcc2e14e3a4ebc74a3998a9f8f96d8f680` |
 | `migrations/inventory/0002_catalog.sql` | `cecccb789616eede86cd6cea63162264a24f023c62a7f6ddfb182e2aed387d97` |
 | `migrations/inventory/0001_schema.sql` | `60a1389cfff22a0a79566c1264ed338cb6049b761398af8dc6224c3d87fe32ac` |
 | `migrations/embed.go` | `439b7ae21a933585e4a5e21c8c14360bc4e2298fd6e3c39330bcfd5d17c8b258` |
@@ -2931,10 +2945,10 @@ SHA-256 относится к исходному файлу на момент с
 | `migrations/orders/0001_schema.sql` | `7a2abc0f03d1dac75ea31f86a6abfadae9532eaee42416167be45aee5d5ab16f` |
 | `migrations/payments/0001_schema.sql` | `2856144143bedd41e0380818034ae85025f18b3f40baa295c4eace2d48519af4` |
 | `internal/datalab/run_test.go` | `f2661ab897184cef5a77d8f5c876fa8657a3069dfd478370f2e0e7102bdefa55` |
-| `internal/datalab/run.go` | `bf5ba5f61402ba363b0b23d41b42e8aa353e1d123472eac6dad94d231024384e` |
+| `internal/datalab/run.go` | `bd7a88c531d0364b7c70e718c84417795dbb509e74d63c9a5c1da148e0384cbc` |
 | `compose.postgres.yaml` | `f8e28373a62b0135d30f9b568f1b548eb4f7d8322d9296dbd909708a52a8ef4d` |
 | `internal/smoke/exec_adapter.go` | `5f903f8c590d90655b333d6988139d9276ca5e6dbb400bfff10b0af0dda0c4ba` |
-| `docs/development/POSTGRES.md` | `9e9b89c8839596a23e911606f29617735d3a8e0bdd2c977d8c76a27f632142fc` |
+| `docs/development/POSTGRES.md` | `4754e34da40adcfa27b9e8070346f17f650b42c0da0f55dd5e783b8f30f79976` |
 | `internal/database/config_unix_test.go` | `c8e157471af06e5ca233c8ee8e005c9ffe43166066019a53504aef5f408a2e27` |
 
 ## Полные самостоятельные приложения
@@ -3037,7 +3051,7 @@ SHA-256 относится к исходному файлу на момент с
 - [internal/command/command.go](#p02-internal-command-command-go) — `internal/command/command.go`
 - [internal/database/migrate.go](#p02-internal-database-migrate-go) — `internal/database/migrate.go`
 - [internal/database/integration_test.go](#p02-internal-database-integration-test-go) — `internal/database/integration_test.go`
-- [internal/database/fingerprint.go](#p02-internal-database-fingerprint-go) — `internal/database/fingerprint.go`
+- [Data checksum](#p02-internal-database-checksum-go) — `internal/database/checksum.go`
 - [internal/database/config_test.go](#p02-internal-database-config-test-go) — `internal/database/config_test.go`
 - [internal/database/config.go](#p02-internal-database-config-go) — `internal/database/config.go`
 - [internal/database/bootstrap.go](#p02-internal-database-bootstrap-go) — `internal/database/bootstrap.go`
@@ -3064,7 +3078,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
 </p>
 
 <p align="center">
@@ -3082,7 +3096,7 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Project guide
@@ -3177,7 +3191,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience |
 | **G4** | Reproducible engineering lab |
 
-The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
 
 [Engineering decisions and review](#appendix-engineering-decisions) traces owner feedback through the rationale, changes and verification. It also links the separate [Go smoke task](https://github.com/Includeoyasi/faultline-lab/issues/9); its execution and review are tracked in GitHub.
 
@@ -3242,7 +3256,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
 </p>
 
 <p align="center">
@@ -3260,7 +3274,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Навигация по проекту
@@ -3344,7 +3358,7 @@ flowchart LR
 
 G0 — архитектура; G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Порядок и критерии приёмки описаны в workflow; факты принятия сохраняются с датой и источником.
 
-[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
 
 [Инженерные решения и ревью](#appendix-engineering-decisions) связывают замечания владельца с обоснованием, изменениями и проверками. Выполнение переноса контейнерного smoke на Go и его ревью ведутся в [задаче #9](https://github.com/Includeoyasi/faultline-lab/issues/9).
 
@@ -3411,7 +3425,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Проверить отдельный backlog | [Перенос smoke на Go](#appendix-go-smoke-backlog) — задача #9, границы и критерии |
 | Проверить права и защиту main | [Безопасность репозитория](#appendix-repository-security) — действующая защита и переход на аккаунт исполнителя |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
@@ -3426,7 +3440,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
 - [ADR 0002](#appendix-adr-0002): согласованный порядок фиксации решений в PR, ADR и обзорной странице.
 - [ADR 0003](#appendix-adr-0003): принятое решение о Go smoke и его последствия.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -4523,7 +4537,7 @@ Codex (AI-Your-Bro) — исполнитель: готовит проектны�
 
 #### Стандарт код-ревью
 
-[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/.github/pull_request_template.md) содержит краткий применимый чек-лист.
 
 После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; владелец проекта рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению владельца проекта или действие самого владельца проекта.
 
@@ -4782,7 +4796,7 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
+Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
@@ -4981,7 +4995,7 @@ Go-модуль, закреплённые инструменты и нативн
 - Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
 - Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
 
-Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
 
 <a id="appendix-lab-boundary"></a>
 
@@ -5273,13 +5287,13 @@ Docker рекомендует разделять ответственности 
 
 ### Баннер Faultline Lab
 
-Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/docs/assets/banner.svg).
+Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/docs/assets/banner.svg).
 
 #### Задание
 
 Подготовить три альтернативных варианта с акцентом на технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее. Сделаны векторные композиции с читаемым названием, тёмным текстом на светлом фоне и встроенными title/description. Внешних шрифтов, скриптов и удалённых графических зависимостей нет.
 
-![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/docs/assets/banner-concepts/comparison.png)
+![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/docs/assets/banner-concepts/comparison.png)
 
 | Вариант | Образ | Палитра | Статус |
 | :--- | :--- | :--- | :--- |
@@ -5289,13 +5303,13 @@ Docker рекомендует разделять ответственности 
 
 #### Выбранное решение
 
-![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/docs/assets/banner-concepts/02-experiment-flow.png)
+![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/docs/assets/banner-concepts/02-experiment-flow.png)
 
 Абстрактные линии проходят через область наблюдения. Это метафора исследования поведения системы и сравнения изменений; линии не являются графиком измеренных результатов. Композиция не зависит от домена магазина и подходит будущим подключаемым бизнесам.
 
 Размер SVG — 1280 × 420; README задаёт ширину 100%. Исходник масштабируется, PNG служит предварительным просмотром. Основная подпись: **Explore how systems behave.** Нижняя последовательность: **Hypothesis → Experiment → Evidence**.
 
-Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
+Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
 
 Баннеры отрендерены локально и визуально просмотрены на общем листе. Проверены отсутствие обрезанного текста и соответствие композиций заданию. Отдельный preview выбранного варианта используется для проверки основного баннера. Выбранный вариант слит в main через [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4), merge commit 8c392b8. Проверка отрисовки нового README на GitHub пока не выполнялась.
 
@@ -5433,7 +5447,7 @@ P01 не достигает всей контрольной точки G1: ба�
 | GitHub Issue | Текущая стадия, исполнитель, критерии выполнения, блокеры и связь с PR |
 | GitHub PR | Diff, результаты проверок, замечания и решение владельца по HEAD |
 | ADR | Существенное решение, варианты, последствия и основание принятия |
-| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
+| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
 
 #### Стадии в Issue
 
@@ -8882,7 +8896,7 @@ JSON schema version 2 сохраняет `run_id`, `project`, `result`, `service
 
 Отчёт не содержит полного inspect Env или разрешённого Compose-конфига. Пути checkout и домашнего каталога редактируются в диагностике. Smoke использует несекретный профиль; сторонние произвольные логи перед публикацией нужно проверять отдельно. Это проверка каркаса, а не измерение бизнес-корректности или capacity.
 
-После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/b120a06dde9d82598a3d03456787be7131356e5e/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
+После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/d097b567a819b798e88d6c8bf5df1c9d726edd0c/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
 
 <a id="go-smoke-main"></a>
 
@@ -14882,7 +14896,7 @@ func TestPostgresFoundation(t *testing.T) {
 				t.Fatalf("versions=%d want=%d", got, want)
 			}
 		}
-		before, e := Fingerprint(ctx, cfg)
+		before, e := Checksum(ctx, cfg)
 		if e != nil {
 			t.Fatal(e)
 		}
@@ -14891,7 +14905,7 @@ func TestPostgresFoundation(t *testing.T) {
 				t.Fatal(e)
 			}
 		}
-		after, e := Fingerprint(ctx, cfg)
+		after, e := Checksum(ctx, cfg)
 		if e != nil || before != after {
 			t.Fatal("repeat modified history", e)
 		}
@@ -15004,11 +15018,11 @@ func TestPostgresFoundation(t *testing.T) {
 }
 ```
 
-<a id="p02-internal-database-fingerprint-go"></a>
+<a id="p02-internal-database-checksum-go"></a>
 
-## Приложение: internal/database/fingerprint.go
+## Приложение: Data checksum
 
-Полный исходный документ: `internal/database/fingerprint.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+Полный исходный документ: `internal/database/checksum.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```go
 package database
@@ -15021,9 +15035,9 @@ import (
 	"errors"
 )
 
-// Fingerprint covers ordered migration history and the complete small catalog.
+// Checksum covers ordered migration history and Inventory product-stock pairs.
 // It is evidence of persistence for this foundation, not a general backup tool.
-func Fingerprint(ctx context.Context, cfg Config) (string, error) {
+func Checksum(ctx context.Context, cfg Config) (string, error) {
 	var values []string
 	for _, service := range cfg.Services {
 		conn, err := Connect(ctx, cfg, service.Database, service.MigrationUser)
@@ -15034,7 +15048,7 @@ func Fingerprint(ctx context.Context, cfg Config) (string, error) {
 		err = conn.QueryRow(ctx, `SELECT coalesce(json_agg(v ORDER BY version)::text,'[]') FROM lab_migrations.versions v`).Scan(&history)
 		Close(conn)
 		if err != nil {
-			return "", SafeError("history fingerprint", err)
+			return "", SafeError("history checksum", err)
 		}
 		values = append(values, service.Name, history)
 	}
@@ -15050,12 +15064,12 @@ func Fingerprint(ctx context.Context, cfg Config) (string, error) {
 	var catalog string
 	err = conn.QueryRow(ctx, `SELECT coalesce(json_agg(v ORDER BY sku)::text,'[]') FROM (SELECT p.*,s.available FROM inventory.products p JOIN inventory.stock s USING(sku)) v`).Scan(&catalog)
 	if err != nil {
-		return "", SafeError("catalog fingerprint", err)
+		return "", SafeError("catalog checksum", err)
 	}
 	values = append(values, catalog)
 	data, err := json.Marshal(values)
 	if err != nil {
-		return "", errors.New("cannot encode fingerprint")
+		return "", errors.New("cannot encode checksum")
 	}
 	sum := sha256.Sum256(data)
 	return hex.EncodeToString(sum[:]), nil
@@ -15604,11 +15618,17 @@ func setting(key, fallback string) string {
 }
 func run(ctx context.Context, args []string, out, errs io.Writer) int {
 	if len(args) == 0 {
-		_, _ = fmt.Fprintln(errs, "usage: labdata {secrets|bootstrap|migrate|seed|fingerprint|smoke|reset} [flags]")
+		_, _ = fmt.Fprintln(errs, "usage: labdata {secrets|bootstrap|migrate|seed|checksum|smoke|reset} [flags]")
 		return 2
 	}
 	flags := flag.NewFlagSet("labdata "+args[0], flag.ContinueOnError)
 	flags.SetOutput(errs)
+	if args[0] == "checksum" {
+		flags.Usage = func() {
+			_, _ = fmt.Fprint(errs, "Usage: labdata checksum [flags]\n\nPrint SHA-256 of migration history and Inventory product-stock data without changing it.\n\n")
+			flags.PrintDefaults()
+		}
+	}
 	config := flags.String("config", setting("FL_DATA_CONFIG", "configs/postgres/local.json"), "public database configuration")
 	secrets := flags.String("secrets", setting("FL_DATA_SECRETS", ".local/postgres"), "private credentials directory")
 	service := flags.String("service", "", "single migration service; empty applies all")
@@ -15629,7 +15649,7 @@ func run(ctx context.Context, args []string, out, errs io.Writer) int {
 		err = datalab.Run(ctx, out)
 	case "reset":
 		err = datalab.Reset(ctx, *project, *confirm, out)
-	case "secrets", "bootstrap", "migrate", "seed", "fingerprint":
+	case "secrets", "bootstrap", "migrate", "seed", "checksum":
 		var cfg database.Config
 		cfg, err = database.Load(*config, *secrets)
 		if err != nil {
@@ -15658,9 +15678,9 @@ func run(ctx context.Context, args []string, out, errs io.Writer) int {
 			}
 		case "seed":
 			err = database.Seed(operationCtx, cfg)
-		case "fingerprint":
+		case "checksum":
 			var value string
-			value, err = database.Fingerprint(operationCtx, cfg)
+			value, err = database.Checksum(operationCtx, cfg)
 			if err == nil {
 				_, err = fmt.Fprintln(out, value)
 			}
@@ -15673,7 +15693,7 @@ func run(ctx context.Context, args []string, out, errs io.Writer) int {
 		_, _ = fmt.Fprintln(errs, err)
 		return 1
 	}
-	if args[0] != "fingerprint" {
+	if args[0] != "checksum" {
 		_, _ = fmt.Fprintln(out, args[0]+": PASS")
 	}
 	return 0
@@ -16129,7 +16149,7 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 	if _, err = call(ctx, "rights, migrations and seed", 3*time.Minute, composeArgs(project, "run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "--entrypoint", "/app/database.test", "dbtool", "-test.run=^TestPostgresFoundation$", "-test.v", "-test.timeout=150s")...); err != nil {
 		return err
 	}
-	before, err := tool("fingerprint before restart", "fingerprint")
+	before, err := tool("checksum before restart", "checksum")
 	if err != nil {
 		return err
 	}
@@ -16144,7 +16164,7 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 			return err
 		}
 	}
-	after, err := tool("fingerprint after restart", "fingerprint")
+	after, err := tool("checksum after restart", "checksum")
 	if err != nil {
 		return err
 	}
@@ -16354,7 +16374,7 @@ docker compose -f compose.yaml -f compose.postgres.yaml -p faultline-data-local 
 docker compose -f compose.yaml -f compose.postgres.yaml -p faultline-data-local run --rm --no-deps dbtool seed
 ```
 
-Для macOS в команде сборки задаются `GOOS=darwin` и `GOARCH=arm64` либо `amd64`, для Linux — `GOOS=linux` и архитектура хоста. Имя результата: `bin/labdata-<os>-<arch>`; на Unix перед запуском при необходимости выполнить `chmod +x`. `data-cross-check` собирает все пять вариантов; компиляция не подтверждает работу Docker на конкретном компьютере. При установленном Go host-команды можно выполнять как `go run ./cmd/labdata secrets`, `go run ./cmd/labdata smoke` и `go run ./cmd/labdata reset ...`. Команды `bootstrap/migrate/seed/fingerprint` штатного профиля выполняются через dbtool внутри Docker-сети: DNS-имя `postgres` с хоста недоступно, порт базы не опубликован.
+Для macOS в команде сборки задаются `GOOS=darwin` и `GOARCH=arm64` либо `amd64`, для Linux — `GOOS=linux` и архитектура хоста. Имя результата: `bin/labdata-<os>-<arch>`; на Unix перед запуском при необходимости выполнить `chmod +x`. `data-cross-check` собирает все пять вариантов; компиляция не подтверждает работу Docker на конкретном компьютере. При установленном Go host-команды можно выполнять как `go run ./cmd/labdata secrets`, `go run ./cmd/labdata smoke` и `go run ./cmd/labdata reset ...`. Команды `bootstrap/migrate/seed/checksum` штатного профиля выполняются через dbtool внутри Docker-сети: DNS-имя `postgres` с хоста недоступно, порт базы не опубликован.
 
 `secrets` создаёт семь криптографически случайных паролей в `.local/postgres`, без вывода значений. Повторный вызов сохраняет их; повреждённый существующий файл отклоняется. Конфигурация адреса, порта, имён баз и ролей — в [local.json](#p02-configs-postgres-local-json). Пароли не входят в конфигурацию. `FL_PG_SECRETS_DIR` позволяет передать Compose другой каталог; `labdata secrets -secrets <каталог>` должен использовать тот же путь. В контейнере настройки читаются через `FL_DATA_CONFIG` и `FL_DATA_SECRETS`.
 
@@ -16441,7 +16461,13 @@ Smoke создаёт свой `faultline-data-test-<случайный ID>`, в�
 - исходный каталог, отсутствие дубликатов, сохранение изменённых цен и остатков при повторе seed, ограничения таблиц;
 - совпадение контрольной суммы каталога, остатков и полной истории миграций до и после перезапуска и повторной подготовки.
 
-Контрольная сумма здесь проверяет сохранность небольшого набора данных. Она сравнивается внутри одного набора данных: новый стенд имеет другие времена применения миграций и может получить другой отпечаток. Она не заменяет backup и не является будущей контрольной суммой плана нагрузки.
+Команда `checksum` читает журнал миграций трёх баз и пары «товар — остаток» Inventory, упорядочивает данные и выводит SHA-256. Она не изменяет данные и сама не выполняет сравнение. Пример для подготовленного стенда:
+
+```text
+docker compose -f compose.yaml -f compose.postgres.yaml -p faultline-data-local run --rm --no-deps dbtool checksum
+```
+
+Smoke сравнивает контрольные суммы до и после перезапуска. Они сравниваются внутри одного набора данных: новый стенд имеет другие времена применения миграций и может получить другую сумму. Это проверка сохранности выбранных данных; схема и права проверяются отдельно. Она не заменяет backup и не является будущей контрольной суммой плана нагрузки.
 
 После успеха, ошибки или перехваченной отмены cleanup получает новый контекст на 60s и удаляет только ресурсы своего одноразового проекта, включая volume и образ dbtool. Для очистки явно активируется профиль `tools`: выбор dbtool в предыдущем `compose run` не переносится на следующую команду `down`. Затем проверяется отсутствие ресурсов и удаляются временные пароли. [Семантика профилей Compose](https://docs.docker.com/compose/how-tos/profiles/#stop-application-and-services-with-specific-profiles). SIGKILL, авария ОС и недоступный Docker могут помешать очистке; для такого одноразового набора восстановление означает адресное удаление оставшихся ресурсов, а не восстановление данных. Для повторного Compose cleanup можно заново создать файлы паролей в каталоге прогона командой `secrets -secrets <каталог>` и передать его через `FL_PG_SECRETS_DIR`, затем вызвать reset с точным project из отчёта.
 
