@@ -33,11 +33,17 @@ func setting(key, fallback string) string {
 }
 func run(ctx context.Context, args []string, out, errs io.Writer) int {
 	if len(args) == 0 {
-		_, _ = fmt.Fprintln(errs, "usage: labdata {secrets|bootstrap|migrate|seed|fingerprint|smoke|reset} [flags]")
+		_, _ = fmt.Fprintln(errs, "usage: labdata {secrets|bootstrap|migrate|seed|checksum|smoke|reset} [flags]")
 		return 2
 	}
 	flags := flag.NewFlagSet("labdata "+args[0], flag.ContinueOnError)
 	flags.SetOutput(errs)
+	if args[0] == "checksum" {
+		flags.Usage = func() {
+			_, _ = fmt.Fprint(errs, "Usage: labdata checksum [flags]\n\nPrint SHA-256 of migration history and Inventory product-stock data without changing it.\n\n")
+			flags.PrintDefaults()
+		}
+	}
 	config := flags.String("config", setting("FL_DATA_CONFIG", "configs/postgres/local.json"), "public database configuration")
 	secrets := flags.String("secrets", setting("FL_DATA_SECRETS", ".local/postgres"), "private credentials directory")
 	service := flags.String("service", "", "single migration service; empty applies all")
@@ -58,7 +64,7 @@ func run(ctx context.Context, args []string, out, errs io.Writer) int {
 		err = datalab.Run(ctx, out)
 	case "reset":
 		err = datalab.Reset(ctx, *project, *confirm, out)
-	case "secrets", "bootstrap", "migrate", "seed", "fingerprint":
+	case "secrets", "bootstrap", "migrate", "seed", "checksum":
 		var cfg database.Config
 		cfg, err = database.Load(*config, *secrets)
 		if err != nil {
@@ -87,9 +93,9 @@ func run(ctx context.Context, args []string, out, errs io.Writer) int {
 			}
 		case "seed":
 			err = database.Seed(operationCtx, cfg)
-		case "fingerprint":
+		case "checksum":
 			var value string
-			value, err = database.Fingerprint(operationCtx, cfg)
+			value, err = database.Checksum(operationCtx, cfg)
 			if err == nil {
 				_, err = fmt.Fprintln(out, value)
 			}
@@ -102,7 +108,7 @@ func run(ctx context.Context, args []string, out, errs io.Writer) int {
 		_, _ = fmt.Fprintln(errs, err)
 		return 1
 	}
-	if args[0] != "fingerprint" {
+	if args[0] != "checksum" {
 		_, _ = fmt.Fprintln(out, args[0]+": PASS")
 	}
 	return 0

@@ -75,7 +75,7 @@ func TestPostgresFoundation(t *testing.T) {
 				t.Fatalf("versions=%d want=%d", got, want)
 			}
 		}
-		before, e := Fingerprint(ctx, cfg)
+		before, e := Checksum(ctx, cfg)
 		if e != nil {
 			t.Fatal(e)
 		}
@@ -84,7 +84,7 @@ func TestPostgresFoundation(t *testing.T) {
 				t.Fatal(e)
 			}
 		}
-		after, e := Fingerprint(ctx, cfg)
+		after, e := Checksum(ctx, cfg)
 		if e != nil || before != after {
 			t.Fatal("repeat modified history", e)
 		}

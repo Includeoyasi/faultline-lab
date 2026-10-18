@@ -225,7 +225,7 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 	if _, err = call(ctx, "rights, migrations and seed", 3*time.Minute, composeArgs(project, "run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "--entrypoint", "/app/database.test", "dbtool", "-test.run=^TestPostgresFoundation$", "-test.v", "-test.timeout=150s")...); err != nil {
 		return err
 	}
-	before, err := tool("fingerprint before restart", "fingerprint")
+	before, err := tool("checksum before restart", "checksum")
 	if err != nil {
 		return err
 	}
@@ -240,7 +240,7 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 			return err
 		}
 	}
-	after, err := tool("fingerprint after restart", "fingerprint")
+	after, err := tool("checksum after restart", "checksum")
 	if err != nil {
 		return err
 	}
