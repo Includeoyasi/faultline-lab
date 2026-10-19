@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 58,
+  "context_revision": 59,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-18",
+  "context_updated_on": "2026-10-19",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "f7e43fcfc91fba5bad1b35ceacffbf756a7cebdb",
+    "snapshot_ref": "996ccd015b549be6fa670c34f3376755e74782c2",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -2915,6 +2915,12 @@
       "date": "2026-10-18",
       "summary": "Address initial CI lint without weakening checks; reject Redis default-user profile; clarify toolchain exception to dependency runtime hardening",
       "trigger": "Issue16 CI diagnostics and read-only documentation review"
+    },
+    {
+      "revision": 59,
+      "date": "2026-10-19",
+      "summary": "Reworked Kafka Publishing into seven annotated sequence diagrams: replica failure, three protections and joint recovery; preserved durable-job architecture and explicit proposal status",
+      "trigger": "Direct owner voice instruction to make the current proposal reviewable through interaction diagrams"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -3059,7 +3065,16 @@
       "protocol": "Read monotonic lease generation G -> initialize transactional producer using stable lane ID -> claim lease only by CAS on that same G; no producer reuse after failed CAS and no reinit under old generation",
       "ordering": "One unacknowledged version per stream per Kafka transaction; next version only after confirmed Kafka commit and durable SQL mark; cross-stream batching allowed",
       "limits": "Contenders can fence a live publisher and hurt availability; client automatic epoch recovery must be excluded for stale lease; PostgreSQL/Kafka boundary still permits duplicate event IDs",
-      "future_checks": "A pause/resume and B takeover, delayed init/CAS, lost commit/SQL mark, retry/reinit, read_committed, inbox/version guards; F09 remains open until implemented and verified"
+      "future_checks": "A pause/resume and B takeover, delayed init/CAS, lost commit/SQL mark, retry/reinit, read_committed, inbox/version guards; F09 remains open until implemented and verified",
+      "presentation": {
+        "updated_on": "2026-10-19",
+        "source_commit": "996ccd015b549be6fa670c34f3376755e74782c2",
+        "provenance": "Owner requested in voice chat separate visual explanations of SQL lease, Kafka fencing and idempotent consumer, then their joint operation, for architecture review",
+        "route": "One paused-replica failure; three mechanisms; exact activation; end-to-end delivery; lost SQL publication mark; costs, alternatives and future checks",
+        "preserved_contracts": "Distinct SQL generation and Kafka epoch; read G -> broker init -> CAS same G; no reinit under old lease; independent post-commit delivery and SQL mark; inbox+durable job before offset, version/state guards in worker transaction",
+        "validation": "Seven Mermaid sequence diagrams rendered with Mermaid 11.4.1 and visually inspected; local documentation links and safety checks passed; this is document validation, not runtime validation of the proposed protocol",
+        "decision": "Presentation change only; protocol remains proposed and unimplemented, owner design acceptance pending"
+      }
     },
     "ci_refinement": "Initial Linux CI stopped at staticcheck ST1005 and an unused Compose wrapper; lower-case error messages and removal retain all checks. Redis default username is now rejected before ACL generation; affected Windows tests/vet pass. Actual final-HEAD CI results belong in PR/Actions."
   }
