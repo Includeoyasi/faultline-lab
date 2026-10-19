@@ -17,18 +17,32 @@ import (
 
 	"github.com/Includeoyasi/faultline-lab/internal/command"
 	"github.com/Includeoyasi/faultline-lab/internal/database"
+	"github.com/Includeoyasi/faultline-lab/internal/infrastructure"
 )
 
 var projectName = regexp.MustCompile(`^faultline-data-[a-z0-9][a-z0-9-]{0,47}$`)
 
-func composeArgs(project string, args ...string) []string {
+func composeModeArgs(project string, fullStack bool, args ...string) []string {
 	// Profile activation by an earlier explicit run is not retained by down.
 	// All starts/builds below retain explicit service targets.
-	return append([]string{"compose", "-f", "compose.yaml", "-f", "compose.postgres.yaml", "-p", project, "--profile", "tools"}, args...)
+	base := []string{"compose", "-f", "compose.yaml", "-f", "compose.postgres.yaml"}
+	if fullStack {
+		base = append(base, "-f", "compose.infrastructure.yaml")
+	}
+	return append(append(base, "-p", project, "--profile", "tools"), args...)
 }
 
 // Reset requires an exact explicit project confirmation; ordinary down preserves data.
 func Reset(ctx context.Context, project, confirm string, out io.Writer) error {
+	return reset(ctx, project, confirm, out, false)
+}
+
+// ResetInfrastructure includes Kafka's persistent volume in the explicit reset.
+func ResetInfrastructure(ctx context.Context, project, confirm string, out io.Writer) error {
+	return reset(ctx, project, confirm, out, true)
+}
+
+func reset(ctx context.Context, project, confirm string, out io.Writer, fullStack bool) error {
 	if !projectName.MatchString(project) || project != confirm {
 		return errors.New("reset requires a faultline-data-* project and identical -confirm value")
 	}
@@ -39,7 +53,7 @@ func Reset(ctx context.Context, project, confirm string, out io.Writer) error {
 	executor := command.Executor{Directory: root, Env: os.Environ()}
 	bounded, cancel := context.WithTimeout(ctx, time.Minute)
 	defer cancel()
-	result, err := executor.Execute(bounded, "docker", composeArgs(project, "down", "--volumes", "--remove-orphans", "--rmi", "local"))
+	result, err := executor.Execute(bounded, "docker", composeModeArgs(project, fullStack, "down", "--volumes", "--remove-orphans", "--rmi", "local"))
 	if err != nil {
 		return errors.New("scoped reset failed; inspect Docker for the named project")
 	}
@@ -64,21 +78,38 @@ type report struct {
 }
 
 func Run(ctx context.Context, out io.Writer) (finalErr error) {
+	return runHost(ctx, out, false)
+}
+
+// RunInfrastructure verifies PostgreSQL, Kafka and Redis together.
+func RunInfrastructure(ctx context.Context, out io.Writer) error {
+	return runHost(ctx, out, true)
+}
+
+func runHost(ctx context.Context, out io.Writer, fullStack bool) error {
 	root, err := os.Getwd()
 	if err != nil {
 		return errors.New("cannot locate checkout")
 	}
-	return run(ctx, out, root, nil)
+	return runMode(ctx, out, root, nil, fullStack)
 }
 
 func run(ctx context.Context, out io.Writer, root string, execute func(context.Context, string, []string) (command.Output, error)) (finalErr error) {
+	return runMode(ctx, out, root, execute, false)
+}
+
+func runMode(ctx context.Context, out io.Writer, root string, execute func(context.Context, string, []string) (command.Output, error), fullStack bool) (finalErr error) {
 	var err error
 	var token [8]byte
 	if _, err = rand.Read(token[:]); err != nil {
 		return errors.New("cannot generate project ID")
 	}
 	project := "faultline-data-test-" + hex.EncodeToString(token[:])
-	dir := filepath.Join(root, "artifacts", "postgres", project)
+	artifactKind := "postgres"
+	if fullStack {
+		artifactKind = "infrastructure"
+	}
+	dir := filepath.Join(root, "artifacts", artifactKind, project)
 	if err = os.MkdirAll(dir, 0o700); err != nil {
 		return errors.New("cannot create report directory")
 	}
@@ -86,6 +117,14 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 	if err != nil {
 		return err
 	}
+	var infraCfg infrastructure.Config
+	if fullStack {
+		infraCfg, err = infrastructure.Load(filepath.Join(root, "configs/infrastructure/local.json"), filepath.Join(dir, "infrastructure-secrets"))
+		if err != nil {
+			return err
+		}
+	}
+	compose := func(args ...string) []string { return composeModeArgs(project, fullStack, args...) }
 	removeCredentials := func() error {
 		var result error
 		// Windows/OneDrive can mark a bind-source directory read-only.
@@ -101,11 +140,29 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 		if e := os.Remove(cfg.Secrets); e != nil && !errors.Is(e, os.ErrNotExist) {
 			result = errors.Join(result, errors.New("cannot remove temporary credential directory"))
 		}
+		if fullStack {
+			if e := os.Chmod(infraCfg.Secrets, 0o700); e != nil && !errors.Is(e, os.ErrNotExist) {
+				result = errors.Join(result, errors.New("cannot restore infrastructure credential directory permissions"))
+			}
+			for _, name := range infrastructure.CredentialFiles {
+				if e := os.Remove(filepath.Join(infraCfg.Secrets, name)); e != nil && !errors.Is(e, os.ErrNotExist) {
+					result = errors.Join(result, errors.New("cannot remove infrastructure credential"))
+				}
+			}
+			if e := os.Remove(infraCfg.Secrets); e != nil && !errors.Is(e, os.ErrNotExist) {
+				result = errors.Join(result, errors.New("cannot remove infrastructure credential directory"))
+			}
+		}
 		return result
 	}
 	defer func() { finalErr = errors.Join(finalErr, removeCredentials()) }()
 	if err = database.GenerateSecrets(cfg); err != nil {
 		return err
+	}
+	if fullStack {
+		if err = infrastructure.GenerateSecrets(infraCfg); err != nil {
+			return err
+		}
 	}
 	pairs := []string{root, "[workspace]", filepath.ToSlash(root), "[workspace]"}
 	if home, e := os.UserHomeDir(); e == nil && home != "" {
@@ -118,15 +175,25 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 		}
 		pairs = append(pairs, value, "[secret]")
 	}
+	if fullStack {
+		value, e := infrastructure.Password(infraCfg)
+		if e != nil {
+			return e
+		}
+		pairs = append(pairs, value, "[secret]", infrastructure.PasswordHash(value), "[secret hash]")
+	}
 	redact := strings.NewReplacer(pairs...)
 	env := []string{}
 	for _, item := range os.Environ() {
 		key, _, _ := strings.Cut(item, "=")
-		if !strings.EqualFold(key, "FL_PG_SECRETS_DIR") {
+		if !strings.EqualFold(key, "FL_PG_SECRETS_DIR") && !strings.EqualFold(key, "FL_INFRA_SECRETS_DIR") {
 			env = append(env, item)
 		}
 	}
 	env = append(env, "FL_PG_SECRETS_DIR="+cfg.Secrets)
+	if fullStack {
+		env = append(env, "FL_INFRA_SECRETS_DIR="+infraCfg.Secrets)
+	}
 	executor := command.Executor{Directory: root, Env: env}
 	if execute == nil {
 		execute = executor.Execute
@@ -143,7 +210,7 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 		return errors.New("cannot save initial report")
 	}
 	call := func(parent context.Context, stage string, budget time.Duration, args ...string) (string, error) {
-		_, _ = fmt.Fprintln(out, "PostgreSQL smoke:", stage)
+		_, _ = fmt.Fprintln(out, artifactKind+" smoke:", stage)
 		commandCtx, cancel := context.WithTimeout(parent, budget)
 		defer cancel()
 		result, e := execute(commandCtx, "docker", args)
@@ -163,7 +230,7 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 		if mayExist {
 			cleanupCtx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 			defer cancel()
-			_, e := call(cleanupCtx, "cleanup", 60*time.Second, composeArgs(project, "down", "--volumes", "--remove-orphans", "--rmi", "local")...)
+			_, e := call(cleanupCtx, "cleanup", 60*time.Second, compose("down", "--volumes", "--remove-orphans", "--rmi", "local")...)
 			if e == nil {
 				for _, args := range [][]string{
 					{"ps", "-aq", "--filter", "label=com.docker.compose.project=" + project},
@@ -197,42 +264,68 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 			evidence.Result = "PASS"
 		}
 		finalErr = errors.Join(finalErr, save())
-		_, _ = fmt.Fprintf(out, "%s: artifacts/postgres/%s/report.json\n", evidence.Result, project)
+		_, _ = fmt.Fprintf(out, "%s: artifacts/%s/%s/report.json\n", evidence.Result, artifactKind, project)
 	}()
 	if _, err = call(ctx, "prerequisites", 15*time.Second, "version", "--format", "{{.Server.Version}}"); err != nil {
 		return err
 	}
 	mayExist = true
-	if _, err = call(ctx, "build dbtool", 10*time.Minute, composeArgs(project, "build", "dbtool")...); err != nil {
-		return err
+	services := []string{"postgres"}
+	buildServices := []string{"dbtool"}
+	if fullStack {
+		services = append(services, "kafka", "redis")
+		buildServices = append(buildServices, "infrastructure-check")
 	}
-	if _, err = call(ctx, "start PostgreSQL", 90*time.Second, composeArgs(project, "up", "-d", "--wait", "--wait-timeout", "75", "postgres")...); err != nil {
-		return err
-	}
+	// Register before build/start, so partial startup failures retain diagnostics.
 	defer func() {
 		logCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
-		_, _ = call(logCtx, "PostgreSQL logs", 5*time.Second, composeArgs(project, "logs", "--no-color", "postgres")...)
+		_, _ = call(logCtx, "dependency logs", 5*time.Second, compose(append([]string{"logs", "--no-color", "--tail", "200"}, services...)...)...)
 	}()
+	if _, err = call(ctx, "build dbtool", 10*time.Minute, compose(append([]string{"build"}, buildServices...)...)...); err != nil {
+		return err
+	}
+	if _, err = call(ctx, "start dependencies", 2*time.Minute, compose(append([]string{"up", "-d", "--wait", "--wait-timeout", "100"}, services...)...)...); err != nil {
+		return err
+	}
+	if fullStack {
+		if _, err = call(ctx, "Docker backend budget", 10*time.Second, "info", "--format", `{"os":{{json .OSType}},"architecture":{{json .Architecture}},"cpus":{{json .NCPU}},"memory_bytes":{{json .MemTotal}}}`); err != nil {
+			return err
+		}
+		if _, err = call(ctx, "dependency limits and image IDs", 10*time.Second, "inspect", "--format", "name={{.Name}} image_id={{.Image}} configured_image={{.Config.Image}} memory_bytes={{.HostConfig.Memory}} nano_cpus={{.HostConfig.NanoCpus}}", project+"-postgres-1", project+"-kafka-1", project+"-redis-1"); err != nil {
+			return err
+		}
+	}
 	tool := func(stage string, args ...string) (string, error) {
-		return call(ctx, stage, 90*time.Second, composeArgs(project, append([]string{"run", "--rm", "--no-deps", "dbtool"}, args...)...)...)
+		return call(ctx, stage, 90*time.Second, compose(append([]string{"run", "--rm", "--no-deps", "dbtool"}, args...)...)...)
 	}
 	for attempt := 0; attempt < 2; attempt++ {
 		if _, err = tool("bootstrap", "bootstrap"); err != nil {
 			return err
 		}
 	}
-	if _, err = call(ctx, "rights, migrations and seed", 3*time.Minute, composeArgs(project, "run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "--entrypoint", "/app/database.test", "dbtool", "-test.run=^TestPostgresFoundation$", "-test.v", "-test.timeout=150s")...); err != nil {
+	if _, err = call(ctx, "rights, migrations and seed", 3*time.Minute, compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "--entrypoint", "/app/database.test", "dbtool", "-test.run=^TestPostgresFoundation$", "-test.v", "-test.timeout=150s")...); err != nil {
 		return err
 	}
 	before, err := tool("checksum before restart", "checksum")
 	if err != nil {
 		return err
 	}
-	if _, err = call(ctx, "restart PostgreSQL", 60*time.Second, composeArgs(project, "restart", "postgres")...); err != nil {
+	var checkpoint string
+	if fullStack {
+		checkpoint, err = call(ctx, "Kafka and Redis before restart", 60*time.Second, compose("run", "--rm", "--no-deps", "infrastructure-check", "check-infrastructure", "-stage", "before-restart")...)
+		if err != nil {
+			return err
+		}
+		var plan infrastructure.Checkpoint
+		if err = json.Unmarshal([]byte(checkpoint), &plan); err != nil || plan.Version != 1 {
+			return errors.New("infrastructure checker returned an invalid checkpoint")
+		}
+	}
+	if _, err = call(ctx, "restart dependencies", 90*time.Second, compose(append([]string{"restart"}, services...)...)...); err != nil {
 		return err
 	}
-	if _, err = call(ctx, "wait after restart", 60*time.Second, composeArgs(project, "up", "-d", "--wait", "--wait-timeout", "45", "postgres")...); err != nil {
+	if _, err = call(ctx, "wait after restart", 2*time.Minute, compose(append([]string{"up", "-d", "--wait", "--wait-timeout", "100"}, services...)...)...); err != nil {
 		return err
 	}
 	for _, operation := range []string{"bootstrap", "migrate", "seed"} {
@@ -247,7 +340,16 @@ func run(ctx context.Context, out io.Writer, root string, execute func(context.C
 	if strings.TrimSpace(before) != strings.TrimSpace(after) {
 		return errors.New("data or migration history changed across restart/repeat")
 	}
-	_, err = call(ctx, "resource snapshot", 15*time.Second, "stats", "--no-stream", "--format", "{{json .}}", project+"-postgres-1")
+	if fullStack {
+		if _, err = call(ctx, "Kafka and Redis after restart", 60*time.Second, compose("run", "--rm", "--no-deps", "infrastructure-check", "check-infrastructure", "-stage", "after-restart", "-checkpoint", strings.TrimSpace(checkpoint))...); err != nil {
+			return err
+		}
+	}
+	statArgs := []string{"stats", "--no-stream", "--format", "{{json .}}"}
+	for _, service := range services {
+		statArgs = append(statArgs, project+"-"+service+"-1")
+	}
+	_, err = call(ctx, "resource snapshot", 15*time.Second, statArgs...)
 	return err
 }
 func roleNames(cfg database.Config) []string {

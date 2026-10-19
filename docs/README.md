@@ -15,6 +15,8 @@
 | Запустить и проверить три процесса | [Запуск сервисов](development/SERVICE_RUNTIME.md) — настройки, JSON, health и границы shutdown |
 | Поднять три runtime-контейнера | [Контейнерный каркас](development/CONTAINER_RUNTIME.md) — сборка, health, остановка и smoke с отчётом |
 | Подготовить базы и исходные данные | [PostgreSQL](development/POSTGRES.md) — роли, миграции, seed, схемы взаимодействий и reset |
+| Запустить инфраструктуру вместе | [Kafka и Redis](development/INFRASTRUCTURE.md) — общий smoke, ACL, TTL, сохранность Kafka и очистка |
+| Разобрать смену Kafka publisher и повторы | [Публикация Kafka](architecture/KAFKA_PUBLISHING.md) — проблема, три механизма и совместные сценарии на схемах |
 | Проверить Windows smoke | [Отчёт P01](development/evidence/p01/WINDOWS_SMOKE.md) — исходные JSON/JSONL, бюджет и остановка среды |
 | Проверить исходные ресурсы | [Профили сред](development/RESOURCE_PROFILES.md) — Windows, macOS и возможный будущий сервер |
 | Посмотреть оформление | [Концепции баннера](design/BANNER_OPTIONS.md) — три варианта и выбранное решение |

@@ -1,0 +1,9 @@
+{
+  "kafka_brokers": ["kafka:9092"],
+  "kafka_topic": "faultline-smoke",
+  "redis_address": "redis:6379",
+  "redis_user": "lab",
+  "key_prefix": "faultline:smoke:",
+  "timeout": "5s",
+  "probe_ttl": "1s"
+}

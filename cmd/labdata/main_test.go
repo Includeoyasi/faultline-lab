@@ -29,3 +29,11 @@ func TestUsageAndSecrets(t *testing.T) {
 		}
 	}
 }
+
+func TestInfrastructureCheckDoesNotLoadPostgresCredentials(t *testing.T) {
+	var out, errs bytes.Buffer
+	code := run(t.Context(), []string{"check-infrastructure", "-config", "missing-postgres.json", "-infrastructure-config", "../../configs/infrastructure/local.json", "-infrastructure-secrets", t.TempDir(), "-stage", "invalid"}, &out, &errs)
+	if code != 1 || !strings.Contains(errs.String(), "stage must be") || strings.Contains(errs.String(), "PostgreSQL") || out.Len() != 0 {
+		t.Fatalf("code=%d out=%q err=%q", code, out.String(), errs.String())
+	}
+}
