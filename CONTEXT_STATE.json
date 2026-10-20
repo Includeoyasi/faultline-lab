@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 59,
+  "context_revision": 63,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-19",
+  "context_updated_on": "2026-10-20",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "996ccd015b549be6fa670c34f3376755e74782c2",
+    "snapshot_ref": "30e934a325533f9acf9dc5ba76a4a96bae0adbd2",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -41,7 +41,8 @@
       9,
       12,
       16,
-      20
+      20,
+      24
     ]
   },
   "accepted_architecture": [
@@ -51,6 +52,23 @@
       "approved_on": "2026-10-13",
       "approval_evidence": "Прямое сообщение пользователя: G0 полностью принят.",
       "conditions": []
+    },
+    {
+      "id": "F03",
+      "status": "APPROVED",
+      "approved_on": "2026-10-20",
+      "approval_evidence": "Direct owner chat: F03 и F11 согласованы",
+      "decision": "Separate runner, host, backend, requested and actual image platform facts; immutable image IDs; unknown provenance; MATCH does not prove native execution; A/B requires a verified profile and full F06",
+      "document": "docs/architecture/PLATFORM_EVIDENCE.md",
+      "adr": "docs/adr/0004-platform-evidence.md"
+    },
+    {
+      "id": "F11",
+      "status": "APPROVED",
+      "approved_on": "2026-10-20",
+      "approval_evidence": "Direct owner chat: F03 и F11 согласованы",
+      "decision": "Preserve FINALIZING with separate recovery_status=NEEDS_REVIEW, durable blocked work and guards for exceptional RELEASED after unknown Commit; no automatic terminal/refund/re-reserve or repair exit approved",
+      "scope_note": "Approval is retained as dated history; F11 implementation is outside Issue24"
     }
   ],
   "authorization_history": [
@@ -88,6 +106,17 @@
       ],
       "implementation_and_review_pr_authorized": true,
       "other_work": "Outbox implementation, gate acceptance and other audit findings keep their agreed checkpoints"
+    },
+    {
+      "date": "2026-10-20",
+      "source": "Direct owner chat: можешь завести задачу по 1 пункту и брать ее в работку, following the bounded F03/current-F06 plan",
+      "scope": [
+        "Issue24: existing smoke/labdata metadata",
+        "F03 observed image platform facts",
+        "Current F06 resource facts"
+      ],
+      "implementation_and_review_pr_authorized": true,
+      "other_work": "F05 and business/outbox/loadgen changes excluded; full comparison eligibility deferred"
     }
   ],
   "review_history": [
@@ -2577,6 +2606,61 @@
       "title": "internal/infrastructure/secrets_unix_test.go",
       "anchor": "p02-infra-internal-infrastructure-secrets-unix-test-go",
       "language": "go"
+    },
+    {
+      "path": "docs/architecture/PLATFORM_EVIDENCE.md",
+      "title": "F03: accepted platform evidence contract",
+      "anchor": "appendix-docs-architecture-platform-evidence-md"
+    },
+    {
+      "path": "docs/adr/0004-platform-evidence.md",
+      "title": "ADR 0004: accepted platform provenance decision",
+      "anchor": "appendix-docs-adr-0004-platform-evidence-md"
+    },
+    {
+      "path": "docs/development/RUN_METADATA.md",
+      "title": "Observed run metadata: fields and limits",
+      "anchor": "appendix-docs-development-run-metadata-md"
+    },
+    {
+      "path": "docs/development/evidence/run-metadata/VALIDATION.md",
+      "title": "Windows run metadata validation — 2026-10-20",
+      "anchor": "appendix-docs-development-evidence-run-metadata-validation-md"
+    },
+    {
+      "path": "docs/development/evidence/run-metadata/windows-smoke.json",
+      "title": "Windows service metadata excerpt",
+      "anchor": "appendix-docs-development-evidence-run-metadata-windows-smoke-json"
+    },
+    {
+      "path": "docs/development/evidence/run-metadata/windows-postgres.json",
+      "title": "Windows PostgreSQL metadata excerpt",
+      "anchor": "appendix-docs-development-evidence-run-metadata-windows-postgres-json"
+    },
+    {
+      "path": "docs/development/evidence/run-metadata/windows-infrastructure.json",
+      "title": "Windows combined infrastructure metadata excerpt",
+      "anchor": "appendix-docs-development-evidence-run-metadata-windows-infrastructure-json"
+    },
+    {
+      "path": "docs/development/evidence/run-metadata/windows-summary.json",
+      "title": "Windows metadata source fingerprints and cleanup",
+      "anchor": "appendix-docs-development-evidence-run-metadata-windows-summary-json"
+    },
+    {
+      "path": "internal/runmeta/collect.go",
+      "title": "Shared run metadata collector",
+      "anchor": "appendix-internal-runmeta-collect-go"
+    },
+    {
+      "path": "internal/runmeta/collect_test.go",
+      "title": "Metadata platform/resource/provenance tests",
+      "anchor": "appendix-internal-runmeta-collect-test-go"
+    },
+    {
+      "path": "internal/smoke/metadata_test.go",
+      "title": "Smoke metadata cancellation and failure tests",
+      "anchor": "appendix-internal-smoke-metadata-test-go"
     }
   ],
   "change_history": [
@@ -2921,6 +3005,12 @@
       "date": "2026-10-19",
       "summary": "Reworked Kafka Publishing into seven annotated sequence diagrams: replica failure, three protections and joint recovery; preserved durable-job architecture and explicit proposal status",
       "trigger": "Direct owner voice instruction to make the current proposal reviewable through interaction diagrams"
+    },
+    {
+      "revision": 63,
+      "date": "2026-10-20",
+      "summary": "Implemented bounded F03/current F06 facts for existing runners, validated Windows metadata and cleanup, retained direct owner F03/F11 approvals and review-format requirements",
+      "trigger": "Owner authorized Issue24 creation and implementation; full comparison and other findings retain future checkpoints"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -3077,5 +3167,51 @@
       }
     },
     "ci_refinement": "Initial Linux CI stopped at staticcheck ST1005 and an unused Compose wrapper; lower-case error messages and removal retain all checks. Redis default username is now rejected before ACL generation; affected Windows tests/vet pass. Actual final-HEAD CI results belong in PR/Actions."
+  },
+  "architecture_review_format": {
+    "confirmed_on": "2026-10-19",
+    "source": "Direct owner chat after Kafka Publishing review",
+    "blocks": [
+      "Problem, localization cases and diagrams",
+      "Patterns, practices and solution alternatives",
+      "Justified solution and tradeoffs",
+      "Implementation plan for the current stage",
+      "Specific review focus"
+    ],
+    "sentences_per_block": "3–10 substantive sentences",
+    "presentation": "Prefer diagrams and tables; explain once and show once; enough content for an owner decision without repeated narrative"
+  },
+  "run_metadata_contract": {
+    "schema_version": 1,
+    "report_versions": {
+      "smoke": 3,
+      "labdata": 1
+    },
+    "guide": "docs/development/RUN_METADATA.md",
+    "source_commit": "30e934a325533f9acf9dc5ba76a4a96bae0adbd2",
+    "scope": "Named long-lived tested containers only; no ephemeral tool-platform inference",
+    "platform_facts": "Runner target, unknown physical host, Docker backend, requested platform and container image ID/platform/digests; independent requested/actual and backend/image relations",
+    "resources": "Backend CPU/memory budget, configured memory/nanoCPU fields and timestamped startup usage separately; NOT_CONFIGURED is field-specific; missing is not measured zero",
+    "failure_semantics": "Metadata is optional evidence, not the functional verdict; bounded 30s total and 5s per query; cancellation preserves owned cleanup",
+    "privacy": "Raw config/inspect/errors are not persisted; typed allowlist; repository names omitted from digests",
+    "comparison": "UNVERIFIED execution profile; NOT_EVALUATED A/B; no full experiment manifest yet"
+  },
+  "run_metadata_evidence": {
+    "date": "2026-10-20",
+    "source": "docs/development/evidence/run-metadata/VALIDATION.md",
+    "summary": "docs/development/evidence/run-metadata/windows-summary.json",
+    "go_checks": [
+      "go test ./... PASS",
+      "go vet ./... PASS",
+      "runmeta variant/resource unit regression PASS"
+    ],
+    "windows_modes": [
+      "service smoke PASS with known image platforms and measured startup usage",
+      "PostgreSQL-only smoke PASS with metadata",
+      "Combined PostgreSQL/Kafka/Redis smoke PASS with metadata"
+    ],
+    "runtime_regression": "Docker image Variant can be absent; JSON array decoding by exact image ID handles it without persisting raw inspect",
+    "cleanup": "Owned run containers/images removed; Docker Desktop and WSL VM stopped; autostart false",
+    "limits": "Dirty worktree before source commit, fingerprints recorded; physical host profile unverified; macOS runtime NOT_RUN; no capacity conclusion"
   }
 }
