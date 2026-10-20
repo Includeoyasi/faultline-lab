@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -13,6 +14,29 @@ import (
 
 	"github.com/Includeoyasi/faultline-lab/internal/command"
 )
+
+// Return metadata observations independently of the functional lifecycle fixture.
+func metadataFixture(args []string) (command.Output, bool) {
+	switch {
+	case args[0] == "info":
+		return command.Output{Stdout: `{"os":"linux","arch":"amd64","cpus":6,"memory":2147483648,"version":"29.0.0"}`}, true
+	case args[0] == "compose" && slices.Contains(args, "config"):
+		return command.Output{Stdout: `{"services":{"postgres":{},"kafka":{},"redis":{}},"private":"` + strings.Join([]string{"", "Users", "private"}, "/") + ` PASSWORD=metadata-secret"}`}, true
+	case args[0] == "compose" && slices.Contains(args, "ps"):
+		name := args[len(args)-1]
+		index := slices.Index([]string{"postgres", "kafka", "redis"}, name)
+		return command.Output{Stdout: strings.Repeat(string(rune('a'+index)), 64)}, true
+	case args[0] == "compose" && slices.Contains(args, "version"):
+		return command.Output{Stdout: "5.0.0"}, true
+	case args[0] == "inspect":
+		return command.Output{Stdout: fmt.Sprintf(`{"image":"sha256:%s","memory":134217728,"nano_cpus":0,"running":true}`, strings.Repeat("d", 64))}, true
+	case args[0] == "image" && args[1] == "inspect":
+		return command.Output{Stdout: fmt.Sprintf(`[{"Id":"sha256:%s","Os":"linux","Architecture":"amd64","RepoDigests":[]}]`, strings.Repeat("d", 64))}, true
+	case args[0] == "stats":
+		return command.Output{Stdout: `{"cpu":"2.5%","memory":"16MiB / 128MiB"}`}, true
+	}
+	return command.Output{}, false
+}
 
 func TestResetRejectsAmbiguousTargets(t *testing.T) {
 	for _, test := range []struct{ project, confirm string }{
@@ -27,7 +51,7 @@ func TestResetRejectsAmbiguousTargets(t *testing.T) {
 }
 
 func TestRunCleanupAndReports(t *testing.T) {
-	for _, scenario := range []string{"success", "read-only-directory", "partial-build", "cancel-build", "cleanup-failure"} {
+	for _, scenario := range []string{"success", "read-only-directory", "partial-build", "cancel-build", "cleanup-failure", "metadata-cancel", "metadata-missing"} {
 		t.Run(scenario, func(t *testing.T) {
 			root := t.TempDir()
 			config, e := os.ReadFile("../../configs/postgres/local.json")
@@ -47,6 +71,16 @@ func TestRunCleanupAndReports(t *testing.T) {
 			execute := func(commandCtx context.Context, program string, args []string) (command.Output, error) {
 				if program != "docker" {
 					t.Fatal("unexpected executable")
+				}
+				if scenario == "metadata-cancel" && args[0] == "info" {
+					cancel()
+					return command.Output{}, commandCtx.Err()
+				}
+				if scenario == "metadata-missing" && args[0] == "image" && args[1] == "inspect" {
+					return command.Output{Stderr: "metadata-private"}, errors.New("metadata-private")
+				}
+				if data, ok := metadataFixture(args); ok {
+					return data, nil
 				}
 				if slices.Contains(args, "build") {
 					imageExists = true
@@ -87,7 +121,7 @@ func TestRunCleanupAndReports(t *testing.T) {
 				return command.Output{}, nil
 			}
 			err := run(ctx, io.Discard, root, execute)
-			wantSuccess := scenario == "success" || scenario == "read-only-directory"
+			wantSuccess := scenario == "success" || scenario == "read-only-directory" || scenario == "metadata-missing"
 			if !cleaned || wantSuccess != (err == nil) {
 				t.Fatalf("cleanup=%t err=%v", cleaned, err)
 			}
@@ -111,6 +145,15 @@ func TestRunCleanupAndReports(t *testing.T) {
 			}
 			if wantSuccess && saved.Result != "PASS" || !wantSuccess && saved.Result != "FAIL" {
 				t.Fatal("wrong verdict")
+			}
+			if wantSuccess && scenario != "metadata-missing" && (saved.SchemaVersion != 1 || saved.Environment.Services["postgres"].Image.Status != "KNOWN" || saved.Environment.Services["postgres"].Usage.Status != "MEASURED") {
+				t.Fatal("postgres-only metadata missing")
+			}
+			if strings.Contains(string(data), "metadata-secret") || strings.Contains(string(data), strings.Join([]string{"", "Users", "private"}, "/")) {
+				t.Fatal("raw Compose data leaked")
+			}
+			if strings.Contains(string(data), "metadata-private") || scenario == "metadata-missing" && saved.Environment.Services["postgres"].Image.Status != "UNKNOWN" {
+				t.Fatal("missing metadata not safely represented")
 			}
 			if (scenario == "cleanup-failure") != (saved.Cleanup == "FAIL") {
 				t.Fatal("wrong cleanup verdict")

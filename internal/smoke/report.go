@@ -5,10 +5,11 @@ import (
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/Includeoyasi/faultline-lab/internal/runmeta"
 )
 
-// Report version 2 preserves result/cleanup/services/commands and exit meanings.
-// It replaces Node metadata with Go metadata and adds cancellation/recovery data.
+// Report version 3 adds observed run metadata without changing result/exit meanings.
 type Report struct {
 	SchemaVersion int                      `json:"schema_version"`
 	RunID         string                   `json:"run_id"`
@@ -34,6 +35,7 @@ type Report struct {
 	Commands      []commandReport          `json:"commands"`
 	Recovery      []string                 `json:"recovery_command"`
 	Limitations   []string                 `json:"limitations"`
+	Environment   runmeta.Report           `json:"environment"`
 }
 
 type serviceReport struct {

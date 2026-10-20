@@ -1,0 +1,185 @@
+{
+  "source_report": "artifacts/infrastructure/faultline-data-test-6841f8e773fbd377/report.json",
+  "source_report_sha256": "50098a0a068bbb0e3f2fca91c9bbd9cf3ad0fce5b81345a6953096141b39f3df",
+  "result": "PASS",
+  "cleanup": "PASS",
+  "started_at": "2026-10-20T13:05:03.86877Z",
+  "finished_at": "2026-10-20T13:06:13.2169735Z",
+  "environment": {
+    "schema_version": 1,
+    "runner_platform": {
+      "os": "windows",
+      "architecture": "amd64",
+      "raw": "windows/amd64",
+      "status": "KNOWN",
+      "source": "runtime.GOOS/GOARCH"
+    },
+    "host_platform": {
+      "status": "UNKNOWN",
+      "source": "host profile",
+      "reason": "physical_host_not_observed"
+    },
+    "backend_platform": {
+      "os": "linux",
+      "architecture": "amd64",
+      "raw": "linux/x86_64",
+      "status": "KNOWN",
+      "source": "docker info"
+    },
+    "docker_version": "29.8.2",
+    "compose_version": "5.6.0",
+    "go_version": "go1.27.2",
+    "backend_budget": {
+      "cpus": {
+        "value": 2,
+        "status": "KNOWN",
+        "source": "docker info.NCPU"
+      },
+      "memory_bytes": {
+        "value": 1996603392,
+        "status": "KNOWN",
+        "source": "docker info.MemTotal"
+      }
+    },
+    "services": {
+      "kafka": {
+        "container_id": "e81165a9abce5add87d44cf8cd9be5dce73b74cb657c55d90e0a1b81970e9d03",
+        "image_id": "sha256:77e3df9054047a88b520d0cc46e16696d3b22022e1d580aeccd2632df6532837",
+        "image_digests": [
+          "sha256:77e3df9054047a88b520d0cc46e16696d3b22022e1d580aeccd2632df6532837"
+        ],
+        "requested_platform": {
+          "status": "UNSET",
+          "source": "effective Compose config and DOCKER_DEFAULT_PLATFORM"
+        },
+        "image_platform": {
+          "os": "linux",
+          "architecture": "amd64",
+          "raw": "linux/amd64",
+          "status": "KNOWN",
+          "source": "docker image inspect by container image ID"
+        },
+        "backend_image_relation": {
+          "status": "MATCH"
+        },
+        "requested_actual_relation": {
+          "status": "NOT_REQUESTED"
+        },
+        "limits": {
+          "nano_cpus": {
+            "value": 750000000,
+            "status": "KNOWN",
+            "source": "container.HostConfig.NanoCpus"
+          },
+          "memory_bytes": {
+            "value": 671088640,
+            "status": "KNOWN",
+            "source": "container.HostConfig.Memory"
+          }
+        },
+        "usage_snapshot": {
+          "observed_at": "2026-10-20T13:05:32.3882122Z",
+          "cpu_percent": 2.75,
+          "memory_bytes": 257635123,
+          "source": "docker stats",
+          "status": "MEASURED"
+        }
+      },
+      "postgres": {
+        "container_id": "6bc1c58484dc873349c8b11737fa1f832c6dda0732d9ab4c54769a8af25429ba",
+        "image_id": "sha256:afc7e2d441324c0388fa80c3d24f733b4194a4eb7f47dd8ee2b08eb1a24a647c",
+        "image_digests": [
+          "sha256:afc7e2d441324c0388fa80c3d24f733b4194a4eb7f47dd8ee2b08eb1a24a647c"
+        ],
+        "requested_platform": {
+          "status": "UNSET",
+          "source": "effective Compose config and DOCKER_DEFAULT_PLATFORM"
+        },
+        "image_platform": {
+          "os": "linux",
+          "architecture": "amd64",
+          "raw": "linux/amd64",
+          "status": "KNOWN",
+          "source": "docker image inspect by container image ID"
+        },
+        "backend_image_relation": {
+          "status": "MATCH"
+        },
+        "requested_actual_relation": {
+          "status": "NOT_REQUESTED"
+        },
+        "limits": {
+          "nano_cpus": {
+            "value": 500000000,
+            "status": "KNOWN",
+            "source": "container.HostConfig.NanoCpus"
+          },
+          "memory_bytes": {
+            "value": 536870912,
+            "status": "KNOWN",
+            "source": "container.HostConfig.Memory"
+          }
+        },
+        "usage_snapshot": {
+          "observed_at": "2026-10-20T13:05:30.0698277Z",
+          "cpu_percent": 4.3,
+          "memory_bytes": 33827061,
+          "source": "docker stats",
+          "status": "MEASURED"
+        }
+      },
+      "redis": {
+        "container_id": "73990ca58558a0b691b298a28bbe209253b58e56b0b4821a07b62a0d0bf3af1f",
+        "image_id": "sha256:b51665e66f00759be7c3152ad5ac3c66fb2f619c13ef62dea7cc1f9914524635",
+        "image_digests": [
+          "sha256:b51665e66f00759be7c3152ad5ac3c66fb2f619c13ef62dea7cc1f9914524635"
+        ],
+        "requested_platform": {
+          "status": "UNSET",
+          "source": "effective Compose config and DOCKER_DEFAULT_PLATFORM"
+        },
+        "image_platform": {
+          "os": "linux",
+          "architecture": "amd64",
+          "raw": "linux/amd64",
+          "status": "KNOWN",
+          "source": "docker image inspect by container image ID"
+        },
+        "backend_image_relation": {
+          "status": "MATCH"
+        },
+        "requested_actual_relation": {
+          "status": "NOT_REQUESTED"
+        },
+        "limits": {
+          "nano_cpus": {
+            "value": 250000000,
+            "status": "KNOWN",
+            "source": "container.HostConfig.NanoCpus"
+          },
+          "memory_bytes": {
+            "value": 134217728,
+            "status": "KNOWN",
+            "source": "container.HostConfig.Memory"
+          }
+        },
+        "usage_snapshot": {
+          "observed_at": "2026-10-20T13:05:34.6830858Z",
+          "cpu_percent": 0.63,
+          "memory_bytes": 15791554,
+          "source": "docker stats",
+          "status": "MEASURED"
+        }
+      }
+    },
+    "execution_profile": {
+      "status": "UNVERIFIED",
+      "reason": "platform_match_does_not_prove_native_execution"
+    },
+    "comparison_eligibility": {
+      "status": "NOT_EVALUATED",
+      "reason": "requires_verified_execution_profile_and_experiment_contract"
+    },
+    "coverage": "named long-lived tested containers; ephemeral tool containers are not observed"
+  }
+}

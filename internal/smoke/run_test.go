@@ -70,6 +70,9 @@ func (f *dockerFixture) execute(ctx context.Context, program string, args []stri
 	case "version":
 		return commandOutput{stdout: "29.8.2"}, nil
 	case "info":
+		if strings.Contains(args[len(args)-1], `"cpus"`) {
+			return commandOutput{stdout: `{"os":"linux","arch":"arm64","cpus":4,"memory":1073741824,"version":"29.8.2"}`}, nil
+		}
 		return commandOutput{stdout: "linux/arm64"}, nil
 	case "compose": // compose version
 		return commandOutput{stdout: "5.6.0"}, nil
@@ -97,6 +100,9 @@ func (f *dockerFixture) execute(ctx context.Context, program string, args []stri
 		}
 		return commandOutput{}, nil
 	case "inspect":
+		if args[1] == "--format" {
+			return commandOutput{stdout: `{"image":"sha256:` + strings.Repeat("d", 64) + `","memory":0,"nano_cpus":500000000,"running":true}`}, nil
+		}
 		index := int(args[1][0] - 'a')
 		name := services[index]
 		state, code, oom := "running", 0, false
@@ -134,10 +140,15 @@ func (f *dockerFixture) execute(ctx context.Context, program string, args []stri
 		}
 		return commandOutput{}, nil
 	case "image":
+		if args[1] == "inspect" {
+			return commandOutput{stdout: `[{"Id":"sha256:` + strings.Repeat("d", 64) + `","Os":"linux","Architecture":"arm64","RepoDigests":[]}]`}, nil
+		}
 		if f.images {
 			return commandOutput{stdout: "owned-image"}, nil
 		}
 		return commandOutput{}, nil
+	case "stats":
+		return commandOutput{stdout: `{"cpu":"1.0%","memory":"12MiB / 1GiB"}`}, nil
 	default:
 		f.t.Fatalf("unexpected Docker operation %s %v", op, args)
 		return commandOutput{}, nil
@@ -176,6 +187,9 @@ func TestSuccessfulRunRetainsServiceChecks(t *testing.T) {
 		if !observed.Healthy || !observed.Stopped || observed.ID == "" || observed.ImageID == "" || observed.ExitCode == nil || *observed.ExitCode != 0 {
 			t.Fatalf("incomplete %s observation: %+v", service, observed)
 		}
+	}
+	if report.SchemaVersion != 3 || report.Environment.SchemaVersion != 1 || report.Environment.Services["orders"].Image.Architecture != "arm64" || report.Environment.Services["orders"].Usage.Status != "MEASURED" {
+		t.Fatal("run metadata missing from successful smoke")
 	}
 	if count := strings.Count(strings.Join(f.operations, ","), "down"); count != 2 {
 		t.Fatalf("late engine resource was not cleaned again: %v", f.operations)

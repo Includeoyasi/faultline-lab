@@ -18,6 +18,7 @@ import (
 	"github.com/Includeoyasi/faultline-lab/internal/command"
 	"github.com/Includeoyasi/faultline-lab/internal/database"
 	"github.com/Includeoyasi/faultline-lab/internal/infrastructure"
+	"github.com/Includeoyasi/faultline-lab/internal/runmeta"
 )
 
 var projectName = regexp.MustCompile(`^faultline-data-[a-z0-9][a-z0-9-]{0,47}$`)
@@ -69,12 +70,14 @@ type event struct {
 	ExitCode int    `json:"exit_code"`
 }
 type report struct {
-	Project  string    `json:"project"`
-	Started  time.Time `json:"started_at"`
-	Finished time.Time `json:"finished_at"`
-	Result   string    `json:"result"`
-	Cleanup  string    `json:"cleanup"`
-	Events   []event   `json:"events"`
+	SchemaVersion int            `json:"schema_version"`
+	Project       string         `json:"project"`
+	Started       time.Time      `json:"started_at"`
+	Finished      time.Time      `json:"finished_at"`
+	Result        string         `json:"result"`
+	Cleanup       string         `json:"cleanup"`
+	Events        []event        `json:"events"`
+	Environment   runmeta.Report `json:"environment"`
 }
 
 func Run(ctx context.Context, out io.Writer) (finalErr error) {
@@ -198,7 +201,11 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	if execute == nil {
 		execute = executor.Execute
 	}
-	evidence := report{Project: project, Started: time.Now().UTC(), Result: "FAIL", Cleanup: "PENDING", Events: []event{}}
+	services := []string{"postgres"}
+	if fullStack {
+		services = append(services, "kafka", "redis")
+	}
+	evidence := report{SchemaVersion: 1, Project: project, Started: time.Now().UTC(), Result: "FAIL", Cleanup: "PENDING", Events: []event{}, Environment: runmeta.New(services)}
 	save := func() error {
 		data, e := json.MarshalIndent(evidence, "", "  ")
 		if e != nil {
@@ -270,10 +277,8 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 		return err
 	}
 	mayExist = true
-	services := []string{"postgres"}
 	buildServices := []string{"dbtool"}
 	if fullStack {
-		services = append(services, "kafka", "redis")
 		buildServices = append(buildServices, "infrastructure-check")
 	}
 	// Register before build/start, so partial startup failures retain diagnostics.
@@ -285,16 +290,18 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	if _, err = call(ctx, "build dbtool", 10*time.Minute, compose(append([]string{"build"}, buildServices...)...)...); err != nil {
 		return err
 	}
-	if _, err = call(ctx, "start dependencies", 2*time.Minute, compose(append([]string{"up", "-d", "--wait", "--wait-timeout", "100"}, services...)...)...); err != nil {
+	_, err = call(ctx, "start dependencies", 2*time.Minute, compose(append([]string{"up", "-d", "--wait", "--wait-timeout", "100"}, services...)...)...)
+	// This adapter intentionally bypasses call(): full Compose config may
+	// contain secrets, while runmeta retains only explicitly allowed fields.
+	evidence.Environment = runmeta.Collect(ctx, func(ctx context.Context, args []string) (string, error) {
+		result, e := execute(ctx, "docker", args)
+		if e == nil && result.ExitCode != 0 {
+			e = errors.New("metadata command failed")
+		}
+		return result.Stdout, e
+	}, compose(), services)
+	if err = errors.Join(err, ctx.Err(), save()); err != nil {
 		return err
-	}
-	if fullStack {
-		if _, err = call(ctx, "Docker backend budget", 10*time.Second, "info", "--format", `{"os":{{json .OSType}},"architecture":{{json .Architecture}},"cpus":{{json .NCPU}},"memory_bytes":{{json .MemTotal}}}`); err != nil {
-			return err
-		}
-		if _, err = call(ctx, "dependency limits and image IDs", 10*time.Second, "inspect", "--format", "name={{.Name}} image_id={{.Image}} configured_image={{.Config.Image}} memory_bytes={{.HostConfig.Memory}} nano_cpus={{.HostConfig.NanoCpus}}", project+"-postgres-1", project+"-kafka-1", project+"-redis-1"); err != nil {
-			return err
-		}
 	}
 	tool := func(stage string, args ...string) (string, error) {
 		return call(ctx, stage, 90*time.Second, compose(append([]string{"run", "--rm", "--no-deps", "dbtool"}, args...)...)...)
@@ -345,12 +352,7 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 			return err
 		}
 	}
-	statArgs := []string{"stats", "--no-stream", "--format", "{{json .}}"}
-	for _, service := range services {
-		statArgs = append(statArgs, project+"-"+service+"-1")
-	}
-	_, err = call(ctx, "resource snapshot", 15*time.Second, statArgs...)
-	return err
+	return nil
 }
 func roleNames(cfg database.Config) []string {
 	var result []string
