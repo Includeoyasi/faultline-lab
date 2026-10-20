@@ -3,6 +3,7 @@ package database
 import (
 	"context"
 	"errors"
+	"fmt"
 	"io/fs"
 	"os"
 	"strings"
@@ -67,10 +68,11 @@ func TestPostgresFoundation(t *testing.T) {
 				}
 			}
 			conn := connect(t, service.Database, service.MigrationUser)
-			want := 1
-			if service.Name == "inventory" {
-				want = 2
+			loaded, e := loadMigrations(migrations.Files, service.Name)
+			if e != nil {
+				t.Fatal(e)
 			}
+			want := len(loaded)
 			if got := scalar(t, conn, "SELECT count(*) FROM lab_migrations.versions"); got != want {
 				t.Fatalf("versions=%d want=%d", got, want)
 			}
@@ -100,7 +102,11 @@ func TestPostgresFoundation(t *testing.T) {
 		if e := Migrate(ctx, cfg, service); e != nil {
 			t.Fatal(e)
 		}
-		if got := scalar(t, conn, "SELECT count(*) FROM lab_migrations.versions"); got != 2 {
+		loaded, e := loadMigrations(migrations.Files, service.Name)
+		if e != nil {
+			t.Fatal(e)
+		}
+		if got := scalar(t, conn, "SELECT count(*) FROM lab_migrations.versions"); got != len(loaded) {
 			t.Fatal("grant repair changed migration history")
 		}
 		if got := scalar(t, app, "SELECT count(*) FROM inventory.products"); got != 0 {
@@ -175,14 +181,19 @@ func TestPostgresFoundation(t *testing.T) {
 			}
 			files["inventory/"+entry.Name()] = &fstest.MapFile{Data: data}
 		}
-		files["inventory/0003_failure.sql"] = &fstest.MapFile{Data: []byte("CREATE TABLE inventory.must_rollback(id int); SELECT 1/0;")}
+		loaded, e := loadMigrations(migrations.Files, service.Name)
+		if e != nil {
+			t.Fatal(e)
+		}
+		failureFile := fmt.Sprintf("inventory/%04d_failure.sql", loaded[len(loaded)-1].version+1)
+		files[failureFile] = &fstest.MapFile{Data: []byte("CREATE TABLE inventory.must_rollback(id int); SELECT 1/0;")}
 		if e = migrate(ctx, cfg, service, files); e == nil || !strings.Contains(e.Error(), "22012") {
 			t.Fatalf("expected failed migration: %v", e)
 		}
-		if scalar(t, conn, "SELECT count(*) FROM lab_migrations.versions") != 2 || scalar(t, conn, "SELECT count(*) FROM information_schema.tables WHERE table_schema='inventory' AND table_name='must_rollback'") != 0 {
+		if scalar(t, conn, "SELECT count(*) FROM lab_migrations.versions") != len(loaded) || scalar(t, conn, "SELECT count(*) FROM information_schema.tables WHERE table_schema='inventory' AND table_name='must_rollback'") != 0 {
 			t.Fatal("failed migration persisted")
 		}
-		delete(files, "inventory/0003_failure.sql")
+		delete(files, failureFile)
 		files["inventory/0001_schema.sql"].Data = []byte("CREATE SCHEMA inventory; -- changed")
 		if e = migrate(ctx, cfg, service, files); e == nil || !strings.Contains(e.Error(), "checksum") {
 			t.Fatal("accepted changed migration", e)

@@ -1,0 +1,16 @@
+services:
+  inventory:
+    command: []
+    environment:
+      FL_INVENTORY_CONFIG: /etc/faultline/inventory.json
+      FL_INVENTORY_DATASET_ID: ${FL_INVENTORY_DATASET_ID:?set a unique dataset identity before starting Inventory}
+    volumes:
+      - ./configs/inventory/local.json:/etc/faultline/inventory.json:ro
+    secrets:
+      - {source: inventory-app-password, target: inventory_app.password}
+    networks: [runtime, data]
+    mem_limit: 128m
+    cpus: 0.5
+    depends_on:
+      postgres:
+        condition: service_healthy

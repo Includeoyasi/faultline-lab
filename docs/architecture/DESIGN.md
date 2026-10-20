@@ -109,10 +109,11 @@ flowchart LR
 Порядок небольших пакетов для код-ревью:
 
 1. **P01 — первый PR после G0, до G1.** Три Go entrypoints, конфигурация, health, shutdown и JSON-логи; контейнерный toolchain, образы сервисов, минимальный Compose и Go CI. Дополнение среды согласовано после G0 для Windows/macOS; детали и статус — в [описании среды](../development/ENVIRONMENT.md).
-2. **P02:** Compose для PostgreSQL/Kafka/Redis, отдельные БД/роли, миграции и seed. [Согласованная декомпозиция](../development/packets/P02.md) сохраняет этот объём: две задачи под два будущих PR: #12 — PostgreSQL/миграции/seed, #16 — Kafka/Redis и проверка полного стенда. Реализация не начата.
-3. **P03:** Protobuf-контракты с operation keys, состояниями и классификацией ошибок.
-4. **P04:** Create/Get/GetByRequestKey и долговечная задача Orders.
-5. **P05:** Reserve/Commit/Release/GetReservation с ledger, блокировками и cancellation barrier.
+2. **P02:** Compose для PostgreSQL/Kafka/Redis, отдельные БД/роли, миграции и seed. [Декомпозиция](../development/packets/P02.md) сохраняет инфраструктурный объём; актуальные задачи и приёмка находятся в GitHub.
+3. **Inventory и его protobuf-контракт:** Reserve/Commit/Release/GetReservation/GetAvailability с operation keys, ledger, блокировками и cancellation barrier.
+4. **Orders и его protobuf-контракт:** Create/Get/GetByRequestKey и долговечная задача, использующая уже проверенный Inventory.
+
+Порядок Inventory → Orders уточнён владельцем в чате 20 октября 2026 года при пересмотре плана после аудита. Контракты вводятся вместе с соответствующим рабочим срезом; границы трёх сервисов и критерии G1 сохраняются.
 
 Каждый пакет проходит своё код-ревью. После подготовки и принятия этой основы проводится отдельная приёмка контрольной точки G1; первый PR не называется G1 и не требует предварительного прохождения G1.
 

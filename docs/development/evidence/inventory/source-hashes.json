@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "validation_subject": "working tree before source commit",
+  "normalization": "UTF-8 text with CRLF replaced by LF",
+  "source_sha256": {
+    "api/inventory/v1/inventory.proto": "b4f9ea70983e1f43ba1327efdd2477678fc80afe5986bd0976d4f2ad8b5f53e7",
+    "api/inventory/v1/inventory.pb.go": "3284c70b5007cf84001a994e7321e9c83db1a57ef432ced8c2527fe9625ba392",
+    "api/inventory/v1/inventory_grpc.pb.go": "8a231faf54a683fe44b051348a91927742d20d634a371b24f48fdb41a929a669",
+    "migrations/inventory/0003_reservations.sql": "d74f941ba8f606f0d445db4c05dcc23f201558be06352930eda3a871aa02dab6",
+    "go.mod": "4756e88767a7e8ff9012ce8bd548095c7204754ebc82e7c3e72635944d7dd8c4",
+    "go.sum": "82f6a57c35ab438d05ee37801803006774b39fe8cad86402fa03ff0af81b1baf",
+    "build/Dockerfile": "836b38be04faed48d944869ab1c23b7dc2a776a4fe289efcf64131cd34af370c",
+    "tools/go.sh": "9d0060a4cc3fde4e46d85da1bbdf470cc8b96520245b294e928f5c9117d346a2",
+    "internal/service/run.go": "990600e1e53cfb8c50ab09c92c905c61d3be64f9b241c5bfd52393d684219b09",
+    "cmd/inventory/main.go": "01ff23a872198afb07aceda2a2a14e7bf0ebc21f0510ef384b0c35c69cb266b8",
+    "internal/database/integration_test.go": "331377677dc73bcf56366028d54f3a6f221d10cd22a1f87bbb6e6189c15b4ef4",
+    "internal/datalab/run.go": "09d84528559f1623e8565ed99e4abf3aab29271c2b41a9b42b58031ef8c4cb03",
+    "internal/datalab/infrastructure_test.go": "f9aeed25878348fb67c9cffda5f2b3dd0b51c368496fc061307613a7c10ea4bb",
+    "compose.yaml": "05a53e758aaaef80bfd0fcf6a74b30648fba848f7fc9d523bca6e58717d71e49",
+    "compose.postgres.yaml": "edab063cc996ccba4ca3e2dfaf322d6d876b7c2367d0775648e5ee161b90d1b6",
+    "compose.inventory.yaml": "a02fbcc9da63e1f36b826326b6b4ec206bbe6908b42cbf8ea1de2352ef5cccf1",
+    "configs/inventory/local.json": "7fdfb317c21024cf17c5d3836e5c297cf3cf1efa4d3d6a2b152e1c6494b878ae",
+    "internal/inventory/command.go": "21237044176eb4229e62617607c083cbc34263ea10c3459a1791752b9e384b81",
+    "internal/inventory/config.go": "4d10e2c7cab8df892a7451dccfac9644e107e5819237ace3a7db3169bc9c91be",
+    "internal/inventory/deployment_test.go": "561bea897591f35b895a32869f4ed334218edf5ad82e8cbf4e5c863eb5b0660c",
+    "internal/inventory/integration_test.go": "74032e431b40974a12eeb4165982aba3e857a17efc82b809666e650d89dc16d4",
+    "internal/inventory/model.go": "e3bf7904cde1c5e795c09ac254f675d6dccfe1a9d4a0e4d05e002fec0435ab8b",
+    "internal/inventory/model_test.go": "1d186a195c031cefd67530f8e6ff447802d5e6f6486c05ac2e50fdc93724e42a",
+    "internal/inventory/process_test.go": "400a416f3f7b2c6bd50627546e4882b75300ba1dcd6f5012aa7a6536dca34c18",
+    "internal/inventory/server.go": "6b5a7b068046eed498f04d0d4933045e8bc63d0820dfb7faa7296b7f3c4ba489",
+    "internal/inventory/server_test.go": "636a3ef94e781e24da91ae248fb1ec0fec1eab6a734af9b5be91a106762f075e",
+    "internal/inventory/store.go": "ecff78d796e1aa8ead7867fd084c65d1af17565344a6a55ae0e2943d220dc942"
+  },
+  "reports": [
+    {
+      "path": "artifacts/postgres/faultline-data-test-4591c9fe80d3aecb/report.json",
+      "sha256": "d4b6fd1d6415d0e6e45f8639165b37ce738a56471098722edb22d27f16d27b67"
+    },
+    {
+      "path": "artifacts/infrastructure/faultline-data-test-0e9512f319183416/report.json",
+      "sha256": "1e005b14a4e4c58b8bb5aa4628b9823fe3ef096e5c4b30fba8ef4a6b046e8f1a"
+    }
+  ]
+}

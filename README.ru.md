@@ -24,7 +24,7 @@
 
 Репозиторий содержит три Go-процесса с явной конфигурацией, gRPC health, JSON-логами и ограниченным завершением. Бизнес-процесс, инфраструктура и эксперименты вводятся по [roadmap](docs/ROADMAP.md); схема ниже показывает принятые границы.
 
-[Команды сборки](docs/development/TOOLCHAIN.md) · [Запуск контейнеров](docs/development/CONTAINER_RUNTIME.md) · [Go smoke](docs/development/SMOKE.md).
+[Команды сборки](docs/development/TOOLCHAIN.md) · [Запуск контейнеров](docs/development/CONTAINER_RUNTIME.md) · [API склада](docs/development/INVENTORY.md) · [Go smoke](docs/development/SMOKE.md).
 
 **Актуальные задачи и ревью:** [Issues](https://github.com/Includeoyasi/faultline-lab/issues), [PR](https://github.com/Includeoyasi/faultline-lab/pulls) и [milestones](https://github.com/Includeoyasi/faultline-lab/milestones). Здесь хранятся спецификации и датированные доказательства, включая [Windows baseline](docs/development/evidence/p01/WINDOWS_SMOKE.md). Выводы об эффективности требуют отдельных измерений.
 

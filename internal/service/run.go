@@ -21,6 +21,11 @@ var ErrShutdownTimeout = errors.New("shutdown timeout exceeded; active RPCs were
 // Run validates configuration, serves gRPC health and drains active RPCs on
 // cancellation. It returns ErrShutdownTimeout if the drain budget expires.
 func Run(ctx context.Context, name string, lookup func(string) (string, bool), output io.Writer) error {
+	return RunRegistered(ctx, name, lookup, output, nil)
+}
+
+// RunRegistered adds a business API to the shared bounded gRPC lifecycle.
+func RunRegistered(ctx context.Context, name string, lookup func(string) (string, bool), output io.Writer, register func(*grpc.Server)) error {
 	logger := newLogger(output, name, slog.LevelInfo)
 	cfg, err := LoadConfig(lookup)
 	if err != nil {
@@ -28,7 +33,7 @@ func Run(ctx context.Context, name string, lookup func(string) (string, bool), o
 		return err
 	}
 	logger = newLogger(output, name, cfg.LogLevel)
-	if err := serve(ctx, cfg, logger); err != nil {
+	if err := serveRegistered(ctx, cfg, logger, register); err != nil {
 		logger.ErrorContext(ctx, "service failed", "error", err.Error())
 		return err
 	}
@@ -36,6 +41,10 @@ func Run(ctx context.Context, name string, lookup func(string) (string, bool), o
 }
 
 func serve(ctx context.Context, cfg Config, logger *slog.Logger) error {
+	return serveRegistered(ctx, cfg, logger, nil)
+}
+
+func serveRegistered(ctx context.Context, cfg Config, logger *slog.Logger, register func(*grpc.Server)) error {
 	if err := ctx.Err(); err != nil {
 		return err
 	}
@@ -45,6 +54,9 @@ func serve(ctx context.Context, cfg Config, logger *slog.Logger) error {
 	}
 	// grpc.Server.Serve owns and closes the listener, including on Stop.
 	server := grpc.NewServer()
+	if register != nil {
+		register(server)
+	}
 	healthServer := health.NewServer()
 	healthServer.SetServingStatus("", healthpb.HealthCheckResponse_NOT_SERVING)
 	healthpb.RegisterHealthServer(server, healthServer)

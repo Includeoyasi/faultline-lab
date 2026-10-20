@@ -22,7 +22,7 @@ flowchart LR
 
 `dbtool` и PostgreSQL соединены внутренней сетью `data`: порт базы на хост не публикуется. PostgreSQL работает от UID 999, dbtool — от UID 65532; файловая система контейнеров read-only, запись разрешена только в volume/tmpfs. У PostgreSQL лимит 512 MiB и 0.5 CPU; у временного dbtool — 256 MiB и 1 CPU. Это ограничения локального стенда, не измеренная производственная ёмкость.
 
-Три бизнес-сервиса пока сохраняют свой gRPC-каркас. Подключение их бизнес-операций к базам будет следующим изменением. Kafka/Redis относятся к отдельной [задаче #16](https://github.com/Includeoyasi/faultline-lab/issues/16).
+[Inventory](INVENTORY.md) использует свою прикладную роль для бизнес-операций. Orders и Payments сохраняют gRPC-каркас. Проверка Kafka/Redis описана в [инфраструктурном профиле](INFRASTRUCTURE.md).
 
 PostgreSQL добавляется через `compose.postgres.yaml`. Базовый `compose.yaml` и существующий smoke трёх сервисов запускаются независимо от подготовки паролей базы.
 

@@ -73,9 +73,15 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 					}
 				}
 				if slices.Contains(args, "up") {
-					for _, name := range []string{"postgres", "kafka", "redis"} {
-						if !slices.Contains(args, name) {
-							t.Fatal("combined start omitted a dependency")
+					if slices.Contains(args, "inventory") {
+						if !slices.Contains(args, "compose.inventory.yaml") || !slices.Contains(args, "--no-deps") {
+							t.Fatal("business start lost its isolated overlay")
+						}
+					} else {
+						for _, name := range []string{"postgres", "kafka", "redis"} {
+							if !slices.Contains(args, name) {
+								t.Fatal("combined start omitted a dependency")
+							}
 						}
 					}
 					if scenario == "start-failure" {

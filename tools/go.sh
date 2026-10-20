@@ -3,7 +3,7 @@
 set -eu
 
 if [ "$#" -gt 1 ]; then
-  echo "usage: lab-go {versions|build|check|format|service-smoke|smoke-build|smoke-cross-check|smoke-cli-tests|data-build|data-cross-check}" >&2
+  echo "usage: lab-go {versions|build|check|format|generate|service-smoke|smoke-build|smoke-cross-check|smoke-cli-tests|data-build|data-cross-check}" >&2
   exit 2
 fi
 
@@ -43,6 +43,11 @@ source_files() {
     -o -type f -name '*.go' -print0 > "$file_list"
 }
 
+generate() {
+  protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative api/inventory/v1/inventory.proto
+  goimports -w api/inventory/v1
+}
+
 case "${1:-versions}" in
   versions)
     versions
@@ -52,6 +57,9 @@ case "${1:-versions}" in
     ;;
   check)
     versions
+    protoc --version
+    generate
+    git diff --exit-code -- api/
     source_files
     formatting=$(xargs -0 -r gofmt -l < "$file_list")
     imports=$(xargs -0 -r goimports -l < "$file_list")
@@ -70,6 +78,9 @@ case "${1:-versions}" in
   format)
     source_files
     xargs -0 -r goimports -w < "$file_list"
+    ;;
+  generate)
+    generate
     ;;
   service-smoke)
     build
@@ -96,7 +107,7 @@ case "${1:-versions}" in
     CGO_ENABLED=0 go test -c -o bin/smoke-cli-tests ./tests/smokecli
     ;;
   *)
-    echo "usage: lab-go {versions|build|check|format|service-smoke|smoke-build|smoke-cross-check|smoke-cli-tests|data-build|data-cross-check}" >&2
+    echo "usage: lab-go {versions|build|check|format|generate|service-smoke|smoke-build|smoke-cross-check|smoke-cli-tests|data-build|data-cross-check}" >&2
     exit 2
     ;;
 esac

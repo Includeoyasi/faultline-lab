@@ -1,0 +1,11 @@
+{
+  "host": "postgres",
+  "port": 5432,
+  "database": "inventory_db",
+  "user": "inventory_app",
+  "sslmode": "disable",
+  "password_file": "/run/secrets/inventory_app.password",
+  "connect_timeout": "5s",
+  "request_timeout": "3s",
+  "max_connections": 4
+}
