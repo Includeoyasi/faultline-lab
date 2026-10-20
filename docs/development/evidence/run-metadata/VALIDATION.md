@@ -5,6 +5,7 @@
 | Проверка | Результат и доказательство |
 | :--- | :--- |
 | `go test ./...`, `go vet ./...` | PASS; включая сохранение функционального PASS при недоступном image inspect и очистку при отмене внутри сбора метаданных |
+| Проверка сохранённых реальных отчётов | `TestSuccessfulReportsHaveObservedMetadata` — PASS для всех трёх режимов на Windows; та же проверка включена в Linux CI после функциональных прогонов |
 | Контейнеры Orders/Inventory/Payments | PASS; фактические платформы трёх образов получены; снимки потребления сохранены — [выдержка отчёта](windows-smoke.json) |
 | PostgreSQL-only | PASS; роли, миграции, seed, restart и очистка сохранены — [выдержка отчёта](windows-postgres.json) |
 | PostgreSQL/Kafka/Redis | PASS; права, Kafka checkpoint/restart, Redis и очистка сохранены — [выдержка отчёта](windows-infrastructure.json) |
