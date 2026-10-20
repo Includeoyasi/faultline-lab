@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 63,
+  "context_revision": 64,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-20",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "30e934a325533f9acf9dc5ba76a4a96bae0adbd2",
+    "snapshot_ref": "179181120566ec8f9e09719bd79fe8cbb3d2a530",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -2661,6 +2661,11 @@
       "path": "internal/smoke/metadata_test.go",
       "title": "Smoke metadata cancellation and failure tests",
       "anchor": "appendix-internal-smoke-metadata-test-go"
+    },
+    {
+      "path": "tests/smokecli/metadata_test.go",
+      "title": "Validate observed metadata in completed real smoke reports",
+      "anchor": "appendix-smokecli-real-report-metadata-test"
     }
   ],
   "change_history": [
@@ -3011,6 +3016,12 @@
       "date": "2026-10-20",
       "summary": "Implemented bounded F03/current F06 facts for existing runners, validated Windows metadata and cleanup, retained direct owner F03/F11 approvals and review-format requirements",
       "trigger": "Owner authorized Issue24 creation and implementation; full comparison and other findings retain future checkpoints"
+    },
+    {
+      "revision": 64,
+      "date": "2026-10-20",
+      "summary": "Added opt-in validation of completed real metadata reports to existing CLI tests and native Linux CI; validated saved Windows observations",
+      "trigger": "Real optional Variant regression showed that functional PASS alone does not establish observed metadata completeness"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -3194,7 +3205,8 @@
     "resources": "Backend CPU/memory budget, configured memory/nanoCPU fields and timestamped startup usage separately; NOT_CONFIGURED is field-specific; missing is not measured zero",
     "failure_semantics": "Metadata is optional evidence, not the functional verdict; bounded 30s total and 5s per query; cancellation preserves owned cleanup",
     "privacy": "Raw config/inspect/errors are not persisted; typed allowlist; repository names omitted from digests",
-    "comparison": "UNVERIFIED execution profile; NOT_EVALUATED A/B; no full experiment manifest yet"
+    "comparison": "UNVERIFIED execution profile; NOT_EVALUATED A/B; no full experiment manifest yet",
+    "ci_validation": "After all three functional smoke modes, existing host CLI test binary checks completed reports for known image platforms and measured resource snapshots; functional CLI semantics remain unchanged"
   },
   "run_metadata_evidence": {
     "date": "2026-10-20",
@@ -3212,6 +3224,7 @@
     ],
     "runtime_regression": "Docker image Variant can be absent; JSON array decoding by exact image ID handles it without persisting raw inspect",
     "cleanup": "Owned run containers/images removed; Docker Desktop and WSL VM stopped; autostart false",
-    "limits": "Dirty worktree before source commit, fingerprints recorded; physical host profile unverified; macOS runtime NOT_RUN; no capacity conclusion"
+    "limits": "Dirty worktree before source commit, fingerprints recorded; physical host profile unverified; macOS runtime NOT_RUN; no capacity conclusion",
+    "real_report_validation": "TestSuccessfulReportsHaveObservedMetadata PASS against the three saved real Windows reports; read-only, no Docker restart"
   }
 }

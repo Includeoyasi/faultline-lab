@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **63**. Дата снимка: **2026-10-20**, Europe/Moscow. Исходный коммит внешних материалов: `30e934a325533f9acf9dc5ba76a4a96bae0adbd2`.
+Ревизия: **64**. Дата снимка: **2026-10-20**, Europe/Moscow. Исходный коммит внешних материалов: `179181120566ec8f9e09719bd79fe8cbb3d2a530`.
 
 ## Выполнение задач
 
@@ -71,7 +71,7 @@ JSON ниже включён для автономного чтения реше
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 63,
+  "context_revision": 64,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-20",
   "user_timezone": "Europe/Moscow",
@@ -87,7 +87,7 @@ JSON ниже включён для автономного чтения реше
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "30e934a325533f9acf9dc5ba76a4a96bae0adbd2",
+    "snapshot_ref": "179181120566ec8f9e09719bd79fe8cbb3d2a530",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -2731,6 +2731,11 @@ JSON ниже включён для автономного чтения реше
       "path": "internal/smoke/metadata_test.go",
       "title": "Smoke metadata cancellation and failure tests",
       "anchor": "appendix-internal-smoke-metadata-test-go"
+    },
+    {
+      "path": "tests/smokecli/metadata_test.go",
+      "title": "Validate observed metadata in completed real smoke reports",
+      "anchor": "appendix-smokecli-real-report-metadata-test"
     }
   ],
   "change_history": [
@@ -3081,6 +3086,12 @@ JSON ниже включён для автономного чтения реше
       "date": "2026-10-20",
       "summary": "Implemented bounded F03/current F06 facts for existing runners, validated Windows metadata and cleanup, retained direct owner F03/F11 approvals and review-format requirements",
       "trigger": "Owner authorized Issue24 creation and implementation; full comparison and other findings retain future checkpoints"
+    },
+    {
+      "revision": 64,
+      "date": "2026-10-20",
+      "summary": "Added opt-in validation of completed real metadata reports to existing CLI tests and native Linux CI; validated saved Windows observations",
+      "trigger": "Real optional Variant regression showed that functional PASS alone does not establish observed metadata completeness"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -3264,7 +3275,8 @@ JSON ниже включён для автономного чтения реше
     "resources": "Backend CPU/memory budget, configured memory/nanoCPU fields and timestamped startup usage separately; NOT_CONFIGURED is field-specific; missing is not measured zero",
     "failure_semantics": "Metadata is optional evidence, not the functional verdict; bounded 30s total and 5s per query; cancellation preserves owned cleanup",
     "privacy": "Raw config/inspect/errors are not persisted; typed allowlist; repository names omitted from digests",
-    "comparison": "UNVERIFIED execution profile; NOT_EVALUATED A/B; no full experiment manifest yet"
+    "comparison": "UNVERIFIED execution profile; NOT_EVALUATED A/B; no full experiment manifest yet",
+    "ci_validation": "After all three functional smoke modes, existing host CLI test binary checks completed reports for known image platforms and measured resource snapshots; functional CLI semantics remain unchanged"
   },
   "run_metadata_evidence": {
     "date": "2026-10-20",
@@ -3282,7 +3294,8 @@ JSON ниже включён для автономного чтения реше
     ],
     "runtime_regression": "Docker image Variant can be absent; JSON array decoding by exact image ID handles it without persisting raw inspect",
     "cleanup": "Owned run containers/images removed; Docker Desktop and WSL VM stopped; autostart false",
-    "limits": "Dirty worktree before source commit, fingerprints recorded; physical host profile unverified; macOS runtime NOT_RUN; no capacity conclusion"
+    "limits": "Dirty worktree before source commit, fingerprints recorded; physical host profile unverified; macOS runtime NOT_RUN; no capacity conclusion",
+    "real_report_validation": "TestSuccessfulReportsHaveObservedMetadata PASS against the three saved real Windows reports; read-only, no Docker restart"
   }
 }
 ```
@@ -3293,7 +3306,7 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `bf52e4b740ae0de06607f8621216ba01497d0fdc4ed521ff804d7c9a64e8e21c` |
+| `CONTEXT_STATE.json` | `94ad55c2b8d75c4ba6bcdc672d9f9a88d196ed05ab64701f59745a48279fc4aa` |
 | `tools/context_intro.md` | `91fb656b2ec7b4dcd798be45f7b78ec2452763455476ebcd55762b465ad25d2b` |
 | `tools/update_context.ps1` | `73dff2e2da1f7ea7e8fc8fe2dc70bde722f4d697c1ca7c685d297214cd133e33` |
 | `README.md` | `22ffdce45845f796e45b53a5531d249c6b8a9cc3991bf2bdcf996e0286eb5d29` |
@@ -3327,7 +3340,7 @@ SHA-256 относится к исходному файлу на момент с
 | `compose.yaml` | `76cabf52d3c42c963c0ed56bc486b8e68686159ad32e680f23c2574bfa2fb6ed` |
 | `tools/go.sh` | `40fdab41afd4022715a929a0c9e1252037e9896f8abeb288fa286d591a0a2697` |
 | `.golangci.yml` | `44651a36c889767cd425bc12b46e07c8bffc924024de23af1176057f78f3a74a` |
-| `.github/workflows/go.yml` | `10f6a32cee9a43bcf73213f0c5e30735d395146fa9e178f060829c49e3a99b35` |
+| `.github/workflows/go.yml` | `263ce3321dfe0a69fc018efca13af710962a8f53516473873c24f472b1e839a6` |
 | `.dockerignore` | `e75b314d79f67eec6dafc763b1e4c118597186f106f91a73749750d4ab0cf045` |
 | `docs/development/SERVICE_RUNTIME.md` | `85d5e127812af0a6ccfdd29c3fd54dbbe4d2203cfa5c3e08cc4923f9fa3fbbd6` |
 | `internal/service/config.go` | `a5cd706cc41d0fb88ea96b0ffaeff4f7ecf32bf31394ec5398efb39fba240a89` |
@@ -3455,8 +3468,8 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/infrastructure/secrets_unix_test.go` | `12beb16c108d1f477d5d78153dd36691953601c77a16cbbfe0ed92cdf97647a2` |
 | `docs/architecture/PLATFORM_EVIDENCE.md` | `627fe9d237e63bac68c26675b50a2d130176209d897cf8d917b4024233e28aa3` |
 | `docs/adr/0004-platform-evidence.md` | `a38a4602e20f43fa537e09b00495dd65e57394178c3baecc9fac4c561fcc80d6` |
-| `docs/development/RUN_METADATA.md` | `9408889cb581e1686b8b16a007b0c074dead72ecbcf9c475252d475a2674382a` |
-| `docs/development/evidence/run-metadata/VALIDATION.md` | `63123c09ae3c804e9b7d58a87fa327bd88e92c16ac9d7f58c1b5aa9628918e2d` |
+| `docs/development/RUN_METADATA.md` | `021fb80905aeb9a9994a4a3e1d77506a106046b0b79990f4693326f2c87ac2e5` |
+| `docs/development/evidence/run-metadata/VALIDATION.md` | `45edce3374c7239486da84ddc801473c67255689db5bc133be42f2581b662166` |
 | `docs/development/evidence/run-metadata/windows-smoke.json` | `89341fcbe659492faeb8f545c1065a8ec7903a82097da9b56cb5c774bf333173` |
 | `docs/development/evidence/run-metadata/windows-postgres.json` | `4e7bf8c3a353d09117d9acab30bf8a77de92e6550f755412bf5ee3fba039c35b` |
 | `docs/development/evidence/run-metadata/windows-infrastructure.json` | `d2004877ff5e4bd6799f4ee2151bf233dfc74ab4537ca6a6d2e36acb7a922e5c` |
@@ -3464,6 +3477,7 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/runmeta/collect.go` | `0f6ead062aeb5f935b7358d0eb1736f3ab3dac0ddc35ceead7372c95028495c6` |
 | `internal/runmeta/collect_test.go` | `a6ea9f35ae66e53366a09ba76639022082fd82d9104e4acaae9d9e65fa6860d8` |
 | `internal/smoke/metadata_test.go` | `d6892d54ac1c0b6ebc5e46949aaa666cbdd4d1ecd359368914aeef6fa7a95809` |
+| `tests/smokecli/metadata_test.go` | `c97fae901cc71bf80ac784555b33db83409fa982cc61a1ed1c79efb97cfe0880` |
 
 ## Полные самостоятельные приложения
 
@@ -3635,6 +3649,7 @@ SHA-256 относится к исходному файлу на момент с
 - [Shared run metadata collector](#appendix-internal-runmeta-collect-go) — `internal/runmeta/collect.go`
 - [Metadata platform/resource/provenance tests](#appendix-internal-runmeta-collect-test-go) — `internal/runmeta/collect_test.go`
 - [Smoke metadata cancellation and failure tests](#appendix-internal-smoke-metadata-test-go) — `internal/smoke/metadata_test.go`
+- [Validate observed metadata in completed real smoke reports](#appendix-smokecli-real-report-metadata-test) — `tests/smokecli/metadata_test.go`
 
 <a id="appendix-readme-en"></a>
 
@@ -3643,7 +3658,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
 </p>
 
 <p align="center">
@@ -3661,7 +3676,7 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Project guide
@@ -3756,7 +3771,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience |
 | **G4** | Reproducible engineering lab |
 
-The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
 
 [Engineering decisions and review](#appendix-engineering-decisions) traces owner feedback through the rationale, changes and verification. It also links the separate [Go smoke task](https://github.com/Includeoyasi/faultline-lab/issues/9); its execution and review are tracked in GitHub.
 
@@ -3824,7 +3839,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
 </p>
 
 <p align="center">
@@ -3842,7 +3857,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Навигация по проекту
@@ -3926,7 +3941,7 @@ flowchart LR
 
 G0 — архитектура; G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Порядок и критерии приёмки описаны в workflow; факты принятия сохраняются с датой и источником.
 
-[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
 
 [Инженерные решения и ревью](#appendix-engineering-decisions) связывают замечания владельца с обоснованием, изменениями и проверками. Выполнение переноса контейнерного smoke на Go и его ревью ведутся в [задаче #9](https://github.com/Includeoyasi/faultline-lab/issues/9).
 
@@ -3999,7 +4014,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Проверить отдельный backlog | [Перенос smoke на Go](#appendix-go-smoke-backlog) — задача #9, границы и критерии |
 | Проверить права и защиту main | [Безопасность репозитория](#appendix-repository-security) — действующая защита и переход на аккаунт исполнителя |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
@@ -4014,7 +4029,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
 - [ADR 0002](#appendix-adr-0002): согласованный порядок фиксации решений в PR, ADR и обзорной странице.
 - [ADR 0003](#appendix-adr-0003): принятое решение о Go smoke и его последствия.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -5113,7 +5128,7 @@ Codex (AI-Your-Bro) — исполнитель: готовит проектны�
 
 #### Стандарт код-ревью
 
-[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/.github/pull_request_template.md) содержит краткий применимый чек-лист.
 
 После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; владелец проекта рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению владельца проекта или действие самого владельца проекта.
 
@@ -5373,7 +5388,7 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
+Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
@@ -5572,7 +5587,7 @@ Go-модуль, закреплённые инструменты и нативн
 - Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
 - Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
 
-Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
 
 <a id="appendix-lab-boundary"></a>
 
@@ -5866,13 +5881,13 @@ Docker рекомендует разделять ответственности 
 
 ### Баннер Faultline Lab
 
-Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/docs/assets/banner.svg).
+Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/docs/assets/banner.svg).
 
 #### Задание
 
 Подготовить три альтернативных варианта с акцентом на технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее. Сделаны векторные композиции с читаемым названием, тёмным текстом на светлом фоне и встроенными title/description. Внешних шрифтов, скриптов и удалённых графических зависимостей нет.
 
-![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/docs/assets/banner-concepts/comparison.png)
+![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/docs/assets/banner-concepts/comparison.png)
 
 | Вариант | Образ | Палитра | Статус |
 | :--- | :--- | :--- | :--- |
@@ -5882,13 +5897,13 @@ Docker рекомендует разделять ответственности 
 
 #### Выбранное решение
 
-![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/docs/assets/banner-concepts/02-experiment-flow.png)
+![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/docs/assets/banner-concepts/02-experiment-flow.png)
 
 Абстрактные линии проходят через область наблюдения. Это метафора исследования поведения системы и сравнения изменений; линии не являются графиком измеренных результатов. Композиция не зависит от домена магазина и подходит будущим подключаемым бизнесам.
 
 Размер SVG — 1280 × 420; README задаёт ширину 100%. Исходник масштабируется, PNG служит предварительным просмотром. Основная подпись: **Explore how systems behave.** Нижняя последовательность: **Hypothesis → Experiment → Evidence**.
 
-Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
+Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
 
 Баннеры отрендерены локально и визуально просмотрены на общем листе. Проверены отсутствие обрезанного текста и соответствие композиций заданию. Отдельный preview выбранного варианта используется для проверки основного баннера. Выбранный вариант слит в main через [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4), merge commit 8c392b8. Проверка отрисовки нового README на GitHub пока не выполнялась.
 
@@ -6026,7 +6041,7 @@ P01 не достигает всей контрольной точки G1: ба�
 | GitHub Issue | Текущая стадия, исполнитель, критерии выполнения, блокеры и связь с PR |
 | GitHub PR | Diff, результаты проверок, замечания и решение владельца по HEAD |
 | ADR | Существенное решение, варианты, последствия и основание принятия |
-| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
+| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
 
 #### Стадии в Issue
 
@@ -6694,10 +6709,6 @@ jobs:
         run: |
           docker compose run --rm toolchain smoke-build
           bin/smoke-linux-${{ matrix.arch }}
-      - name: Verify SIGINT report and scoped cleanup on the host
-        run: |
-          docker compose run --rm toolchain smoke-cli-tests
-          LAB_SMOKE_BINARY="$PWD/bin/smoke-linux-${{ matrix.arch }}" LAB_SMOKE_ROOT="$PWD" bin/smoke-cli-tests -test.v -test.timeout=4m
       - name: Cross-compile smoke for supported host platforms
         if: matrix.arch == 'amd64'
         run: docker compose run --rm toolchain smoke-cross-check
@@ -6707,6 +6718,10 @@ jobs:
           bin/labdata-linux-${{ matrix.arch }} smoke
       - name: Verify PostgreSQL, Kafka and Redis together
         run: bin/labdata-linux-${{ matrix.arch }} smoke -infrastructure
+      - name: Verify observed metadata, SIGINT report and scoped cleanup
+        run: |
+          docker compose run --rm toolchain smoke-cli-tests
+          LAB_SMOKE_BINARY="$PWD/bin/smoke-linux-${{ matrix.arch }}" LAB_SMOKE_ROOT="$PWD" bin/smoke-cli-tests -test.v -test.timeout=4m
       - name: Cross-compile data tool for supported hosts
         if: matrix.arch == 'amd64'
         run: docker compose run --rm toolchain data-cross-check
@@ -9514,7 +9529,7 @@ JSON schema version 2 сохраняет `run_id`, `project`, `result`, `service
 
 Отчёт не содержит полного inspect Env или разрешённого Compose-конфига. Пути checkout и домашнего каталога редактируются в диагностике. Smoke использует несекретный профиль; сторонние произвольные логи перед публикацией нужно проверять отдельно. Это проверка каркаса, а не измерение бизнес-корректности или capacity.
 
-После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
+После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
 
 <a id="go-smoke-main"></a>
 
@@ -18402,7 +18417,7 @@ flowchart TB
 
 Kafka работает в KRaft с явными broker/controller listeners, статическим quorum и постоянным cluster ID. Автоматическое создание топиков выключено. Один broker не обеспечивает репликационную доступность: `acks=all` здесь означает подтверждение единственным ISR. Сохраняется проверка штатного restart, а не аварии диска/хоста.
 
-Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/30e934a325533f9acf9dc5ba76a4a96bae0adbd2/docs/development/POSTGRES.md#подготовка-стенда).
+Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/179181120566ec8f9e09719bd79fe8cbb3d2a530/docs/development/POSTGRES.md#подготовка-стенда).
 
 Контейнеры зависимостей и runtime-проверок непривилегированные, с read-only root, без capabilities и с `no-new-privileges`; запись разрешена в явные volume/tmpfs. Временный toolchain имеет отдельные права для сборки в workspace, описанные в [его руководстве](#appendix-toolchain). Порты доступны через DNS внутренней сети: `postgres`, `kafka:9092`, `redis:6379`. Kafka PLAINTEXT и Redis без TLS допустимы только в этом изолированном локальном профиле; удалённое размещение требует отдельного профиля аутентификации, TLS и сетевых правил.
 
@@ -19930,6 +19945,8 @@ flowchart LR
 
 Покрытие: постоянные проверяемые контейнеры Orders/Inventory/Payments либо PostgreSQL/Kafka/Redis. Платформа временных `run --rm` инструментов не выводится из их тегов. Недоступный inspect и частичный запуск сохраняют известные факты и причины неизвестности; отмена прекращает новые запросы и сохраняет адресную очистку. Общий бюджет сбора — 30 секунд, на команду — пять секунд. Полный Compose config, inspect, stderr, секреты и домашние пути не сохраняются в новом блоке.
 
+CI отдельно проверяет полноту метаданных успешных прогонов в своём известном профиле. Эта проверка читает сохранённые отчёты и не меняет функциональный exit-код обычного CLI.
+
 Исторические отчёты сохраняют прежний формат. Старые `host_platform` и `docker_architecture` smoke обозначают GOOS runner и платформу backend соответственно; платформу образа следует читать из `environment`.
 
 Датированные результаты Windows и ограничения проверки: [доказательства](#appendix-docs-development-evidence-run-metadata-validation-md).
@@ -19947,6 +19964,7 @@ flowchart LR
 | Проверка | Результат и доказательство |
 | :--- | :--- |
 | `go test ./...`, `go vet ./...` | PASS; включая сохранение функционального PASS при недоступном image inspect и очистку при отмене внутри сбора метаданных |
+| Проверка сохранённых реальных отчётов | `TestSuccessfulReportsHaveObservedMetadata` — PASS для всех трёх режимов на Windows; та же проверка включена в Linux CI после функциональных прогонов |
 | Контейнеры Orders/Inventory/Payments | PASS; фактические платформы трёх образов получены; снимки потребления сохранены — [выдержка отчёта](#appendix-docs-development-evidence-run-metadata-windows-smoke-json) |
 | PostgreSQL-only | PASS; роли, миграции, seed, restart и очистка сохранены — [выдержка отчёта](#appendix-docs-development-evidence-run-metadata-windows-postgres-json) |
 | PostgreSQL/Kafka/Redis | PASS; права, Kafka checkpoint/restart, Redis и очистка сохранены — [выдержка отчёта](#appendix-docs-development-evidence-run-metadata-windows-infrastructure-json) |
@@ -21110,4 +21128,102 @@ func TestCancellationDuringMetadataCleansAndStopsStages(t *testing.T) {
 		t.Fatalf("cancelled metadata run did not stop and clean: %s %v", r.Result, err)
 	}
 	verifySavedReport(t, options, r)
+}
+
+<a id="appendix-smokecli-real-report-metadata-test"></a>
+
+## Приложение: Validate observed metadata in completed real smoke reports
+
+Полный исходный документ: `tests/smokecli/metadata_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+package smokecli
+
+import (
+	"encoding/json"
+	"os"
+	"path/filepath"
+	"testing"
+	"time"
+
+	"github.com/Includeoyasi/faultline-lab/internal/runmeta"
+)
+
+// These opt-in checks read completed real reports. Unlike the functional CLI
+// exit code, they require observable metadata in the known CI deployment.
+func TestSuccessfulReportsHaveObservedMetadata(t *testing.T) {
+	root := os.Getenv("LAB_SMOKE_ROOT")
+	if root == "" {
+		t.Skip("requires completed runtime, PostgreSQL and infrastructure reports")
+	}
+	for _, test := range []struct {
+		kind     string
+		version  int
+		services []string
+	}{
+		{"smoke", 3, []string{"orders", "inventory", "payments"}},
+		{"postgres", 1, []string{"postgres"}},
+		{"infrastructure", 1, []string{"postgres", "kafka", "redis"}},
+	} {
+		t.Run(test.kind, func(t *testing.T) {
+			r := latestSuccessfulReport(t, root, test.kind)
+			if r.SchemaVersion != test.version || r.Cleanup != "PASS" || r.Environment.SchemaVersion != 1 {
+				t.Fatal("report schema/cleanup missing")
+			}
+			env := r.Environment
+			if env.Runner.Status != "KNOWN" || env.Backend.Status != "KNOWN" || env.BackendBudget.CPUs.Status != "KNOWN" || env.BackendBudget.MemoryBytes.Status != "KNOWN" {
+				t.Fatal("runner/backend observations missing")
+			}
+			if env.ExecutionProfile.Status != "UNVERIFIED" || env.ComparisonEligibility.Status != "NOT_EVALUATED" {
+				t.Fatal("functional report claimed performance eligibility")
+			}
+			for _, name := range test.services {
+				s, exists := env.Services[name]
+				if !exists || s.ContainerID == "" || s.ImageID == "" || s.Image.Status != "KNOWN" {
+					t.Fatalf("%s image provenance missing: %+v", name, s.Image)
+				}
+				if s.Usage.Status != "MEASURED" || s.Usage.ObservedAt == nil || s.Usage.MemoryBytes == nil || s.Usage.CPUPercent == nil {
+					t.Fatalf("%s resource sample missing", name)
+				}
+				for _, cap := range []runmeta.Quantity{s.Limits.MemoryBytes, s.Limits.NanoCPUs} {
+					if cap.Value == nil || cap.Status != "KNOWN" && cap.Status != "NOT_CONFIGURED" {
+						t.Fatalf("%s configured resource field missing", name)
+					}
+				}
+			}
+		})
+	}
+}
+
+type savedReport struct {
+	SchemaVersion int            `json:"schema_version"`
+	Started       time.Time      `json:"started_at"`
+	Result        string         `json:"result"`
+	Cleanup       string         `json:"cleanup"`
+	Environment   runmeta.Report `json:"environment"`
+}
+
+func latestSuccessfulReport(t *testing.T, root, kind string) savedReport {
+	t.Helper()
+	files, err := filepath.Glob(filepath.Join(root, "artifacts", kind, "*", "report.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var latest savedReport
+	for _, file := range files {
+		data, err := os.ReadFile(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var r savedReport
+		if err = json.Unmarshal(data, &r); err != nil {
+			t.Fatal(err)
+		}
+		if r.Result == "PASS" && r.Started.After(latest.Started) {
+			latest = r
+		}
+	}
+	if latest.Result != "PASS" {
+		t.Fatal("no completed successful report", kind)
+	}
+	return latest
 }
