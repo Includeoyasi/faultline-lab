@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **65**. Дата снимка: **2026-10-20**, Europe/Moscow. Исходный коммит внешних материалов: `a7231366be44c2528edb68e507606d87b9a47fee`.
+Ревизия: **66**. Дата снимка: **2026-10-21**, Europe/Moscow. Исходный коммит внешних материалов: `d47cfa9addc7c6290b584714e094440fc10af040`.
 
 ## Выполнение задач
 
@@ -71,9 +71,9 @@ JSON ниже включён для автономного чтения реше
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 65,
+  "context_revision": 66,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-20",
+  "context_updated_on": "2026-10-21",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -87,7 +87,7 @@ JSON ниже включён для автономного чтения реше
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "a7231366be44c2528edb68e507606d87b9a47fee",
+    "snapshot_ref": "d47cfa9addc7c6290b584714e094440fc10af040",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -646,11 +646,11 @@ JSON ниже включён для автономного чтения реше
   },
   "toolchain": {
     "document": "docs/development/TOOLCHAIN.md",
-    "go": "1.27.2",
+    "go": "1.27.3",
     "goimports": "golang.org/x/tools v0.52.0",
     "govulncheck": "golang.org/x/vuln v1.9.0",
     "golangci_lint": "v2.14.0",
-    "go_image": "golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e",
+    "go_image": "golang:1.27.3-trixie@sha256:604106102d33b1084e37ca08adf98ac0813624ae8595bd0d7f3965ecebded09c",
     "lint_image": "golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f",
     "image_indexes": "VERIFIED_LINUX_AMD64_AND_ARM64",
     "application_dependencies": "google.golang.org/grpc v1.84.0; STANDARD_LOG_SLOG; TOOL_DIRECTIVES_PINNED",
@@ -667,6 +667,20 @@ JSON ниже включён для автономного чтения реше
       "tag": "v7.0.2",
       "sha": "cf430e030ddbb5b0abf93d22962f4752f3646cd9",
       "source": "Official GitHub release and git tag ref checked 2026-10-15"
+    },
+    "security_patch": {
+      "date": "2026-10-21",
+      "finding": "GO-2026-6809 in crypto/x509 of Go 1.27.2",
+      "change": "Pin Go 1.27.3 and rebuild toolchain/runtime binaries; module dependencies and linter versions unchanged",
+      "registry_evidence": "docs/development/evidence/go-toolchain/go-1.27.3-registry.json",
+      "provenance": "Official Go release history and Docker Registry OCI index; response digest recomputed and native Linux AMD64/ARM64 manifests verified",
+      "historical_evidence": "Prior 1.27.2 test records and installed host SDK remain dated evidence; no host SDK installation performed"
+    },
+    "deadline_check": {
+      "recorded_on": "2026-10-21",
+      "behavior": "Blackhole dependency test accepts deadline-driven socket errors before ctx.Err is populated; a non-nil error, elapsed context deadline and one-second ceiling remain mandatory.",
+      "source": "internal/infrastructure/deadline_test.go",
+      "local_evidence": "20 repeated Redis+Kafka deadline cases passed with portable Windows AMD64 Go1.27.3; this does not replace Linux container CI"
     }
   },
   "network_configuration_review": {
@@ -2718,38 +2732,38 @@ JSON ниже включён для автономного чтения реше
       "language": "go"
     },
     {
-      "path": "internal/inventory/config.go",
-      "title": "internal/inventory/config.go",
+      "path": "internal/inventory/store/config.go",
+      "title": "internal/inventory/store/config.go",
       "anchor": "inventory-internal-inventory-config-go",
       "language": "go"
     },
     {
-      "path": "internal/inventory/deployment_test.go",
-      "title": "internal/inventory/deployment_test.go",
+      "path": "internal/inventory/store/deployment_test.go",
+      "title": "internal/inventory/store/deployment_test.go",
       "anchor": "inventory-internal-inventory-deployment-test-go",
       "language": "go"
     },
     {
-      "path": "internal/inventory/integration_test.go",
-      "title": "internal/inventory/integration_test.go",
+      "path": "internal/inventory/store/integration_test.go",
+      "title": "internal/inventory/store/integration_test.go",
       "anchor": "inventory-internal-inventory-integration-test-go",
       "language": "go"
     },
     {
-      "path": "internal/inventory/model.go",
-      "title": "internal/inventory/model.go",
+      "path": "internal/inventory/model/model.go",
+      "title": "internal/inventory/model/model.go",
       "anchor": "inventory-internal-inventory-model-go",
       "language": "go"
     },
     {
-      "path": "internal/inventory/model_test.go",
-      "title": "internal/inventory/model_test.go",
+      "path": "internal/inventory/model/model_test.go",
+      "title": "internal/inventory/model/model_test.go",
       "anchor": "inventory-internal-inventory-model-test-go",
       "language": "go"
     },
     {
-      "path": "internal/inventory/process_test.go",
-      "title": "internal/inventory/process_test.go",
+      "path": "internal/inventory/store/process_test.go",
+      "title": "internal/inventory/store/process_test.go",
       "anchor": "inventory-internal-inventory-process-test-go",
       "language": "go"
     },
@@ -2766,9 +2780,39 @@ JSON ниже включён для автономного чтения реше
       "language": "go"
     },
     {
-      "path": "internal/inventory/store.go",
-      "title": "internal/inventory/store.go",
+      "path": "internal/inventory/store/store.go",
+      "title": "internal/inventory/store/store.go",
       "anchor": "inventory-internal-inventory-store-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/mutate.go",
+      "title": "internal/inventory/store/mutate.go",
+      "anchor": "inventory-store-mutate-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/get_reservation.go",
+      "title": "internal/inventory/store/get_reservation.go",
+      "anchor": "inventory-store-get-reservation-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/get_availability.go",
+      "title": "internal/inventory/store/get_availability.go",
+      "anchor": "inventory-store-get-availability-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/close.go",
+      "title": "internal/inventory/store/close.go",
+      "anchor": "inventory-store-close-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/config_test.go",
+      "title": "internal/inventory/store/config_test.go",
+      "anchor": "inventory-store-config-test-go",
       "language": "go"
     }
   ],
@@ -3306,7 +3350,16 @@ JSON ниже включён для автономного чтения реше
       "macos_runtime": "NOT_RUN",
       "full_F10": "Not established until the remaining services and coordinated reset are implemented"
     },
-    "remaining_scope": "No Orders, Payments, Kafka publication, Redis cache, full reset, capacity result or G1 acceptance"
+    "remaining_scope": "No Orders, Payments, Kafka publication, Redis cache, full reset, capacity result or G1 acceptance",
+    "layout": {
+      "recorded_on": "2026-10-21",
+      "source_commit": "d47cfa9addc7c6290b584714e094440fc10af040",
+      "owner_request": "https://github.com/Includeoyasi/faultline-lab/pull/27#discussion_r4335472777",
+      "storage": "internal/inventory/store: Store/NewStore/private helpers in store.go; one exported Store method per file; SQL in constants beside callers",
+      "domain": "internal/inventory/model: unchanged request/result JSON, canonical operation hash and shared sentinel errors; storage and gRPC transport import this package without cycles",
+      "test_entrypoint": "Docker compiles ./internal/inventory/store to /app/inventory.test; existing scenario names and datalab selectors retained",
+      "local_verification": "Windows AMD64 portable Go1.27.3: inventory/model/store unit tests and go vet passed. Database/process/deployment integration cases require isolated container CI; no local Docker/WSL run for this refactor."
+    }
   },
   "architecture_review_format": {
     "source": "Direct owner chat after Kafka Publishing review, 2026-10-19",
@@ -3334,7 +3387,7 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `84a775c671381eb56f88f2592bbbfe7cdf20707f7bd387d872f29a324f6ecb6e` |
+| `CONTEXT_STATE.json` | `38bd246a1f044ffaa74ea046911c9ef973d037943a8580b3e66c2bba6ff8f331` |
 | `tools/context_intro.md` | `91fb656b2ec7b4dcd798be45f7b78ec2452763455476ebcd55762b465ad25d2b` |
 | `tools/update_context.ps1` | `73dff2e2da1f7ea7e8fc8fe2dc70bde722f4d697c1ca7c685d297214cd133e33` |
 | `README.md` | `bdfebd2fbc801c1f05a5e6391fcfc9f4ddb5227e4ee11d75982a31ce5d0f65b7` |
@@ -3358,13 +3411,13 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/TASK_TRACKING.md` | `46baf95126af2e7e362d6751e957057e915a98f4b7606739178c57427aec61d8` |
 | `docs/development/REPOSITORY_SECURITY.md` | `e15d0de41447fcf81b76f4264a76483895940dc1c03f6ab809e3a626b9f8278a` |
 | `.github/CODEOWNERS` | `95de6cc3de1ba640d0ab9e2b9bfbdea79b7ce6641a8bcdb0bcef1f7607666415` |
-| `docs/development/TOOLCHAIN.md` | `0e47e1e6d6722762ae3d3c67c85c7e6cfc3377ae2b29d16fccda5d72cdba4bd4` |
-| `go.mod` | `4756e88767a7e8ff9012ce8bd548095c7204754ebc82e7c3e72635944d7dd8c4` |
+| `docs/development/TOOLCHAIN.md` | `0f157d8c47342cd957eddfb4e97a653da495e6ec61cb99cecd1a71ac454ab70b` |
+| `go.mod` | `52f08a91aac4ab4b0edf1d6838f200c210a2b198a705bc258ecf3e156bcd8192` |
 | `go.sum` | `82f6a57c35ab438d05ee37801803006774b39fe8cad86402fa03ff0af81b1baf` |
 | `cmd/orders/main.go` | `131626df0bae0819d49c3d46793809c839cacb6dbd71a93b4bc1740a04ea3e6c` |
 | `cmd/inventory/main.go` | `01ff23a872198afb07aceda2a2a14e7bf0ebc21f0510ef384b0c35c69cb266b8` |
 | `cmd/payments/main.go` | `3ceb9fe70d25948079c3682ad409c4970918d30036f74afb6451858725c351c1` |
-| `build/Dockerfile` | `836b38be04faed48d944869ab1c23b7dc2a776a4fe289efcf64131cd34af370c` |
+| `build/Dockerfile` | `b8dbdcfd1d38c90bd8a06feb89fc35dd4945b3218669ae01b38b215a49be1e55` |
 | `compose.yaml` | `05a53e758aaaef80bfd0fcf6a74b30648fba848f7fc9d523bca6e58717d71e49` |
 | `tools/go.sh` | `9d0060a4cc3fde4e46d85da1bbdf470cc8b96520245b294e928f5c9117d346a2` |
 | `.golangci.yml` | `44651a36c889767cd425bc12b46e07c8bffc924024de23af1176057f78f3a74a` |
@@ -3488,7 +3541,7 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/infrastructure/check.go` | `d60ad61dce85e2ccdb63bb8e257ba94e523677c0eddc0b45a5896906255ae8d8` |
 | `internal/infrastructure/config.go` | `4de22b0f4c2c8c0b910cba3f414d0325fc1c71f8a26d6c6a2c0b16f3cf55c51d` |
 | `internal/infrastructure/config_test.go` | `e8d7367565dc5d9f971d400f74b67150f43fd135e1a9e6fdf758f56ea8f9b707` |
-| `internal/infrastructure/deadline_test.go` | `e3609a269ad43ce551b75a06996f0fb05ba7beb6027b10a1797d00463a38894e` |
+| `internal/infrastructure/deadline_test.go` | `3af9c2aecebf51a31e1f126a1cbb1195f53f1ba7d11e66bc1bd802802778d507` |
 | `internal/infrastructure/kafka.go` | `98b6234b67ec16b9ee10546f8f38a3da89f693e9eb293fc6cd079856ebf35785` |
 | `internal/infrastructure/kafka_deadline_test.go` | `848800c298d7be535bd9b722a659d853f64af1aeb77b06cff6634781ab0262e3` |
 | `internal/infrastructure/redis.go` | `839a988ce2b5dae68ccfef3c5a6d23e3f2034a2d3f00b54c053700383c4dcc2a` |
@@ -3498,21 +3551,26 @@ SHA-256 относится к исходному файлу на момент с
 | `migrations/inventory/0003_reservations.sql` | `d74f941ba8f606f0d445db4c05dcc23f201558be06352930eda3a871aa02dab6` |
 | `compose.inventory.yaml` | `a02fbcc9da63e1f36b826326b6b4ec206bbe6908b42cbf8ea1de2352ef5cccf1` |
 | `configs/inventory/local.json` | `7fdfb317c21024cf17c5d3836e5c297cf3cf1efa4d3d6a2b152e1c6494b878ae` |
-| `docs/development/INVENTORY.md` | `194b31569ec0689400c0119ac1960ee49958f88ffb5d394e4aa0df0f1b3443ea` |
+| `docs/development/INVENTORY.md` | `2677f215417a910a3a6e31064f8a799667b7fa82fa757e0f9d02a02ca3e590ec` |
 | `docs/development/evidence/inventory/VALIDATION.md` | `b84dd9f960ad4df632c35a4e2a8f4102faa36f4b5657ff569048db5f2b995474` |
 | `docs/development/evidence/inventory/windows-postgres.json` | `b6229f2c5813cb0d3fb0ac35f9739584ee05f8a2c16023bc7d74f0b60428a218` |
 | `docs/development/evidence/inventory/windows-infrastructure.json` | `2d411e270263e35627adc5c98d47ebf943c5f1603aa44206bd8d1a31ff5d089f` |
 | `docs/development/evidence/inventory/source-hashes.json` | `d3c79640894521b22dc41ff0734a5e3a8bfcd99008da7e26d18b1db57f7f500f` |
-| `internal/inventory/command.go` | `21237044176eb4229e62617607c083cbc34263ea10c3459a1791752b9e384b81` |
-| `internal/inventory/config.go` | `4d10e2c7cab8df892a7451dccfac9644e107e5819237ace3a7db3169bc9c91be` |
-| `internal/inventory/deployment_test.go` | `561bea897591f35b895a32869f4ed334218edf5ad82e8cbf4e5c863eb5b0660c` |
-| `internal/inventory/integration_test.go` | `74032e431b40974a12eeb4165982aba3e857a17efc82b809666e650d89dc16d4` |
-| `internal/inventory/model.go` | `e3bf7904cde1c5e795c09ac254f675d6dccfe1a9d4a0e4d05e002fec0435ab8b` |
-| `internal/inventory/model_test.go` | `1d186a195c031cefd67530f8e6ff447802d5e6f6486c05ac2e50fdc93724e42a` |
-| `internal/inventory/process_test.go` | `400a416f3f7b2c6bd50627546e4882b75300ba1dcd6f5012aa7a6536dca34c18` |
-| `internal/inventory/server.go` | `6b5a7b068046eed498f04d0d4933045e8bc63d0820dfb7faa7296b7f3c4ba489` |
-| `internal/inventory/server_test.go` | `636a3ef94e781e24da91ae248fb1ec0fec1eab6a734af9b5be91a106762f075e` |
-| `internal/inventory/store.go` | `ecff78d796e1aa8ead7867fd084c65d1af17565344a6a55ae0e2943d220dc942` |
+| `internal/inventory/command.go` | `af1f7af15cee12e4c6244c5fe49d180b04c4403388e0ae0eb9418fe5a4a3a0b6` |
+| `internal/inventory/store/config.go` | `ea9b17e58018a19a79a31d4ce758f85358aef433a628a5a8c16ca803d19534f5` |
+| `internal/inventory/store/deployment_test.go` | `0bf8bbdf1fcff0e16b6b869335450f88da1c3d7572746b668c5e302988bd0ada` |
+| `internal/inventory/store/integration_test.go` | `4f1e39419b1ff61d1de1af2eb4baafc8790f96008d5d873466254ccd3ec9ced3` |
+| `internal/inventory/model/model.go` | `409c7030865b67633eb20194fe812bfc35e7582edd09cd99bdba58fc765c41a3` |
+| `internal/inventory/model/model_test.go` | `bf46c43e1ef3703f086549bae07d914943db74f111d3b162f0492c774c6cd30f` |
+| `internal/inventory/store/process_test.go` | `44efd18b680e2e62a7a58739ccb9d7afa9a970a33a0237d48b151739709a6bdc` |
+| `internal/inventory/server.go` | `f3ed5f34cb396d5ee8704c8eacbd1f06863b0f68c1921c21868a19becd8aaa40` |
+| `internal/inventory/server_test.go` | `7a606253de497eb4c2a34ab5f4c70852485e3542669277d2f910f7c38f1d8101` |
+| `internal/inventory/store/store.go` | `9bcac66b0f322dbcbfa9b131dac37b52d548cb5c33c059e9d13111c09a3ac3ab` |
+| `internal/inventory/store/mutate.go` | `4c0cf01395e1358dc9ea81bc98ceb6b517cac1308c5c909231c51ad95e954027` |
+| `internal/inventory/store/get_reservation.go` | `4142a551774e6dde6e388cfab28419a0618b30eaf2759f148492d3394440c040` |
+| `internal/inventory/store/get_availability.go` | `3b1aa64407b2b6971fc79c67ed41b4cf24e28834aae96102951bd60a128a9d40` |
+| `internal/inventory/store/close.go` | `13ede548fb300bd657882ce1acbee6370d802231b63b5203a736337e57e693a2` |
+| `internal/inventory/store/config_test.go` | `704699f26c474dc6e070827a51cca3634d6848eb98e42e15b1385c5fc7c3f764` |
 
 ## Полные самостоятельные приложения
 
@@ -3683,15 +3741,20 @@ SHA-256 относится к исходному файлу на момент с
 - [docs/development/evidence/inventory/windows-infrastructure.json](#inventory-docs-development-evidence-inventory-windows-infrastructure-json) — `docs/development/evidence/inventory/windows-infrastructure.json`
 - [docs/development/evidence/inventory/source-hashes.json](#inventory-docs-development-evidence-inventory-source-hashes-json) — `docs/development/evidence/inventory/source-hashes.json`
 - [internal/inventory/command.go](#inventory-internal-inventory-command-go) — `internal/inventory/command.go`
-- [internal/inventory/config.go](#inventory-internal-inventory-config-go) — `internal/inventory/config.go`
-- [internal/inventory/deployment_test.go](#inventory-internal-inventory-deployment-test-go) — `internal/inventory/deployment_test.go`
-- [internal/inventory/integration_test.go](#inventory-internal-inventory-integration-test-go) — `internal/inventory/integration_test.go`
-- [internal/inventory/model.go](#inventory-internal-inventory-model-go) — `internal/inventory/model.go`
-- [internal/inventory/model_test.go](#inventory-internal-inventory-model-test-go) — `internal/inventory/model_test.go`
-- [internal/inventory/process_test.go](#inventory-internal-inventory-process-test-go) — `internal/inventory/process_test.go`
+- [internal/inventory/store/config.go](#inventory-internal-inventory-config-go) — `internal/inventory/store/config.go`
+- [internal/inventory/store/deployment_test.go](#inventory-internal-inventory-deployment-test-go) — `internal/inventory/store/deployment_test.go`
+- [internal/inventory/store/integration_test.go](#inventory-internal-inventory-integration-test-go) — `internal/inventory/store/integration_test.go`
+- [internal/inventory/model/model.go](#inventory-internal-inventory-model-go) — `internal/inventory/model/model.go`
+- [internal/inventory/model/model_test.go](#inventory-internal-inventory-model-test-go) — `internal/inventory/model/model_test.go`
+- [internal/inventory/store/process_test.go](#inventory-internal-inventory-process-test-go) — `internal/inventory/store/process_test.go`
 - [internal/inventory/server.go](#inventory-internal-inventory-server-go) — `internal/inventory/server.go`
 - [internal/inventory/server_test.go](#inventory-internal-inventory-server-test-go) — `internal/inventory/server_test.go`
-- [internal/inventory/store.go](#inventory-internal-inventory-store-go) — `internal/inventory/store.go`
+- [internal/inventory/store/store.go](#inventory-internal-inventory-store-go) — `internal/inventory/store/store.go`
+- [internal/inventory/store/mutate.go](#inventory-store-mutate-go) — `internal/inventory/store/mutate.go`
+- [internal/inventory/store/get_reservation.go](#inventory-store-get-reservation-go) — `internal/inventory/store/get_reservation.go`
+- [internal/inventory/store/get_availability.go](#inventory-store-get-availability-go) — `internal/inventory/store/get_availability.go`
+- [internal/inventory/store/close.go](#inventory-store-close-go) — `internal/inventory/store/close.go`
+- [internal/inventory/store/config_test.go](#inventory-store-config-test-go) — `internal/inventory/store/config_test.go`
 
 <a id="appendix-readme-en"></a>
 
@@ -3700,7 +3763,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
 </p>
 
 <p align="center">
@@ -3718,7 +3781,7 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Project guide
@@ -3813,7 +3876,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience |
 | **G4** | Reproducible engineering lab |
 
-The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
 
 [Engineering decisions and review](#appendix-engineering-decisions) traces owner feedback through the rationale, changes and verification. It also links the separate [Go smoke task](https://github.com/Includeoyasi/faultline-lab/issues/9); its execution and review are tracked in GitHub.
 
@@ -3881,7 +3944,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
 </p>
 
 <p align="center">
@@ -3899,7 +3962,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Навигация по проекту
@@ -3983,7 +4046,7 @@ flowchart LR
 
 G0 — архитектура; G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Порядок и критерии приёмки описаны в workflow; факты принятия сохраняются с датой и источником.
 
-[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
 
 [Инженерные решения и ревью](#appendix-engineering-decisions) связывают замечания владельца с обоснованием, изменениями и проверками. Выполнение переноса контейнерного smoke на Go и его ревью ведутся в [задаче #9](https://github.com/Includeoyasi/faultline-lab/issues/9).
 
@@ -4056,7 +4119,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Проверить отдельный backlog | [Перенос smoke на Go](#appendix-go-smoke-backlog) — задача #9, границы и критерии |
 | Проверить права и защиту main | [Безопасность репозитория](#appendix-repository-security) — действующая защита и переход на аккаунт исполнителя |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
@@ -4071,7 +4134,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
 - [ADR 0002](#appendix-adr-0002): согласованный порядок фиксации решений в PR, ADR и обзорной странице.
 - [ADR 0003](#appendix-adr-0003): принятое решение о Go smoke и его последствия.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -5171,7 +5234,7 @@ Codex (AI-Your-Bro) — исполнитель: готовит проектны�
 
 #### Стандарт код-ревью
 
-[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/.github/pull_request_template.md) содержит краткий применимый чек-лист.
 
 После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; владелец проекта рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению владельца проекта или действие самого владельца проекта.
 
@@ -5431,7 +5494,7 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
+Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
@@ -5630,7 +5693,7 @@ Go-модуль, закреплённые инструменты и нативн
 - Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
 - Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
 
-Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
 
 <a id="appendix-lab-boundary"></a>
 
@@ -5924,13 +5987,13 @@ Docker рекомендует разделять ответственности 
 
 ### Баннер Faultline Lab
 
-Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/docs/assets/banner.svg).
+Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/assets/banner.svg).
 
 #### Задание
 
 Подготовить три альтернативных варианта с акцентом на технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее. Сделаны векторные композиции с читаемым названием, тёмным текстом на светлом фоне и встроенными title/description. Внешних шрифтов, скриптов и удалённых графических зависимостей нет.
 
-![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/docs/assets/banner-concepts/comparison.png)
+![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/assets/banner-concepts/comparison.png)
 
 | Вариант | Образ | Палитра | Статус |
 | :--- | :--- | :--- | :--- |
@@ -5940,13 +6003,13 @@ Docker рекомендует разделять ответственности 
 
 #### Выбранное решение
 
-![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/docs/assets/banner-concepts/02-experiment-flow.png)
+![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/assets/banner-concepts/02-experiment-flow.png)
 
 Абстрактные линии проходят через область наблюдения. Это метафора исследования поведения системы и сравнения изменений; линии не являются графиком измеренных результатов. Композиция не зависит от домена магазина и подходит будущим подключаемым бизнесам.
 
 Размер SVG — 1280 × 420; README задаёт ширину 100%. Исходник масштабируется, PNG служит предварительным просмотром. Основная подпись: **Explore how systems behave.** Нижняя последовательность: **Hypothesis → Experiment → Evidence**.
 
-Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
+Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
 
 Баннеры отрендерены локально и визуально просмотрены на общем листе. Проверены отсутствие обрезанного текста и соответствие композиций заданию. Отдельный preview выбранного варианта используется для проверки основного баннера. Выбранный вариант слит в main через [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4), merge commit 8c392b8. Проверка отрисовки нового README на GitHub пока не выполнялась.
 
@@ -6084,7 +6147,7 @@ P01 не достигает всей контрольной точки G1: ба�
 | GitHub Issue | Текущая стадия, исполнитель, критерии выполнения, блокеры и связь с PR |
 | GitHub PR | Diff, результаты проверок, замечания и решение владельца по HEAD |
 | ADR | Существенное решение, варианты, последствия и основание принятия |
-| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
+| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
 
 #### Стадии в Issue
 
@@ -6192,17 +6255,19 @@ GitHub разрешает machine account, зарегистрированный 
 
 | Компонент | Источник закрепления | Версия |
 | :--- | :--- | :--- |
-| Go | [go.mod](#appendix-go-mod), [Dockerfile](#appendix-toolchain-dockerfile) | 1.27.2 |
+| Go | [go.mod](#appendix-go-mod), [Dockerfile](#appendix-toolchain-dockerfile) | 1.27.3 |
 | goimports | tool directive в go.mod, go.sum | golang.org/x/tools v0.52.0 |
 | govulncheck | tool directive в go.mod, go.sum | golang.org/x/vuln v1.9.0 |
 | protoc | Dockerfile, официальные архивы с SHA256 для AMD64/ARM64 | 32.1 |
 | protoc-gen-go | tool directive в go.mod, go.sum | v1.36.11 |
 | protoc-gen-go-grpc | tool directive в go.mod, go.sum | v1.6.2 |
 | golangci-lint | Dockerfile, официальный образ с digest | v2.14.0 |
-| База toolchain | Dockerfile, индекс с AMD64/ARM64 | golang:1.27.2-trixie, sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e |
+| База toolchain | Dockerfile, индекс с AMD64/ARM64 | golang:1.27.3-trixie, sha256:604106102d33b1084e37ca08adf98ac0813624ae8595bd0d7f3965ecebded09c |
 | Образ линтера | Dockerfile, индекс с AMD64/ARM64 | golangci/golangci-lint:v2.14.0, sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f |
 
-Версии проверены по официальным источникам 15 октября 2026 года: [Go releases](https://go.dev/dl/), [golangci-lint releases](https://github.com/golangci/golangci-lint/releases/tag/v2.14.0), Go module proxy и Docker Registry. Оба закреплённых digest относятся к multi-platform индексам, а не к одному варианту CPU.
+Исходный набор версий проверен по официальным источникам 15 октября 2026 года: [Go releases](https://go.dev/dl/), [golangci-lint releases](https://github.com/golangci/golangci-lint/releases/tag/v2.14.0), Go module proxy и Docker Registry. Оба закреплённых digest относятся к multi-platform индексам, а не к одному варианту CPU.
+
+21 октября Go обновлён до [1.27.3](https://go.dev/doc/devel/release#go1.27.3), чтобы устранить блокирующий CI security finding GO-2026-6809 в стандартной библиотеке crypto/x509. SHA-256 индекса получен из официального Docker Registry и сверен с байтами ответа; наличие Linux AMD64 и ARM64 подтверждено в [данных проверки индекса](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/development/evidence/go-toolchain/go-1.27.3-registry.json). Пересборка этим toolchain обновляет стандартную библиотеку и в статических runtime-бинарниках. Исторические evidence и установленный host Go 1.27.2 сохраняются; основной путь запуска проверок остаётся контейнерным.
 
 gRPC v1.84.0 добавлен для реального health API в P01-04; версия проверена через официальный Go proxy. JSON-логи использует стандартный log/slog. Инструменты закреплены через [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools). PostgreSQL использует pgx v5.11.0; инфраструктурные проверки — franz-go v1.22.2 и go-redis v9.23.0, закреплённые в go.mod/go.sum.
 
@@ -6248,7 +6313,7 @@ Toolchain — временный сервис профиля tools. Явный `
 ```go
 module github.com/Includeoyasi/faultline-lab
 
-go 1.27.2
+go 1.27.3
 
 tool (
 	golang.org/x/tools/cmd/goimports
@@ -6462,7 +6527,7 @@ func main() {
 ```dockerfile
 FROM golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f AS lint
 
-FROM golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e AS toolchain
+FROM golang:1.27.3-trixie@sha256:604106102d33b1084e37ca08adf98ac0813624ae8595bd0d7f3965ecebded09c AS toolchain
 ARG TARGETARCH
 RUN apt-get update && apt-get install -y --no-install-recommends unzip \
     && case "$TARGETARCH" in \
@@ -6508,7 +6573,7 @@ COPY internal ./internal
 COPY migrations ./migrations
 RUN CGO_ENABLED=0 go build -trimpath -o /out/labdata ./cmd/labdata \
     && CGO_ENABLED=0 go test -c -o /out/database.test ./internal/database \
-    && CGO_ENABLED=0 go test -c -o /out/inventory.test ./internal/inventory \
+    && CGO_ENABLED=0 go test -c -o /out/inventory.test ./internal/inventory/store \
     && CGO_ENABLED=0 go build -trimpath -o /out/inventory ./cmd/inventory
 
 FROM scratch AS labdata
@@ -9626,7 +9691,7 @@ JSON schema version 2 сохраняет `run_id`, `project`, `result`, `service
 
 Отчёт не содержит полного inspect Env или разрешённого Compose-конфига. Пути checkout и домашнего каталога редактируются в диагностике. Smoke использует несекретный профиль; сторонние произвольные логи перед публикацией нужно проверять отдельно. Это проверка каркаса, а не измерение бизнес-корректности или capacity.
 
-После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
+После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
 
 <a id="go-smoke-main"></a>
 
@@ -18482,7 +18547,7 @@ flowchart TB
 
 Kafka работает в KRaft с явными broker/controller listeners, статическим quorum и постоянным cluster ID. Автоматическое создание топиков выключено. Один broker не обеспечивает репликационную доступность: `acks=all` здесь означает подтверждение единственным ISR. Сохраняется проверка штатного restart, а не аварии диска/хоста.
 
-Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/a7231366be44c2528edb68e507606d87b9a47fee/docs/development/POSTGRES.md#подготовка-стенда).
+Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/development/POSTGRES.md#подготовка-стенда).
 
 Контейнеры зависимостей и runtime-проверок непривилегированные, с read-only root, без capabilities и с `no-new-privileges`; запись разрешена в явные volume/tmpfs. Временный toolchain имеет отдельные права для сборки в workspace, описанные в [его руководстве](#appendix-toolchain). Порты доступны через DNS внутренней сети: `postgres`, `kafka:9092`, `redis:6379`. Kafka PLAINTEXT и Redis без TLS допустимы только в этом изолированном локальном профиле; удалённое размещение требует отдельного профиля аутентификации, TLS и сетевых правил.
 
@@ -19232,6 +19297,7 @@ package infrastructure
 
 import (
 	"context"
+	"errors"
 	"net"
 	"sync"
 	"testing"
@@ -19295,8 +19361,14 @@ func TestConnectionDeadlines(t *testing.T) {
 				err = client.Ping(ctx)
 				client.Close()
 			}
-			if err == nil || ctx.Err() == nil || time.Since(started) > time.Second {
-				t.Fatal("dependency operation did not obey its short deadline")
+			finished := time.Now()
+			deadline, _ := ctx.Deadline()
+			var timeout net.Error
+			deadlineError := errors.Is(err, context.DeadlineExceeded) || errors.Is(ctx.Err(), context.DeadlineExceeded) || (errors.As(err, &timeout) && timeout.Timeout())
+			// Socket deadlines and the context timer can fire independently.
+			// The operation must time out at its deadline, even if ctx.Err is not set yet.
+			if err == nil || !deadlineError || finished.Before(deadline) || finished.Sub(started) > time.Second {
+				t.Fatalf("dependency deadline not obeyed: err=%v (%T), ctx=%v, elapsed=%v", err, err, ctx.Err(), finished.Sub(started))
 			}
 		})
 	}
@@ -20088,6 +20160,8 @@ stateDiagram-v2
 
 #### 4. Реализация и запуск текущего среза
 
+Хранилище находится в [internal/inventory/store](#inventory-internal-inventory-store-go): конструктор и внутренние функции — в `store.go`, методы `Mutate`, `GetReservation`, `GetAvailability` и `Close` — каждый в своём файле, SQL-запросы — в константах рядом с использующим их кодом. Общие типы и проверка идентичности операции вынесены в [model](#inventory-internal-inventory-model-go), который используют хранилище и gRPC-сервер.
+
 Новая [миграция 0003](#inventory-migrations-inventory-0003-reservations-sql) добавляет резервы, позиции, операции, ledger, локальный outbox и привязку базы к набору; старые миграции не изменяются. Сам сервис читает только свой прикладной секрет и не создаёт базы, роли или таблицы. Перед запуском нужно подготовить PostgreSQL командами из [POSTGRES.md](#p02-docs-development-postgres-md), затем задать уникальный идентификатор набора; после удаления набора новый запуск получает новое значение. Контейнерный профиль [compose.inventory.yaml](#inventory-compose-inventory-yaml) включает бизнес-API, а минимальный compose запускает явную команду `health-only` для проверки каркаса. Protobuf-код генерируется закреплёнными protoc 32.1, protoc-gen-go 1.36.11 и protoc-gen-go-grpc 1.6.2; [стандартная генерация gRPC Go](https://grpc.io/docs/languages/go/quickstart/#regenerate-grpc-code) выполняется внутри toolchain.
 
 ```powershell
@@ -20430,6 +20504,7 @@ import (
 	"io"
 	"log/slog"
 
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/store"
 	"github.com/Includeoyasi/faultline-lab/internal/service"
 	"google.golang.org/grpc"
 )
@@ -20451,18 +20526,18 @@ func Execute(ctx context.Context, args []string, lookup func(string) (string, bo
 	}
 	path, _ := lookup("FL_INVENTORY_CONFIG")
 	dataset, _ := lookup("FL_INVENTORY_DATASET_ID")
-	cfg, err := LoadConfig(path, dataset)
+	cfg, err := store.LoadConfig(path, dataset)
 	if err != nil {
 		logger.ErrorContext(ctx, "configuration rejected", "error", err.Error())
 		return 1
 	}
-	store, err := Open(ctx, cfg)
+	backend, err := store.Open(ctx, cfg)
 	if err != nil {
 		logger.ErrorContext(ctx, "inventory startup failed", "error", err.Error())
 		return 1
 	}
-	defer store.Close()
-	if err = service.RunRegistered(ctx, "inventory", lookup, output, func(server *grpc.Server) { Register(server, store) }); err != nil {
+	defer backend.Close()
+	if err = service.RunRegistered(ctx, "inventory", lookup, output, func(server *grpc.Server) { Register(server, backend) }); err != nil {
 		return 1
 	}
 	return 0
@@ -20471,12 +20546,12 @@ func Execute(ctx context.Context, args []string, lookup func(string) (string, bo
 
 <a id="inventory-internal-inventory-config-go"></a>
 
-## Приложение: internal/inventory/config.go
+## Приложение: internal/inventory/store/config.go
 
-Полный исходный документ: `internal/inventory/config.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+Полный исходный документ: `internal/inventory/store/config.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```go
-package inventory
+package store
 
 import (
 	"context"
@@ -20490,6 +20565,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -20529,7 +20605,7 @@ func LoadConfig(path, dataset string) (Config, error) {
 func (c Config) Validate() error {
 	connect, e1 := time.ParseDuration(c.ConnectTimeout)
 	request, e2 := time.ParseDuration(c.RequestTimeout)
-	if c.Host == "" || strings.ContainsAny(c.Host, "/\\@ \t\r\n") || c.Port == 0 || c.Database != "inventory_db" || c.User != "inventory_app" || c.SSLMode != "disable" || c.PasswordFile == "" || !identifier.MatchString(c.DatasetID) || c.MaxConnections < 1 || c.MaxConnections > 8 || e1 != nil || e2 != nil || connect < time.Millisecond || connect > time.Minute || request < time.Millisecond || request > time.Minute {
+	if c.Host == "" || strings.ContainsAny(c.Host, "/\\@ \t\r\n") || c.Port == 0 || c.Database != "inventory_db" || c.User != "inventory_app" || c.SSLMode != "disable" || c.PasswordFile == "" || !model.ValidIdentifier(c.DatasetID) || c.MaxConnections < 1 || c.MaxConnections > 8 || e1 != nil || e2 != nil || connect < time.Millisecond || connect > time.Minute || request < time.Millisecond || request > time.Minute {
 		return errors.New("inventory requires its application identity, dataset, secret file, explicit endpoint, bounded timeouts and 1..8 connections")
 	}
 	return nil
@@ -20579,12 +20655,12 @@ func Open(ctx context.Context, c Config) (*Store, error) {
 
 <a id="inventory-internal-inventory-deployment-test-go"></a>
 
-## Приложение: internal/inventory/deployment_test.go
+## Приложение: internal/inventory/store/deployment_test.go
 
-Полный исходный документ: `internal/inventory/deployment_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+Полный исходный документ: `internal/inventory/store/deployment_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```go
-package inventory
+package store
 
 import (
 	"context"
@@ -20649,12 +20725,12 @@ func TestInventoryDeployed(t *testing.T) {
 
 <a id="inventory-internal-inventory-integration-test-go"></a>
 
-## Приложение: internal/inventory/integration_test.go
+## Приложение: internal/inventory/store/integration_test.go
 
-Полный исходный документ: `internal/inventory/integration_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+Полный исходный документ: `internal/inventory/store/integration_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```go
-package inventory
+package store
 
 import (
 	"context"
@@ -20670,6 +20746,7 @@ import (
 	"time"
 
 	"github.com/Includeoyasi/faultline-lab/internal/database"
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
 )
 
 var testDataset = func() string {
@@ -20708,7 +20785,7 @@ func fixture(t *testing.T, s *Store, sku string, quantity, price int64) {
 		t.Fatal(err)
 	}
 }
-func mutate(t *testing.T, s *Store, r Request) Receipt {
+func mutate(t *testing.T, s *Store, r model.Request) model.Receipt {
 	t.Helper()
 	result, err := s.Mutate(t.Context(), r)
 	if err != nil {
@@ -20716,8 +20793,8 @@ func mutate(t *testing.T, s *Store, r Request) Receipt {
 	}
 	return result
 }
-func request(method, order, key string, items ...Item) Request {
-	return Request{DatasetID: testDataset, OrderID: order, OperationID: key, Method: method, Items: items}
+func request(method, order, key string, items ...model.Item) model.Request {
+	return model.Request{DatasetID: testDataset, OrderID: order, OperationID: key, Method: method, Items: items}
 }
 func scalar(t *testing.T, s *Store, query string, args ...any) int64 {
 	t.Helper()
@@ -20733,7 +20810,7 @@ func TestInventoryFoundation(t *testing.T) {
 	t.Run("commit absent is a durable refusal", func(t *testing.T) {
 		r := request("commit", "absent", "absent-commit")
 		first := mutate(t, s, r)
-		if first.Outcome != InvalidState || first.Reservation != nil {
+		if first.Outcome != model.InvalidState || first.Reservation != nil {
 			t.Fatal(first)
 		}
 		if repeated := mutate(t, s, r); !reflect.DeepEqual(first, repeated) {
@@ -20746,9 +20823,9 @@ func TestInventoryFoundation(t *testing.T) {
 	t.Run("atomic multi SKU refusal and durable rejection", func(t *testing.T) {
 		fixture(t, s, "atomic-a", 2, 100)
 		fixture(t, s, "atomic-b", 0, 200)
-		r := request("reserve", "atomic", "atomic-key", Item{"atomic-a", 1}, Item{"atomic-b", 1})
+		r := request("reserve", "atomic", "atomic-key", model.Item{SKU: "atomic-a", Quantity: 1}, model.Item{SKU: "atomic-b", Quantity: 1})
 		before := mutate(t, s, r)
-		if before.Outcome != InsufficientStock {
+		if before.Outcome != model.InsufficientStock {
 			t.Fatal(before)
 		}
 		if scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='atomic-a'") != 2 {
@@ -20761,7 +20838,7 @@ func TestInventoryFoundation(t *testing.T) {
 			t.Fatal("saved refusal changed")
 		}
 		r.OperationID = "atomic-new"
-		if mutate(t, s, r).Outcome != Applied {
+		if mutate(t, s, r).Outcome != model.Applied {
 			t.Fatal("fresh retry failed")
 		}
 	})
@@ -20774,15 +20851,15 @@ func TestInventoryFoundation(t *testing.T) {
 			slots <- struct{}{}
 			wg.Go(func() {
 				defer func() { <-slots }()
-				r := request("reserve", fmt.Sprintf("contended-%d", i), fmt.Sprintf("contended-key-%d", i), Item{"contended", 1})
+				r := request("reserve", fmt.Sprintf("contended-%d", i), fmt.Sprintf("contended-key-%d", i), model.Item{SKU: "contended", Quantity: 1})
 				result, err := s.Mutate(t.Context(), r)
 				if err != nil {
 					t.Error(err)
 					return
 				}
-				if result.Outcome == Applied {
+				if result.Outcome == model.Applied {
 					successes.Add(1)
-				} else if result.Outcome != InsufficientStock {
+				} else if result.Outcome != model.InsufficientStock {
 					t.Errorf("unexpected result %s", result.Outcome)
 				}
 			})
@@ -20794,12 +20871,12 @@ func TestInventoryFoundation(t *testing.T) {
 	})
 	t.Run("concurrent same key and changed payload", func(t *testing.T) {
 		fixture(t, s, "dedupe", 5, 125)
-		r := request("reserve", "dedupe", "dedupe-key", Item{"dedupe", 2})
+		r := request("reserve", "dedupe", "dedupe-key", model.Item{SKU: "dedupe", Quantity: 2})
 		var wg sync.WaitGroup
 		for i := 0; i < 16; i++ {
 			wg.Go(func() {
 				result, err := s.Mutate(t.Context(), r)
-				if err != nil || result.Outcome != Applied {
+				if err != nil || result.Outcome != model.Applied {
 					t.Errorf("repeat=%v %v", result, err)
 				}
 			})
@@ -20809,17 +20886,17 @@ func TestInventoryFoundation(t *testing.T) {
 			t.Fatal("duplicate effect")
 		}
 		r.Items[0].Quantity = 1
-		if _, err := s.Mutate(t.Context(), r); !errors.Is(err, ErrKeyConflict) {
+		if _, err := s.Mutate(t.Context(), r); !errors.Is(err, model.ErrKeyConflict) {
 			t.Fatal("changed payload accepted", err)
 		}
 		r.OperationID = "dedupe-second"
-		if mutate(t, s, r).Outcome != ReservationExists {
+		if mutate(t, s, r).Outcome != model.ReservationExists {
 			t.Fatal("second key created another reservation")
 		}
 	})
 	t.Run("historical receipt and release barrier", func(t *testing.T) {
 		fixture(t, s, "release", 3, 75)
-		r := request("reserve", "release", "release-reserve", Item{"release", 2})
+		r := request("reserve", "release", "release-reserve", model.Item{SKU: "release", Quantity: 2})
 		original := mutate(t, s, r)
 		mutate(t, s, request("release", "release", "release-terminal"))
 		mutate(t, s, request("release", "release", "release-terminal"))
@@ -20827,23 +20904,23 @@ func TestInventoryFoundation(t *testing.T) {
 			t.Fatal("historical receipt changed")
 		}
 		current, err := s.GetReservation(t.Context(), testDataset, "release")
-		if err != nil || current.State != Released {
+		if err != nil || current.State != model.Released {
 			t.Fatal(current, err)
 		}
 		if scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='release'") != 3 {
 			t.Fatal("release repeated effect")
 		}
-		if mutate(t, s, request("commit", "release", "release-commit")).Outcome != InvalidState {
+		if mutate(t, s, request("commit", "release", "release-commit")).Outcome != model.InvalidState {
 			t.Fatal("committed released reservation")
 		}
 		mutate(t, s, request("release", "persist-barrier", "persist-release"))
-		if mutate(t, s, request("reserve", "persist-barrier", "persist-late", Item{"release", 1})).Outcome != ReservationExists {
+		if mutate(t, s, request("reserve", "persist-barrier", "persist-late", model.Item{SKU: "release", Quantity: 1})).Outcome != model.ReservationExists {
 			t.Fatal("late reserve bypassed barrier")
 		}
 	})
 	t.Run("commit release race", func(t *testing.T) {
 		fixture(t, s, "race", 1, 99)
-		mutate(t, s, request("reserve", "race", "race-reserve", Item{"race", 1}))
+		mutate(t, s, request("reserve", "race", "race-reserve", model.Item{SKU: "race", Quantity: 1}))
 		var wg sync.WaitGroup
 		for _, method := range []string{"commit", "release"} {
 			wg.Go(func() {
@@ -20858,9 +20935,9 @@ func TestInventoryFoundation(t *testing.T) {
 			t.Fatal(err)
 		}
 		want := int64(0)
-		if current.State == Released {
+		if current.State == model.Released {
 			want = 1
-		} else if current.State != Committed {
+		} else if current.State != model.Committed {
 			t.Fatal(current)
 		}
 		if scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='race'") != want || scalar(t, s, "SELECT count(*) FROM inventory.outbox WHERE order_id='race'") != 2 {
@@ -20869,16 +20946,16 @@ func TestInventoryFoundation(t *testing.T) {
 	})
 	t.Run("commit retries never sell twice or release sold stock", func(t *testing.T) {
 		fixture(t, s, "committed", 3, 10)
-		mutate(t, s, request("reserve", "committed", "committed-reserve", Item{"committed", 2}))
+		mutate(t, s, request("reserve", "committed", "committed-reserve", model.Item{SKU: "committed", Quantity: 2}))
 		r := request("commit", "committed", "committed-first")
 		first := mutate(t, s, r)
 		if repeated := mutate(t, s, r); !reflect.DeepEqual(first, repeated) {
 			t.Fatal("commit receipt changed")
 		}
-		if mutate(t, s, request("commit", "committed", "committed-second")).Outcome != Applied {
+		if mutate(t, s, request("commit", "committed", "committed-second")).Outcome != model.Applied {
 			t.Fatal("repeat terminal commit")
 		}
-		if mutate(t, s, request("release", "committed", "committed-release")).Outcome != InvalidState {
+		if mutate(t, s, request("release", "committed", "committed-release")).Outcome != model.InvalidState {
 			t.Fatal("released sold stock")
 		}
 		if scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='committed'") != 1 || scalar(t, s, "SELECT count(*) FROM inventory.ledger WHERE order_id='committed'") != 2 || scalar(t, s, "SELECT count(*) FROM inventory.outbox WHERE order_id='committed'") != 2 {
@@ -20893,7 +20970,7 @@ func TestInventoryFoundation(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if _, err = s.Mutate(t.Context(), request("reserve", "rollback", "rollback-key", Item{"rollback", 1})); err == nil {
+		if _, err = s.Mutate(t.Context(), request("reserve", "rollback", "rollback-key", model.Item{SKU: "rollback", Quantity: 1})); err == nil {
 			t.Fatal("controlled outbox failure did not fail transaction")
 		}
 		if scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='rollback'") != 2 || scalar(t, s, "SELECT count(*) FROM inventory.reservations WHERE order_id='rollback'") != 0 || scalar(t, s, "SELECT count(*) FROM inventory.operations WHERE operation_id='rollback-key'") != 0 || scalar(t, s, "SELECT count(*) FROM inventory.ledger WHERE order_id='rollback'") != 0 {
@@ -20942,7 +21019,7 @@ func TestInventoryFoundation(t *testing.T) {
 		if scalar(t, s, "SELECT count(*) FROM inventory.operations WHERE operation_id='blocked-key'") != 0 {
 			t.Fatal("canceled operation persisted")
 		}
-		if mutate(t, s, request("release", "blocked", "blocked-retry")).Outcome != Applied {
+		if mutate(t, s, request("release", "blocked", "blocked-retry")).Outcome != model.Applied {
 			t.Fatal("pool did not recover after cancellation")
 		}
 	})
@@ -20952,7 +21029,7 @@ func TestInventoryFoundation(t *testing.T) {
 			order := fmt.Sprintf("barrier-race-%d", i)
 			var wg sync.WaitGroup
 			wg.Go(func() {
-				if _, err := s.Mutate(t.Context(), request("reserve", order, order+"-reserve", Item{"barrier-race", 1})); err != nil {
+				if _, err := s.Mutate(t.Context(), request("reserve", order, order+"-reserve", model.Item{SKU: "barrier-race", Quantity: 1})); err != nil {
 					t.Error(err)
 				}
 			})
@@ -20962,7 +21039,7 @@ func TestInventoryFoundation(t *testing.T) {
 				}
 			})
 			wg.Wait()
-			if mutate(t, s, request("reserve", order, order+"-late", Item{"barrier-race", 1})).Outcome != ReservationExists {
+			if mutate(t, s, request("reserve", order, order+"-late", model.Item{SKU: "barrier-race", Quantity: 1})).Outcome != model.ReservationExists {
 				t.Fatal("late reserve bypassed cancellation")
 			}
 		}
@@ -20972,10 +21049,10 @@ func TestInventoryFoundation(t *testing.T) {
 	})
 	t.Run("overflow unknown SKU cancellation and dataset isolation", func(t *testing.T) {
 		fixture(t, s, "overflow", math.MaxInt64, math.MaxInt64)
-		if _, err := s.Mutate(t.Context(), request("reserve", "overflow", "overflow-key", Item{"overflow", 2})); !errors.Is(err, ErrInvalid) {
+		if _, err := s.Mutate(t.Context(), request("reserve", "overflow", "overflow-key", model.Item{SKU: "overflow", Quantity: 2})); !errors.Is(err, model.ErrInvalid) {
 			t.Fatal("overflow", err)
 		}
-		if mutate(t, s, request("reserve", "unknown", "unknown-key", Item{"missing", 1})).Outcome != UnknownSKU {
+		if mutate(t, s, request("reserve", "unknown", "unknown-key", model.Item{SKU: "missing", Quantity: 1})).Outcome != model.UnknownSKU {
 			t.Fatal("unknown SKU")
 		}
 		canceled, cancel := context.WithCancel(t.Context())
@@ -20985,7 +21062,7 @@ func TestInventoryFoundation(t *testing.T) {
 		}
 		r := request("release", "foreign", "foreign-key")
 		r.DatasetID = "old-dataset"
-		if _, err := s.Mutate(t.Context(), r); !errors.Is(err, ErrDataset) {
+		if _, err := s.Mutate(t.Context(), r); !errors.Is(err, model.ErrDataset) {
 			t.Fatal("foreign dataset", err)
 		}
 		if scalar(t, s, "SELECT count(*) FROM inventory.operations WHERE operation_id IN ('overflow-key','canceled-key','foreign-key')") != 0 {
@@ -20997,13 +21074,13 @@ func TestInventoryFoundation(t *testing.T) {
 func TestInventoryAfterRestart(t *testing.T) {
 	s := integrationStore(t)
 	r, err := s.GetReservation(t.Context(), testDataset, "persist-barrier")
-	if err != nil || r.State != Released {
+	if err != nil || r.State != model.Released {
 		t.Fatal("barrier lost", r, err)
 	}
-	if result := mutate(t, s, request("release", "persist-barrier", "persist-release")); result.Reservation.State != Released {
+	if result := mutate(t, s, request("release", "persist-barrier", "persist-release")); result.Reservation.State != model.Released {
 		t.Fatal("receipt lost")
 	}
-	if mutate(t, s, request("reserve", "persist-barrier", "after-restart", Item{"release", 1})).Outcome != ReservationExists {
+	if mutate(t, s, request("reserve", "persist-barrier", "after-restart", model.Item{SKU: "release", Quantity: 1})).Outcome != model.ReservationExists {
 		t.Fatal("restart bypassed barrier")
 	}
 	if scalar(t, s, "SELECT count(*) FROM inventory.ledger WHERE order_id='dedupe'") != 1 {
@@ -21013,7 +21090,7 @@ func TestInventoryAfterRestart(t *testing.T) {
 		t.Fatal("event lost")
 	}
 	// A new configured namespace cannot attach to surviving data accidentally.
-	if _, err = NewStore(t.Context(), s.pool, "another-dataset", time.Second); !errors.Is(err, ErrDataset) {
+	if _, err = NewStore(t.Context(), s.pool, "another-dataset", time.Second); !errors.Is(err, model.ErrDataset) {
 		t.Fatal("dataset rebinding allowed", err)
 	}
 }
@@ -21021,13 +21098,13 @@ func TestInventoryAfterRestart(t *testing.T) {
 
 <a id="inventory-internal-inventory-model-go"></a>
 
-## Приложение: internal/inventory/model.go
+## Приложение: internal/inventory/model/model.go
 
-Полный исходный документ: `internal/inventory/model.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+Полный исходный документ: `internal/inventory/model/model.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```go
-// Package inventory owns stock mutations and durable reservation receipts.
-package inventory
+// Package model defines Inventory requests, results and validation shared by storage and transport.
+package model
 
 import (
 	"crypto/sha256"
@@ -21101,7 +21178,8 @@ type Availability struct {
 	Currency       string
 }
 
-func canonical(request Request) (Request, string, error) {
+// Canonical validates a request and computes its stable operation identity.
+func Canonical(request Request) (Request, string, error) {
 	if !identifier.MatchString(request.DatasetID) || !identifier.MatchString(request.OrderID) || !identifier.MatchString(request.OperationID) {
 		return Request{}, "", ErrInvalid
 	}
@@ -21131,16 +21209,22 @@ func canonical(request Request) (Request, string, error) {
 	hash := sha256.Sum256(data)
 	return request, hex.EncodeToString(hash[:]), nil
 }
+
+// ValidIdentifier validates a dataset, order or operation identifier.
+func ValidIdentifier(value string) bool { return identifier.MatchString(value) }
+
+// ValidSKU validates a product identifier.
+func ValidSKU(value string) bool { return skuPattern.MatchString(value) }
 ```
 
 <a id="inventory-internal-inventory-model-test-go"></a>
 
-## Приложение: internal/inventory/model_test.go
+## Приложение: internal/inventory/model/model_test.go
 
-Полный исходный документ: `internal/inventory/model_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+Полный исходный документ: `internal/inventory/model/model_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```go
-package inventory
+package model
 
 import (
 	"errors"
@@ -21149,7 +21233,7 @@ import (
 
 func TestCanonicalOperationIdentity(t *testing.T) {
 	base := Request{DatasetID: "dataset", OrderID: "order", OperationID: "key", Method: "reserve", Items: []Item{{"B", 2}, {"A", 1}}}
-	normalized, hash, err := canonical(base)
+	normalized, hash, err := Canonical(base)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -21158,12 +21242,12 @@ func TestCanonicalOperationIdentity(t *testing.T) {
 	}
 	reordered := base
 	reordered.Items = []Item{{"A", 1}, {"B", 2}}
-	if _, same, e := canonical(reordered); e != nil || hash != same {
+	if _, same, e := Canonical(reordered); e != nil || hash != same {
 		t.Fatal("SKU order changed operation identity", e)
 	}
 	changed := base
 	changed.OrderID = "other"
-	if _, different, e := canonical(changed); e != nil || hash == different {
+	if _, different, e := Canonical(changed); e != nil || hash == different {
 		t.Fatal("different order reused request identity", e)
 	}
 }
@@ -21177,22 +21261,8 @@ func TestInvalidRequests(t *testing.T) {
 		{DatasetID: "d", OrderID: "o", OperationID: "k", Method: "commit", Items: []Item{{"A", 1}}},
 		{DatasetID: "../secret", OrderID: "o", OperationID: "k", Method: "release"},
 	} {
-		if _, _, err := canonical(r); !errors.Is(err, ErrInvalid) {
+		if _, _, err := Canonical(r); !errors.Is(err, ErrInvalid) {
 			t.Fatalf("request accepted: %+v", r)
-		}
-	}
-}
-
-func TestConfigRestrictsIdentityAndBudgets(t *testing.T) {
-	base := Config{Host: "postgres", Port: 5432, Database: "inventory_db", User: "inventory_app", SSLMode: "disable", PasswordFile: "/run/secrets/inventory_app.password", DatasetID: "dataset", ConnectTimeout: "5s", RequestTimeout: "3s", MaxConnections: 4}
-	if err := base.Validate(); err != nil {
-		t.Fatal(err)
-	}
-	for _, mutate := range []func(*Config){func(c *Config) { c.User = "postgres" }, func(c *Config) { c.User = "inventory_migrator" }, func(c *Config) { c.Database = "orders_db" }, func(c *Config) { c.MaxConnections = 30 }, func(c *Config) { c.RequestTimeout = "0s" }, func(c *Config) { c.DatasetID = "" }} {
-		cfg := base
-		mutate(&cfg)
-		if cfg.Validate() == nil {
-			t.Fatalf("invalid config accepted: %+v", cfg)
 		}
 	}
 }
@@ -21200,12 +21270,12 @@ func TestConfigRestrictsIdentityAndBudgets(t *testing.T) {
 
 <a id="inventory-internal-inventory-process-test-go"></a>
 
-## Приложение: internal/inventory/process_test.go
+## Приложение: internal/inventory/store/process_test.go
 
-Полный исходный документ: `internal/inventory/process_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+Полный исходный документ: `internal/inventory/store/process_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```go
-package inventory
+package store
 
 import (
 	"context"
@@ -21385,6 +21455,7 @@ import (
 	"errors"
 
 	inventoryv1 "github.com/Includeoyasi/faultline-lab/api/inventory/v1"
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -21392,9 +21463,9 @@ import (
 
 // Backend defines the domain boundary; SQL correctness is tested on PostgreSQL.
 type Backend interface {
-	Mutate(context.Context, Request) (Receipt, error)
-	GetReservation(context.Context, string, string) (*Reservation, error)
-	GetAvailability(context.Context, string, []string) ([]Availability, error)
+	Mutate(context.Context, model.Request) (model.Receipt, error)
+	GetReservation(context.Context, string, string) (*model.Reservation, error)
+	GetAvailability(context.Context, string, []string) ([]model.Availability, error)
 }
 type Server struct {
 	inventoryv1.UnimplementedInventoryServer
@@ -21406,20 +21477,20 @@ func Register(server *grpc.Server, backend Backend) {
 }
 
 func (s *Server) Reserve(ctx context.Context, r *inventoryv1.ReserveRequest) (*inventoryv1.OperationResult, error) {
-	request := Request{DatasetID: r.GetDatasetId(), OrderID: r.GetOrderId(), OperationID: r.GetOperationId(), Method: "reserve"}
+	request := model.Request{DatasetID: r.GetDatasetId(), OrderID: r.GetOrderId(), OperationID: r.GetOperationId(), Method: "reserve"}
 	for _, item := range r.GetItems() {
-		request.Items = append(request.Items, Item{SKU: item.GetSku(), Quantity: item.GetQuantity()})
+		request.Items = append(request.Items, model.Item{SKU: item.GetSku(), Quantity: item.GetQuantity()})
 	}
 	return s.mutate(ctx, request)
 }
 func (s *Server) CommitReservation(ctx context.Context, r *inventoryv1.ChangeReservationRequest) (*inventoryv1.OperationResult, error) {
-	return s.mutate(ctx, Request{DatasetID: r.GetDatasetId(), OrderID: r.GetOrderId(), OperationID: r.GetOperationId(), Method: "commit"})
+	return s.mutate(ctx, model.Request{DatasetID: r.GetDatasetId(), OrderID: r.GetOrderId(), OperationID: r.GetOperationId(), Method: "commit"})
 }
 func (s *Server) ReleaseReservation(ctx context.Context, r *inventoryv1.ChangeReservationRequest) (*inventoryv1.OperationResult, error) {
-	return s.mutate(ctx, Request{DatasetID: r.GetDatasetId(), OrderID: r.GetOrderId(), OperationID: r.GetOperationId(), Method: "release"})
+	return s.mutate(ctx, model.Request{DatasetID: r.GetDatasetId(), OrderID: r.GetOrderId(), OperationID: r.GetOperationId(), Method: "release"})
 }
-func (s *Server) mutate(ctx context.Context, r Request) (*inventoryv1.OperationResult, error) {
-	if _, _, err := canonical(r); err != nil {
+func (s *Server) mutate(ctx context.Context, r model.Request) (*inventoryv1.OperationResult, error) {
+	if _, _, err := model.Canonical(r); err != nil {
 		return nil, rpcError(err)
 	}
 	receipt, err := s.backend.Mutate(ctx, r)
@@ -21446,7 +21517,7 @@ func (s *Server) GetAvailability(ctx context.Context, r *inventoryv1.GetAvailabi
 	}
 	return response, nil
 }
-func protoReservation(r *Reservation) *inventoryv1.Reservation {
+func protoReservation(r *model.Reservation) *inventoryv1.Reservation {
 	if r == nil {
 		return nil
 	}
@@ -21458,14 +21529,14 @@ func protoReservation(r *Reservation) *inventoryv1.Reservation {
 }
 func rpcError(err error) error {
 	switch {
-	case errors.Is(err, ErrInvalid):
-		return status.Error(codes.InvalidArgument, ErrInvalid.Error())
-	case errors.Is(err, ErrKeyConflict):
-		return status.Error(codes.AlreadyExists, ErrKeyConflict.Error())
-	case errors.Is(err, ErrDataset):
-		return status.Error(codes.FailedPrecondition, ErrDataset.Error())
-	case errors.Is(err, ErrNotFound):
-		return status.Error(codes.NotFound, ErrNotFound.Error())
+	case errors.Is(err, model.ErrInvalid):
+		return status.Error(codes.InvalidArgument, model.ErrInvalid.Error())
+	case errors.Is(err, model.ErrKeyConflict):
+		return status.Error(codes.AlreadyExists, model.ErrKeyConflict.Error())
+	case errors.Is(err, model.ErrDataset):
+		return status.Error(codes.FailedPrecondition, model.ErrDataset.Error())
+	case errors.Is(err, model.ErrNotFound):
+		return status.Error(codes.NotFound, model.ErrNotFound.Error())
 	case errors.Is(err, context.Canceled):
 		return status.Error(codes.Canceled, "inventory request canceled; outcome may be unknown")
 	case errors.Is(err, context.DeadlineExceeded):
@@ -21493,6 +21564,7 @@ import (
 	"time"
 
 	inventoryv1 "github.com/Includeoyasi/faultline-lab/api/inventory/v1"
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/credentials/insecure"
@@ -21506,19 +21578,19 @@ type fakeBackend struct {
 	block bool
 }
 
-func (b *fakeBackend) Mutate(ctx context.Context, r Request) (Receipt, error) {
+func (b *fakeBackend) Mutate(ctx context.Context, r model.Request) (model.Receipt, error) {
 	b.calls++
 	if b.block {
 		<-ctx.Done()
-		return Receipt{}, ctx.Err()
+		return model.Receipt{}, ctx.Err()
 	}
-	return Receipt{OperationID: r.OperationID, Outcome: Applied, Reservation: &Reservation{DatasetID: r.DatasetID, OrderID: r.OrderID, State: Reserved, Version: 1}}, b.err
+	return model.Receipt{OperationID: r.OperationID, Outcome: model.Applied, Reservation: &model.Reservation{DatasetID: r.DatasetID, OrderID: r.OrderID, State: model.Reserved, Version: 1}}, b.err
 }
-func (b *fakeBackend) GetReservation(context.Context, string, string) (*Reservation, error) {
-	return nil, ErrNotFound
+func (b *fakeBackend) GetReservation(context.Context, string, string) (*model.Reservation, error) {
+	return nil, model.ErrNotFound
 }
-func (b *fakeBackend) GetAvailability(context.Context, string, []string) ([]Availability, error) {
-	return nil, ErrNotFound
+func (b *fakeBackend) GetAvailability(context.Context, string, []string) ([]model.Availability, error) {
+	return nil, model.ErrNotFound
 }
 
 func TestGRPCContract(t *testing.T) {
@@ -21527,9 +21599,9 @@ func TestGRPCContract(t *testing.T) {
 			backend := &fakeBackend{}
 			switch scenario {
 			case "key conflict":
-				backend.err = ErrKeyConflict
+				backend.err = model.ErrKeyConflict
 			case "dataset mismatch":
-				backend.err = ErrDataset
+				backend.err = model.ErrDataset
 			case "timeout":
 				backend.block = true
 			case "safe storage error":
@@ -21583,22 +21655,33 @@ func TestGRPCContract(t *testing.T) {
 
 <a id="inventory-internal-inventory-store-go"></a>
 
-## Приложение: internal/inventory/store.go
+## Приложение: internal/inventory/store/store.go
 
-Полный исходный документ: `internal/inventory/store.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+Полный исходный документ: `internal/inventory/store/store.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ```go
-package inventory
+package store
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"math"
 	"time"
 
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
+)
+
+const (
+	bindDatasetSQL           = "INSERT INTO inventory.dataset(singleton,dataset_id) VALUES(true,$1) ON CONFLICT DO NOTHING"
+	readDatasetSQL           = "SELECT dataset_id FROM inventory.dataset WHERE singleton"
+	lockStockSQL             = "SELECT s.available,p.price_minor,p.currency FROM inventory.stock s JOIN inventory.products p USING(sku) WHERE s.sku=$1 FOR UPDATE OF s,p"
+	insertReservationSQL     = "INSERT INTO inventory.reservations(order_id,state,version,total_minor,currency) VALUES($1,$2,1,$3,$4)"
+	decreaseStockSQL         = "UPDATE inventory.stock SET available=available-$2 WHERE sku=$1"
+	insertReservationItemSQL = "INSERT INTO inventory.reservation_items(order_id,sku,quantity,unit_price_minor) VALUES($1,$2,$3,$4)"
+	readReservationSQL       = "SELECT state,version,total_minor,currency FROM inventory.reservations WHERE order_id=$1"
+	readReservationItemsSQL  = "SELECT sku,quantity,unit_price_minor FROM inventory.reservation_items WHERE order_id=$1 ORDER BY sku"
 )
 
 // Store owns one bounded pool and exactly one immutable dataset.
@@ -21611,8 +21694,8 @@ type Store struct {
 // NewStore binds an already migrated database to a dataset. It never creates
 // roles, schemas or tables. The caller owns the pool until NewStore succeeds.
 func NewStore(ctx context.Context, pool *pgxpool.Pool, dataset string, timeout time.Duration) (*Store, error) {
-	if !identifier.MatchString(dataset) || timeout < time.Millisecond || timeout > time.Minute {
-		return nil, ErrInvalid
+	if !model.ValidIdentifier(dataset) || timeout < time.Millisecond || timeout > time.Minute {
+		return nil, model.ErrInvalid
 	}
 	ctx, cancel := context.WithTimeout(ctx, timeout)
 	defer cancel()
@@ -21621,15 +21704,15 @@ func NewStore(ctx context.Context, pool *pgxpool.Pool, dataset string, timeout t
 		return nil, storageError(err)
 	}
 	defer rollback(tx)
-	if _, err = tx.Exec(ctx, "INSERT INTO inventory.dataset(singleton,dataset_id) VALUES(true,$1) ON CONFLICT DO NOTHING", dataset); err != nil {
+	if _, err = tx.Exec(ctx, bindDatasetSQL, dataset); err != nil {
 		return nil, storageError(err)
 	}
 	var actual string
-	if err = tx.QueryRow(ctx, "SELECT dataset_id FROM inventory.dataset WHERE singleton").Scan(&actual); err != nil {
+	if err = tx.QueryRow(ctx, readDatasetSQL).Scan(&actual); err != nil {
 		return nil, storageError(err)
 	}
 	if actual != dataset {
-		return nil, ErrDataset
+		return nil, model.ErrDataset
 	}
 	if err = tx.Commit(ctx); err != nil {
 		return nil, storageError(err)
@@ -21637,16 +21720,14 @@ func NewStore(ctx context.Context, pool *pgxpool.Pool, dataset string, timeout t
 	return &Store{pool: pool, dataset: dataset, timeout: timeout}, nil
 }
 
-func (s *Store) Close() { s.pool.Close() }
-
 func rollback(tx pgx.Tx) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 	_ = tx.Rollback(ctx)
 }
 func storageError(err error) error {
-	if errors.Is(err, ErrInvalid) {
-		return ErrInvalid
+	if errors.Is(err, model.ErrInvalid) {
+		return model.ErrInvalid
 	}
 	if errors.Is(err, context.Canceled) {
 		return context.Canceled
@@ -21657,166 +21738,43 @@ func storageError(err error) error {
 	return errors.New("inventory storage operation failed; outcome may be unknown")
 }
 
-// Mutate serializes operation identity AND order identity, including orders
-// with no row yet. Stock rows are locked in canonical SKU order.
-func (s *Store) Mutate(ctx context.Context, request Request) (Receipt, error) {
-	request, hash, err := canonical(request)
-	if err != nil {
-		return Receipt{}, err
-	}
-	if request.DatasetID != s.dataset {
-		return Receipt{}, ErrDataset
-	}
-	ctx, cancel := context.WithTimeout(ctx, s.timeout)
-	defer cancel()
-	tx, err := s.pool.Begin(ctx)
-	if err != nil {
-		return Receipt{}, storageError(err)
-	}
-	defer rollback(tx)
-	// Separate advisory namespaces avoid collisions between order/key identity.
-	if _, err = tx.Exec(ctx, "SELECT pg_advisory_xact_lock(1,hashtext($1))", request.OperationID); err != nil {
-		return Receipt{}, storageError(err)
-	}
-	var previousHash string
-	var data []byte
-	err = tx.QueryRow(ctx, "SELECT request_hash,receipt FROM inventory.operations WHERE operation_id=$1", request.OperationID).Scan(&previousHash, &data)
-	if err == nil {
-		if previousHash != hash {
-			return Receipt{}, ErrKeyConflict
-		}
-		var result Receipt
-		if err = json.Unmarshal(data, &result); err != nil {
-			return Receipt{}, storageError(err)
-		}
-		return result, nil
-	}
-	if !errors.Is(err, pgx.ErrNoRows) {
-		return Receipt{}, storageError(err)
-	}
-	if _, err = tx.Exec(ctx, "SELECT pg_advisory_xact_lock(2,hashtext($1))", request.OrderID); err != nil {
-		return Receipt{}, storageError(err)
-	}
-	reservation, err := s.readReservation(ctx, tx, request.OrderID)
-	if err != nil && !errors.Is(err, ErrNotFound) {
-		return Receipt{}, err
-	}
-	err = nil // An absent order is an expected input to the state machine.
-	result := Receipt{OperationID: request.OperationID, Outcome: Applied, Reservation: reservation}
-	changed := false
-	switch request.Method {
-	case "reserve":
-		if reservation != nil {
-			result.Outcome = ReservationExists
-			break
-		}
-		result.Reservation, result.Outcome, err = s.reserve(ctx, tx, request)
-		changed = err == nil && result.Outcome == Applied
-	case "commit", "release":
-		target := Committed
-		if request.Method == "release" {
-			target = Released
-		}
-		switch {
-		case reservation == nil && target == Released:
-			reservation = &Reservation{DatasetID: s.dataset, OrderID: request.OrderID, State: Released, Version: 1, Items: []PricedItem{}}
-			_, err = tx.Exec(ctx, "INSERT INTO inventory.reservations(order_id,state,version,total_minor,currency) VALUES($1,$2,1,0,'')", request.OrderID, Released)
-			result.Reservation = reservation
-			changed = err == nil
-		case reservation == nil:
-			result.Outcome = InvalidState
-		case reservation.State == target: // Already at requested terminal state: no second effect.
-		case reservation.State != Reserved:
-			result.Outcome = InvalidState
-		default:
-			if target == Released {
-				for _, item := range reservation.Items {
-					if _, err = tx.Exec(ctx, "UPDATE inventory.stock SET available=available+$2 WHERE sku=$1", item.SKU, item.Quantity); err != nil {
-						break
-					}
-				}
-			}
-			if err == nil {
-				_, err = tx.Exec(ctx, "UPDATE inventory.reservations SET state=$2,version=version+1,updated_at=now() WHERE order_id=$1", request.OrderID, target)
-			}
-			if err == nil {
-				reservation.State = target
-				reservation.Version++
-				changed = true
-			}
-		}
-	}
-	if err != nil {
-		return Receipt{}, storageError(err)
-	}
-	data, err = json.Marshal(result)
-	if err != nil {
-		return Receipt{}, storageError(err)
-	}
-	if _, err = tx.Exec(ctx, "INSERT INTO inventory.operations(operation_id,request_hash,receipt) VALUES($1,$2,$3::jsonb)", request.OperationID, hash, string(data)); err != nil {
-		return Receipt{}, storageError(err)
-	}
-	if changed {
-		for _, item := range result.Reservation.Items {
-			delta := int64(0)
-			if request.Method == "reserve" {
-				delta = -item.Quantity
-			}
-			if request.Method == "release" {
-				delta = item.Quantity
-			}
-			if _, err = tx.Exec(ctx, "INSERT INTO inventory.ledger(order_id,version,sku,available_delta,operation_id) VALUES($1,$2,$3,$4,$5)", request.OrderID, result.Reservation.Version, item.SKU, delta, request.OperationID); err != nil {
-				return Receipt{}, storageError(err)
-			}
-		}
-		eventType := map[string]string{"reserve": "InventoryReserved", "commit": "InventoryCommitted", "release": "InventoryReleased"}[request.Method]
-		if _, err = tx.Exec(ctx, "INSERT INTO inventory.outbox(event_id,order_id,aggregate_version,event_type,payload) VALUES($1,$2,$3,$4,$5::jsonb)", request.OperationID, request.OrderID, result.Reservation.Version, eventType, string(data)); err != nil {
-			return Receipt{}, storageError(err)
-		}
-	}
-	if err = tx.Commit(ctx); err != nil {
-		return Receipt{}, storageError(err)
-	}
-	return result, nil
-}
-
-func (s *Store) reserve(ctx context.Context, tx pgx.Tx, r Request) (*Reservation, string, error) {
-	reservation := &Reservation{DatasetID: s.dataset, OrderID: r.OrderID, State: Reserved, Version: 1, Items: []PricedItem{}}
+func (s *Store) reserve(ctx context.Context, tx pgx.Tx, r model.Request) (*model.Reservation, string, error) {
+	reservation := &model.Reservation{DatasetID: s.dataset, OrderID: r.OrderID, State: model.Reserved, Version: 1, Items: []model.PricedItem{}}
 	for _, item := range r.Items {
 		var available, price int64
 		var currency string
-		err := tx.QueryRow(ctx, "SELECT s.available,p.price_minor,p.currency FROM inventory.stock s JOIN inventory.products p USING(sku) WHERE s.sku=$1 FOR UPDATE OF s,p", item.SKU).Scan(&available, &price, &currency)
+		err := tx.QueryRow(ctx, lockStockSQL, item.SKU).Scan(&available, &price, &currency)
 		if errors.Is(err, pgx.ErrNoRows) {
-			return nil, UnknownSKU, nil
+			return nil, model.UnknownSKU, nil
 		}
 		if err != nil {
 			return nil, "", err
 		}
 		if available < item.Quantity {
-			return nil, InsufficientStock, nil
+			return nil, model.InsufficientStock, nil
 		}
 		if (price > 0 && item.Quantity > math.MaxInt64/price) || reservation.TotalMinor > math.MaxInt64-price*item.Quantity {
-			return nil, "", ErrInvalid
+			return nil, "", model.ErrInvalid
 		}
 		if reservation.Currency != "" && reservation.Currency != currency {
-			return nil, "", ErrInvalid
+			return nil, "", model.ErrInvalid
 		}
 		reservation.Currency = currency
 		reservation.TotalMinor += price * item.Quantity
-		reservation.Items = append(reservation.Items, PricedItem{SKU: item.SKU, Quantity: item.Quantity, UnitPriceMinor: price})
+		reservation.Items = append(reservation.Items, model.PricedItem{SKU: item.SKU, Quantity: item.Quantity, UnitPriceMinor: price})
 	}
-	if _, err := tx.Exec(ctx, "INSERT INTO inventory.reservations(order_id,state,version,total_minor,currency) VALUES($1,$2,1,$3,$4)", r.OrderID, Reserved, reservation.TotalMinor, reservation.Currency); err != nil {
+	if _, err := tx.Exec(ctx, insertReservationSQL, r.OrderID, model.Reserved, reservation.TotalMinor, reservation.Currency); err != nil {
 		return nil, "", err
 	}
 	for _, item := range reservation.Items {
-		if _, err := tx.Exec(ctx, "UPDATE inventory.stock SET available=available-$2 WHERE sku=$1", item.SKU, item.Quantity); err != nil {
+		if _, err := tx.Exec(ctx, decreaseStockSQL, item.SKU, item.Quantity); err != nil {
 			return nil, "", err
 		}
-		if _, err := tx.Exec(ctx, "INSERT INTO inventory.reservation_items(order_id,sku,quantity,unit_price_minor) VALUES($1,$2,$3,$4)", r.OrderID, item.SKU, item.Quantity, item.UnitPriceMinor); err != nil {
+		if _, err := tx.Exec(ctx, insertReservationItemSQL, r.OrderID, item.SKU, item.Quantity, item.UnitPriceMinor); err != nil {
 			return nil, "", err
 		}
 	}
-	return reservation, Applied, nil
+	return reservation, model.Applied, nil
 }
 
 type querier interface {
@@ -21824,22 +21782,22 @@ type querier interface {
 	Query(context.Context, string, ...any) (pgx.Rows, error)
 }
 
-func (s *Store) readReservation(ctx context.Context, q querier, orderID string) (*Reservation, error) {
-	r := &Reservation{DatasetID: s.dataset, OrderID: orderID, Items: []PricedItem{}}
-	err := q.QueryRow(ctx, "SELECT state,version,total_minor,currency FROM inventory.reservations WHERE order_id=$1", orderID).Scan(&r.State, &r.Version, &r.TotalMinor, &r.Currency)
+func (s *Store) readReservation(ctx context.Context, q querier, orderID string) (*model.Reservation, error) {
+	r := &model.Reservation{DatasetID: s.dataset, OrderID: orderID, Items: []model.PricedItem{}}
+	err := q.QueryRow(ctx, readReservationSQL, orderID).Scan(&r.State, &r.Version, &r.TotalMinor, &r.Currency)
 	if errors.Is(err, pgx.ErrNoRows) {
-		return nil, ErrNotFound
+		return nil, model.ErrNotFound
 	}
 	if err != nil {
 		return nil, storageError(err)
 	}
-	rows, err := q.Query(ctx, "SELECT sku,quantity,unit_price_minor FROM inventory.reservation_items WHERE order_id=$1 ORDER BY sku", orderID)
+	rows, err := q.Query(ctx, readReservationItemsSQL, orderID)
 	if err != nil {
 		return nil, storageError(err)
 	}
 	defer rows.Close()
 	for rows.Next() {
-		var item PricedItem
+		var item model.PricedItem
 		if err = rows.Scan(&item.SKU, &item.Quantity, &item.UnitPriceMinor); err != nil {
 			return nil, storageError(err)
 		}
@@ -21850,43 +21808,233 @@ func (s *Store) readReservation(ctx context.Context, q querier, orderID string) 
 	}
 	return r, nil
 }
+```
 
-func (s *Store) GetReservation(ctx context.Context, dataset, orderID string) (*Reservation, error) {
-	if dataset != s.dataset {
-		return nil, ErrDataset
+<a id="inventory-store-mutate-go"></a>
+
+## Приложение: internal/inventory/store/mutate.go
+
+Полный исходный документ: `internal/inventory/store/mutate.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
+	"github.com/jackc/pgx/v5"
+)
+
+const (
+	lockOperationSQL          = "SELECT pg_advisory_xact_lock(1,hashtext($1))"
+	readOperationSQL          = "SELECT request_hash,receipt FROM inventory.operations WHERE operation_id=$1"
+	lockOrderSQL              = "SELECT pg_advisory_xact_lock(2,hashtext($1))"
+	insertReleaseBarrierSQL   = "INSERT INTO inventory.reservations(order_id,state,version,total_minor,currency) VALUES($1,$2,1,0,'')"
+	increaseStockSQL          = "UPDATE inventory.stock SET available=available+$2 WHERE sku=$1"
+	updateReservationStateSQL = "UPDATE inventory.reservations SET state=$2,version=version+1,updated_at=now() WHERE order_id=$1"
+	insertOperationSQL        = "INSERT INTO inventory.operations(operation_id,request_hash,receipt) VALUES($1,$2,$3::jsonb)"
+	insertLedgerSQL           = "INSERT INTO inventory.ledger(order_id,version,sku,available_delta,operation_id) VALUES($1,$2,$3,$4,$5)"
+	insertOutboxSQL           = "INSERT INTO inventory.outbox(event_id,order_id,aggregate_version,event_type,payload) VALUES($1,$2,$3,$4,$5::jsonb)"
+)
+
+// Mutate serializes operation identity AND order identity, including orders
+// with no row yet. Stock rows are locked in canonical SKU order.
+func (s *Store) Mutate(ctx context.Context, request model.Request) (model.Receipt, error) {
+	request, hash, err := model.Canonical(request)
+	if err != nil {
+		return model.Receipt{}, err
 	}
-	if !identifier.MatchString(orderID) {
-		return nil, ErrInvalid
+	if request.DatasetID != s.dataset {
+		return model.Receipt{}, model.ErrDataset
+	}
+	ctx, cancel := context.WithTimeout(ctx, s.timeout)
+	defer cancel()
+	tx, err := s.pool.Begin(ctx)
+	if err != nil {
+		return model.Receipt{}, storageError(err)
+	}
+	defer rollback(tx)
+	// Separate advisory namespaces avoid collisions between order/key identity.
+	if _, err = tx.Exec(ctx, lockOperationSQL, request.OperationID); err != nil {
+		return model.Receipt{}, storageError(err)
+	}
+	var previousHash string
+	var data []byte
+	err = tx.QueryRow(ctx, readOperationSQL, request.OperationID).Scan(&previousHash, &data)
+	if err == nil {
+		if previousHash != hash {
+			return model.Receipt{}, model.ErrKeyConflict
+		}
+		var result model.Receipt
+		if err = json.Unmarshal(data, &result); err != nil {
+			return model.Receipt{}, storageError(err)
+		}
+		return result, nil
+	}
+	if !errors.Is(err, pgx.ErrNoRows) {
+		return model.Receipt{}, storageError(err)
+	}
+	if _, err = tx.Exec(ctx, lockOrderSQL, request.OrderID); err != nil {
+		return model.Receipt{}, storageError(err)
+	}
+	reservation, err := s.readReservation(ctx, tx, request.OrderID)
+	if err != nil && !errors.Is(err, model.ErrNotFound) {
+		return model.Receipt{}, err
+	}
+	err = nil // An absent order is an expected input to the state machine.
+	result := model.Receipt{OperationID: request.OperationID, Outcome: model.Applied, Reservation: reservation}
+	changed := false
+	switch request.Method {
+	case "reserve":
+		if reservation != nil {
+			result.Outcome = model.ReservationExists
+			break
+		}
+		result.Reservation, result.Outcome, err = s.reserve(ctx, tx, request)
+		changed = err == nil && result.Outcome == model.Applied
+	case "commit", "release":
+		target := model.Committed
+		if request.Method == "release" {
+			target = model.Released
+		}
+		switch {
+		case reservation == nil && target == model.Released:
+			reservation = &model.Reservation{DatasetID: s.dataset, OrderID: request.OrderID, State: model.Released, Version: 1, Items: []model.PricedItem{}}
+			_, err = tx.Exec(ctx, insertReleaseBarrierSQL, request.OrderID, model.Released)
+			result.Reservation = reservation
+			changed = err == nil
+		case reservation == nil:
+			result.Outcome = model.InvalidState
+		case reservation.State == target: // Already at requested terminal state: no second effect.
+		case reservation.State != model.Reserved:
+			result.Outcome = model.InvalidState
+		default:
+			if target == model.Released {
+				for _, item := range reservation.Items {
+					if _, err = tx.Exec(ctx, increaseStockSQL, item.SKU, item.Quantity); err != nil {
+						break
+					}
+				}
+			}
+			if err == nil {
+				_, err = tx.Exec(ctx, updateReservationStateSQL, request.OrderID, target)
+			}
+			if err == nil {
+				reservation.State = target
+				reservation.Version++
+				changed = true
+			}
+		}
+	}
+	if err != nil {
+		return model.Receipt{}, storageError(err)
+	}
+	data, err = json.Marshal(result)
+	if err != nil {
+		return model.Receipt{}, storageError(err)
+	}
+	if _, err = tx.Exec(ctx, insertOperationSQL, request.OperationID, hash, string(data)); err != nil {
+		return model.Receipt{}, storageError(err)
+	}
+	if changed {
+		for _, item := range result.Reservation.Items {
+			delta := int64(0)
+			if request.Method == "reserve" {
+				delta = -item.Quantity
+			}
+			if request.Method == "release" {
+				delta = item.Quantity
+			}
+			if _, err = tx.Exec(ctx, insertLedgerSQL, request.OrderID, result.Reservation.Version, item.SKU, delta, request.OperationID); err != nil {
+				return model.Receipt{}, storageError(err)
+			}
+		}
+		eventType := map[string]string{"reserve": "InventoryReserved", "commit": "InventoryCommitted", "release": "InventoryReleased"}[request.Method]
+		if _, err = tx.Exec(ctx, insertOutboxSQL, request.OperationID, request.OrderID, result.Reservation.Version, eventType, string(data)); err != nil {
+			return model.Receipt{}, storageError(err)
+		}
+	}
+	if err = tx.Commit(ctx); err != nil {
+		return model.Receipt{}, storageError(err)
+	}
+	return result, nil
+}
+```
+
+<a id="inventory-store-get-reservation-go"></a>
+
+## Приложение: internal/inventory/store/get_reservation.go
+
+Полный исходный документ: `internal/inventory/store/get_reservation.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"context"
+
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
+)
+
+func (s *Store) GetReservation(ctx context.Context, dataset, orderID string) (*model.Reservation, error) {
+	if dataset != s.dataset {
+		return nil, model.ErrDataset
+	}
+	if !model.ValidIdentifier(orderID) {
+		return nil, model.ErrInvalid
 	}
 	ctx, cancel := context.WithTimeout(ctx, s.timeout)
 	defer cancel()
 	return s.readReservation(ctx, s.pool, orderID)
 }
+```
 
-func (s *Store) GetAvailability(ctx context.Context, dataset string, skus []string) ([]Availability, error) {
+<a id="inventory-store-get-availability-go"></a>
+
+## Приложение: internal/inventory/store/get_availability.go
+
+Полный исходный документ: `internal/inventory/store/get_availability.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"context"
+
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
+)
+
+const (
+	readAvailabilitySQL = "SELECT s.sku,s.available,p.price_minor,p.currency FROM inventory.stock s JOIN inventory.products p USING(sku) WHERE s.sku=ANY($1) ORDER BY s.sku"
+)
+
+func (s *Store) GetAvailability(ctx context.Context, dataset string, skus []string) ([]model.Availability, error) {
 	if dataset != s.dataset {
-		return nil, ErrDataset
+		return nil, model.ErrDataset
 	}
 	if len(skus) == 0 || len(skus) > 100 {
-		return nil, ErrInvalid
+		return nil, model.ErrInvalid
 	}
 	seen := map[string]bool{}
 	for _, sku := range skus {
-		if !skuPattern.MatchString(sku) || seen[sku] {
-			return nil, ErrInvalid
+		if !model.ValidSKU(sku) || seen[sku] {
+			return nil, model.ErrInvalid
 		}
 		seen[sku] = true
 	}
 	ctx, cancel := context.WithTimeout(ctx, s.timeout)
 	defer cancel()
-	rows, err := s.pool.Query(ctx, "SELECT s.sku,s.available,p.price_minor,p.currency FROM inventory.stock s JOIN inventory.products p USING(sku) WHERE s.sku=ANY($1) ORDER BY s.sku", skus)
+	rows, err := s.pool.Query(ctx, readAvailabilitySQL, skus)
 	if err != nil {
 		return nil, storageError(err)
 	}
 	defer rows.Close()
-	result := []Availability{}
+	result := []model.Availability{}
 	for rows.Next() {
-		var item Availability
+		var item model.Availability
 		if err = rows.Scan(&item.SKU, &item.Available, &item.UnitPriceMinor, &item.Currency); err != nil {
 			return nil, storageError(err)
 		}
@@ -21896,8 +22044,49 @@ func (s *Store) GetAvailability(ctx context.Context, dataset string, skus []stri
 		return nil, storageError(err)
 	}
 	if len(result) != len(skus) {
-		return nil, ErrNotFound
+		return nil, model.ErrNotFound
 	}
 	return result, nil
+}
+```
+
+<a id="inventory-store-close-go"></a>
+
+## Приложение: internal/inventory/store/close.go
+
+Полный исходный документ: `internal/inventory/store/close.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+// Close releases the pool owned by Store.
+func (s *Store) Close() { s.pool.Close() }
+```
+
+<a id="inventory-store-config-test-go"></a>
+
+## Приложение: internal/inventory/store/config_test.go
+
+Полный исходный документ: `internal/inventory/store/config_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"testing"
+)
+
+func TestConfigRestrictsIdentityAndBudgets(t *testing.T) {
+	base := Config{Host: "postgres", Port: 5432, Database: "inventory_db", User: "inventory_app", SSLMode: "disable", PasswordFile: "/run/secrets/inventory_app.password", DatasetID: "dataset", ConnectTimeout: "5s", RequestTimeout: "3s", MaxConnections: 4}
+	if err := base.Validate(); err != nil {
+		t.Fatal(err)
+	}
+	for _, mutate := range []func(*Config){func(c *Config) { c.User = "postgres" }, func(c *Config) { c.User = "inventory_migrator" }, func(c *Config) { c.Database = "orders_db" }, func(c *Config) { c.MaxConnections = 30 }, func(c *Config) { c.RequestTimeout = "0s" }, func(c *Config) { c.DatasetID = "" }} {
+		cfg := base
+		mutate(&cfg)
+		if cfg.Validate() == nil {
+			t.Fatalf("invalid config accepted: %+v", cfg)
+		}
+	}
 }
 ```

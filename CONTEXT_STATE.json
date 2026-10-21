@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 65,
+  "context_revision": 66,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-20",
+  "context_updated_on": "2026-10-21",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "a7231366be44c2528edb68e507606d87b9a47fee",
+    "snapshot_ref": "d47cfa9addc7c6290b584714e094440fc10af040",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -576,11 +576,11 @@
   },
   "toolchain": {
     "document": "docs/development/TOOLCHAIN.md",
-    "go": "1.27.2",
+    "go": "1.27.3",
     "goimports": "golang.org/x/tools v0.52.0",
     "govulncheck": "golang.org/x/vuln v1.9.0",
     "golangci_lint": "v2.14.0",
-    "go_image": "golang:1.27.2-trixie@sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e",
+    "go_image": "golang:1.27.3-trixie@sha256:604106102d33b1084e37ca08adf98ac0813624ae8595bd0d7f3965ecebded09c",
     "lint_image": "golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f",
     "image_indexes": "VERIFIED_LINUX_AMD64_AND_ARM64",
     "application_dependencies": "google.golang.org/grpc v1.84.0; STANDARD_LOG_SLOG; TOOL_DIRECTIVES_PINNED",
@@ -597,6 +597,20 @@
       "tag": "v7.0.2",
       "sha": "cf430e030ddbb5b0abf93d22962f4752f3646cd9",
       "source": "Official GitHub release and git tag ref checked 2026-10-15"
+    },
+    "security_patch": {
+      "date": "2026-10-21",
+      "finding": "GO-2026-6809 in crypto/x509 of Go 1.27.2",
+      "change": "Pin Go 1.27.3 and rebuild toolchain/runtime binaries; module dependencies and linter versions unchanged",
+      "registry_evidence": "docs/development/evidence/go-toolchain/go-1.27.3-registry.json",
+      "provenance": "Official Go release history and Docker Registry OCI index; response digest recomputed and native Linux AMD64/ARM64 manifests verified",
+      "historical_evidence": "Prior 1.27.2 test records and installed host SDK remain dated evidence; no host SDK installation performed"
+    },
+    "deadline_check": {
+      "recorded_on": "2026-10-21",
+      "behavior": "Blackhole dependency test accepts deadline-driven socket errors before ctx.Err is populated; a non-nil error, elapsed context deadline and one-second ceiling remain mandatory.",
+      "source": "internal/infrastructure/deadline_test.go",
+      "local_evidence": "20 repeated Redis+Kafka deadline cases passed with portable Windows AMD64 Go1.27.3; this does not replace Linux container CI"
     }
   },
   "network_configuration_review": {
@@ -2648,38 +2662,38 @@
       "language": "go"
     },
     {
-      "path": "internal/inventory/config.go",
-      "title": "internal/inventory/config.go",
+      "path": "internal/inventory/store/config.go",
+      "title": "internal/inventory/store/config.go",
       "anchor": "inventory-internal-inventory-config-go",
       "language": "go"
     },
     {
-      "path": "internal/inventory/deployment_test.go",
-      "title": "internal/inventory/deployment_test.go",
+      "path": "internal/inventory/store/deployment_test.go",
+      "title": "internal/inventory/store/deployment_test.go",
       "anchor": "inventory-internal-inventory-deployment-test-go",
       "language": "go"
     },
     {
-      "path": "internal/inventory/integration_test.go",
-      "title": "internal/inventory/integration_test.go",
+      "path": "internal/inventory/store/integration_test.go",
+      "title": "internal/inventory/store/integration_test.go",
       "anchor": "inventory-internal-inventory-integration-test-go",
       "language": "go"
     },
     {
-      "path": "internal/inventory/model.go",
-      "title": "internal/inventory/model.go",
+      "path": "internal/inventory/model/model.go",
+      "title": "internal/inventory/model/model.go",
       "anchor": "inventory-internal-inventory-model-go",
       "language": "go"
     },
     {
-      "path": "internal/inventory/model_test.go",
-      "title": "internal/inventory/model_test.go",
+      "path": "internal/inventory/model/model_test.go",
+      "title": "internal/inventory/model/model_test.go",
       "anchor": "inventory-internal-inventory-model-test-go",
       "language": "go"
     },
     {
-      "path": "internal/inventory/process_test.go",
-      "title": "internal/inventory/process_test.go",
+      "path": "internal/inventory/store/process_test.go",
+      "title": "internal/inventory/store/process_test.go",
       "anchor": "inventory-internal-inventory-process-test-go",
       "language": "go"
     },
@@ -2696,9 +2710,39 @@
       "language": "go"
     },
     {
-      "path": "internal/inventory/store.go",
-      "title": "internal/inventory/store.go",
+      "path": "internal/inventory/store/store.go",
+      "title": "internal/inventory/store/store.go",
       "anchor": "inventory-internal-inventory-store-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/mutate.go",
+      "title": "internal/inventory/store/mutate.go",
+      "anchor": "inventory-store-mutate-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/get_reservation.go",
+      "title": "internal/inventory/store/get_reservation.go",
+      "anchor": "inventory-store-get-reservation-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/get_availability.go",
+      "title": "internal/inventory/store/get_availability.go",
+      "anchor": "inventory-store-get-availability-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/close.go",
+      "title": "internal/inventory/store/close.go",
+      "anchor": "inventory-store-close-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/config_test.go",
+      "title": "internal/inventory/store/config_test.go",
+      "anchor": "inventory-store-config-test-go",
       "language": "go"
     }
   ],
@@ -3236,7 +3280,16 @@
       "macos_runtime": "NOT_RUN",
       "full_F10": "Not established until the remaining services and coordinated reset are implemented"
     },
-    "remaining_scope": "No Orders, Payments, Kafka publication, Redis cache, full reset, capacity result or G1 acceptance"
+    "remaining_scope": "No Orders, Payments, Kafka publication, Redis cache, full reset, capacity result or G1 acceptance",
+    "layout": {
+      "recorded_on": "2026-10-21",
+      "source_commit": "d47cfa9addc7c6290b584714e094440fc10af040",
+      "owner_request": "https://github.com/Includeoyasi/faultline-lab/pull/27#discussion_r4335472777",
+      "storage": "internal/inventory/store: Store/NewStore/private helpers in store.go; one exported Store method per file; SQL in constants beside callers",
+      "domain": "internal/inventory/model: unchanged request/result JSON, canonical operation hash and shared sentinel errors; storage and gRPC transport import this package without cycles",
+      "test_entrypoint": "Docker compiles ./internal/inventory/store to /app/inventory.test; existing scenario names and datalab selectors retained",
+      "local_verification": "Windows AMD64 portable Go1.27.3: inventory/model/store unit tests and go vet passed. Database/process/deployment integration cases require isolated container CI; no local Docker/WSL run for this refactor."
+    }
   },
   "architecture_review_format": {
     "source": "Direct owner chat after Kafka Publishing review, 2026-10-19",
