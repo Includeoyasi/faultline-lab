@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **69**. Дата снимка: **2026-10-21**, Europe/Moscow. Исходный коммит внешних материалов: `65d4191d0851afd26fdfce66f7af2086e8cab663`.
+Ревизия: **70**. Дата снимка: **2026-10-21**, Europe/Moscow. Исходный коммит внешних материалов: `0fd6715098970d8aa0614617125d2c50f0d3f6d8`.
 
 ## Выполнение задач
 
@@ -71,7 +71,7 @@ JSON ниже включён для автономного чтения реше
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 69,
+  "context_revision": 70,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-21",
   "user_timezone": "Europe/Moscow",
@@ -87,7 +87,7 @@ JSON ниже включён для автономного чтения реше
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "65d4191d0851afd26fdfce66f7af2086e8cab663",
+    "snapshot_ref": "0fd6715098970d8aa0614617125d2c50f0d3f6d8",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -693,6 +693,12 @@ JSON ниже включён для автономного чтения реше
       "tag": "v7.0.2",
       "sha": "cf430e030ddbb5b0abf93d22962f4752f3646cd9",
       "source": "Official GitHub release and git tag ref checked 2026-10-15"
+    },
+    "deadline_check": {
+      "recorded_on": "2026-10-21",
+      "behavior": "Blackhole dependency test accepts deadline-driven socket errors before ctx.Err is populated; a non-nil error, elapsed context deadline and one-second ceiling remain mandatory.",
+      "source": "internal/infrastructure/deadline_test.go",
+      "local_evidence": "20 repeated Redis+Kafka deadline cases passed with portable Windows AMD64 Go1.27.3; this does not replace Linux container CI"
     }
   },
   "network_configuration_review": {
@@ -3275,11 +3281,20 @@ JSON ниже включён для автономного чтения реше
       "rule": "When useful, include one meaningful Mermaid interaction diagram explaining the PR behavior, actions or guarantees on a concrete scenario; avoid replacing this with a component-only sketch. Omit diagrams when they add no value",
       "review_check": "When a diagram is used, check that it matches the change and distinguish implemented behavior from proposed or future parts",
       "exception": "If a diagram adds no value, omit the diagram section without an N/A entry or justification; this does not change the five-block architecture review format",
-      "sections": ["Содержание", "Проверки", "Ограничения", "Материалы", "Связанные задачи"],
+      "sections": [
+        "Содержание",
+        "Проверки",
+        "Ограничения",
+        "Материалы",
+        "Связанные задачи"
+      ],
       "text_format": "Numbered items apply to Ограничения only, one limitation per point with a short clarification when needed. Other sections keep their suitable existing prose or bullets; preserve wording outside the annotated block",
       "annotation_scope": "Apply each annotation to its specified block; do not generalize its formatting across the description unless the owner requests analogous changes. A heading rename or navigation move does not authorize a full content rewrite",
       "references": "Put Closes and Refs directives in Связанные задачи; key files, generated-code notes, guide and evidence links belong in Материалы",
-      "reminders": ["AGENTS.md", ".github/pull_request_template.md"]
+      "reminders": [
+        "AGENTS.md",
+        ".github/pull_request_template.md"
+      ]
     }
   },
   "run_metadata_contract": {
@@ -3326,7 +3341,7 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `9c10e54bf1ae6f2424a163c0a764113e81da82774dcaf9a0a2128dd2dd3c21b5` |
+| `CONTEXT_STATE.json` | `ef7258393e4b835f6ed675fdbb063b1ff081f0a36a536322d7bccdf93db4783c` |
 | `tools/context_intro.md` | `91fb656b2ec7b4dcd798be45f7b78ec2452763455476ebcd55762b465ad25d2b` |
 | `tools/update_context.ps1` | `73dff2e2da1f7ea7e8fc8fe2dc70bde722f4d697c1ca7c685d297214cd133e33` |
 | `README.md` | `22ffdce45845f796e45b53a5531d249c6b8a9cc3991bf2bdcf996e0286eb5d29` |
@@ -3480,7 +3495,7 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/infrastructure/check.go` | `d60ad61dce85e2ccdb63bb8e257ba94e523677c0eddc0b45a5896906255ae8d8` |
 | `internal/infrastructure/config.go` | `4de22b0f4c2c8c0b910cba3f414d0325fc1c71f8a26d6c6a2c0b16f3cf55c51d` |
 | `internal/infrastructure/config_test.go` | `e8d7367565dc5d9f971d400f74b67150f43fd135e1a9e6fdf758f56ea8f9b707` |
-| `internal/infrastructure/deadline_test.go` | `e3609a269ad43ce551b75a06996f0fb05ba7beb6027b10a1797d00463a38894e` |
+| `internal/infrastructure/deadline_test.go` | `3af9c2aecebf51a31e1f126a1cbb1195f53f1ba7d11e66bc1bd802802778d507` |
 | `internal/infrastructure/kafka.go` | `98b6234b67ec16b9ee10546f8f38a3da89f693e9eb293fc6cd079856ebf35785` |
 | `internal/infrastructure/kafka_deadline_test.go` | `848800c298d7be535bd9b722a659d853f64af1aeb77b06cff6634781ab0262e3` |
 | `internal/infrastructure/redis.go` | `839a988ce2b5dae68ccfef3c5a6d23e3f2034a2d3f00b54c053700383c4dcc2a` |
@@ -3678,7 +3693,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
 </p>
 
 <p align="center">
@@ -3696,7 +3711,7 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Project guide
@@ -3791,7 +3806,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience |
 | **G4** | Reproducible engineering lab |
 
-The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
 
 [Engineering decisions and review](#appendix-engineering-decisions) traces owner feedback through the rationale, changes and verification. It also links the separate [Go smoke task](https://github.com/Includeoyasi/faultline-lab/issues/9); its execution and review are tracked in GitHub.
 
@@ -3859,7 +3874,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
 </p>
 
 <p align="center">
@@ -3877,7 +3892,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Навигация по проекту
@@ -3961,7 +3976,7 @@ flowchart LR
 
 G0 — архитектура; G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Порядок и критерии приёмки описаны в workflow; факты принятия сохраняются с датой и источником.
 
-[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
 
 [Инженерные решения и ревью](#appendix-engineering-decisions) связывают замечания владельца с обоснованием, изменениями и проверками. Выполнение переноса контейнерного smoke на Go и его ревью ведутся в [задаче #9](https://github.com/Includeoyasi/faultline-lab/issues/9).
 
@@ -4034,7 +4049,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Проверить отдельный backlog | [Перенос smoke на Go](#appendix-go-smoke-backlog) — задача #9, границы и критерии |
 | Проверить права и защиту main | [Безопасность репозитория](#appendix-repository-security) — действующая защита и переход на аккаунт исполнителя |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
@@ -4049,7 +4064,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
 - [ADR 0002](#appendix-adr-0002): согласованный порядок фиксации решений в PR, ADR и обзорной странице.
 - [ADR 0003](#appendix-adr-0003): принятое решение о Go smoke и его последствия.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -5148,7 +5163,7 @@ Codex (AI-Your-Bro) — исполнитель: готовит проектны�
 
 #### Стандарт код-ревью
 
-[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/.github/pull_request_template.md) содержит краткий применимый чек-лист.
 
 После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; владелец проекта рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению владельца проекта или действие самого владельца проекта.
 
@@ -5409,7 +5424,7 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
+Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
@@ -5608,7 +5623,7 @@ Go-модуль, закреплённые инструменты и нативн
 - Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
 - Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
 
-Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
 
 <a id="appendix-lab-boundary"></a>
 
@@ -5902,13 +5917,13 @@ Docker рекомендует разделять ответственности 
 
 ### Баннер Faultline Lab
 
-Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/docs/assets/banner.svg).
+Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/assets/banner.svg).
 
 #### Задание
 
 Подготовить три альтернативных варианта с акцентом на технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее. Сделаны векторные композиции с читаемым названием, тёмным текстом на светлом фоне и встроенными title/description. Внешних шрифтов, скриптов и удалённых графических зависимостей нет.
 
-![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/docs/assets/banner-concepts/comparison.png)
+![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/assets/banner-concepts/comparison.png)
 
 | Вариант | Образ | Палитра | Статус |
 | :--- | :--- | :--- | :--- |
@@ -5918,13 +5933,13 @@ Docker рекомендует разделять ответственности 
 
 #### Выбранное решение
 
-![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/docs/assets/banner-concepts/02-experiment-flow.png)
+![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/assets/banner-concepts/02-experiment-flow.png)
 
 Абстрактные линии проходят через область наблюдения. Это метафора исследования поведения системы и сравнения изменений; линии не являются графиком измеренных результатов. Композиция не зависит от домена магазина и подходит будущим подключаемым бизнесам.
 
 Размер SVG — 1280 × 420; README задаёт ширину 100%. Исходник масштабируется, PNG служит предварительным просмотром. Основная подпись: **Explore how systems behave.** Нижняя последовательность: **Hypothesis → Experiment → Evidence**.
 
-Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
+Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
 
 Баннеры отрендерены локально и визуально просмотрены на общем листе. Проверены отсутствие обрезанного текста и соответствие композиций заданию. Отдельный preview выбранного варианта используется для проверки основного баннера. Выбранный вариант слит в main через [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4), merge commit 8c392b8. Проверка отрисовки нового README на GitHub пока не выполнялась.
 
@@ -6062,7 +6077,7 @@ P01 не достигает всей контрольной точки G1: ба�
 | GitHub Issue | Текущая стадия, исполнитель, критерии выполнения, блокеры и связь с PR |
 | GitHub PR | Diff, результаты проверок, замечания и решение владельца по HEAD |
 | ADR | Существенное решение, варианты, последствия и основание принятия |
-| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
+| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
 
 #### Стадии в Issue
 
@@ -6179,7 +6194,7 @@ GitHub разрешает machine account, зарегистрированный 
 
 Исходный набор версий проверен по официальным источникам 15 октября 2026 года: [Go releases](https://go.dev/dl/), [golangci-lint releases](https://github.com/golangci/golangci-lint/releases/tag/v2.14.0), Go module proxy и Docker Registry. Оба закреплённых digest относятся к multi-platform индексам, а не к одному варианту CPU.
 
-21 октября Go обновлён до [1.27.3](https://go.dev/doc/devel/release#go1.27.3), чтобы устранить блокирующий CI security finding GO-2026-6809 в стандартной библиотеке crypto/x509. SHA-256 индекса получен из официального Docker Registry и сверен с байтами ответа; наличие Linux AMD64 и ARM64 подтверждено в [данных проверки индекса](https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/docs/development/evidence/go-toolchain/go-1.27.3-registry.json). Пересборка этим toolchain обновляет стандартную библиотеку и в статических runtime-бинарниках. Исторические evidence и установленный host Go 1.27.2 сохраняются; основной путь запуска проверок остаётся контейнерным.
+21 октября Go обновлён до [1.27.3](https://go.dev/doc/devel/release#go1.27.3), чтобы устранить блокирующий CI security finding GO-2026-6809 в стандартной библиотеке crypto/x509. SHA-256 индекса получен из официального Docker Registry и сверен с байтами ответа; наличие Linux AMD64 и ARM64 подтверждено в [данных проверки индекса](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/development/evidence/go-toolchain/go-1.27.3-registry.json). Пересборка этим toolchain обновляет стандартную библиотеку и в статических runtime-бинарниках. Исторические evidence и установленный host Go 1.27.2 сохраняются; основной путь запуска проверок остаётся контейнерным.
 
 gRPC v1.84.0 добавлен для реального health API в P01-04; версия проверена через официальный Go proxy. JSON-логи использует стандартный log/slog. Инструменты закреплены через [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools). PostgreSQL использует pgx v5.11.0; инфраструктурные проверки — franz-go v1.22.2 и go-redis v9.23.0, закреплённые в go.mod/go.sum.
 
@@ -9552,7 +9567,7 @@ JSON schema version 2 сохраняет `run_id`, `project`, `result`, `service
 
 Отчёт не содержит полного inspect Env или разрешённого Compose-конфига. Пути checkout и домашнего каталога редактируются в диагностике. Smoke использует несекретный профиль; сторонние произвольные логи перед публикацией нужно проверять отдельно. Это проверка каркаса, а не измерение бизнес-корректности или capacity.
 
-После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
+После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
 
 <a id="go-smoke-main"></a>
 
@@ -18440,7 +18455,7 @@ flowchart TB
 
 Kafka работает в KRaft с явными broker/controller listeners, статическим quorum и постоянным cluster ID. Автоматическое создание топиков выключено. Один broker не обеспечивает репликационную доступность: `acks=all` здесь означает подтверждение единственным ISR. Сохраняется проверка штатного restart, а не аварии диска/хоста.
 
-Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/65d4191d0851afd26fdfce66f7af2086e8cab663/docs/development/POSTGRES.md#подготовка-стенда).
+Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/development/POSTGRES.md#подготовка-стенда).
 
 Контейнеры зависимостей и runtime-проверок непривилегированные, с read-only root, без capabilities и с `no-new-privileges`; запись разрешена в явные volume/tmpfs. Временный toolchain имеет отдельные права для сборки в workspace, описанные в [его руководстве](#appendix-toolchain). Порты доступны через DNS внутренней сети: `postgres`, `kafka:9092`, `redis:6379`. Kafka PLAINTEXT и Redis без TLS допустимы только в этом изолированном локальном профиле; удалённое размещение требует отдельного профиля аутентификации, TLS и сетевых правил.
 
@@ -19208,6 +19223,7 @@ package infrastructure
 
 import (
 	"context"
+	"errors"
 	"net"
 	"sync"
 	"testing"
@@ -19271,8 +19287,14 @@ func TestConnectionDeadlines(t *testing.T) {
 				err = client.Ping(ctx)
 				client.Close()
 			}
-			if err == nil || ctx.Err() == nil || time.Since(started) > time.Second {
-				t.Fatal("dependency operation did not obey its short deadline")
+			finished := time.Now()
+			deadline, _ := ctx.Deadline()
+			var timeout net.Error
+			deadlineError := errors.Is(err, context.DeadlineExceeded) || errors.Is(ctx.Err(), context.DeadlineExceeded) || (errors.As(err, &timeout) && timeout.Timeout())
+			// Socket deadlines and the context timer can fire independently.
+			// The operation must time out at its deadline, even if ctx.Err is not set yet.
+			if err == nil || !deadlineError || finished.Before(deadline) || finished.Sub(started) > time.Second {
+				t.Fatalf("dependency deadline not obeyed: err=%v (%T), ctx=%v, elapsed=%v", err, err, ctx.Err(), finished.Sub(started))
 			}
 		})
 	}

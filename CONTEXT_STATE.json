@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 69,
+  "context_revision": 70,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-21",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "65d4191d0851afd26fdfce66f7af2086e8cab663",
+    "snapshot_ref": "0fd6715098970d8aa0614617125d2c50f0d3f6d8",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -623,6 +623,12 @@
       "tag": "v7.0.2",
       "sha": "cf430e030ddbb5b0abf93d22962f4752f3646cd9",
       "source": "Official GitHub release and git tag ref checked 2026-10-15"
+    },
+    "deadline_check": {
+      "recorded_on": "2026-10-21",
+      "behavior": "Blackhole dependency test accepts deadline-driven socket errors before ctx.Err is populated; a non-nil error, elapsed context deadline and one-second ceiling remain mandatory.",
+      "source": "internal/infrastructure/deadline_test.go",
+      "local_evidence": "20 repeated Redis+Kafka deadline cases passed with portable Windows AMD64 Go1.27.3; this does not replace Linux container CI"
     }
   },
   "network_configuration_review": {
@@ -3205,11 +3211,20 @@
       "rule": "When useful, include one meaningful Mermaid interaction diagram explaining the PR behavior, actions or guarantees on a concrete scenario; avoid replacing this with a component-only sketch. Omit diagrams when they add no value",
       "review_check": "When a diagram is used, check that it matches the change and distinguish implemented behavior from proposed or future parts",
       "exception": "If a diagram adds no value, omit the diagram section without an N/A entry or justification; this does not change the five-block architecture review format",
-      "sections": ["Содержание", "Проверки", "Ограничения", "Материалы", "Связанные задачи"],
+      "sections": [
+        "Содержание",
+        "Проверки",
+        "Ограничения",
+        "Материалы",
+        "Связанные задачи"
+      ],
       "text_format": "Numbered items apply to Ограничения only, one limitation per point with a short clarification when needed. Other sections keep their suitable existing prose or bullets; preserve wording outside the annotated block",
       "annotation_scope": "Apply each annotation to its specified block; do not generalize its formatting across the description unless the owner requests analogous changes. A heading rename or navigation move does not authorize a full content rewrite",
       "references": "Put Closes and Refs directives in Связанные задачи; key files, generated-code notes, guide and evidence links belong in Материалы",
-      "reminders": ["AGENTS.md", ".github/pull_request_template.md"]
+      "reminders": [
+        "AGENTS.md",
+        ".github/pull_request_template.md"
+      ]
     }
   },
   "run_metadata_contract": {
