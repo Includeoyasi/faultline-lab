@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 67,
+  "context_revision": 68,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-21",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "23ce9f4ae178fd6adc3836273edd644afcc4e317",
+    "snapshot_ref": "cb549b7c58a6c518576b55c5233a2633ffab60db",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -3193,12 +3193,13 @@
     "presentation": "Prefer diagrams and tables; explain once and show once; enough content for an owner decision without repeated narrative",
     "pull_request_descriptions": {
       "confirmed_on": "2026-10-21",
-      "source": "Direct owner chat and PR25/PR27 browser review annotations on 2026-10-21; owner authorized applying the collected batch",
-      "rule": "When useful, include one small overview Mermaid diagram explaining the essence of the PR; keep detailed scenarios and state diagrams in the guide. Omit diagrams when they add no value",
+      "source": "Direct owner chat and PR25/PR27 browser annotations on 2026-10-21; owner clarified that block-specific edits must not be mixed across all blocks and a diagram must remain meaningful",
+      "rule": "When useful, include one meaningful Mermaid interaction diagram explaining the PR behavior, actions or guarantees on a concrete scenario; avoid replacing this with a component-only sketch. Omit diagrams when they add no value",
       "review_check": "When a diagram is used, check that it matches the change and distinguish implemented behavior from proposed or future parts",
       "exception": "If a diagram adds no value, omit the diagram section without an N/A entry or justification; this does not change the five-block architecture review format",
       "sections": ["Содержание", "Проверки", "Ограничения", "Материалы", "Связанные задачи"],
-      "text_format": "Numbered items, one idea per item with a short clarification when necessary; separate scope limitations from review file navigation",
+      "text_format": "Numbered items apply to Ограничения only, one limitation per point with a short clarification when needed. Other sections keep their suitable existing prose or bullets; preserve wording outside the annotated block",
+      "annotation_scope": "Apply each annotation to its specified block; do not generalize its formatting across the description unless the owner requests analogous changes. A heading rename or navigation move does not authorize a full content rewrite",
       "references": "Put Closes and Refs directives in Связанные задачи; key files, generated-code notes, guide and evidence links belong in Материалы",
       "reminders": ["AGENTS.md", ".github/pull_request_template.md"]
     }
