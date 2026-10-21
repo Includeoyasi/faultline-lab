@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 64,
+  "context_revision": 65,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-20",
+  "context_updated_on": "2026-10-21",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "179181120566ec8f9e09719bd79fe8cbb3d2a530",
+    "snapshot_ref": "0bdfb5a0ec3395253b45e8b53a7b66e1e1d1a5be",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -3190,7 +3190,15 @@
       "Specific review focus"
     ],
     "sentences_per_block": "3–10 substantive sentences",
-    "presentation": "Prefer diagrams and tables; explain once and show once; enough content for an owner decision without repeated narrative"
+    "presentation": "Prefer diagrams and tables; explain once and show once; enough content for an owner decision without repeated narrative",
+    "pull_request_descriptions": {
+      "confirmed_on": "2026-10-21",
+      "source": "Direct owner chat: no diagrams in current PR descriptions; add a standing reminder",
+      "rule": "PRs changing architecture, interactions or data flow include a small readable Mermaid diagram directly in the description; separate guide links are additional material",
+      "review_check": "Verify that the diagram matches implemented behavior before requesting review; distinguish future components",
+      "exception": "For a small edit where a diagram adds no clarity, give a brief N/A reason",
+      "reminders": ["AGENTS.md", ".github/pull_request_template.md"]
+    }
   },
   "run_metadata_contract": {
     "schema_version": 1,
