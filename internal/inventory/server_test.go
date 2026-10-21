@@ -8,6 +8,7 @@ import (
 	"time"
 
 	inventoryv1 "github.com/Includeoyasi/faultline-lab/api/inventory/v1"
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/credentials/insecure"
@@ -21,19 +22,19 @@ type fakeBackend struct {
 	block bool
 }
 
-func (b *fakeBackend) Mutate(ctx context.Context, r Request) (Receipt, error) {
+func (b *fakeBackend) Mutate(ctx context.Context, r model.Request) (model.Receipt, error) {
 	b.calls++
 	if b.block {
 		<-ctx.Done()
-		return Receipt{}, ctx.Err()
+		return model.Receipt{}, ctx.Err()
 	}
-	return Receipt{OperationID: r.OperationID, Outcome: Applied, Reservation: &Reservation{DatasetID: r.DatasetID, OrderID: r.OrderID, State: Reserved, Version: 1}}, b.err
+	return model.Receipt{OperationID: r.OperationID, Outcome: model.Applied, Reservation: &model.Reservation{DatasetID: r.DatasetID, OrderID: r.OrderID, State: model.Reserved, Version: 1}}, b.err
 }
-func (b *fakeBackend) GetReservation(context.Context, string, string) (*Reservation, error) {
-	return nil, ErrNotFound
+func (b *fakeBackend) GetReservation(context.Context, string, string) (*model.Reservation, error) {
+	return nil, model.ErrNotFound
 }
-func (b *fakeBackend) GetAvailability(context.Context, string, []string) ([]Availability, error) {
-	return nil, ErrNotFound
+func (b *fakeBackend) GetAvailability(context.Context, string, []string) ([]model.Availability, error) {
+	return nil, model.ErrNotFound
 }
 
 func TestGRPCContract(t *testing.T) {
@@ -42,9 +43,9 @@ func TestGRPCContract(t *testing.T) {
 			backend := &fakeBackend{}
 			switch scenario {
 			case "key conflict":
-				backend.err = ErrKeyConflict
+				backend.err = model.ErrKeyConflict
 			case "dataset mismatch":
-				backend.err = ErrDataset
+				backend.err = model.ErrDataset
 			case "timeout":
 				backend.block = true
 			case "safe storage error":

@@ -1,4 +1,4 @@
-package inventory
+package store
 
 import (
 	"context"
@@ -12,6 +12,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -51,7 +52,7 @@ func LoadConfig(path, dataset string) (Config, error) {
 func (c Config) Validate() error {
 	connect, e1 := time.ParseDuration(c.ConnectTimeout)
 	request, e2 := time.ParseDuration(c.RequestTimeout)
-	if c.Host == "" || strings.ContainsAny(c.Host, "/\\@ \t\r\n") || c.Port == 0 || c.Database != "inventory_db" || c.User != "inventory_app" || c.SSLMode != "disable" || c.PasswordFile == "" || !identifier.MatchString(c.DatasetID) || c.MaxConnections < 1 || c.MaxConnections > 8 || e1 != nil || e2 != nil || connect < time.Millisecond || connect > time.Minute || request < time.Millisecond || request > time.Minute {
+	if c.Host == "" || strings.ContainsAny(c.Host, "/\\@ \t\r\n") || c.Port == 0 || c.Database != "inventory_db" || c.User != "inventory_app" || c.SSLMode != "disable" || c.PasswordFile == "" || !model.ValidIdentifier(c.DatasetID) || c.MaxConnections < 1 || c.MaxConnections > 8 || e1 != nil || e2 != nil || connect < time.Millisecond || connect > time.Minute || request < time.Millisecond || request > time.Minute {
 		return errors.New("inventory requires its application identity, dataset, secret file, explicit endpoint, bounded timeouts and 1..8 connections")
 	}
 	return nil

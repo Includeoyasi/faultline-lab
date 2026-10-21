@@ -5,6 +5,7 @@ import (
 	"io"
 	"log/slog"
 
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/store"
 	"github.com/Includeoyasi/faultline-lab/internal/service"
 	"google.golang.org/grpc"
 )
@@ -26,18 +27,18 @@ func Execute(ctx context.Context, args []string, lookup func(string) (string, bo
 	}
 	path, _ := lookup("FL_INVENTORY_CONFIG")
 	dataset, _ := lookup("FL_INVENTORY_DATASET_ID")
-	cfg, err := LoadConfig(path, dataset)
+	cfg, err := store.LoadConfig(path, dataset)
 	if err != nil {
 		logger.ErrorContext(ctx, "configuration rejected", "error", err.Error())
 		return 1
 	}
-	store, err := Open(ctx, cfg)
+	backend, err := store.Open(ctx, cfg)
 	if err != nil {
 		logger.ErrorContext(ctx, "inventory startup failed", "error", err.Error())
 		return 1
 	}
-	defer store.Close()
-	if err = service.RunRegistered(ctx, "inventory", lookup, output, func(server *grpc.Server) { Register(server, store) }); err != nil {
+	defer backend.Close()
+	if err = service.RunRegistered(ctx, "inventory", lookup, output, func(server *grpc.Server) { Register(server, backend) }); err != nil {
 		return 1
 	}
 	return 0

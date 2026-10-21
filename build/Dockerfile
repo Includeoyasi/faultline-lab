@@ -46,7 +46,7 @@ COPY internal ./internal
 COPY migrations ./migrations
 RUN CGO_ENABLED=0 go build -trimpath -o /out/labdata ./cmd/labdata \
     && CGO_ENABLED=0 go test -c -o /out/database.test ./internal/database \
-    && CGO_ENABLED=0 go test -c -o /out/inventory.test ./internal/inventory \
+    && CGO_ENABLED=0 go test -c -o /out/inventory.test ./internal/inventory/store \
     && CGO_ENABLED=0 go build -trimpath -o /out/inventory ./cmd/inventory
 
 FROM scratch AS labdata

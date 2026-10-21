@@ -1,5 +1,5 @@
-// Package inventory owns stock mutations and durable reservation receipts.
-package inventory
+// Package model defines Inventory requests, results and validation shared by storage and transport.
+package model
 
 import (
 	"crypto/sha256"
@@ -73,7 +73,8 @@ type Availability struct {
 	Currency       string
 }
 
-func canonical(request Request) (Request, string, error) {
+// Canonical validates a request and computes its stable operation identity.
+func Canonical(request Request) (Request, string, error) {
 	if !identifier.MatchString(request.DatasetID) || !identifier.MatchString(request.OrderID) || !identifier.MatchString(request.OperationID) {
 		return Request{}, "", ErrInvalid
 	}
@@ -103,3 +104,9 @@ func canonical(request Request) (Request, string, error) {
 	hash := sha256.Sum256(data)
 	return request, hex.EncodeToString(hash[:]), nil
 }
+
+// ValidIdentifier validates a dataset, order or operation identifier.
+func ValidIdentifier(value string) bool { return identifier.MatchString(value) }
+
+// ValidSKU validates a product identifier.
+func ValidSKU(value string) bool { return skuPattern.MatchString(value) }

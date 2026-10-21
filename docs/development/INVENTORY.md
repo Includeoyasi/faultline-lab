@@ -59,6 +59,8 @@ stateDiagram-v2
 
 ## 4. Реализация и запуск текущего среза
 
+Хранилище находится в [internal/inventory/store](../../internal/inventory/store/store.go): конструктор и внутренние функции — в `store.go`, методы `Mutate`, `GetReservation`, `GetAvailability` и `Close` — каждый в своём файле, SQL-запросы — в константах рядом с использующим их кодом. Общие типы и проверка идентичности операции вынесены в [model](../../internal/inventory/model/model.go), который используют хранилище и gRPC-сервер.
+
 Новая [миграция 0003](../../migrations/inventory/0003_reservations.sql) добавляет резервы, позиции, операции, ledger, локальный outbox и привязку базы к набору; старые миграции не изменяются. Сам сервис читает только свой прикладной секрет и не создаёт базы, роли или таблицы. Перед запуском нужно подготовить PostgreSQL командами из [POSTGRES.md](POSTGRES.md), затем задать уникальный идентификатор набора; после удаления набора новый запуск получает новое значение. Контейнерный профиль [compose.inventory.yaml](../../compose.inventory.yaml) включает бизнес-API, а минимальный compose запускает явную команду `health-only` для проверки каркаса. Protobuf-код генерируется закреплёнными protoc 32.1, protoc-gen-go 1.36.11 и protoc-gen-go-grpc 1.6.2; [стандартная генерация gRPC Go](https://grpc.io/docs/languages/go/quickstart/#regenerate-grpc-code) выполняется внутри toolchain.
 
 ```powershell

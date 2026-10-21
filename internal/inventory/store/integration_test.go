@@ -1,4 +1,4 @@
-package inventory
+package store
 
 import (
 	"context"
@@ -14,6 +14,7 @@ import (
 	"time"
 
 	"github.com/Includeoyasi/faultline-lab/internal/database"
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
 )
 
 var testDataset = func() string {
@@ -52,7 +53,7 @@ func fixture(t *testing.T, s *Store, sku string, quantity, price int64) {
 		t.Fatal(err)
 	}
 }
-func mutate(t *testing.T, s *Store, r Request) Receipt {
+func mutate(t *testing.T, s *Store, r model.Request) model.Receipt {
 	t.Helper()
 	result, err := s.Mutate(t.Context(), r)
 	if err != nil {
@@ -60,8 +61,8 @@ func mutate(t *testing.T, s *Store, r Request) Receipt {
 	}
 	return result
 }
-func request(method, order, key string, items ...Item) Request {
-	return Request{DatasetID: testDataset, OrderID: order, OperationID: key, Method: method, Items: items}
+func request(method, order, key string, items ...model.Item) model.Request {
+	return model.Request{DatasetID: testDataset, OrderID: order, OperationID: key, Method: method, Items: items}
 }
 func scalar(t *testing.T, s *Store, query string, args ...any) int64 {
 	t.Helper()
@@ -77,7 +78,7 @@ func TestInventoryFoundation(t *testing.T) {
 	t.Run("commit absent is a durable refusal", func(t *testing.T) {
 		r := request("commit", "absent", "absent-commit")
 		first := mutate(t, s, r)
-		if first.Outcome != InvalidState || first.Reservation != nil {
+		if first.Outcome != model.InvalidState || first.Reservation != nil {
 			t.Fatal(first)
 		}
 		if repeated := mutate(t, s, r); !reflect.DeepEqual(first, repeated) {
@@ -90,9 +91,9 @@ func TestInventoryFoundation(t *testing.T) {
 	t.Run("atomic multi SKU refusal and durable rejection", func(t *testing.T) {
 		fixture(t, s, "atomic-a", 2, 100)
 		fixture(t, s, "atomic-b", 0, 200)
-		r := request("reserve", "atomic", "atomic-key", Item{"atomic-a", 1}, Item{"atomic-b", 1})
+		r := request("reserve", "atomic", "atomic-key", model.Item{SKU: "atomic-a", Quantity: 1}, model.Item{SKU: "atomic-b", Quantity: 1})
 		before := mutate(t, s, r)
-		if before.Outcome != InsufficientStock {
+		if before.Outcome != model.InsufficientStock {
 			t.Fatal(before)
 		}
 		if scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='atomic-a'") != 2 {
@@ -105,7 +106,7 @@ func TestInventoryFoundation(t *testing.T) {
 			t.Fatal("saved refusal changed")
 		}
 		r.OperationID = "atomic-new"
-		if mutate(t, s, r).Outcome != Applied {
+		if mutate(t, s, r).Outcome != model.Applied {
 			t.Fatal("fresh retry failed")
 		}
 	})
@@ -118,15 +119,15 @@ func TestInventoryFoundation(t *testing.T) {
 			slots <- struct{}{}
 			wg.Go(func() {
 				defer func() { <-slots }()
-				r := request("reserve", fmt.Sprintf("contended-%d", i), fmt.Sprintf("contended-key-%d", i), Item{"contended", 1})
+				r := request("reserve", fmt.Sprintf("contended-%d", i), fmt.Sprintf("contended-key-%d", i), model.Item{SKU: "contended", Quantity: 1})
 				result, err := s.Mutate(t.Context(), r)
 				if err != nil {
 					t.Error(err)
 					return
 				}
-				if result.Outcome == Applied {
+				if result.Outcome == model.Applied {
 					successes.Add(1)
-				} else if result.Outcome != InsufficientStock {
+				} else if result.Outcome != model.InsufficientStock {
 					t.Errorf("unexpected result %s", result.Outcome)
 				}
 			})
@@ -138,12 +139,12 @@ func TestInventoryFoundation(t *testing.T) {
 	})
 	t.Run("concurrent same key and changed payload", func(t *testing.T) {
 		fixture(t, s, "dedupe", 5, 125)
-		r := request("reserve", "dedupe", "dedupe-key", Item{"dedupe", 2})
+		r := request("reserve", "dedupe", "dedupe-key", model.Item{SKU: "dedupe", Quantity: 2})
 		var wg sync.WaitGroup
 		for i := 0; i < 16; i++ {
 			wg.Go(func() {
 				result, err := s.Mutate(t.Context(), r)
-				if err != nil || result.Outcome != Applied {
+				if err != nil || result.Outcome != model.Applied {
 					t.Errorf("repeat=%v %v", result, err)
 				}
 			})
@@ -153,17 +154,17 @@ func TestInventoryFoundation(t *testing.T) {
 			t.Fatal("duplicate effect")
 		}
 		r.Items[0].Quantity = 1
-		if _, err := s.Mutate(t.Context(), r); !errors.Is(err, ErrKeyConflict) {
+		if _, err := s.Mutate(t.Context(), r); !errors.Is(err, model.ErrKeyConflict) {
 			t.Fatal("changed payload accepted", err)
 		}
 		r.OperationID = "dedupe-second"
-		if mutate(t, s, r).Outcome != ReservationExists {
+		if mutate(t, s, r).Outcome != model.ReservationExists {
 			t.Fatal("second key created another reservation")
 		}
 	})
 	t.Run("historical receipt and release barrier", func(t *testing.T) {
 		fixture(t, s, "release", 3, 75)
-		r := request("reserve", "release", "release-reserve", Item{"release", 2})
+		r := request("reserve", "release", "release-reserve", model.Item{SKU: "release", Quantity: 2})
 		original := mutate(t, s, r)
 		mutate(t, s, request("release", "release", "release-terminal"))
 		mutate(t, s, request("release", "release", "release-terminal"))
@@ -171,23 +172,23 @@ func TestInventoryFoundation(t *testing.T) {
 			t.Fatal("historical receipt changed")
 		}
 		current, err := s.GetReservation(t.Context(), testDataset, "release")
-		if err != nil || current.State != Released {
+		if err != nil || current.State != model.Released {
 			t.Fatal(current, err)
 		}
 		if scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='release'") != 3 {
 			t.Fatal("release repeated effect")
 		}
-		if mutate(t, s, request("commit", "release", "release-commit")).Outcome != InvalidState {
+		if mutate(t, s, request("commit", "release", "release-commit")).Outcome != model.InvalidState {
 			t.Fatal("committed released reservation")
 		}
 		mutate(t, s, request("release", "persist-barrier", "persist-release"))
-		if mutate(t, s, request("reserve", "persist-barrier", "persist-late", Item{"release", 1})).Outcome != ReservationExists {
+		if mutate(t, s, request("reserve", "persist-barrier", "persist-late", model.Item{SKU: "release", Quantity: 1})).Outcome != model.ReservationExists {
 			t.Fatal("late reserve bypassed barrier")
 		}
 	})
 	t.Run("commit release race", func(t *testing.T) {
 		fixture(t, s, "race", 1, 99)
-		mutate(t, s, request("reserve", "race", "race-reserve", Item{"race", 1}))
+		mutate(t, s, request("reserve", "race", "race-reserve", model.Item{SKU: "race", Quantity: 1}))
 		var wg sync.WaitGroup
 		for _, method := range []string{"commit", "release"} {
 			wg.Go(func() {
@@ -202,9 +203,9 @@ func TestInventoryFoundation(t *testing.T) {
 			t.Fatal(err)
 		}
 		want := int64(0)
-		if current.State == Released {
+		if current.State == model.Released {
 			want = 1
-		} else if current.State != Committed {
+		} else if current.State != model.Committed {
 			t.Fatal(current)
 		}
 		if scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='race'") != want || scalar(t, s, "SELECT count(*) FROM inventory.outbox WHERE order_id='race'") != 2 {
@@ -213,16 +214,16 @@ func TestInventoryFoundation(t *testing.T) {
 	})
 	t.Run("commit retries never sell twice or release sold stock", func(t *testing.T) {
 		fixture(t, s, "committed", 3, 10)
-		mutate(t, s, request("reserve", "committed", "committed-reserve", Item{"committed", 2}))
+		mutate(t, s, request("reserve", "committed", "committed-reserve", model.Item{SKU: "committed", Quantity: 2}))
 		r := request("commit", "committed", "committed-first")
 		first := mutate(t, s, r)
 		if repeated := mutate(t, s, r); !reflect.DeepEqual(first, repeated) {
 			t.Fatal("commit receipt changed")
 		}
-		if mutate(t, s, request("commit", "committed", "committed-second")).Outcome != Applied {
+		if mutate(t, s, request("commit", "committed", "committed-second")).Outcome != model.Applied {
 			t.Fatal("repeat terminal commit")
 		}
-		if mutate(t, s, request("release", "committed", "committed-release")).Outcome != InvalidState {
+		if mutate(t, s, request("release", "committed", "committed-release")).Outcome != model.InvalidState {
 			t.Fatal("released sold stock")
 		}
 		if scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='committed'") != 1 || scalar(t, s, "SELECT count(*) FROM inventory.ledger WHERE order_id='committed'") != 2 || scalar(t, s, "SELECT count(*) FROM inventory.outbox WHERE order_id='committed'") != 2 {
@@ -237,7 +238,7 @@ func TestInventoryFoundation(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if _, err = s.Mutate(t.Context(), request("reserve", "rollback", "rollback-key", Item{"rollback", 1})); err == nil {
+		if _, err = s.Mutate(t.Context(), request("reserve", "rollback", "rollback-key", model.Item{SKU: "rollback", Quantity: 1})); err == nil {
 			t.Fatal("controlled outbox failure did not fail transaction")
 		}
 		if scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='rollback'") != 2 || scalar(t, s, "SELECT count(*) FROM inventory.reservations WHERE order_id='rollback'") != 0 || scalar(t, s, "SELECT count(*) FROM inventory.operations WHERE operation_id='rollback-key'") != 0 || scalar(t, s, "SELECT count(*) FROM inventory.ledger WHERE order_id='rollback'") != 0 {
@@ -286,7 +287,7 @@ func TestInventoryFoundation(t *testing.T) {
 		if scalar(t, s, "SELECT count(*) FROM inventory.operations WHERE operation_id='blocked-key'") != 0 {
 			t.Fatal("canceled operation persisted")
 		}
-		if mutate(t, s, request("release", "blocked", "blocked-retry")).Outcome != Applied {
+		if mutate(t, s, request("release", "blocked", "blocked-retry")).Outcome != model.Applied {
 			t.Fatal("pool did not recover after cancellation")
 		}
 	})
@@ -296,7 +297,7 @@ func TestInventoryFoundation(t *testing.T) {
 			order := fmt.Sprintf("barrier-race-%d", i)
 			var wg sync.WaitGroup
 			wg.Go(func() {
-				if _, err := s.Mutate(t.Context(), request("reserve", order, order+"-reserve", Item{"barrier-race", 1})); err != nil {
+				if _, err := s.Mutate(t.Context(), request("reserve", order, order+"-reserve", model.Item{SKU: "barrier-race", Quantity: 1})); err != nil {
 					t.Error(err)
 				}
 			})
@@ -306,7 +307,7 @@ func TestInventoryFoundation(t *testing.T) {
 				}
 			})
 			wg.Wait()
-			if mutate(t, s, request("reserve", order, order+"-late", Item{"barrier-race", 1})).Outcome != ReservationExists {
+			if mutate(t, s, request("reserve", order, order+"-late", model.Item{SKU: "barrier-race", Quantity: 1})).Outcome != model.ReservationExists {
 				t.Fatal("late reserve bypassed cancellation")
 			}
 		}
@@ -316,10 +317,10 @@ func TestInventoryFoundation(t *testing.T) {
 	})
 	t.Run("overflow unknown SKU cancellation and dataset isolation", func(t *testing.T) {
 		fixture(t, s, "overflow", math.MaxInt64, math.MaxInt64)
-		if _, err := s.Mutate(t.Context(), request("reserve", "overflow", "overflow-key", Item{"overflow", 2})); !errors.Is(err, ErrInvalid) {
+		if _, err := s.Mutate(t.Context(), request("reserve", "overflow", "overflow-key", model.Item{SKU: "overflow", Quantity: 2})); !errors.Is(err, model.ErrInvalid) {
 			t.Fatal("overflow", err)
 		}
-		if mutate(t, s, request("reserve", "unknown", "unknown-key", Item{"missing", 1})).Outcome != UnknownSKU {
+		if mutate(t, s, request("reserve", "unknown", "unknown-key", model.Item{SKU: "missing", Quantity: 1})).Outcome != model.UnknownSKU {
 			t.Fatal("unknown SKU")
 		}
 		canceled, cancel := context.WithCancel(t.Context())
@@ -329,7 +330,7 @@ func TestInventoryFoundation(t *testing.T) {
 		}
 		r := request("release", "foreign", "foreign-key")
 		r.DatasetID = "old-dataset"
-		if _, err := s.Mutate(t.Context(), r); !errors.Is(err, ErrDataset) {
+		if _, err := s.Mutate(t.Context(), r); !errors.Is(err, model.ErrDataset) {
 			t.Fatal("foreign dataset", err)
 		}
 		if scalar(t, s, "SELECT count(*) FROM inventory.operations WHERE operation_id IN ('overflow-key','canceled-key','foreign-key')") != 0 {
@@ -341,13 +342,13 @@ func TestInventoryFoundation(t *testing.T) {
 func TestInventoryAfterRestart(t *testing.T) {
 	s := integrationStore(t)
 	r, err := s.GetReservation(t.Context(), testDataset, "persist-barrier")
-	if err != nil || r.State != Released {
+	if err != nil || r.State != model.Released {
 		t.Fatal("barrier lost", r, err)
 	}
-	if result := mutate(t, s, request("release", "persist-barrier", "persist-release")); result.Reservation.State != Released {
+	if result := mutate(t, s, request("release", "persist-barrier", "persist-release")); result.Reservation.State != model.Released {
 		t.Fatal("receipt lost")
 	}
-	if mutate(t, s, request("reserve", "persist-barrier", "after-restart", Item{"release", 1})).Outcome != ReservationExists {
+	if mutate(t, s, request("reserve", "persist-barrier", "after-restart", model.Item{SKU: "release", Quantity: 1})).Outcome != model.ReservationExists {
 		t.Fatal("restart bypassed barrier")
 	}
 	if scalar(t, s, "SELECT count(*) FROM inventory.ledger WHERE order_id='dedupe'") != 1 {
@@ -357,7 +358,7 @@ func TestInventoryAfterRestart(t *testing.T) {
 		t.Fatal("event lost")
 	}
 	// A new configured namespace cannot attach to surviving data accidentally.
-	if _, err = NewStore(t.Context(), s.pool, "another-dataset", time.Second); !errors.Is(err, ErrDataset) {
+	if _, err = NewStore(t.Context(), s.pool, "another-dataset", time.Second); !errors.Is(err, model.ErrDataset) {
 		t.Fatal("dataset rebinding allowed", err)
 	}
 }

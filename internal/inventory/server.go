@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	inventoryv1 "github.com/Includeoyasi/faultline-lab/api/inventory/v1"
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -12,9 +13,9 @@ import (
 
 // Backend defines the domain boundary; SQL correctness is tested on PostgreSQL.
 type Backend interface {
-	Mutate(context.Context, Request) (Receipt, error)
-	GetReservation(context.Context, string, string) (*Reservation, error)
-	GetAvailability(context.Context, string, []string) ([]Availability, error)
+	Mutate(context.Context, model.Request) (model.Receipt, error)
+	GetReservation(context.Context, string, string) (*model.Reservation, error)
+	GetAvailability(context.Context, string, []string) ([]model.Availability, error)
 }
 type Server struct {
 	inventoryv1.UnimplementedInventoryServer
@@ -26,20 +27,20 @@ func Register(server *grpc.Server, backend Backend) {
 }
 
 func (s *Server) Reserve(ctx context.Context, r *inventoryv1.ReserveRequest) (*inventoryv1.OperationResult, error) {
-	request := Request{DatasetID: r.GetDatasetId(), OrderID: r.GetOrderId(), OperationID: r.GetOperationId(), Method: "reserve"}
+	request := model.Request{DatasetID: r.GetDatasetId(), OrderID: r.GetOrderId(), OperationID: r.GetOperationId(), Method: "reserve"}
 	for _, item := range r.GetItems() {
-		request.Items = append(request.Items, Item{SKU: item.GetSku(), Quantity: item.GetQuantity()})
+		request.Items = append(request.Items, model.Item{SKU: item.GetSku(), Quantity: item.GetQuantity()})
 	}
 	return s.mutate(ctx, request)
 }
 func (s *Server) CommitReservation(ctx context.Context, r *inventoryv1.ChangeReservationRequest) (*inventoryv1.OperationResult, error) {
-	return s.mutate(ctx, Request{DatasetID: r.GetDatasetId(), OrderID: r.GetOrderId(), OperationID: r.GetOperationId(), Method: "commit"})
+	return s.mutate(ctx, model.Request{DatasetID: r.GetDatasetId(), OrderID: r.GetOrderId(), OperationID: r.GetOperationId(), Method: "commit"})
 }
 func (s *Server) ReleaseReservation(ctx context.Context, r *inventoryv1.ChangeReservationRequest) (*inventoryv1.OperationResult, error) {
-	return s.mutate(ctx, Request{DatasetID: r.GetDatasetId(), OrderID: r.GetOrderId(), OperationID: r.GetOperationId(), Method: "release"})
+	return s.mutate(ctx, model.Request{DatasetID: r.GetDatasetId(), OrderID: r.GetOrderId(), OperationID: r.GetOperationId(), Method: "release"})
 }
-func (s *Server) mutate(ctx context.Context, r Request) (*inventoryv1.OperationResult, error) {
-	if _, _, err := canonical(r); err != nil {
+func (s *Server) mutate(ctx context.Context, r model.Request) (*inventoryv1.OperationResult, error) {
+	if _, _, err := model.Canonical(r); err != nil {
 		return nil, rpcError(err)
 	}
 	receipt, err := s.backend.Mutate(ctx, r)
@@ -66,7 +67,7 @@ func (s *Server) GetAvailability(ctx context.Context, r *inventoryv1.GetAvailabi
 	}
 	return response, nil
 }
-func protoReservation(r *Reservation) *inventoryv1.Reservation {
+func protoReservation(r *model.Reservation) *inventoryv1.Reservation {
 	if r == nil {
 		return nil
 	}
@@ -78,14 +79,14 @@ func protoReservation(r *Reservation) *inventoryv1.Reservation {
 }
 func rpcError(err error) error {
 	switch {
-	case errors.Is(err, ErrInvalid):
-		return status.Error(codes.InvalidArgument, ErrInvalid.Error())
-	case errors.Is(err, ErrKeyConflict):
-		return status.Error(codes.AlreadyExists, ErrKeyConflict.Error())
-	case errors.Is(err, ErrDataset):
-		return status.Error(codes.FailedPrecondition, ErrDataset.Error())
-	case errors.Is(err, ErrNotFound):
-		return status.Error(codes.NotFound, ErrNotFound.Error())
+	case errors.Is(err, model.ErrInvalid):
+		return status.Error(codes.InvalidArgument, model.ErrInvalid.Error())
+	case errors.Is(err, model.ErrKeyConflict):
+		return status.Error(codes.AlreadyExists, model.ErrKeyConflict.Error())
+	case errors.Is(err, model.ErrDataset):
+		return status.Error(codes.FailedPrecondition, model.ErrDataset.Error())
+	case errors.Is(err, model.ErrNotFound):
+		return status.Error(codes.NotFound, model.ErrNotFound.Error())
 	case errors.Is(err, context.Canceled):
 		return status.Error(codes.Canceled, "inventory request canceled; outcome may be unknown")
 	case errors.Is(err, context.DeadlineExceeded):
