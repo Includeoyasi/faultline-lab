@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 65,
+  "context_revision": 66,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-21",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "0bdfb5a0ec3395253b45e8b53a7b66e1e1d1a5be",
+    "snapshot_ref": "a82db863c7ceb07d9e0e043e68aa3000d5acc9f1",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -3193,10 +3193,10 @@
     "presentation": "Prefer diagrams and tables; explain once and show once; enough content for an owner decision without repeated narrative",
     "pull_request_descriptions": {
       "confirmed_on": "2026-10-21",
-      "source": "Direct owner chat: no diagrams in current PR descriptions; add a standing reminder",
-      "rule": "PRs changing architecture, interactions or data flow include a small readable Mermaid diagram directly in the description; separate guide links are additional material",
-      "review_check": "Verify that the diagram matches implemented behavior before requesting review; distinguish future components",
-      "exception": "For a small edit where a diagram adds no clarity, give a brief N/A reason",
+      "source": "Direct owner chat: keep the reminder flexible; diagrams may be omitted when the change does not need them",
+      "rule": "Add a small readable Mermaid diagram directly to the PR description when it helps explain the change; decide by usefulness rather than requiring one for every PR",
+      "review_check": "When a diagram is used, check that it matches the change and distinguish implemented behavior from proposed or future parts",
+      "exception": "If a diagram adds no value, omit the diagram section without an N/A entry or justification; this does not change the five-block architecture review format",
       "reminders": ["AGENTS.md", ".github/pull_request_template.md"]
     }
   },
