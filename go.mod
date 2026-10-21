@@ -1,6 +1,6 @@
 module github.com/Includeoyasi/faultline-lab
 
-go 1.27.2
+go 1.27.3
 
 tool (
 	golang.org/x/tools/cmd/goimports

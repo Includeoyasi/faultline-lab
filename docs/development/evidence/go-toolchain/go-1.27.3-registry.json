@@ -1,0 +1,25 @@
+{
+  "checked_at_utc": "2026-10-21T10:07:00.0218956Z",
+  "registry": "registry-1.docker.io/library/golang",
+  "tag": "1.27.3-trixie",
+  "digest": "sha256:604106102d33b1084e37ca08adf98ac0813624ae8595bd0d7f3965ecebded09c",
+  "computed_digest": "sha256:604106102d33b1084e37ca08adf98ac0813624ae8595bd0d7f3965ecebded09c",
+  "media_type": "application/vnd.oci.image.index.v1+json",
+  "platforms": [
+    {
+      "digest": "sha256:8aa2821993207ae840ce09e4223217efcd14e01f71525db734faf4232bd59999",
+      "platform": {
+        "architecture": "amd64",
+        "os": "linux"
+      }
+    },
+    {
+      "digest": "sha256:288557fbc328e4ef9a78bae2eb44f24447029ff08667be883d79eeaa9029cf0c",
+      "platform": {
+        "architecture": "arm64",
+        "os": "linux",
+        "variant": "v8"
+      }
+    }
+  ]
+}

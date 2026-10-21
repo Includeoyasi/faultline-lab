@@ -6,17 +6,19 @@
 
 | Компонент | Источник закрепления | Версия |
 | :--- | :--- | :--- |
-| Go | [go.mod](../../go.mod), [Dockerfile](../../build/Dockerfile) | 1.27.2 |
+| Go | [go.mod](../../go.mod), [Dockerfile](../../build/Dockerfile) | 1.27.3 |
 | goimports | tool directive в go.mod, go.sum | golang.org/x/tools v0.52.0 |
 | govulncheck | tool directive в go.mod, go.sum | golang.org/x/vuln v1.9.0 |
 | protoc | Dockerfile, официальные архивы с SHA256 для AMD64/ARM64 | 32.1 |
 | protoc-gen-go | tool directive в go.mod, go.sum | v1.36.11 |
 | protoc-gen-go-grpc | tool directive в go.mod, go.sum | v1.6.2 |
 | golangci-lint | Dockerfile, официальный образ с digest | v2.14.0 |
-| База toolchain | Dockerfile, индекс с AMD64/ARM64 | golang:1.27.2-trixie, sha256:47667934874913a449b96faa7ef4777fa285d9ec29126ee80ed61c45b7cccf0e |
+| База toolchain | Dockerfile, индекс с AMD64/ARM64 | golang:1.27.3-trixie, sha256:604106102d33b1084e37ca08adf98ac0813624ae8595bd0d7f3965ecebded09c |
 | Образ линтера | Dockerfile, индекс с AMD64/ARM64 | golangci/golangci-lint:v2.14.0, sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f |
 
-Версии проверены по официальным источникам 15 октября 2026 года: [Go releases](https://go.dev/dl/), [golangci-lint releases](https://github.com/golangci/golangci-lint/releases/tag/v2.14.0), Go module proxy и Docker Registry. Оба закреплённых digest относятся к multi-platform индексам, а не к одному варианту CPU.
+Исходный набор версий проверен по официальным источникам 15 октября 2026 года: [Go releases](https://go.dev/dl/), [golangci-lint releases](https://github.com/golangci/golangci-lint/releases/tag/v2.14.0), Go module proxy и Docker Registry. Оба закреплённых digest относятся к multi-platform индексам, а не к одному варианту CPU.
+
+21 октября Go обновлён до [1.27.3](https://go.dev/doc/devel/release#go1.27.3), чтобы устранить блокирующий CI security finding GO-2026-6809 в стандартной библиотеке crypto/x509. SHA-256 индекса получен из официального Docker Registry и сверен с байтами ответа; наличие Linux AMD64 и ARM64 подтверждено в [данных проверки индекса](evidence/go-toolchain/go-1.27.3-registry.json). Пересборка этим toolchain обновляет стандартную библиотеку и в статических runtime-бинарниках. Исторические evidence и установленный host Go 1.27.2 сохраняются; основной путь запуска проверок остаётся контейнерным.
 
 gRPC v1.84.0 добавлен для реального health API в P01-04; версия проверена через официальный Go proxy. JSON-логи использует стандартный log/slog. Инструменты закреплены через [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools). PostgreSQL использует pgx v5.11.0; инфраструктурные проверки — franz-go v1.22.2 и go-redis v9.23.0, закреплённые в go.mod/go.sum.
 
