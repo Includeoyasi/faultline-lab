@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"context"
+	"errors"
 	"net"
 	"sync"
 	"testing"
@@ -65,8 +66,14 @@ func TestConnectionDeadlines(t *testing.T) {
 				err = client.Ping(ctx)
 				client.Close()
 			}
-			if err == nil || ctx.Err() == nil || time.Since(started) > time.Second {
-				t.Fatal("dependency operation did not obey its short deadline")
+			finished := time.Now()
+			deadline, _ := ctx.Deadline()
+			var timeout net.Error
+			deadlineError := errors.Is(err, context.DeadlineExceeded) || errors.Is(ctx.Err(), context.DeadlineExceeded) || (errors.As(err, &timeout) && timeout.Timeout())
+			// Socket deadlines and the context timer can fire independently.
+			// The operation must time out at its deadline, even if ctx.Err is not set yet.
+			if err == nil || !deadlineError || finished.Before(deadline) || finished.Sub(started) > time.Second {
+				t.Fatalf("dependency deadline not obeyed: err=%v (%T), ctx=%v, elapsed=%v", err, err, ctx.Err(), finished.Sub(started))
 			}
 		})
 	}
