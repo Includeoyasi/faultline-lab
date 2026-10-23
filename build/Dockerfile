@@ -47,12 +47,16 @@ COPY migrations ./migrations
 RUN CGO_ENABLED=0 go build -trimpath -o /out/labdata ./cmd/labdata \
     && CGO_ENABLED=0 go test -c -o /out/database.test ./internal/database \
     && CGO_ENABLED=0 go test -c -o /out/inventory.test ./internal/inventory/store \
-    && CGO_ENABLED=0 go build -trimpath -o /out/inventory ./cmd/inventory
+    && CGO_ENABLED=0 go test -c -o /out/orders.test ./internal/orders/acceptance \
+    && CGO_ENABLED=0 go build -trimpath -o /out/inventory ./cmd/inventory \
+    && CGO_ENABLED=0 go build -trimpath -o /out/orders ./cmd/orders
 
 FROM scratch AS labdata
 COPY --from=labdata-build /out/labdata /app/labdata
 COPY --from=labdata-build /out/database.test /app/database.test
 COPY --from=labdata-build /out/inventory.test /app/inventory.test
 COPY --from=labdata-build /out/inventory /app/inventory
+COPY --from=labdata-build /out/orders.test /app/orders.test
+COPY --from=labdata-build /out/orders /app/orders
 USER 65532:65532
 ENTRYPOINT ["/app/labdata"]
