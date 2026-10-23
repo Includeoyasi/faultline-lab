@@ -17,8 +17,8 @@ sequenceDiagram
     O->>D: Захват job: lease + новое поколение
     O->>I: Reserve с постоянным operation_id
     Note over I: Резерв сохранён
-    I--xO: Ответ потерян; Orders падает
-    Note over O: Перезапуск; lease истёк
+    I--xO: Ответ потерян, Orders падает
+    Note over O: Перезапуск после истечения lease
     O->>D: Новый захват той же job
     O->>I: Тот же Reserve и operation_id
     I-->>O: Сохранённый результат
