@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-20",
+  "timezone": "Europe/Moscow",
+  "source_base": "457a7dc9d65e194ec28c7960f62dcda6d6c6ef17",
+  "source_dirty": true,
+  "source_fingerprints": {
+    "internal/runmeta/collect.go": "0f6ead062aeb5f935b7358d0eb1736f3ab3dac0ddc35ceead7372c95028495c6",
+    "internal/smoke/run.go": "ebe924c35089d92407507f733f4594f28ee5f4419be085304304f42b6827991a",
+    "internal/smoke/report.go": "258ffd346c1721b5a58561de832aaaff2459704dafddc4f343bed5e3717c9d6b",
+    "internal/datalab/run.go": "ced0102ccd938d698c2d51f656d259ac18c0685d30152072873909ba46caf464"
+  },
+  "observations": [
+    {
+      "kind": "smoke",
+      "report": "e0911008-057b-1230-1f25-c7a2c2e49103",
+      "runner": "windows/amd64",
+      "backend": "linux/x86_64"
+    },
+    {
+      "kind": "postgres",
+      "report": "faultline-data-test-3ae0603061975d33",
+      "runner": "windows/amd64",
+      "backend": "linux/x86_64"
+    },
+    {
+      "kind": "infrastructure",
+      "report": "faultline-data-test-6841f8e773fbd377",
+      "runner": "windows/amd64",
+      "backend": "linux/x86_64"
+    }
+  ],
+  "cleanup": {
+    "owned_projects": "PASS",
+    "run_specific_image_tags": "absent after scoped down --rmi local",
+    "docker_desktop_processes": 0,
+    "wsl_vm_processes": 0,
+    "docker_autostart": false
+  },
+  "limits": {
+    "host_profile": "UNVERIFIED",
+    "comparison_eligibility": "NOT_EVALUATED",
+    "macos_runtime": "NOT_RUN"
+  }
+}
