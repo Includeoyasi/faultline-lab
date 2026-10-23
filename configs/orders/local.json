@@ -1,0 +1,20 @@
+{
+  "database": {
+    "host": "postgres",
+    "port": 5432,
+    "database": "orders_db",
+    "user": "orders_app",
+    "sslmode": "disable",
+    "password_file": "/run/secrets/orders_app.password",
+    "connect_timeout": "5s",
+    "request_timeout": "3s",
+    "max_connections": 4
+  },
+  "inventory_target": "inventory:50051",
+  "worker_count": 2,
+  "rpc_timeout": "4s",
+  "lease": "10s",
+  "poll_interval": "100ms",
+  "retry_min": "250ms",
+  "retry_max": "5s"
+}

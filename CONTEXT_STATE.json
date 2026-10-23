@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 71,
+  "context_revision": 74,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-23",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "199f6912701aac70a04d9e07e270ebb4520c9f98",
+    "snapshot_ref": "450e139506f88f0f2570df12abc05a7b6c0a304a",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -42,7 +42,8 @@
       12,
       16,
       20,
-      24
+      24,
+      28
     ]
   },
   "accepted_architecture": [
@@ -128,6 +129,17 @@
       ],
       "implementation_and_review_pr_authorized": true,
       "other_work": "F05 and business/outbox/loadgen changes excluded; full comparison eligibility deferred"
+    },
+    {
+      "date": "2026-10-23",
+      "source": "Direct owner chat: prepare Orders package and corresponding PR; explain current project/roadmap state, ready functionality, F01–F12 and G0→G1 acceptance criteria",
+      "scope": [
+        "Orders admission and reads",
+        "Durable Inventory reserve job through PAYMENT_PENDING",
+        "Concrete G1 evidence and detailed PR context"
+      ],
+      "implementation_and_review_pr_authorized": true,
+      "other_work": "G1 remains an explicit owner decision; no Kafka/F09, Payments, cancellation/finalization/F11, full reset or experiment implementation authorized by this slice"
     }
   ],
   "review_history": [
@@ -2833,6 +2845,148 @@
       "path": "tests/smokecli/metadata_test.go",
       "title": "Validate observed metadata in completed real smoke reports",
       "anchor": "appendix-smokecli-real-report-metadata-test"
+    },
+    {
+      "path": "api/orders/v1/orders.proto",
+      "title": "api/orders/v1/orders.proto",
+      "anchor": "orders-api-orders-v1-orders-proto",
+      "language": "protobuf"
+    },
+    {
+      "path": "compose.orders.yaml",
+      "title": "compose.orders.yaml",
+      "anchor": "orders-compose-orders-yaml",
+      "language": "yaml"
+    },
+    {
+      "path": "configs/orders/local.json",
+      "title": "configs/orders/local.json",
+      "anchor": "orders-configs-orders-local-json",
+      "language": "json"
+    },
+    {
+      "path": "migrations/orders/0002_reservations.sql",
+      "title": "migrations/orders/0002_reservations.sql",
+      "anchor": "orders-migrations-orders-0002-reservations-sql",
+      "language": "sql"
+    },
+    {
+      "path": "docs/development/ORDERS.md",
+      "title": "docs/development/ORDERS.md",
+      "anchor": "orders-docs-development-ORDERS-md"
+    },
+    {
+      "path": "internal/orders/command.go",
+      "title": "internal/orders/command.go",
+      "anchor": "orders-internal-orders-command-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/config.go",
+      "title": "internal/orders/config.go",
+      "anchor": "orders-internal-orders-config-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/config_test.go",
+      "title": "internal/orders/config_test.go",
+      "anchor": "orders-internal-orders-config-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/server.go",
+      "title": "internal/orders/server.go",
+      "anchor": "orders-internal-orders-server-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/acceptance/foundation_test.go",
+      "title": "internal/orders/acceptance/foundation_test.go",
+      "anchor": "orders-internal-orders-acceptance-foundation-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/acceptance/process_test.go",
+      "title": "internal/orders/acceptance/process_test.go",
+      "anchor": "orders-internal-orders-acceptance-process-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/model/model.go",
+      "title": "internal/orders/model/model.go",
+      "anchor": "orders-internal-orders-model-model-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/model/model_test.go",
+      "title": "internal/orders/model/model_test.go",
+      "anchor": "orders-internal-orders-model-model-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/store/claim.go",
+      "title": "internal/orders/store/claim.go",
+      "anchor": "orders-internal-orders-store-claim-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/store/close.go",
+      "title": "internal/orders/store/close.go",
+      "anchor": "orders-internal-orders-store-close-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/store/config.go",
+      "title": "internal/orders/store/config.go",
+      "anchor": "orders-internal-orders-store-config-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/store/create.go",
+      "title": "internal/orders/store/create.go",
+      "anchor": "orders-internal-orders-store-create-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/store/get_by_request_key.go",
+      "title": "internal/orders/store/get_by_request_key.go",
+      "anchor": "orders-internal-orders-store-get-by-request-key-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/store/get_order.go",
+      "title": "internal/orders/store/get_order.go",
+      "anchor": "orders-internal-orders-store-get-order-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/store/resolve.go",
+      "title": "internal/orders/store/resolve.go",
+      "anchor": "orders-internal-orders-store-resolve-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/store/store.go",
+      "title": "internal/orders/store/store.go",
+      "anchor": "orders-internal-orders-store-store-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/worker/worker.go",
+      "title": "internal/orders/worker/worker.go",
+      "anchor": "orders-internal-orders-worker-worker-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/worker/worker_test.go",
+      "title": "internal/orders/worker/worker_test.go",
+      "anchor": "orders-internal-orders-worker-worker-test-go",
+      "language": "go"
+    },
+    {
+      "path": "docs/development/evidence/orders/VALIDATION.md",
+      "title": "Orders native acceptance and crash evidence — 2026-10-23",
+      "anchor": "orders-native-validation-2026-10-23"
     }
   ],
   "change_history": [
@@ -3201,6 +3355,24 @@
       "date": "2026-10-23",
       "summary": "Reconciled Inventory and accepted run metadata sources; both labdata modes observe the Inventory business container with its effective deployment overlay, and real report validation requires its image/resource observations. Preserved owner review-format rules and five architecture review blocks.",
       "trigger": "Owner requested merging current main into Inventory PR27 and refreshing it for owner merge"
+    },
+    {
+      "revision": 72,
+      "date": "2026-10-23",
+      "summary": "Added Orders admission/read API and one durable Inventory reserve workflow, application-only deployment and concrete G1 acceptance scenarios; retained F01–F12 scope and explicit owner acceptance boundaries",
+      "trigger": "Direct owner authorization to implement Orders and prepare its PR with project/roadmap and G0→G1 review context"
+    },
+    {
+      "revision": 73,
+      "date": "2026-10-23",
+      "summary": "Recorded successful native AMD64/ARM64 Orders acceptance/crash, 1000/100 stock balance, deployed persistence and metadata/cleanup evidence at a fixed tested HEAD; explicit scope and owner G1 decision retained",
+      "trigger": "Completed real container CI after implementing the owner-authorized Orders slice"
+    },
+    {
+      "revision": 74,
+      "date": "2026-10-23",
+      "summary": "Repaired Mermaid sequence labels in Orders materials and separately rendered both PR and guide diagrams with Mermaid 11.4.1; structural documentation checks alone do not verify rendering",
+      "trigger": "Owner reported the PR diagram parse error; business behavior and acceptance criteria unchanged"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -3480,5 +3652,44 @@
     "cleanup": "Owned run containers/images removed; Docker Desktop and WSL VM stopped; autostart false",
     "limits": "Dirty worktree before source commit, fingerprints recorded; physical host profile unverified; macOS runtime NOT_RUN; no capacity conclusion",
     "real_report_validation": "TestSuccessfulReportsHaveObservedMetadata PASS against the three saved real Windows reports; read-only, no Docker restart"
+  },
+  "orders_foundation": {
+    "recorded_on": "2026-10-23",
+    "source_commit": "d09f1fe6652cc18cf88cd4ce30f604be379f2ef0",
+    "guide": "docs/development/ORDERS.md",
+    "api": [
+      "CreateOrder",
+      "GetOrder",
+      "GetOrderByRequestKey"
+    ],
+    "identity": "One immutable dataset per orders_db; unique request_key hashes canonical dataset/key/items; immutable admission reply; persisted order and Reserve operation IDs, no protective TTL",
+    "admission": "One transaction saves order and reserve_job before ACCEPTED; reads expose live state separately",
+    "worker": "Bounded workers, SKIP LOCKED, DB-clock lease/generation and order version; job→order lock order; final lease CAS rolls back all writes even after lock wait; RPC outside SQL TX; bounded backoff+jitter",
+    "completion": "Validate peer identity/items/prices/currency/overflow-safe total and current RESERVED snapshot; one TX saves PAYMENT_PENDING, priced snapshot, local OrderAwaitingPayment and job completion",
+    "failure": "Only confirmed UNKNOWN_SKU/INSUFFICIENT_STOCK reject. Transient/unknown effects retry same operation; contradictions block job visibly while order remains RESERVING; no repair exit or new business terminal state",
+    "runtime": "Only orders_app credential for orders_db; explicit Inventory target, worker/SQL/RPC/lease budgets; health-only skeleton retained; labdata observes Orders and Inventory after startup with effective overlays",
+    "local_evidence": {
+      "date": "2026-10-23",
+      "environment": "Windows AMD64 portable Go1.27.3",
+      "results": "Orders/model/worker/config unit tests and opt-in test compilation, datalab/smokecli regressions, go vet, go build ./..., real health-only service process smoke PASS. PostgreSQL/Inventory/SIGKILL acceptance cases require isolated native container CI; current results are in PR/Actions."
+    },
+    "diagram_validation": {
+      "date": "2026-10-23",
+      "source_commit": "450e139506f88f0f2570df12abc05a7b6c0a304a",
+      "renderer": "Mermaid 11.4.1",
+      "result": "Original semicolon label parse error reproduced; repaired PR and Orders guide sequences rendered as SVG/PNG and visually inspected. This is separate from structural Documentation checks and business runtime validation."
+    },
+    "g1": "Owner reviews code/migrations, repeat/conflict, 1000/100 stock conservation, persistent step after SIGKILL/restart and stale worker guards; green mandatory checks and accepted review precede explicit G1 acceptance. Broader roadmap stage1 also lists payment model/basic metrics, retained as a visible boundary; no G2 claim",
+    "remaining_scope": "No Payments, Kafka publisher/consumer, CancelOrder, finalization/F11, Redis, full dataset reset, capacity or A/B result",
+    "validation": {
+      "date": "2026-10-23",
+      "verified_head": "1aec8ab098bccb9b7b501285fffda06360310d19",
+      "code_source": "d09f1fe6652cc18cf88cd4ce30f604be379f2ef0",
+      "source": "docs/development/evidence/orders/VALIDATION.md",
+      "go_run": "https://github.com/Includeoyasi/faultline-lab/actions/runs/39989398467",
+      "documentation_run": "https://github.com/Includeoyasi/faultline-lab/actions/runs/39989398444",
+      "result": "Native Linux AMD64/ARM64 quality and real PostgreSQL-only/combined smoke PASS: admission conflicts, atomic failure, lease fences, 1000 attempts/100 units, process SIGKILL before Reserve and after Inventory commit, deployed API before/after PostgreSQL restart, observed metadata and scoped cleanup",
+      "boundaries": "SQL generations model takeover; no two simultaneous Orders processes, no injected lost Create response or separate SQL-connection measurement during RPC; personal Docker/WSL not started, Windows Docker/macOS runtime NOT_RUN; owner G1 acceptance not implied"
+    }
   }
 }
