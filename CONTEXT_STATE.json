@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 72,
+  "context_revision": 73,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-23",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "d09f1fe6652cc18cf88cd4ce30f604be379f2ef0",
+    "snapshot_ref": "8ae910dd0d4bf80b99a57c6d5dce791313524b0e",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -2982,6 +2982,11 @@
       "title": "internal/orders/worker/worker_test.go",
       "anchor": "orders-internal-orders-worker-worker-test-go",
       "language": "go"
+    },
+    {
+      "path": "docs/development/evidence/orders/VALIDATION.md",
+      "title": "Orders native acceptance and crash evidence — 2026-10-23",
+      "anchor": "orders-native-validation-2026-10-23"
     }
   ],
   "change_history": [
@@ -3356,6 +3361,12 @@
       "date": "2026-10-23",
       "summary": "Added Orders admission/read API and one durable Inventory reserve workflow, application-only deployment and concrete G1 acceptance scenarios; retained F01–F12 scope and explicit owner acceptance boundaries",
       "trigger": "Direct owner authorization to implement Orders and prepare its PR with project/roadmap and G0→G1 review context"
+    },
+    {
+      "revision": 73,
+      "date": "2026-10-23",
+      "summary": "Recorded successful native AMD64/ARM64 Orders acceptance/crash, 1000/100 stock balance, deployed persistence and metadata/cleanup evidence at a fixed tested HEAD; explicit scope and owner G1 decision retained",
+      "trigger": "Completed real container CI after implementing the owner-authorized Orders slice"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -3657,6 +3668,16 @@
       "results": "Orders/model/worker/config unit tests and opt-in test compilation, datalab/smokecli regressions, go vet, go build ./..., real health-only service process smoke PASS. PostgreSQL/Inventory/SIGKILL acceptance cases require isolated native container CI; current results are in PR/Actions."
     },
     "g1": "Owner reviews code/migrations, repeat/conflict, 1000/100 stock conservation, persistent step after SIGKILL/restart and stale worker guards; green mandatory checks and accepted review precede explicit G1 acceptance. Broader roadmap stage1 also lists payment model/basic metrics, retained as a visible boundary; no G2 claim",
-    "remaining_scope": "No Payments, Kafka publisher/consumer, CancelOrder, finalization/F11, Redis, full dataset reset, capacity or A/B result"
+    "remaining_scope": "No Payments, Kafka publisher/consumer, CancelOrder, finalization/F11, Redis, full dataset reset, capacity or A/B result",
+    "validation": {
+      "date": "2026-10-23",
+      "verified_head": "1aec8ab098bccb9b7b501285fffda06360310d19",
+      "code_source": "d09f1fe6652cc18cf88cd4ce30f604be379f2ef0",
+      "source": "docs/development/evidence/orders/VALIDATION.md",
+      "go_run": "https://github.com/Includeoyasi/faultline-lab/actions/runs/39989398467",
+      "documentation_run": "https://github.com/Includeoyasi/faultline-lab/actions/runs/39989398444",
+      "result": "Native Linux AMD64/ARM64 quality and real PostgreSQL-only/combined smoke PASS: admission conflicts, atomic failure, lease fences, 1000 attempts/100 units, process SIGKILL before Reserve and after Inventory commit, deployed API before/after PostgreSQL restart, observed metadata and scoped cleanup",
+      "boundaries": "SQL generations model takeover; no two simultaneous Orders processes, no injected lost Create response or separate SQL-connection measurement during RPC; personal Docker/WSL not started, Windows Docker/macOS runtime NOT_RUN; owner G1 acceptance not implied"
+    }
   }
 }
