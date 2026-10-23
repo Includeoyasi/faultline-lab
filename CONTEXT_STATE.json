@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 66,
+  "context_revision": 71,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-21",
+  "context_updated_on": "2026-10-23",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "d47cfa9addc7c6290b584714e094440fc10af040",
+    "snapshot_ref": "199f6912701aac70a04d9e07e270ebb4520c9f98",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -41,7 +41,8 @@
       9,
       12,
       16,
-      20
+      20,
+      24
     ]
   },
   "accepted_architecture": [
@@ -51,6 +52,23 @@
       "approved_on": "2026-10-13",
       "approval_evidence": "Прямое сообщение пользователя: G0 полностью принят.",
       "conditions": []
+    },
+    {
+      "id": "F03",
+      "status": "APPROVED",
+      "approved_on": "2026-10-20",
+      "approval_evidence": "Direct owner chat: F03 и F11 согласованы",
+      "decision": "Separate runner, host, backend, requested and actual image platform facts; immutable image IDs; unknown provenance; MATCH does not prove native execution; A/B requires a verified profile and full F06",
+      "document": "docs/architecture/PLATFORM_EVIDENCE.md",
+      "adr": "docs/adr/0004-platform-evidence.md"
+    },
+    {
+      "id": "F11",
+      "status": "APPROVED",
+      "approved_on": "2026-10-20",
+      "approval_evidence": "Direct owner chat: F03 и F11 согласованы",
+      "decision": "Preserve FINALIZING with separate recovery_status=NEEDS_REVIEW, durable blocked work and guards for exceptional RELEASED after unknown Commit; no automatic terminal/refund/re-reserve or repair exit approved",
+      "scope_note": "Approval is retained as dated history; F11 implementation is outside Issue24"
     }
   ],
   "authorization_history": [
@@ -99,6 +117,17 @@
       ],
       "implementation_and_review_pr_authorized": true,
       "other_work": "Orders, Payments, Redis caching, Kafka publisher/F09 and full dataset reset excluded; gate acceptance remains separate"
+    },
+    {
+      "date": "2026-10-20",
+      "source": "Direct owner chat: можешь завести задачу по 1 пункту и брать ее в работку, following the bounded F03/current-F06 plan",
+      "scope": [
+        "Issue24: existing smoke/labdata metadata",
+        "F03 observed image platform facts",
+        "Current F06 resource facts"
+      ],
+      "implementation_and_review_pr_authorized": true,
+      "other_work": "F05 and business/outbox/loadgen changes excluded; full comparison eligibility deferred"
     }
   ],
   "review_history": [
@@ -2744,6 +2773,66 @@
       "title": "internal/inventory/store/config_test.go",
       "anchor": "inventory-store-config-test-go",
       "language": "go"
+    },
+    {
+      "path": "docs/architecture/PLATFORM_EVIDENCE.md",
+      "title": "F03: accepted platform evidence contract",
+      "anchor": "appendix-docs-architecture-platform-evidence-md"
+    },
+    {
+      "path": "docs/adr/0004-platform-evidence.md",
+      "title": "ADR 0004: accepted platform provenance decision",
+      "anchor": "appendix-docs-adr-0004-platform-evidence-md"
+    },
+    {
+      "path": "docs/development/RUN_METADATA.md",
+      "title": "Observed run metadata: fields and limits",
+      "anchor": "appendix-docs-development-run-metadata-md"
+    },
+    {
+      "path": "docs/development/evidence/run-metadata/VALIDATION.md",
+      "title": "Windows run metadata validation — 2026-10-20",
+      "anchor": "appendix-docs-development-evidence-run-metadata-validation-md"
+    },
+    {
+      "path": "docs/development/evidence/run-metadata/windows-smoke.json",
+      "title": "Windows service metadata excerpt",
+      "anchor": "appendix-docs-development-evidence-run-metadata-windows-smoke-json"
+    },
+    {
+      "path": "docs/development/evidence/run-metadata/windows-postgres.json",
+      "title": "Windows PostgreSQL metadata excerpt",
+      "anchor": "appendix-docs-development-evidence-run-metadata-windows-postgres-json"
+    },
+    {
+      "path": "docs/development/evidence/run-metadata/windows-infrastructure.json",
+      "title": "Windows combined infrastructure metadata excerpt",
+      "anchor": "appendix-docs-development-evidence-run-metadata-windows-infrastructure-json"
+    },
+    {
+      "path": "docs/development/evidence/run-metadata/windows-summary.json",
+      "title": "Windows metadata source fingerprints and cleanup",
+      "anchor": "appendix-docs-development-evidence-run-metadata-windows-summary-json"
+    },
+    {
+      "path": "internal/runmeta/collect.go",
+      "title": "Shared run metadata collector",
+      "anchor": "appendix-internal-runmeta-collect-go"
+    },
+    {
+      "path": "internal/runmeta/collect_test.go",
+      "title": "Metadata platform/resource/provenance tests",
+      "anchor": "appendix-internal-runmeta-collect-test-go"
+    },
+    {
+      "path": "internal/smoke/metadata_test.go",
+      "title": "Smoke metadata cancellation and failure tests",
+      "anchor": "appendix-internal-smoke-metadata-test-go"
+    },
+    {
+      "path": "tests/smokecli/metadata_test.go",
+      "title": "Validate observed metadata in completed real smoke reports",
+      "anchor": "appendix-smokecli-real-report-metadata-test"
     }
   ],
   "change_history": [
@@ -3094,6 +3183,24 @@
       "date": "2026-10-20",
       "summary": "Implemented Inventory business API, atomic reservations and durable receipts/barriers with application-only runtime and real PostgreSQL/deployment restart evidence; preserved direct owner review-format and F03/F11 approval facts",
       "trigger": "Owner authorized the next independent Inventory task after the metadata PR"
+    },
+    {
+      "revision": 63,
+      "date": "2026-10-20",
+      "summary": "Implemented bounded F03/current F06 facts for existing runners, validated Windows metadata and cleanup, retained direct owner F03/F11 approvals and review-format requirements",
+      "trigger": "Owner authorized Issue24 creation and implementation; full comparison and other findings retain future checkpoints"
+    },
+    {
+      "revision": 64,
+      "date": "2026-10-20",
+      "summary": "Added opt-in validation of completed real metadata reports to existing CLI tests and native Linux CI; validated saved Windows observations",
+      "trigger": "Real optional Variant regression showed that functional PASS alone does not establish observed metadata completeness"
+    },
+    {
+      "revision": 71,
+      "date": "2026-10-23",
+      "summary": "Reconciled Inventory and accepted run metadata sources; both labdata modes observe the Inventory business container with its effective deployment overlay, and real report validation requires its image/resource observations. Preserved owner review-format rules and five architecture review blocks.",
+      "trigger": "Owner requested merging current main into Inventory PR27 and refreshing it for owner merge"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -3292,20 +3399,86 @@
     }
   },
   "architecture_review_format": {
-    "source": "Direct owner chat after Kafka Publishing review, 2026-10-19",
+    "source": "Direct owner chat after Kafka Publishing review",
     "blocks": [
-      "Problem, localized cases and diagrams",
-      "Pattern classification, established practices and alternatives",
-      "Justified solution with tradeoffs",
-      "Implementation plan appropriate to the current stage",
+      "Problem, localization cases and diagrams",
+      "Patterns, practices and solution alternatives",
+      "Justified solution and tradeoffs",
+      "Implementation plan for the current stage",
       "Specific review focus"
     ],
-    "writing": "3–10 substantive sentences per block; prefer diagrams/tables, explain once and illustrate rather than repeating; make the decision understandable to the owner"
+    "writing": "3–10 substantive sentences per block; prefer diagrams/tables, explain once and illustrate rather than repeating; make the decision understandable to the owner",
+    "confirmed_on": "2026-10-19",
+    "sentences_per_block": "3–10 substantive sentences",
+    "presentation": "Prefer diagrams and tables; explain once and show once; enough content for an owner decision without repeated narrative",
+    "pull_request_descriptions": {
+      "confirmed_on": "2026-10-21",
+      "source": "Direct owner chat and PR25/PR27 browser annotations on 2026-10-21; owner clarified that block-specific edits must not be mixed across all blocks and a diagram must remain meaningful",
+      "rule": "When useful, include one meaningful Mermaid interaction diagram explaining the PR behavior, actions or guarantees on a concrete scenario; avoid replacing this with a component-only sketch. Omit diagrams when they add no value",
+      "review_check": "When a diagram is used, check that it matches the change and distinguish implemented behavior from proposed or future parts",
+      "exception": "If a diagram adds no value, omit the diagram section without an N/A entry or justification; this does not change the five-block architecture review format",
+      "sections": [
+        "Содержание",
+        "Проверки",
+        "Ограничения",
+        "Материалы",
+        "Связанные задачи"
+      ],
+      "text_format": "Numbered items apply to Ограничения only, one limitation per point with a short clarification when needed. Other sections keep their suitable existing prose or bullets; preserve wording outside the annotated block",
+      "annotation_scope": "Apply each annotation to its specified block; do not generalize its formatting across the description unless the owner requests analogous changes. A heading rename or navigation move does not authorize a full content rewrite",
+      "references": "Put Closes and Refs directives in Связанные задачи; key files, generated-code notes, guide and evidence links belong in Материалы",
+      "reminders": [
+        "AGENTS.md",
+        ".github/pull_request_template.md"
+      ]
+    }
   },
   "owner_architecture_approvals_2026_10_20": {
     "source": "Direct owner chat: F03 and F11 approved",
     "F03": "Separate observed runner/backend/requested/image platforms; unknown values are explicit, MATCH alone does not establish native execution; full comparison validation belongs with experiments",
     "F11": "FINALIZING with separate NEEDS_REVIEW recovery flag and durable evidence/blocked work on exceptional RELEASED; no automatic successful terminal transition, refund or repair exit",
     "meaning": "Architectural approval does not imply completed implementation, code review acceptance or gate acceptance"
+  },
+  "run_metadata_contract": {
+    "schema_version": 1,
+    "report_versions": {
+      "smoke": 3,
+      "labdata": 1
+    },
+    "guide": "docs/development/RUN_METADATA.md",
+    "source_commit": "30e934a325533f9acf9dc5ba76a4a96bae0adbd2",
+    "scope": "Named long-lived tested containers only; no ephemeral tool-platform inference",
+    "platform_facts": "Runner target, unknown physical host, Docker backend, requested platform and container image ID/platform/digests; independent requested/actual and backend/image relations",
+    "resources": "Backend CPU/memory budget, configured memory/nanoCPU fields and timestamped startup usage separately; NOT_CONFIGURED is field-specific; missing is not measured zero",
+    "failure_semantics": "Metadata is optional evidence, not the functional verdict; bounded 30s total and 5s per query; cancellation preserves owned cleanup",
+    "privacy": "Raw config/inspect/errors are not persisted; typed allowlist; repository names omitted from digests",
+    "comparison": "UNVERIFIED execution profile; NOT_EVALUATED A/B; no full experiment manifest yet",
+    "ci_validation": "After all three functional smoke modes, existing host CLI test binary checks completed reports for known image platforms and measured resource snapshots; functional CLI semantics remain unchanged",
+    "inventory_integration": {
+      "recorded_on": "2026-10-23",
+      "source_commit": "199f6912701aac70a04d9e07e270ebb4520c9f98",
+      "coverage": "labdata observes postgres and Inventory business container; combined mode also observes kafka/redis. Collect after Inventory startup with effective compose.inventory.yaml overlay, before deployed API probes.",
+      "failure_semantics": "Before collection all named containers retain explicit unknown values; absent metadata does not change functional success; cancellation and scoped cleanup preserved.",
+      "verification": "Portable Go 1.27.3 on Windows AMD64: targeted tests and go vet for datalab, runmeta, inventory/model/store and smokecli passed; fixtures verify collection after business startup with effective overlays. Native container results belong in PR/Actions."
+    }
+  },
+  "run_metadata_evidence": {
+    "date": "2026-10-20",
+    "source": "docs/development/evidence/run-metadata/VALIDATION.md",
+    "summary": "docs/development/evidence/run-metadata/windows-summary.json",
+    "go_checks": [
+      "go test ./... PASS",
+      "go vet ./... PASS",
+      "runmeta variant/resource unit regression PASS"
+    ],
+    "windows_modes": [
+      "service smoke PASS with known image platforms and measured startup usage",
+      "PostgreSQL-only smoke PASS with metadata",
+      "Combined PostgreSQL/Kafka/Redis smoke PASS with metadata"
+    ],
+    "runtime_regression": "Docker image Variant can be absent; JSON array decoding by exact image ID handles it without persisting raw inspect",
+    "cleanup": "Owned run containers/images removed; Docker Desktop and WSL VM stopped; autostart false",
+    "limits": "Dirty worktree before source commit, fingerprints recorded; physical host profile unverified; macOS runtime NOT_RUN; no capacity conclusion",
+    "real_report_validation": "TestSuccessfulReportsHaveObservedMetadata PASS against the three saved real Windows reports; read-only, no Docker restart"
   }
 }

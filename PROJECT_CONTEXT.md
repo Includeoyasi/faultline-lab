@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **66**. Дата снимка: **2026-10-21**, Europe/Moscow. Исходный коммит внешних материалов: `d47cfa9addc7c6290b584714e094440fc10af040`.
+Ревизия: **71**. Дата снимка: **2026-10-23**, Europe/Moscow. Исходный коммит внешних материалов: `199f6912701aac70a04d9e07e270ebb4520c9f98`.
 
 ## Выполнение задач
 
@@ -71,9 +71,9 @@ JSON ниже включён для автономного чтения реше
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 66,
+  "context_revision": 71,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-21",
+  "context_updated_on": "2026-10-23",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -87,7 +87,7 @@ JSON ниже включён для автономного чтения реше
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "d47cfa9addc7c6290b584714e094440fc10af040",
+    "snapshot_ref": "199f6912701aac70a04d9e07e270ebb4520c9f98",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -111,7 +111,8 @@ JSON ниже включён для автономного чтения реше
       9,
       12,
       16,
-      20
+      20,
+      24
     ]
   },
   "accepted_architecture": [
@@ -121,6 +122,23 @@ JSON ниже включён для автономного чтения реше
       "approved_on": "2026-10-13",
       "approval_evidence": "Прямое сообщение пользователя: G0 полностью принят.",
       "conditions": []
+    },
+    {
+      "id": "F03",
+      "status": "APPROVED",
+      "approved_on": "2026-10-20",
+      "approval_evidence": "Direct owner chat: F03 и F11 согласованы",
+      "decision": "Separate runner, host, backend, requested and actual image platform facts; immutable image IDs; unknown provenance; MATCH does not prove native execution; A/B requires a verified profile and full F06",
+      "document": "docs/architecture/PLATFORM_EVIDENCE.md",
+      "adr": "docs/adr/0004-platform-evidence.md"
+    },
+    {
+      "id": "F11",
+      "status": "APPROVED",
+      "approved_on": "2026-10-20",
+      "approval_evidence": "Direct owner chat: F03 и F11 согласованы",
+      "decision": "Preserve FINALIZING with separate recovery_status=NEEDS_REVIEW, durable blocked work and guards for exceptional RELEASED after unknown Commit; no automatic terminal/refund/re-reserve or repair exit approved",
+      "scope_note": "Approval is retained as dated history; F11 implementation is outside Issue24"
     }
   ],
   "authorization_history": [
@@ -169,6 +187,17 @@ JSON ниже включён для автономного чтения реше
       ],
       "implementation_and_review_pr_authorized": true,
       "other_work": "Orders, Payments, Redis caching, Kafka publisher/F09 and full dataset reset excluded; gate acceptance remains separate"
+    },
+    {
+      "date": "2026-10-20",
+      "source": "Direct owner chat: можешь завести задачу по 1 пункту и брать ее в работку, following the bounded F03/current-F06 plan",
+      "scope": [
+        "Issue24: existing smoke/labdata metadata",
+        "F03 observed image platform facts",
+        "Current F06 resource facts"
+      ],
+      "implementation_and_review_pr_authorized": true,
+      "other_work": "F05 and business/outbox/loadgen changes excluded; full comparison eligibility deferred"
     }
   ],
   "review_history": [
@@ -2814,6 +2843,66 @@ JSON ниже включён для автономного чтения реше
       "title": "internal/inventory/store/config_test.go",
       "anchor": "inventory-store-config-test-go",
       "language": "go"
+    },
+    {
+      "path": "docs/architecture/PLATFORM_EVIDENCE.md",
+      "title": "F03: accepted platform evidence contract",
+      "anchor": "appendix-docs-architecture-platform-evidence-md"
+    },
+    {
+      "path": "docs/adr/0004-platform-evidence.md",
+      "title": "ADR 0004: accepted platform provenance decision",
+      "anchor": "appendix-docs-adr-0004-platform-evidence-md"
+    },
+    {
+      "path": "docs/development/RUN_METADATA.md",
+      "title": "Observed run metadata: fields and limits",
+      "anchor": "appendix-docs-development-run-metadata-md"
+    },
+    {
+      "path": "docs/development/evidence/run-metadata/VALIDATION.md",
+      "title": "Windows run metadata validation — 2026-10-20",
+      "anchor": "appendix-docs-development-evidence-run-metadata-validation-md"
+    },
+    {
+      "path": "docs/development/evidence/run-metadata/windows-smoke.json",
+      "title": "Windows service metadata excerpt",
+      "anchor": "appendix-docs-development-evidence-run-metadata-windows-smoke-json"
+    },
+    {
+      "path": "docs/development/evidence/run-metadata/windows-postgres.json",
+      "title": "Windows PostgreSQL metadata excerpt",
+      "anchor": "appendix-docs-development-evidence-run-metadata-windows-postgres-json"
+    },
+    {
+      "path": "docs/development/evidence/run-metadata/windows-infrastructure.json",
+      "title": "Windows combined infrastructure metadata excerpt",
+      "anchor": "appendix-docs-development-evidence-run-metadata-windows-infrastructure-json"
+    },
+    {
+      "path": "docs/development/evidence/run-metadata/windows-summary.json",
+      "title": "Windows metadata source fingerprints and cleanup",
+      "anchor": "appendix-docs-development-evidence-run-metadata-windows-summary-json"
+    },
+    {
+      "path": "internal/runmeta/collect.go",
+      "title": "Shared run metadata collector",
+      "anchor": "appendix-internal-runmeta-collect-go"
+    },
+    {
+      "path": "internal/runmeta/collect_test.go",
+      "title": "Metadata platform/resource/provenance tests",
+      "anchor": "appendix-internal-runmeta-collect-test-go"
+    },
+    {
+      "path": "internal/smoke/metadata_test.go",
+      "title": "Smoke metadata cancellation and failure tests",
+      "anchor": "appendix-internal-smoke-metadata-test-go"
+    },
+    {
+      "path": "tests/smokecli/metadata_test.go",
+      "title": "Validate observed metadata in completed real smoke reports",
+      "anchor": "appendix-smokecli-real-report-metadata-test"
     }
   ],
   "change_history": [
@@ -3164,6 +3253,24 @@ JSON ниже включён для автономного чтения реше
       "date": "2026-10-20",
       "summary": "Implemented Inventory business API, atomic reservations and durable receipts/barriers with application-only runtime and real PostgreSQL/deployment restart evidence; preserved direct owner review-format and F03/F11 approval facts",
       "trigger": "Owner authorized the next independent Inventory task after the metadata PR"
+    },
+    {
+      "revision": 63,
+      "date": "2026-10-20",
+      "summary": "Implemented bounded F03/current F06 facts for existing runners, validated Windows metadata and cleanup, retained direct owner F03/F11 approvals and review-format requirements",
+      "trigger": "Owner authorized Issue24 creation and implementation; full comparison and other findings retain future checkpoints"
+    },
+    {
+      "revision": 64,
+      "date": "2026-10-20",
+      "summary": "Added opt-in validation of completed real metadata reports to existing CLI tests and native Linux CI; validated saved Windows observations",
+      "trigger": "Real optional Variant regression showed that functional PASS alone does not establish observed metadata completeness"
+    },
+    {
+      "revision": 71,
+      "date": "2026-10-23",
+      "summary": "Reconciled Inventory and accepted run metadata sources; both labdata modes observe the Inventory business container with its effective deployment overlay, and real report validation requires its image/resource observations. Preserved owner review-format rules and five architecture review blocks.",
+      "trigger": "Owner requested merging current main into Inventory PR27 and refreshing it for owner merge"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -3362,21 +3469,87 @@ JSON ниже включён для автономного чтения реше
     }
   },
   "architecture_review_format": {
-    "source": "Direct owner chat after Kafka Publishing review, 2026-10-19",
+    "source": "Direct owner chat after Kafka Publishing review",
     "blocks": [
-      "Problem, localized cases and diagrams",
-      "Pattern classification, established practices and alternatives",
-      "Justified solution with tradeoffs",
-      "Implementation plan appropriate to the current stage",
+      "Problem, localization cases and diagrams",
+      "Patterns, practices and solution alternatives",
+      "Justified solution and tradeoffs",
+      "Implementation plan for the current stage",
       "Specific review focus"
     ],
-    "writing": "3–10 substantive sentences per block; prefer diagrams/tables, explain once and illustrate rather than repeating; make the decision understandable to the owner"
+    "writing": "3–10 substantive sentences per block; prefer diagrams/tables, explain once and illustrate rather than repeating; make the decision understandable to the owner",
+    "confirmed_on": "2026-10-19",
+    "sentences_per_block": "3–10 substantive sentences",
+    "presentation": "Prefer diagrams and tables; explain once and show once; enough content for an owner decision without repeated narrative",
+    "pull_request_descriptions": {
+      "confirmed_on": "2026-10-21",
+      "source": "Direct owner chat and PR25/PR27 browser annotations on 2026-10-21; owner clarified that block-specific edits must not be mixed across all blocks and a diagram must remain meaningful",
+      "rule": "When useful, include one meaningful Mermaid interaction diagram explaining the PR behavior, actions or guarantees on a concrete scenario; avoid replacing this with a component-only sketch. Omit diagrams when they add no value",
+      "review_check": "When a diagram is used, check that it matches the change and distinguish implemented behavior from proposed or future parts",
+      "exception": "If a diagram adds no value, omit the diagram section without an N/A entry or justification; this does not change the five-block architecture review format",
+      "sections": [
+        "Содержание",
+        "Проверки",
+        "Ограничения",
+        "Материалы",
+        "Связанные задачи"
+      ],
+      "text_format": "Numbered items apply to Ограничения only, one limitation per point with a short clarification when needed. Other sections keep their suitable existing prose or bullets; preserve wording outside the annotated block",
+      "annotation_scope": "Apply each annotation to its specified block; do not generalize its formatting across the description unless the owner requests analogous changes. A heading rename or navigation move does not authorize a full content rewrite",
+      "references": "Put Closes and Refs directives in Связанные задачи; key files, generated-code notes, guide and evidence links belong in Материалы",
+      "reminders": [
+        "AGENTS.md",
+        ".github/pull_request_template.md"
+      ]
+    }
   },
   "owner_architecture_approvals_2026_10_20": {
     "source": "Direct owner chat: F03 and F11 approved",
     "F03": "Separate observed runner/backend/requested/image platforms; unknown values are explicit, MATCH alone does not establish native execution; full comparison validation belongs with experiments",
     "F11": "FINALIZING with separate NEEDS_REVIEW recovery flag and durable evidence/blocked work on exceptional RELEASED; no automatic successful terminal transition, refund or repair exit",
     "meaning": "Architectural approval does not imply completed implementation, code review acceptance or gate acceptance"
+  },
+  "run_metadata_contract": {
+    "schema_version": 1,
+    "report_versions": {
+      "smoke": 3,
+      "labdata": 1
+    },
+    "guide": "docs/development/RUN_METADATA.md",
+    "source_commit": "30e934a325533f9acf9dc5ba76a4a96bae0adbd2",
+    "scope": "Named long-lived tested containers only; no ephemeral tool-platform inference",
+    "platform_facts": "Runner target, unknown physical host, Docker backend, requested platform and container image ID/platform/digests; independent requested/actual and backend/image relations",
+    "resources": "Backend CPU/memory budget, configured memory/nanoCPU fields and timestamped startup usage separately; NOT_CONFIGURED is field-specific; missing is not measured zero",
+    "failure_semantics": "Metadata is optional evidence, not the functional verdict; bounded 30s total and 5s per query; cancellation preserves owned cleanup",
+    "privacy": "Raw config/inspect/errors are not persisted; typed allowlist; repository names omitted from digests",
+    "comparison": "UNVERIFIED execution profile; NOT_EVALUATED A/B; no full experiment manifest yet",
+    "ci_validation": "After all three functional smoke modes, existing host CLI test binary checks completed reports for known image platforms and measured resource snapshots; functional CLI semantics remain unchanged",
+    "inventory_integration": {
+      "recorded_on": "2026-10-23",
+      "source_commit": "199f6912701aac70a04d9e07e270ebb4520c9f98",
+      "coverage": "labdata observes postgres and Inventory business container; combined mode also observes kafka/redis. Collect after Inventory startup with effective compose.inventory.yaml overlay, before deployed API probes.",
+      "failure_semantics": "Before collection all named containers retain explicit unknown values; absent metadata does not change functional success; cancellation and scoped cleanup preserved.",
+      "verification": "Portable Go 1.27.3 on Windows AMD64: targeted tests and go vet for datalab, runmeta, inventory/model/store and smokecli passed; fixtures verify collection after business startup with effective overlays. Native container results belong in PR/Actions."
+    }
+  },
+  "run_metadata_evidence": {
+    "date": "2026-10-20",
+    "source": "docs/development/evidence/run-metadata/VALIDATION.md",
+    "summary": "docs/development/evidence/run-metadata/windows-summary.json",
+    "go_checks": [
+      "go test ./... PASS",
+      "go vet ./... PASS",
+      "runmeta variant/resource unit regression PASS"
+    ],
+    "windows_modes": [
+      "service smoke PASS with known image platforms and measured startup usage",
+      "PostgreSQL-only smoke PASS with metadata",
+      "Combined PostgreSQL/Kafka/Redis smoke PASS with metadata"
+    ],
+    "runtime_regression": "Docker image Variant can be absent; JSON array decoding by exact image ID handles it without persisting raw inspect",
+    "cleanup": "Owned run containers/images removed; Docker Desktop and WSL VM stopped; autostart false",
+    "limits": "Dirty worktree before source commit, fingerprints recorded; physical host profile unverified; macOS runtime NOT_RUN; no capacity conclusion",
+    "real_report_validation": "TestSuccessfulReportsHaveObservedMetadata PASS against the three saved real Windows reports; read-only, no Docker restart"
   }
 }
 ```
@@ -3387,18 +3560,18 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `38bd246a1f044ffaa74ea046911c9ef973d037943a8580b3e66c2bba6ff8f331` |
+| `CONTEXT_STATE.json` | `4a8b8ac8a7fa096cd13d4f2edbf2c187f25081e5490653fa0f141d1e1f83c1ec` |
 | `tools/context_intro.md` | `91fb656b2ec7b4dcd798be45f7b78ec2452763455476ebcd55762b465ad25d2b` |
 | `tools/update_context.ps1` | `73dff2e2da1f7ea7e8fc8fe2dc70bde722f4d697c1ca7c685d297214cd133e33` |
 | `README.md` | `bdfebd2fbc801c1f05a5e6391fcfc9f4ddb5227e4ee11d75982a31ce5d0f65b7` |
 | `README.ru.md` | `d9cbe989a91bb2aa1db27ff7cfd20e30a38496bbf679b2e10dc923a390e2262e` |
-| `docs/README.md` | `e38d6fbaf4e6925a93f61b4d82d1f72b4336ac32fd169f90abc12fc7112806c3` |
+| `docs/README.md` | `9b33aa290ad15d972e0947969ae88e00e251d797e467333d11d4ad2e56f740d0` |
 | `docs/ROADMAP.md` | `4cecbf9ecfd16dfef30f8ec22f2f7a592a9b47abc8de6ef8079c1be375077dee` |
 | `docs/architecture/DESIGN.md` | `f862de88c86c177aeda21bf9c99ed9fcacbf22d0579ddfc80d83782a2fdd375c` |
 | `docs/architecture/PROCESSES.md` | `dd6d00ee9d169236fe0f0d14de4b6f54d778a7cf79489f6b6a3354357e2e9ec6` |
 | `docs/development/WORKFLOW.md` | `db64e33c94566d5ce8b128e81a030443980817f63d75355803aec2acef040516` |
 | `docs/experiments/REPORT_TEMPLATE.md` | `4f569aab52ba34a68bb2e8b4551c6a3bf4932277c26c3b4206dbb505781a2cab` |
-| `AGENTS.md` | `29eed5b2d899a15d230a5865117686bb67dd1765fb16afc4a03bd9b29f895091` |
+| `AGENTS.md` | `cc2e5758164af8e8d37f0835a85ca2bddd72ab4a1bac80d46d65a6464efb6330` |
 | `docs/adr/0001-approved-g0.md` | `b8518c5c49cdefea3dbf0bf2a79ab40459dba2b565e71a6c534a555cbafa20df` |
 | `CONTRIBUTING.md` | `5d7fe456ad6e2967e3e324bb227f711dd23a735e4080db9ceb4d01760c94327e` |
 | `LICENSE` | `26a8432e65ef8fc4a2fbb6f4170ee2c31f0cacd3d2696bb678fb0ab7fd14ad1e` |
@@ -3421,7 +3594,7 @@ SHA-256 относится к исходному файлу на момент с
 | `compose.yaml` | `05a53e758aaaef80bfd0fcf6a74b30648fba848f7fc9d523bca6e58717d71e49` |
 | `tools/go.sh` | `9d0060a4cc3fde4e46d85da1bbdf470cc8b96520245b294e928f5c9117d346a2` |
 | `.golangci.yml` | `44651a36c889767cd425bc12b46e07c8bffc924024de23af1176057f78f3a74a` |
-| `.github/workflows/go.yml` | `10f6a32cee9a43bcf73213f0c5e30735d395146fa9e178f060829c49e3a99b35` |
+| `.github/workflows/go.yml` | `263ce3321dfe0a69fc018efca13af710962a8f53516473873c24f472b1e839a6` |
 | `.dockerignore` | `e75b314d79f67eec6dafc763b1e4c118597186f106f91a73749750d4ab0cf045` |
 | `docs/development/SERVICE_RUNTIME.md` | `189adfbcfa489f45efdd217d64640447fa4ac4a7bb6bae57aba90375fe551338` |
 | `internal/service/config.go` | `a5cd706cc41d0fb88ea96b0ffaeff4f7ecf32bf31394ec5398efb39fba240a89` |
@@ -3445,22 +3618,22 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/evidence/p01/windows-2026-10-15/payments.jsonl` | `d3466907750bc5c137738ba0045f8d37f6c83e7fb4e3690a56896cbf9ad83c58` |
 | `docs/development/evidence/p01/windows-2026-10-15/environment.json` | `e32d9a5c383c6fcc426179fc716ab8ad39bece710670215b208405ee099bc90b` |
 | `docs/development/evidence/p01/windows-2026-10-15/cleanup.json` | `6c78a1ca41714a3ccb50e4777a2532ffeaca7d1cfb5fb561127e76e91fe0ad79` |
-| `docs/development/ENGINEERING_DECISIONS.md` | `c553ac968846968b3c2109d7938ca80c47464b82393f82fceb2182bef66cb335` |
+| `docs/development/ENGINEERING_DECISIONS.md` | `a8beee65ffd2bc4508e8d6fc023a2b203c62e2e8f06dde13531a56e1dfd29669` |
 | `docs/adr/0002-record-review-decisions.md` | `00ad82591791da40b82d0c98c4be2c098a069fee70a5ba495a658a3657ba305e` |
 | `docs/adr/0003-go-container-smoke.md` | `228110462151044ffc87a6048293b8ad12e2673bee74bb627c8675ec62347181` |
 | `docs/development/backlog/GO_SMOKE.md` | `158ba7ad889fa7562db4136fc4fa475e607c0485f6d80f7bc59ab504bf80a4d4` |
 | `docs/development/packets/P02.md` | `c58b3cc3a1288c61cc90ac47cbad752409230551c1de69366166d26529195364` |
-| `docs/development/SMOKE.md` | `f9952d1b7033d7e2ffecec19e23f118b6c154194a86e8162d0bbc8d4aba0e043` |
+| `docs/development/SMOKE.md` | `a02b316b3eadee27ec1fefc1a9f76eb08a17ba5aa7429a5f8aa22dc3f0700173` |
 | `cmd/smoke/main.go` | `16ff87a9b0691547b5d4c79663efeab797ebccee1d8beb5b48df01ea0e13b0cd` |
 | `cmd/smoke/main_test.go` | `2970b74307c907e153f3eeeffb4b309c0ecc99652b4ed9bfe5f1e869c34e4154` |
-| `internal/smoke/run.go` | `c190e71b9c47c9c950be8334e5302a41f63ddcb592bcfaa9186ea00b792231db` |
-| `internal/smoke/report.go` | `0f16b8801b83b1d61142f180776de2e38c8830fa137d9d0bf76b6c28a96f428c` |
+| `internal/smoke/run.go` | `ebe924c35089d92407507f733f4594f28ee5f4419be085304304f42b6827991a` |
+| `internal/smoke/report.go` | `258ffd346c1721b5a58561de832aaaff2459704dafddc4f343bed5e3717c9d6b` |
 | `internal/smoke/checks.go` | `cb2ad73b3a258531f21c15b99f853bff819a3fc58feccad725c7be969dc32253` |
 | `internal/smoke/config.go` | `ac4fffa46895f9d2108866a9614b217f72c637dc55bc7eefcdf40c8471e1f557` |
 | `internal/command/exec.go` | `69aa0f4eef3cb8cef8518b528980751c5ed62104563e6778f8adeae5dbfc7d4f` |
 | `internal/command/exec_unix.go` | `46f04c817063ac9b643ce92fe793059f3b285ce19fc005d68e9142733f9fae93` |
 | `internal/command/exec_windows.go` | `12300ad8ef2126568fa4ac4d79a1c48f90f294226c46eda7fcb8298ea22872a9` |
-| `internal/smoke/run_test.go` | `2a71a2eab90c3b36a510ed12acaf85f9adf5672bf418242d0ed66b89f304d37f` |
+| `internal/smoke/run_test.go` | `14022c225f557f914c30222a2aca6703629bba30e69ec7692a3c35d32233408f` |
 | `internal/smoke/config_test.go` | `770d8d3161ac428cc70c141585ab6925c7780daca683dea8b1db2b17729adf64` |
 | `internal/command/exec_test.go` | `310e08549e9027c2fb6a0efb4be346567c848aabe42e0c766527ea63aff0f25e` |
 | `tools/doc_safety.mjs` | `785ca466148638927a73eaeb3ca55dfbc6af65069739e5820d264dc646da1dc9` |
@@ -3501,11 +3674,11 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/database/sql/seed/inventory.sql` | `61b9efdd980a8508fd1f36e4c4e2d0a72f907cb2c5ae0a8c9afe8c75de0deb2d` |
 | `migrations/orders/0001_schema.sql` | `7a2abc0f03d1dac75ea31f86a6abfadae9532eaee42416167be45aee5d5ab16f` |
 | `migrations/payments/0001_schema.sql` | `2856144143bedd41e0380818034ae85025f18b3f40baa295c4eace2d48519af4` |
-| `internal/datalab/run_test.go` | `f2661ab897184cef5a77d8f5c876fa8657a3069dfd478370f2e0e7102bdefa55` |
-| `internal/datalab/run.go` | `09d84528559f1623e8565ed99e4abf3aab29271c2b41a9b42b58031ef8c4cb03` |
+| `internal/datalab/run_test.go` | `43c2110a0f77958a7566762f3e86ac57dd0729c89978de344ca27220d948a147` |
+| `internal/datalab/run.go` | `3da57ad1ecf2445feedc6caacca943292d84c99bbeb990168b977e1d815cc5fc` |
 | `compose.postgres.yaml` | `edab063cc996ccba4ca3e2dfaf322d6d876b7c2367d0775648e5ee161b90d1b6` |
 | `internal/smoke/exec_adapter.go` | `5f903f8c590d90655b333d6988139d9276ca5e6dbb400bfff10b0af0dda0c4ba` |
-| `docs/development/POSTGRES.md` | `53884bfd349cf029676dad8936d57bb642c37e5e581437b9ab0f45f72b84da1f` |
+| `docs/development/POSTGRES.md` | `940d5f729ed58cd3f6b9190965f341d2006a85baee08bf9708c467c304d77310` |
 | `internal/database/config_unix_test.go` | `c8e157471af06e5ca233c8ee8e005c9ffe43166066019a53504aef5f408a2e27` |
 | `docs/PRODUCT_INTENT.md` | `277f3b947d5773e3bb80660eeaa667397d195b88fee4e3e71b09dfede1f5ec3b` |
 | `internal/database/migration_files.go` | `046b6a55f44422e4acc6c7d15d10dafd7775802c69223f00ac09e79cf1d93225` |
@@ -3532,12 +3705,12 @@ SHA-256 относится к исходному файлу на момент с
 | `configs/kafka/start.sh` | `3b4d8fea3474105c4c36d425f78f7d3152fed6d41929fe6bc941574ba2c827cf` |
 | `configs/redis/redis.conf` | `029a2c2bb179d718ccee7f551dc74b09c3fabe7195d41fae3d31619e072aeb12` |
 | `docs/architecture/KAFKA_PUBLISHING.md` | `a816285716b5640c9496a637093a1e0f22a1f986e9ec64946409a4b22608d564` |
-| `docs/development/INFRASTRUCTURE.md` | `a9bb042b37df1871f4719afe5c82d6c47dd4155e5618ec6130937e11009e125b` |
+| `docs/development/INFRASTRUCTURE.md` | `f204c1979552e5d82a64c63926f394fc649d1ab127da6759a76443b85bc2be0a` |
 | `docs/development/evidence/p02/INFRASTRUCTURE.md` | `e8cf387eec497eb0acb88b757472102a70ace2a56baa9c6063b6c6e992275e25` |
 | `docs/development/evidence/p02/infrastructure-images.json` | `99f4762612ea8763059ec8354c6b7fe1dba1bb92760e02bd3cf66ca4e7c24783` |
 | `docs/development/evidence/p02/windows-infrastructure-cleanup.json` | `2f7ff1d247b962053e55c83ab2857b138db6ececd44ef79d2e0a8d15769cce4f` |
 | `docs/development/evidence/p02/windows-infrastructure-report.json` | `04252a7eb6e4bd0faad678ec377f06c75c1d4e93ca5869311aa850c054a8a522` |
-| `internal/datalab/infrastructure_test.go` | `f9aeed25878348fb67c9cffda5f2b3dd0b51c368496fc061307613a7c10ea4bb` |
+| `internal/datalab/infrastructure_test.go` | `b28cc181621318ceb012d7aea563fdf0f6018875c1fb8cd4beb9bed27465930b` |
 | `internal/infrastructure/check.go` | `d60ad61dce85e2ccdb63bb8e257ba94e523677c0eddc0b45a5896906255ae8d8` |
 | `internal/infrastructure/config.go` | `4de22b0f4c2c8c0b910cba3f414d0325fc1c71f8a26d6c6a2c0b16f3cf55c51d` |
 | `internal/infrastructure/config_test.go` | `e8d7367565dc5d9f971d400f74b67150f43fd135e1a9e6fdf758f56ea8f9b707` |
@@ -3571,6 +3744,18 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/inventory/store/get_availability.go` | `3b1aa64407b2b6971fc79c67ed41b4cf24e28834aae96102951bd60a128a9d40` |
 | `internal/inventory/store/close.go` | `13ede548fb300bd657882ce1acbee6370d802231b63b5203a736337e57e693a2` |
 | `internal/inventory/store/config_test.go` | `704699f26c474dc6e070827a51cca3634d6848eb98e42e15b1385c5fc7c3f764` |
+| `docs/architecture/PLATFORM_EVIDENCE.md` | `627fe9d237e63bac68c26675b50a2d130176209d897cf8d917b4024233e28aa3` |
+| `docs/adr/0004-platform-evidence.md` | `a38a4602e20f43fa537e09b00495dd65e57394178c3baecc9fac4c561fcc80d6` |
+| `docs/development/RUN_METADATA.md` | `049e45f50d7e77b76d6b219728e067d08c720164340a77ef4237c496bf9269ee` |
+| `docs/development/evidence/run-metadata/VALIDATION.md` | `45edce3374c7239486da84ddc801473c67255689db5bc133be42f2581b662166` |
+| `docs/development/evidence/run-metadata/windows-smoke.json` | `89341fcbe659492faeb8f545c1065a8ec7903a82097da9b56cb5c774bf333173` |
+| `docs/development/evidence/run-metadata/windows-postgres.json` | `4e7bf8c3a353d09117d9acab30bf8a77de92e6550f755412bf5ee3fba039c35b` |
+| `docs/development/evidence/run-metadata/windows-infrastructure.json` | `d2004877ff5e4bd6799f4ee2151bf233dfc74ab4537ca6a6d2e36acb7a922e5c` |
+| `docs/development/evidence/run-metadata/windows-summary.json` | `d4e846afa63bab94fb312fd5fb7084ac72c4141a0bf9d8115367fea6d82201a7` |
+| `internal/runmeta/collect.go` | `0f6ead062aeb5f935b7358d0eb1736f3ab3dac0ddc35ceead7372c95028495c6` |
+| `internal/runmeta/collect_test.go` | `a6ea9f35ae66e53366a09ba76639022082fd82d9104e4acaae9d9e65fa6860d8` |
+| `internal/smoke/metadata_test.go` | `d6892d54ac1c0b6ebc5e46949aaa666cbdd4d1ecd359368914aeef6fa7a95809` |
+| `tests/smokecli/metadata_test.go` | `821683ccc4abb578f7446dd81adaf65e00f5e7182ec888a77d9f9cb50673afe9` |
 
 ## Полные самостоятельные приложения
 
@@ -3755,6 +3940,18 @@ SHA-256 относится к исходному файлу на момент с
 - [internal/inventory/store/get_availability.go](#inventory-store-get-availability-go) — `internal/inventory/store/get_availability.go`
 - [internal/inventory/store/close.go](#inventory-store-close-go) — `internal/inventory/store/close.go`
 - [internal/inventory/store/config_test.go](#inventory-store-config-test-go) — `internal/inventory/store/config_test.go`
+- [F03: accepted platform evidence contract](#appendix-docs-architecture-platform-evidence-md) — `docs/architecture/PLATFORM_EVIDENCE.md`
+- [ADR 0004: accepted platform provenance decision](#appendix-docs-adr-0004-platform-evidence-md) — `docs/adr/0004-platform-evidence.md`
+- [Observed run metadata: fields and limits](#appendix-docs-development-run-metadata-md) — `docs/development/RUN_METADATA.md`
+- [Windows run metadata validation — 2026-10-20](#appendix-docs-development-evidence-run-metadata-validation-md) — `docs/development/evidence/run-metadata/VALIDATION.md`
+- [Windows service metadata excerpt](#appendix-docs-development-evidence-run-metadata-windows-smoke-json) — `docs/development/evidence/run-metadata/windows-smoke.json`
+- [Windows PostgreSQL metadata excerpt](#appendix-docs-development-evidence-run-metadata-windows-postgres-json) — `docs/development/evidence/run-metadata/windows-postgres.json`
+- [Windows combined infrastructure metadata excerpt](#appendix-docs-development-evidence-run-metadata-windows-infrastructure-json) — `docs/development/evidence/run-metadata/windows-infrastructure.json`
+- [Windows metadata source fingerprints and cleanup](#appendix-docs-development-evidence-run-metadata-windows-summary-json) — `docs/development/evidence/run-metadata/windows-summary.json`
+- [Shared run metadata collector](#appendix-internal-runmeta-collect-go) — `internal/runmeta/collect.go`
+- [Metadata platform/resource/provenance tests](#appendix-internal-runmeta-collect-test-go) — `internal/runmeta/collect_test.go`
+- [Smoke metadata cancellation and failure tests](#appendix-internal-smoke-metadata-test-go) — `internal/smoke/metadata_test.go`
+- [Validate observed metadata in completed real smoke reports](#appendix-smokecli-real-report-metadata-test) — `tests/smokecli/metadata_test.go`
 
 <a id="appendix-readme-en"></a>
 
@@ -3763,7 +3960,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
 </p>
 
 <p align="center">
@@ -3781,7 +3978,7 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Project guide
@@ -3876,7 +4073,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience |
 | **G4** | Reproducible engineering lab |
 
-The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
 
 [Engineering decisions and review](#appendix-engineering-decisions) traces owner feedback through the rationale, changes and verification. It also links the separate [Go smoke task](https://github.com/Includeoyasi/faultline-lab/issues/9); its execution and review are tracked in GitHub.
 
@@ -3944,7 +4141,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
 </p>
 
 <p align="center">
@@ -3962,7 +4159,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Навигация по проекту
@@ -4046,7 +4243,7 @@ flowchart LR
 
 G0 — архитектура; G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Порядок и критерии приёмки описаны в workflow; факты принятия сохраняются с датой и источником.
 
-[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
 
 [Инженерные решения и ревью](#appendix-engineering-decisions) связывают замечания владельца с обоснованием, изменениями и проверками. Выполнение переноса контейнерного smoke на Go и его ревью ведутся в [задаче #9](https://github.com/Includeoyasi/faultline-lab/issues/9).
 
@@ -4107,6 +4304,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Подготовить базы и исходные данные | [PostgreSQL](#p02-docs-development-postgres-md) — роли, миграции, seed, схемы взаимодействий и reset |
 | Работать со складом | [Inventory](#inventory-docs-development-inventory-md) — API, резервы, повторы, отмена и проверка транзакций |
 | Запустить инфраструктуру вместе | [Kafka и Redis](#p02-infra-docs-development-infrastructure-md) — общий smoke, ACL, TTL, сохранность Kafka и очистка |
+| Прочитать платформы и ресурсы отчёта | [Метаданные запуска](#appendix-docs-development-run-metadata-md) — происхождение значений, неизвестные поля и ограничения |
 | Разобрать смену Kafka publisher и повторы | [Публикация Kafka](#p02-infra-docs-architecture-kafka-publishing-md) — проблема, три механизма и совместные сценарии на схемах |
 | Проверить Windows smoke | [Отчёт P01](#windows-smoke-proof) — исходные JSON/JSONL, бюджет и остановка среды |
 | Проверить исходные ресурсы | [Профили сред](#appendix-resource-profiles) — Windows, macOS и возможный будущий сервер |
@@ -4119,7 +4317,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Проверить отдельный backlog | [Перенос smoke на Go](#appendix-go-smoke-backlog) — задача #9, границы и критерии |
 | Проверить права и защиту main | [Безопасность репозитория](#appendix-repository-security) — действующая защита и переход на аккаунт исполнителя |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
@@ -4134,7 +4332,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
 - [ADR 0002](#appendix-adr-0002): согласованный порядок фиксации решений в PR, ADR и обзорной странице.
 - [ADR 0003](#appendix-adr-0003): принятое решение о Go smoke и его последствия.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -5234,7 +5432,7 @@ Codex (AI-Your-Bro) — исполнитель: готовит проектны�
 
 #### Стандарт код-ревью
 
-[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/.github/pull_request_template.md) содержит краткий применимый чек-лист.
 
 После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; владелец проекта рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению владельца проекта или действие самого владельца проекта.
 
@@ -5434,7 +5632,8 @@ PROJECT_CONTEXT.md — самостоятельный пакет для друг
 - Keep exactly three business services: Orders, Inventory and Payments. Workflow orchestration lives inside Orders; do not add a business service for it. Lab tools and adapters are separate from the tested business.
 - Follow docs/development/CODE_REVIEW.md. Address lifecycle, errors/context, concurrency, data ownership and meaningful tests. Never report a test, measurement or approval that did not occur. Compile-only results do not establish runtime compatibility.
 - Addresses belong to deployment configuration. FL_GRPC_ADDR is required, with no hidden listen address or port fallback. Keep listener, peer DNS and host publication separate; host publication must bind loopback explicitly. Test loopback fixtures and observed addresses are not production defaults.
-- Use clear PR headings such as “Что было сделано”, “Проверки” and “На что обратить внимание”. Explain observable behavior and evidence. Do not use the rejected question-style heading.
+- Use concise PR sections: “Содержание”, “Проверки”, “Ограничения”, “Материалы” and “Связанные задачи” as applicable. Number items in “Ограничения”, one limitation per point with a short clarification when needed; this does not impose numbering or a new writing style on other sections. Preserve their existing wording and presentation when addressing local annotations. Put closing/reference directives in “Связанные задачи”; keep review file navigation in “Материалы”, separate from limitations. Apply an annotation to its specified block; do not generalize it across the description unless the owner requests analogous changes. The owner clarified this scope in chat on 2026-10-21.
+- Add one meaningful Mermaid diagram directly to a PR description when it helps explain the essence of the change. Show relevant actions, guarantees or a concrete interaction scenario; do not reduce a working interaction to a component-only sketch. Use judgment: diagrams are optional, and the section may be omitted without an N/A entry or explanation when it adds no value. When used, make the diagram match the change and distinguish implemented behavior from proposed or future parts before requesting review. Additional detailed diagrams belong in the linked guide; the agreed five-block format for architecture review documents remains unchanged.
 - Record findings discovered during a task in a concise list in its existing GitHub Issue/PR: observation, required action, status and verified result. Update one list instead of creating an Issue for every small finding. Do not call planned work completed or silently expand scope. This owner instruction comes from voice chat on 2026-10-18.
 - Working review discussion belongs in PRs, substantial decisions in ADRs and selected examples in docs/development/ENGINEERING_DECISIONS.md. Attribute chat requirements to the owner and identify chat as their source; do not impersonate owner GitHub comments or approval.
 - After a substantive decision, implementation result or environment check, update the canonical specifications and dated evidence in CONTEXT_STATE.json, increment its revision and regenerate PROJECT_CONTEXT.md with tools/update_context.ps1, then run -CheckOnly. Do not edit only the generated file. Do not copy live task stages, counters or assignments into context.
@@ -5494,7 +5693,7 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
+Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
@@ -5693,7 +5892,7 @@ Go-модуль, закреплённые инструменты и нативн
 - Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
 - Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
 
-Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
 
 <a id="appendix-lab-boundary"></a>
 
@@ -5987,13 +6186,13 @@ Docker рекомендует разделять ответственности 
 
 ### Баннер Faultline Lab
 
-Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/assets/banner.svg).
+Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner.svg).
 
 #### Задание
 
 Подготовить три альтернативных варианта с акцентом на технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее. Сделаны векторные композиции с читаемым названием, тёмным текстом на светлом фоне и встроенными title/description. Внешних шрифтов, скриптов и удалённых графических зависимостей нет.
 
-![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/assets/banner-concepts/comparison.png)
+![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner-concepts/comparison.png)
 
 | Вариант | Образ | Палитра | Статус |
 | :--- | :--- | :--- | :--- |
@@ -6003,13 +6202,13 @@ Docker рекомендует разделять ответственности 
 
 #### Выбранное решение
 
-![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/assets/banner-concepts/02-experiment-flow.png)
+![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner-concepts/02-experiment-flow.png)
 
 Абстрактные линии проходят через область наблюдения. Это метафора исследования поведения системы и сравнения изменений; линии не являются графиком измеренных результатов. Композиция не зависит от домена магазина и подходит будущим подключаемым бизнесам.
 
 Размер SVG — 1280 × 420; README задаёт ширину 100%. Исходник масштабируется, PNG служит предварительным просмотром. Основная подпись: **Explore how systems behave.** Нижняя последовательность: **Hypothesis → Experiment → Evidence**.
 
-Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
+Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
 
 Баннеры отрендерены локально и визуально просмотрены на общем листе. Проверены отсутствие обрезанного текста и соответствие композиций заданию. Отдельный preview выбранного варианта используется для проверки основного баннера. Выбранный вариант слит в main через [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4), merge commit 8c392b8. Проверка отрисовки нового README на GitHub пока не выполнялась.
 
@@ -6147,7 +6346,7 @@ P01 не достигает всей контрольной точки G1: ба�
 | GitHub Issue | Текущая стадия, исполнитель, критерии выполнения, блокеры и связь с PR |
 | GitHub PR | Diff, результаты проверок, замечания и решение владельца по HEAD |
 | ADR | Существенное решение, варианты, последствия и основание принятия |
-| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
+| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
 
 #### Стадии в Issue
 
@@ -6267,7 +6466,7 @@ GitHub разрешает machine account, зарегистрированный 
 
 Исходный набор версий проверен по официальным источникам 15 октября 2026 года: [Go releases](https://go.dev/dl/), [golangci-lint releases](https://github.com/golangci/golangci-lint/releases/tag/v2.14.0), Go module proxy и Docker Registry. Оба закреплённых digest относятся к multi-platform индексам, а не к одному варианту CPU.
 
-21 октября Go обновлён до [1.27.3](https://go.dev/doc/devel/release#go1.27.3), чтобы устранить блокирующий CI security finding GO-2026-6809 в стандартной библиотеке crypto/x509. SHA-256 индекса получен из официального Docker Registry и сверен с байтами ответа; наличие Linux AMD64 и ARM64 подтверждено в [данных проверки индекса](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/development/evidence/go-toolchain/go-1.27.3-registry.json). Пересборка этим toolchain обновляет стандартную библиотеку и в статических runtime-бинарниках. Исторические evidence и установленный host Go 1.27.2 сохраняются; основной путь запуска проверок остаётся контейнерным.
+21 октября Go обновлён до [1.27.3](https://go.dev/doc/devel/release#go1.27.3), чтобы устранить блокирующий CI security finding GO-2026-6809 в стандартной библиотеке crypto/x509. SHA-256 индекса получен из официального Docker Registry и сверен с байтами ответа; наличие Linux AMD64 и ARM64 подтверждено в [данных проверки индекса](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/development/evidence/go-toolchain/go-1.27.3-registry.json). Пересборка этим toolchain обновляет стандартную библиотеку и в статических runtime-бинарниках. Исторические evidence и установленный host Go 1.27.2 сохраняются; основной путь запуска проверок остаётся контейнерным.
 
 gRPC v1.84.0 добавлен для реального health API в P01-04; версия проверена через официальный Go proxy. JSON-логи использует стандартный log/slog. Инструменты закреплены через [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools). PostgreSQL использует pgx v5.11.0; инфраструктурные проверки — franz-go v1.22.2 и go-redis v9.23.0, закреплённые в go.mod/go.sum.
 
@@ -6856,10 +7055,6 @@ jobs:
         run: |
           docker compose run --rm toolchain smoke-build
           bin/smoke-linux-${{ matrix.arch }}
-      - name: Verify SIGINT report and scoped cleanup on the host
-        run: |
-          docker compose run --rm toolchain smoke-cli-tests
-          LAB_SMOKE_BINARY="$PWD/bin/smoke-linux-${{ matrix.arch }}" LAB_SMOKE_ROOT="$PWD" bin/smoke-cli-tests -test.v -test.timeout=4m
       - name: Cross-compile smoke for supported host platforms
         if: matrix.arch == 'amd64'
         run: docker compose run --rm toolchain smoke-cross-check
@@ -6869,6 +7064,10 @@ jobs:
           bin/labdata-linux-${{ matrix.arch }} smoke
       - name: Verify PostgreSQL, Kafka and Redis together
         run: bin/labdata-linux-${{ matrix.arch }} smoke -infrastructure
+      - name: Verify observed metadata, SIGINT report and scoped cleanup
+        run: |
+          docker compose run --rm toolchain smoke-cli-tests
+          LAB_SMOKE_BINARY="$PWD/bin/smoke-linux-${{ matrix.arch }}" LAB_SMOKE_ROOT="$PWD" bin/smoke-cli-tests -test.v -test.timeout=4m
       - name: Cross-compile data tool for supported hosts
         if: matrix.arch == 'amd64'
         run: docker compose run --rm toolchain data-cross-check
@@ -9456,6 +9655,7 @@ flowchart LR
 | [0001](#appendix-adr-0001) | Архитектура G0 | accepted |
 | [0002](#appendix-adr-0002) | PR, ADR и обзорная страница для фиксации решений | accepted: порядок согласован в чате, публикация принята в PR #8 |
 | [0003](#appendix-adr-0003) | Go вместо Node.js для контейнерного smoke | accepted: выбран Go; выполнение — в #9 |
+| [0004](#appendix-docs-adr-0004-platform-evidence-md) | Раздельное происхождение платформ и правила сравнения | accepted владельцем в чате 20 октября 2026; полный допуск A/B вводится перед экспериментами |
 
 <a id="appendix-adr-0002"></a>
 
@@ -9635,6 +9835,8 @@ flowchart LR
 
 Smoke собирает и запускает три сервиса, проверяет health, изоляцию и остановку, сохраняет отчёт и удаляет ресурсы тестового запуска.
 
+Блок `environment` описывает фактические образы, платформы и ресурсы: [поля и ограничения метаданных](#appendix-docs-development-run-metadata-md).
+
 #### Сборка без Go SDK на хосте
 
 Нужны Git, Docker с Linux backend и Compose. Соберите бинарник для своей ОС через [контейнерный toolchain](#appendix-toolchain) и запустите его на хосте.
@@ -9691,7 +9893,7 @@ JSON schema version 2 сохраняет `run_id`, `project`, `result`, `service
 
 Отчёт не содержит полного inspect Env или разрешённого Compose-конфига. Пути checkout и домашнего каталога редактируются в диагностике. Smoke использует несекретный профиль; сторонние произвольные логи перед публикацией нужно проверять отдельно. Это проверка каркаса, а не измерение бизнес-корректности или capacity.
 
-После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
+После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
 
 <a id="go-smoke-main"></a>
 
@@ -9810,6 +10012,8 @@ import (
 	"runtime"
 	"strings"
 	"time"
+
+	"github.com/Includeoyasi/faultline-lab/internal/runmeta"
 )
 
 var services = []string{"orders", "inventory", "payments"}
@@ -9931,10 +10135,11 @@ func newRunner(options Options, execute executeFunc) (*runner, error) {
 		pairs = append(pairs, home, "[home]", filepath.ToSlash(home), "[home]")
 	}
 	return &runner{options: options, directory: directory, execute: execute, redact: strings.NewReplacer(pairs...), report: Report{
-		SchemaVersion: 2, RunID: id, Project: project, StartedAt: time.Now().UTC(), Result: "FAIL", Phase: "prerequisites", Cleanup: "PENDING",
+		SchemaVersion: 3, RunID: id, Project: project, StartedAt: time.Now().UTC(), Result: "FAIL", Phase: "prerequisites", Cleanup: "PENDING",
 		HostPlatform: runtime.GOOS, GoVersion: runtime.Version(), Services: map[string]serviceReport{}, Commands: []commandReport{},
 		Recovery:    []string{"docker", "compose", "-f", "compose.yaml", "-p", project, "down", "--remove-orphans", "--rmi", "local"},
-		Limitations: []string{"No business operations or capacity measurement", "docker_architecture describes the backend, not individual image platforms (F03)", "SIGKILL or host failure requires recovery_command; signal cleanup cannot be guaranteed in those cases"},
+		Limitations: []string{"No business operations or capacity measurement", "Legacy host_platform is runner GOOS; docker_architecture describes the backend. See environment for platform observations", "Platform match does not prove native execution; A/B eligibility is not evaluated", "SIGKILL or host failure requires recovery_command; signal cleanup cannot be guaranteed in those cases"},
+		Environment: runmeta.New(services),
 	}}, nil
 }
 
@@ -9992,7 +10197,16 @@ func (r *runner) exercise(ctx context.Context) error {
 		{"start", func(ctx context.Context) error {
 			r.resourcesMayExist = true
 			_, err := r.compose(ctx, append([]string{"up", "-d", "--wait", "--wait-timeout", "60"}, services...)...)
-			return err
+			// Collect before shutdown, including observable partial starts. Raw
+			// config/inspect data bypass diagnostics and never reach the report.
+			r.report.Environment = runmeta.Collect(ctx, func(ctx context.Context, args []string) (string, error) {
+				out, e := r.execute(ctx, "docker", args)
+				if e == nil && out.exitCode != 0 {
+					e = errors.New("metadata command failed")
+				}
+				return out.stdout, e
+			}, r.composeArgs(), services)
+			return errors.Join(err, r.checkpoint())
 		}},
 		{"check", r.checkAll},
 		{"isolation", r.isolate},
@@ -10128,10 +10342,11 @@ import (
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/Includeoyasi/faultline-lab/internal/runmeta"
 )
 
-// Report version 2 preserves result/cleanup/services/commands and exit meanings.
-// It replaces Node metadata with Go metadata and adds cancellation/recovery data.
+// Report version 3 adds observed run metadata without changing result/exit meanings.
 type Report struct {
 	SchemaVersion int                      `json:"schema_version"`
 	RunID         string                   `json:"run_id"`
@@ -10157,6 +10372,7 @@ type Report struct {
 	Commands      []commandReport          `json:"commands"`
 	Recovery      []string                 `json:"recovery_command"`
 	Limitations   []string                 `json:"limitations"`
+	Environment   runmeta.Report           `json:"environment"`
 }
 
 type serviceReport struct {
@@ -10863,6 +11079,9 @@ func (f *dockerFixture) execute(ctx context.Context, program string, args []stri
 	case "version":
 		return commandOutput{stdout: "29.8.2"}, nil
 	case "info":
+		if strings.Contains(args[len(args)-1], `"cpus"`) {
+			return commandOutput{stdout: `{"os":"linux","arch":"arm64","cpus":4,"memory":1073741824,"version":"29.8.2"}`}, nil
+		}
 		return commandOutput{stdout: "linux/arm64"}, nil
 	case "compose": // compose version
 		return commandOutput{stdout: "5.6.0"}, nil
@@ -10890,6 +11109,9 @@ func (f *dockerFixture) execute(ctx context.Context, program string, args []stri
 		}
 		return commandOutput{}, nil
 	case "inspect":
+		if args[1] == "--format" {
+			return commandOutput{stdout: `{"image":"sha256:` + strings.Repeat("d", 64) + `","memory":0,"nano_cpus":500000000,"running":true}`}, nil
+		}
 		index := int(args[1][0] - 'a')
 		name := services[index]
 		state, code, oom := "running", 0, false
@@ -10927,10 +11149,15 @@ func (f *dockerFixture) execute(ctx context.Context, program string, args []stri
 		}
 		return commandOutput{}, nil
 	case "image":
+		if args[1] == "inspect" {
+			return commandOutput{stdout: `[{"Id":"sha256:` + strings.Repeat("d", 64) + `","Os":"linux","Architecture":"arm64","RepoDigests":[]}]`}, nil
+		}
 		if f.images {
 			return commandOutput{stdout: "owned-image"}, nil
 		}
 		return commandOutput{}, nil
+	case "stats":
+		return commandOutput{stdout: `{"cpu":"1.0%","memory":"12MiB / 1GiB"}`}, nil
 	default:
 		f.t.Fatalf("unexpected Docker operation %s %v", op, args)
 		return commandOutput{}, nil
@@ -10969,6 +11196,9 @@ func TestSuccessfulRunRetainsServiceChecks(t *testing.T) {
 		if !observed.Healthy || !observed.Stopped || observed.ID == "" || observed.ImageID == "" || observed.ExitCode == nil || *observed.ExitCode != 0 {
 			t.Fatalf("incomplete %s observation: %+v", service, observed)
 		}
+	}
+	if report.SchemaVersion != 3 || report.Environment.SchemaVersion != 1 || report.Environment.Services["orders"].Image.Architecture != "arm64" || report.Environment.Services["orders"].Usage.Status != "MEASURED" {
+		t.Fatal("run metadata missing from successful smoke")
 	}
 	if count := strings.Count(strings.Join(f.operations, ","), "down"); count != 2 {
 		t.Fatalf("late engine resource was not cleaned again: %v", f.operations)
@@ -16581,6 +16811,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -16590,6 +16821,29 @@ import (
 
 	"github.com/Includeoyasi/faultline-lab/internal/command"
 )
+
+// Return metadata observations independently of the functional lifecycle fixture.
+func metadataFixture(args []string) (command.Output, bool) {
+	switch {
+	case args[0] == "info":
+		return command.Output{Stdout: `{"os":"linux","arch":"amd64","cpus":6,"memory":2147483648,"version":"29.0.0"}`}, true
+	case args[0] == "compose" && slices.Contains(args, "config"):
+		return command.Output{Stdout: `{"services":{"postgres":{},"kafka":{},"redis":{},"inventory":{}},"private":"` + strings.Join([]string{"", "Users", "private"}, "/") + ` PASSWORD=metadata-secret"}`}, true
+	case args[0] == "compose" && slices.Contains(args, "ps"):
+		name := args[len(args)-1]
+		index := slices.Index([]string{"postgres", "kafka", "redis", "inventory"}, name)
+		return command.Output{Stdout: strings.Repeat(string(rune('a'+index)), 64)}, true
+	case args[0] == "compose" && slices.Contains(args, "version"):
+		return command.Output{Stdout: "5.0.0"}, true
+	case args[0] == "inspect":
+		return command.Output{Stdout: fmt.Sprintf(`{"image":"sha256:%s","memory":134217728,"nano_cpus":0,"running":true}`, strings.Repeat("d", 64))}, true
+	case args[0] == "image" && args[1] == "inspect":
+		return command.Output{Stdout: fmt.Sprintf(`[{"Id":"sha256:%s","Os":"linux","Architecture":"amd64","RepoDigests":[]}]`, strings.Repeat("d", 64))}, true
+	case args[0] == "stats":
+		return command.Output{Stdout: `{"cpu":"2.5%","memory":"16MiB / 128MiB"}`}, true
+	}
+	return command.Output{}, false
+}
 
 func TestResetRejectsAmbiguousTargets(t *testing.T) {
 	for _, test := range []struct{ project, confirm string }{
@@ -16604,7 +16858,7 @@ func TestResetRejectsAmbiguousTargets(t *testing.T) {
 }
 
 func TestRunCleanupAndReports(t *testing.T) {
-	for _, scenario := range []string{"success", "read-only-directory", "partial-build", "cancel-build", "cleanup-failure"} {
+	for _, scenario := range []string{"success", "read-only-directory", "partial-build", "cancel-build", "cleanup-failure", "metadata-cancel", "metadata-missing"} {
 		t.Run(scenario, func(t *testing.T) {
 			root := t.TempDir()
 			config, e := os.ReadFile("../../configs/postgres/local.json")
@@ -16621,9 +16875,26 @@ func TestRunCleanupAndReports(t *testing.T) {
 			defer cancel()
 			cleaned := false
 			imageExists := false
+			inventoryStarted := false
 			execute := func(commandCtx context.Context, program string, args []string) (command.Output, error) {
 				if program != "docker" {
 					t.Fatal("unexpected executable")
+				}
+				if slices.Contains(args, "up") && slices.Contains(args, "inventory") {
+					inventoryStarted = true
+				}
+				if args[0] == "compose" && slices.Contains(args, "config") && (!inventoryStarted || !slices.Contains(args, "compose.inventory.yaml")) {
+					t.Fatal("metadata must observe the started Inventory business profile")
+				}
+				if scenario == "metadata-cancel" && args[0] == "info" {
+					cancel()
+					return command.Output{}, commandCtx.Err()
+				}
+				if scenario == "metadata-missing" && args[0] == "image" && args[1] == "inspect" {
+					return command.Output{Stderr: "metadata-private"}, errors.New("metadata-private")
+				}
+				if data, ok := metadataFixture(args); ok {
+					return data, nil
 				}
 				if slices.Contains(args, "build") {
 					imageExists = true
@@ -16664,7 +16935,7 @@ func TestRunCleanupAndReports(t *testing.T) {
 				return command.Output{}, nil
 			}
 			err := run(ctx, io.Discard, root, execute)
-			wantSuccess := scenario == "success" || scenario == "read-only-directory"
+			wantSuccess := scenario == "success" || scenario == "read-only-directory" || scenario == "metadata-missing"
 			if !cleaned || wantSuccess != (err == nil) {
 				t.Fatalf("cleanup=%t err=%v", cleaned, err)
 			}
@@ -16688,6 +16959,19 @@ func TestRunCleanupAndReports(t *testing.T) {
 			}
 			if wantSuccess && saved.Result != "PASS" || !wantSuccess && saved.Result != "FAIL" {
 				t.Fatal("wrong verdict")
+			}
+			if wantSuccess && scenario != "metadata-missing" && (saved.SchemaVersion != 1 || saved.Environment.Services["postgres"].Image.Status != "KNOWN" || saved.Environment.Services["postgres"].Usage.Status != "MEASURED") {
+				t.Fatal("postgres-only metadata missing")
+			}
+			inventory := saved.Environment.Services["inventory"]
+			if wantSuccess && scenario != "metadata-missing" && (inventory.Image.Status != "KNOWN" || inventory.Usage.Status != "MEASURED") {
+				t.Fatal("Inventory business container metadata missing")
+			}
+			if strings.Contains(string(data), "metadata-secret") || strings.Contains(string(data), strings.Join([]string{"", "Users", "private"}, "/")) {
+				t.Fatal("raw Compose data leaked")
+			}
+			if strings.Contains(string(data), "metadata-private") || scenario == "metadata-missing" && saved.Environment.Services["postgres"].Image.Status != "UNKNOWN" {
+				t.Fatal("missing metadata not safely represented")
 			}
 			if (scenario == "cleanup-failure") != (saved.Cleanup == "FAIL") {
 				t.Fatal("wrong cleanup verdict")
@@ -16724,6 +17008,7 @@ import (
 	"github.com/Includeoyasi/faultline-lab/internal/command"
 	"github.com/Includeoyasi/faultline-lab/internal/database"
 	"github.com/Includeoyasi/faultline-lab/internal/infrastructure"
+	"github.com/Includeoyasi/faultline-lab/internal/runmeta"
 )
 
 var projectName = regexp.MustCompile(`^faultline-data-[a-z0-9][a-z0-9-]{0,47}$`)
@@ -16775,12 +17060,14 @@ type event struct {
 	ExitCode int    `json:"exit_code"`
 }
 type report struct {
-	Project  string    `json:"project"`
-	Started  time.Time `json:"started_at"`
-	Finished time.Time `json:"finished_at"`
-	Result   string    `json:"result"`
-	Cleanup  string    `json:"cleanup"`
-	Events   []event   `json:"events"`
+	SchemaVersion int            `json:"schema_version"`
+	Project       string         `json:"project"`
+	Started       time.Time      `json:"started_at"`
+	Finished      time.Time      `json:"finished_at"`
+	Result        string         `json:"result"`
+	Cleanup       string         `json:"cleanup"`
+	Events        []event        `json:"events"`
+	Environment   runmeta.Report `json:"environment"`
 }
 
 func Run(ctx context.Context, out io.Writer) (finalErr error) {
@@ -16906,7 +17193,12 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	if execute == nil {
 		execute = executor.Execute
 	}
-	evidence := report{Project: project, Started: time.Now().UTC(), Result: "FAIL", Cleanup: "PENDING", Events: []event{}}
+	services := []string{"postgres"}
+	if fullStack {
+		services = append(services, "kafka", "redis")
+	}
+	observedServices := append(append([]string{}, services...), "inventory")
+	evidence := report{SchemaVersion: 1, Project: project, Started: time.Now().UTC(), Result: "FAIL", Cleanup: "PENDING", Events: []event{}, Environment: runmeta.New(observedServices)}
 	save := func() error {
 		data, e := json.MarshalIndent(evidence, "", "  ")
 		if e != nil {
@@ -16978,11 +17270,9 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 		return err
 	}
 	mayExist = true
-	services := []string{"postgres"}
 	buildServices := []string{"dbtool"}
 	buildServices = append(buildServices, "inventory")
 	if fullStack {
-		services = append(services, "kafka", "redis")
 		buildServices = append(buildServices, "infrastructure-check")
 	}
 	// Register before build/start, so partial startup failures retain diagnostics.
@@ -16995,16 +17285,9 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	if _, err = call(ctx, "build dbtool", 10*time.Minute, compose(append([]string{"build"}, buildServices...)...)...); err != nil {
 		return err
 	}
-	if _, err = call(ctx, "start dependencies", 2*time.Minute, compose(append([]string{"up", "-d", "--wait", "--wait-timeout", "100"}, services...)...)...); err != nil {
+	_, err = call(ctx, "start dependencies", 2*time.Minute, compose(append([]string{"up", "-d", "--wait", "--wait-timeout", "100"}, services...)...)...)
+	if err != nil {
 		return err
-	}
-	if fullStack {
-		if _, err = call(ctx, "Docker backend budget", 10*time.Second, "info", "--format", `{"os":{{json .OSType}},"architecture":{{json .Architecture}},"cpus":{{json .NCPU}},"memory_bytes":{{json .MemTotal}}}`); err != nil {
-			return err
-		}
-		if _, err = call(ctx, "dependency limits and image IDs", 10*time.Second, "inspect", "--format", "name={{.Name}} image_id={{.Image}} configured_image={{.Config.Image}} memory_bytes={{.HostConfig.Memory}} nano_cpus={{.HostConfig.NanoCpus}}", project+"-postgres-1", project+"-kafka-1", project+"-redis-1"); err != nil {
-			return err
-		}
 	}
 	tool := func(stage string, args ...string) (string, error) {
 		return call(ctx, stage, 90*time.Second, compose(append([]string{"run", "--rm", "--no-deps", "dbtool"}, args...)...)...)
@@ -17029,7 +17312,17 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 			break
 		}
 	}
-	if _, err = call(ctx, "start Inventory business container", 60*time.Second, append(deployed, "up", "-d", "--no-deps", "--wait", "--wait-timeout", "45", "inventory")...); err != nil {
+	_, err = call(ctx, "start Inventory business container", 60*time.Second, append(deployed, "up", "-d", "--no-deps", "--wait", "--wait-timeout", "45", "inventory")...)
+	// Observe the business container with its effective overlay, before its
+	// functional probes. Raw config bypasses call() to keep secrets out of logs.
+	evidence.Environment = runmeta.Collect(ctx, func(ctx context.Context, args []string) (string, error) {
+		result, e := execute(ctx, "docker", args)
+		if e == nil && result.ExitCode != 0 {
+			e = errors.New("metadata command failed")
+		}
+		return result.Stdout, e
+	}, deployed, observedServices)
+	if err = errors.Join(err, ctx.Err(), save()); err != nil {
 		return err
 	}
 	deployedProbe := func(stage string) error {
@@ -17084,12 +17377,7 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 			return err
 		}
 	}
-	statArgs := []string{"stats", "--no-stream", "--format", "{{json .}}"}
-	for _, service := range services {
-		statArgs = append(statArgs, project+"-"+service+"-1")
-	}
-	_, err = call(ctx, "resource snapshot", 15*time.Second, statArgs...)
-	return err
+	return nil
 }
 func roleNames(cfg database.Config) []string {
 	var result []string
@@ -17238,6 +17526,8 @@ func (p processExecutor) execute(ctx context.Context, program string, args []str
 Полный исходный документ: `docs/development/POSTGRES.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 ### PostgreSQL: подготовка данных и проверка изоляции
+
+Оба режима `labdata smoke` сохраняют [метаданные платформ и ресурсов](#appendix-docs-development-run-metadata-md) в блоке `environment` отчёта.
 
 Основа данных для [задачи #12](https://github.com/Includeoyasi/faultline-lab/issues/12): один PostgreSQL, три отдельные базы, прикладная и миграционная роль для каждой базы, миграции и небольшой каталог Inventory. Команды выполняются из корня checkout. Фактические проверки и ограничения среды сохраняются в [отчёте](#p02-docs-development-evidence-p02-postgres-md).
 
@@ -18503,6 +18793,8 @@ Lease выбирает владельца в PostgreSQL, fencing исполня�
 
 ### Kafka и Redis: совместная проверка инфраструктуры
 
+Платформы фактических образов, бюджет Docker, лимиты и стартовый снимок потребления описаны в [метаданных запуска](#appendix-docs-development-run-metadata-md).
+
 [Задача #16](https://github.com/Includeoyasi/faultline-lab/issues/16) добавляет Kafka и Redis к [PostgreSQL](#p02-docs-development-postgres-md). Три бизнес-сервиса остаются отдельными gRPC-процессами; этот пакет проверяет инфраструктуру до подключения бизнес-обработчиков. Результаты конкретных запусков и ограничения среды — в [отчёте](#p02-infra-docs-development-evidence-p02-infrastructure-md).
 
 #### Состав и границы доступа
@@ -18547,7 +18839,7 @@ flowchart TB
 
 Kafka работает в KRaft с явными broker/controller listeners, статическим quorum и постоянным cluster ID. Автоматическое создание топиков выключено. Один broker не обеспечивает репликационную доступность: `acks=all` здесь означает подтверждение единственным ISR. Сохраняется проверка штатного restart, а не аварии диска/хоста.
 
-Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/d47cfa9addc7c6290b584714e094440fc10af040/docs/development/POSTGRES.md#подготовка-стенда).
+Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/development/POSTGRES.md#подготовка-стенда).
 
 Контейнеры зависимостей и runtime-проверок непривилегированные, с read-only root, без capabilities и с `no-new-privileges`; запись разрешена в явные volume/tmpfs. Временный toolchain имеет отдельные права для сборки в workspace, описанные в [его руководстве](#appendix-toolchain). Порты доступны через DNS внутренней сети: `postgres`, `kafka:9092`, `redis:6379`. Kafka PLAINTEXT и Redis без TLS допустимы только в этом изолированном локальном профиле; удалённое размещение требует отдельного профиля аутентификации, TLS и сетевых правил.
 
@@ -18910,7 +19202,7 @@ import (
 )
 
 func TestCombinedInfrastructureLifecycle(t *testing.T) {
-	for _, scenario := range []string{"success", "start-failure", "before-failure", "invalid-checkpoint", "after-failure", "cancel-before", "cleanup-failure"} {
+	for _, scenario := range []string{"success", "start-failure", "before-failure", "invalid-checkpoint", "after-failure", "cancel-before", "cleanup-failure", "metadata-cancel", "metadata-missing"} {
 		t.Run(scenario, func(t *testing.T) {
 			root := t.TempDir()
 			for _, path := range []string{"configs/postgres/local.json", "configs/infrastructure/local.json"} {
@@ -18929,11 +19221,25 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 			ctx, cancel := context.WithCancel(t.Context())
 			defer cancel()
 			cleaned, logged, afterCalled := false, false, false
+			inventoryStarted := false
 			var password, passwordHash string
 			checkpoint := `{"version":1,"topic":"faultline-smoke","partition":0,"offset":7,"key":"checkpoint","value":"expected"}`
 			execute := func(commandCtx context.Context, program string, args []string) (command.Output, error) {
 				if program != "docker" {
 					t.Fatal("unexpected executable")
+				}
+				if args[0] == "compose" && slices.Contains(args, "config") && (!inventoryStarted || !slices.Contains(args, "compose.inventory.yaml") || !slices.Contains(args, "compose.infrastructure.yaml")) {
+					t.Fatal("metadata must observe the combined Inventory business profile")
+				}
+				if scenario == "metadata-cancel" && args[0] == "info" {
+					cancel()
+					return command.Output{}, commandCtx.Err()
+				}
+				if scenario == "metadata-missing" && args[0] == "image" && args[1] == "inspect" {
+					return command.Output{Stderr: "metadata-private"}, errors.New("metadata-private")
+				}
+				if data, ok := metadataFixture(args); ok {
+					return data, nil
 				}
 				if args[0] == "compose" && !slices.Contains(args, "compose.infrastructure.yaml") {
 					t.Fatal("combined command lost its overlay")
@@ -18968,6 +19274,7 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 				}
 				if slices.Contains(args, "up") {
 					if slices.Contains(args, "inventory") {
+						inventoryStarted = true
 						if !slices.Contains(args, "compose.inventory.yaml") || !slices.Contains(args, "--no-deps") {
 							t.Fatal("business start lost its isolated overlay")
 						}
@@ -19007,10 +19314,11 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 				return command.Output{}, nil
 			}
 			err := runMode(ctx, io.Discard, root, execute, true)
-			if !cleaned || !logged || (err == nil) != (scenario == "success") {
+			wantSuccess := scenario == "success" || scenario == "metadata-missing"
+			if !cleaned || !logged || (err == nil) != wantSuccess {
 				t.Fatal("incorrect combined lifecycle result")
 			}
-			if (scenario == "start-failure" || scenario == "before-failure" || scenario == "cancel-before" || scenario == "invalid-checkpoint") && afterCalled {
+			if (scenario == "start-failure" || scenario == "before-failure" || scenario == "cancel-before" || scenario == "invalid-checkpoint" || scenario == "metadata-cancel") && afterCalled {
 				t.Fatal("continued after an earlier failure")
 			}
 			paths, err := filepath.Glob(filepath.Join(root, "artifacts/infrastructure/*/report.json"))
@@ -19025,8 +19333,21 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 				t.Fatal("report did not redact actual credential output")
 			}
 			var saved report
-			if json.Unmarshal(data, &saved) != nil || (saved.Result == "PASS") != (scenario == "success") {
+			if json.Unmarshal(data, &saved) != nil || (saved.Result == "PASS") != wantSuccess {
 				t.Fatal("incorrect saved verdict")
+			}
+			if scenario == "success" {
+				for _, service := range []string{"postgres", "kafka", "redis", "inventory"} {
+					if saved.Environment.Services[service].Image.Status != "KNOWN" || saved.Environment.Services[service].Usage.Status != "MEASURED" {
+						t.Fatal("combined metadata missing", service)
+					}
+				}
+			}
+			if strings.Contains(string(data), "metadata-secret") || strings.Contains(string(data), strings.Join([]string{"", "Users", "private"}, "/")) {
+				t.Fatal("raw Compose data leaked")
+			}
+			if strings.Contains(string(data), "metadata-private") || scenario == "metadata-missing" && saved.Environment.Services["postgres"].Image.Status != "UNKNOWN" {
+				t.Fatal("missing metadata not safely represented")
 			}
 			for _, name := range []string{"secrets", "infrastructure-secrets"} {
 				if _, err = os.Stat(filepath.Join(filepath.Dir(paths[0]), name)); !errors.Is(err, os.ErrNotExist) {
@@ -22090,3 +22411,1464 @@ func TestConfigRestrictsIdentityAndBudgets(t *testing.T) {
 	}
 }
 ```
+
+<a id="appendix-docs-architecture-platform-evidence-md"></a>
+
+## Приложение: F03: accepted platform evidence contract
+
+Полный исходный документ: `docs/architecture/PLATFORM_EVIDENCE.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### F03 — происхождение платформы и допустимость сравнения запусков
+
+**Архитектурное решение согласовано владельцем 20 октября 2026 года в чате.** Основание — [F03 и связанный F06 в аудите](https://github.com/Includeoyasi/faultline-lab/issues/20); запись решения — [ADR 0004](#appendix-docs-adr-0004-platform-evidence-md). Согласование контракта не означает выполненный сбор полей и проверки допуска.
+
+#### 1. Описание проблемы и кейсы для локализации
+
+Текущий smoke уже честно называет `docker_architecture` платформой backend, но не сохраняет платформу образа каждого контейнера. Поэтому одинаковая запись о Docker на ARM64 может скрыть два разных запуска: образ ARM64 и образ AMD64. Если такие результаты сравнить как одинаковые условия, влияние способа исполнения можно ошибочно приписать изменению кода. Ниже модель риска, а не обнаруженное измерение эмуляции или производительности.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant R as Runner
+    participant D as Docker backend
+    participant C as Контейнер
+    participant O as Отчёт
+    R->>D: Прочитать платформу backend
+    D-->>R: linux/arm64
+    R->>D: Запустить образ linux/amd64
+    D->>C: Создать контейнер
+    D-->>R: Container ID и image ID
+    R->>O: Сохранить только платформу backend
+    Note over O: Платформа использованного образа<br/>не установлена в отчёте
+```
+
+| Кейс | Что требуется различить |
+| :--- | :--- |
+| Backend ARM64, образ ARM64 или AMD64 | Одинаковый backend не означает одинаковую платформу образа |
+| Runner на Mac ARM64, Docker на другой машине AMD64 | Место работы CLI не определяет архитектуру исполнения контейнера |
+| Тег образа изменился после создания контейнера | Важно описать image ID контейнера, а не новое содержимое тега |
+
+#### 2. Паттерны, общепринятые практики и варианты
+
+Это задача происхождения измерительных данных и контроля условий эксперимента. Решение разделяет наблюдение, источник наблюдения и вывод о пригодности результата. Docker предоставляет сведения об образе, backend и эффективной конфигурации, но их нужно связать с конкретным контейнером. Наша классификация пригодности будет правилом лаборатории, а не универсальным детектором эмуляции.
+
+| Вариант | Преимущество | Ограничение |
+| :--- | :--- | :--- |
+| Запретить явный выбор другой платформы | Простой стартовый запрет | Не доказывает фактическую платформу образа или отсутствие эмуляции |
+| Только сохранять раздельные факты | Прозрачный отчёт и полезный smoke | Читатель всё ещё может сравнить несовместимые прогоны |
+| **Раздельные факты и отдельный допуск к A/B** | Проверяемые причины допуска/отказа | Нужны версия формата и проверенный профиль исполнения |
+
+| Первичный источник | Что он устанавливает |
+| :--- | :--- |
+| [Docker image inspect](https://docs.docker.com/reference/cli/docker/image/inspect/), [Compose platform](https://docs.docker.com/reference/compose-file/services/#platform) | Сведения образа и запрошенная runtime-платформа |
+| [Compose config](https://docs.docker.com/reference/cli/docker/compose/config/), [Docker contexts](https://docs.docker.com/engine/manage-resources/contexts/) | Эффективная конфигурация и возможность другого Docker daemon |
+| [Go runtime](https://pkg.go.dev/runtime#GOARCH), [Docker multi-platform](https://docs.docker.com/build/building/multi-platform/) | Цель компиляции runner, различие native execution, эмуляции и cross-build |
+
+#### 3. Обоснованное решение и компромиссы
+
+Согласовано сохранять небольшой версионированный блок фактов одинакового смысла в обоих runners. Фактический образ определяется через image ID созданного контейнера; неполученные сведения остаются неизвестными с причиной. Явный запрос платформы дополнительно сверяется с фактическим образом. Совпадение платформ backend и образа отмечается как `MATCH`, но само по себе не объявляется доказательством native execution. Функциональный результат smoke сохраняется отдельно от пригодности к сравнению производительности. По умолчанию A/B допускается только внутри проверенного native-профиля с известными совместимыми платформами; остальные условия сравнения проверяются по F06. Цена решения — дополнительный сбор метаданных и возможность отклонить сравнение, хотя функциональный smoke прошёл.
+
+```mermaid
+flowchart TB
+    Runner["GOOS / GOARCH runner"] --> Facts["Факты запуска<br/>значение, источник, причина unknown"]
+    Host["Подтверждённый профиль хоста"] --> Facts
+    Backend["Docker info: платформа backend"] --> Facts
+    Compose["Эффективный Compose<br/>и default platform"] --> Facts
+    Container["Контейнер → использованный image ID"] --> Inspect["Inspect именно этого образа"]
+    Inspect --> Facts
+    Facts --> Relation["Сопоставить платформы<br/>MATCH / MISMATCH / UNKNOWN"]
+    Relation --> Gate["Проверить профиль и условия F06"]
+    Gate --> Compare["Допуск к сравнению<br/>и конкретные причины отказа"]
+    Check["Реальные функциональные проверки"] --> Result["Результат smoke<br/>PASS / FAIL / NOT_RUN"]
+```
+
+| Согласованное поле | Источник и смысл |
+| :--- | :--- |
+| `runner_platform` | `runtime.GOOS/GOARCH`: цель бинарника, не физическая архитектура компьютера |
+| `host_platform` | Проверенные сведения профиля хоста с происхождением; при отсутствии — unknown |
+| `backend_platform` | OS/architecture Docker daemon; raw и нормализованное значения |
+| `requested_platform` | Значение и источник: эффективный `service.platform` или `DOCKER_DEFAULT_PLATFORM`; явное unset, если оба не заданы |
+| `image_id`, `image_platform` | Из контейнера и inspect его образа; OS/architecture/variant и доступный immutable digest |
+| `platform_relation` | Сопоставление образа с backend, отдельно для каждого контейнера |
+| `requested_actual_relation` | Отдельная проверка запроса против образа; NOT_REQUESTED при unset, явная причина при несовпадении или неизвестности |
+| `execution_profile` | Проверенный режим native/эмуляции и основание; неподтверждённое не превращается в native |
+| `platform_eligibility` | Допуск только по платформенной части; полный допуск A/B требует также F06 |
+
+#### 4. План реализации с учётом текущего этапа
+
+Контракт согласован до начала сравнительных performance-экспериментов. Реализация сбора планируется вместе с текущей частью F06 в общем техническом PR. Версии отчётов обновляем явно, чтобы старое поле не сменило смысл незаметно. Полный допуск A/B подключаем перед первым сравнительным экспериментом; сведения о среде начинаем сохранять уже сейчас.
+
+| Шаг | Результат и проверка будущей реализации |
+| :--- | :--- |
+| Описать схему и совместимость | Старые отчёты читаются как прежняя версия; в новых различимы unknown и unset |
+| Подключить источники к обоим runners | Backend, контейнер и образ связаны по ID; в отчёт попадает только разрешённый список полей |
+| Проверить преобразование данных | `x86_64` и `amd64` нормализуются; известный ARM variant сохраняется, неизвестный не угадывается |
+| Проверить спорные случаи | Иной image architecture, перемещённый тег, default/override platform, недоступный inspect и частичный запуск; requested ≠ actual отклоняет платформенный допуск даже при backend/image MATCH |
+| Проверить реальные доступные среды | Нативные AMD64/ARM64 CI и Windows; macOS остаётся NOT_RUN до фактического запуска |
+| Перед первым A/B добавить допуск | Проверенный профиль плюс полнота F06; несовместимый или неполный прогон не даёт вывода об эффективности |
+
+#### 5. На что обратить отдельное внимание
+
+Сравнивать образ нужно с исполняющим Docker backend, поскольку runner может работать на другом компьютере или через трансляцию. Указание `build.platforms` и успешная cross-build не доказывают runtime-платформу; сборка и исполнение записываются раздельно. Не публикуем полный Compose config, endpoint Docker context, секреты и домашние пути; отсутствие image-метаданных не должно мешать ограниченной очистке. Для признания native нужны проверенные сведения об исполняющем хосте/VM и режиме запуска со ссылкой на профиль, а не один флаг или `MATCH`. Даже этот допуск не делает Windows и Mac одной A/B-парой и не доказывает достоверность измерений без остальных условий F06.
+
+```mermaid
+flowchart TB
+    Start["Платформенная часть допуска A/B"] --> Known{"Платформы образов<br/>и backend установлены?"}
+    Known -->|Нет| No["Сравнение недопустимо<br/>сохранить причину"]
+    Known -->|Да| Match{"Совместимы OS, arch<br/>и значимый variant?"}
+    Match -->|Нет| No
+    Match -->|Да| Requested{"Образ соответствует запросу<br/>или запрос не задан?"}
+    Requested -->|Нет или неизвестно| No
+    Requested -->|Да| Native{"Native-профиль проверен<br/>и одинаков в A/B?"}
+    Native -->|Нет или неизвестно| No
+    Native -->|Да| Next["Перейти к проверкам F06<br/>ресурсы, нагрузка, полнота"]
+```
+
+| Аспект решения | Согласованный вариант |
+| :--- | :--- |
+| Контракт | Раздельные факты со своим источником; requested и actual не подменяют друг друга |
+| Политика сравнения | Native-профиль по умолчанию; эмуляция может быть отдельным функциональным сценарием |
+| Граница | Учёт удалённого daemon не означает готовую поддержку remote-запуска: локальные bind mounts требуют отдельной проверки |
+
+<a id="appendix-docs-adr-0004-platform-evidence-md"></a>
+
+## Приложение: ADR 0004: accepted platform provenance decision
+
+Полный исходный документ: `docs/adr/0004-platform-evidence.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### ADR 0004 — происхождение платформы и сравнение запусков
+
+- Решение: **accepted**, 20 октября 2026 года, Europe/Moscow.
+- Источник: прямое сообщение владельца в чате «F03 и F11 согласованы».
+- Полный разбор, варианты, схемы и границы реализации: [F03](#appendix-docs-architecture-platform-evidence-md).
+
+#### Решение и последствия
+
+Разделяем сведения runner, хоста, Docker backend, запрошенной платформы и фактически использованного образа с происхождением и неизвестными значениями. Проверки image/backend и requested/actual независимы; MATCH не доказывает native execution. Сравнение A/B требует проверенного native-профиля и условий F06, а функциональный PASS имеет отдельный смысл.
+
+Согласован контракт, а не выполненная реализация или measurement. Код и применимые проверки предъявляются отдельным пакетом; удалённый daemon в метаданных не означает уже поддержанный remote-запуск.
+
+<a id="appendix-docs-development-run-metadata-md"></a>
+
+## Приложение: Observed run metadata: fields and limits
+
+Полный исходный документ: `docs/development/RUN_METADATA.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Метаданные функционального запуска
+
+`smoke` и оба режима `labdata smoke` сохраняют общий блок `environment` версии 1 в `report.json`. Формат smoke обновлён с версии 2 до 3; labdata получил явную версию 1. Прежние поля результатов, очистки и событий сохранены. Основание — [решение F03](#appendix-docs-architecture-platform-evidence-md) и [ADR 0004](#appendix-docs-adr-0004-platform-evidence-md).
+
+```mermaid
+flowchart LR
+    C["ID контейнера"] --> I["Image ID контейнера"]
+    I --> P["Inspect именно этого образа"]
+    P --> A["Фактическая платформа"]
+    B["Docker backend"] --> R["Сопоставление платформ"]
+    Q["Запрос Compose / default platform"] --> R
+    A --> R
+```
+
+| Поле `environment` | Что означает |
+| :--- | :--- |
+| `runner_platform` | Цель Go-бинарника; физическая архитектура компьютера этим не доказана |
+| `host_platform` | Пока `UNKNOWN`: подтверждённый профиль физического хоста не собирается |
+| `backend_platform`, `backend_budget` | Платформа, CPU и память Docker daemon/VM из `docker info` |
+| `services.*.requested_platform` | Эффективный `service.platform`, затем `DOCKER_DEFAULT_PLATFORM`; `UNSET`, если оба отсутствуют |
+| `container_id`, `image_id`, `image_digests`, `image_platform` | Контейнер, его неизменяемый image ID, доступные digest и платформа; изменяемый тег не используется |
+| `backend_image_relation`, `requested_actual_relation` | Два независимых сопоставления: `MATCH`, `MISMATCH`, `UNKNOWN`; без запроса — `NOT_REQUESTED` |
+| `limits` | Значения `HostConfig.Memory` в байтах и `HostConfig.NanoCpus` в миллиардных долях CPU |
+| `usage_snapshot` | Один стартовый снимок `docker stats`: время, CPU в процентах и используемая память в байтах |
+
+`KNOWN` означает полученное значение; `UNKNOWN` содержит причину отсутствия. Нулевой лимит имеет статус `NOT_CONFIGURED`: ограничение не задано **в этом поле**, но возможны quota/cpuset и ограничения родительской группы. `NOT_MEASURED` отличается от измеренного нулевого потребления. Снимок Docker stats снимается после старта наблюдаемых контейнеров, до проверок их API; это не измерение нагрузки, RSS или capacity. В `labdata` этому предшествуют подготовка PostgreSQL и проверки хранилища, необходимые для запуска бизнес-контейнера Inventory.
+
+| Пример | Backend / image | Запрос / image | Вывод |
+| :--- | :--- | :--- | :--- |
+| Backend ARM64, image AMD64, запрос AMD64 | `MISMATCH` | `MATCH` | Запрос выполнен; способ исполнения ещё не доказан |
+| Backend AMD64, image AMD64, запрос ARM64 | `MATCH` | `MISMATCH` | Образ не соответствует запросу |
+
+Совпадение платформ не доказывает native execution. `execution_profile=UNVERIFIED` и `comparison_eligibility=NOT_EVALUATED`: полный допуск A/B по F03/F06 добавляется перед сравнительными экспериментами. Функциональный результат и пригодность измерений — разные выводы.
+
+Покрытие: Orders/Inventory/Payments в `smoke`; PostgreSQL и бизнес-контейнер Inventory в `labdata smoke`; дополнительно Kafka/Redis в режиме `-infrastructure`. Inventory наблюдается с последним overlay `compose.inventory.yaml`, который включает его бизнес-API. Платформа временных `run --rm` инструментов не выводится из их тегов. Недоступный inspect и частичный запуск сохраняют известные факты и причины неизвестности; если запуск не дошёл до сбора, значения остаются неизвестными. Отмена прекращает новые запросы и сохраняет адресную очистку. Общий бюджет сбора — 30 секунд, на команду — пять секунд. Полный Compose config, inspect, stderr, секреты и домашние пути не сохраняются в новом блоке.
+
+CI отдельно проверяет полноту метаданных успешных прогонов в своём известном профиле. Эта проверка читает сохранённые отчёты и не меняет функциональный exit-код обычного CLI.
+
+Исторические отчёты сохраняют прежний формат. Старые `host_platform` и `docker_architecture` smoke обозначают GOOS runner и платформу backend соответственно; платформу образа следует читать из `environment`.
+
+Датированные результаты Windows и ограничения проверки: [доказательства](#appendix-docs-development-evidence-run-metadata-validation-md).
+
+<a id="appendix-docs-development-evidence-run-metadata-validation-md"></a>
+
+## Приложение: Windows run metadata validation — 2026-10-20
+
+Полный исходный документ: `docs/development/evidence/run-metadata/VALIDATION.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Проверка метаданных запуска — 20 октября 2026
+
+Проверена текущая часть F03/F06 из [задачи #24](https://github.com/Includeoyasi/faultline-lab/issues/24). Windows runner собран с Go 1.27.2; Docker backend сообщает `linux/x86_64`, нормализованное значение — `linux/amd64`.
+
+| Проверка | Результат и доказательство |
+| :--- | :--- |
+| `go test ./...`, `go vet ./...` | PASS; включая сохранение функционального PASS при недоступном image inspect и очистку при отмене внутри сбора метаданных |
+| Проверка сохранённых реальных отчётов | `TestSuccessfulReportsHaveObservedMetadata` — PASS для всех трёх режимов на Windows; та же проверка включена в Linux CI после функциональных прогонов |
+| Контейнеры Orders/Inventory/Payments | PASS; фактические платформы трёх образов получены; снимки потребления сохранены — [выдержка отчёта](#appendix-docs-development-evidence-run-metadata-windows-smoke-json) |
+| PostgreSQL-only | PASS; роли, миграции, seed, restart и очистка сохранены — [выдержка отчёта](#appendix-docs-development-evidence-run-metadata-windows-postgres-json) |
+| PostgreSQL/Kafka/Redis | PASS; права, Kafka checkpoint/restart, Redis и очистка сохранены — [выдержка отчёта](#appendix-docs-development-evidence-run-metadata-windows-infrastructure-json) |
+| Ресурсы личного компьютера | Собственные контейнеры и теги образов удалены; Docker Desktop и WSL VM остановлены, автозапуск выключен — [сводка](#appendix-docs-development-evidence-run-metadata-windows-summary-json) |
+
+JSON-выдержки содержат неизменённый блок `environment`, результат, очистку, время, относительный путь и SHA-256 полного локального отчёта. Прогоны выполнены до коммита в изменённом рабочем дереве; базовый SHA и хеши проверенных исходников сохранены в сводке.
+
+Реальный прогон выявил отсутствие необязательного `Variant` у образа PostgreSQL: Go template Docker завершался ошибкой и весь image inspect становился неизвестным. Исправление читает JSON по неизменяемому image ID и сохраняет только разрешённые поля. Повторные прогоны подтвердили получение платформ всех проверяемых образов; fixtures отдельно проверяют отсутствие и сохранение известного variant, разные платформы, смену тега, неполные ресурсы и частичный запуск.
+
+Это функциональные проверки и стартовые снимки ресурсов, не performance-эксперимент. Профиль физического исполнения остаётся непроверенным; A/B не оценивается. Windows-результат не подтверждает runtime macOS; macOS — NOT_RUN. Linux AMD64/ARM64 проверяются существующей CI-матрицей; актуальные результаты относятся к конкретному HEAD PR.
+
+<a id="appendix-docs-development-evidence-run-metadata-windows-smoke-json"></a>
+
+## Приложение: Windows service metadata excerpt
+
+Полный исходный документ: `docs/development/evidence/run-metadata/windows-smoke.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+{
+  "source_report": "artifacts/smoke/e0911008-057b-1230-1f25-c7a2c2e49103/report.json",
+  "source_report_sha256": "6244eb989ca9641e7666599f8d025c6951b2317fe29e589ab05dec2f05e4b8e5",
+  "result": "PASS",
+  "cleanup": "PASS",
+  "started_at": "2026-10-20T13:02:01.7595646Z",
+  "finished_at": "2026-10-20T13:03:39.2736387Z",
+  "environment": {
+    "schema_version": 1,
+    "runner_platform": {
+      "os": "windows",
+      "architecture": "amd64",
+      "raw": "windows/amd64",
+      "status": "KNOWN",
+      "source": "runtime.GOOS/GOARCH"
+    },
+    "host_platform": {
+      "status": "UNKNOWN",
+      "source": "host profile",
+      "reason": "physical_host_not_observed"
+    },
+    "backend_platform": {
+      "os": "linux",
+      "architecture": "amd64",
+      "raw": "linux/x86_64",
+      "status": "KNOWN",
+      "source": "docker info"
+    },
+    "docker_version": "29.8.2",
+    "compose_version": "5.6.0",
+    "go_version": "go1.27.2",
+    "backend_budget": {
+      "cpus": {
+        "value": 2,
+        "status": "KNOWN",
+        "source": "docker info.NCPU"
+      },
+      "memory_bytes": {
+        "value": 1996603392,
+        "status": "KNOWN",
+        "source": "docker info.MemTotal"
+      }
+    },
+    "services": {
+      "inventory": {
+        "container_id": "9ed6e46fb37eaa100916118c3607c66c44ef69371ed32cd098455909999d3bd5",
+        "image_id": "sha256:eebb85c29a849c77c7078c56bc6fc920234c013b122ee34fa01896c6969b65be",
+        "image_digests": [
+          "sha256:eebb85c29a849c77c7078c56bc6fc920234c013b122ee34fa01896c6969b65be"
+        ],
+        "requested_platform": {
+          "status": "UNSET",
+          "source": "effective Compose config and DOCKER_DEFAULT_PLATFORM"
+        },
+        "image_platform": {
+          "os": "linux",
+          "architecture": "amd64",
+          "raw": "linux/amd64",
+          "status": "KNOWN",
+          "source": "docker image inspect by container image ID"
+        },
+        "backend_image_relation": {
+          "status": "MATCH"
+        },
+        "requested_actual_relation": {
+          "status": "NOT_REQUESTED"
+        },
+        "limits": {
+          "nano_cpus": {
+            "value": 0,
+            "status": "NOT_CONFIGURED",
+            "source": "container.HostConfig.NanoCpus"
+          },
+          "memory_bytes": {
+            "value": 0,
+            "status": "NOT_CONFIGURED",
+            "source": "container.HostConfig.Memory"
+          }
+        },
+        "usage_snapshot": {
+          "observed_at": "2026-10-20T13:03:19.7778127Z",
+          "cpu_percent": 0,
+          "memory_bytes": 2359296,
+          "source": "docker stats",
+          "status": "MEASURED"
+        }
+      },
+      "orders": {
+        "container_id": "cbc3db5d273a0f0f5f1690c1c961fcfa983631097e4c706a946358daf2ce439e",
+        "image_id": "sha256:c39a6b6ba0e2b4ed82e3f4eb8696c385af63950d18ec9b611e6e24c431dcd2b5",
+        "image_digests": [
+          "sha256:c39a6b6ba0e2b4ed82e3f4eb8696c385af63950d18ec9b611e6e24c431dcd2b5"
+        ],
+        "requested_platform": {
+          "status": "UNSET",
+          "source": "effective Compose config and DOCKER_DEFAULT_PLATFORM"
+        },
+        "image_platform": {
+          "os": "linux",
+          "architecture": "amd64",
+          "raw": "linux/amd64",
+          "status": "KNOWN",
+          "source": "docker image inspect by container image ID"
+        },
+        "backend_image_relation": {
+          "status": "MATCH"
+        },
+        "requested_actual_relation": {
+          "status": "NOT_REQUESTED"
+        },
+        "limits": {
+          "nano_cpus": {
+            "value": 0,
+            "status": "NOT_CONFIGURED",
+            "source": "container.HostConfig.NanoCpus"
+          },
+          "memory_bytes": {
+            "value": 0,
+            "status": "NOT_CONFIGURED",
+            "source": "container.HostConfig.Memory"
+          }
+        },
+        "usage_snapshot": {
+          "observed_at": "2026-10-20T13:03:17.5240989Z",
+          "cpu_percent": 0,
+          "memory_bytes": 2359296,
+          "source": "docker stats",
+          "status": "MEASURED"
+        }
+      },
+      "payments": {
+        "container_id": "e8b0bb790d9f3e9d541b6aee63a63da30a2367c76dc1e78b9136d1f169c8d2ba",
+        "image_id": "sha256:933d7cc03883105c2234f0edd73f0d464bda999a1e9351658ed46edafbc77105",
+        "image_digests": [
+          "sha256:933d7cc03883105c2234f0edd73f0d464bda999a1e9351658ed46edafbc77105"
+        ],
+        "requested_platform": {
+          "status": "UNSET",
+          "source": "effective Compose config and DOCKER_DEFAULT_PLATFORM"
+        },
+        "image_platform": {
+          "os": "linux",
+          "architecture": "amd64",
+          "raw": "linux/amd64",
+          "status": "KNOWN",
+          "source": "docker image inspect by container image ID"
+        },
+        "backend_image_relation": {
+          "status": "MATCH"
+        },
+        "requested_actual_relation": {
+          "status": "NOT_REQUESTED"
+        },
+        "limits": {
+          "nano_cpus": {
+            "value": 0,
+            "status": "NOT_CONFIGURED",
+            "source": "container.HostConfig.NanoCpus"
+          },
+          "memory_bytes": {
+            "value": 0,
+            "status": "NOT_CONFIGURED",
+            "source": "container.HostConfig.Memory"
+          }
+        },
+        "usage_snapshot": {
+          "observed_at": "2026-10-20T13:03:21.9860196Z",
+          "cpu_percent": 0,
+          "memory_bytes": 2507145,
+          "source": "docker stats",
+          "status": "MEASURED"
+        }
+      }
+    },
+    "execution_profile": {
+      "status": "UNVERIFIED",
+      "reason": "platform_match_does_not_prove_native_execution"
+    },
+    "comparison_eligibility": {
+      "status": "NOT_EVALUATED",
+      "reason": "requires_verified_execution_profile_and_experiment_contract"
+    },
+    "coverage": "named long-lived tested containers; ephemeral tool containers are not observed"
+  }
+}
+
+<a id="appendix-docs-development-evidence-run-metadata-windows-postgres-json"></a>
+
+## Приложение: Windows PostgreSQL metadata excerpt
+
+Полный исходный документ: `docs/development/evidence/run-metadata/windows-postgres.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+{
+  "source_report": "artifacts/postgres/faultline-data-test-3ae0603061975d33/report.json",
+  "source_report_sha256": "a627632b9a9fdb313e842f3f27859659a9b8792e95c8e25ad324fd31cb165b94",
+  "result": "PASS",
+  "cleanup": "PASS",
+  "started_at": "2026-10-20T13:03:39.8848117Z",
+  "finished_at": "2026-10-20T13:05:03.7409871Z",
+  "environment": {
+    "schema_version": 1,
+    "runner_platform": {
+      "os": "windows",
+      "architecture": "amd64",
+      "raw": "windows/amd64",
+      "status": "KNOWN",
+      "source": "runtime.GOOS/GOARCH"
+    },
+    "host_platform": {
+      "status": "UNKNOWN",
+      "source": "host profile",
+      "reason": "physical_host_not_observed"
+    },
+    "backend_platform": {
+      "os": "linux",
+      "architecture": "amd64",
+      "raw": "linux/x86_64",
+      "status": "KNOWN",
+      "source": "docker info"
+    },
+    "docker_version": "29.8.2",
+    "compose_version": "5.6.0",
+    "go_version": "go1.27.2",
+    "backend_budget": {
+      "cpus": {
+        "value": 2,
+        "status": "KNOWN",
+        "source": "docker info.NCPU"
+      },
+      "memory_bytes": {
+        "value": 1996603392,
+        "status": "KNOWN",
+        "source": "docker info.MemTotal"
+      }
+    },
+    "services": {
+      "postgres": {
+        "container_id": "e8fe500ac055c9ee4937a9c4e0f897d9d2f93f718f3f86bf727bfc8e72003fc9",
+        "image_id": "sha256:afc7e2d441324c0388fa80c3d24f733b4194a4eb7f47dd8ee2b08eb1a24a647c",
+        "image_digests": [
+          "sha256:afc7e2d441324c0388fa80c3d24f733b4194a4eb7f47dd8ee2b08eb1a24a647c"
+        ],
+        "requested_platform": {
+          "status": "UNSET",
+          "source": "effective Compose config and DOCKER_DEFAULT_PLATFORM"
+        },
+        "image_platform": {
+          "os": "linux",
+          "architecture": "amd64",
+          "raw": "linux/amd64",
+          "status": "KNOWN",
+          "source": "docker image inspect by container image ID"
+        },
+        "backend_image_relation": {
+          "status": "MATCH"
+        },
+        "requested_actual_relation": {
+          "status": "NOT_REQUESTED"
+        },
+        "limits": {
+          "nano_cpus": {
+            "value": 500000000,
+            "status": "KNOWN",
+            "source": "container.HostConfig.NanoCpus"
+          },
+          "memory_bytes": {
+            "value": 536870912,
+            "status": "KNOWN",
+            "source": "container.HostConfig.Memory"
+          }
+        },
+        "usage_snapshot": {
+          "observed_at": "2026-10-20T13:04:46.4524657Z",
+          "cpu_percent": 1.43,
+          "memory_bytes": 66332917,
+          "source": "docker stats",
+          "status": "MEASURED"
+        }
+      }
+    },
+    "execution_profile": {
+      "status": "UNVERIFIED",
+      "reason": "platform_match_does_not_prove_native_execution"
+    },
+    "comparison_eligibility": {
+      "status": "NOT_EVALUATED",
+      "reason": "requires_verified_execution_profile_and_experiment_contract"
+    },
+    "coverage": "named long-lived tested containers; ephemeral tool containers are not observed"
+  }
+}
+
+<a id="appendix-docs-development-evidence-run-metadata-windows-infrastructure-json"></a>
+
+## Приложение: Windows combined infrastructure metadata excerpt
+
+Полный исходный документ: `docs/development/evidence/run-metadata/windows-infrastructure.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+{
+  "source_report": "artifacts/infrastructure/faultline-data-test-6841f8e773fbd377/report.json",
+  "source_report_sha256": "50098a0a068bbb0e3f2fca91c9bbd9cf3ad0fce5b81345a6953096141b39f3df",
+  "result": "PASS",
+  "cleanup": "PASS",
+  "started_at": "2026-10-20T13:05:03.86877Z",
+  "finished_at": "2026-10-20T13:06:13.2169735Z",
+  "environment": {
+    "schema_version": 1,
+    "runner_platform": {
+      "os": "windows",
+      "architecture": "amd64",
+      "raw": "windows/amd64",
+      "status": "KNOWN",
+      "source": "runtime.GOOS/GOARCH"
+    },
+    "host_platform": {
+      "status": "UNKNOWN",
+      "source": "host profile",
+      "reason": "physical_host_not_observed"
+    },
+    "backend_platform": {
+      "os": "linux",
+      "architecture": "amd64",
+      "raw": "linux/x86_64",
+      "status": "KNOWN",
+      "source": "docker info"
+    },
+    "docker_version": "29.8.2",
+    "compose_version": "5.6.0",
+    "go_version": "go1.27.2",
+    "backend_budget": {
+      "cpus": {
+        "value": 2,
+        "status": "KNOWN",
+        "source": "docker info.NCPU"
+      },
+      "memory_bytes": {
+        "value": 1996603392,
+        "status": "KNOWN",
+        "source": "docker info.MemTotal"
+      }
+    },
+    "services": {
+      "kafka": {
+        "container_id": "e81165a9abce5add87d44cf8cd9be5dce73b74cb657c55d90e0a1b81970e9d03",
+        "image_id": "sha256:77e3df9054047a88b520d0cc46e16696d3b22022e1d580aeccd2632df6532837",
+        "image_digests": [
+          "sha256:77e3df9054047a88b520d0cc46e16696d3b22022e1d580aeccd2632df6532837"
+        ],
+        "requested_platform": {
+          "status": "UNSET",
+          "source": "effective Compose config and DOCKER_DEFAULT_PLATFORM"
+        },
+        "image_platform": {
+          "os": "linux",
+          "architecture": "amd64",
+          "raw": "linux/amd64",
+          "status": "KNOWN",
+          "source": "docker image inspect by container image ID"
+        },
+        "backend_image_relation": {
+          "status": "MATCH"
+        },
+        "requested_actual_relation": {
+          "status": "NOT_REQUESTED"
+        },
+        "limits": {
+          "nano_cpus": {
+            "value": 750000000,
+            "status": "KNOWN",
+            "source": "container.HostConfig.NanoCpus"
+          },
+          "memory_bytes": {
+            "value": 671088640,
+            "status": "KNOWN",
+            "source": "container.HostConfig.Memory"
+          }
+        },
+        "usage_snapshot": {
+          "observed_at": "2026-10-20T13:05:32.3882122Z",
+          "cpu_percent": 2.75,
+          "memory_bytes": 257635123,
+          "source": "docker stats",
+          "status": "MEASURED"
+        }
+      },
+      "postgres": {
+        "container_id": "6bc1c58484dc873349c8b11737fa1f832c6dda0732d9ab4c54769a8af25429ba",
+        "image_id": "sha256:afc7e2d441324c0388fa80c3d24f733b4194a4eb7f47dd8ee2b08eb1a24a647c",
+        "image_digests": [
+          "sha256:afc7e2d441324c0388fa80c3d24f733b4194a4eb7f47dd8ee2b08eb1a24a647c"
+        ],
+        "requested_platform": {
+          "status": "UNSET",
+          "source": "effective Compose config and DOCKER_DEFAULT_PLATFORM"
+        },
+        "image_platform": {
+          "os": "linux",
+          "architecture": "amd64",
+          "raw": "linux/amd64",
+          "status": "KNOWN",
+          "source": "docker image inspect by container image ID"
+        },
+        "backend_image_relation": {
+          "status": "MATCH"
+        },
+        "requested_actual_relation": {
+          "status": "NOT_REQUESTED"
+        },
+        "limits": {
+          "nano_cpus": {
+            "value": 500000000,
+            "status": "KNOWN",
+            "source": "container.HostConfig.NanoCpus"
+          },
+          "memory_bytes": {
+            "value": 536870912,
+            "status": "KNOWN",
+            "source": "container.HostConfig.Memory"
+          }
+        },
+        "usage_snapshot": {
+          "observed_at": "2026-10-20T13:05:30.0698277Z",
+          "cpu_percent": 4.3,
+          "memory_bytes": 33827061,
+          "source": "docker stats",
+          "status": "MEASURED"
+        }
+      },
+      "redis": {
+        "container_id": "73990ca58558a0b691b298a28bbe209253b58e56b0b4821a07b62a0d0bf3af1f",
+        "image_id": "sha256:b51665e66f00759be7c3152ad5ac3c66fb2f619c13ef62dea7cc1f9914524635",
+        "image_digests": [
+          "sha256:b51665e66f00759be7c3152ad5ac3c66fb2f619c13ef62dea7cc1f9914524635"
+        ],
+        "requested_platform": {
+          "status": "UNSET",
+          "source": "effective Compose config and DOCKER_DEFAULT_PLATFORM"
+        },
+        "image_platform": {
+          "os": "linux",
+          "architecture": "amd64",
+          "raw": "linux/amd64",
+          "status": "KNOWN",
+          "source": "docker image inspect by container image ID"
+        },
+        "backend_image_relation": {
+          "status": "MATCH"
+        },
+        "requested_actual_relation": {
+          "status": "NOT_REQUESTED"
+        },
+        "limits": {
+          "nano_cpus": {
+            "value": 250000000,
+            "status": "KNOWN",
+            "source": "container.HostConfig.NanoCpus"
+          },
+          "memory_bytes": {
+            "value": 134217728,
+            "status": "KNOWN",
+            "source": "container.HostConfig.Memory"
+          }
+        },
+        "usage_snapshot": {
+          "observed_at": "2026-10-20T13:05:34.6830858Z",
+          "cpu_percent": 0.63,
+          "memory_bytes": 15791554,
+          "source": "docker stats",
+          "status": "MEASURED"
+        }
+      }
+    },
+    "execution_profile": {
+      "status": "UNVERIFIED",
+      "reason": "platform_match_does_not_prove_native_execution"
+    },
+    "comparison_eligibility": {
+      "status": "NOT_EVALUATED",
+      "reason": "requires_verified_execution_profile_and_experiment_contract"
+    },
+    "coverage": "named long-lived tested containers; ephemeral tool containers are not observed"
+  }
+}
+
+<a id="appendix-docs-development-evidence-run-metadata-windows-summary-json"></a>
+
+## Приложение: Windows metadata source fingerprints and cleanup
+
+Полный исходный документ: `docs/development/evidence/run-metadata/windows-summary.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+{
+  "date": "2026-10-20",
+  "timezone": "Europe/Moscow",
+  "source_base": "457a7dc9d65e194ec28c7960f62dcda6d6c6ef17",
+  "source_dirty": true,
+  "source_fingerprints": {
+    "internal/runmeta/collect.go": "0f6ead062aeb5f935b7358d0eb1736f3ab3dac0ddc35ceead7372c95028495c6",
+    "internal/smoke/run.go": "ebe924c35089d92407507f733f4594f28ee5f4419be085304304f42b6827991a",
+    "internal/smoke/report.go": "258ffd346c1721b5a58561de832aaaff2459704dafddc4f343bed5e3717c9d6b",
+    "internal/datalab/run.go": "ced0102ccd938d698c2d51f656d259ac18c0685d30152072873909ba46caf464"
+  },
+  "observations": [
+    {
+      "kind": "smoke",
+      "report": "e0911008-057b-1230-1f25-c7a2c2e49103",
+      "runner": "windows/amd64",
+      "backend": "linux/x86_64"
+    },
+    {
+      "kind": "postgres",
+      "report": "faultline-data-test-3ae0603061975d33",
+      "runner": "windows/amd64",
+      "backend": "linux/x86_64"
+    },
+    {
+      "kind": "infrastructure",
+      "report": "faultline-data-test-6841f8e773fbd377",
+      "runner": "windows/amd64",
+      "backend": "linux/x86_64"
+    }
+  ],
+  "cleanup": {
+    "owned_projects": "PASS",
+    "run_specific_image_tags": "absent after scoped down --rmi local",
+    "docker_desktop_processes": 0,
+    "wsl_vm_processes": 0,
+    "docker_autostart": false
+  },
+  "limits": {
+    "host_profile": "UNVERIFIED",
+    "comparison_eligibility": "NOT_EVALUATED",
+    "macos_runtime": "NOT_RUN"
+  }
+}
+
+<a id="appendix-internal-runmeta-collect-go"></a>
+
+## Приложение: Shared run metadata collector
+
+Полный исходный документ: `internal/runmeta/collect.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+// Package runmeta records observed Docker facts without changing smoke outcomes.
+package runmeta
+
+import (
+	"context"
+	"encoding/json"
+	"math"
+	"os"
+	"regexp"
+	"runtime"
+	"strconv"
+	"strings"
+	"time"
+)
+
+// Platform separates a value from its origin and any missing observation.
+type Platform struct {
+	OS           string `json:"os,omitempty"`
+	Architecture string `json:"architecture,omitempty"`
+	Variant      string `json:"variant,omitempty"`
+	Raw          string `json:"raw,omitempty"`
+	Status       string `json:"status"`
+	Source       string `json:"source"`
+	Reason       string `json:"reason,omitempty"`
+}
+
+// Quantity uses null for unknown. Zero means no cap in this particular field;
+// e.g. NanoCpus=0 says nothing about quota/cpuset or a parent cgroup.
+type Quantity struct {
+	Value  *int64 `json:"value"`
+	Status string `json:"status"`
+	Source string `json:"source"`
+	Reason string `json:"reason,omitempty"`
+}
+
+type Relation struct {
+	Status string `json:"status"`
+	Reason string `json:"reason,omitempty"`
+}
+
+type Budget struct {
+	CPUs        Quantity `json:"cpus"`
+	MemoryBytes Quantity `json:"memory_bytes"`
+}
+
+type Limits struct {
+	NanoCPUs    Quantity `json:"nano_cpus"`
+	MemoryBytes Quantity `json:"memory_bytes"`
+}
+
+// Sample is one Docker stats observation, not a load/capacity measurement.
+type Sample struct {
+	ObservedAt  *time.Time `json:"observed_at,omitempty"`
+	CPUPercent  *float64   `json:"cpu_percent"`
+	MemoryBytes *int64     `json:"memory_bytes"`
+	Source      string     `json:"source"`
+	Status      string     `json:"status"`
+	Reason      string     `json:"reason,omitempty"`
+}
+
+type Service struct {
+	ContainerID       string   `json:"container_id,omitempty"`
+	ImageID           string   `json:"image_id,omitempty"`
+	ImageDigests      []string `json:"image_digests"`
+	Requested         Platform `json:"requested_platform"`
+	Image             Platform `json:"image_platform"`
+	BackendRelation   Relation `json:"backend_image_relation"`
+	RequestedRelation Relation `json:"requested_actual_relation"`
+	Limits            Limits   `json:"limits"`
+	Usage             Sample   `json:"usage_snapshot"`
+}
+
+// Report version 1 covers the named long-lived tested containers only.
+// Tool containers removed by compose run --rm are deliberately not inferred.
+type Report struct {
+	SchemaVersion         int                `json:"schema_version"`
+	Runner                Platform           `json:"runner_platform"`
+	Host                  Platform           `json:"host_platform"`
+	Backend               Platform           `json:"backend_platform"`
+	DockerVersion         string             `json:"docker_version,omitempty"`
+	ComposeVersion        string             `json:"compose_version,omitempty"`
+	GoVersion             string             `json:"go_version"`
+	BackendBudget         Budget             `json:"backend_budget"`
+	Services              map[string]Service `json:"services"`
+	ExecutionProfile      Relation           `json:"execution_profile"`
+	ComparisonEligibility Relation           `json:"comparison_eligibility"`
+	Coverage              string             `json:"coverage"`
+}
+
+var (
+	platformToken = regexp.MustCompile(`^[a-z0-9_-]{1,32}$`)
+	variantToken  = regexp.MustCompile(`^v[0-9]{1,3}$`)
+	containerID   = regexp.MustCompile(`^[a-f0-9]{12,64}$`)
+	imageID       = regexp.MustCompile(`^sha256:[a-f0-9]{64}$`)
+	versionToken  = regexp.MustCompile(`^[a-zA-Z0-9.+_-]{1,80}$`)
+)
+
+func unknownPlatform(source, reason string) Platform {
+	return Platform{Status: "UNKNOWN", Source: source, Reason: reason}
+}
+
+func unknownQuantity(source, reason string) Quantity {
+	return Quantity{Status: "UNKNOWN", Source: source, Reason: reason}
+}
+
+// New supplies honest initial values even if build/start is cancelled.
+func New(names []string) Report {
+	r := Report{
+		SchemaVersion: 1, Runner: parsePlatform(runtime.GOOS+"/"+runtime.GOARCH, "runtime.GOOS/GOARCH"),
+		Host:    unknownPlatform("host profile", "physical_host_not_observed"),
+		Backend: unknownPlatform("docker info", "not_collected"), GoVersion: runtime.Version(),
+		BackendBudget:         Budget{unknownQuantity("docker info.NCPU", "not_collected"), unknownQuantity("docker info.MemTotal", "not_collected")},
+		Services:              map[string]Service{},
+		ExecutionProfile:      Relation{"UNVERIFIED", "platform_match_does_not_prove_native_execution"},
+		ComparisonEligibility: Relation{"NOT_EVALUATED", "requires_verified_execution_profile_and_experiment_contract"},
+		Coverage:              "named long-lived tested containers; ephemeral tool containers are not observed",
+	}
+	for _, name := range names {
+		r.Services[name] = Service{
+			ImageDigests: []string{}, Requested: unknownPlatform("effective Compose config", "not_collected"),
+			Image:           unknownPlatform("docker image inspect by container image ID", "container_not_observed"),
+			BackendRelation: Relation{"UNKNOWN", "platform_not_observed"}, RequestedRelation: Relation{"UNKNOWN", "request_not_observed"},
+			Limits: Limits{unknownQuantity("container.HostConfig.NanoCpus", "container_not_observed"), unknownQuantity("container.HostConfig.Memory", "container_not_observed")},
+			Usage:  Sample{Source: "docker stats", Status: "NOT_MEASURED", Reason: "not_collected"},
+		}
+	}
+	return r
+}
+
+// Docker executes an argv without persisting raw stdout/stderr. Metadata queries
+// must bypass command loggers because effective Compose config contains secrets.
+type Docker func(context.Context, []string) (string, error)
+
+// Collect has one total budget and per-command deadlines. Missing metadata is
+// data, not a functional failure; callers still own cancellation and cleanup.
+func Collect(parent context.Context, docker Docker, compose []string, names []string) Report {
+	r := New(names)
+	ctx, cancel := context.WithTimeout(parent, 30*time.Second)
+	defer cancel()
+	query := func(args ...string) (string, bool) {
+		if ctx.Err() != nil {
+			return "", false
+		}
+		bounded, stop := context.WithTimeout(ctx, 5*time.Second)
+		defer stop()
+		out, err := docker(bounded, args)
+		return out, err == nil && bounded.Err() == nil
+	}
+	var backend struct {
+		OS      string `json:"os"`
+		Arch    string `json:"arch"`
+		CPUs    *int64 `json:"cpus"`
+		Memory  *int64 `json:"memory"`
+		Version string `json:"version"`
+	}
+	const backendFormat = `{"os":{{json .OSType}},"arch":{{json .Architecture}},"cpus":{{json .NCPU}},"memory":{{json .MemTotal}},"version":{{json .ServerVersion}}}`
+	if out, ok := query("info", "--format", backendFormat); ok && json.Unmarshal([]byte(out), &backend) == nil {
+		r.Backend = parsePlatform(backend.OS+"/"+backend.Arch, "docker info")
+		r.BackendBudget = Budget{quantity(backend.CPUs, "docker info.NCPU", false), quantity(backend.Memory, "docker info.MemTotal", false)}
+		if versionToken.MatchString(backend.Version) {
+			r.DockerVersion = backend.Version
+		}
+	} else {
+		r.Backend.Reason = "query_failed_or_invalid_response"
+	}
+	if out, ok := query("compose", "version", "--short"); ok && versionToken.MatchString(strings.TrimSpace(out)) {
+		r.ComposeVersion = strings.TrimSpace(out)
+	}
+	var config struct {
+		Services map[string]struct {
+			Platform string `json:"platform"`
+		} `json:"services"`
+	}
+	configOK := false
+	if out, ok := query(append(append([]string{}, compose...), "config", "--format", "json")...); ok {
+		configOK = json.Unmarshal([]byte(out), &config) == nil && config.Services != nil
+	}
+	for _, name := range names {
+		s := r.Services[name]
+		if svc, exists := config.Services[name]; configOK && exists {
+			switch {
+			case svc.Platform != "":
+				s.Requested = parsePlatform(svc.Platform, "effective Compose service.platform")
+			case os.Getenv("DOCKER_DEFAULT_PLATFORM") != "":
+				s.Requested = parsePlatform(os.Getenv("DOCKER_DEFAULT_PLATFORM"), "DOCKER_DEFAULT_PLATFORM")
+			default:
+				s.Requested = Platform{Status: "UNSET", Source: "effective Compose config and DOCKER_DEFAULT_PLATFORM"}
+			}
+		} else {
+			s.Requested.Reason = "config_unavailable_or_service_missing"
+		}
+		s.RequestedRelation = compare(s.Requested, s.Image, true)
+		ids, ok := query(append(append([]string{}, compose...), "ps", "--all", "-q", name)...)
+		id := strings.TrimSpace(ids)
+		if !ok || !containerID.MatchString(id) {
+			s.Image.Reason = "unique_container_not_observed"
+			r.Services[name] = s
+			continue
+		}
+		s.ContainerID = id
+		var c struct {
+			Image    string `json:"image"`
+			Memory   *int64 `json:"memory"`
+			NanoCPUs *int64 `json:"nano_cpus"`
+			Running  *bool  `json:"running"`
+		}
+		const containerFormat = `{"image":{{json .Image}},"memory":{{json .HostConfig.Memory}},"nano_cpus":{{json .HostConfig.NanoCpus}},"running":{{json .State.Running}}}`
+		if out, ok := query("inspect", "--format", containerFormat, id); ok && json.Unmarshal([]byte(out), &c) == nil {
+			s.Limits = Limits{quantity(c.NanoCPUs, "container.HostConfig.NanoCpus", true), quantity(c.Memory, "container.HostConfig.Memory", true)}
+			if imageID.MatchString(c.Image) {
+				s.ImageID = c.Image
+				var images []struct {
+					ID      string   `json:"id"`
+					OS      string   `json:"os"`
+					Arch    string   `json:"Architecture"`
+					Variant string   `json:"variant"`
+					Digests []string `json:"RepoDigests"`
+				}
+				// Decode image JSON in memory with an allowlist; an absent optional
+				// Variant must not fail a Go template query.
+				if out, ok := query("image", "inspect", c.Image); ok && json.Unmarshal([]byte(out), &images) == nil && len(images) == 1 && images[0].ID == c.Image {
+					img := images[0]
+					value := img.OS + "/" + img.Arch
+					if img.Variant != "" {
+						value += "/" + img.Variant
+					}
+					s.Image = parsePlatform(value, "docker image inspect by container image ID")
+					for _, d := range img.Digests {
+						_, digest, _ := strings.Cut(d, "@")
+						if imageID.MatchString(digest) {
+							s.ImageDigests = append(s.ImageDigests, digest)
+						}
+					}
+				} else {
+					s.Image.Reason = "image_inspect_failed_or_id_mismatch"
+				}
+			} else {
+				s.Image.Reason = "invalid_or_missing_image_id"
+			}
+		} else {
+			s.Image.Reason = "container_inspect_failed_or_invalid"
+		}
+		s.BackendRelation = compare(r.Backend, s.Image, false)
+		s.RequestedRelation = compare(s.Requested, s.Image, true)
+		if c.Running != nil && *c.Running {
+			s.Usage = sample(query, id)
+		} else {
+			s.Usage.Reason = "container_not_observed_running"
+		}
+		r.Services[name] = s
+	}
+	return r
+}
+
+func parsePlatform(value, source string) Platform {
+	p := unknownPlatform(source, "invalid_or_missing_platform")
+	parts := strings.Split(strings.ToLower(strings.TrimSpace(value)), "/")
+	if len(parts) < 2 || len(parts) > 3 || !platformToken.MatchString(parts[0]) || !platformToken.MatchString(parts[1]) {
+		return p
+	}
+	p.OS, p.Architecture = parts[0], parts[1]
+	switch p.Architecture {
+	case "x86_64", "x86-64":
+		p.Architecture = "amd64"
+	case "aarch64":
+		p.Architecture = "arm64"
+	}
+	if len(parts) == 3 {
+		if !variantToken.MatchString(parts[2]) {
+			return unknownPlatform(source, "invalid_variant")
+		}
+		p.Variant = parts[2]
+	}
+	p.Raw = strings.TrimSpace(value)
+	p.Status = "KNOWN"
+	p.Reason = ""
+	return p
+}
+
+func quantity(value *int64, source string, limit bool) Quantity {
+	if value == nil || *value < 0 || (*value == 0 && !limit) {
+		return unknownQuantity(source, "missing_or_invalid_value")
+	}
+	state := "KNOWN"
+	if *value == 0 && limit {
+		state = "NOT_CONFIGURED"
+	}
+	return Quantity{Value: value, Status: state, Source: source}
+}
+
+func compare(left, right Platform, requested bool) Relation {
+	if requested && left.Status == "UNSET" {
+		return Relation{Status: "NOT_REQUESTED"}
+	}
+	if left.Status != "KNOWN" || right.Status != "KNOWN" {
+		return Relation{"UNKNOWN", "platform_not_observed"}
+	}
+	if left.OS != right.OS || left.Architecture != right.Architecture || (left.Variant != "" && right.Variant != "" && left.Variant != right.Variant) {
+		return Relation{Status: "MISMATCH"}
+	}
+	if (!requested || left.Variant != "") && left.Variant != right.Variant {
+		return Relation{"UNKNOWN", "variant_not_comparable"}
+	}
+	return Relation{Status: "MATCH"}
+}
+
+func sample(query func(...string) (string, bool), id string) Sample {
+	s := Sample{Source: "docker stats", Status: "NOT_MEASURED", Reason: "query_failed_or_invalid_response"}
+	const format = `{"cpu":{{json .CPUPerc}},"memory":{{json .MemUsage}}}`
+	var data struct {
+		CPU    string `json:"cpu"`
+		Memory string `json:"memory"`
+	}
+	out, ok := query("stats", "--no-stream", "--format", format, id)
+	if !ok || json.Unmarshal([]byte(out), &data) != nil {
+		return s
+	}
+	cpu, err := strconv.ParseFloat(strings.TrimSuffix(data.CPU, "%"), 64)
+	memory, _, _ := strings.Cut(data.Memory, "/")
+	bytes, valid := memoryBytes(strings.TrimSpace(memory))
+	if err != nil || !strings.HasSuffix(data.CPU, "%") || math.IsNaN(cpu) || math.IsInf(cpu, 0) || cpu < 0 || !valid {
+		return s
+	}
+	now := time.Now().UTC()
+	s.ObservedAt = &now
+	s.CPUPercent = &cpu
+	s.MemoryBytes = &bytes
+	s.Status = "MEASURED"
+	s.Reason = ""
+	return s
+}
+
+func memoryBytes(value string) (int64, bool) {
+	for _, unit := range []struct {
+		name string
+		size float64
+	}{{"TiB", 1 << 40}, {"GiB", 1 << 30}, {"MiB", 1 << 20}, {"KiB", 1 << 10}, {"TB", 1e12}, {"GB", 1e9}, {"MB", 1e6}, {"kB", 1e3}, {"B", 1}} {
+		if !strings.HasSuffix(value, unit.name) {
+			continue
+		}
+		n, err := strconv.ParseFloat(strings.TrimSpace(strings.TrimSuffix(value, unit.name)), 64)
+		n *= unit.size
+		if err != nil || math.IsNaN(n) || math.IsInf(n, 0) || n < 0 || n >= math.MaxInt64 {
+			return 0, false
+		}
+		return int64(n), true
+	}
+	return 0, false
+}
+
+<a id="appendix-internal-runmeta-collect-test-go"></a>
+
+## Приложение: Metadata platform/resource/provenance tests
+
+Полный исходный документ: `internal/runmeta/collect_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+package runmeta
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"strings"
+	"testing"
+)
+
+func syntheticHome(directory string) string {
+	return strings.Join([]string{"", directory, "private"}, "/")
+}
+
+func dockerFixture(t *testing.T, backend, actual, requested, failure string) Docker {
+	t.Helper()
+	id := strings.Repeat("a", 64)
+	image := "sha256:" + strings.Repeat("b", 64)
+	return func(ctx context.Context, args []string) (string, error) {
+		t.Helper()
+		if ctx.Err() != nil {
+			t.Fatal("command started after cancellation")
+		}
+		if args[0] == failure {
+			return "private-error-with-secret", errors.New("private-error-with-secret")
+		}
+		switch args[0] {
+		case "info":
+			return `{"os":"linux","arch":"` + backend + `","cpus":4,"memory":1073741824,"version":"29.0.0","private":"` + syntheticHome("home") + `"}`, nil
+		case "compose":
+			switch args[1] {
+			case "version":
+				return "5.0.0\n", nil
+			case "config":
+				out, _ := json.Marshal(map[string]any{"services": map[string]any{"orders": map[string]any{"platform": requested, "environment": map[string]string{"PASSWORD": "private-secret"}, "volumes": []string{syntheticHome("Users") + ":/mnt"}}}})
+				return string(out), nil
+			case "ps":
+				return id, nil
+			}
+		case "inspect":
+			if args[len(args)-1] != id {
+				t.Fatal("inspect used something other than observed container ID")
+			}
+			return `{"image":"` + image + `","memory":0,"nano_cpus":500000000,"running":true,"ignored":"private-secret"}`, nil
+		case "image":
+			if args[1] != "inspect" || args[len(args)-1] != image {
+				t.Fatal("image metadata used a mutable tag")
+			}
+			return `[{"Id":"` + image + `","Os":"linux","Architecture":"` + actual + `","RepoDigests":["private.registry/app@` + image + `"],"Config":{"Env":["PASSWORD=private-secret"]}}]`, nil
+		case "stats":
+			return `{"cpu":"12.50%","memory":"1.5MiB / 1GiB","private":"` + syntheticHome("home") + `"}`, nil
+		}
+		t.Fatalf("unexpected metadata command %v", args)
+		return "", nil
+	}
+}
+
+func TestObservedImageIdentityPlatformsAndResources(t *testing.T) {
+	t.Setenv("DOCKER_DEFAULT_PLATFORM", "")
+	for _, test := range []struct{ name, backend, image, requested, wantBackend, wantRequest string }{
+		{"matching", "x86_64", "amd64", "linux/amd64", "MATCH", "MATCH"},
+		{"emulation candidate", "aarch64", "amd64", "linux/amd64", "MISMATCH", "MATCH"},
+		{"request ignored", "amd64", "amd64", "linux/arm64", "MATCH", "MISMATCH"},
+		{"no request", "amd64", "amd64", "", "MATCH", "NOT_REQUESTED"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			r := Collect(t.Context(), dockerFixture(t, test.backend, test.image, test.requested, ""), []string{"compose"}, []string{"orders"})
+			s := r.Services["orders"]
+			if s.BackendRelation.Status != test.wantBackend || s.RequestedRelation.Status != test.wantRequest {
+				t.Fatalf("relations: %+v", s)
+			}
+			if s.ContainerID == "" || s.ImageID == "" || len(s.ImageDigests) != 1 {
+				t.Fatal("immutable provenance missing")
+			}
+			if r.BackendBudget.CPUs.Value == nil || *r.BackendBudget.CPUs.Value != 4 || s.Limits.MemoryBytes.Status != "NOT_CONFIGURED" || s.Limits.MemoryBytes.Value == nil || *s.Limits.MemoryBytes.Value != 0 {
+				t.Fatal("budget and cap meanings lost")
+			}
+			if s.Usage.Status != "MEASURED" || s.Usage.ObservedAt == nil || *s.Usage.MemoryBytes != 1572864 || *s.Usage.CPUPercent != 12.5 {
+				t.Fatalf("usage: %+v", s.Usage)
+			}
+			if r.Host.Status != "UNKNOWN" || r.ExecutionProfile.Status != "UNVERIFIED" || r.ComparisonEligibility.Status != "NOT_EVALUATED" {
+				t.Fatal("platform facts were presented as execution proof")
+			}
+			data, _ := json.Marshal(r)
+			for _, secret := range []string{"private-secret", "/home/", "/Users/", "private.registry", "PASSWORD", "private-error"} {
+				if strings.Contains(string(data), secret) {
+					t.Fatalf("metadata leaked %q", secret)
+				}
+			}
+		})
+	}
+}
+
+func TestDefaultPlatformAndMissingObservations(t *testing.T) {
+	t.Setenv("DOCKER_DEFAULT_PLATFORM", "linux/arm64")
+	r := Collect(t.Context(), dockerFixture(t, "arm64", "arm64", "", ""), []string{"compose"}, []string{"orders"})
+	if r.Services["orders"].Requested.Source != "DOCKER_DEFAULT_PLATFORM" || r.Services["orders"].RequestedRelation.Status != "MATCH" {
+		t.Fatal("default platform not observed")
+	}
+	for _, op := range []string{"info", "compose", "inspect", "image", "stats"} {
+		t.Run(op, func(t *testing.T) {
+			r := Collect(t.Context(), dockerFixture(t, "amd64", "amd64", "", op), []string{"compose"}, []string{"orders"})
+			s := r.Services["orders"]
+			if op == "info" && r.Backend.Status != "UNKNOWN" || op == "compose" && s.Requested.Status != "UNKNOWN" || (op == "inspect" || op == "image") && s.Image.Status != "UNKNOWN" || op == "stats" && s.Usage.Status != "NOT_MEASURED" {
+				t.Fatalf("missing observation invented: %+v", r)
+			}
+			data, _ := json.Marshal(r)
+			if strings.Contains(string(data), "private-error") {
+				t.Fatal("raw error persisted")
+			}
+		})
+	}
+}
+
+func TestPartialStartAndCancellation(t *testing.T) {
+	base := dockerFixture(t, "amd64", "amd64", "", "")
+	r := Collect(t.Context(), func(ctx context.Context, args []string) (string, error) {
+		if args[0] == "compose" && args[1] == "ps" {
+			return "", nil
+		}
+		return base(ctx, args)
+	}, []string{"compose"}, []string{"orders"})
+	if r.Backend.Status != "KNOWN" || r.Services["orders"].Image.Status != "UNKNOWN" || r.Services["orders"].Image.Reason == "" {
+		t.Fatal("partial start lost known data or missing reason")
+	}
+	ctx, cancel := context.WithCancel(t.Context())
+	cancel()
+	r = Collect(ctx, func(context.Context, []string) (string, error) {
+		t.Fatal("cancelled collection executed command")
+		return "", nil
+	}, []string{"compose"}, []string{"orders"})
+	if r.Services["orders"].Image.Status != "UNKNOWN" {
+		t.Fatal("cancelled collection invented image")
+	}
+}
+
+func TestMalformedOrMismatchedImageIsUnknown(t *testing.T) {
+	for _, response := range []string{`{`, `[{"Id":"sha256:other","Os":"linux","Architecture":"amd64"}]`} {
+		base := dockerFixture(t, "amd64", "amd64", "", "")
+		r := Collect(t.Context(), func(ctx context.Context, args []string) (string, error) {
+			if args[0] == "image" {
+				return response, nil
+			}
+			return base(ctx, args)
+		}, []string{"compose"}, []string{"orders"})
+		if r.Services["orders"].Image.Status != "UNKNOWN" {
+			t.Fatal("invalid image metadata accepted")
+		}
+	}
+}
+
+func TestPlatformNormalizationAndVariants(t *testing.T) {
+	for _, test := range []struct{ value, arch, variant, state string }{
+		{"linux/x86_64", "amd64", "", "KNOWN"}, {"linux/x86-64", "amd64", "", "KNOWN"}, {"linux/aarch64", "arm64", "", "KNOWN"}, {"linux/arm/v7", "arm", "v7", "KNOWN"},
+		{"linux/arm64/v8", "arm64", "v8", "KNOWN"}, {"linux/arm64/private/path", "", "", "UNKNOWN"}, {syntheticHome("home"), "", "", "UNKNOWN"},
+	} {
+		p := parsePlatform(test.value, "fixture")
+		if p.Status != test.state || p.Architecture != test.arch || p.Variant != test.variant {
+			t.Fatalf("platform %q: %+v", test.value, p)
+		}
+	}
+	if got := compare(parsePlatform("linux/arm/v7", "fixture"), parsePlatform("linux/arm", "fixture"), false); got.Status != "UNKNOWN" {
+		t.Fatal("unknown variant guessed")
+	}
+	if got := compare(parsePlatform("linux/arm/v7", "fixture"), parsePlatform("linux/arm/v6", "fixture"), false); got.Status != "MISMATCH" {
+		t.Fatal("variant mismatch hidden")
+	}
+	for _, value := range []string{"NaNMiB", "-1MiB", "1e100GiB", syntheticHome("home"), ""} {
+		if _, ok := memoryBytes(value); ok {
+			t.Fatalf("invalid measurement accepted: %q", value)
+		}
+	}
+}
+
+func TestImageVariantAndUnmeasuredVersusZero(t *testing.T) {
+	base := dockerFixture(t, "arm64", "arm64", "linux/arm64", "")
+	r := Collect(t.Context(), func(ctx context.Context, args []string) (string, error) {
+		if args[0] == "image" {
+			out, err := base(ctx, args)
+			return strings.Replace(out, `"Architecture":"arm64"`, `"Architecture":"arm64","Variant":"v8"`, 1), err
+		}
+		if args[0] == "inspect" {
+			return `{"image":"sha256:` + strings.Repeat("b", 64) + `","running":true}`, nil
+		}
+		if args[0] == "stats" {
+			return `{"cpu":"0.00%","memory":"0B / 0B"}`, nil
+		}
+		return base(ctx, args)
+	}, []string{"compose"}, []string{"orders"})
+	s := r.Services["orders"]
+	if s.Image.Variant != "v8" || s.Image.Raw != "linux/arm64/v8" || s.BackendRelation.Status != "UNKNOWN" || s.RequestedRelation.Status != "MATCH" {
+		t.Fatalf("variant handling: %+v", s)
+	}
+	if s.Limits.MemoryBytes.Status != "UNKNOWN" || s.Limits.NanoCPUs.Status != "UNKNOWN" || s.Usage.Status != "MEASURED" || s.Usage.MemoryBytes == nil || *s.Usage.MemoryBytes != 0 {
+		t.Fatal("unknown cap confused with measured zero")
+	}
+}
+
+<a id="appendix-internal-smoke-metadata-test-go"></a>
+
+## Приложение: Smoke metadata cancellation and failure tests
+
+Полный исходный документ: `internal/smoke/metadata_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+package smoke
+
+import (
+	"context"
+	"errors"
+	"slices"
+	"strings"
+	"testing"
+)
+
+func TestMissingImageMetadataPreservesFunctionalResult(t *testing.T) {
+	f, options := fixture(t)
+	r, err := run(t.Context(), options, func(ctx context.Context, program string, args []string) (commandOutput, error) {
+		if args[0] == "image" && args[1] == "inspect" {
+			return commandOutput{stderr: "metadata-secret"}, errors.New("metadata-secret")
+		}
+		return f.execute(ctx, program, args)
+	})
+	if err != nil || r.Result != "PASS" || r.Cleanup != "PASS" || r.Environment.Services["orders"].Image.Status != "UNKNOWN" {
+		t.Fatalf("metadata changed functional outcome: %s %v", r.Result, err)
+	}
+	if strings.Contains(r.Error, "metadata-secret") {
+		t.Fatal("raw metadata error leaked")
+	}
+	verifySavedReport(t, options, r)
+}
+
+func TestCancellationDuringMetadataCleansAndStopsStages(t *testing.T) {
+	f, options := fixture(t)
+	ctx, cancel := context.WithCancel(t.Context())
+	defer cancel()
+	r, err := run(ctx, options, func(child context.Context, program string, args []string) (commandOutput, error) {
+		if args[0] == "info" && strings.Contains(args[len(args)-1], `"cpus"`) {
+			if _, ok := child.Deadline(); !ok {
+				t.Fatal("metadata query lacks deadline")
+			}
+			cancel()
+			return commandOutput{}, child.Err()
+		}
+		return f.execute(child, program, args)
+	})
+	if err == nil || !r.Cancelled || r.Result != "FAIL" || r.Cleanup != "PASS" || f.owned || f.images || !f.foreign || slices.Contains(f.operations, "exec") {
+		t.Fatalf("cancelled metadata run did not stop and clean: %s %v", r.Result, err)
+	}
+	verifySavedReport(t, options, r)
+}
+
+<a id="appendix-smokecli-real-report-metadata-test"></a>
+
+## Приложение: Validate observed metadata in completed real smoke reports
+
+Полный исходный документ: `tests/smokecli/metadata_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+package smokecli
+
+import (
+	"encoding/json"
+	"os"
+	"path/filepath"
+	"testing"
+	"time"
+
+	"github.com/Includeoyasi/faultline-lab/internal/runmeta"
+)
+
+// These opt-in checks read completed real reports. Unlike the functional CLI
+// exit code, they require observable metadata in the known CI deployment.
+func TestSuccessfulReportsHaveObservedMetadata(t *testing.T) {
+	root := os.Getenv("LAB_SMOKE_ROOT")
+	if root == "" {
+		t.Skip("requires completed runtime, PostgreSQL and infrastructure reports")
+	}
+	for _, test := range []struct {
+		kind     string
+		version  int
+		services []string
+	}{
+		{"smoke", 3, []string{"orders", "inventory", "payments"}},
+		{"postgres", 1, []string{"postgres", "inventory"}},
+		{"infrastructure", 1, []string{"postgres", "kafka", "redis", "inventory"}},
+	} {
+		t.Run(test.kind, func(t *testing.T) {
+			r := latestSuccessfulReport(t, root, test.kind)
+			if r.SchemaVersion != test.version || r.Cleanup != "PASS" || r.Environment.SchemaVersion != 1 {
+				t.Fatal("report schema/cleanup missing")
+			}
+			env := r.Environment
+			if env.Runner.Status != "KNOWN" || env.Backend.Status != "KNOWN" || env.BackendBudget.CPUs.Status != "KNOWN" || env.BackendBudget.MemoryBytes.Status != "KNOWN" {
+				t.Fatal("runner/backend observations missing")
+			}
+			if env.ExecutionProfile.Status != "UNVERIFIED" || env.ComparisonEligibility.Status != "NOT_EVALUATED" {
+				t.Fatal("functional report claimed performance eligibility")
+			}
+			for _, name := range test.services {
+				s, exists := env.Services[name]
+				if !exists || s.ContainerID == "" || s.ImageID == "" || s.Image.Status != "KNOWN" {
+					t.Fatalf("%s image provenance missing: %+v", name, s.Image)
+				}
+				if s.Usage.Status != "MEASURED" || s.Usage.ObservedAt == nil || s.Usage.MemoryBytes == nil || s.Usage.CPUPercent == nil {
+					t.Fatalf("%s resource sample missing", name)
+				}
+				for _, cap := range []runmeta.Quantity{s.Limits.MemoryBytes, s.Limits.NanoCPUs} {
+					if cap.Value == nil || cap.Status != "KNOWN" && cap.Status != "NOT_CONFIGURED" {
+						t.Fatalf("%s configured resource field missing", name)
+					}
+				}
+			}
+		})
+	}
+}
+
+type savedReport struct {
+	SchemaVersion int            `json:"schema_version"`
+	Started       time.Time      `json:"started_at"`
+	Result        string         `json:"result"`
+	Cleanup       string         `json:"cleanup"`
+	Environment   runmeta.Report `json:"environment"`
+}
+
+func latestSuccessfulReport(t *testing.T, root, kind string) savedReport {
+	t.Helper()
+	files, err := filepath.Glob(filepath.Join(root, "artifacts", kind, "*", "report.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var latest savedReport
+	for _, file := range files {
+		data, err := os.ReadFile(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var r savedReport
+		if err = json.Unmarshal(data, &r); err != nil {
+			t.Fatal(err)
+		}
+		if r.Result == "PASS" && r.Started.After(latest.Started) {
+			latest = r
+		}
+	}
+	if latest.Result != "PASS" {
+		t.Fatal("no completed successful report", kind)
+	}
+	return latest
+}
