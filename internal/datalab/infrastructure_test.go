@@ -16,7 +16,7 @@ import (
 )
 
 func TestCombinedInfrastructureLifecycle(t *testing.T) {
-	for _, scenario := range []string{"success", "start-failure", "before-failure", "invalid-checkpoint", "after-failure", "cancel-before", "cleanup-failure"} {
+	for _, scenario := range []string{"success", "start-failure", "before-failure", "invalid-checkpoint", "after-failure", "cancel-before", "cleanup-failure", "metadata-cancel", "metadata-missing"} {
 		t.Run(scenario, func(t *testing.T) {
 			root := t.TempDir()
 			for _, path := range []string{"configs/postgres/local.json", "configs/infrastructure/local.json"} {
@@ -35,11 +35,25 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 			ctx, cancel := context.WithCancel(t.Context())
 			defer cancel()
 			cleaned, logged, afterCalled := false, false, false
+			inventoryStarted := false
 			var password, passwordHash string
 			checkpoint := `{"version":1,"topic":"faultline-smoke","partition":0,"offset":7,"key":"checkpoint","value":"expected"}`
 			execute := func(commandCtx context.Context, program string, args []string) (command.Output, error) {
 				if program != "docker" {
 					t.Fatal("unexpected executable")
+				}
+				if args[0] == "compose" && slices.Contains(args, "config") && (!inventoryStarted || !slices.Contains(args, "compose.inventory.yaml") || !slices.Contains(args, "compose.infrastructure.yaml")) {
+					t.Fatal("metadata must observe the combined Inventory business profile")
+				}
+				if scenario == "metadata-cancel" && args[0] == "info" {
+					cancel()
+					return command.Output{}, commandCtx.Err()
+				}
+				if scenario == "metadata-missing" && args[0] == "image" && args[1] == "inspect" {
+					return command.Output{Stderr: "metadata-private"}, errors.New("metadata-private")
+				}
+				if data, ok := metadataFixture(args); ok {
+					return data, nil
 				}
 				if args[0] == "compose" && !slices.Contains(args, "compose.infrastructure.yaml") {
 					t.Fatal("combined command lost its overlay")
@@ -74,6 +88,7 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 				}
 				if slices.Contains(args, "up") {
 					if slices.Contains(args, "inventory") {
+						inventoryStarted = true
 						if !slices.Contains(args, "compose.inventory.yaml") || !slices.Contains(args, "--no-deps") {
 							t.Fatal("business start lost its isolated overlay")
 						}
@@ -113,10 +128,11 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 				return command.Output{}, nil
 			}
 			err := runMode(ctx, io.Discard, root, execute, true)
-			if !cleaned || !logged || (err == nil) != (scenario == "success") {
+			wantSuccess := scenario == "success" || scenario == "metadata-missing"
+			if !cleaned || !logged || (err == nil) != wantSuccess {
 				t.Fatal("incorrect combined lifecycle result")
 			}
-			if (scenario == "start-failure" || scenario == "before-failure" || scenario == "cancel-before" || scenario == "invalid-checkpoint") && afterCalled {
+			if (scenario == "start-failure" || scenario == "before-failure" || scenario == "cancel-before" || scenario == "invalid-checkpoint" || scenario == "metadata-cancel") && afterCalled {
 				t.Fatal("continued after an earlier failure")
 			}
 			paths, err := filepath.Glob(filepath.Join(root, "artifacts/infrastructure/*/report.json"))
@@ -131,8 +147,21 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 				t.Fatal("report did not redact actual credential output")
 			}
 			var saved report
-			if json.Unmarshal(data, &saved) != nil || (saved.Result == "PASS") != (scenario == "success") {
+			if json.Unmarshal(data, &saved) != nil || (saved.Result == "PASS") != wantSuccess {
 				t.Fatal("incorrect saved verdict")
+			}
+			if scenario == "success" {
+				for _, service := range []string{"postgres", "kafka", "redis", "inventory"} {
+					if saved.Environment.Services[service].Image.Status != "KNOWN" || saved.Environment.Services[service].Usage.Status != "MEASURED" {
+						t.Fatal("combined metadata missing", service)
+					}
+				}
+			}
+			if strings.Contains(string(data), "metadata-secret") || strings.Contains(string(data), strings.Join([]string{"", "Users", "private"}, "/")) {
+				t.Fatal("raw Compose data leaked")
+			}
+			if strings.Contains(string(data), "metadata-private") || scenario == "metadata-missing" && saved.Environment.Services["postgres"].Image.Status != "UNKNOWN" {
+				t.Fatal("missing metadata not safely represented")
 			}
 			for _, name := range []string{"secrets", "infrastructure-secrets"} {
 				if _, err = os.Stat(filepath.Join(filepath.Dir(paths[0]), name)); !errors.Is(err, os.ErrNotExist) {

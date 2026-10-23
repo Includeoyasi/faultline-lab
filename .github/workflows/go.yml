@@ -50,10 +50,6 @@ jobs:
         run: |
           docker compose run --rm toolchain smoke-build
           bin/smoke-linux-${{ matrix.arch }}
-      - name: Verify SIGINT report and scoped cleanup on the host
-        run: |
-          docker compose run --rm toolchain smoke-cli-tests
-          LAB_SMOKE_BINARY="$PWD/bin/smoke-linux-${{ matrix.arch }}" LAB_SMOKE_ROOT="$PWD" bin/smoke-cli-tests -test.v -test.timeout=4m
       - name: Cross-compile smoke for supported host platforms
         if: matrix.arch == 'amd64'
         run: docker compose run --rm toolchain smoke-cross-check
@@ -63,6 +59,10 @@ jobs:
           bin/labdata-linux-${{ matrix.arch }} smoke
       - name: Verify PostgreSQL, Kafka and Redis together
         run: bin/labdata-linux-${{ matrix.arch }} smoke -infrastructure
+      - name: Verify observed metadata, SIGINT report and scoped cleanup
+        run: |
+          docker compose run --rm toolchain smoke-cli-tests
+          LAB_SMOKE_BINARY="$PWD/bin/smoke-linux-${{ matrix.arch }}" LAB_SMOKE_ROOT="$PWD" bin/smoke-cli-tests -test.v -test.timeout=4m
       - name: Cross-compile data tool for supported hosts
         if: matrix.arch == 'amd64'
         run: docker compose run --rm toolchain data-cross-check

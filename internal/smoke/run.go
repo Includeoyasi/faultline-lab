@@ -13,6 +13,8 @@ import (
 	"runtime"
 	"strings"
 	"time"
+
+	"github.com/Includeoyasi/faultline-lab/internal/runmeta"
 )
 
 var services = []string{"orders", "inventory", "payments"}
@@ -134,10 +136,11 @@ func newRunner(options Options, execute executeFunc) (*runner, error) {
 		pairs = append(pairs, home, "[home]", filepath.ToSlash(home), "[home]")
 	}
 	return &runner{options: options, directory: directory, execute: execute, redact: strings.NewReplacer(pairs...), report: Report{
-		SchemaVersion: 2, RunID: id, Project: project, StartedAt: time.Now().UTC(), Result: "FAIL", Phase: "prerequisites", Cleanup: "PENDING",
+		SchemaVersion: 3, RunID: id, Project: project, StartedAt: time.Now().UTC(), Result: "FAIL", Phase: "prerequisites", Cleanup: "PENDING",
 		HostPlatform: runtime.GOOS, GoVersion: runtime.Version(), Services: map[string]serviceReport{}, Commands: []commandReport{},
 		Recovery:    []string{"docker", "compose", "-f", "compose.yaml", "-p", project, "down", "--remove-orphans", "--rmi", "local"},
-		Limitations: []string{"No business operations or capacity measurement", "docker_architecture describes the backend, not individual image platforms (F03)", "SIGKILL or host failure requires recovery_command; signal cleanup cannot be guaranteed in those cases"},
+		Limitations: []string{"No business operations or capacity measurement", "Legacy host_platform is runner GOOS; docker_architecture describes the backend. See environment for platform observations", "Platform match does not prove native execution; A/B eligibility is not evaluated", "SIGKILL or host failure requires recovery_command; signal cleanup cannot be guaranteed in those cases"},
+		Environment: runmeta.New(services),
 	}}, nil
 }
 
@@ -195,7 +198,16 @@ func (r *runner) exercise(ctx context.Context) error {
 		{"start", func(ctx context.Context) error {
 			r.resourcesMayExist = true
 			_, err := r.compose(ctx, append([]string{"up", "-d", "--wait", "--wait-timeout", "60"}, services...)...)
-			return err
+			// Collect before shutdown, including observable partial starts. Raw
+			// config/inspect data bypass diagnostics and never reach the report.
+			r.report.Environment = runmeta.Collect(ctx, func(ctx context.Context, args []string) (string, error) {
+				out, e := r.execute(ctx, "docker", args)
+				if e == nil && out.exitCode != 0 {
+					e = errors.New("metadata command failed")
+				}
+				return out.stdout, e
+			}, r.composeArgs(), services)
+			return errors.Join(err, r.checkpoint())
 		}},
 		{"check", r.checkAll},
 		{"isolation", r.isolate},

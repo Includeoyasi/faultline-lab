@@ -17,6 +17,7 @@
 | Подготовить базы и исходные данные | [PostgreSQL](development/POSTGRES.md) — роли, миграции, seed, схемы взаимодействий и reset |
 | Работать со складом | [Inventory](development/INVENTORY.md) — API, резервы, повторы, отмена и проверка транзакций |
 | Запустить инфраструктуру вместе | [Kafka и Redis](development/INFRASTRUCTURE.md) — общий smoke, ACL, TTL, сохранность Kafka и очистка |
+| Прочитать платформы и ресурсы отчёта | [Метаданные запуска](development/RUN_METADATA.md) — происхождение значений, неизвестные поля и ограничения |
 | Разобрать смену Kafka publisher и повторы | [Публикация Kafka](architecture/KAFKA_PUBLISHING.md) — проблема, три механизма и совместные сценарии на схемах |
 | Проверить Windows smoke | [Отчёт P01](development/evidence/p01/WINDOWS_SMOKE.md) — исходные JSON/JSONL, бюджет и остановка среды |
 | Проверить исходные ресурсы | [Профили сред](development/RESOURCE_PROFILES.md) — Windows, macOS и возможный будущий сервер |
