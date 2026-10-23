@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 73,
+  "context_revision": 74,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-23",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "8ae910dd0d4bf80b99a57c6d5dce791313524b0e",
+    "snapshot_ref": "450e139506f88f0f2570df12abc05a7b6c0a304a",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -3367,6 +3367,12 @@
       "date": "2026-10-23",
       "summary": "Recorded successful native AMD64/ARM64 Orders acceptance/crash, 1000/100 stock balance, deployed persistence and metadata/cleanup evidence at a fixed tested HEAD; explicit scope and owner G1 decision retained",
       "trigger": "Completed real container CI after implementing the owner-authorized Orders slice"
+    },
+    {
+      "revision": 74,
+      "date": "2026-10-23",
+      "summary": "Repaired Mermaid sequence labels in Orders materials and separately rendered both PR and guide diagrams with Mermaid 11.4.1; structural documentation checks alone do not verify rendering",
+      "trigger": "Owner reported the PR diagram parse error; business behavior and acceptance criteria unchanged"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -3666,6 +3672,12 @@
       "date": "2026-10-23",
       "environment": "Windows AMD64 portable Go1.27.3",
       "results": "Orders/model/worker/config unit tests and opt-in test compilation, datalab/smokecli regressions, go vet, go build ./..., real health-only service process smoke PASS. PostgreSQL/Inventory/SIGKILL acceptance cases require isolated native container CI; current results are in PR/Actions."
+    },
+    "diagram_validation": {
+      "date": "2026-10-23",
+      "source_commit": "450e139506f88f0f2570df12abc05a7b6c0a304a",
+      "renderer": "Mermaid 11.4.1",
+      "result": "Original semicolon label parse error reproduced; repaired PR and Orders guide sequences rendered as SVG/PNG and visually inspected. This is separate from structural Documentation checks and business runtime validation."
     },
     "g1": "Owner reviews code/migrations, repeat/conflict, 1000/100 stock conservation, persistent step after SIGKILL/restart and stale worker guards; green mandatory checks and accepted review precede explicit G1 acceptance. Broader roadmap stage1 also lists payment model/basic metrics, retained as a visible boundary; no G2 claim",
     "remaining_scope": "No Payments, Kafka publisher/consumer, CancelOrder, finalization/F11, Redis, full dataset reset, capacity or A/B result",
