@@ -52,6 +52,7 @@ services:
     environment:
       FL_DATA_CONFIG: /etc/faultline/postgres.json
       FL_DATA_SECRETS: /run/secrets
+      FL_INVENTORY_DATASET_ID: ${FL_INVENTORY_DATASET_ID:-}
     volumes:
       - ./configs/postgres/local.json:/etc/faultline/postgres.json:ro
     secrets:

@@ -35,11 +35,15 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 			ctx, cancel := context.WithCancel(t.Context())
 			defer cancel()
 			cleaned, logged, afterCalled := false, false, false
+			inventoryStarted := false
 			var password, passwordHash string
 			checkpoint := `{"version":1,"topic":"faultline-smoke","partition":0,"offset":7,"key":"checkpoint","value":"expected"}`
 			execute := func(commandCtx context.Context, program string, args []string) (command.Output, error) {
 				if program != "docker" {
 					t.Fatal("unexpected executable")
+				}
+				if args[0] == "compose" && slices.Contains(args, "config") && (!inventoryStarted || !slices.Contains(args, "compose.inventory.yaml") || !slices.Contains(args, "compose.infrastructure.yaml")) {
+					t.Fatal("metadata must observe the combined Inventory business profile")
 				}
 				if scenario == "metadata-cancel" && args[0] == "info" {
 					cancel()
@@ -83,9 +87,16 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 					}
 				}
 				if slices.Contains(args, "up") {
-					for _, name := range []string{"postgres", "kafka", "redis"} {
-						if !slices.Contains(args, name) {
-							t.Fatal("combined start omitted a dependency")
+					if slices.Contains(args, "inventory") {
+						inventoryStarted = true
+						if !slices.Contains(args, "compose.inventory.yaml") || !slices.Contains(args, "--no-deps") {
+							t.Fatal("business start lost its isolated overlay")
+						}
+					} else {
+						for _, name := range []string{"postgres", "kafka", "redis"} {
+							if !slices.Contains(args, name) {
+								t.Fatal("combined start omitted a dependency")
+							}
 						}
 					}
 					if scenario == "start-failure" {
@@ -140,7 +151,7 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 				t.Fatal("incorrect saved verdict")
 			}
 			if scenario == "success" {
-				for _, service := range []string{"postgres", "kafka", "redis"} {
+				for _, service := range []string{"postgres", "kafka", "redis", "inventory"} {
 					if saved.Environment.Services[service].Image.Status != "KNOWN" || saved.Environment.Services[service].Usage.Status != "MEASURED" {
 						t.Fatal("combined metadata missing", service)
 					}

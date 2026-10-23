@@ -24,7 +24,7 @@
 
 The repository contains three Go service processes with explicit configuration, gRPC health, JSON logs and bounded shutdown. The shop workflow, infrastructure and experiments follow the [roadmap](docs/ROADMAP.md); the architecture diagram below describes their intended boundaries.
 
-[Build tools](docs/development/TOOLCHAIN.md) · [Runtime guide](docs/development/CONTAINER_RUNTIME.md) · [Go container smoke](docs/development/SMOKE.md).
+[Build tools](docs/development/TOOLCHAIN.md) · [Runtime guide](docs/development/CONTAINER_RUNTIME.md) · [Inventory API](docs/development/INVENTORY.md) · [Go container smoke](docs/development/SMOKE.md).
 
 **Live work and review status:** [Issues](https://github.com/Includeoyasi/faultline-lab/issues), [pull requests](https://github.com/Includeoyasi/faultline-lab/pulls) and [milestones](https://github.com/Includeoyasi/faultline-lab/milestones). The repository keeps specifications and dated evidence, including the [Windows baseline](docs/development/evidence/p01/WINDOWS_SMOKE.md), rather than a second progress board. Performance claims require their own measurements.
 

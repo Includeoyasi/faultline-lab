@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 70,
+  "context_revision": 71,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-21",
+  "context_updated_on": "2026-10-23",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "0fd6715098970d8aa0614617125d2c50f0d3f6d8",
+    "snapshot_ref": "199f6912701aac70a04d9e07e270ebb4520c9f98",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -106,6 +106,17 @@
       ],
       "implementation_and_review_pr_authorized": true,
       "other_work": "Outbox implementation, gate acceptance and other audit findings keep their agreed checkpoints"
+    },
+    {
+      "date": "2026-10-20",
+      "source": "Direct owner chat: proceed with the next task after confirming Inventory is independent of the metadata PR",
+      "scope": [
+        "Inventory business API and protobuf",
+        "atomic reservations, Commit/Release and cancellation barriers",
+        "Inventory portion of F10 with dataset lifetime retention"
+      ],
+      "implementation_and_review_pr_authorized": true,
+      "other_work": "Orders, Payments, Redis caching, Kafka publisher/F09 and full dataset reset excluded; gate acceptance remains separate"
     },
     {
       "date": "2026-10-20",
@@ -601,14 +612,6 @@
     "go_image": "golang:1.27.3-trixie@sha256:604106102d33b1084e37ca08adf98ac0813624ae8595bd0d7f3965ecebded09c",
     "lint_image": "golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f",
     "image_indexes": "VERIFIED_LINUX_AMD64_AND_ARM64",
-    "security_patch": {
-      "date": "2026-10-21",
-      "finding": "GO-2026-6809 in crypto/x509 of Go 1.27.2",
-      "change": "Pin Go 1.27.3 and rebuild toolchain/runtime binaries; module dependencies and linter versions unchanged",
-      "registry_evidence": "docs/development/evidence/go-toolchain/go-1.27.3-registry.json",
-      "provenance": "Official Go release history and Docker Registry OCI index; response digest recomputed and native Linux AMD64/ARM64 manifests verified",
-      "historical_evidence": "Prior 1.27.2 test records and installed host SDK remain dated evidence; no host SDK installation performed"
-    },
     "application_dependencies": "google.golang.org/grpc v1.84.0; STANDARD_LOG_SLOG; TOOL_DIRECTIVES_PINNED",
     "native_ci_runners": [
       "ubuntu-24.04",
@@ -623,6 +626,14 @@
       "tag": "v7.0.2",
       "sha": "cf430e030ddbb5b0abf93d22962f4752f3646cd9",
       "source": "Official GitHub release and git tag ref checked 2026-10-15"
+    },
+    "security_patch": {
+      "date": "2026-10-21",
+      "finding": "GO-2026-6809 in crypto/x509 of Go 1.27.2",
+      "change": "Pin Go 1.27.3 and rebuild toolchain/runtime binaries; module dependencies and linter versions unchanged",
+      "registry_evidence": "docs/development/evidence/go-toolchain/go-1.27.3-registry.json",
+      "provenance": "Official Go release history and Docker Registry OCI index; response digest recomputed and native Linux AMD64/ARM64 manifests verified",
+      "historical_evidence": "Prior 1.27.2 test records and installed host SDK remain dated evidence; no host SDK installation performed"
     },
     "deadline_check": {
       "recorded_on": "2026-10-21",
@@ -2622,6 +2633,148 @@
       "language": "go"
     },
     {
+      "path": "api/inventory/v1/inventory.proto",
+      "title": "api/inventory/v1/inventory.proto",
+      "anchor": "inventory-api-inventory-v1-inventory-proto",
+      "language": "protobuf"
+    },
+    {
+      "path": "migrations/inventory/0003_reservations.sql",
+      "title": "migrations/inventory/0003_reservations.sql",
+      "anchor": "inventory-migrations-inventory-0003-reservations-sql",
+      "language": "sql"
+    },
+    {
+      "path": "compose.inventory.yaml",
+      "title": "compose.inventory.yaml",
+      "anchor": "inventory-compose-inventory-yaml",
+      "language": "yaml"
+    },
+    {
+      "path": "configs/inventory/local.json",
+      "title": "configs/inventory/local.json",
+      "anchor": "inventory-configs-inventory-local-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/INVENTORY.md",
+      "title": "docs/development/INVENTORY.md",
+      "anchor": "inventory-docs-development-inventory-md"
+    },
+    {
+      "path": "docs/development/evidence/inventory/VALIDATION.md",
+      "title": "docs/development/evidence/inventory/VALIDATION.md",
+      "anchor": "inventory-docs-development-evidence-inventory-validation-md"
+    },
+    {
+      "path": "docs/development/evidence/inventory/windows-postgres.json",
+      "title": "docs/development/evidence/inventory/windows-postgres.json",
+      "anchor": "inventory-docs-development-evidence-inventory-windows-postgres-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/inventory/windows-infrastructure.json",
+      "title": "docs/development/evidence/inventory/windows-infrastructure.json",
+      "anchor": "inventory-docs-development-evidence-inventory-windows-infrastructure-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/inventory/source-hashes.json",
+      "title": "docs/development/evidence/inventory/source-hashes.json",
+      "anchor": "inventory-docs-development-evidence-inventory-source-hashes-json",
+      "language": "json"
+    },
+    {
+      "path": "internal/inventory/command.go",
+      "title": "internal/inventory/command.go",
+      "anchor": "inventory-internal-inventory-command-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/config.go",
+      "title": "internal/inventory/store/config.go",
+      "anchor": "inventory-internal-inventory-config-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/deployment_test.go",
+      "title": "internal/inventory/store/deployment_test.go",
+      "anchor": "inventory-internal-inventory-deployment-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/integration_test.go",
+      "title": "internal/inventory/store/integration_test.go",
+      "anchor": "inventory-internal-inventory-integration-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/model/model.go",
+      "title": "internal/inventory/model/model.go",
+      "anchor": "inventory-internal-inventory-model-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/model/model_test.go",
+      "title": "internal/inventory/model/model_test.go",
+      "anchor": "inventory-internal-inventory-model-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/process_test.go",
+      "title": "internal/inventory/store/process_test.go",
+      "anchor": "inventory-internal-inventory-process-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/server.go",
+      "title": "internal/inventory/server.go",
+      "anchor": "inventory-internal-inventory-server-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/server_test.go",
+      "title": "internal/inventory/server_test.go",
+      "anchor": "inventory-internal-inventory-server-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/store.go",
+      "title": "internal/inventory/store/store.go",
+      "anchor": "inventory-internal-inventory-store-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/mutate.go",
+      "title": "internal/inventory/store/mutate.go",
+      "anchor": "inventory-store-mutate-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/get_reservation.go",
+      "title": "internal/inventory/store/get_reservation.go",
+      "anchor": "inventory-store-get-reservation-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/get_availability.go",
+      "title": "internal/inventory/store/get_availability.go",
+      "anchor": "inventory-store-get-availability-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/close.go",
+      "title": "internal/inventory/store/close.go",
+      "anchor": "inventory-store-close-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/config_test.go",
+      "title": "internal/inventory/store/config_test.go",
+      "anchor": "inventory-store-config-test-go",
+      "language": "go"
+    },
+    {
       "path": "docs/architecture/PLATFORM_EVIDENCE.md",
       "title": "F03: accepted platform evidence contract",
       "anchor": "appendix-docs-architecture-platform-evidence-md"
@@ -3026,6 +3179,12 @@
       "trigger": "Direct owner voice instruction to make the current proposal reviewable through interaction diagrams"
     },
     {
+      "revision": 65,
+      "date": "2026-10-20",
+      "summary": "Implemented Inventory business API, atomic reservations and durable receipts/barriers with application-only runtime and real PostgreSQL/deployment restart evidence; preserved direct owner review-format and F03/F11 approval facts",
+      "trigger": "Owner authorized the next independent Inventory task after the metadata PR"
+    },
+    {
       "revision": 63,
       "date": "2026-10-20",
       "summary": "Implemented bounded F03/current F06 facts for existing runners, validated Windows metadata and cleanup, retained direct owner F03/F11 approvals and review-format requirements",
@@ -3036,6 +3195,12 @@
       "date": "2026-10-20",
       "summary": "Added opt-in validation of completed real metadata reports to existing CLI tests and native Linux CI; validated saved Windows observations",
       "trigger": "Real optional Variant regression showed that functional PASS alone does not establish observed metadata completeness"
+    },
+    {
+      "revision": 71,
+      "date": "2026-10-23",
+      "summary": "Reconciled Inventory and accepted run metadata sources; both labdata modes observe the Inventory business container with its effective deployment overlay, and real report validation requires its image/resource observations. Preserved owner review-format rules and five architecture review blocks.",
+      "trigger": "Owner requested merging current main into Inventory PR27 and refreshing it for owner merge"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -3193,8 +3358,47 @@
     },
     "ci_refinement": "Initial Linux CI stopped at staticcheck ST1005 and an unused Compose wrapper; lower-case error messages and removal retain all checks. Redis default username is now rejected before ACL generation; affected Windows tests/vet pass. Actual final-HEAD CI results belong in PR/Actions."
   },
+  "inventory_foundation": {
+    "source_commit": "a7231366be44c2528edb68e507606d87b9a47fee",
+    "decision_date": "2026-10-20",
+    "service": "Inventory owns inventory_db and connects only as inventory_app",
+    "api": [
+      "Reserve",
+      "CommitReservation",
+      "ReleaseReservation",
+      "GetReservation",
+      "GetAvailability"
+    ],
+    "atomic_writes": [
+      "reservation and priced items",
+      "stock availability",
+      "immutable operation receipt including business rejection",
+      "ledger",
+      "local outbox fact without Kafka publication"
+    ],
+    "concurrency": "Transactional advisory locks serialize operation key and order even without an existing reservation; canonical SKU ordering for stock locks",
+    "receipt_semantics": "OperationResult is historical and immutable; GetReservation is authoritative current state. A new operation key cannot create a second reservation for an existing order or bypass RELEASED.",
+    "dataset_lifetime": "One database is bound to one explicit dataset_id. All RPCs verify identity. Keys, rejections, barriers and events have no TTL or selective GC; a fresh isolated dataset requires a fresh identity.",
+    "runtime": "Business mode requires explicit application-only configuration and bounded pool/request timeouts; health-only is an explicit lifecycle test command",
+    "validation": {
+      "date": "2026-10-20",
+      "host": "Windows AMD64 with Linux containers on Docker Desktop",
+      "evidence": "docs/development/evidence/inventory/VALIDATION.md",
+      "macos_runtime": "NOT_RUN",
+      "full_F10": "Not established until the remaining services and coordinated reset are implemented"
+    },
+    "remaining_scope": "No Orders, Payments, Kafka publication, Redis cache, full reset, capacity result or G1 acceptance",
+    "layout": {
+      "recorded_on": "2026-10-21",
+      "source_commit": "d47cfa9addc7c6290b584714e094440fc10af040",
+      "owner_request": "https://github.com/Includeoyasi/faultline-lab/pull/27#discussion_r4335472777",
+      "storage": "internal/inventory/store: Store/NewStore/private helpers in store.go; one exported Store method per file; SQL in constants beside callers",
+      "domain": "internal/inventory/model: unchanged request/result JSON, canonical operation hash and shared sentinel errors; storage and gRPC transport import this package without cycles",
+      "test_entrypoint": "Docker compiles ./internal/inventory/store to /app/inventory.test; existing scenario names and datalab selectors retained",
+      "local_verification": "Windows AMD64 portable Go1.27.3: inventory/model/store unit tests and go vet passed. Database/process/deployment integration cases require isolated container CI; no local Docker/WSL run for this refactor."
+    }
+  },
   "architecture_review_format": {
-    "confirmed_on": "2026-10-19",
     "source": "Direct owner chat after Kafka Publishing review",
     "blocks": [
       "Problem, localization cases and diagrams",
@@ -3203,6 +3407,8 @@
       "Implementation plan for the current stage",
       "Specific review focus"
     ],
+    "writing": "3–10 substantive sentences per block; prefer diagrams/tables, explain once and illustrate rather than repeating; make the decision understandable to the owner",
+    "confirmed_on": "2026-10-19",
     "sentences_per_block": "3–10 substantive sentences",
     "presentation": "Prefer diagrams and tables; explain once and show once; enough content for an owner decision without repeated narrative",
     "pull_request_descriptions": {
@@ -3227,6 +3433,12 @@
       ]
     }
   },
+  "owner_architecture_approvals_2026_10_20": {
+    "source": "Direct owner chat: F03 and F11 approved",
+    "F03": "Separate observed runner/backend/requested/image platforms; unknown values are explicit, MATCH alone does not establish native execution; full comparison validation belongs with experiments",
+    "F11": "FINALIZING with separate NEEDS_REVIEW recovery flag and durable evidence/blocked work on exceptional RELEASED; no automatic successful terminal transition, refund or repair exit",
+    "meaning": "Architectural approval does not imply completed implementation, code review acceptance or gate acceptance"
+  },
   "run_metadata_contract": {
     "schema_version": 1,
     "report_versions": {
@@ -3241,7 +3453,14 @@
     "failure_semantics": "Metadata is optional evidence, not the functional verdict; bounded 30s total and 5s per query; cancellation preserves owned cleanup",
     "privacy": "Raw config/inspect/errors are not persisted; typed allowlist; repository names omitted from digests",
     "comparison": "UNVERIFIED execution profile; NOT_EVALUATED A/B; no full experiment manifest yet",
-    "ci_validation": "After all three functional smoke modes, existing host CLI test binary checks completed reports for known image platforms and measured resource snapshots; functional CLI semantics remain unchanged"
+    "ci_validation": "After all three functional smoke modes, existing host CLI test binary checks completed reports for known image platforms and measured resource snapshots; functional CLI semantics remain unchanged",
+    "inventory_integration": {
+      "recorded_on": "2026-10-23",
+      "source_commit": "199f6912701aac70a04d9e07e270ebb4520c9f98",
+      "coverage": "labdata observes postgres and Inventory business container; combined mode also observes kafka/redis. Collect after Inventory startup with effective compose.inventory.yaml overlay, before deployed API probes.",
+      "failure_semantics": "Before collection all named containers retain explicit unknown values; absent metadata does not change functional success; cancellation and scoped cleanup preserved.",
+      "verification": "Portable Go 1.27.3 on Windows AMD64: targeted tests and go vet for datalab, runmeta, inventory/model/store and smokecli passed; fixtures verify collection after business startup with effective overlays. Native container results belong in PR/Actions."
+    }
   },
   "run_metadata_evidence": {
     "date": "2026-10-20",

@@ -189,11 +189,13 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	env := []string{}
 	for _, item := range os.Environ() {
 		key, _, _ := strings.Cut(item, "=")
-		if !strings.EqualFold(key, "FL_PG_SECRETS_DIR") && !strings.EqualFold(key, "FL_INFRA_SECRETS_DIR") {
+		if !strings.EqualFold(key, "FL_PG_SECRETS_DIR") && !strings.EqualFold(key, "FL_INFRA_SECRETS_DIR") && !strings.EqualFold(key, "FL_INVENTORY_DATASET_ID") {
 			env = append(env, item)
 		}
 	}
 	env = append(env, "FL_PG_SECRETS_DIR="+cfg.Secrets)
+	// Each disposable database gets a unique namespace, independent of test keys.
+	env = append(env, "FL_INVENTORY_DATASET_ID="+project)
 	if fullStack {
 		env = append(env, "FL_INFRA_SECRETS_DIR="+infraCfg.Secrets)
 	}
@@ -205,7 +207,8 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	if fullStack {
 		services = append(services, "kafka", "redis")
 	}
-	evidence := report{SchemaVersion: 1, Project: project, Started: time.Now().UTC(), Result: "FAIL", Cleanup: "PENDING", Events: []event{}, Environment: runmeta.New(services)}
+	observedServices := append(append([]string{}, services...), "inventory")
+	evidence := report{SchemaVersion: 1, Project: project, Started: time.Now().UTC(), Result: "FAIL", Cleanup: "PENDING", Events: []event{}, Environment: runmeta.New(observedServices)}
 	save := func() error {
 		data, e := json.MarshalIndent(evidence, "", "  ")
 		if e != nil {
@@ -278,6 +281,7 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	}
 	mayExist = true
 	buildServices := []string{"dbtool"}
+	buildServices = append(buildServices, "inventory")
 	if fullStack {
 		buildServices = append(buildServices, "infrastructure-check")
 	}
@@ -285,22 +289,14 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	defer func() {
 		logCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
-		_, _ = call(logCtx, "dependency logs", 5*time.Second, compose(append([]string{"logs", "--no-color", "--tail", "200"}, services...)...)...)
+		logServices := append(append([]string{}, services...), "inventory")
+		_, _ = call(logCtx, "dependency logs", 5*time.Second, compose(append([]string{"logs", "--no-color", "--tail", "200"}, logServices...)...)...)
 	}()
 	if _, err = call(ctx, "build dbtool", 10*time.Minute, compose(append([]string{"build"}, buildServices...)...)...); err != nil {
 		return err
 	}
 	_, err = call(ctx, "start dependencies", 2*time.Minute, compose(append([]string{"up", "-d", "--wait", "--wait-timeout", "100"}, services...)...)...)
-	// This adapter intentionally bypasses call(): full Compose config may
-	// contain secrets, while runmeta retains only explicitly allowed fields.
-	evidence.Environment = runmeta.Collect(ctx, func(ctx context.Context, args []string) (string, error) {
-		result, e := execute(ctx, "docker", args)
-		if e == nil && result.ExitCode != 0 {
-			e = errors.New("metadata command failed")
-		}
-		return result.Stdout, e
-	}, compose(), services)
-	if err = errors.Join(err, ctx.Err(), save()); err != nil {
+	if err != nil {
 		return err
 	}
 	tool := func(stage string, args ...string) (string, error) {
@@ -314,6 +310,39 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	if _, err = call(ctx, "rights, migrations and seed", 3*time.Minute, compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "--entrypoint", "/app/database.test", "dbtool", "-test.run=^TestPostgresFoundation$", "-test.v", "-test.timeout=150s")...); err != nil {
 		return err
 	}
+	if _, inventoryErr := call(ctx, "Inventory operations and process restart", 3*time.Minute, compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "--entrypoint", "/app/inventory.test", "dbtool", "-test.run=^TestInventory(Foundation|Process)$", "-test.v", "-test.timeout=150s")...); inventoryErr != nil {
+		return inventoryErr
+	}
+	// Put the business overlay last, preserving its command/config/secret wiring.
+	base := compose()
+	var deployed []string
+	for index, value := range base {
+		if value == "-p" {
+			deployed = append(append(append([]string{}, base[:index]...), "-f", "compose.inventory.yaml"), base[index:]...)
+			break
+		}
+	}
+	_, err = call(ctx, "start Inventory business container", 60*time.Second, append(deployed, "up", "-d", "--no-deps", "--wait", "--wait-timeout", "45", "inventory")...)
+	// Observe the business container with its effective overlay, before its
+	// functional probes. Raw config bypasses call() to keep secrets out of logs.
+	evidence.Environment = runmeta.Collect(ctx, func(ctx context.Context, args []string) (string, error) {
+		result, e := execute(ctx, "docker", args)
+		if e == nil && result.ExitCode != 0 {
+			e = errors.New("metadata command failed")
+		}
+		return result.Stdout, e
+	}, deployed, observedServices)
+	if err = errors.Join(err, ctx.Err(), save()); err != nil {
+		return err
+	}
+	deployedProbe := func(stage string) error {
+		_, e := call(ctx, stage, 45*time.Second, compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "-e", "FL_INVENTORY_TARGET=inventory:50051", "--entrypoint", "/app/inventory.test", "dbtool", "-test.run=^TestInventoryDeployed$", "-test.v", "-test.timeout=30s")...)
+		return e
+	}
+	if err = deployedProbe("Inventory deployed gRPC API"); err != nil {
+		return err
+	}
+	// Inventory tests add owned fixtures; capture the baseline after their writes.
 	before, err := tool("checksum before restart", "checksum")
 	if err != nil {
 		return err
@@ -346,6 +375,12 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	}
 	if strings.TrimSpace(before) != strings.TrimSpace(after) {
 		return errors.New("data or migration history changed across restart/repeat")
+	}
+	if _, err = call(ctx, "Inventory persistence after PostgreSQL restart", time.Minute, compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "--entrypoint", "/app/inventory.test", "dbtool", "-test.run=^TestInventoryAfterRestart$", "-test.v", "-test.timeout=45s")...); err != nil {
+		return err
+	}
+	if err = deployedProbe("Inventory deployed API after PostgreSQL restart"); err != nil {
+		return err
 	}
 	if fullStack {
 		if _, err = call(ctx, "Kafka and Redis after restart", 60*time.Second, compose("run", "--rm", "--no-deps", "infrastructure-check", "check-infrastructure", "-stage", "after-restart", "-checkpoint", strings.TrimSpace(checkpoint))...); err != nil {

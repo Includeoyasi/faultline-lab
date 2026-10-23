@@ -21,10 +21,10 @@ func metadataFixture(args []string) (command.Output, bool) {
 	case args[0] == "info":
 		return command.Output{Stdout: `{"os":"linux","arch":"amd64","cpus":6,"memory":2147483648,"version":"29.0.0"}`}, true
 	case args[0] == "compose" && slices.Contains(args, "config"):
-		return command.Output{Stdout: `{"services":{"postgres":{},"kafka":{},"redis":{}},"private":"` + strings.Join([]string{"", "Users", "private"}, "/") + ` PASSWORD=metadata-secret"}`}, true
+		return command.Output{Stdout: `{"services":{"postgres":{},"kafka":{},"redis":{},"inventory":{}},"private":"` + strings.Join([]string{"", "Users", "private"}, "/") + ` PASSWORD=metadata-secret"}`}, true
 	case args[0] == "compose" && slices.Contains(args, "ps"):
 		name := args[len(args)-1]
-		index := slices.Index([]string{"postgres", "kafka", "redis"}, name)
+		index := slices.Index([]string{"postgres", "kafka", "redis", "inventory"}, name)
 		return command.Output{Stdout: strings.Repeat(string(rune('a'+index)), 64)}, true
 	case args[0] == "compose" && slices.Contains(args, "version"):
 		return command.Output{Stdout: "5.0.0"}, true
@@ -68,9 +68,16 @@ func TestRunCleanupAndReports(t *testing.T) {
 			defer cancel()
 			cleaned := false
 			imageExists := false
+			inventoryStarted := false
 			execute := func(commandCtx context.Context, program string, args []string) (command.Output, error) {
 				if program != "docker" {
 					t.Fatal("unexpected executable")
+				}
+				if slices.Contains(args, "up") && slices.Contains(args, "inventory") {
+					inventoryStarted = true
+				}
+				if args[0] == "compose" && slices.Contains(args, "config") && (!inventoryStarted || !slices.Contains(args, "compose.inventory.yaml")) {
+					t.Fatal("metadata must observe the started Inventory business profile")
 				}
 				if scenario == "metadata-cancel" && args[0] == "info" {
 					cancel()
@@ -148,6 +155,10 @@ func TestRunCleanupAndReports(t *testing.T) {
 			}
 			if wantSuccess && scenario != "metadata-missing" && (saved.SchemaVersion != 1 || saved.Environment.Services["postgres"].Image.Status != "KNOWN" || saved.Environment.Services["postgres"].Usage.Status != "MEASURED") {
 				t.Fatal("postgres-only metadata missing")
+			}
+			inventory := saved.Environment.Services["inventory"]
+			if wantSuccess && scenario != "metadata-missing" && (inventory.Image.Status != "KNOWN" || inventory.Usage.Status != "MEASURED") {
+				t.Fatal("Inventory business container metadata missing")
 			}
 			if strings.Contains(string(data), "metadata-secret") || strings.Contains(string(data), strings.Join([]string{"", "Users", "private"}, "/")) {
 				t.Fatal("raw Compose data leaked")

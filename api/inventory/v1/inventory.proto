@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package faultline.inventory.v1;
+option go_package = "github.com/Includeoyasi/faultline-lab/api/inventory/v1;inventoryv1";
+
+// Inventory owns reservations and stock in one isolated dataset.
+service Inventory {
+  rpc Reserve(ReserveRequest) returns (OperationResult);
+  rpc CommitReservation(ChangeReservationRequest) returns (OperationResult);
+  rpc ReleaseReservation(ChangeReservationRequest) returns (OperationResult);
+  rpc GetReservation(GetReservationRequest) returns (Reservation);
+  rpc GetAvailability(GetAvailabilityRequest) returns (GetAvailabilityResponse);
+}
+
+enum ReservationState {
+  RESERVATION_STATE_UNSPECIFIED = 0;
+  RESERVATION_STATE_RESERVED = 1;
+  RESERVATION_STATE_COMMITTED = 2;
+  RESERVATION_STATE_RELEASED = 3;
+}
+
+enum Outcome {
+  OUTCOME_UNSPECIFIED = 0;
+  OUTCOME_APPLIED = 1;
+  OUTCOME_INSUFFICIENT_STOCK = 2;
+  OUTCOME_UNKNOWN_SKU = 3;
+  OUTCOME_INVALID_STATE = 4;
+  OUTCOME_RESERVATION_EXISTS = 5;
+}
+
+message Item {
+  string sku = 1;
+  int64 quantity = 2;
+}
+
+message PricedItem {
+  string sku = 1;
+  int64 quantity = 2;
+  int64 unit_price_minor = 3;
+}
+
+message ReserveRequest {
+  string dataset_id = 1;
+  string order_id = 2;
+  string operation_id = 3;
+  repeated Item items = 4;
+}
+
+message ChangeReservationRequest {
+  string dataset_id = 1;
+  string order_id = 2;
+  string operation_id = 3;
+}
+
+message GetReservationRequest {
+  string dataset_id = 1;
+  string order_id = 2;
+}
+
+message Reservation {
+  string dataset_id = 1;
+  string order_id = 2;
+  ReservationState state = 3;
+  int64 version = 4;
+  repeated PricedItem items = 5;
+  int64 total_minor = 6;
+  string currency = 7;
+}
+
+// Immutable receipt, including business rejection. The reservation is a
+// historical snapshot AT THIS OPERATION; GetReservation reads current state.
+// A transport error means unknown outcome; retry the SAME operation_id.
+message OperationResult {
+  string operation_id = 1;
+  Outcome outcome = 2;
+  Reservation reservation_at_operation = 3;
+}
+
+message GetAvailabilityRequest {
+  string dataset_id = 1;
+  repeated string skus = 2;
+}
+
+message Availability {
+  string sku = 1;
+  int64 available = 2;
+  int64 unit_price_minor = 3;
+  string currency = 4;
+}
+
+message GetAvailabilityResponse {
+  repeated Availability items = 1;
+}

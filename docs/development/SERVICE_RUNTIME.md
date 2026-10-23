@@ -1,6 +1,6 @@
 # Сервисы: конфигурация, логи и жизненный цикл
 
-Три независимых процесса Orders, Inventory и Payments проверяют настройки, пишут JSON в stderr и обслуживают стандартный `grpc.health.v1.Health/Check`. Health пока подтверждает только работу gRPC-каркаса. Бизнес-методов, PostgreSQL/Kafka/Redis и доменных protobuf здесь нет.
+Три независимых процесса Orders, Inventory и Payments проверяют настройки, пишут JSON в stderr и обслуживают стандартный `grpc.health.v1.Health/Check`. Этот документ описывает общий жизненный цикл. [Бизнес-API Inventory](INVENTORY.md) использует PostgreSQL; Orders и Payments сохраняют каркас. Для проверки Inventory без БД предусмотрена явная команда `health-only`, подтверждающая только работу gRPC-каркаса.
 
 Конфигурация и базовый процесс введены в PR #6/#7; контейнерный жизненный цикл — в [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). Это исторические источники реализации. Актуальные задачи и ревью — в [GitHub](https://github.com/Includeoyasi/faultline-lab/issues).
 

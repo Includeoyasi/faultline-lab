@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **70**. Дата снимка: **2026-10-21**, Europe/Moscow. Исходный коммит внешних материалов: `0fd6715098970d8aa0614617125d2c50f0d3f6d8`.
+Ревизия: **71**. Дата снимка: **2026-10-23**, Europe/Moscow. Исходный коммит внешних материалов: `199f6912701aac70a04d9e07e270ebb4520c9f98`.
 
 ## Выполнение задач
 
@@ -71,9 +71,9 @@ JSON ниже включён для автономного чтения реше
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 70,
+  "context_revision": 71,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-21",
+  "context_updated_on": "2026-10-23",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -87,7 +87,7 @@ JSON ниже включён для автономного чтения реше
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "0fd6715098970d8aa0614617125d2c50f0d3f6d8",
+    "snapshot_ref": "199f6912701aac70a04d9e07e270ebb4520c9f98",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -176,6 +176,17 @@ JSON ниже включён для автономного чтения реше
       ],
       "implementation_and_review_pr_authorized": true,
       "other_work": "Outbox implementation, gate acceptance and other audit findings keep their agreed checkpoints"
+    },
+    {
+      "date": "2026-10-20",
+      "source": "Direct owner chat: proceed with the next task after confirming Inventory is independent of the metadata PR",
+      "scope": [
+        "Inventory business API and protobuf",
+        "atomic reservations, Commit/Release and cancellation barriers",
+        "Inventory portion of F10 with dataset lifetime retention"
+      ],
+      "implementation_and_review_pr_authorized": true,
+      "other_work": "Orders, Payments, Redis caching, Kafka publisher/F09 and full dataset reset excluded; gate acceptance remains separate"
     },
     {
       "date": "2026-10-20",
@@ -671,14 +682,6 @@ JSON ниже включён для автономного чтения реше
     "go_image": "golang:1.27.3-trixie@sha256:604106102d33b1084e37ca08adf98ac0813624ae8595bd0d7f3965ecebded09c",
     "lint_image": "golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f",
     "image_indexes": "VERIFIED_LINUX_AMD64_AND_ARM64",
-    "security_patch": {
-      "date": "2026-10-21",
-      "finding": "GO-2026-6809 in crypto/x509 of Go 1.27.2",
-      "change": "Pin Go 1.27.3 and rebuild toolchain/runtime binaries; module dependencies and linter versions unchanged",
-      "registry_evidence": "docs/development/evidence/go-toolchain/go-1.27.3-registry.json",
-      "provenance": "Official Go release history and Docker Registry OCI index; response digest recomputed and native Linux AMD64/ARM64 manifests verified",
-      "historical_evidence": "Prior 1.27.2 test records and installed host SDK remain dated evidence; no host SDK installation performed"
-    },
     "application_dependencies": "google.golang.org/grpc v1.84.0; STANDARD_LOG_SLOG; TOOL_DIRECTIVES_PINNED",
     "native_ci_runners": [
       "ubuntu-24.04",
@@ -693,6 +696,14 @@ JSON ниже включён для автономного чтения реше
       "tag": "v7.0.2",
       "sha": "cf430e030ddbb5b0abf93d22962f4752f3646cd9",
       "source": "Official GitHub release and git tag ref checked 2026-10-15"
+    },
+    "security_patch": {
+      "date": "2026-10-21",
+      "finding": "GO-2026-6809 in crypto/x509 of Go 1.27.2",
+      "change": "Pin Go 1.27.3 and rebuild toolchain/runtime binaries; module dependencies and linter versions unchanged",
+      "registry_evidence": "docs/development/evidence/go-toolchain/go-1.27.3-registry.json",
+      "provenance": "Official Go release history and Docker Registry OCI index; response digest recomputed and native Linux AMD64/ARM64 manifests verified",
+      "historical_evidence": "Prior 1.27.2 test records and installed host SDK remain dated evidence; no host SDK installation performed"
     },
     "deadline_check": {
       "recorded_on": "2026-10-21",
@@ -2692,6 +2703,148 @@ JSON ниже включён для автономного чтения реше
       "language": "go"
     },
     {
+      "path": "api/inventory/v1/inventory.proto",
+      "title": "api/inventory/v1/inventory.proto",
+      "anchor": "inventory-api-inventory-v1-inventory-proto",
+      "language": "protobuf"
+    },
+    {
+      "path": "migrations/inventory/0003_reservations.sql",
+      "title": "migrations/inventory/0003_reservations.sql",
+      "anchor": "inventory-migrations-inventory-0003-reservations-sql",
+      "language": "sql"
+    },
+    {
+      "path": "compose.inventory.yaml",
+      "title": "compose.inventory.yaml",
+      "anchor": "inventory-compose-inventory-yaml",
+      "language": "yaml"
+    },
+    {
+      "path": "configs/inventory/local.json",
+      "title": "configs/inventory/local.json",
+      "anchor": "inventory-configs-inventory-local-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/INVENTORY.md",
+      "title": "docs/development/INVENTORY.md",
+      "anchor": "inventory-docs-development-inventory-md"
+    },
+    {
+      "path": "docs/development/evidence/inventory/VALIDATION.md",
+      "title": "docs/development/evidence/inventory/VALIDATION.md",
+      "anchor": "inventory-docs-development-evidence-inventory-validation-md"
+    },
+    {
+      "path": "docs/development/evidence/inventory/windows-postgres.json",
+      "title": "docs/development/evidence/inventory/windows-postgres.json",
+      "anchor": "inventory-docs-development-evidence-inventory-windows-postgres-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/inventory/windows-infrastructure.json",
+      "title": "docs/development/evidence/inventory/windows-infrastructure.json",
+      "anchor": "inventory-docs-development-evidence-inventory-windows-infrastructure-json",
+      "language": "json"
+    },
+    {
+      "path": "docs/development/evidence/inventory/source-hashes.json",
+      "title": "docs/development/evidence/inventory/source-hashes.json",
+      "anchor": "inventory-docs-development-evidence-inventory-source-hashes-json",
+      "language": "json"
+    },
+    {
+      "path": "internal/inventory/command.go",
+      "title": "internal/inventory/command.go",
+      "anchor": "inventory-internal-inventory-command-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/config.go",
+      "title": "internal/inventory/store/config.go",
+      "anchor": "inventory-internal-inventory-config-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/deployment_test.go",
+      "title": "internal/inventory/store/deployment_test.go",
+      "anchor": "inventory-internal-inventory-deployment-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/integration_test.go",
+      "title": "internal/inventory/store/integration_test.go",
+      "anchor": "inventory-internal-inventory-integration-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/model/model.go",
+      "title": "internal/inventory/model/model.go",
+      "anchor": "inventory-internal-inventory-model-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/model/model_test.go",
+      "title": "internal/inventory/model/model_test.go",
+      "anchor": "inventory-internal-inventory-model-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/process_test.go",
+      "title": "internal/inventory/store/process_test.go",
+      "anchor": "inventory-internal-inventory-process-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/server.go",
+      "title": "internal/inventory/server.go",
+      "anchor": "inventory-internal-inventory-server-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/server_test.go",
+      "title": "internal/inventory/server_test.go",
+      "anchor": "inventory-internal-inventory-server-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/store.go",
+      "title": "internal/inventory/store/store.go",
+      "anchor": "inventory-internal-inventory-store-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/mutate.go",
+      "title": "internal/inventory/store/mutate.go",
+      "anchor": "inventory-store-mutate-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/get_reservation.go",
+      "title": "internal/inventory/store/get_reservation.go",
+      "anchor": "inventory-store-get-reservation-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/get_availability.go",
+      "title": "internal/inventory/store/get_availability.go",
+      "anchor": "inventory-store-get-availability-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/close.go",
+      "title": "internal/inventory/store/close.go",
+      "anchor": "inventory-store-close-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/inventory/store/config_test.go",
+      "title": "internal/inventory/store/config_test.go",
+      "anchor": "inventory-store-config-test-go",
+      "language": "go"
+    },
+    {
       "path": "docs/architecture/PLATFORM_EVIDENCE.md",
       "title": "F03: accepted platform evidence contract",
       "anchor": "appendix-docs-architecture-platform-evidence-md"
@@ -3096,6 +3249,12 @@ JSON ниже включён для автономного чтения реше
       "trigger": "Direct owner voice instruction to make the current proposal reviewable through interaction diagrams"
     },
     {
+      "revision": 65,
+      "date": "2026-10-20",
+      "summary": "Implemented Inventory business API, atomic reservations and durable receipts/barriers with application-only runtime and real PostgreSQL/deployment restart evidence; preserved direct owner review-format and F03/F11 approval facts",
+      "trigger": "Owner authorized the next independent Inventory task after the metadata PR"
+    },
+    {
       "revision": 63,
       "date": "2026-10-20",
       "summary": "Implemented bounded F03/current F06 facts for existing runners, validated Windows metadata and cleanup, retained direct owner F03/F11 approvals and review-format requirements",
@@ -3106,6 +3265,12 @@ JSON ниже включён для автономного чтения реше
       "date": "2026-10-20",
       "summary": "Added opt-in validation of completed real metadata reports to existing CLI tests and native Linux CI; validated saved Windows observations",
       "trigger": "Real optional Variant regression showed that functional PASS alone does not establish observed metadata completeness"
+    },
+    {
+      "revision": 71,
+      "date": "2026-10-23",
+      "summary": "Reconciled Inventory and accepted run metadata sources; both labdata modes observe the Inventory business container with its effective deployment overlay, and real report validation requires its image/resource observations. Preserved owner review-format rules and five architecture review blocks.",
+      "trigger": "Owner requested merging current main into Inventory PR27 and refreshing it for owner merge"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -3263,8 +3428,47 @@ JSON ниже включён для автономного чтения реше
     },
     "ci_refinement": "Initial Linux CI stopped at staticcheck ST1005 and an unused Compose wrapper; lower-case error messages and removal retain all checks. Redis default username is now rejected before ACL generation; affected Windows tests/vet pass. Actual final-HEAD CI results belong in PR/Actions."
   },
+  "inventory_foundation": {
+    "source_commit": "a7231366be44c2528edb68e507606d87b9a47fee",
+    "decision_date": "2026-10-20",
+    "service": "Inventory owns inventory_db and connects only as inventory_app",
+    "api": [
+      "Reserve",
+      "CommitReservation",
+      "ReleaseReservation",
+      "GetReservation",
+      "GetAvailability"
+    ],
+    "atomic_writes": [
+      "reservation and priced items",
+      "stock availability",
+      "immutable operation receipt including business rejection",
+      "ledger",
+      "local outbox fact without Kafka publication"
+    ],
+    "concurrency": "Transactional advisory locks serialize operation key and order even without an existing reservation; canonical SKU ordering for stock locks",
+    "receipt_semantics": "OperationResult is historical and immutable; GetReservation is authoritative current state. A new operation key cannot create a second reservation for an existing order or bypass RELEASED.",
+    "dataset_lifetime": "One database is bound to one explicit dataset_id. All RPCs verify identity. Keys, rejections, barriers and events have no TTL or selective GC; a fresh isolated dataset requires a fresh identity.",
+    "runtime": "Business mode requires explicit application-only configuration and bounded pool/request timeouts; health-only is an explicit lifecycle test command",
+    "validation": {
+      "date": "2026-10-20",
+      "host": "Windows AMD64 with Linux containers on Docker Desktop",
+      "evidence": "docs/development/evidence/inventory/VALIDATION.md",
+      "macos_runtime": "NOT_RUN",
+      "full_F10": "Not established until the remaining services and coordinated reset are implemented"
+    },
+    "remaining_scope": "No Orders, Payments, Kafka publication, Redis cache, full reset, capacity result or G1 acceptance",
+    "layout": {
+      "recorded_on": "2026-10-21",
+      "source_commit": "d47cfa9addc7c6290b584714e094440fc10af040",
+      "owner_request": "https://github.com/Includeoyasi/faultline-lab/pull/27#discussion_r4335472777",
+      "storage": "internal/inventory/store: Store/NewStore/private helpers in store.go; one exported Store method per file; SQL in constants beside callers",
+      "domain": "internal/inventory/model: unchanged request/result JSON, canonical operation hash and shared sentinel errors; storage and gRPC transport import this package without cycles",
+      "test_entrypoint": "Docker compiles ./internal/inventory/store to /app/inventory.test; existing scenario names and datalab selectors retained",
+      "local_verification": "Windows AMD64 portable Go1.27.3: inventory/model/store unit tests and go vet passed. Database/process/deployment integration cases require isolated container CI; no local Docker/WSL run for this refactor."
+    }
+  },
   "architecture_review_format": {
-    "confirmed_on": "2026-10-19",
     "source": "Direct owner chat after Kafka Publishing review",
     "blocks": [
       "Problem, localization cases and diagrams",
@@ -3273,6 +3477,8 @@ JSON ниже включён для автономного чтения реше
       "Implementation plan for the current stage",
       "Specific review focus"
     ],
+    "writing": "3–10 substantive sentences per block; prefer diagrams/tables, explain once and illustrate rather than repeating; make the decision understandable to the owner",
+    "confirmed_on": "2026-10-19",
     "sentences_per_block": "3–10 substantive sentences",
     "presentation": "Prefer diagrams and tables; explain once and show once; enough content for an owner decision without repeated narrative",
     "pull_request_descriptions": {
@@ -3297,6 +3503,12 @@ JSON ниже включён для автономного чтения реше
       ]
     }
   },
+  "owner_architecture_approvals_2026_10_20": {
+    "source": "Direct owner chat: F03 and F11 approved",
+    "F03": "Separate observed runner/backend/requested/image platforms; unknown values are explicit, MATCH alone does not establish native execution; full comparison validation belongs with experiments",
+    "F11": "FINALIZING with separate NEEDS_REVIEW recovery flag and durable evidence/blocked work on exceptional RELEASED; no automatic successful terminal transition, refund or repair exit",
+    "meaning": "Architectural approval does not imply completed implementation, code review acceptance or gate acceptance"
+  },
   "run_metadata_contract": {
     "schema_version": 1,
     "report_versions": {
@@ -3311,7 +3523,14 @@ JSON ниже включён для автономного чтения реше
     "failure_semantics": "Metadata is optional evidence, not the functional verdict; bounded 30s total and 5s per query; cancellation preserves owned cleanup",
     "privacy": "Raw config/inspect/errors are not persisted; typed allowlist; repository names omitted from digests",
     "comparison": "UNVERIFIED execution profile; NOT_EVALUATED A/B; no full experiment manifest yet",
-    "ci_validation": "After all three functional smoke modes, existing host CLI test binary checks completed reports for known image platforms and measured resource snapshots; functional CLI semantics remain unchanged"
+    "ci_validation": "After all three functional smoke modes, existing host CLI test binary checks completed reports for known image platforms and measured resource snapshots; functional CLI semantics remain unchanged",
+    "inventory_integration": {
+      "recorded_on": "2026-10-23",
+      "source_commit": "199f6912701aac70a04d9e07e270ebb4520c9f98",
+      "coverage": "labdata observes postgres and Inventory business container; combined mode also observes kafka/redis. Collect after Inventory startup with effective compose.inventory.yaml overlay, before deployed API probes.",
+      "failure_semantics": "Before collection all named containers retain explicit unknown values; absent metadata does not change functional success; cancellation and scoped cleanup preserved.",
+      "verification": "Portable Go 1.27.3 on Windows AMD64: targeted tests and go vet for datalab, runmeta, inventory/model/store and smokecli passed; fixtures verify collection after business startup with effective overlays. Native container results belong in PR/Actions."
+    }
   },
   "run_metadata_evidence": {
     "date": "2026-10-20",
@@ -3341,14 +3560,14 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `ef7258393e4b835f6ed675fdbb063b1ff081f0a36a536322d7bccdf93db4783c` |
+| `CONTEXT_STATE.json` | `4a8b8ac8a7fa096cd13d4f2edbf2c187f25081e5490653fa0f141d1e1f83c1ec` |
 | `tools/context_intro.md` | `91fb656b2ec7b4dcd798be45f7b78ec2452763455476ebcd55762b465ad25d2b` |
 | `tools/update_context.ps1` | `73dff2e2da1f7ea7e8fc8fe2dc70bde722f4d697c1ca7c685d297214cd133e33` |
-| `README.md` | `22ffdce45845f796e45b53a5531d249c6b8a9cc3991bf2bdcf996e0286eb5d29` |
-| `README.ru.md` | `8f67c7fb034f71fb6a1a5e264ad975a22ea2ddb8f117c92a34bccd030332332f` |
-| `docs/README.md` | `4679eda1fbf7155490cd720fc8d04a92d0eb9e01a31d6ef00295dfc4172815e9` |
-| `docs/ROADMAP.md` | `3881f7898db08cd56221d60fe1578b8642060c99bc53f3574bc59e8defcff637` |
-| `docs/architecture/DESIGN.md` | `74a141c2ce11d07cb568f01a6eb72b849f9556d7be85705544bb9e8a15806f2e` |
+| `README.md` | `bdfebd2fbc801c1f05a5e6391fcfc9f4ddb5227e4ee11d75982a31ce5d0f65b7` |
+| `README.ru.md` | `d9cbe989a91bb2aa1db27ff7cfd20e30a38496bbf679b2e10dc923a390e2262e` |
+| `docs/README.md` | `9b33aa290ad15d972e0947969ae88e00e251d797e467333d11d4ad2e56f740d0` |
+| `docs/ROADMAP.md` | `4cecbf9ecfd16dfef30f8ec22f2f7a592a9b47abc8de6ef8079c1be375077dee` |
+| `docs/architecture/DESIGN.md` | `f862de88c86c177aeda21bf9c99ed9fcacbf22d0579ddfc80d83782a2fdd375c` |
 | `docs/architecture/PROCESSES.md` | `dd6d00ee9d169236fe0f0d14de4b6f54d778a7cf79489f6b6a3354357e2e9ec6` |
 | `docs/development/WORKFLOW.md` | `db64e33c94566d5ce8b128e81a030443980817f63d75355803aec2acef040516` |
 | `docs/experiments/REPORT_TEMPLATE.md` | `4f569aab52ba34a68bb2e8b4551c6a3bf4932277c26c3b4206dbb505781a2cab` |
@@ -3365,33 +3584,33 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/TASK_TRACKING.md` | `46baf95126af2e7e362d6751e957057e915a98f4b7606739178c57427aec61d8` |
 | `docs/development/REPOSITORY_SECURITY.md` | `e15d0de41447fcf81b76f4264a76483895940dc1c03f6ab809e3a626b9f8278a` |
 | `.github/CODEOWNERS` | `95de6cc3de1ba640d0ab9e2b9bfbdea79b7ce6641a8bcdb0bcef1f7607666415` |
-| `docs/development/TOOLCHAIN.md` | `a39f3e14a4552981d0d6d111c9ce21d93ce00bcf535966008f8a13bb211d68f2` |
-| `go.mod` | `718c76f84b1ea1c4dddae4b62dfde128a0fec9084be01bdb48ebc35ee93802af` |
-| `go.sum` | `52fcef4f812d457d5baac85703c0e4e6ba61d4097561d223031e4e141db86307` |
+| `docs/development/TOOLCHAIN.md` | `0f157d8c47342cd957eddfb4e97a653da495e6ec61cb99cecd1a71ac454ab70b` |
+| `go.mod` | `52f08a91aac4ab4b0edf1d6838f200c210a2b198a705bc258ecf3e156bcd8192` |
+| `go.sum` | `82f6a57c35ab438d05ee37801803006774b39fe8cad86402fa03ff0af81b1baf` |
 | `cmd/orders/main.go` | `131626df0bae0819d49c3d46793809c839cacb6dbd71a93b4bc1740a04ea3e6c` |
-| `cmd/inventory/main.go` | `3a8d1959cf1530e56c786e7e26ac0a0d04c145e9cf5266f95f6a766e57fb5f39` |
+| `cmd/inventory/main.go` | `01ff23a872198afb07aceda2a2a14e7bf0ebc21f0510ef384b0c35c69cb266b8` |
 | `cmd/payments/main.go` | `3ceb9fe70d25948079c3682ad409c4970918d30036f74afb6451858725c351c1` |
-| `build/Dockerfile` | `4726bcafcefbad42b608636d9f25df48d5621b47c162dde1fe78d3b483d7e19a` |
-| `compose.yaml` | `76cabf52d3c42c963c0ed56bc486b8e68686159ad32e680f23c2574bfa2fb6ed` |
-| `tools/go.sh` | `40fdab41afd4022715a929a0c9e1252037e9896f8abeb288fa286d591a0a2697` |
+| `build/Dockerfile` | `b8dbdcfd1d38c90bd8a06feb89fc35dd4945b3218669ae01b38b215a49be1e55` |
+| `compose.yaml` | `05a53e758aaaef80bfd0fcf6a74b30648fba848f7fc9d523bca6e58717d71e49` |
+| `tools/go.sh` | `9d0060a4cc3fde4e46d85da1bbdf470cc8b96520245b294e928f5c9117d346a2` |
 | `.golangci.yml` | `44651a36c889767cd425bc12b46e07c8bffc924024de23af1176057f78f3a74a` |
 | `.github/workflows/go.yml` | `263ce3321dfe0a69fc018efca13af710962a8f53516473873c24f472b1e839a6` |
 | `.dockerignore` | `e75b314d79f67eec6dafc763b1e4c118597186f106f91a73749750d4ab0cf045` |
-| `docs/development/SERVICE_RUNTIME.md` | `85d5e127812af0a6ccfdd29c3fd54dbbe4d2203cfa5c3e08cc4923f9fa3fbbd6` |
+| `docs/development/SERVICE_RUNTIME.md` | `189adfbcfa489f45efdd217d64640447fa4ac4a7bb6bae57aba90375fe551338` |
 | `internal/service/config.go` | `a5cd706cc41d0fb88ea96b0ffaeff4f7ecf32bf31394ec5398efb39fba240a89` |
 | `internal/service/log.go` | `034f82245011a1a905514e9f21d16953dd4ce325cdfc720d8832d1d924a5773f` |
-| `internal/service/run.go` | `5a1160b916ac892c1deffc38a5fda57dffb1cf352785d75cab5d960a57556a13` |
+| `internal/service/run.go` | `990600e1e53cfb8c50ab09c92c905c61d3be64f9b241c5bfd52393d684219b09` |
 | `internal/service/config_test.go` | `c628504d6e9ad8432832b6ceb98796589ef86140dc9cf76b8dd6b2018250014f` |
 | `internal/service/log_test.go` | `1b8f3fc837128930d5ef7a99d75a183bc7037035d5e756ea2faabe800d61f732` |
 | `internal/service/run_test.go` | `8a70e4e7ed779fd77f3823a03ab3d1fda80edd6cd7da5ca315472815c096694d` |
-| `tests/smoke/services_test.go` | `7f011324f860dc3521decfdbbf850c8724bbea8edfd98f4600ec08a16fef4ed1` |
+| `tests/smoke/services_test.go` | `87abb6ef18d3d50588479e2a255e4777a7e6afebd1e3ee74c566286cae083b89` |
 | `configs/env/local.env.example` | `e1ed433b87891f1416c0eee2143c8c5be7131002169fb6061e86ce00fb97ba12` |
 | `configs/env/container.env.example` | `968bffa2aa651eb168d4cf58fb6935ec8eeb9d636ad5e20dfb5c836be61b2c2b` |
 | `.gitignore` | `f2b608989f7ce4e52f1dd1bed1015febf699d7593df371b99ee957b308a03546` |
 | `internal/service/command.go` | `e571f49daf1664aa64c3c9db53a8e0b0d7fb5f2be18b6b2ba8b10cdce64d41b4` |
 | `internal/service/command_test.go` | `56eb2c958131551d61097e00fd66a34068332c141b81c3eaa5ec8358072a7051` |
 | `internal/service/shutdown_test.go` | `9387689f5183003faabddb0c5f6d6d5fd5c89e410fec66cf76aa94eebf25be58` |
-| `docs/development/CONTAINER_RUNTIME.md` | `0807c58d99e01fb3ab6c7a4d1163b1c5965fe877e869aca7a021062025dcd13e` |
+| `docs/development/CONTAINER_RUNTIME.md` | `152ae34e3bf0d8346a59cc828c307ea9df425e98102d725322db830944bb5678` |
 | `docs/development/evidence/p01/WINDOWS_SMOKE.md` | `8b17000ed9fb0c10083508e57a3d6da29ca36dc624e0d5d27be8c1f9ff837b53` |
 | `docs/development/evidence/p01/windows-2026-10-15/report.json` | `b08d9deabadc65c765d9173482e9171782aeff28affb5e7fd9bf0b201d5add65` |
 | `docs/development/evidence/p01/windows-2026-10-15/orders.jsonl` | `84ff81f5e1e0d74fc37e092972581d0243e46ef5ff6f88d7c75e8bfa4a2fe8c2` |
@@ -3441,7 +3660,7 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/evidence/p02/POSTGRES.md` | `816dfe301836a56669dd8818d28e4e2f769d883f06447354b2eabbec06ae03bf` |
 | `internal/command/command.go` | `3eb0aa422d5b40ba355479ca534c2f7c22ec9c118212beafbbf477ee5da28af3` |
 | `internal/database/migrate.go` | `bc58c9f7c8a53fb36d4d452d22b02f4bc65034be4b941a76bb96ad969da3bf00` |
-| `internal/database/integration_test.go` | `2a9c0fb5bc0771aac0dac93105ce5fa05e625059877cf88b6c73388b07ae98ff` |
+| `internal/database/integration_test.go` | `331377677dc73bcf56366028d54f3a6f221d10cd22a1f87bbb6e6189c15b4ef4` |
 | `internal/database/checksum.go` | `5c79a23790b3f726a9467b5bdb4fb1574fa9ca3a119da9a2e6d2f21400d9aa2b` |
 | `internal/database/config_test.go` | `99b8d5b78e2de98e1448952f470cbce68fd7e4ab05f3747e50529828d8d732f5` |
 | `internal/database/config.go` | `347c25f171131fbe847601aa81a7dcd7e9958d45d48f9c80787b23fb7edbc926` |
@@ -3455,11 +3674,11 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/database/sql/seed/inventory.sql` | `61b9efdd980a8508fd1f36e4c4e2d0a72f907cb2c5ae0a8c9afe8c75de0deb2d` |
 | `migrations/orders/0001_schema.sql` | `7a2abc0f03d1dac75ea31f86a6abfadae9532eaee42416167be45aee5d5ab16f` |
 | `migrations/payments/0001_schema.sql` | `2856144143bedd41e0380818034ae85025f18b3f40baa295c4eace2d48519af4` |
-| `internal/datalab/run_test.go` | `632f39f2bb11c854217376653a72ecb07ad44a090bd8f1195a25e06de62396d3` |
-| `internal/datalab/run.go` | `ced0102ccd938d698c2d51f656d259ac18c0685d30152072873909ba46caf464` |
-| `compose.postgres.yaml` | `f8e28373a62b0135d30f9b568f1b548eb4f7d8322d9296dbd909708a52a8ef4d` |
+| `internal/datalab/run_test.go` | `43c2110a0f77958a7566762f3e86ac57dd0729c89978de344ca27220d948a147` |
+| `internal/datalab/run.go` | `3da57ad1ecf2445feedc6caacca943292d84c99bbeb990168b977e1d815cc5fc` |
+| `compose.postgres.yaml` | `edab063cc996ccba4ca3e2dfaf322d6d876b7c2367d0775648e5ee161b90d1b6` |
 | `internal/smoke/exec_adapter.go` | `5f903f8c590d90655b333d6988139d9276ca5e6dbb400bfff10b0af0dda0c4ba` |
-| `docs/development/POSTGRES.md` | `ad55d38ed23191dd4c010efb434dcd67a31b645acd96111e4788eef52200cabb` |
+| `docs/development/POSTGRES.md` | `940d5f729ed58cd3f6b9190965f341d2006a85baee08bf9708c467c304d77310` |
 | `internal/database/config_unix_test.go` | `c8e157471af06e5ca233c8ee8e005c9ffe43166066019a53504aef5f408a2e27` |
 | `docs/PRODUCT_INTENT.md` | `277f3b947d5773e3bb80660eeaa667397d195b88fee4e3e71b09dfede1f5ec3b` |
 | `internal/database/migration_files.go` | `046b6a55f44422e4acc6c7d15d10dafd7775802c69223f00ac09e79cf1d93225` |
@@ -3491,7 +3710,7 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/evidence/p02/infrastructure-images.json` | `99f4762612ea8763059ec8354c6b7fe1dba1bb92760e02bd3cf66ca4e7c24783` |
 | `docs/development/evidence/p02/windows-infrastructure-cleanup.json` | `2f7ff1d247b962053e55c83ab2857b138db6ececd44ef79d2e0a8d15769cce4f` |
 | `docs/development/evidence/p02/windows-infrastructure-report.json` | `04252a7eb6e4bd0faad678ec377f06c75c1d4e93ca5869311aa850c054a8a522` |
-| `internal/datalab/infrastructure_test.go` | `0f8cedc1e6025153096891aeef71079ddfdc0a017e9c575b871bb7b3993cac05` |
+| `internal/datalab/infrastructure_test.go` | `b28cc181621318ceb012d7aea563fdf0f6018875c1fb8cd4beb9bed27465930b` |
 | `internal/infrastructure/check.go` | `d60ad61dce85e2ccdb63bb8e257ba94e523677c0eddc0b45a5896906255ae8d8` |
 | `internal/infrastructure/config.go` | `4de22b0f4c2c8c0b910cba3f414d0325fc1c71f8a26d6c6a2c0b16f3cf55c51d` |
 | `internal/infrastructure/config_test.go` | `e8d7367565dc5d9f971d400f74b67150f43fd135e1a9e6fdf758f56ea8f9b707` |
@@ -3501,9 +3720,33 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/infrastructure/redis.go` | `839a988ce2b5dae68ccfef3c5a6d23e3f2034a2d3f00b54c053700383c4dcc2a` |
 | `internal/infrastructure/secrets.go` | `e62dbc037b75db1dad56f7d8eb80809db47f508bca302f4de3202fbbd2086aab` |
 | `internal/infrastructure/secrets_unix_test.go` | `12beb16c108d1f477d5d78153dd36691953601c77a16cbbfe0ed92cdf97647a2` |
+| `api/inventory/v1/inventory.proto` | `b4f9ea70983e1f43ba1327efdd2477678fc80afe5986bd0976d4f2ad8b5f53e7` |
+| `migrations/inventory/0003_reservations.sql` | `d74f941ba8f606f0d445db4c05dcc23f201558be06352930eda3a871aa02dab6` |
+| `compose.inventory.yaml` | `a02fbcc9da63e1f36b826326b6b4ec206bbe6908b42cbf8ea1de2352ef5cccf1` |
+| `configs/inventory/local.json` | `7fdfb317c21024cf17c5d3836e5c297cf3cf1efa4d3d6a2b152e1c6494b878ae` |
+| `docs/development/INVENTORY.md` | `2677f215417a910a3a6e31064f8a799667b7fa82fa757e0f9d02a02ca3e590ec` |
+| `docs/development/evidence/inventory/VALIDATION.md` | `b84dd9f960ad4df632c35a4e2a8f4102faa36f4b5657ff569048db5f2b995474` |
+| `docs/development/evidence/inventory/windows-postgres.json` | `b6229f2c5813cb0d3fb0ac35f9739584ee05f8a2c16023bc7d74f0b60428a218` |
+| `docs/development/evidence/inventory/windows-infrastructure.json` | `2d411e270263e35627adc5c98d47ebf943c5f1603aa44206bd8d1a31ff5d089f` |
+| `docs/development/evidence/inventory/source-hashes.json` | `d3c79640894521b22dc41ff0734a5e3a8bfcd99008da7e26d18b1db57f7f500f` |
+| `internal/inventory/command.go` | `af1f7af15cee12e4c6244c5fe49d180b04c4403388e0ae0eb9418fe5a4a3a0b6` |
+| `internal/inventory/store/config.go` | `ea9b17e58018a19a79a31d4ce758f85358aef433a628a5a8c16ca803d19534f5` |
+| `internal/inventory/store/deployment_test.go` | `0bf8bbdf1fcff0e16b6b869335450f88da1c3d7572746b668c5e302988bd0ada` |
+| `internal/inventory/store/integration_test.go` | `4f1e39419b1ff61d1de1af2eb4baafc8790f96008d5d873466254ccd3ec9ced3` |
+| `internal/inventory/model/model.go` | `409c7030865b67633eb20194fe812bfc35e7582edd09cd99bdba58fc765c41a3` |
+| `internal/inventory/model/model_test.go` | `bf46c43e1ef3703f086549bae07d914943db74f111d3b162f0492c774c6cd30f` |
+| `internal/inventory/store/process_test.go` | `44efd18b680e2e62a7a58739ccb9d7afa9a970a33a0237d48b151739709a6bdc` |
+| `internal/inventory/server.go` | `f3ed5f34cb396d5ee8704c8eacbd1f06863b0f68c1921c21868a19becd8aaa40` |
+| `internal/inventory/server_test.go` | `7a606253de497eb4c2a34ab5f4c70852485e3542669277d2f910f7c38f1d8101` |
+| `internal/inventory/store/store.go` | `9bcac66b0f322dbcbfa9b131dac37b52d548cb5c33c059e9d13111c09a3ac3ab` |
+| `internal/inventory/store/mutate.go` | `4c0cf01395e1358dc9ea81bc98ceb6b517cac1308c5c909231c51ad95e954027` |
+| `internal/inventory/store/get_reservation.go` | `4142a551774e6dde6e388cfab28419a0618b30eaf2759f148492d3394440c040` |
+| `internal/inventory/store/get_availability.go` | `3b1aa64407b2b6971fc79c67ed41b4cf24e28834aae96102951bd60a128a9d40` |
+| `internal/inventory/store/close.go` | `13ede548fb300bd657882ce1acbee6370d802231b63b5203a736337e57e693a2` |
+| `internal/inventory/store/config_test.go` | `704699f26c474dc6e070827a51cca3634d6848eb98e42e15b1385c5fc7c3f764` |
 | `docs/architecture/PLATFORM_EVIDENCE.md` | `627fe9d237e63bac68c26675b50a2d130176209d897cf8d917b4024233e28aa3` |
 | `docs/adr/0004-platform-evidence.md` | `a38a4602e20f43fa537e09b00495dd65e57394178c3baecc9fac4c561fcc80d6` |
-| `docs/development/RUN_METADATA.md` | `021fb80905aeb9a9994a4a3e1d77506a106046b0b79990f4693326f2c87ac2e5` |
+| `docs/development/RUN_METADATA.md` | `049e45f50d7e77b76d6b219728e067d08c720164340a77ef4237c496bf9269ee` |
 | `docs/development/evidence/run-metadata/VALIDATION.md` | `45edce3374c7239486da84ddc801473c67255689db5bc133be42f2581b662166` |
 | `docs/development/evidence/run-metadata/windows-smoke.json` | `89341fcbe659492faeb8f545c1065a8ec7903a82097da9b56cb5c774bf333173` |
 | `docs/development/evidence/run-metadata/windows-postgres.json` | `4e7bf8c3a353d09117d9acab30bf8a77de92e6550f755412bf5ee3fba039c35b` |
@@ -3512,7 +3755,7 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/runmeta/collect.go` | `0f6ead062aeb5f935b7358d0eb1736f3ab3dac0ddc35ceead7372c95028495c6` |
 | `internal/runmeta/collect_test.go` | `a6ea9f35ae66e53366a09ba76639022082fd82d9104e4acaae9d9e65fa6860d8` |
 | `internal/smoke/metadata_test.go` | `d6892d54ac1c0b6ebc5e46949aaa666cbdd4d1ecd359368914aeef6fa7a95809` |
-| `tests/smokecli/metadata_test.go` | `c97fae901cc71bf80ac784555b33db83409fa982cc61a1ed1c79efb97cfe0880` |
+| `tests/smokecli/metadata_test.go` | `821683ccc4abb578f7446dd81adaf65e00f5e7182ec888a77d9f9cb50673afe9` |
 
 ## Полные самостоятельные приложения
 
@@ -3673,6 +3916,30 @@ SHA-256 относится к исходному файлу на момент с
 - [internal/infrastructure/redis.go](#p02-infra-internal-infrastructure-redis-go) — `internal/infrastructure/redis.go`
 - [internal/infrastructure/secrets.go](#p02-infra-internal-infrastructure-secrets-go) — `internal/infrastructure/secrets.go`
 - [internal/infrastructure/secrets_unix_test.go](#p02-infra-internal-infrastructure-secrets-unix-test-go) — `internal/infrastructure/secrets_unix_test.go`
+- [api/inventory/v1/inventory.proto](#inventory-api-inventory-v1-inventory-proto) — `api/inventory/v1/inventory.proto`
+- [migrations/inventory/0003_reservations.sql](#inventory-migrations-inventory-0003-reservations-sql) — `migrations/inventory/0003_reservations.sql`
+- [compose.inventory.yaml](#inventory-compose-inventory-yaml) — `compose.inventory.yaml`
+- [configs/inventory/local.json](#inventory-configs-inventory-local-json) — `configs/inventory/local.json`
+- [docs/development/INVENTORY.md](#inventory-docs-development-inventory-md) — `docs/development/INVENTORY.md`
+- [docs/development/evidence/inventory/VALIDATION.md](#inventory-docs-development-evidence-inventory-validation-md) — `docs/development/evidence/inventory/VALIDATION.md`
+- [docs/development/evidence/inventory/windows-postgres.json](#inventory-docs-development-evidence-inventory-windows-postgres-json) — `docs/development/evidence/inventory/windows-postgres.json`
+- [docs/development/evidence/inventory/windows-infrastructure.json](#inventory-docs-development-evidence-inventory-windows-infrastructure-json) — `docs/development/evidence/inventory/windows-infrastructure.json`
+- [docs/development/evidence/inventory/source-hashes.json](#inventory-docs-development-evidence-inventory-source-hashes-json) — `docs/development/evidence/inventory/source-hashes.json`
+- [internal/inventory/command.go](#inventory-internal-inventory-command-go) — `internal/inventory/command.go`
+- [internal/inventory/store/config.go](#inventory-internal-inventory-config-go) — `internal/inventory/store/config.go`
+- [internal/inventory/store/deployment_test.go](#inventory-internal-inventory-deployment-test-go) — `internal/inventory/store/deployment_test.go`
+- [internal/inventory/store/integration_test.go](#inventory-internal-inventory-integration-test-go) — `internal/inventory/store/integration_test.go`
+- [internal/inventory/model/model.go](#inventory-internal-inventory-model-go) — `internal/inventory/model/model.go`
+- [internal/inventory/model/model_test.go](#inventory-internal-inventory-model-test-go) — `internal/inventory/model/model_test.go`
+- [internal/inventory/store/process_test.go](#inventory-internal-inventory-process-test-go) — `internal/inventory/store/process_test.go`
+- [internal/inventory/server.go](#inventory-internal-inventory-server-go) — `internal/inventory/server.go`
+- [internal/inventory/server_test.go](#inventory-internal-inventory-server-test-go) — `internal/inventory/server_test.go`
+- [internal/inventory/store/store.go](#inventory-internal-inventory-store-go) — `internal/inventory/store/store.go`
+- [internal/inventory/store/mutate.go](#inventory-store-mutate-go) — `internal/inventory/store/mutate.go`
+- [internal/inventory/store/get_reservation.go](#inventory-store-get-reservation-go) — `internal/inventory/store/get_reservation.go`
+- [internal/inventory/store/get_availability.go](#inventory-store-get-availability-go) — `internal/inventory/store/get_availability.go`
+- [internal/inventory/store/close.go](#inventory-store-close-go) — `internal/inventory/store/close.go`
+- [internal/inventory/store/config_test.go](#inventory-store-config-test-go) — `internal/inventory/store/config_test.go`
 - [F03: accepted platform evidence contract](#appendix-docs-architecture-platform-evidence-md) — `docs/architecture/PLATFORM_EVIDENCE.md`
 - [ADR 0004: accepted platform provenance decision](#appendix-docs-adr-0004-platform-evidence-md) — `docs/adr/0004-platform-evidence.md`
 - [Observed run metadata: fields and limits](#appendix-docs-development-run-metadata-md) — `docs/development/RUN_METADATA.md`
@@ -3693,7 +3960,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
 </p>
 
 <p align="center">
@@ -3711,14 +3978,14 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Project guide
 
 The repository contains three Go service processes with explicit configuration, gRPC health, JSON logs and bounded shutdown. The shop workflow, infrastructure and experiments follow the [roadmap](#appendix-roadmap); the architecture diagram below describes their intended boundaries.
 
-[Build tools](#appendix-toolchain) · [Runtime guide](#appendix-container-runtime) · [Go container smoke](#go-smoke-guide).
+[Build tools](#appendix-toolchain) · [Runtime guide](#appendix-container-runtime) · [Inventory API](#inventory-docs-development-inventory-md) · [Go container smoke](#go-smoke-guide).
 
 **Live work and review status:** [Issues](https://github.com/Includeoyasi/faultline-lab/issues), [pull requests](https://github.com/Includeoyasi/faultline-lab/pulls) and [milestones](https://github.com/Includeoyasi/faultline-lab/milestones). The repository keeps specifications and dated evidence, including the [Windows baseline](#windows-smoke-proof), rather than a second progress board. Performance claims require their own measurements.
 
@@ -3806,7 +4073,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience |
 | **G4** | Reproducible engineering lab |
 
-The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
 
 [Engineering decisions and review](#appendix-engineering-decisions) traces owner feedback through the rationale, changes and verification. It also links the separate [Go smoke task](https://github.com/Includeoyasi/faultline-lab/issues/9); its execution and review are tracked in GitHub.
 
@@ -3874,7 +4141,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
 </p>
 
 <p align="center">
@@ -3892,14 +4159,14 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Навигация по проекту
 
 Репозиторий содержит три Go-процесса с явной конфигурацией, gRPC health, JSON-логами и ограниченным завершением. Бизнес-процесс, инфраструктура и эксперименты вводятся по [roadmap](#appendix-roadmap); схема ниже показывает принятые границы.
 
-[Команды сборки](#appendix-toolchain) · [Запуск контейнеров](#appendix-container-runtime) · [Go smoke](#go-smoke-guide).
+[Команды сборки](#appendix-toolchain) · [Запуск контейнеров](#appendix-container-runtime) · [API склада](#inventory-docs-development-inventory-md) · [Go smoke](#go-smoke-guide).
 
 **Актуальные задачи и ревью:** [Issues](https://github.com/Includeoyasi/faultline-lab/issues), [PR](https://github.com/Includeoyasi/faultline-lab/pulls) и [milestones](https://github.com/Includeoyasi/faultline-lab/milestones). Здесь хранятся спецификации и датированные доказательства, включая [Windows baseline](#windows-smoke-proof). Выводы об эффективности требуют отдельных измерений.
 
@@ -3976,7 +4243,7 @@ flowchart LR
 
 G0 — архитектура; G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Порядок и критерии приёмки описаны в workflow; факты принятия сохраняются с датой и источником.
 
-[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
 
 [Инженерные решения и ревью](#appendix-engineering-decisions) связывают замечания владельца с обоснованием, изменениями и проверками. Выполнение переноса контейнерного smoke на Go и его ревью ведутся в [задаче #9](https://github.com/Includeoyasi/faultline-lab/issues/9).
 
@@ -4035,6 +4302,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Запустить и проверить три процесса | [Запуск сервисов](#appendix-service-runtime) — настройки, JSON, health и границы shutdown |
 | Поднять три runtime-контейнера | [Контейнерный каркас](#appendix-container-runtime) — сборка, health, остановка и smoke с отчётом |
 | Подготовить базы и исходные данные | [PostgreSQL](#p02-docs-development-postgres-md) — роли, миграции, seed, схемы взаимодействий и reset |
+| Работать со складом | [Inventory](#inventory-docs-development-inventory-md) — API, резервы, повторы, отмена и проверка транзакций |
 | Запустить инфраструктуру вместе | [Kafka и Redis](#p02-infra-docs-development-infrastructure-md) — общий smoke, ACL, TTL, сохранность Kafka и очистка |
 | Прочитать платформы и ресурсы отчёта | [Метаданные запуска](#appendix-docs-development-run-metadata-md) — происхождение значений, неизвестные поля и ограничения |
 | Разобрать смену Kafka publisher и повторы | [Публикация Kafka](#p02-infra-docs-architecture-kafka-publishing-md) — проблема, три механизма и совместные сценарии на схемах |
@@ -4049,7 +4317,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Проверить отдельный backlog | [Перенос smoke на Go](#appendix-go-smoke-backlog) — задача #9, границы и критерии |
 | Проверить права и защиту main | [Безопасность репозитория](#appendix-repository-security) — действующая защита и переход на аккаунт исполнителя |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
@@ -4064,7 +4332,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
 - [ADR 0002](#appendix-adr-0002): согласованный порядок фиксации решений в PR, ADR и обзорной странице.
 - [ADR 0003](#appendix-adr-0003): принятое решение о Go smoke и его последствия.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -4518,8 +4786,8 @@ Regression suite: короткий успешный процесс, конкур
 3. **Поднять инфраструктуру Compose.** PostgreSQL, Kafka и Redis в core-профиле; Grafana/Prometheus/Loki/Alloy в obs-профиле. Готово: healthchecks проходят, image versions закреплены, логи видны в Grafana.
 4. **Создать базы, роли и миграции.** Отдельные credentials, constraints и ledger/operation keys. Готово: Inventory не может читать orders_db, первичный stock загружается повторяемо.
 5. **Описать protobuf и envelope событий.** Ключи операций, ошибки, версии, trace/correlation. Готово: можно сгенерировать клиентов и однозначно классифицировать business reject, temporary error и unknown outcome.
-6. **Реализовать CreateOrder/GetOrder/GetOrderByRequestKey.** Durable reserve job и уникальный client_request_id. Готово: повтор возвращает тот же order_id; другой payload с тем же ключом отклоняется.
-7. **Реализовать атомарный Inventory.** Reserve, Commit, Release, cancellation barrier, GetReservation. Готово: конкурентные заказы на ограниченный остаток сохраняют баланс; повтор мутации не меняет его второй раз.
+6. **Реализовать атомарный Inventory.** Его protobuf-контракт, Reserve, Commit, Release, cancellation barrier, GetReservation/GetAvailability. Готово: конкурентные заказы на ограниченный остаток сохраняют баланс; повтор мутации не меняет его второй раз.
+7. **Реализовать CreateOrder/GetOrder/GetOrderByRequestKey.** Контракт Orders, durable reserve job и уникальный client_request_id. Готово: повтор возвращает тот же order_id; другой payload с тем же ключом отклоняется.
 8. **Сделать детерминированный Payments.** Durable jobs, approve/decline, задержка вне транзакции, cancel barrier и refund. Готово: одинаковый seed воспроизводит исходы; на order_id максимум один debit.
 9. **Соединить сервисы через Kafka.** Outbox/inbox, устойчивые publishers, сохранённые шаги Orders и минимальная сверка неизвестных результатов. Готово: сквозной успех/отказ и контрольный перезапуск дают правильные terminal states.
 10. **Запустить первый loadgen + verifier.** JSON/CSV результатов, базовый Grafana dashboard, чтение через Redis и первый отчёт. Готово: один ступенчатый тест воспроизводится, каждый запрос учтён, узкое место выбрано по данным.
@@ -4643,10 +4911,11 @@ flowchart LR
 Порядок небольших пакетов для код-ревью:
 
 1. **P01 — первый PR после G0, до G1.** Три Go entrypoints, конфигурация, health, shutdown и JSON-логи; контейнерный toolchain, образы сервисов, минимальный Compose и Go CI. Дополнение среды согласовано после G0 для Windows/macOS; детали и статус — в [описании среды](#appendix-environment).
-2. **P02:** Compose для PostgreSQL/Kafka/Redis, отдельные БД/роли, миграции и seed. [Согласованная декомпозиция](#appendix-p02) сохраняет этот объём: две задачи под два будущих PR: #12 — PostgreSQL/миграции/seed, #16 — Kafka/Redis и проверка полного стенда. Реализация не начата.
-3. **P03:** Protobuf-контракты с operation keys, состояниями и классификацией ошибок.
-4. **P04:** Create/Get/GetByRequestKey и долговечная задача Orders.
-5. **P05:** Reserve/Commit/Release/GetReservation с ledger, блокировками и cancellation barrier.
+2. **P02:** Compose для PostgreSQL/Kafka/Redis, отдельные БД/роли, миграции и seed. [Декомпозиция](#appendix-p02) сохраняет инфраструктурный объём; актуальные задачи и приёмка находятся в GitHub.
+3. **Inventory и его protobuf-контракт:** Reserve/Commit/Release/GetReservation/GetAvailability с operation keys, ledger, блокировками и cancellation barrier.
+4. **Orders и его protobuf-контракт:** Create/Get/GetByRequestKey и долговечная задача, использующая уже проверенный Inventory.
+
+Порядок Inventory → Orders уточнён владельцем в чате 20 октября 2026 года при пересмотре плана после аудита. Контракты вводятся вместе с соответствующим рабочим срезом; границы трёх сервисов и критерии G1 сохраняются.
 
 Каждый пакет проходит своё код-ревью. После подготовки и принятия этой основы проводится отдельная приёмка контрольной точки G1; первый PR не называется G1 и не требует предварительного прохождения G1.
 
@@ -5163,7 +5432,7 @@ Codex (AI-Your-Bro) — исполнитель: готовит проектны�
 
 #### Стандарт код-ревью
 
-[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/.github/pull_request_template.md) содержит краткий применимый чек-лист.
 
 После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; владелец проекта рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению владельца проекта или действие самого владельца проекта.
 
@@ -5424,7 +5693,7 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
+Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
@@ -5623,7 +5892,7 @@ Go-модуль, закреплённые инструменты и нативн
 - Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
 - Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
 
-Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
 
 <a id="appendix-lab-boundary"></a>
 
@@ -5917,13 +6186,13 @@ Docker рекомендует разделять ответственности 
 
 ### Баннер Faultline Lab
 
-Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/assets/banner.svg).
+Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner.svg).
 
 #### Задание
 
 Подготовить три альтернативных варианта с акцентом на технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее. Сделаны векторные композиции с читаемым названием, тёмным текстом на светлом фоне и встроенными title/description. Внешних шрифтов, скриптов и удалённых графических зависимостей нет.
 
-![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/assets/banner-concepts/comparison.png)
+![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner-concepts/comparison.png)
 
 | Вариант | Образ | Палитра | Статус |
 | :--- | :--- | :--- | :--- |
@@ -5933,13 +6202,13 @@ Docker рекомендует разделять ответственности 
 
 #### Выбранное решение
 
-![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/assets/banner-concepts/02-experiment-flow.png)
+![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner-concepts/02-experiment-flow.png)
 
 Абстрактные линии проходят через область наблюдения. Это метафора исследования поведения системы и сравнения изменений; линии не являются графиком измеренных результатов. Композиция не зависит от домена магазина и подходит будущим подключаемым бизнесам.
 
 Размер SVG — 1280 × 420; README задаёт ширину 100%. Исходник масштабируется, PNG служит предварительным просмотром. Основная подпись: **Explore how systems behave.** Нижняя последовательность: **Hypothesis → Experiment → Evidence**.
 
-Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
+Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
 
 Баннеры отрендерены локально и визуально просмотрены на общем листе. Проверены отсутствие обрезанного текста и соответствие композиций заданию. Отдельный preview выбранного варианта используется для проверки основного баннера. Выбранный вариант слит в main через [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4), merge commit 8c392b8. Проверка отрисовки нового README на GitHub пока не выполнялась.
 
@@ -6077,7 +6346,7 @@ P01 не достигает всей контрольной точки G1: ба�
 | GitHub Issue | Текущая стадия, исполнитель, критерии выполнения, блокеры и связь с PR |
 | GitHub PR | Diff, результаты проверок, замечания и решение владельца по HEAD |
 | ADR | Существенное решение, варианты, последствия и основание принятия |
-| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
+| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
 
 #### Стадии в Issue
 
@@ -6188,13 +6457,16 @@ GitHub разрешает machine account, зарегистрированный 
 | Go | [go.mod](#appendix-go-mod), [Dockerfile](#appendix-toolchain-dockerfile) | 1.27.3 |
 | goimports | tool directive в go.mod, go.sum | golang.org/x/tools v0.52.0 |
 | govulncheck | tool directive в go.mod, go.sum | golang.org/x/vuln v1.9.0 |
+| protoc | Dockerfile, официальные архивы с SHA256 для AMD64/ARM64 | 32.1 |
+| protoc-gen-go | tool directive в go.mod, go.sum | v1.36.11 |
+| protoc-gen-go-grpc | tool directive в go.mod, go.sum | v1.6.2 |
 | golangci-lint | Dockerfile, официальный образ с digest | v2.14.0 |
 | База toolchain | Dockerfile, индекс с AMD64/ARM64 | golang:1.27.3-trixie, sha256:604106102d33b1084e37ca08adf98ac0813624ae8595bd0d7f3965ecebded09c |
 | Образ линтера | Dockerfile, индекс с AMD64/ARM64 | golangci/golangci-lint:v2.14.0, sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f |
 
 Исходный набор версий проверен по официальным источникам 15 октября 2026 года: [Go releases](https://go.dev/dl/), [golangci-lint releases](https://github.com/golangci/golangci-lint/releases/tag/v2.14.0), Go module proxy и Docker Registry. Оба закреплённых digest относятся к multi-platform индексам, а не к одному варианту CPU.
 
-21 октября Go обновлён до [1.27.3](https://go.dev/doc/devel/release#go1.27.3), чтобы устранить блокирующий CI security finding GO-2026-6809 в стандартной библиотеке crypto/x509. SHA-256 индекса получен из официального Docker Registry и сверен с байтами ответа; наличие Linux AMD64 и ARM64 подтверждено в [данных проверки индекса](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/development/evidence/go-toolchain/go-1.27.3-registry.json). Пересборка этим toolchain обновляет стандартную библиотеку и в статических runtime-бинарниках. Исторические evidence и установленный host Go 1.27.2 сохраняются; основной путь запуска проверок остаётся контейнерным.
+21 октября Go обновлён до [1.27.3](https://go.dev/doc/devel/release#go1.27.3), чтобы устранить блокирующий CI security finding GO-2026-6809 в стандартной библиотеке crypto/x509. SHA-256 индекса получен из официального Docker Registry и сверен с байтами ответа; наличие Linux AMD64 и ARM64 подтверждено в [данных проверки индекса](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/development/evidence/go-toolchain/go-1.27.3-registry.json). Пересборка этим toolchain обновляет стандартную библиотеку и в статических runtime-бинарниках. Исторические evidence и установленный host Go 1.27.2 сохраняются; основной путь запуска проверок остаётся контейнерным.
 
 gRPC v1.84.0 добавлен для реального health API в P01-04; версия проверена через официальный Go proxy. JSON-логи использует стандартный log/slog. Инструменты закреплены через [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools). PostgreSQL использует pgx v5.11.0; инфраструктурные проверки — franz-go v1.22.2 и go-redis v9.23.0, закреплённые в go.mod/go.sum.
 
@@ -6205,16 +6477,17 @@ gRPC v1.84.0 добавлен для реального health API в P01-04; в
 ```text
 docker compose build toolchain
 docker compose run --rm toolchain versions
+docker compose run --rm toolchain generate
 docker compose run --rm toolchain check
 docker compose run --rm toolchain build
 docker compose run --rm toolchain service-smoke
 ```
 
-`versions` выводит фактические Go, golangci-lint, build metadata goimports и версию govulncheck. `check` проверяет gofmt/goimports без перезаписи исходников, tidy без diff, verify, build, согласованные линтеры, unit/race commands и govulncheck. Ошибка любого шага завершает команду с ненулевым кодом. Набор линтеров — govet, staticcheck, errcheck, ineffassign, unused.
+`versions` выводит фактические Go, golangci-lint, build metadata goimports и версию govulncheck. `generate` создаёт protobuf-код и нормализует импорты. `check` повторяет генерацию и отклоняет diff в API, затем проверяет gofmt/goimports, tidy без diff, verify, build, согласованные линтеры, unit/race commands и govulncheck. Ошибка любого шага завершает команду с ненулевым кодом. Набор линтеров — govet, staticcheck, errcheck, ineffassign, unused.
 
-`build` создаёт Linux-бинарники bin/orders, bin/inventory, bin/payments для архитектуры toolchain-контейнера и выводит build metadata. Они игнорируются Git. На Windows эти Linux-бинарники не запускаются напрямую. `service-smoke` собирает и проверяет три отдельных процесса: health, JSON-диагностику ошибок, выход и независимость. Unit/process tests, graceful drain и runtime-контейнеры реализованы и проверены; бизнес-процессы остаются следующими пакетами. Прежний bootstrap-smoke удалён: сервисы больше не завершаются сразу после запуска.
+`build` создаёт Linux-бинарники bin/orders, bin/inventory, bin/payments для архитектуры toolchain-контейнера и выводит build metadata. Они игнорируются Git. На Windows эти Linux-бинарники не запускаются напрямую. `service-smoke` проверяет три отдельных процесса: health, JSON-диагностику ошибок, выход и независимость; Inventory запускается явной командой `health-only`. Его бизнес-RPC и PostgreSQL проверяются отдельным [интеграционным прогоном](#inventory-docs-development-inventory-md).
 
-Для осознанного исправления форматирования: `docker compose run --rm toolchain format`. Эта команда меняет Go-исходники в рабочей копии; check их не меняет. Неподдерживаемая команда и лишние аргументы дают exit code 2.
+Для исправления форматирования: `docker compose run --rm toolchain format`. Эта команда меняет Go-исходники в рабочей копии. Неподдерживаемая команда и лишние аргументы дают exit code 2.
 
 `data-build` собирает host CLI для [подготовки PostgreSQL](#p02-docs-development-postgres-md); `data-cross-check` проверяет компиляцию для Windows AMD64, Linux AMD64/ARM64 и macOS AMD64/ARM64. Host OS/архитектура задаются через GOOS/GOARCH.
 
@@ -6244,6 +6517,8 @@ go 1.27.3
 tool (
 	golang.org/x/tools/cmd/goimports
 	golang.org/x/vuln/cmd/govulncheck
+	google.golang.org/grpc/cmd/protoc-gen-go-grpc
+	google.golang.org/protobuf/cmd/protoc-gen-go
 )
 
 require (
@@ -6253,12 +6528,14 @@ require (
 	github.com/twmb/franz-go/pkg/kmsg v1.15.0
 	golang.org/x/sys v0.49.0
 	google.golang.org/grpc v1.84.0
+	google.golang.org/protobuf v1.36.11
 )
 
 require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
+	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/klauspost/compress v1.20.3 // indirect
 	github.com/pierrec/lz4/v4 v4.1.33 // indirect
 	go.uber.org/atomic v1.12.0 // indirect
@@ -6270,7 +6547,7 @@ require (
 	golang.org/x/tools v0.52.0 // indirect
 	golang.org/x/vuln v1.9.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260706201446-f0a921348800 // indirect
-	google.golang.org/protobuf v1.36.11 // indirect
+	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.6.2 // indirect
 )
 ```
 
@@ -6354,6 +6631,8 @@ google.golang.org/genproto/googleapis/rpc v0.0.0-20260706201446-f0a921348800 h1:
 google.golang.org/genproto/googleapis/rpc v0.0.0-20260706201446-f0a921348800/go.mod h1:4Hqkh8ycfw05ld/3BWL7rJOSfebL2Q+DVDeRgYgxUU8=
 google.golang.org/grpc v1.84.0 h1:soMyaPJ8pAak5PIQ0DGBUir0XRo2fRoMqhNWMLlLxO0=
 google.golang.org/grpc v1.84.0/go.mod h1:ljCht0DrxQrXBDRTZp52Qxh3Ffk8CdYm2sj4O2QN2C0=
+google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.6.2 h1:rgSNvqscFZ1JgV/4wH5GOsZFSFkR2Eua9As3KIr2LlM=
+google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.6.2/go.mod h1:iMEtFwDlAhjDU9L5mY6U1XLwlIId/G3h+QcBHDIvrJ8=
 google.golang.org/protobuf v1.36.11 h1:fV6ZwhNocDyBLK0dj+fg8ektcVegBBuEolpbTQyBNVE=
 google.golang.org/protobuf v1.36.11/go.mod h1:HTf+CrKn2C3g5S8VImy6tdcUvCska2kB7j23XfzDpco=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
@@ -6401,12 +6680,12 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/Includeoyasi/faultline-lab/internal/service"
+	"github.com/Includeoyasi/faultline-lab/internal/inventory"
 )
 
 func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
-	exitCode := service.Execute(ctx, "inventory", os.Args[1:], os.LookupEnv, os.Stderr)
+	exitCode := inventory.Execute(ctx, os.Args[1:], os.LookupEnv, os.Stderr)
 	stop()
 	os.Exit(exitCode)
 }
@@ -6448,6 +6727,17 @@ func main() {
 FROM golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f AS lint
 
 FROM golang:1.27.3-trixie@sha256:604106102d33b1084e37ca08adf98ac0813624ae8595bd0d7f3965ecebded09c AS toolchain
+ARG TARGETARCH
+RUN apt-get update && apt-get install -y --no-install-recommends unzip \
+    && case "$TARGETARCH" in \
+       amd64) archive=linux-x86_64; checksum=e9c129c176bb7df02546c4cd6185126ca53c89e7d2f09511e209319704b5dd7e ;; \
+       arm64) archive=linux-aarch_64; checksum=4a802ed23d70f7bad7eb19e5a3e724b3aa967250d572cadfd537c1ba939aee6a ;; \
+       *) exit 2 ;; esac \
+    && curl -fsSL "https://github.com/protocolbuffers/protobuf/releases/download/v32.1/protoc-32.1-$archive.zip" -o /tmp/protoc.zip \
+    && echo "$checksum  /tmp/protoc.zip" | sha256sum -c - \
+    && unzip -q /tmp/protoc.zip -d /opt/protoc \
+    && ln -s /opt/protoc/bin/protoc /usr/local/bin/protoc \
+    && rm /tmp/protoc.zip && rm -rf /var/lib/apt/lists/*
 ENV GOTOOLCHAIN=local \
     GOFLAGS=-mod=readonly \
     GOBIN=/usr/local/bin
@@ -6463,6 +6753,7 @@ CMD ["versions"]
 FROM toolchain AS service-build
 ARG SERVICE
 COPY cmd ./cmd
+COPY api ./api
 COPY internal ./internal
 COPY migrations ./migrations
 RUN case "$SERVICE" in orders|inventory|payments) ;; *) exit 2 ;; esac \
@@ -6476,14 +6767,19 @@ ENTRYPOINT ["/app/service"]
 
 FROM toolchain AS labdata-build
 COPY cmd ./cmd
+COPY api ./api
 COPY internal ./internal
 COPY migrations ./migrations
 RUN CGO_ENABLED=0 go build -trimpath -o /out/labdata ./cmd/labdata \
-    && CGO_ENABLED=0 go test -c -o /out/database.test ./internal/database
+    && CGO_ENABLED=0 go test -c -o /out/database.test ./internal/database \
+    && CGO_ENABLED=0 go test -c -o /out/inventory.test ./internal/inventory/store \
+    && CGO_ENABLED=0 go build -trimpath -o /out/inventory ./cmd/inventory
 
 FROM scratch AS labdata
 COPY --from=labdata-build /out/labdata /app/labdata
 COPY --from=labdata-build /out/database.test /app/database.test
+COPY --from=labdata-build /out/inventory.test /app/inventory.test
+COPY --from=labdata-build /out/inventory /app/inventory
 USER 65532:65532
 ENTRYPOINT ["/app/labdata"]
 ```
@@ -6525,6 +6821,7 @@ services:
         SERVICE: orders
   inventory:
     <<: *runtime
+    command: [health-only]
     build:
       <<: *service-build
       args:
@@ -6570,7 +6867,7 @@ networks:
 set -eu
 
 if [ "$#" -gt 1 ]; then
-  echo "usage: lab-go {versions|build|check|format|service-smoke|smoke-build|smoke-cross-check|smoke-cli-tests|data-build|data-cross-check}" >&2
+  echo "usage: lab-go {versions|build|check|format|generate|service-smoke|smoke-build|smoke-cross-check|smoke-cli-tests|data-build|data-cross-check}" >&2
   exit 2
 fi
 
@@ -6610,6 +6907,11 @@ source_files() {
     -o -type f -name '*.go' -print0 > "$file_list"
 }
 
+generate() {
+  protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative api/inventory/v1/inventory.proto
+  goimports -w api/inventory/v1
+}
+
 case "${1:-versions}" in
   versions)
     versions
@@ -6619,6 +6921,9 @@ case "${1:-versions}" in
     ;;
   check)
     versions
+    protoc --version
+    generate
+    git diff --exit-code -- api/
     source_files
     formatting=$(xargs -0 -r gofmt -l < "$file_list")
     imports=$(xargs -0 -r goimports -l < "$file_list")
@@ -6637,6 +6942,9 @@ case "${1:-versions}" in
   format)
     source_files
     xargs -0 -r goimports -w < "$file_list"
+    ;;
+  generate)
+    generate
     ;;
   service-smoke)
     build
@@ -6663,7 +6971,7 @@ case "${1:-versions}" in
     CGO_ENABLED=0 go test -c -o bin/smoke-cli-tests ./tests/smokecli
     ;;
   *)
-    echo "usage: lab-go {versions|build|check|format|service-smoke|smoke-build|smoke-cross-check|smoke-cli-tests|data-build|data-cross-check}" >&2
+    echo "usage: lab-go {versions|build|check|format|generate|service-smoke|smoke-build|smoke-cross-check|smoke-cli-tests|data-build|data-cross-check}" >&2
     exit 2
     ;;
 esac
@@ -6825,7 +7133,7 @@ node_modules
 
 ### Сервисы: конфигурация, логи и жизненный цикл
 
-Три независимых процесса Orders, Inventory и Payments проверяют настройки, пишут JSON в stderr и обслуживают стандартный `grpc.health.v1.Health/Check`. Health пока подтверждает только работу gRPC-каркаса. Бизнес-методов, PostgreSQL/Kafka/Redis и доменных protobuf здесь нет.
+Три независимых процесса Orders, Inventory и Payments проверяют настройки, пишут JSON в stderr и обслуживают стандартный `grpc.health.v1.Health/Check`. Этот документ описывает общий жизненный цикл. [Бизнес-API Inventory](#inventory-docs-development-inventory-md) использует PostgreSQL; Orders и Payments сохраняют каркас. Для проверки Inventory без БД предусмотрена явная команда `health-only`, подтверждающая только работу gRPC-каркаса.
 
 Конфигурация и базовый процесс введены в PR #6/#7; контейнерный жизненный цикл — в [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). Это исторические источники реализации. Актуальные задачи и ревью — в [GitHub](https://github.com/Includeoyasi/faultline-lab/issues).
 
@@ -7090,6 +7398,11 @@ var ErrShutdownTimeout = errors.New("shutdown timeout exceeded; active RPCs were
 // Run validates configuration, serves gRPC health and drains active RPCs on
 // cancellation. It returns ErrShutdownTimeout if the drain budget expires.
 func Run(ctx context.Context, name string, lookup func(string) (string, bool), output io.Writer) error {
+	return RunRegistered(ctx, name, lookup, output, nil)
+}
+
+// RunRegistered adds a business API to the shared bounded gRPC lifecycle.
+func RunRegistered(ctx context.Context, name string, lookup func(string) (string, bool), output io.Writer, register func(*grpc.Server)) error {
 	logger := newLogger(output, name, slog.LevelInfo)
 	cfg, err := LoadConfig(lookup)
 	if err != nil {
@@ -7097,7 +7410,7 @@ func Run(ctx context.Context, name string, lookup func(string) (string, bool), o
 		return err
 	}
 	logger = newLogger(output, name, cfg.LogLevel)
-	if err := serve(ctx, cfg, logger); err != nil {
+	if err := serveRegistered(ctx, cfg, logger, register); err != nil {
 		logger.ErrorContext(ctx, "service failed", "error", err.Error())
 		return err
 	}
@@ -7105,6 +7418,10 @@ func Run(ctx context.Context, name string, lookup func(string) (string, bool), o
 }
 
 func serve(ctx context.Context, cfg Config, logger *slog.Logger) error {
+	return serveRegistered(ctx, cfg, logger, nil)
+}
+
+func serveRegistered(ctx context.Context, cfg Config, logger *slog.Logger, register func(*grpc.Server)) error {
 	if err := ctx.Err(); err != nil {
 		return err
 	}
@@ -7114,6 +7431,9 @@ func serve(ctx context.Context, cfg Config, logger *slog.Logger) error {
 	}
 	// grpc.Server.Serve owns and closes the listener, including on Stop.
 	server := grpc.NewServer()
+	if register != nil {
+		register(server)
+	}
 	healthServer := health.NewServer()
 	healthServer.SetServingStatus("", healthpb.HealthCheckResponse_NOT_SERVING)
 	healthpb.RegisterHealthServer(server, healthServer)
@@ -7616,6 +7936,9 @@ func freeAddress(t *testing.T) string {
 func start(t *testing.T, binary string, overrides map[string]string) *process {
 	t.Helper()
 	p := &process{cmd: exec.Command(binary), logs: &logCapture{started: make(chan string, 1)}, done: make(chan struct{})}
+	if strings.TrimSuffix(filepath.Base(binary), ".exe") == "inventory" {
+		p.cmd.Args = append(p.cmd.Args, "health-only")
+	}
 	values := map[string]string{"FL_GRPC_ADDR": freeAddress(t)}
 	for key, value := range overrides {
 		values[key] = value
@@ -7825,6 +8148,9 @@ func assertFailure(t *testing.T, binary, service string, overrides map[string]st
 	ctx, cancel := context.WithTimeout(t.Context(), 10*time.Second)
 	defer cancel()
 	cmd := exec.CommandContext(ctx, binary)
+	if strings.TrimSuffix(filepath.Base(binary), ".exe") == "inventory" {
+		cmd.Args = append(cmd.Args, "health-only")
+	}
 	cmd.Env = childEnvironment(overrides)
 	output, err := cmd.CombinedOutput()
 	var exitError *exec.ExitError
@@ -8310,7 +8636,7 @@ flowchart TB
 
 [Dockerfile](#appendix-toolchain-dockerfile) использует закреплённый [toolchain](#appendix-toolchain) как stage общего multi-stage Dockerfile. Сервис выбирается build argument, разрешены только orders/inventory/payments. Финальный `scratch` содержит один статический бинарник и запускает его напрямую: без компилятора, shell, root и промежуточного процесса вместо PID 1. CA bundle и timezone database сейчас не требуются; перед появлением TLS-клиентов состав образа пересматривается явно.
 
-[Compose](#appendix-compose-toolchain) задаёт read-only root filesystem, `cap_drop: ALL`, `no-new-privileges`, внутреннюю сеть и отсутствие публикации портов. Runtime не получает host mounts или Docker socket. Toolchain остаётся временным сервисом профиля tools. Сборка runtime использует stage toolchain напрямую; активация сервиса профиля tools для неё не требуется. Обычный up запускает только три runtime-сервиса.
+[Compose](#appendix-compose-toolchain) задаёт read-only root filesystem, `cap_drop: ALL`, `no-new-privileges`, внутреннюю сеть и отсутствие публикации портов. Базовый каркас не получает host mounts или Docker socket; Inventory использует явную команду `health-only`. Его отдельный [бизнес-профиль](#inventory-docs-development-inventory-md) подключает конфигурацию, один прикладной секрет и сеть данных. Toolchain остаётся временным сервисом профиля tools; сборка runtime использует его stage напрямую.
 
 #### Требования и запуск
 
@@ -9567,7 +9893,7 @@ JSON schema version 2 сохраняет `run_id`, `project`, `result`, `service
 
 Отчёт не содержит полного inspect Env или разрешённого Compose-конфига. Пути checkout и домашнего каталога редактируются в диагностике. Smoke использует несекретный профиль; сторонние произвольные логи перед публикацией нужно проверять отдельно. Это проверка каркаса, а не измерение бизнес-корректности или capacity.
 
-После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
+После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
 
 <a id="go-smoke-main"></a>
 
@@ -15453,6 +15779,7 @@ package database
 import (
 	"context"
 	"errors"
+	"fmt"
 	"io/fs"
 	"os"
 	"strings"
@@ -15517,10 +15844,11 @@ func TestPostgresFoundation(t *testing.T) {
 				}
 			}
 			conn := connect(t, service.Database, service.MigrationUser)
-			want := 1
-			if service.Name == "inventory" {
-				want = 2
+			loaded, e := loadMigrations(migrations.Files, service.Name)
+			if e != nil {
+				t.Fatal(e)
 			}
+			want := len(loaded)
 			if got := scalar(t, conn, "SELECT count(*) FROM lab_migrations.versions"); got != want {
 				t.Fatalf("versions=%d want=%d", got, want)
 			}
@@ -15550,7 +15878,11 @@ func TestPostgresFoundation(t *testing.T) {
 		if e := Migrate(ctx, cfg, service); e != nil {
 			t.Fatal(e)
 		}
-		if got := scalar(t, conn, "SELECT count(*) FROM lab_migrations.versions"); got != 2 {
+		loaded, e := loadMigrations(migrations.Files, service.Name)
+		if e != nil {
+			t.Fatal(e)
+		}
+		if got := scalar(t, conn, "SELECT count(*) FROM lab_migrations.versions"); got != len(loaded) {
 			t.Fatal("grant repair changed migration history")
 		}
 		if got := scalar(t, app, "SELECT count(*) FROM inventory.products"); got != 0 {
@@ -15625,14 +15957,19 @@ func TestPostgresFoundation(t *testing.T) {
 			}
 			files["inventory/"+entry.Name()] = &fstest.MapFile{Data: data}
 		}
-		files["inventory/0003_failure.sql"] = &fstest.MapFile{Data: []byte("CREATE TABLE inventory.must_rollback(id int); SELECT 1/0;")}
+		loaded, e := loadMigrations(migrations.Files, service.Name)
+		if e != nil {
+			t.Fatal(e)
+		}
+		failureFile := fmt.Sprintf("inventory/%04d_failure.sql", loaded[len(loaded)-1].version+1)
+		files[failureFile] = &fstest.MapFile{Data: []byte("CREATE TABLE inventory.must_rollback(id int); SELECT 1/0;")}
 		if e = migrate(ctx, cfg, service, files); e == nil || !strings.Contains(e.Error(), "22012") {
 			t.Fatalf("expected failed migration: %v", e)
 		}
-		if scalar(t, conn, "SELECT count(*) FROM lab_migrations.versions") != 2 || scalar(t, conn, "SELECT count(*) FROM information_schema.tables WHERE table_schema='inventory' AND table_name='must_rollback'") != 0 {
+		if scalar(t, conn, "SELECT count(*) FROM lab_migrations.versions") != len(loaded) || scalar(t, conn, "SELECT count(*) FROM information_schema.tables WHERE table_schema='inventory' AND table_name='must_rollback'") != 0 {
 			t.Fatal("failed migration persisted")
 		}
-		delete(files, "inventory/0003_failure.sql")
+		delete(files, failureFile)
 		files["inventory/0001_schema.sql"].Data = []byte("CREATE SCHEMA inventory; -- changed")
 		if e = migrate(ctx, cfg, service, files); e == nil || !strings.Contains(e.Error(), "checksum") {
 			t.Fatal("accepted changed migration", e)
@@ -16491,10 +16828,10 @@ func metadataFixture(args []string) (command.Output, bool) {
 	case args[0] == "info":
 		return command.Output{Stdout: `{"os":"linux","arch":"amd64","cpus":6,"memory":2147483648,"version":"29.0.0"}`}, true
 	case args[0] == "compose" && slices.Contains(args, "config"):
-		return command.Output{Stdout: `{"services":{"postgres":{},"kafka":{},"redis":{}},"private":"` + strings.Join([]string{"", "Users", "private"}, "/") + ` PASSWORD=metadata-secret"}`}, true
+		return command.Output{Stdout: `{"services":{"postgres":{},"kafka":{},"redis":{},"inventory":{}},"private":"` + strings.Join([]string{"", "Users", "private"}, "/") + ` PASSWORD=metadata-secret"}`}, true
 	case args[0] == "compose" && slices.Contains(args, "ps"):
 		name := args[len(args)-1]
-		index := slices.Index([]string{"postgres", "kafka", "redis"}, name)
+		index := slices.Index([]string{"postgres", "kafka", "redis", "inventory"}, name)
 		return command.Output{Stdout: strings.Repeat(string(rune('a'+index)), 64)}, true
 	case args[0] == "compose" && slices.Contains(args, "version"):
 		return command.Output{Stdout: "5.0.0"}, true
@@ -16538,9 +16875,16 @@ func TestRunCleanupAndReports(t *testing.T) {
 			defer cancel()
 			cleaned := false
 			imageExists := false
+			inventoryStarted := false
 			execute := func(commandCtx context.Context, program string, args []string) (command.Output, error) {
 				if program != "docker" {
 					t.Fatal("unexpected executable")
+				}
+				if slices.Contains(args, "up") && slices.Contains(args, "inventory") {
+					inventoryStarted = true
+				}
+				if args[0] == "compose" && slices.Contains(args, "config") && (!inventoryStarted || !slices.Contains(args, "compose.inventory.yaml")) {
+					t.Fatal("metadata must observe the started Inventory business profile")
 				}
 				if scenario == "metadata-cancel" && args[0] == "info" {
 					cancel()
@@ -16618,6 +16962,10 @@ func TestRunCleanupAndReports(t *testing.T) {
 			}
 			if wantSuccess && scenario != "metadata-missing" && (saved.SchemaVersion != 1 || saved.Environment.Services["postgres"].Image.Status != "KNOWN" || saved.Environment.Services["postgres"].Usage.Status != "MEASURED") {
 				t.Fatal("postgres-only metadata missing")
+			}
+			inventory := saved.Environment.Services["inventory"]
+			if wantSuccess && scenario != "metadata-missing" && (inventory.Image.Status != "KNOWN" || inventory.Usage.Status != "MEASURED") {
+				t.Fatal("Inventory business container metadata missing")
 			}
 			if strings.Contains(string(data), "metadata-secret") || strings.Contains(string(data), strings.Join([]string{"", "Users", "private"}, "/")) {
 				t.Fatal("raw Compose data leaked")
@@ -16831,11 +17179,13 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	env := []string{}
 	for _, item := range os.Environ() {
 		key, _, _ := strings.Cut(item, "=")
-		if !strings.EqualFold(key, "FL_PG_SECRETS_DIR") && !strings.EqualFold(key, "FL_INFRA_SECRETS_DIR") {
+		if !strings.EqualFold(key, "FL_PG_SECRETS_DIR") && !strings.EqualFold(key, "FL_INFRA_SECRETS_DIR") && !strings.EqualFold(key, "FL_INVENTORY_DATASET_ID") {
 			env = append(env, item)
 		}
 	}
 	env = append(env, "FL_PG_SECRETS_DIR="+cfg.Secrets)
+	// Each disposable database gets a unique namespace, independent of test keys.
+	env = append(env, "FL_INVENTORY_DATASET_ID="+project)
 	if fullStack {
 		env = append(env, "FL_INFRA_SECRETS_DIR="+infraCfg.Secrets)
 	}
@@ -16847,7 +17197,8 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	if fullStack {
 		services = append(services, "kafka", "redis")
 	}
-	evidence := report{SchemaVersion: 1, Project: project, Started: time.Now().UTC(), Result: "FAIL", Cleanup: "PENDING", Events: []event{}, Environment: runmeta.New(services)}
+	observedServices := append(append([]string{}, services...), "inventory")
+	evidence := report{SchemaVersion: 1, Project: project, Started: time.Now().UTC(), Result: "FAIL", Cleanup: "PENDING", Events: []event{}, Environment: runmeta.New(observedServices)}
 	save := func() error {
 		data, e := json.MarshalIndent(evidence, "", "  ")
 		if e != nil {
@@ -16920,6 +17271,7 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	}
 	mayExist = true
 	buildServices := []string{"dbtool"}
+	buildServices = append(buildServices, "inventory")
 	if fullStack {
 		buildServices = append(buildServices, "infrastructure-check")
 	}
@@ -16927,22 +17279,14 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	defer func() {
 		logCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
-		_, _ = call(logCtx, "dependency logs", 5*time.Second, compose(append([]string{"logs", "--no-color", "--tail", "200"}, services...)...)...)
+		logServices := append(append([]string{}, services...), "inventory")
+		_, _ = call(logCtx, "dependency logs", 5*time.Second, compose(append([]string{"logs", "--no-color", "--tail", "200"}, logServices...)...)...)
 	}()
 	if _, err = call(ctx, "build dbtool", 10*time.Minute, compose(append([]string{"build"}, buildServices...)...)...); err != nil {
 		return err
 	}
 	_, err = call(ctx, "start dependencies", 2*time.Minute, compose(append([]string{"up", "-d", "--wait", "--wait-timeout", "100"}, services...)...)...)
-	// This adapter intentionally bypasses call(): full Compose config may
-	// contain secrets, while runmeta retains only explicitly allowed fields.
-	evidence.Environment = runmeta.Collect(ctx, func(ctx context.Context, args []string) (string, error) {
-		result, e := execute(ctx, "docker", args)
-		if e == nil && result.ExitCode != 0 {
-			e = errors.New("metadata command failed")
-		}
-		return result.Stdout, e
-	}, compose(), services)
-	if err = errors.Join(err, ctx.Err(), save()); err != nil {
+	if err != nil {
 		return err
 	}
 	tool := func(stage string, args ...string) (string, error) {
@@ -16956,6 +17300,39 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	if _, err = call(ctx, "rights, migrations and seed", 3*time.Minute, compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "--entrypoint", "/app/database.test", "dbtool", "-test.run=^TestPostgresFoundation$", "-test.v", "-test.timeout=150s")...); err != nil {
 		return err
 	}
+	if _, inventoryErr := call(ctx, "Inventory operations and process restart", 3*time.Minute, compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "--entrypoint", "/app/inventory.test", "dbtool", "-test.run=^TestInventory(Foundation|Process)$", "-test.v", "-test.timeout=150s")...); inventoryErr != nil {
+		return inventoryErr
+	}
+	// Put the business overlay last, preserving its command/config/secret wiring.
+	base := compose()
+	var deployed []string
+	for index, value := range base {
+		if value == "-p" {
+			deployed = append(append(append([]string{}, base[:index]...), "-f", "compose.inventory.yaml"), base[index:]...)
+			break
+		}
+	}
+	_, err = call(ctx, "start Inventory business container", 60*time.Second, append(deployed, "up", "-d", "--no-deps", "--wait", "--wait-timeout", "45", "inventory")...)
+	// Observe the business container with its effective overlay, before its
+	// functional probes. Raw config bypasses call() to keep secrets out of logs.
+	evidence.Environment = runmeta.Collect(ctx, func(ctx context.Context, args []string) (string, error) {
+		result, e := execute(ctx, "docker", args)
+		if e == nil && result.ExitCode != 0 {
+			e = errors.New("metadata command failed")
+		}
+		return result.Stdout, e
+	}, deployed, observedServices)
+	if err = errors.Join(err, ctx.Err(), save()); err != nil {
+		return err
+	}
+	deployedProbe := func(stage string) error {
+		_, e := call(ctx, stage, 45*time.Second, compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "-e", "FL_INVENTORY_TARGET=inventory:50051", "--entrypoint", "/app/inventory.test", "dbtool", "-test.run=^TestInventoryDeployed$", "-test.v", "-test.timeout=30s")...)
+		return e
+	}
+	if err = deployedProbe("Inventory deployed gRPC API"); err != nil {
+		return err
+	}
+	// Inventory tests add owned fixtures; capture the baseline after their writes.
 	before, err := tool("checksum before restart", "checksum")
 	if err != nil {
 		return err
@@ -16988,6 +17365,12 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	}
 	if strings.TrimSpace(before) != strings.TrimSpace(after) {
 		return errors.New("data or migration history changed across restart/repeat")
+	}
+	if _, err = call(ctx, "Inventory persistence after PostgreSQL restart", time.Minute, compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "--entrypoint", "/app/inventory.test", "dbtool", "-test.run=^TestInventoryAfterRestart$", "-test.v", "-test.timeout=45s")...); err != nil {
+		return err
+	}
+	if err = deployedProbe("Inventory deployed API after PostgreSQL restart"); err != nil {
+		return err
 	}
 	if fullStack {
 		if _, err = call(ctx, "Kafka and Redis after restart", 60*time.Second, compose("run", "--rm", "--no-deps", "infrastructure-check", "check-infrastructure", "-stage", "after-restart", "-checkpoint", strings.TrimSpace(checkpoint))...); err != nil {
@@ -17066,6 +17449,7 @@ services:
     environment:
       FL_DATA_CONFIG: /etc/faultline/postgres.json
       FL_DATA_SECRETS: /run/secrets
+      FL_INVENTORY_DATASET_ID: ${FL_INVENTORY_DATASET_ID:-}
     volumes:
       - ./configs/postgres/local.json:/etc/faultline/postgres.json:ro
     secrets:
@@ -17167,7 +17551,7 @@ flowchart LR
 
 `dbtool` и PostgreSQL соединены внутренней сетью `data`: порт базы на хост не публикуется. PostgreSQL работает от UID 999, dbtool — от UID 65532; файловая система контейнеров read-only, запись разрешена только в volume/tmpfs. У PostgreSQL лимит 512 MiB и 0.5 CPU; у временного dbtool — 256 MiB и 1 CPU. Это ограничения локального стенда, не измеренная производственная ёмкость.
 
-Три бизнес-сервиса пока сохраняют свой gRPC-каркас. Подключение их бизнес-операций к базам будет следующим изменением. Kafka/Redis относятся к отдельной [задаче #16](https://github.com/Includeoyasi/faultline-lab/issues/16).
+[Inventory](#inventory-docs-development-inventory-md) использует свою прикладную роль для бизнес-операций. Orders и Payments сохраняют gRPC-каркас. Проверка Kafka/Redis описана в [инфраструктурном профиле](#p02-infra-docs-development-infrastructure-md).
 
 PostgreSQL добавляется через `compose.postgres.yaml`. Базовый `compose.yaml` и существующий smoke трёх сервисов запускаются независимо от подготовки паролей базы.
 
@@ -18455,7 +18839,7 @@ flowchart TB
 
 Kafka работает в KRaft с явными broker/controller listeners, статическим quorum и постоянным cluster ID. Автоматическое создание топиков выключено. Один broker не обеспечивает репликационную доступность: `acks=all` здесь означает подтверждение единственным ISR. Сохраняется проверка штатного restart, а не аварии диска/хоста.
 
-Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/0fd6715098970d8aa0614617125d2c50f0d3f6d8/docs/development/POSTGRES.md#подготовка-стенда).
+Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/development/POSTGRES.md#подготовка-стенда).
 
 Контейнеры зависимостей и runtime-проверок непривилегированные, с read-only root, без capabilities и с `no-new-privileges`; запись разрешена в явные volume/tmpfs. Временный toolchain имеет отдельные права для сборки в workspace, описанные в [его руководстве](#appendix-toolchain). Порты доступны через DNS внутренней сети: `postgres`, `kafka:9092`, `redis:6379`. Kafka PLAINTEXT и Redis без TLS допустимы только в этом изолированном локальном профиле; удалённое размещение требует отдельного профиля аутентификации, TLS и сетевых правил.
 
@@ -18837,11 +19221,15 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 			ctx, cancel := context.WithCancel(t.Context())
 			defer cancel()
 			cleaned, logged, afterCalled := false, false, false
+			inventoryStarted := false
 			var password, passwordHash string
 			checkpoint := `{"version":1,"topic":"faultline-smoke","partition":0,"offset":7,"key":"checkpoint","value":"expected"}`
 			execute := func(commandCtx context.Context, program string, args []string) (command.Output, error) {
 				if program != "docker" {
 					t.Fatal("unexpected executable")
+				}
+				if args[0] == "compose" && slices.Contains(args, "config") && (!inventoryStarted || !slices.Contains(args, "compose.inventory.yaml") || !slices.Contains(args, "compose.infrastructure.yaml")) {
+					t.Fatal("metadata must observe the combined Inventory business profile")
 				}
 				if scenario == "metadata-cancel" && args[0] == "info" {
 					cancel()
@@ -18885,9 +19273,16 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 					}
 				}
 				if slices.Contains(args, "up") {
-					for _, name := range []string{"postgres", "kafka", "redis"} {
-						if !slices.Contains(args, name) {
-							t.Fatal("combined start omitted a dependency")
+					if slices.Contains(args, "inventory") {
+						inventoryStarted = true
+						if !slices.Contains(args, "compose.inventory.yaml") || !slices.Contains(args, "--no-deps") {
+							t.Fatal("business start lost its isolated overlay")
+						}
+					} else {
+						for _, name := range []string{"postgres", "kafka", "redis"} {
+							if !slices.Contains(args, name) {
+								t.Fatal("combined start omitted a dependency")
+							}
 						}
 					}
 					if scenario == "start-failure" {
@@ -18942,7 +19337,7 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 				t.Fatal("incorrect saved verdict")
 			}
 			if scenario == "success" {
-				for _, service := range []string{"postgres", "kafka", "redis"} {
+				for _, service := range []string{"postgres", "kafka", "redis", "inventory"} {
 					if saved.Environment.Services[service].Image.Status != "KNOWN" || saved.Environment.Services[service].Usage.Status != "MEASURED" {
 						t.Fatal("combined metadata missing", service)
 					}
@@ -19812,6 +20207,2211 @@ func TestSecretPermissionsUnderRestrictiveUmask(t *testing.T) {
 }
 ```
 
+<a id="inventory-api-inventory-v1-inventory-proto"></a>
+
+## Приложение: api/inventory/v1/inventory.proto
+
+Полный исходный документ: `api/inventory/v1/inventory.proto`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```protobuf
+syntax = "proto3";
+
+package faultline.inventory.v1;
+option go_package = "github.com/Includeoyasi/faultline-lab/api/inventory/v1;inventoryv1";
+
+// Inventory owns reservations and stock in one isolated dataset.
+service Inventory {
+  rpc Reserve(ReserveRequest) returns (OperationResult);
+  rpc CommitReservation(ChangeReservationRequest) returns (OperationResult);
+  rpc ReleaseReservation(ChangeReservationRequest) returns (OperationResult);
+  rpc GetReservation(GetReservationRequest) returns (Reservation);
+  rpc GetAvailability(GetAvailabilityRequest) returns (GetAvailabilityResponse);
+}
+
+enum ReservationState {
+  RESERVATION_STATE_UNSPECIFIED = 0;
+  RESERVATION_STATE_RESERVED = 1;
+  RESERVATION_STATE_COMMITTED = 2;
+  RESERVATION_STATE_RELEASED = 3;
+}
+
+enum Outcome {
+  OUTCOME_UNSPECIFIED = 0;
+  OUTCOME_APPLIED = 1;
+  OUTCOME_INSUFFICIENT_STOCK = 2;
+  OUTCOME_UNKNOWN_SKU = 3;
+  OUTCOME_INVALID_STATE = 4;
+  OUTCOME_RESERVATION_EXISTS = 5;
+}
+
+message Item {
+  string sku = 1;
+  int64 quantity = 2;
+}
+
+message PricedItem {
+  string sku = 1;
+  int64 quantity = 2;
+  int64 unit_price_minor = 3;
+}
+
+message ReserveRequest {
+  string dataset_id = 1;
+  string order_id = 2;
+  string operation_id = 3;
+  repeated Item items = 4;
+}
+
+message ChangeReservationRequest {
+  string dataset_id = 1;
+  string order_id = 2;
+  string operation_id = 3;
+}
+
+message GetReservationRequest {
+  string dataset_id = 1;
+  string order_id = 2;
+}
+
+message Reservation {
+  string dataset_id = 1;
+  string order_id = 2;
+  ReservationState state = 3;
+  int64 version = 4;
+  repeated PricedItem items = 5;
+  int64 total_minor = 6;
+  string currency = 7;
+}
+
+// Immutable receipt, including business rejection. The reservation is a
+// historical snapshot AT THIS OPERATION; GetReservation reads current state.
+// A transport error means unknown outcome; retry the SAME operation_id.
+message OperationResult {
+  string operation_id = 1;
+  Outcome outcome = 2;
+  Reservation reservation_at_operation = 3;
+}
+
+message GetAvailabilityRequest {
+  string dataset_id = 1;
+  repeated string skus = 2;
+}
+
+message Availability {
+  string sku = 1;
+  int64 available = 2;
+  int64 unit_price_minor = 3;
+  string currency = 4;
+}
+
+message GetAvailabilityResponse {
+  repeated Availability items = 1;
+}
+```
+
+<a id="inventory-migrations-inventory-0003-reservations-sql"></a>
+
+## Приложение: migrations/inventory/0003_reservations.sql
+
+Полный исходный документ: `migrations/inventory/0003_reservations.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+-- The entire database belongs to ONE immutable dataset. A new dataset needs
+-- a new isolated database/Compose project, never deletion of individual keys.
+CREATE TABLE inventory.dataset (
+    singleton boolean PRIMARY KEY DEFAULT true CHECK (singleton),
+    dataset_id text NOT NULL CHECK (length(dataset_id) BETWEEN 1 AND 128)
+);
+
+CREATE TABLE inventory.reservations (
+    order_id text PRIMARY KEY CHECK (length(order_id) BETWEEN 1 AND 128),
+    state text NOT NULL CHECK (state IN ('RESERVED', 'COMMITTED', 'RELEASED')),
+    version bigint NOT NULL CHECK (version > 0),
+    total_minor bigint NOT NULL CHECK (total_minor >= 0),
+    currency text NOT NULL CHECK (currency = '' OR currency ~ '^[A-Z]{3}$'),
+    created_at timestamptz NOT NULL DEFAULT now(),
+    updated_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE TABLE inventory.reservation_items (
+    order_id text NOT NULL REFERENCES inventory.reservations(order_id),
+    sku text NOT NULL REFERENCES inventory.products(sku),
+    quantity bigint NOT NULL CHECK (quantity > 0),
+    unit_price_minor bigint NOT NULL CHECK (unit_price_minor >= 0),
+    PRIMARY KEY (order_id, sku)
+);
+
+CREATE TABLE inventory.operations (
+    operation_id text PRIMARY KEY CHECK (length(operation_id) BETWEEN 1 AND 128),
+    request_hash text NOT NULL CHECK (length(request_hash) = 64),
+    receipt jsonb NOT NULL,
+    created_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE TABLE inventory.ledger (
+    order_id text NOT NULL REFERENCES inventory.reservations(order_id),
+    version bigint NOT NULL,
+    sku text NOT NULL REFERENCES inventory.products(sku),
+    available_delta bigint NOT NULL,
+    operation_id text NOT NULL REFERENCES inventory.operations(operation_id) DEFERRABLE INITIALLY DEFERRED,
+    PRIMARY KEY (order_id, version, sku)
+);
+
+-- Durable local facts only. Publication and F09 fencing are a separate PR.
+CREATE TABLE inventory.outbox (
+    event_id text PRIMARY KEY,
+    order_id text NOT NULL REFERENCES inventory.reservations(order_id),
+    aggregate_version bigint NOT NULL CHECK (aggregate_version > 0),
+    event_type text NOT NULL CHECK (event_type IN ('InventoryReserved', 'InventoryCommitted', 'InventoryReleased')),
+    payload jsonb NOT NULL,
+    created_at timestamptz NOT NULL DEFAULT now(),
+    UNIQUE (order_id, aggregate_version)
+);
+```
+
+<a id="inventory-compose-inventory-yaml"></a>
+
+## Приложение: compose.inventory.yaml
+
+Полный исходный документ: `compose.inventory.yaml`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```yaml
+services:
+  inventory:
+    command: []
+    environment:
+      FL_INVENTORY_CONFIG: /etc/faultline/inventory.json
+      FL_INVENTORY_DATASET_ID: ${FL_INVENTORY_DATASET_ID:?set a unique dataset identity before starting Inventory}
+    volumes:
+      - ./configs/inventory/local.json:/etc/faultline/inventory.json:ro
+    secrets:
+      - {source: inventory-app-password, target: inventory_app.password}
+    networks: [runtime, data]
+    mem_limit: 128m
+    cpus: 0.5
+    depends_on:
+      postgres:
+        condition: service_healthy
+```
+
+<a id="inventory-configs-inventory-local-json"></a>
+
+## Приложение: configs/inventory/local.json
+
+Полный исходный документ: `configs/inventory/local.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "host": "postgres",
+  "port": 5432,
+  "database": "inventory_db",
+  "user": "inventory_app",
+  "sslmode": "disable",
+  "password_file": "/run/secrets/inventory_app.password",
+  "connect_timeout": "5s",
+  "request_timeout": "3s",
+  "max_connections": 4
+}
+```
+
+<a id="inventory-docs-development-inventory-md"></a>
+
+## Приложение: docs/development/INVENTORY.md
+
+Полный исходный документ: `docs/development/INVENTORY.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Склад: резервирование, продажа и освобождение
+
+Inventory обслуживает пять RPC из [контракта v1](#inventory-api-inventory-v1-inventory-proto) и владеет своей PostgreSQL-базой. Это первый рабочий бизнес-срез согласованной архитектуры; Orders и Payments подключаются следующими изменениями. [Issue #26](https://github.com/Includeoyasi/faultline-lab/issues/26) содержит критерии и актуальное ревью.
+
+#### 1. Проблема и проверяемые случаи
+
+Два покупателя могут одновременно запросить последний товар, а потерянный ответ может заставить клиента повторить уже выполненную операцию. Отмена может обогнать задержанное резервирование: после завершившегося Release товар нельзя зарезервировать снова для того же заказа. Поэтому нужна атомарная операция склада и долговечная память о запросах, включая подтверждённые отказы. Техническая ошибка или timeout оставляет результат неизвестным; клиент повторяет прежний ключ, а не создаёт новый.
+
+```mermaid
+sequenceDiagram
+    participant C as Клиент / будущий Orders
+    participant I as Inventory
+    participant D as inventory_db
+    C->>I: Reserve(dataset, order, operation, items)
+    I->>D: Транзакция: ключ, резерв, остатки, ledger, событие
+    D-->>I: COMMIT
+    I--xC: Ответ потерян
+    C->>I: Повтор того же Reserve
+    I->>D: Прочитать сохранённый результат operation
+    I-->>C: Прежний результат без второго списания
+```
+
+| Случай | Требуемый итог |
+|---|---|
+| 100 запросов на 10 единиц | 10 успешных резервов, доступность 0 |
+| Не хватает второй позиции | Первая позиция также не списана |
+| Release выполнен до Reserve | Сохранён RELEASED-барьер, поздний Reserve отклонён |
+| Commit и Release одновременно | Один терминальный переход, один эффект |
+| Ошибка записи локального события | Вся складская транзакция откачена |
+
+#### 2. Паттерны и варианты реализации
+
+Используется автомат состояний одного агрегата и идемпотентная операция с неизменным результатом. PostgreSQL хранит ключ запроса, резерв и движения остатков в одной транзакции; локальный outbox сохраняет предназначенный для дальнейшей публикации факт. Транзакционные advisory-блокировки сериализуют ключ операции и заказ даже тогда, когда резерв ещё не существует; блокировки товарных строк берутся в порядке SKU. Альтернатива — отдельные строки блокировки заказов: они дают ту же защиту отсутствующего резерва, но требуют ещё одной долговечной сущности. Redis остаётся будущим кешем чтения и не участвует в разрешении продажи.
+
+```mermaid
+stateDiagram-v2
+    [*] --> ABSENT
+    ABSENT --> RESERVED: Reserve
+    ABSENT --> RELEASED: Release создаёт барьер
+    RESERVED --> COMMITTED: CommitReservation
+    RESERVED --> RELEASED: ReleaseReservation
+    COMMITTED --> COMMITTED: Безопасный повтор Commit
+    RELEASED --> RELEASED: Безопасный повтор Release
+```
+
+#### 3. Решение и его цена
+
+Успешный Reserve фиксирует позиции, цены, валюту и итог; один заказ имеет не больше одного резерва. Ответ `OperationResult` — исторический результат конкретной операции: повтор Reserve после Release вернёт прежний результат Reserve, а `GetReservation` покажет текущее `RELEASED`. Отказы `INSUFFICIENT_STOCK`, `UNKNOWN_SKU`, `INVALID_STATE` и `RESERVATION_EXISTS` также сохраняются, поэтому повтор не меняет смысл после изменения склада. Это требует хранить ключи, отказы, барьеры и события всю жизнь набора данных; TTL и выборочной очистки нет. Один Inventory database принадлежит одному неизменному `dataset_id`, который проверяется в каждом запросе; подключение другого набора к сохранившейся базе отвергается.
+
+| Ответ | Значение для клиента |
+|---|---|
+| `OUTCOME_APPLIED` | Операция подтверждена; snapshot относится к моменту этой операции |
+| Остальные `Outcome` | Подтверждённый и сохранённый бизнес-отказ |
+| `INVALID_ARGUMENT` | Некорректный ввод, операция не сохранена |
+| `ALREADY_EXISTS` | Прежний operation_id использован с другим методом/заказом/позициями |
+| `FAILED_PRECONDITION` | Запрос относится к другому набору данных |
+| `UNAVAILABLE`, `DEADLINE_EXCEEDED`, `CANCELLED` | Результат мутации может быть неизвестен; повторить тот же ключ |
+| `NOT_FOUND` из GetReservation | Сейчас записи нет; это не барьер для уже выполняющегося Reserve |
+
+#### 4. Реализация и запуск текущего среза
+
+Хранилище находится в [internal/inventory/store](#inventory-internal-inventory-store-go): конструктор и внутренние функции — в `store.go`, методы `Mutate`, `GetReservation`, `GetAvailability` и `Close` — каждый в своём файле, SQL-запросы — в константах рядом с использующим их кодом. Общие типы и проверка идентичности операции вынесены в [model](#inventory-internal-inventory-model-go), который используют хранилище и gRPC-сервер.
+
+Новая [миграция 0003](#inventory-migrations-inventory-0003-reservations-sql) добавляет резервы, позиции, операции, ledger, локальный outbox и привязку базы к набору; старые миграции не изменяются. Сам сервис читает только свой прикладной секрет и не создаёт базы, роли или таблицы. Перед запуском нужно подготовить PostgreSQL командами из [POSTGRES.md](#p02-docs-development-postgres-md), затем задать уникальный идентификатор набора; после удаления набора новый запуск получает новое значение. Контейнерный профиль [compose.inventory.yaml](#inventory-compose-inventory-yaml) включает бизнес-API, а минимальный compose запускает явную команду `health-only` для проверки каркаса. Protobuf-код генерируется закреплёнными protoc 32.1, protoc-gen-go 1.36.11 и protoc-gen-go-grpc 1.6.2; [стандартная генерация gRPC Go](https://grpc.io/docs/languages/go/quickstart/#regenerate-grpc-code) выполняется внутри toolchain.
+
+```powershell
+$env:FL_INVENTORY_DATASET_ID = 'dataset-' + [guid]::NewGuid().ToString('N')
+docker compose -f compose.yaml -f compose.postgres.yaml -f compose.inventory.yaml -p faultline-data-local up -d --build --wait postgres inventory
+docker compose run --rm toolchain generate
+```
+
+Для повторного старта существующего набора сохраняйте прежнее значение `FL_INVENTORY_DATASET_ID`. Профиль предназначен для изолированной локальной сети Docker, без публикации бизнес-порта на хост.
+
+```mermaid
+flowchart LR
+    C[Клиент] -->|gRPC| I[Inventory: inventory_app]
+    I --> T[Одна PostgreSQL-транзакция]
+    T --> O[operations: неизменный результат]
+    T --> R[reservations и позиции]
+    T --> S[stock и ledger]
+    T --> E[outbox: локальный факт]
+    E -.-> F[Будущий publisher: отдельный PR F09]
+```
+
+#### 5. Фокус ревью и проверки
+
+Проверьте различие исторического ответа операции и актуального состояния: старый успешный Reserve не означает, что товар всё ещё зарезервирован. Отдельно важны Release до Reserve, смена ключа при том же заказе и невозможность освобождения уже проданного товара. Интеграционный smoke проверяет настоящую конкуренцию PostgreSQL, откат при сбое outbox, отмену ожидающей блокировки операции, рестарт процесса Inventory и рестарт PostgreSQL. Его команда — `labdata smoke`; совместный запуск с Kafka/Redis — `labdata smoke -infrastructure`, результаты и очистка сохраняются в `artifacts/`. Сохранённое локальное событие пока не означает отправку в Kafka, полный F10 для трёх сервисов и приёмку G1: эти результаты требуют следующих функциональных срезов.
+
+<a id="inventory-docs-development-evidence-inventory-validation-md"></a>
+
+## Приложение: docs/development/evidence/inventory/VALIDATION.md
+
+Полный исходный документ: `docs/development/evidence/inventory/VALIDATION.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Inventory: проверка на Windows с Linux-контейнерами
+
+20 октября 2026 года проверен код рабочего дерева перед исходным коммитом. [Нормализованные SHA256 исходников](#inventory-docs-development-evidence-inventory-source-hashes-json) связывают проверку с конкретными файлами; исходные полные отчёты остаются в игнорируемом `artifacts/`. Здесь сохранены выбранные события с SHA256 исходных отчётов, без секретов и машинных путей.
+
+| Проверка | Фактический результат |
+|---|---|
+| Закреплённый Linux toolchain: генерация API, форматирование, tidy/verify, build, lint | PASS; lint: 0 замечаний |
+| `go test -count=1 ./...`, `go test -race -count=1 ./...`, govulncheck | PASS; уязвимостей не обнаружено |
+| Процессы каркаса, health, диагностика и остановка | PASS; Inventory в явном health-only режиме |
+| [PostgreSQL и Inventory](#inventory-docs-development-evidence-inventory-windows-postgres-json) | PASS; проект `faultline-data-test-4591c9fe80d3aecb` |
+| [Общий PostgreSQL/Kafka/Redis и Inventory](#inventory-docs-development-evidence-inventory-windows-infrastructure-json) | PASS; проект `faultline-data-test-0e9512f319183416` |
+| Runtime smoke трёх контейнеров каркаса | PASS; запуск `db74e00c-b6a6-41fa-9729-2fb381727ad7` |
+| Очистка каждого disposable проекта | PASS; контейнеры, сети, тома и временные image tags отсутствуют |
+
+#### Что проверено в PostgreSQL и через gRPC
+
+- 100 конкурентных попыток купить 10 единиц дали ровно 10 резервов; остаток неотрицателен и баланс сохранён.
+- Многопозиционный отказ не списывает доступную первую позицию; сохранённый отказ не меняется после пополнения.
+- Конкурентный повтор ключа даёт один эффект; изменённый payload отклоняется, новый ключ не создаёт второй резерв заказа.
+- Release до Reserve и их гонка сохраняют барьер; Commit/Release выбирают один терминальный переход. Повтор Commit не продаёт дважды, Release после продажи отклоняется.
+- Контролируемый отказ вставки outbox откатывает остаток, резерв, операцию и ledger. Отмена запроса, ожидающего DB-блокировку, не оставляет эффект и не ломает пул.
+- Отдельный настоящий процесс Inventory переживает перезапуск с прежним результатом операции. После рестарта PostgreSQL сохраняются барьер, ключ, ledger и событие.
+- Через отдельный процесс проверены Reserve, CommitReservation и GetAvailability; через обычный scratch-контейнер с `compose.inventory.yaml` и одним прикладным секретом — Reserve, ReleaseReservation и GetReservation. Так все пять RPC проходят транспортную проверку. Повтор через контейнер после рестарта PostgreSQL сохраняет исторический результат и текущее RELEASED.
+
+#### Воспроизведение
+
+Из корня checkout с доступным Docker:
+
+```text
+docker compose build toolchain
+docker compose run --rm toolchain check
+docker compose run --rm toolchain service-smoke
+docker compose run --rm -e GOOS=windows -e GOARCH=amd64 toolchain data-build
+```
+
+Затем на Windows:
+
+```powershell
+.\bin\labdata-windows-amd64.exe smoke
+.\bin\labdata-windows-amd64.exe smoke -infrastructure
+```
+
+Host Go использовался для сборки локальных CLI; PostgreSQL и бизнес-процесс проверялись в Linux-контейнерах. Для связанного Windows worktree локальный toolchain получал явное read-only подключение Git-метаданных. Эти особенности не меняют бизнес-конфигурацию стенда.
+
+После проверки Docker Desktop остановлен, его WSL VM завершена; процессов Docker/vmmemWSL не осталось, `autoStart=false`. Полезные кеши и установленные инструменты сохранены. Результаты AMD64/ARM64 CI относятся к конкретному HEAD и доступны в PR; этот документ не подменяет их. Личный macOS runtime, native/emulation-профиль, capacity и полный F10 трёх сервисов здесь не подтверждаются.
+
+<a id="inventory-docs-development-evidence-inventory-windows-postgres-json"></a>
+
+## Приложение: docs/development/evidence/inventory/windows-postgres.json
+
+Полный исходный документ: `docs/development/evidence/inventory/windows-postgres.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "schema_version": 1,
+  "mode": "postgres",
+  "host_runner": "windows/amd64",
+  "service_execution": "Linux containers on Docker Desktop; native/emulation not independently established",
+  "source_report": {
+    "path": "artifacts/postgres/faultline-data-test-4591c9fe80d3aecb/report.json",
+    "sha256": "d4b6fd1d6415d0e6e45f8639165b37ce738a56471098722edb22d27f16d27b67"
+  },
+  "started_at": "2026-10-20T16:11:31.3176735Z",
+  "finished_at": "2026-10-20T16:13:50.1117773Z",
+  "result": "PASS",
+  "cleanup": "PASS",
+  "events": [
+    {
+      "stage": "rights, migrations and seed",
+      "output": "=== RUN   TestPostgresFoundation\n=== RUN   TestPostgresFoundation/concurrent_migrations_and_immutable_history\n=== RUN   TestPostgresFoundation/repeat_migrations_restore_application_access\n=== RUN   TestPostgresFoundation/role_isolation_and_denied_DDL\n=== RUN   TestPostgresFoundation/failed_migration_rollback_and_checksum_drift\n=== RUN   TestPostgresFoundation/repeat_seed_preserves_catalog_and_modified_stock\n--- PASS: TestPostgresFoundation (0.54s)\n    --- PASS: TestPostgresFoundation/concurrent_migrations_and_immutable_history (0.24s)\n    --- PASS: TestPostgresFoundation/repeat_migrations_restore_application_access (0.02s)\n    --- PASS: TestPostgresFoundation/role_isolation_and_denied_DDL (0.19s)\n    --- PASS: TestPostgresFoundation/failed_migration_rollback_and_checksum_drift (0.06s)\n    --- PASS: TestPostgresFoundation/repeat_seed_preserves_catalog_and_modified_stock (0.02s)\nPASS\n Container faultline-data-test-4591c9fe80d3aecb-dbtool-run-16e0a81b697d Creating \n Container faultline-data-test-4591c9fe80d3aecb-dbtool-run-16e0a81b697d Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "Inventory operations and process restart",
+      "output": "=== RUN   TestInventoryFoundation\n=== RUN   TestInventoryFoundation/commit_absent_is_a_durable_refusal\n=== RUN   TestInventoryFoundation/atomic_multi_SKU_refusal_and_durable_rejection\n=== RUN   TestInventoryFoundation/concurrent_limited_stock_and_conservation\n=== RUN   TestInventoryFoundation/concurrent_same_key_and_changed_payload\n=== RUN   TestInventoryFoundation/historical_receipt_and_release_barrier\n=== RUN   TestInventoryFoundation/commit_release_race\n=== RUN   TestInventoryFoundation/commit_retries_never_sell_twice_or_release_sold_stock\n=== RUN   TestInventoryFoundation/failed_outbox_insert_rolls_back_the_entire_mutation\n=== RUN   TestInventoryFoundation/cancel_while_waiting_on_an_owned_database_lock\n=== RUN   TestInventoryFoundation/concurrent_release_before_reserve\n=== RUN   TestInventoryFoundation/overflow_unknown_SKU_cancellation_and_dataset_isolation\n--- PASS: TestInventoryFoundation (0.44s)\n    --- PASS: TestInventoryFoundation/commit_absent_is_a_durable_refusal (0.01s)\n    --- PASS: TestInventoryFoundation/atomic_multi_SKU_refusal_and_durable_rejection (0.02s)\n    --- PASS: TestInventoryFoundation/concurrent_limited_stock_and_conservation (0.22s)\n    --- PASS: TestInventoryFoundation/concurrent_same_key_and_changed_payload (0.01s)\n    --- PASS: TestInventoryFoundation/historical_receipt_and_release_barrier (0.01s)\n    --- PASS: TestInventoryFoundation/commit_release_race (0.01s)\n    --- PASS: TestInventoryFoundation/commit_retries_never_sell_twice_or_release_sold_stock (0.01s)\n    --- PASS: TestInventoryFoundation/failed_outbox_insert_rolls_back_the_entire_mutation (0.01s)\n    --- PASS: TestInventoryFoundation/cancel_while_waiting_on_an_owned_database_lock (0.01s)\n    --- PASS: TestInventoryFoundation/concurrent_release_before_reserve (0.10s)\n    --- PASS: TestInventoryFoundation/overflow_unknown_SKU_cancellation_and_dataset_isolation (0.00s)\n=== RUN   TestInventoryProcess\n    process_test.go:163: real Inventory process restart: preserved receipt, committed reservation, available=2\n--- PASS: TestInventoryProcess (0.08s)\nPASS\n Container faultline-data-test-4591c9fe80d3aecb-dbtool-run-363e52284857 Creating \n Container faultline-data-test-4591c9fe80d3aecb-dbtool-run-363e52284857 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "start Inventory business container",
+      "output": " Network faultline-data-test-4591c9fe80d3aecb_runtime Creating \n Network faultline-data-test-4591c9fe80d3aecb_runtime Creating \n Network faultline-data-test-4591c9fe80d3aecb_runtime Created \n Network faultline-data-test-4591c9fe80d3aecb_runtime Created \n Container faultline-data-test-4591c9fe80d3aecb-inventory-1 Creating \n Container faultline-data-test-4591c9fe80d3aecb-inventory-1 Created \n Container faultline-data-test-4591c9fe80d3aecb-inventory-1 Starting \n Container faultline-data-test-4591c9fe80d3aecb-inventory-1 Started \n Container faultline-data-test-4591c9fe80d3aecb-inventory-1 Waiting \n Container faultline-data-test-4591c9fe80d3aecb-inventory-1 Healthy \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "Inventory deployed gRPC API",
+      "output": "=== RUN   TestInventoryDeployed\n    deployment_test.go:60: scratch Inventory container: Reserve/Release/GetReservation and immutable replay PASS\n--- PASS: TestInventoryDeployed (0.03s)\nPASS\n Container faultline-data-test-4591c9fe80d3aecb-dbtool-run-0acb0bd15291 Creating \n Container faultline-data-test-4591c9fe80d3aecb-dbtool-run-0acb0bd15291 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "checksum before restart",
+      "output": "c664ed2dc81c737110d3ae3607099f11456392e57d77352e2788c34c2d89d6bf\n Container faultline-data-test-4591c9fe80d3aecb-dbtool-run-af091f2c6377 Creating \n Container faultline-data-test-4591c9fe80d3aecb-dbtool-run-af091f2c6377 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "checksum after restart",
+      "output": "c664ed2dc81c737110d3ae3607099f11456392e57d77352e2788c34c2d89d6bf\n Container faultline-data-test-4591c9fe80d3aecb-dbtool-run-5f88efdfed6f Creating \n Container faultline-data-test-4591c9fe80d3aecb-dbtool-run-5f88efdfed6f Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "Inventory persistence after PostgreSQL restart",
+      "output": "=== RUN   TestInventoryAfterRestart\n--- PASS: TestInventoryAfterRestart (0.02s)\nPASS\n Container faultline-data-test-4591c9fe80d3aecb-dbtool-run-d517a8d70311 Creating \n Container faultline-data-test-4591c9fe80d3aecb-dbtool-run-d517a8d70311 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "Inventory deployed API after PostgreSQL restart",
+      "output": "=== RUN   TestInventoryDeployed\n    deployment_test.go:60: scratch Inventory container: Reserve/Release/GetReservation and immutable replay PASS\n--- PASS: TestInventoryDeployed (0.02s)\nPASS\n Container faultline-data-test-4591c9fe80d3aecb-dbtool-run-fe88bd05c0d4 Creating \n Container faultline-data-test-4591c9fe80d3aecb-dbtool-run-fe88bd05c0d4 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "cleanup",
+      "output": " Container faultline-data-test-4591c9fe80d3aecb-inventory-1 Stopping \n Container faultline-data-test-4591c9fe80d3aecb-postgres-1 Stopping \n Container faultline-data-test-4591c9fe80d3aecb-inventory-1 Stopped \n Container faultline-data-test-4591c9fe80d3aecb-inventory-1 Removing \n Container faultline-data-test-4591c9fe80d3aecb-inventory-1 Removed \n Container faultline-data-test-4591c9fe80d3aecb-postgres-1 Stopped \n Container faultline-data-test-4591c9fe80d3aecb-postgres-1 Removing \n Container faultline-data-test-4591c9fe80d3aecb-postgres-1 Removed \n Volume faultline-data-test-4591c9fe80d3aecb_postgres-data Removing \n Network faultline-data-test-4591c9fe80d3aecb_runtime Removing \n Network faultline-data-test-4591c9fe80d3aecb_data Removing \n Volume faultline-data-test-4591c9fe80d3aecb_postgres-data Removed \n Network faultline-data-test-4591c9fe80d3aecb_data Removed \n Image faultline-data-test-4591c9fe80d3aecb-inventory:latest Removing \n Image faultline-data-test-4591c9fe80d3aecb-dbtool:latest Removing \n Image faultline-data-test-4591c9fe80d3aecb-inventory:latest Removed \n Network faultline-data-test-4591c9fe80d3aecb_runtime Removed \n Image faultline-data-test-4591c9fe80d3aecb-dbtool:latest Removed \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    }
+  ]
+}
+```
+
+<a id="inventory-docs-development-evidence-inventory-windows-infrastructure-json"></a>
+
+## Приложение: docs/development/evidence/inventory/windows-infrastructure.json
+
+Полный исходный документ: `docs/development/evidence/inventory/windows-infrastructure.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "schema_version": 1,
+  "mode": "infrastructure",
+  "host_runner": "windows/amd64",
+  "service_execution": "Linux containers on Docker Desktop; native/emulation not independently established",
+  "source_report": {
+    "path": "artifacts/infrastructure/faultline-data-test-0e9512f319183416/report.json",
+    "sha256": "1e005b14a4e4c58b8bb5aa4628b9823fe3ef096e5c4b30fba8ef4a6b046e8f1a"
+  },
+  "started_at": "2026-10-20T16:13:50.2360528Z",
+  "finished_at": "2026-10-20T16:15:06.9465488Z",
+  "result": "PASS",
+  "cleanup": "PASS",
+  "events": [
+    {
+      "stage": "rights, migrations and seed",
+      "output": "=== RUN   TestPostgresFoundation\n=== RUN   TestPostgresFoundation/concurrent_migrations_and_immutable_history\n=== RUN   TestPostgresFoundation/repeat_migrations_restore_application_access\n=== RUN   TestPostgresFoundation/role_isolation_and_denied_DDL\n=== RUN   TestPostgresFoundation/failed_migration_rollback_and_checksum_drift\n=== RUN   TestPostgresFoundation/repeat_seed_preserves_catalog_and_modified_stock\n--- PASS: TestPostgresFoundation (0.77s)\n    --- PASS: TestPostgresFoundation/concurrent_migrations_and_immutable_history (0.42s)\n    --- PASS: TestPostgresFoundation/repeat_migrations_restore_application_access (0.05s)\n    --- PASS: TestPostgresFoundation/role_isolation_and_denied_DDL (0.21s)\n    --- PASS: TestPostgresFoundation/failed_migration_rollback_and_checksum_drift (0.02s)\n    --- PASS: TestPostgresFoundation/repeat_seed_preserves_catalog_and_modified_stock (0.06s)\nPASS\n Container faultline-data-test-0e9512f319183416-dbtool-run-602bdbb15aaa Creating \n Container faultline-data-test-0e9512f319183416-dbtool-run-602bdbb15aaa Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "Inventory operations and process restart",
+      "output": "=== RUN   TestInventoryFoundation\n=== RUN   TestInventoryFoundation/commit_absent_is_a_durable_refusal\n=== RUN   TestInventoryFoundation/atomic_multi_SKU_refusal_and_durable_rejection\n=== RUN   TestInventoryFoundation/concurrent_limited_stock_and_conservation\n=== RUN   TestInventoryFoundation/concurrent_same_key_and_changed_payload\n=== RUN   TestInventoryFoundation/historical_receipt_and_release_barrier\n=== RUN   TestInventoryFoundation/commit_release_race\n=== RUN   TestInventoryFoundation/commit_retries_never_sell_twice_or_release_sold_stock\n=== RUN   TestInventoryFoundation/failed_outbox_insert_rolls_back_the_entire_mutation\n=== RUN   TestInventoryFoundation/cancel_while_waiting_on_an_owned_database_lock\n=== RUN   TestInventoryFoundation/concurrent_release_before_reserve\n=== RUN   TestInventoryFoundation/overflow_unknown_SKU_cancellation_and_dataset_isolation\n--- PASS: TestInventoryFoundation (0.39s)\n    --- PASS: TestInventoryFoundation/commit_absent_is_a_durable_refusal (0.00s)\n    --- PASS: TestInventoryFoundation/atomic_multi_SKU_refusal_and_durable_rejection (0.02s)\n    --- PASS: TestInventoryFoundation/concurrent_limited_stock_and_conservation (0.19s)\n    --- PASS: TestInventoryFoundation/concurrent_same_key_and_changed_payload (0.01s)\n    --- PASS: TestInventoryFoundation/historical_receipt_and_release_barrier (0.01s)\n    --- PASS: TestInventoryFoundation/commit_release_race (0.01s)\n    --- PASS: TestInventoryFoundation/commit_retries_never_sell_twice_or_release_sold_stock (0.01s)\n    --- PASS: TestInventoryFoundation/failed_outbox_insert_rolls_back_the_entire_mutation (0.01s)\n    --- PASS: TestInventoryFoundation/cancel_while_waiting_on_an_owned_database_lock (0.01s)\n    --- PASS: TestInventoryFoundation/concurrent_release_before_reserve (0.09s)\n    --- PASS: TestInventoryFoundation/overflow_unknown_SKU_cancellation_and_dataset_isolation (0.01s)\n=== RUN   TestInventoryProcess\n    process_test.go:163: real Inventory process restart: preserved receipt, committed reservation, available=2\n--- PASS: TestInventoryProcess (0.06s)\nPASS\n Container faultline-data-test-0e9512f319183416-dbtool-run-a0fd92855793 Creating \n Container faultline-data-test-0e9512f319183416-dbtool-run-a0fd92855793 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "start Inventory business container",
+      "output": " Network faultline-data-test-0e9512f319183416_runtime Creating \n Network faultline-data-test-0e9512f319183416_runtime Creating \n Network faultline-data-test-0e9512f319183416_runtime Created \n Network faultline-data-test-0e9512f319183416_runtime Created \n Container faultline-data-test-0e9512f319183416-inventory-1 Creating \n Container faultline-data-test-0e9512f319183416-inventory-1 Created \n Container faultline-data-test-0e9512f319183416-inventory-1 Starting \n Container faultline-data-test-0e9512f319183416-inventory-1 Started \n Container faultline-data-test-0e9512f319183416-inventory-1 Waiting \n Container faultline-data-test-0e9512f319183416-inventory-1 Healthy \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "Inventory deployed gRPC API",
+      "output": "=== RUN   TestInventoryDeployed\n    deployment_test.go:60: scratch Inventory container: Reserve/Release/GetReservation and immutable replay PASS\n--- PASS: TestInventoryDeployed (0.03s)\nPASS\n Container faultline-data-test-0e9512f319183416-dbtool-run-a2c7011c57e1 Creating \n Container faultline-data-test-0e9512f319183416-dbtool-run-a2c7011c57e1 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "checksum before restart",
+      "output": "5a5ac05a3c7bbb8285f8bcf33c68a75b0e164e602c00929c41977ba885573812\n Container faultline-data-test-0e9512f319183416-dbtool-run-fc9538321e8e Creating \n Container faultline-data-test-0e9512f319183416-dbtool-run-fc9538321e8e Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "checksum after restart",
+      "output": "5a5ac05a3c7bbb8285f8bcf33c68a75b0e164e602c00929c41977ba885573812\n Container faultline-data-test-0e9512f319183416-dbtool-run-783561c20774 Creating \n Container faultline-data-test-0e9512f319183416-dbtool-run-783561c20774 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "Inventory persistence after PostgreSQL restart",
+      "output": "=== RUN   TestInventoryAfterRestart\n--- PASS: TestInventoryAfterRestart (0.02s)\nPASS\n Container faultline-data-test-0e9512f319183416-dbtool-run-b0d627803108 Creating \n Container faultline-data-test-0e9512f319183416-dbtool-run-b0d627803108 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "Inventory deployed API after PostgreSQL restart",
+      "output": "=== RUN   TestInventoryDeployed\n    deployment_test.go:60: scratch Inventory container: Reserve/Release/GetReservation and immutable replay PASS\n--- PASS: TestInventoryDeployed (0.03s)\nPASS\n Container faultline-data-test-0e9512f319183416-dbtool-run-f4fcb0d51f7a Creating \n Container faultline-data-test-0e9512f319183416-dbtool-run-f4fcb0d51f7a Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "cleanup",
+      "output": " Container faultline-data-test-0e9512f319183416-kafka-1 Stopping \n Container faultline-data-test-0e9512f319183416-inventory-1 Stopping \n Container faultline-data-test-0e9512f319183416-redis-1 Stopping \n Container faultline-data-test-0e9512f319183416-postgres-1 Stopping \n Container faultline-data-test-0e9512f319183416-redis-1 Stopped \n Container faultline-data-test-0e9512f319183416-redis-1 Removing \n Container faultline-data-test-0e9512f319183416-postgres-1 Stopped \n Container faultline-data-test-0e9512f319183416-postgres-1 Removing \n Container faultline-data-test-0e9512f319183416-inventory-1 Stopped \n Container faultline-data-test-0e9512f319183416-inventory-1 Removing \n Container faultline-data-test-0e9512f319183416-redis-1 Removed \n Container faultline-data-test-0e9512f319183416-postgres-1 Removed \n Container faultline-data-test-0e9512f319183416-inventory-1 Removed \n Container faultline-data-test-0e9512f319183416-kafka-1 Stopped \n Container faultline-data-test-0e9512f319183416-kafka-1 Removing \n Container faultline-data-test-0e9512f319183416-kafka-1 Removed \n Volume faultline-data-test-0e9512f319183416_postgres-data Removing \n Network faultline-data-test-0e9512f319183416_data Removing \n Network faultline-data-test-0e9512f319183416_runtime Removing \n Volume faultline-data-test-0e9512f319183416_kafka-data Removing \n Volume faultline-data-test-0e9512f319183416_postgres-data Removed \n Volume faultline-data-test-0e9512f319183416_kafka-data Removed \n Network faultline-data-test-0e9512f319183416_data Removed \n Image faultline-data-test-0e9512f319183416-inventory:latest Removing \n Image faultline-data-test-0e9512f319183416-dbtool:latest Removing \n Image faultline-data-test-0e9512f319183416-infrastructure-check:latest Removing \n Image faultline-data-test-0e9512f319183416-inventory:latest Removed \n Image faultline-data-test-0e9512f319183416-dbtool:latest Removed \n Image faultline-data-test-0e9512f319183416-infrastructure-check:latest Removed \n Network faultline-data-test-0e9512f319183416_runtime Removed \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    }
+  ]
+}
+```
+
+<a id="inventory-docs-development-evidence-inventory-source-hashes-json"></a>
+
+## Приложение: docs/development/evidence/inventory/source-hashes.json
+
+Полный исходный документ: `docs/development/evidence/inventory/source-hashes.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "schema_version": 1,
+  "validation_subject": "working tree before source commit",
+  "normalization": "UTF-8 text with CRLF replaced by LF",
+  "source_sha256": {
+    "api/inventory/v1/inventory.proto": "b4f9ea70983e1f43ba1327efdd2477678fc80afe5986bd0976d4f2ad8b5f53e7",
+    "api/inventory/v1/inventory.pb.go": "3284c70b5007cf84001a994e7321e9c83db1a57ef432ced8c2527fe9625ba392",
+    "api/inventory/v1/inventory_grpc.pb.go": "8a231faf54a683fe44b051348a91927742d20d634a371b24f48fdb41a929a669",
+    "migrations/inventory/0003_reservations.sql": "d74f941ba8f606f0d445db4c05dcc23f201558be06352930eda3a871aa02dab6",
+    "go.mod": "4756e88767a7e8ff9012ce8bd548095c7204754ebc82e7c3e72635944d7dd8c4",
+    "go.sum": "82f6a57c35ab438d05ee37801803006774b39fe8cad86402fa03ff0af81b1baf",
+    "build/Dockerfile": "836b38be04faed48d944869ab1c23b7dc2a776a4fe289efcf64131cd34af370c",
+    "tools/go.sh": "9d0060a4cc3fde4e46d85da1bbdf470cc8b96520245b294e928f5c9117d346a2",
+    "internal/service/run.go": "990600e1e53cfb8c50ab09c92c905c61d3be64f9b241c5bfd52393d684219b09",
+    "cmd/inventory/main.go": "01ff23a872198afb07aceda2a2a14e7bf0ebc21f0510ef384b0c35c69cb266b8",
+    "internal/database/integration_test.go": "331377677dc73bcf56366028d54f3a6f221d10cd22a1f87bbb6e6189c15b4ef4",
+    "internal/datalab/run.go": "09d84528559f1623e8565ed99e4abf3aab29271c2b41a9b42b58031ef8c4cb03",
+    "internal/datalab/infrastructure_test.go": "f9aeed25878348fb67c9cffda5f2b3dd0b51c368496fc061307613a7c10ea4bb",
+    "compose.yaml": "05a53e758aaaef80bfd0fcf6a74b30648fba848f7fc9d523bca6e58717d71e49",
+    "compose.postgres.yaml": "edab063cc996ccba4ca3e2dfaf322d6d876b7c2367d0775648e5ee161b90d1b6",
+    "compose.inventory.yaml": "a02fbcc9da63e1f36b826326b6b4ec206bbe6908b42cbf8ea1de2352ef5cccf1",
+    "configs/inventory/local.json": "7fdfb317c21024cf17c5d3836e5c297cf3cf1efa4d3d6a2b152e1c6494b878ae",
+    "internal/inventory/command.go": "21237044176eb4229e62617607c083cbc34263ea10c3459a1791752b9e384b81",
+    "internal/inventory/config.go": "4d10e2c7cab8df892a7451dccfac9644e107e5819237ace3a7db3169bc9c91be",
+    "internal/inventory/deployment_test.go": "561bea897591f35b895a32869f4ed334218edf5ad82e8cbf4e5c863eb5b0660c",
+    "internal/inventory/integration_test.go": "74032e431b40974a12eeb4165982aba3e857a17efc82b809666e650d89dc16d4",
+    "internal/inventory/model.go": "e3bf7904cde1c5e795c09ac254f675d6dccfe1a9d4a0e4d05e002fec0435ab8b",
+    "internal/inventory/model_test.go": "1d186a195c031cefd67530f8e6ff447802d5e6f6486c05ac2e50fdc93724e42a",
+    "internal/inventory/process_test.go": "400a416f3f7b2c6bd50627546e4882b75300ba1dcd6f5012aa7a6536dca34c18",
+    "internal/inventory/server.go": "6b5a7b068046eed498f04d0d4933045e8bc63d0820dfb7faa7296b7f3c4ba489",
+    "internal/inventory/server_test.go": "636a3ef94e781e24da91ae248fb1ec0fec1eab6a734af9b5be91a106762f075e",
+    "internal/inventory/store.go": "ecff78d796e1aa8ead7867fd084c65d1af17565344a6a55ae0e2943d220dc942"
+  },
+  "reports": [
+    {
+      "path": "artifacts/postgres/faultline-data-test-4591c9fe80d3aecb/report.json",
+      "sha256": "d4b6fd1d6415d0e6e45f8639165b37ce738a56471098722edb22d27f16d27b67"
+    },
+    {
+      "path": "artifacts/infrastructure/faultline-data-test-0e9512f319183416/report.json",
+      "sha256": "1e005b14a4e4c58b8bb5aa4628b9823fe3ef096e5c4b30fba8ef4a6b046e8f1a"
+    }
+  ]
+}
+```
+
+<a id="inventory-internal-inventory-command-go"></a>
+
+## Приложение: internal/inventory/command.go
+
+Полный исходный документ: `internal/inventory/command.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package inventory
+
+import (
+	"context"
+	"io"
+	"log/slog"
+
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/store"
+	"github.com/Includeoyasi/faultline-lab/internal/service"
+	"google.golang.org/grpc"
+)
+
+// Execute starts the business API by default. Health-only is an explicit
+// skeleton command for dependency-free lifecycle checks, never business readiness.
+func Execute(ctx context.Context, args []string, lookup func(string) (string, bool), output io.Writer) int {
+	if len(args) > 0 {
+		if len(args) == 1 && args[0] == "health-only" {
+			return service.Execute(ctx, "inventory", nil, lookup, output)
+		}
+		return service.Execute(ctx, "inventory", args, lookup, output)
+	}
+	logger := slog.New(slog.NewJSONHandler(output, nil)).With("service", "inventory")
+	// Validate listener/log/lifecycle configuration before touching the database.
+	if _, err := service.LoadConfig(lookup); err != nil {
+		logger.ErrorContext(ctx, "configuration rejected", "error", err.Error())
+		return 1
+	}
+	path, _ := lookup("FL_INVENTORY_CONFIG")
+	dataset, _ := lookup("FL_INVENTORY_DATASET_ID")
+	cfg, err := store.LoadConfig(path, dataset)
+	if err != nil {
+		logger.ErrorContext(ctx, "configuration rejected", "error", err.Error())
+		return 1
+	}
+	backend, err := store.Open(ctx, cfg)
+	if err != nil {
+		logger.ErrorContext(ctx, "inventory startup failed", "error", err.Error())
+		return 1
+	}
+	defer backend.Close()
+	if err = service.RunRegistered(ctx, "inventory", lookup, output, func(server *grpc.Server) { Register(server, backend) }); err != nil {
+		return 1
+	}
+	return 0
+}
+```
+
+<a id="inventory-internal-inventory-config-go"></a>
+
+## Приложение: internal/inventory/store/config.go
+
+Полный исходный документ: `internal/inventory/store/config.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"io"
+	"net"
+	"net/url"
+	"os"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
+	"github.com/jackc/pgx/v5/pgxpool"
+)
+
+// Config contains only Inventory's application identity. Credentials are files.
+type Config struct {
+	Host           string `json:"host"`
+	Port           uint16 `json:"port"`
+	Database       string `json:"database"`
+	User           string `json:"user"`
+	SSLMode        string `json:"sslmode"`
+	PasswordFile   string `json:"password_file"`
+	DatasetID      string `json:"-"`
+	ConnectTimeout string `json:"connect_timeout"`
+	RequestTimeout string `json:"request_timeout"`
+	MaxConnections int32  `json:"max_connections"`
+}
+
+func LoadConfig(path, dataset string) (Config, error) {
+	var cfg Config
+	file, err := os.Open(path)
+	if err != nil {
+		return cfg, errors.New("cannot open Inventory configuration")
+	}
+	defer func() { _ = file.Close() }()
+	decoder := json.NewDecoder(io.LimitReader(file, 16<<10))
+	decoder.DisallowUnknownFields()
+	if err = decoder.Decode(&cfg); err != nil {
+		return cfg, errors.New("invalid Inventory configuration")
+	}
+	var extra any
+	if err = decoder.Decode(&extra); !errors.Is(err, io.EOF) {
+		return cfg, errors.New("trailing Inventory configuration")
+	}
+	cfg.DatasetID = dataset
+	return cfg, cfg.Validate()
+}
+func (c Config) Validate() error {
+	connect, e1 := time.ParseDuration(c.ConnectTimeout)
+	request, e2 := time.ParseDuration(c.RequestTimeout)
+	if c.Host == "" || strings.ContainsAny(c.Host, "/\\@ \t\r\n") || c.Port == 0 || c.Database != "inventory_db" || c.User != "inventory_app" || c.SSLMode != "disable" || c.PasswordFile == "" || !model.ValidIdentifier(c.DatasetID) || c.MaxConnections < 1 || c.MaxConnections > 8 || e1 != nil || e2 != nil || connect < time.Millisecond || connect > time.Minute || request < time.Millisecond || request > time.Minute {
+		return errors.New("inventory requires its application identity, dataset, secret file, explicit endpoint, bounded timeouts and 1..8 connections")
+	}
+	return nil
+}
+func Open(ctx context.Context, c Config) (*Store, error) {
+	if err := c.Validate(); err != nil {
+		return nil, err
+	}
+	password, err := os.ReadFile(c.PasswordFile)
+	if err != nil {
+		return nil, errors.New("inventory credential unavailable")
+	}
+	secret := strings.TrimSpace(string(password))
+	if len(secret) != 64 {
+		return nil, errors.New("inventory credential malformed")
+	}
+	for _, char := range secret {
+		if !strings.ContainsRune("0123456789abcdef", char) {
+			return nil, errors.New("inventory credential malformed")
+		}
+	}
+	address := url.URL{Scheme: "postgres", Host: net.JoinHostPort(c.Host, strconv.Itoa(int(c.Port))), Path: c.Database, User: url.UserPassword(c.User, secret)}
+	address.RawQuery = url.Values{"sslmode": {c.SSLMode}, "require_auth": {"scram-sha-256"}}.Encode()
+	cfg, err := pgxpool.ParseConfig(address.String())
+	if err != nil {
+		return nil, errors.New("cannot configure Inventory database")
+	}
+	cfg.MaxConns = c.MaxConnections
+	cfg.MinConns = 0
+	cfg.ConnConfig.ConnectTimeout, _ = time.ParseDuration(c.ConnectTimeout)
+	budget, _ := time.ParseDuration(c.RequestTimeout)
+	cfg.ConnConfig.RuntimeParams["statement_timeout"] = strconv.FormatInt(budget.Milliseconds(), 10)
+	cfg.ConnConfig.RuntimeParams["lock_timeout"] = strconv.FormatInt(budget.Milliseconds(), 10)
+	cfg.ConnConfig.RuntimeParams["timezone"] = "UTC"
+	pool, err := pgxpool.NewWithConfig(ctx, cfg)
+	if err != nil {
+		return nil, storageError(err)
+	}
+	store, err := NewStore(ctx, pool, c.DatasetID, budget)
+	if err != nil {
+		pool.Close()
+		return nil, err
+	}
+	return store, nil
+}
+```
+
+<a id="inventory-internal-inventory-deployment-test-go"></a>
+
+## Приложение: internal/inventory/store/deployment_test.go
+
+Полный исходный документ: `internal/inventory/store/deployment_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"context"
+	"os"
+	"testing"
+	"time"
+
+	inventoryv1 "github.com/Includeoyasi/faultline-lab/api/inventory/v1"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/protobuf/proto"
+)
+
+// Uses the real scratch service container, not the test binary's own Store.
+// Replayed unchanged after a PostgreSQL restart to exercise pool recovery too.
+func TestInventoryDeployed(t *testing.T) {
+	if os.Getenv("FL_DATA_INTEGRATION") != "1" {
+		t.Skip("requires isolated Inventory deployment")
+	}
+	target := os.Getenv("FL_INVENTORY_TARGET")
+	if target == "" {
+		t.Fatal("Inventory deployment target is required")
+	}
+	conn, err := grpc.NewClient("passthrough:///"+target, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer func() { _ = conn.Close() }()
+	client := inventoryv1.NewInventoryClient(conn)
+	ctx, cancel := context.WithTimeout(t.Context(), 15*time.Second)
+	defer cancel()
+	r := &inventoryv1.ReserveRequest{DatasetId: testDataset, OrderId: "deployed-order", OperationId: "deployed-reserve", Items: []*inventoryv1.Item{{Sku: "SKU-001", Quantity: 1}}}
+	reserved, err := client.Reserve(ctx, r)
+	if err != nil || reserved.GetOutcome() != inventoryv1.Outcome_OUTCOME_APPLIED {
+		t.Fatal(reserved, err)
+	}
+	change := &inventoryv1.ChangeReservationRequest{DatasetId: testDataset, OrderId: r.OrderId, OperationId: "deployed-release"}
+	released, err := client.ReleaseReservation(ctx, change)
+	if err != nil || released.GetReservationAtOperation().GetState() != inventoryv1.ReservationState_RESERVATION_STATE_RELEASED {
+		t.Fatal(released, err)
+	}
+	repeated, err := client.ReleaseReservation(ctx, change)
+	if err != nil || !proto.Equal(released, repeated) {
+		t.Fatal("release RPC receipt changed", repeated, err)
+	}
+	current, err := client.GetReservation(ctx, &inventoryv1.GetReservationRequest{DatasetId: testDataset, OrderId: r.OrderId})
+	if err != nil || current.GetState() != inventoryv1.ReservationState_RESERVATION_STATE_RELEASED {
+		t.Fatal("authoritative GetReservation", current, err)
+	}
+	historical, err := client.Reserve(ctx, r)
+	if err != nil || !proto.Equal(reserved, historical) {
+		t.Fatal("old reserve RPC receipt changed", historical, err)
+	}
+	r.OperationId = "deployed-late-reserve"
+	late, err := client.Reserve(ctx, r)
+	if err != nil || late.GetOutcome() != inventoryv1.Outcome_OUTCOME_RESERVATION_EXISTS {
+		t.Fatal("late reserve resurrected released stock", late, err)
+	}
+	t.Log("scratch Inventory container: Reserve/Release/GetReservation and immutable replay PASS")
+}
+```
+
+<a id="inventory-internal-inventory-integration-test-go"></a>
+
+## Приложение: internal/inventory/store/integration_test.go
+
+Полный исходный документ: `internal/inventory/store/integration_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"math"
+	"os"
+	"path/filepath"
+	"reflect"
+	"sync"
+	"sync/atomic"
+	"testing"
+	"time"
+
+	"github.com/Includeoyasi/faultline-lab/internal/database"
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
+)
+
+var testDataset = func() string {
+	if value := os.Getenv("FL_INVENTORY_DATASET_ID"); value != "" {
+		return value
+	}
+	return "inventory-smoke-v1"
+}()
+
+func integrationStore(t *testing.T) *Store {
+	t.Helper()
+	if os.Getenv("FL_DATA_INTEGRATION") != "1" {
+		t.Skip("requires isolated PostgreSQL smoke")
+	}
+	cfg, err := database.Load(os.Getenv("FL_DATA_CONFIG"), os.Getenv("FL_DATA_SECRETS"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	identity, err := cfg.Service("inventory")
+	if err != nil {
+		t.Fatal(err)
+	}
+	store, err := Open(t.Context(), Config{Host: cfg.Host, Port: cfg.Port, Database: identity.Database, User: identity.AppUser, SSLMode: cfg.SSLMode, PasswordFile: filepath.Join(cfg.Secrets, identity.AppUser+".password"), DatasetID: testDataset, ConnectTimeout: "5s", RequestTimeout: "10s", MaxConnections: 4})
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(store.Close)
+	return store
+}
+func fixture(t *testing.T, s *Store, sku string, quantity, price int64) {
+	t.Helper()
+	if _, err := s.pool.Exec(t.Context(), "INSERT INTO inventory.products(sku,title,price_minor,currency) VALUES($1,$1,$2,'RUB');", sku, price); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := s.pool.Exec(t.Context(), "INSERT INTO inventory.stock(sku,available) VALUES($1,$2)", sku, quantity); err != nil {
+		t.Fatal(err)
+	}
+}
+func mutate(t *testing.T, s *Store, r model.Request) model.Receipt {
+	t.Helper()
+	result, err := s.Mutate(t.Context(), r)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return result
+}
+func request(method, order, key string, items ...model.Item) model.Request {
+	return model.Request{DatasetID: testDataset, OrderID: order, OperationID: key, Method: method, Items: items}
+}
+func scalar(t *testing.T, s *Store, query string, args ...any) int64 {
+	t.Helper()
+	var result int64
+	if err := s.pool.QueryRow(t.Context(), query, args...).Scan(&result); err != nil {
+		t.Fatal(err)
+	}
+	return result
+}
+
+func TestInventoryFoundation(t *testing.T) {
+	s := integrationStore(t)
+	t.Run("commit absent is a durable refusal", func(t *testing.T) {
+		r := request("commit", "absent", "absent-commit")
+		first := mutate(t, s, r)
+		if first.Outcome != model.InvalidState || first.Reservation != nil {
+			t.Fatal(first)
+		}
+		if repeated := mutate(t, s, r); !reflect.DeepEqual(first, repeated) {
+			t.Fatal("refusal not replayed")
+		}
+		if scalar(t, s, "SELECT count(*) FROM inventory.operations WHERE operation_id='absent-commit'") != 1 {
+			t.Fatal("refusal was not stored")
+		}
+	})
+	t.Run("atomic multi SKU refusal and durable rejection", func(t *testing.T) {
+		fixture(t, s, "atomic-a", 2, 100)
+		fixture(t, s, "atomic-b", 0, 200)
+		r := request("reserve", "atomic", "atomic-key", model.Item{SKU: "atomic-a", Quantity: 1}, model.Item{SKU: "atomic-b", Quantity: 1})
+		before := mutate(t, s, r)
+		if before.Outcome != model.InsufficientStock {
+			t.Fatal(before)
+		}
+		if scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='atomic-a'") != 2 {
+			t.Fatal("partial reservation")
+		}
+		if _, err := s.pool.Exec(t.Context(), "UPDATE inventory.stock SET available=1 WHERE sku='atomic-b'"); err != nil {
+			t.Fatal(err)
+		}
+		if after := mutate(t, s, r); !reflect.DeepEqual(before, after) {
+			t.Fatal("saved refusal changed")
+		}
+		r.OperationID = "atomic-new"
+		if mutate(t, s, r).Outcome != model.Applied {
+			t.Fatal("fresh retry failed")
+		}
+	})
+	t.Run("concurrent limited stock and conservation", func(t *testing.T) {
+		fixture(t, s, "contended", 10, 100)
+		var successes atomic.Int64
+		var wg sync.WaitGroup
+		slots := make(chan struct{}, 8)
+		for i := 0; i < 100; i++ {
+			slots <- struct{}{}
+			wg.Go(func() {
+				defer func() { <-slots }()
+				r := request("reserve", fmt.Sprintf("contended-%d", i), fmt.Sprintf("contended-key-%d", i), model.Item{SKU: "contended", Quantity: 1})
+				result, err := s.Mutate(t.Context(), r)
+				if err != nil {
+					t.Error(err)
+					return
+				}
+				if result.Outcome == model.Applied {
+					successes.Add(1)
+				} else if result.Outcome != model.InsufficientStock {
+					t.Errorf("unexpected result %s", result.Outcome)
+				}
+			})
+		}
+		wg.Wait()
+		if successes.Load() != 10 || scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='contended'") != 0 || scalar(t, s, "SELECT sum(quantity) FROM inventory.reservation_items WHERE sku='contended'") != 10 {
+			t.Fatal("stock conservation failed", successes.Load())
+		}
+	})
+	t.Run("concurrent same key and changed payload", func(t *testing.T) {
+		fixture(t, s, "dedupe", 5, 125)
+		r := request("reserve", "dedupe", "dedupe-key", model.Item{SKU: "dedupe", Quantity: 2})
+		var wg sync.WaitGroup
+		for i := 0; i < 16; i++ {
+			wg.Go(func() {
+				result, err := s.Mutate(t.Context(), r)
+				if err != nil || result.Outcome != model.Applied {
+					t.Errorf("repeat=%v %v", result, err)
+				}
+			})
+		}
+		wg.Wait()
+		if scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='dedupe'") != 3 || scalar(t, s, "SELECT count(*) FROM inventory.ledger WHERE order_id='dedupe'") != 1 || scalar(t, s, "SELECT count(*) FROM inventory.outbox WHERE order_id='dedupe'") != 1 {
+			t.Fatal("duplicate effect")
+		}
+		r.Items[0].Quantity = 1
+		if _, err := s.Mutate(t.Context(), r); !errors.Is(err, model.ErrKeyConflict) {
+			t.Fatal("changed payload accepted", err)
+		}
+		r.OperationID = "dedupe-second"
+		if mutate(t, s, r).Outcome != model.ReservationExists {
+			t.Fatal("second key created another reservation")
+		}
+	})
+	t.Run("historical receipt and release barrier", func(t *testing.T) {
+		fixture(t, s, "release", 3, 75)
+		r := request("reserve", "release", "release-reserve", model.Item{SKU: "release", Quantity: 2})
+		original := mutate(t, s, r)
+		mutate(t, s, request("release", "release", "release-terminal"))
+		mutate(t, s, request("release", "release", "release-terminal"))
+		if repeat := mutate(t, s, r); !reflect.DeepEqual(original, repeat) {
+			t.Fatal("historical receipt changed")
+		}
+		current, err := s.GetReservation(t.Context(), testDataset, "release")
+		if err != nil || current.State != model.Released {
+			t.Fatal(current, err)
+		}
+		if scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='release'") != 3 {
+			t.Fatal("release repeated effect")
+		}
+		if mutate(t, s, request("commit", "release", "release-commit")).Outcome != model.InvalidState {
+			t.Fatal("committed released reservation")
+		}
+		mutate(t, s, request("release", "persist-barrier", "persist-release"))
+		if mutate(t, s, request("reserve", "persist-barrier", "persist-late", model.Item{SKU: "release", Quantity: 1})).Outcome != model.ReservationExists {
+			t.Fatal("late reserve bypassed barrier")
+		}
+	})
+	t.Run("commit release race", func(t *testing.T) {
+		fixture(t, s, "race", 1, 99)
+		mutate(t, s, request("reserve", "race", "race-reserve", model.Item{SKU: "race", Quantity: 1}))
+		var wg sync.WaitGroup
+		for _, method := range []string{"commit", "release"} {
+			wg.Go(func() {
+				if _, err := s.Mutate(t.Context(), request(method, "race", "race-"+method)); err != nil {
+					t.Error(err)
+				}
+			})
+		}
+		wg.Wait()
+		current, err := s.GetReservation(t.Context(), testDataset, "race")
+		if err != nil {
+			t.Fatal(err)
+		}
+		want := int64(0)
+		if current.State == model.Released {
+			want = 1
+		} else if current.State != model.Committed {
+			t.Fatal(current)
+		}
+		if scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='race'") != want || scalar(t, s, "SELECT count(*) FROM inventory.outbox WHERE order_id='race'") != 2 {
+			t.Fatal("terminal race balance")
+		}
+	})
+	t.Run("commit retries never sell twice or release sold stock", func(t *testing.T) {
+		fixture(t, s, "committed", 3, 10)
+		mutate(t, s, request("reserve", "committed", "committed-reserve", model.Item{SKU: "committed", Quantity: 2}))
+		r := request("commit", "committed", "committed-first")
+		first := mutate(t, s, r)
+		if repeated := mutate(t, s, r); !reflect.DeepEqual(first, repeated) {
+			t.Fatal("commit receipt changed")
+		}
+		if mutate(t, s, request("commit", "committed", "committed-second")).Outcome != model.Applied {
+			t.Fatal("repeat terminal commit")
+		}
+		if mutate(t, s, request("release", "committed", "committed-release")).Outcome != model.InvalidState {
+			t.Fatal("released sold stock")
+		}
+		if scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='committed'") != 1 || scalar(t, s, "SELECT count(*) FROM inventory.ledger WHERE order_id='committed'") != 2 || scalar(t, s, "SELECT count(*) FROM inventory.outbox WHERE order_id='committed'") != 2 {
+			t.Fatal("repeat commit changed business effect")
+		}
+	})
+	t.Run("failed outbox insert rolls back the entire mutation", func(t *testing.T) {
+		fixture(t, s, "rollback", 2, 1)
+		mutate(t, s, request("release", "rollback-fixture", "rollback-fixture-key"))
+		// An owned malformed event fixture forces failure AFTER stock and receipt writes.
+		_, err := s.pool.Exec(t.Context(), "INSERT INTO inventory.outbox(event_id,order_id,aggregate_version,event_type,payload) VALUES('rollback-key','rollback-fixture',2,'InventoryReleased','{}')")
+		if err != nil {
+			t.Fatal(err)
+		}
+		if _, err = s.Mutate(t.Context(), request("reserve", "rollback", "rollback-key", model.Item{SKU: "rollback", Quantity: 1})); err == nil {
+			t.Fatal("controlled outbox failure did not fail transaction")
+		}
+		if scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='rollback'") != 2 || scalar(t, s, "SELECT count(*) FROM inventory.reservations WHERE order_id='rollback'") != 0 || scalar(t, s, "SELECT count(*) FROM inventory.operations WHERE operation_id='rollback-key'") != 0 || scalar(t, s, "SELECT count(*) FROM inventory.ledger WHERE order_id='rollback'") != 0 {
+			t.Fatal("partial business transaction persisted")
+		}
+		if _, err = s.pool.Exec(t.Context(), "DELETE FROM inventory.outbox WHERE event_id='rollback-key'"); err != nil {
+			t.Fatal(err)
+		}
+	})
+	t.Run("cancel while waiting on an owned database lock", func(t *testing.T) {
+		lock, err := s.pool.Begin(t.Context())
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer rollback(lock)
+		if _, err = lock.Exec(t.Context(), "SELECT pg_advisory_xact_lock(2,hashtext('blocked'))"); err != nil {
+			t.Fatal(err)
+		}
+		ctx, cancel := context.WithCancel(t.Context())
+		defer cancel()
+		done := make(chan error, 1)
+		go func() { _, e := s.Mutate(ctx, request("release", "blocked", "blocked-key")); done <- e }()
+		deadline := time.NewTimer(3 * time.Second)
+		defer deadline.Stop()
+		ticker := time.NewTicker(5 * time.Millisecond)
+		defer ticker.Stop()
+		waiting := false
+		for !waiting {
+			select {
+			case <-deadline.C:
+				t.Fatal("request never reached the contended lock")
+			case <-ticker.C:
+				waiting = scalar(t, s, "SELECT count(*) FROM pg_locks WHERE locktype='advisory' AND NOT granted AND classid=2 AND objid::bigint=(hashtext('blocked')::bigint & 4294967295)") > 0
+			}
+		}
+		cancel()
+		select {
+		case err = <-done:
+			if !errors.Is(err, context.Canceled) {
+				t.Fatal("cancel result", err)
+			}
+		case <-time.After(3 * time.Second):
+			t.Fatal("blocked request ignored cancellation")
+		}
+		rollback(lock)
+		if scalar(t, s, "SELECT count(*) FROM inventory.operations WHERE operation_id='blocked-key'") != 0 {
+			t.Fatal("canceled operation persisted")
+		}
+		if mutate(t, s, request("release", "blocked", "blocked-retry")).Outcome != model.Applied {
+			t.Fatal("pool did not recover after cancellation")
+		}
+	})
+	t.Run("concurrent release before reserve", func(t *testing.T) {
+		fixture(t, s, "barrier-race", 20, 1)
+		for i := 0; i < 20; i++ {
+			order := fmt.Sprintf("barrier-race-%d", i)
+			var wg sync.WaitGroup
+			wg.Go(func() {
+				if _, err := s.Mutate(t.Context(), request("reserve", order, order+"-reserve", model.Item{SKU: "barrier-race", Quantity: 1})); err != nil {
+					t.Error(err)
+				}
+			})
+			wg.Go(func() {
+				if _, err := s.Mutate(t.Context(), request("release", order, order+"-release")); err != nil {
+					t.Error(err)
+				}
+			})
+			wg.Wait()
+			if mutate(t, s, request("reserve", order, order+"-late", model.Item{SKU: "barrier-race", Quantity: 1})).Outcome != model.ReservationExists {
+				t.Fatal("late reserve bypassed cancellation")
+			}
+		}
+		if scalar(t, s, "SELECT available FROM inventory.stock WHERE sku='barrier-race'") != 20 {
+			t.Fatal("race leaked stock")
+		}
+	})
+	t.Run("overflow unknown SKU cancellation and dataset isolation", func(t *testing.T) {
+		fixture(t, s, "overflow", math.MaxInt64, math.MaxInt64)
+		if _, err := s.Mutate(t.Context(), request("reserve", "overflow", "overflow-key", model.Item{SKU: "overflow", Quantity: 2})); !errors.Is(err, model.ErrInvalid) {
+			t.Fatal("overflow", err)
+		}
+		if mutate(t, s, request("reserve", "unknown", "unknown-key", model.Item{SKU: "missing", Quantity: 1})).Outcome != model.UnknownSKU {
+			t.Fatal("unknown SKU")
+		}
+		canceled, cancel := context.WithCancel(t.Context())
+		cancel()
+		if _, err := s.Mutate(canceled, request("release", "canceled", "canceled-key")); !errors.Is(err, context.Canceled) {
+			t.Fatal("cancel", err)
+		}
+		r := request("release", "foreign", "foreign-key")
+		r.DatasetID = "old-dataset"
+		if _, err := s.Mutate(t.Context(), r); !errors.Is(err, model.ErrDataset) {
+			t.Fatal("foreign dataset", err)
+		}
+		if scalar(t, s, "SELECT count(*) FROM inventory.operations WHERE operation_id IN ('overflow-key','canceled-key','foreign-key')") != 0 {
+			t.Fatal("invalid operation persisted")
+		}
+	})
+}
+
+func TestInventoryAfterRestart(t *testing.T) {
+	s := integrationStore(t)
+	r, err := s.GetReservation(t.Context(), testDataset, "persist-barrier")
+	if err != nil || r.State != model.Released {
+		t.Fatal("barrier lost", r, err)
+	}
+	if result := mutate(t, s, request("release", "persist-barrier", "persist-release")); result.Reservation.State != model.Released {
+		t.Fatal("receipt lost")
+	}
+	if mutate(t, s, request("reserve", "persist-barrier", "after-restart", model.Item{SKU: "release", Quantity: 1})).Outcome != model.ReservationExists {
+		t.Fatal("restart bypassed barrier")
+	}
+	if scalar(t, s, "SELECT count(*) FROM inventory.ledger WHERE order_id='dedupe'") != 1 {
+		t.Fatal("ledger lost")
+	}
+	if scalar(t, s, "SELECT count(*) FROM inventory.outbox WHERE order_id='dedupe'") != 1 {
+		t.Fatal("event lost")
+	}
+	// A new configured namespace cannot attach to surviving data accidentally.
+	if _, err = NewStore(t.Context(), s.pool, "another-dataset", time.Second); !errors.Is(err, model.ErrDataset) {
+		t.Fatal("dataset rebinding allowed", err)
+	}
+}
+```
+
+<a id="inventory-internal-inventory-model-go"></a>
+
+## Приложение: internal/inventory/model/model.go
+
+Полный исходный документ: `internal/inventory/model/model.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+// Package model defines Inventory requests, results and validation shared by storage and transport.
+package model
+
+import (
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
+	"errors"
+	"regexp"
+	"sort"
+)
+
+var (
+	ErrInvalid     = errors.New("invalid inventory request")
+	ErrKeyConflict = errors.New("operation key already has another request")
+	ErrDataset     = errors.New("dataset does not match inventory")
+	ErrNotFound    = errors.New("reservation or product not found")
+)
+
+var identifier = regexp.MustCompile(`^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$`)
+var skuPattern = regexp.MustCompile(`^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$`)
+
+const (
+	Reserved          = "RESERVED"
+	Committed         = "COMMITTED"
+	Released          = "RELEASED"
+	Applied           = "APPLIED"
+	InsufficientStock = "INSUFFICIENT_STOCK"
+	UnknownSKU        = "UNKNOWN_SKU"
+	InvalidState      = "INVALID_STATE"
+	ReservationExists = "RESERVATION_EXISTS"
+)
+
+// Item is canonicalized by SKU; duplicate SKUs are rejected.
+type Item struct {
+	SKU      string `json:"sku"`
+	Quantity int64  `json:"quantity"`
+}
+type PricedItem struct {
+	SKU            string `json:"sku"`
+	Quantity       int64  `json:"quantity"`
+	UnitPriceMinor int64  `json:"unit_price_minor"`
+}
+
+// Reservation is the authoritative snapshot when returned by GetReservation.
+type Reservation struct {
+	DatasetID  string       `json:"dataset_id"`
+	OrderID    string       `json:"order_id"`
+	State      string       `json:"state"`
+	Version    int64        `json:"version"`
+	Items      []PricedItem `json:"items"`
+	TotalMinor int64        `json:"total_minor"`
+	Currency   string       `json:"currency"`
+}
+
+// Receipt is immutable, even if the reservation changes after this operation.
+type Receipt struct {
+	OperationID string       `json:"operation_id"`
+	Outcome     string       `json:"outcome"`
+	Reservation *Reservation `json:"reservation_at_operation,omitempty"`
+}
+type Request struct {
+	DatasetID   string `json:"dataset_id"`
+	OrderID     string `json:"order_id"`
+	OperationID string `json:"operation_id"`
+	Method      string `json:"method"`
+	Items       []Item `json:"items,omitempty"`
+}
+type Availability struct {
+	SKU            string
+	Available      int64
+	UnitPriceMinor int64
+	Currency       string
+}
+
+// Canonical validates a request and computes its stable operation identity.
+func Canonical(request Request) (Request, string, error) {
+	if !identifier.MatchString(request.DatasetID) || !identifier.MatchString(request.OrderID) || !identifier.MatchString(request.OperationID) {
+		return Request{}, "", ErrInvalid
+	}
+	switch request.Method {
+	case "reserve":
+		if len(request.Items) == 0 || len(request.Items) > 100 {
+			return Request{}, "", ErrInvalid
+		}
+	case "commit", "release":
+		if len(request.Items) != 0 {
+			return Request{}, "", ErrInvalid
+		}
+	default:
+		return Request{}, "", ErrInvalid
+	}
+	request.Items = append([]Item(nil), request.Items...)
+	sort.Slice(request.Items, func(i, j int) bool { return request.Items[i].SKU < request.Items[j].SKU })
+	for i, item := range request.Items {
+		if !skuPattern.MatchString(item.SKU) || item.Quantity <= 0 || (i > 0 && item.SKU == request.Items[i-1].SKU) {
+			return Request{}, "", ErrInvalid
+		}
+	}
+	data, err := json.Marshal(request)
+	if err != nil {
+		return Request{}, "", err
+	}
+	hash := sha256.Sum256(data)
+	return request, hex.EncodeToString(hash[:]), nil
+}
+
+// ValidIdentifier validates a dataset, order or operation identifier.
+func ValidIdentifier(value string) bool { return identifier.MatchString(value) }
+
+// ValidSKU validates a product identifier.
+func ValidSKU(value string) bool { return skuPattern.MatchString(value) }
+```
+
+<a id="inventory-internal-inventory-model-test-go"></a>
+
+## Приложение: internal/inventory/model/model_test.go
+
+Полный исходный документ: `internal/inventory/model/model_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package model
+
+import (
+	"errors"
+	"testing"
+)
+
+func TestCanonicalOperationIdentity(t *testing.T) {
+	base := Request{DatasetID: "dataset", OrderID: "order", OperationID: "key", Method: "reserve", Items: []Item{{"B", 2}, {"A", 1}}}
+	normalized, hash, err := Canonical(base)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if base.Items[0].SKU != "B" || normalized.Items[0].SKU != "A" {
+		t.Fatal("canonicalization mutates caller or does not sort")
+	}
+	reordered := base
+	reordered.Items = []Item{{"A", 1}, {"B", 2}}
+	if _, same, e := Canonical(reordered); e != nil || hash != same {
+		t.Fatal("SKU order changed operation identity", e)
+	}
+	changed := base
+	changed.OrderID = "other"
+	if _, different, e := Canonical(changed); e != nil || hash == different {
+		t.Fatal("different order reused request identity", e)
+	}
+}
+
+func TestInvalidRequests(t *testing.T) {
+	for _, r := range []Request{
+		{},
+		{DatasetID: "d", OrderID: "o", OperationID: "k", Method: "reserve"},
+		{DatasetID: "d", OrderID: "o", OperationID: "k", Method: "reserve", Items: []Item{{"A", 0}}},
+		{DatasetID: "d", OrderID: "o", OperationID: "k", Method: "reserve", Items: []Item{{"A", 1}, {"A", 2}}},
+		{DatasetID: "d", OrderID: "o", OperationID: "k", Method: "commit", Items: []Item{{"A", 1}}},
+		{DatasetID: "../secret", OrderID: "o", OperationID: "k", Method: "release"},
+	} {
+		if _, _, err := Canonical(r); !errors.Is(err, ErrInvalid) {
+			t.Fatalf("request accepted: %+v", r)
+		}
+	}
+}
+```
+
+<a id="inventory-internal-inventory-process-test-go"></a>
+
+## Приложение: internal/inventory/store/process_test.go
+
+Полный исходный документ: `internal/inventory/store/process_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"context"
+	"encoding/json"
+	"net"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"strings"
+	"sync"
+	"syscall"
+	"testing"
+	"time"
+
+	inventoryv1 "github.com/Includeoyasi/faultline-lab/api/inventory/v1"
+	"github.com/Includeoyasi/faultline-lab/internal/database"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
+	healthpb "google.golang.org/grpc/health/grpc_health_v1"
+	"google.golang.org/protobuf/proto"
+)
+
+type startupCapture struct {
+	mu      sync.Mutex
+	pending string
+	started chan string
+}
+
+func (c *startupCapture) Write(data []byte) (int, error) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.pending += string(data)
+	for {
+		line, rest, ok := strings.Cut(c.pending, "\n")
+		if !ok {
+			break
+		}
+		c.pending = rest
+		var record struct {
+			Message string `json:"msg"`
+			Address string `json:"grpc_address"`
+		}
+		if json.Unmarshal([]byte(line), &record) == nil && record.Message == "service started" {
+			select {
+			case c.started <- record.Address:
+			default:
+			}
+		}
+	}
+	return len(data), nil
+}
+
+// Runs the actual business entrypoint, TCP API and graceful signal shutdown.
+// Invoked only by the isolated Linux PostgreSQL harness, including on Windows.
+func TestInventoryProcess(t *testing.T) {
+	s := integrationStore(t)
+	fixture(t, s, "process-stock", 4, 321)
+	cfg, err := database.Load(os.Getenv("FL_DATA_CONFIG"), os.Getenv("FL_DATA_SECRETS"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	settings := Config{Host: cfg.Host, Port: cfg.Port, Database: "inventory_db", User: "inventory_app", SSLMode: "disable", PasswordFile: filepath.Join(cfg.Secrets, "inventory_app.password"), ConnectTimeout: "5s", RequestTimeout: "3s", MaxConnections: 2}
+	data, err := json.Marshal(settings)
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "inventory.json")
+	if err = os.WriteFile(path, data, 0o600); err != nil {
+		t.Fatal(err)
+	}
+	start := func() (inventoryv1.InventoryClient, func()) {
+		t.Helper()
+		cmd := exec.CommandContext(t.Context(), "/app/inventory")
+		capture := &startupCapture{started: make(chan string, 1)}
+		cmd.Stdout = capture
+		cmd.Stderr = capture
+		for _, entry := range os.Environ() {
+			key, _, _ := strings.Cut(entry, "=")
+			if !strings.HasPrefix(key, "FL_") {
+				cmd.Env = append(cmd.Env, entry)
+			}
+		}
+		listener, err := net.Listen("tcp", "127.0.0.1:0")
+		if err != nil {
+			t.Fatal(err)
+		}
+		addressHint := listener.Addr().String()
+		if err = listener.Close(); err != nil {
+			t.Fatal(err)
+		}
+		cmd.Env = append(cmd.Env, "FL_GRPC_ADDR="+addressHint, "FL_INVENTORY_CONFIG="+path, "FL_INVENTORY_DATASET_ID="+testDataset)
+		if err := cmd.Start(); err != nil {
+			t.Fatal(err)
+		}
+		done := make(chan error, 1)
+		go func() { done <- cmd.Wait() }()
+		var once sync.Once
+		stop := func() {
+			once.Do(func() {
+				if err := cmd.Process.Signal(syscall.SIGTERM); err != nil {
+					t.Error("signal Inventory process", err)
+				}
+				select {
+				case err := <-done:
+					if err != nil {
+						t.Error("Inventory process exit", err)
+					}
+				case <-time.After(10 * time.Second):
+					_ = cmd.Process.Kill()
+					<-done
+					t.Error("Inventory process did not drain")
+				}
+			})
+		}
+		// Always reap the owned child, including failures before startup.
+		t.Cleanup(func() { once.Do(func() { _ = cmd.Process.Kill(); <-done }) })
+		var address string
+		select {
+		case address = <-capture.started:
+		case err := <-done:
+			once.Do(func() {})
+			t.Fatal("Inventory exited before startup", err)
+		case <-time.After(10 * time.Second):
+			t.Fatal("Inventory startup timed out")
+		}
+		conn, err := grpc.NewClient("passthrough:///"+address, grpc.WithTransportCredentials(insecure.NewCredentials()))
+		if err != nil {
+			t.Fatal(err)
+		}
+		t.Cleanup(func() { _ = conn.Close() })
+		ctx, cancel := context.WithTimeout(t.Context(), 5*time.Second)
+		defer cancel()
+		health, err := healthpb.NewHealthClient(conn).Check(ctx, &healthpb.HealthCheckRequest{}, grpc.WaitForReady(true))
+		if err != nil || health.GetStatus() != healthpb.HealthCheckResponse_SERVING {
+			t.Fatal("Inventory health", health, err)
+		}
+		return inventoryv1.NewInventoryClient(conn), stop
+	}
+	ctx, cancel := context.WithTimeout(t.Context(), 30*time.Second)
+	defer cancel()
+	first, stop := start()
+	r := &inventoryv1.ReserveRequest{DatasetId: testDataset, OrderId: "process-order", OperationId: "process-reserve", Items: []*inventoryv1.Item{{Sku: "process-stock", Quantity: 2}}}
+	original, err := first.Reserve(ctx, r)
+	if err != nil || original.GetOutcome() != inventoryv1.Outcome_OUTCOME_APPLIED {
+		t.Fatal(original, err)
+	}
+	stop()
+	second, stopSecond := start()
+	defer stopSecond()
+	repeated, err := second.Reserve(ctx, r)
+	if err != nil || !proto.Equal(original, repeated) {
+		t.Fatal("process restart changed receipt", repeated, err)
+	}
+	committed, err := second.CommitReservation(ctx, &inventoryv1.ChangeReservationRequest{DatasetId: testDataset, OrderId: r.OrderId, OperationId: "process-commit"})
+	if err != nil || committed.GetReservationAtOperation().GetState() != inventoryv1.ReservationState_RESERVATION_STATE_COMMITTED {
+		t.Fatal(committed, err)
+	}
+	availability, err := second.GetAvailability(ctx, &inventoryv1.GetAvailabilityRequest{DatasetId: testDataset, Skus: []string{"process-stock"}})
+	if err != nil || len(availability.GetItems()) != 1 || availability.Items[0].Available != 2 {
+		t.Fatal("process stock", availability, err)
+	}
+	t.Logf("real Inventory process restart: preserved receipt, committed reservation, available=%d", availability.Items[0].Available)
+}
+```
+
+<a id="inventory-internal-inventory-server-go"></a>
+
+## Приложение: internal/inventory/server.go
+
+Полный исходный документ: `internal/inventory/server.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package inventory
+
+import (
+	"context"
+	"errors"
+
+	inventoryv1 "github.com/Includeoyasi/faultline-lab/api/inventory/v1"
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+)
+
+// Backend defines the domain boundary; SQL correctness is tested on PostgreSQL.
+type Backend interface {
+	Mutate(context.Context, model.Request) (model.Receipt, error)
+	GetReservation(context.Context, string, string) (*model.Reservation, error)
+	GetAvailability(context.Context, string, []string) ([]model.Availability, error)
+}
+type Server struct {
+	inventoryv1.UnimplementedInventoryServer
+	backend Backend
+}
+
+func Register(server *grpc.Server, backend Backend) {
+	inventoryv1.RegisterInventoryServer(server, &Server{backend: backend})
+}
+
+func (s *Server) Reserve(ctx context.Context, r *inventoryv1.ReserveRequest) (*inventoryv1.OperationResult, error) {
+	request := model.Request{DatasetID: r.GetDatasetId(), OrderID: r.GetOrderId(), OperationID: r.GetOperationId(), Method: "reserve"}
+	for _, item := range r.GetItems() {
+		request.Items = append(request.Items, model.Item{SKU: item.GetSku(), Quantity: item.GetQuantity()})
+	}
+	return s.mutate(ctx, request)
+}
+func (s *Server) CommitReservation(ctx context.Context, r *inventoryv1.ChangeReservationRequest) (*inventoryv1.OperationResult, error) {
+	return s.mutate(ctx, model.Request{DatasetID: r.GetDatasetId(), OrderID: r.GetOrderId(), OperationID: r.GetOperationId(), Method: "commit"})
+}
+func (s *Server) ReleaseReservation(ctx context.Context, r *inventoryv1.ChangeReservationRequest) (*inventoryv1.OperationResult, error) {
+	return s.mutate(ctx, model.Request{DatasetID: r.GetDatasetId(), OrderID: r.GetOrderId(), OperationID: r.GetOperationId(), Method: "release"})
+}
+func (s *Server) mutate(ctx context.Context, r model.Request) (*inventoryv1.OperationResult, error) {
+	if _, _, err := model.Canonical(r); err != nil {
+		return nil, rpcError(err)
+	}
+	receipt, err := s.backend.Mutate(ctx, r)
+	if err != nil {
+		return nil, rpcError(err)
+	}
+	return &inventoryv1.OperationResult{OperationId: receipt.OperationID, Outcome: inventoryv1.Outcome(inventoryv1.Outcome_value["OUTCOME_"+receipt.Outcome]), ReservationAtOperation: protoReservation(receipt.Reservation)}, nil
+}
+func (s *Server) GetReservation(ctx context.Context, r *inventoryv1.GetReservationRequest) (*inventoryv1.Reservation, error) {
+	result, err := s.backend.GetReservation(ctx, r.GetDatasetId(), r.GetOrderId())
+	if err != nil {
+		return nil, rpcError(err)
+	}
+	return protoReservation(result), nil
+}
+func (s *Server) GetAvailability(ctx context.Context, r *inventoryv1.GetAvailabilityRequest) (*inventoryv1.GetAvailabilityResponse, error) {
+	result, err := s.backend.GetAvailability(ctx, r.GetDatasetId(), r.GetSkus())
+	if err != nil {
+		return nil, rpcError(err)
+	}
+	response := &inventoryv1.GetAvailabilityResponse{}
+	for _, item := range result {
+		response.Items = append(response.Items, &inventoryv1.Availability{Sku: item.SKU, Available: item.Available, UnitPriceMinor: item.UnitPriceMinor, Currency: item.Currency})
+	}
+	return response, nil
+}
+func protoReservation(r *model.Reservation) *inventoryv1.Reservation {
+	if r == nil {
+		return nil
+	}
+	result := &inventoryv1.Reservation{DatasetId: r.DatasetID, OrderId: r.OrderID, State: inventoryv1.ReservationState(inventoryv1.ReservationState_value["RESERVATION_STATE_"+r.State]), Version: r.Version, TotalMinor: r.TotalMinor, Currency: r.Currency}
+	for _, item := range r.Items {
+		result.Items = append(result.Items, &inventoryv1.PricedItem{Sku: item.SKU, Quantity: item.Quantity, UnitPriceMinor: item.UnitPriceMinor})
+	}
+	return result
+}
+func rpcError(err error) error {
+	switch {
+	case errors.Is(err, model.ErrInvalid):
+		return status.Error(codes.InvalidArgument, model.ErrInvalid.Error())
+	case errors.Is(err, model.ErrKeyConflict):
+		return status.Error(codes.AlreadyExists, model.ErrKeyConflict.Error())
+	case errors.Is(err, model.ErrDataset):
+		return status.Error(codes.FailedPrecondition, model.ErrDataset.Error())
+	case errors.Is(err, model.ErrNotFound):
+		return status.Error(codes.NotFound, model.ErrNotFound.Error())
+	case errors.Is(err, context.Canceled):
+		return status.Error(codes.Canceled, "inventory request canceled; outcome may be unknown")
+	case errors.Is(err, context.DeadlineExceeded):
+		return status.Error(codes.DeadlineExceeded, "inventory deadline exceeded; outcome may be unknown")
+	default:
+		return status.Error(codes.Unavailable, "inventory storage unavailable; retry with the same operation key")
+	}
+}
+```
+
+<a id="inventory-internal-inventory-server-test-go"></a>
+
+## Приложение: internal/inventory/server_test.go
+
+Полный исходный документ: `internal/inventory/server_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package inventory
+
+import (
+	"context"
+	"errors"
+	"net"
+	"testing"
+	"time"
+
+	inventoryv1 "github.com/Includeoyasi/faultline-lab/api/inventory/v1"
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/status"
+	"google.golang.org/grpc/test/bufconn"
+)
+
+type fakeBackend struct {
+	calls int
+	err   error
+	block bool
+}
+
+func (b *fakeBackend) Mutate(ctx context.Context, r model.Request) (model.Receipt, error) {
+	b.calls++
+	if b.block {
+		<-ctx.Done()
+		return model.Receipt{}, ctx.Err()
+	}
+	return model.Receipt{OperationID: r.OperationID, Outcome: model.Applied, Reservation: &model.Reservation{DatasetID: r.DatasetID, OrderID: r.OrderID, State: model.Reserved, Version: 1}}, b.err
+}
+func (b *fakeBackend) GetReservation(context.Context, string, string) (*model.Reservation, error) {
+	return nil, model.ErrNotFound
+}
+func (b *fakeBackend) GetAvailability(context.Context, string, []string) ([]model.Availability, error) {
+	return nil, model.ErrNotFound
+}
+
+func TestGRPCContract(t *testing.T) {
+	for _, scenario := range []string{"round trip", "invalid input", "key conflict", "dataset mismatch", "timeout", "safe storage error"} {
+		t.Run(scenario, func(t *testing.T) {
+			backend := &fakeBackend{}
+			switch scenario {
+			case "key conflict":
+				backend.err = model.ErrKeyConflict
+			case "dataset mismatch":
+				backend.err = model.ErrDataset
+			case "timeout":
+				backend.block = true
+			case "safe storage error":
+				backend.err = errors.New("postgres://private:password@host/db")
+			}
+			listener := bufconn.Listen(1 << 20)
+			server := grpc.NewServer()
+			Register(server, backend)
+			done := make(chan error, 1)
+			go func() { done <- server.Serve(listener) }()
+			t.Cleanup(func() {
+				server.Stop()
+				if err := <-done; err != nil && !errors.Is(err, grpc.ErrServerStopped) {
+					t.Error(err)
+				}
+			})
+			conn, err := grpc.NewClient("passthrough:///inventory-test", grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithContextDialer(func(context.Context, string) (net.Conn, error) { return listener.Dial() }))
+			if err != nil {
+				t.Fatal(err)
+			}
+			t.Cleanup(func() { _ = conn.Close() })
+			ctx, cancel := context.WithTimeout(t.Context(), time.Second)
+			defer cancel()
+			if scenario == "timeout" {
+				var shortCancel context.CancelFunc
+				ctx, shortCancel = context.WithTimeout(ctx, 30*time.Millisecond)
+				defer shortCancel()
+			}
+			r := &inventoryv1.ReserveRequest{DatasetId: "dataset", OrderId: "order", OperationId: "operation", Items: []*inventoryv1.Item{{Sku: "SKU", Quantity: 1}}}
+			if scenario == "invalid input" {
+				r.Items[0].Quantity = 0
+			}
+			response, err := inventoryv1.NewInventoryClient(conn).Reserve(ctx, r)
+			want := map[string]codes.Code{"round trip": codes.OK, "invalid input": codes.InvalidArgument, "key conflict": codes.AlreadyExists, "dataset mismatch": codes.FailedPrecondition, "timeout": codes.DeadlineExceeded, "safe storage error": codes.Unavailable}[scenario]
+			if status.Code(err) != want {
+				t.Fatalf("got %v want %v", err, want)
+			}
+			if want == codes.OK && (response.GetOutcome() != inventoryv1.Outcome_OUTCOME_APPLIED || response.GetReservationAtOperation().GetState() != inventoryv1.ReservationState_RESERVATION_STATE_RESERVED) {
+				t.Fatal(response)
+			}
+			if scenario == "invalid input" && backend.calls != 0 {
+				t.Fatal("invalid request reached storage")
+			}
+			if scenario == "safe storage error" && status.Convert(err).Message() != "inventory storage unavailable; retry with the same operation key" {
+				t.Fatal("raw storage error leaked")
+			}
+		})
+	}
+}
+```
+
+<a id="inventory-internal-inventory-store-go"></a>
+
+## Приложение: internal/inventory/store/store.go
+
+Полный исходный документ: `internal/inventory/store/store.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"context"
+	"errors"
+	"math"
+	"time"
+
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
+)
+
+const (
+	bindDatasetSQL           = "INSERT INTO inventory.dataset(singleton,dataset_id) VALUES(true,$1) ON CONFLICT DO NOTHING"
+	readDatasetSQL           = "SELECT dataset_id FROM inventory.dataset WHERE singleton"
+	lockStockSQL             = "SELECT s.available,p.price_minor,p.currency FROM inventory.stock s JOIN inventory.products p USING(sku) WHERE s.sku=$1 FOR UPDATE OF s,p"
+	insertReservationSQL     = "INSERT INTO inventory.reservations(order_id,state,version,total_minor,currency) VALUES($1,$2,1,$3,$4)"
+	decreaseStockSQL         = "UPDATE inventory.stock SET available=available-$2 WHERE sku=$1"
+	insertReservationItemSQL = "INSERT INTO inventory.reservation_items(order_id,sku,quantity,unit_price_minor) VALUES($1,$2,$3,$4)"
+	readReservationSQL       = "SELECT state,version,total_minor,currency FROM inventory.reservations WHERE order_id=$1"
+	readReservationItemsSQL  = "SELECT sku,quantity,unit_price_minor FROM inventory.reservation_items WHERE order_id=$1 ORDER BY sku"
+)
+
+// Store owns one bounded pool and exactly one immutable dataset.
+type Store struct {
+	pool    *pgxpool.Pool
+	dataset string
+	timeout time.Duration
+}
+
+// NewStore binds an already migrated database to a dataset. It never creates
+// roles, schemas or tables. The caller owns the pool until NewStore succeeds.
+func NewStore(ctx context.Context, pool *pgxpool.Pool, dataset string, timeout time.Duration) (*Store, error) {
+	if !model.ValidIdentifier(dataset) || timeout < time.Millisecond || timeout > time.Minute {
+		return nil, model.ErrInvalid
+	}
+	ctx, cancel := context.WithTimeout(ctx, timeout)
+	defer cancel()
+	tx, err := pool.Begin(ctx)
+	if err != nil {
+		return nil, storageError(err)
+	}
+	defer rollback(tx)
+	if _, err = tx.Exec(ctx, bindDatasetSQL, dataset); err != nil {
+		return nil, storageError(err)
+	}
+	var actual string
+	if err = tx.QueryRow(ctx, readDatasetSQL).Scan(&actual); err != nil {
+		return nil, storageError(err)
+	}
+	if actual != dataset {
+		return nil, model.ErrDataset
+	}
+	if err = tx.Commit(ctx); err != nil {
+		return nil, storageError(err)
+	}
+	return &Store{pool: pool, dataset: dataset, timeout: timeout}, nil
+}
+
+func rollback(tx pgx.Tx) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	_ = tx.Rollback(ctx)
+}
+func storageError(err error) error {
+	if errors.Is(err, model.ErrInvalid) {
+		return model.ErrInvalid
+	}
+	if errors.Is(err, context.Canceled) {
+		return context.Canceled
+	}
+	if errors.Is(err, context.DeadlineExceeded) {
+		return context.DeadlineExceeded
+	}
+	return errors.New("inventory storage operation failed; outcome may be unknown")
+}
+
+func (s *Store) reserve(ctx context.Context, tx pgx.Tx, r model.Request) (*model.Reservation, string, error) {
+	reservation := &model.Reservation{DatasetID: s.dataset, OrderID: r.OrderID, State: model.Reserved, Version: 1, Items: []model.PricedItem{}}
+	for _, item := range r.Items {
+		var available, price int64
+		var currency string
+		err := tx.QueryRow(ctx, lockStockSQL, item.SKU).Scan(&available, &price, &currency)
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, model.UnknownSKU, nil
+		}
+		if err != nil {
+			return nil, "", err
+		}
+		if available < item.Quantity {
+			return nil, model.InsufficientStock, nil
+		}
+		if (price > 0 && item.Quantity > math.MaxInt64/price) || reservation.TotalMinor > math.MaxInt64-price*item.Quantity {
+			return nil, "", model.ErrInvalid
+		}
+		if reservation.Currency != "" && reservation.Currency != currency {
+			return nil, "", model.ErrInvalid
+		}
+		reservation.Currency = currency
+		reservation.TotalMinor += price * item.Quantity
+		reservation.Items = append(reservation.Items, model.PricedItem{SKU: item.SKU, Quantity: item.Quantity, UnitPriceMinor: price})
+	}
+	if _, err := tx.Exec(ctx, insertReservationSQL, r.OrderID, model.Reserved, reservation.TotalMinor, reservation.Currency); err != nil {
+		return nil, "", err
+	}
+	for _, item := range reservation.Items {
+		if _, err := tx.Exec(ctx, decreaseStockSQL, item.SKU, item.Quantity); err != nil {
+			return nil, "", err
+		}
+		if _, err := tx.Exec(ctx, insertReservationItemSQL, r.OrderID, item.SKU, item.Quantity, item.UnitPriceMinor); err != nil {
+			return nil, "", err
+		}
+	}
+	return reservation, model.Applied, nil
+}
+
+type querier interface {
+	QueryRow(context.Context, string, ...any) pgx.Row
+	Query(context.Context, string, ...any) (pgx.Rows, error)
+}
+
+func (s *Store) readReservation(ctx context.Context, q querier, orderID string) (*model.Reservation, error) {
+	r := &model.Reservation{DatasetID: s.dataset, OrderID: orderID, Items: []model.PricedItem{}}
+	err := q.QueryRow(ctx, readReservationSQL, orderID).Scan(&r.State, &r.Version, &r.TotalMinor, &r.Currency)
+	if errors.Is(err, pgx.ErrNoRows) {
+		return nil, model.ErrNotFound
+	}
+	if err != nil {
+		return nil, storageError(err)
+	}
+	rows, err := q.Query(ctx, readReservationItemsSQL, orderID)
+	if err != nil {
+		return nil, storageError(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var item model.PricedItem
+		if err = rows.Scan(&item.SKU, &item.Quantity, &item.UnitPriceMinor); err != nil {
+			return nil, storageError(err)
+		}
+		r.Items = append(r.Items, item)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, storageError(err)
+	}
+	return r, nil
+}
+```
+
+<a id="inventory-store-mutate-go"></a>
+
+## Приложение: internal/inventory/store/mutate.go
+
+Полный исходный документ: `internal/inventory/store/mutate.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
+	"github.com/jackc/pgx/v5"
+)
+
+const (
+	lockOperationSQL          = "SELECT pg_advisory_xact_lock(1,hashtext($1))"
+	readOperationSQL          = "SELECT request_hash,receipt FROM inventory.operations WHERE operation_id=$1"
+	lockOrderSQL              = "SELECT pg_advisory_xact_lock(2,hashtext($1))"
+	insertReleaseBarrierSQL   = "INSERT INTO inventory.reservations(order_id,state,version,total_minor,currency) VALUES($1,$2,1,0,'')"
+	increaseStockSQL          = "UPDATE inventory.stock SET available=available+$2 WHERE sku=$1"
+	updateReservationStateSQL = "UPDATE inventory.reservations SET state=$2,version=version+1,updated_at=now() WHERE order_id=$1"
+	insertOperationSQL        = "INSERT INTO inventory.operations(operation_id,request_hash,receipt) VALUES($1,$2,$3::jsonb)"
+	insertLedgerSQL           = "INSERT INTO inventory.ledger(order_id,version,sku,available_delta,operation_id) VALUES($1,$2,$3,$4,$5)"
+	insertOutboxSQL           = "INSERT INTO inventory.outbox(event_id,order_id,aggregate_version,event_type,payload) VALUES($1,$2,$3,$4,$5::jsonb)"
+)
+
+// Mutate serializes operation identity AND order identity, including orders
+// with no row yet. Stock rows are locked in canonical SKU order.
+func (s *Store) Mutate(ctx context.Context, request model.Request) (model.Receipt, error) {
+	request, hash, err := model.Canonical(request)
+	if err != nil {
+		return model.Receipt{}, err
+	}
+	if request.DatasetID != s.dataset {
+		return model.Receipt{}, model.ErrDataset
+	}
+	ctx, cancel := context.WithTimeout(ctx, s.timeout)
+	defer cancel()
+	tx, err := s.pool.Begin(ctx)
+	if err != nil {
+		return model.Receipt{}, storageError(err)
+	}
+	defer rollback(tx)
+	// Separate advisory namespaces avoid collisions between order/key identity.
+	if _, err = tx.Exec(ctx, lockOperationSQL, request.OperationID); err != nil {
+		return model.Receipt{}, storageError(err)
+	}
+	var previousHash string
+	var data []byte
+	err = tx.QueryRow(ctx, readOperationSQL, request.OperationID).Scan(&previousHash, &data)
+	if err == nil {
+		if previousHash != hash {
+			return model.Receipt{}, model.ErrKeyConflict
+		}
+		var result model.Receipt
+		if err = json.Unmarshal(data, &result); err != nil {
+			return model.Receipt{}, storageError(err)
+		}
+		return result, nil
+	}
+	if !errors.Is(err, pgx.ErrNoRows) {
+		return model.Receipt{}, storageError(err)
+	}
+	if _, err = tx.Exec(ctx, lockOrderSQL, request.OrderID); err != nil {
+		return model.Receipt{}, storageError(err)
+	}
+	reservation, err := s.readReservation(ctx, tx, request.OrderID)
+	if err != nil && !errors.Is(err, model.ErrNotFound) {
+		return model.Receipt{}, err
+	}
+	err = nil // An absent order is an expected input to the state machine.
+	result := model.Receipt{OperationID: request.OperationID, Outcome: model.Applied, Reservation: reservation}
+	changed := false
+	switch request.Method {
+	case "reserve":
+		if reservation != nil {
+			result.Outcome = model.ReservationExists
+			break
+		}
+		result.Reservation, result.Outcome, err = s.reserve(ctx, tx, request)
+		changed = err == nil && result.Outcome == model.Applied
+	case "commit", "release":
+		target := model.Committed
+		if request.Method == "release" {
+			target = model.Released
+		}
+		switch {
+		case reservation == nil && target == model.Released:
+			reservation = &model.Reservation{DatasetID: s.dataset, OrderID: request.OrderID, State: model.Released, Version: 1, Items: []model.PricedItem{}}
+			_, err = tx.Exec(ctx, insertReleaseBarrierSQL, request.OrderID, model.Released)
+			result.Reservation = reservation
+			changed = err == nil
+		case reservation == nil:
+			result.Outcome = model.InvalidState
+		case reservation.State == target: // Already at requested terminal state: no second effect.
+		case reservation.State != model.Reserved:
+			result.Outcome = model.InvalidState
+		default:
+			if target == model.Released {
+				for _, item := range reservation.Items {
+					if _, err = tx.Exec(ctx, increaseStockSQL, item.SKU, item.Quantity); err != nil {
+						break
+					}
+				}
+			}
+			if err == nil {
+				_, err = tx.Exec(ctx, updateReservationStateSQL, request.OrderID, target)
+			}
+			if err == nil {
+				reservation.State = target
+				reservation.Version++
+				changed = true
+			}
+		}
+	}
+	if err != nil {
+		return model.Receipt{}, storageError(err)
+	}
+	data, err = json.Marshal(result)
+	if err != nil {
+		return model.Receipt{}, storageError(err)
+	}
+	if _, err = tx.Exec(ctx, insertOperationSQL, request.OperationID, hash, string(data)); err != nil {
+		return model.Receipt{}, storageError(err)
+	}
+	if changed {
+		for _, item := range result.Reservation.Items {
+			delta := int64(0)
+			if request.Method == "reserve" {
+				delta = -item.Quantity
+			}
+			if request.Method == "release" {
+				delta = item.Quantity
+			}
+			if _, err = tx.Exec(ctx, insertLedgerSQL, request.OrderID, result.Reservation.Version, item.SKU, delta, request.OperationID); err != nil {
+				return model.Receipt{}, storageError(err)
+			}
+		}
+		eventType := map[string]string{"reserve": "InventoryReserved", "commit": "InventoryCommitted", "release": "InventoryReleased"}[request.Method]
+		if _, err = tx.Exec(ctx, insertOutboxSQL, request.OperationID, request.OrderID, result.Reservation.Version, eventType, string(data)); err != nil {
+			return model.Receipt{}, storageError(err)
+		}
+	}
+	if err = tx.Commit(ctx); err != nil {
+		return model.Receipt{}, storageError(err)
+	}
+	return result, nil
+}
+```
+
+<a id="inventory-store-get-reservation-go"></a>
+
+## Приложение: internal/inventory/store/get_reservation.go
+
+Полный исходный документ: `internal/inventory/store/get_reservation.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"context"
+
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
+)
+
+func (s *Store) GetReservation(ctx context.Context, dataset, orderID string) (*model.Reservation, error) {
+	if dataset != s.dataset {
+		return nil, model.ErrDataset
+	}
+	if !model.ValidIdentifier(orderID) {
+		return nil, model.ErrInvalid
+	}
+	ctx, cancel := context.WithTimeout(ctx, s.timeout)
+	defer cancel()
+	return s.readReservation(ctx, s.pool, orderID)
+}
+```
+
+<a id="inventory-store-get-availability-go"></a>
+
+## Приложение: internal/inventory/store/get_availability.go
+
+Полный исходный документ: `internal/inventory/store/get_availability.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"context"
+
+	"github.com/Includeoyasi/faultline-lab/internal/inventory/model"
+)
+
+const (
+	readAvailabilitySQL = "SELECT s.sku,s.available,p.price_minor,p.currency FROM inventory.stock s JOIN inventory.products p USING(sku) WHERE s.sku=ANY($1) ORDER BY s.sku"
+)
+
+func (s *Store) GetAvailability(ctx context.Context, dataset string, skus []string) ([]model.Availability, error) {
+	if dataset != s.dataset {
+		return nil, model.ErrDataset
+	}
+	if len(skus) == 0 || len(skus) > 100 {
+		return nil, model.ErrInvalid
+	}
+	seen := map[string]bool{}
+	for _, sku := range skus {
+		if !model.ValidSKU(sku) || seen[sku] {
+			return nil, model.ErrInvalid
+		}
+		seen[sku] = true
+	}
+	ctx, cancel := context.WithTimeout(ctx, s.timeout)
+	defer cancel()
+	rows, err := s.pool.Query(ctx, readAvailabilitySQL, skus)
+	if err != nil {
+		return nil, storageError(err)
+	}
+	defer rows.Close()
+	result := []model.Availability{}
+	for rows.Next() {
+		var item model.Availability
+		if err = rows.Scan(&item.SKU, &item.Available, &item.UnitPriceMinor, &item.Currency); err != nil {
+			return nil, storageError(err)
+		}
+		result = append(result, item)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, storageError(err)
+	}
+	if len(result) != len(skus) {
+		return nil, model.ErrNotFound
+	}
+	return result, nil
+}
+```
+
+<a id="inventory-store-close-go"></a>
+
+## Приложение: internal/inventory/store/close.go
+
+Полный исходный документ: `internal/inventory/store/close.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+// Close releases the pool owned by Store.
+func (s *Store) Close() { s.pool.Close() }
+```
+
+<a id="inventory-store-config-test-go"></a>
+
+## Приложение: internal/inventory/store/config_test.go
+
+Полный исходный документ: `internal/inventory/store/config_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"testing"
+)
+
+func TestConfigRestrictsIdentityAndBudgets(t *testing.T) {
+	base := Config{Host: "postgres", Port: 5432, Database: "inventory_db", User: "inventory_app", SSLMode: "disable", PasswordFile: "/run/secrets/inventory_app.password", DatasetID: "dataset", ConnectTimeout: "5s", RequestTimeout: "3s", MaxConnections: 4}
+	if err := base.Validate(); err != nil {
+		t.Fatal(err)
+	}
+	for _, mutate := range []func(*Config){func(c *Config) { c.User = "postgres" }, func(c *Config) { c.User = "inventory_migrator" }, func(c *Config) { c.Database = "orders_db" }, func(c *Config) { c.MaxConnections = 30 }, func(c *Config) { c.RequestTimeout = "0s" }, func(c *Config) { c.DatasetID = "" }} {
+		cfg := base
+		mutate(&cfg)
+		if cfg.Validate() == nil {
+			t.Fatalf("invalid config accepted: %+v", cfg)
+		}
+	}
+}
+```
+
 <a id="appendix-docs-architecture-platform-evidence-md"></a>
 
 ## Приложение: F03: accepted platform evidence contract
@@ -19979,7 +22579,7 @@ flowchart LR
 | `limits` | Значения `HostConfig.Memory` в байтах и `HostConfig.NanoCpus` в миллиардных долях CPU |
 | `usage_snapshot` | Один стартовый снимок `docker stats`: время, CPU в процентах и используемая память в байтах |
 
-`KNOWN` означает полученное значение; `UNKNOWN` содержит причину отсутствия. Нулевой лимит имеет статус `NOT_CONFIGURED`: ограничение не задано **в этом поле**, но возможны quota/cpuset и ограничения родительской группы. `NOT_MEASURED` отличается от измеренного нулевого потребления. Снимок Docker stats снимается после старта, до функциональных действий; это не измерение нагрузки, RSS или capacity.
+`KNOWN` означает полученное значение; `UNKNOWN` содержит причину отсутствия. Нулевой лимит имеет статус `NOT_CONFIGURED`: ограничение не задано **в этом поле**, но возможны quota/cpuset и ограничения родительской группы. `NOT_MEASURED` отличается от измеренного нулевого потребления. Снимок Docker stats снимается после старта наблюдаемых контейнеров, до проверок их API; это не измерение нагрузки, RSS или capacity. В `labdata` этому предшествуют подготовка PostgreSQL и проверки хранилища, необходимые для запуска бизнес-контейнера Inventory.
 
 | Пример | Backend / image | Запрос / image | Вывод |
 | :--- | :--- | :--- | :--- |
@@ -19988,7 +22588,7 @@ flowchart LR
 
 Совпадение платформ не доказывает native execution. `execution_profile=UNVERIFIED` и `comparison_eligibility=NOT_EVALUATED`: полный допуск A/B по F03/F06 добавляется перед сравнительными экспериментами. Функциональный результат и пригодность измерений — разные выводы.
 
-Покрытие: постоянные проверяемые контейнеры Orders/Inventory/Payments либо PostgreSQL/Kafka/Redis. Платформа временных `run --rm` инструментов не выводится из их тегов. Недоступный inspect и частичный запуск сохраняют известные факты и причины неизвестности; отмена прекращает новые запросы и сохраняет адресную очистку. Общий бюджет сбора — 30 секунд, на команду — пять секунд. Полный Compose config, inspect, stderr, секреты и домашние пути не сохраняются в новом блоке.
+Покрытие: Orders/Inventory/Payments в `smoke`; PostgreSQL и бизнес-контейнер Inventory в `labdata smoke`; дополнительно Kafka/Redis в режиме `-infrastructure`. Inventory наблюдается с последним overlay `compose.inventory.yaml`, который включает его бизнес-API. Платформа временных `run --rm` инструментов не выводится из их тегов. Недоступный inspect и частичный запуск сохраняют известные факты и причины неизвестности; если запуск не дошёл до сбора, значения остаются неизвестными. Отмена прекращает новые запросы и сохраняет адресную очистку. Общий бюджет сбора — 30 секунд, на команду — пять секунд. Полный Compose config, inspect, stderr, секреты и домашние пути не сохраняются в новом блоке.
 
 CI отдельно проверяет полноту метаданных успешных прогонов в своём известном профиле. Эта проверка читает сохранённые отчёты и не меняет функциональный exit-код обычного CLI.
 
@@ -21206,8 +23806,8 @@ func TestSuccessfulReportsHaveObservedMetadata(t *testing.T) {
 		services []string
 	}{
 		{"smoke", 3, []string{"orders", "inventory", "payments"}},
-		{"postgres", 1, []string{"postgres"}},
-		{"infrastructure", 1, []string{"postgres", "kafka", "redis"}},
+		{"postgres", 1, []string{"postgres", "inventory"}},
+		{"infrastructure", 1, []string{"postgres", "kafka", "redis", "inventory"}},
 	} {
 		t.Run(test.kind, func(t *testing.T) {
 			r := latestSuccessfulReport(t, root, test.kind)

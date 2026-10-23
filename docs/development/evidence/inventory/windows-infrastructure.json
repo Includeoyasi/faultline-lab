@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "mode": "infrastructure",
+  "host_runner": "windows/amd64",
+  "service_execution": "Linux containers on Docker Desktop; native/emulation not independently established",
+  "source_report": {
+    "path": "artifacts/infrastructure/faultline-data-test-0e9512f319183416/report.json",
+    "sha256": "1e005b14a4e4c58b8bb5aa4628b9823fe3ef096e5c4b30fba8ef4a6b046e8f1a"
+  },
+  "started_at": "2026-10-20T16:13:50.2360528Z",
+  "finished_at": "2026-10-20T16:15:06.9465488Z",
+  "result": "PASS",
+  "cleanup": "PASS",
+  "events": [
+    {
+      "stage": "rights, migrations and seed",
+      "output": "=== RUN   TestPostgresFoundation\n=== RUN   TestPostgresFoundation/concurrent_migrations_and_immutable_history\n=== RUN   TestPostgresFoundation/repeat_migrations_restore_application_access\n=== RUN   TestPostgresFoundation/role_isolation_and_denied_DDL\n=== RUN   TestPostgresFoundation/failed_migration_rollback_and_checksum_drift\n=== RUN   TestPostgresFoundation/repeat_seed_preserves_catalog_and_modified_stock\n--- PASS: TestPostgresFoundation (0.77s)\n    --- PASS: TestPostgresFoundation/concurrent_migrations_and_immutable_history (0.42s)\n    --- PASS: TestPostgresFoundation/repeat_migrations_restore_application_access (0.05s)\n    --- PASS: TestPostgresFoundation/role_isolation_and_denied_DDL (0.21s)\n    --- PASS: TestPostgresFoundation/failed_migration_rollback_and_checksum_drift (0.02s)\n    --- PASS: TestPostgresFoundation/repeat_seed_preserves_catalog_and_modified_stock (0.06s)\nPASS\n Container faultline-data-test-0e9512f319183416-dbtool-run-602bdbb15aaa Creating \n Container faultline-data-test-0e9512f319183416-dbtool-run-602bdbb15aaa Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "Inventory operations and process restart",
+      "output": "=== RUN   TestInventoryFoundation\n=== RUN   TestInventoryFoundation/commit_absent_is_a_durable_refusal\n=== RUN   TestInventoryFoundation/atomic_multi_SKU_refusal_and_durable_rejection\n=== RUN   TestInventoryFoundation/concurrent_limited_stock_and_conservation\n=== RUN   TestInventoryFoundation/concurrent_same_key_and_changed_payload\n=== RUN   TestInventoryFoundation/historical_receipt_and_release_barrier\n=== RUN   TestInventoryFoundation/commit_release_race\n=== RUN   TestInventoryFoundation/commit_retries_never_sell_twice_or_release_sold_stock\n=== RUN   TestInventoryFoundation/failed_outbox_insert_rolls_back_the_entire_mutation\n=== RUN   TestInventoryFoundation/cancel_while_waiting_on_an_owned_database_lock\n=== RUN   TestInventoryFoundation/concurrent_release_before_reserve\n=== RUN   TestInventoryFoundation/overflow_unknown_SKU_cancellation_and_dataset_isolation\n--- PASS: TestInventoryFoundation (0.39s)\n    --- PASS: TestInventoryFoundation/commit_absent_is_a_durable_refusal (0.00s)\n    --- PASS: TestInventoryFoundation/atomic_multi_SKU_refusal_and_durable_rejection (0.02s)\n    --- PASS: TestInventoryFoundation/concurrent_limited_stock_and_conservation (0.19s)\n    --- PASS: TestInventoryFoundation/concurrent_same_key_and_changed_payload (0.01s)\n    --- PASS: TestInventoryFoundation/historical_receipt_and_release_barrier (0.01s)\n    --- PASS: TestInventoryFoundation/commit_release_race (0.01s)\n    --- PASS: TestInventoryFoundation/commit_retries_never_sell_twice_or_release_sold_stock (0.01s)\n    --- PASS: TestInventoryFoundation/failed_outbox_insert_rolls_back_the_entire_mutation (0.01s)\n    --- PASS: TestInventoryFoundation/cancel_while_waiting_on_an_owned_database_lock (0.01s)\n    --- PASS: TestInventoryFoundation/concurrent_release_before_reserve (0.09s)\n    --- PASS: TestInventoryFoundation/overflow_unknown_SKU_cancellation_and_dataset_isolation (0.01s)\n=== RUN   TestInventoryProcess\n    process_test.go:163: real Inventory process restart: preserved receipt, committed reservation, available=2\n--- PASS: TestInventoryProcess (0.06s)\nPASS\n Container faultline-data-test-0e9512f319183416-dbtool-run-a0fd92855793 Creating \n Container faultline-data-test-0e9512f319183416-dbtool-run-a0fd92855793 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "start Inventory business container",
+      "output": " Network faultline-data-test-0e9512f319183416_runtime Creating \n Network faultline-data-test-0e9512f319183416_runtime Creating \n Network faultline-data-test-0e9512f319183416_runtime Created \n Network faultline-data-test-0e9512f319183416_runtime Created \n Container faultline-data-test-0e9512f319183416-inventory-1 Creating \n Container faultline-data-test-0e9512f319183416-inventory-1 Created \n Container faultline-data-test-0e9512f319183416-inventory-1 Starting \n Container faultline-data-test-0e9512f319183416-inventory-1 Started \n Container faultline-data-test-0e9512f319183416-inventory-1 Waiting \n Container faultline-data-test-0e9512f319183416-inventory-1 Healthy \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "Inventory deployed gRPC API",
+      "output": "=== RUN   TestInventoryDeployed\n    deployment_test.go:60: scratch Inventory container: Reserve/Release/GetReservation and immutable replay PASS\n--- PASS: TestInventoryDeployed (0.03s)\nPASS\n Container faultline-data-test-0e9512f319183416-dbtool-run-a2c7011c57e1 Creating \n Container faultline-data-test-0e9512f319183416-dbtool-run-a2c7011c57e1 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "checksum before restart",
+      "output": "5a5ac05a3c7bbb8285f8bcf33c68a75b0e164e602c00929c41977ba885573812\n Container faultline-data-test-0e9512f319183416-dbtool-run-fc9538321e8e Creating \n Container faultline-data-test-0e9512f319183416-dbtool-run-fc9538321e8e Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "checksum after restart",
+      "output": "5a5ac05a3c7bbb8285f8bcf33c68a75b0e164e602c00929c41977ba885573812\n Container faultline-data-test-0e9512f319183416-dbtool-run-783561c20774 Creating \n Container faultline-data-test-0e9512f319183416-dbtool-run-783561c20774 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "Inventory persistence after PostgreSQL restart",
+      "output": "=== RUN   TestInventoryAfterRestart\n--- PASS: TestInventoryAfterRestart (0.02s)\nPASS\n Container faultline-data-test-0e9512f319183416-dbtool-run-b0d627803108 Creating \n Container faultline-data-test-0e9512f319183416-dbtool-run-b0d627803108 Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "Inventory deployed API after PostgreSQL restart",
+      "output": "=== RUN   TestInventoryDeployed\n    deployment_test.go:60: scratch Inventory container: Reserve/Release/GetReservation and immutable replay PASS\n--- PASS: TestInventoryDeployed (0.03s)\nPASS\n Container faultline-data-test-0e9512f319183416-dbtool-run-f4fcb0d51f7a Creating \n Container faultline-data-test-0e9512f319183416-dbtool-run-f4fcb0d51f7a Created \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "cleanup",
+      "output": " Container faultline-data-test-0e9512f319183416-kafka-1 Stopping \n Container faultline-data-test-0e9512f319183416-inventory-1 Stopping \n Container faultline-data-test-0e9512f319183416-redis-1 Stopping \n Container faultline-data-test-0e9512f319183416-postgres-1 Stopping \n Container faultline-data-test-0e9512f319183416-redis-1 Stopped \n Container faultline-data-test-0e9512f319183416-redis-1 Removing \n Container faultline-data-test-0e9512f319183416-postgres-1 Stopped \n Container faultline-data-test-0e9512f319183416-postgres-1 Removing \n Container faultline-data-test-0e9512f319183416-inventory-1 Stopped \n Container faultline-data-test-0e9512f319183416-inventory-1 Removing \n Container faultline-data-test-0e9512f319183416-redis-1 Removed \n Container faultline-data-test-0e9512f319183416-postgres-1 Removed \n Container faultline-data-test-0e9512f319183416-inventory-1 Removed \n Container faultline-data-test-0e9512f319183416-kafka-1 Stopped \n Container faultline-data-test-0e9512f319183416-kafka-1 Removing \n Container faultline-data-test-0e9512f319183416-kafka-1 Removed \n Volume faultline-data-test-0e9512f319183416_postgres-data Removing \n Network faultline-data-test-0e9512f319183416_data Removing \n Network faultline-data-test-0e9512f319183416_runtime Removing \n Volume faultline-data-test-0e9512f319183416_kafka-data Removing \n Volume faultline-data-test-0e9512f319183416_postgres-data Removed \n Volume faultline-data-test-0e9512f319183416_kafka-data Removed \n Network faultline-data-test-0e9512f319183416_data Removed \n Image faultline-data-test-0e9512f319183416-inventory:latest Removing \n Image faultline-data-test-0e9512f319183416-dbtool:latest Removing \n Image faultline-data-test-0e9512f319183416-infrastructure-check:latest Removing \n Image faultline-data-test-0e9512f319183416-inventory:latest Removed \n Image faultline-data-test-0e9512f319183416-dbtool:latest Removed \n Image faultline-data-test-0e9512f319183416-infrastructure-check:latest Removed \n Network faultline-data-test-0e9512f319183416_runtime Removed \n",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "stage": "verify cleanup",
+      "passed": true,
+      "exit_code": 0
+    }
+  ]
+}

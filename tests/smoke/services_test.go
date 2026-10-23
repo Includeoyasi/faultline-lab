@@ -121,6 +121,9 @@ func freeAddress(t *testing.T) string {
 func start(t *testing.T, binary string, overrides map[string]string) *process {
 	t.Helper()
 	p := &process{cmd: exec.Command(binary), logs: &logCapture{started: make(chan string, 1)}, done: make(chan struct{})}
+	if strings.TrimSuffix(filepath.Base(binary), ".exe") == "inventory" {
+		p.cmd.Args = append(p.cmd.Args, "health-only")
+	}
 	values := map[string]string{"FL_GRPC_ADDR": freeAddress(t)}
 	for key, value := range overrides {
 		values[key] = value
@@ -330,6 +333,9 @@ func assertFailure(t *testing.T, binary, service string, overrides map[string]st
 	ctx, cancel := context.WithTimeout(t.Context(), 10*time.Second)
 	defer cancel()
 	cmd := exec.CommandContext(ctx, binary)
+	if strings.TrimSuffix(filepath.Base(binary), ".exe") == "inventory" {
+		cmd.Args = append(cmd.Args, "health-only")
+	}
 	cmd.Env = childEnvironment(overrides)
 	output, err := cmd.CombinedOutput()
 	var exitError *exec.ExitError

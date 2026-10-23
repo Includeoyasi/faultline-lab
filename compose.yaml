@@ -28,6 +28,7 @@ services:
         SERVICE: orders
   inventory:
     <<: *runtime
+    command: [health-only]
     build:
       <<: *service-build
       args:
