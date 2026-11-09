@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **71**. Дата снимка: **2026-10-23**, Europe/Moscow. Исходный коммит внешних материалов: `199f6912701aac70a04d9e07e270ebb4520c9f98`.
+Ревизия: **74**. Дата снимка: **2026-10-23**, Europe/Moscow. Исходный коммит внешних материалов: `450e139506f88f0f2570df12abc05a7b6c0a304a`.
 
 ## Выполнение задач
 
@@ -71,7 +71,7 @@ JSON ниже включён для автономного чтения реше
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 71,
+  "context_revision": 74,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-10-23",
   "user_timezone": "Europe/Moscow",
@@ -87,7 +87,7 @@ JSON ниже включён для автономного чтения реше
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "199f6912701aac70a04d9e07e270ebb4520c9f98",
+    "snapshot_ref": "450e139506f88f0f2570df12abc05a7b6c0a304a",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -112,7 +112,8 @@ JSON ниже включён для автономного чтения реше
       12,
       16,
       20,
-      24
+      24,
+      28
     ]
   },
   "accepted_architecture": [
@@ -198,6 +199,17 @@ JSON ниже включён для автономного чтения реше
       ],
       "implementation_and_review_pr_authorized": true,
       "other_work": "F05 and business/outbox/loadgen changes excluded; full comparison eligibility deferred"
+    },
+    {
+      "date": "2026-10-23",
+      "source": "Direct owner chat: prepare Orders package and corresponding PR; explain current project/roadmap state, ready functionality, F01–F12 and G0→G1 acceptance criteria",
+      "scope": [
+        "Orders admission and reads",
+        "Durable Inventory reserve job through PAYMENT_PENDING",
+        "Concrete G1 evidence and detailed PR context"
+      ],
+      "implementation_and_review_pr_authorized": true,
+      "other_work": "G1 remains an explicit owner decision; no Kafka/F09, Payments, cancellation/finalization/F11, full reset or experiment implementation authorized by this slice"
     }
   ],
   "review_history": [
@@ -2903,6 +2915,148 @@ JSON ниже включён для автономного чтения реше
       "path": "tests/smokecli/metadata_test.go",
       "title": "Validate observed metadata in completed real smoke reports",
       "anchor": "appendix-smokecli-real-report-metadata-test"
+    },
+    {
+      "path": "api/orders/v1/orders.proto",
+      "title": "api/orders/v1/orders.proto",
+      "anchor": "orders-api-orders-v1-orders-proto",
+      "language": "protobuf"
+    },
+    {
+      "path": "compose.orders.yaml",
+      "title": "compose.orders.yaml",
+      "anchor": "orders-compose-orders-yaml",
+      "language": "yaml"
+    },
+    {
+      "path": "configs/orders/local.json",
+      "title": "configs/orders/local.json",
+      "anchor": "orders-configs-orders-local-json",
+      "language": "json"
+    },
+    {
+      "path": "migrations/orders/0002_reservations.sql",
+      "title": "migrations/orders/0002_reservations.sql",
+      "anchor": "orders-migrations-orders-0002-reservations-sql",
+      "language": "sql"
+    },
+    {
+      "path": "docs/development/ORDERS.md",
+      "title": "docs/development/ORDERS.md",
+      "anchor": "orders-docs-development-ORDERS-md"
+    },
+    {
+      "path": "internal/orders/command.go",
+      "title": "internal/orders/command.go",
+      "anchor": "orders-internal-orders-command-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/config.go",
+      "title": "internal/orders/config.go",
+      "anchor": "orders-internal-orders-config-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/config_test.go",
+      "title": "internal/orders/config_test.go",
+      "anchor": "orders-internal-orders-config-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/server.go",
+      "title": "internal/orders/server.go",
+      "anchor": "orders-internal-orders-server-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/acceptance/foundation_test.go",
+      "title": "internal/orders/acceptance/foundation_test.go",
+      "anchor": "orders-internal-orders-acceptance-foundation-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/acceptance/process_test.go",
+      "title": "internal/orders/acceptance/process_test.go",
+      "anchor": "orders-internal-orders-acceptance-process-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/model/model.go",
+      "title": "internal/orders/model/model.go",
+      "anchor": "orders-internal-orders-model-model-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/model/model_test.go",
+      "title": "internal/orders/model/model_test.go",
+      "anchor": "orders-internal-orders-model-model-test-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/store/claim.go",
+      "title": "internal/orders/store/claim.go",
+      "anchor": "orders-internal-orders-store-claim-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/store/close.go",
+      "title": "internal/orders/store/close.go",
+      "anchor": "orders-internal-orders-store-close-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/store/config.go",
+      "title": "internal/orders/store/config.go",
+      "anchor": "orders-internal-orders-store-config-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/store/create.go",
+      "title": "internal/orders/store/create.go",
+      "anchor": "orders-internal-orders-store-create-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/store/get_by_request_key.go",
+      "title": "internal/orders/store/get_by_request_key.go",
+      "anchor": "orders-internal-orders-store-get-by-request-key-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/store/get_order.go",
+      "title": "internal/orders/store/get_order.go",
+      "anchor": "orders-internal-orders-store-get-order-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/store/resolve.go",
+      "title": "internal/orders/store/resolve.go",
+      "anchor": "orders-internal-orders-store-resolve-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/store/store.go",
+      "title": "internal/orders/store/store.go",
+      "anchor": "orders-internal-orders-store-store-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/worker/worker.go",
+      "title": "internal/orders/worker/worker.go",
+      "anchor": "orders-internal-orders-worker-worker-go",
+      "language": "go"
+    },
+    {
+      "path": "internal/orders/worker/worker_test.go",
+      "title": "internal/orders/worker/worker_test.go",
+      "anchor": "orders-internal-orders-worker-worker-test-go",
+      "language": "go"
+    },
+    {
+      "path": "docs/development/evidence/orders/VALIDATION.md",
+      "title": "Orders native acceptance and crash evidence — 2026-10-23",
+      "anchor": "orders-native-validation-2026-10-23"
     }
   ],
   "change_history": [
@@ -3271,6 +3425,24 @@ JSON ниже включён для автономного чтения реше
       "date": "2026-10-23",
       "summary": "Reconciled Inventory and accepted run metadata sources; both labdata modes observe the Inventory business container with its effective deployment overlay, and real report validation requires its image/resource observations. Preserved owner review-format rules and five architecture review blocks.",
       "trigger": "Owner requested merging current main into Inventory PR27 and refreshing it for owner merge"
+    },
+    {
+      "revision": 72,
+      "date": "2026-10-23",
+      "summary": "Added Orders admission/read API and one durable Inventory reserve workflow, application-only deployment and concrete G1 acceptance scenarios; retained F01–F12 scope and explicit owner acceptance boundaries",
+      "trigger": "Direct owner authorization to implement Orders and prepare its PR with project/roadmap and G0→G1 review context"
+    },
+    {
+      "revision": 73,
+      "date": "2026-10-23",
+      "summary": "Recorded successful native AMD64/ARM64 Orders acceptance/crash, 1000/100 stock balance, deployed persistence and metadata/cleanup evidence at a fixed tested HEAD; explicit scope and owner G1 decision retained",
+      "trigger": "Completed real container CI after implementing the owner-authorized Orders slice"
+    },
+    {
+      "revision": 74,
+      "date": "2026-10-23",
+      "summary": "Repaired Mermaid sequence labels in Orders materials and separately rendered both PR and guide diagrams with Mermaid 11.4.1; structural documentation checks alone do not verify rendering",
+      "trigger": "Owner reported the PR diagram parse error; business behavior and acceptance criteria unchanged"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -3550,6 +3722,45 @@ JSON ниже включён для автономного чтения реше
     "cleanup": "Owned run containers/images removed; Docker Desktop and WSL VM stopped; autostart false",
     "limits": "Dirty worktree before source commit, fingerprints recorded; physical host profile unverified; macOS runtime NOT_RUN; no capacity conclusion",
     "real_report_validation": "TestSuccessfulReportsHaveObservedMetadata PASS against the three saved real Windows reports; read-only, no Docker restart"
+  },
+  "orders_foundation": {
+    "recorded_on": "2026-10-23",
+    "source_commit": "d09f1fe6652cc18cf88cd4ce30f604be379f2ef0",
+    "guide": "docs/development/ORDERS.md",
+    "api": [
+      "CreateOrder",
+      "GetOrder",
+      "GetOrderByRequestKey"
+    ],
+    "identity": "One immutable dataset per orders_db; unique request_key hashes canonical dataset/key/items; immutable admission reply; persisted order and Reserve operation IDs, no protective TTL",
+    "admission": "One transaction saves order and reserve_job before ACCEPTED; reads expose live state separately",
+    "worker": "Bounded workers, SKIP LOCKED, DB-clock lease/generation and order version; job→order lock order; final lease CAS rolls back all writes even after lock wait; RPC outside SQL TX; bounded backoff+jitter",
+    "completion": "Validate peer identity/items/prices/currency/overflow-safe total and current RESERVED snapshot; one TX saves PAYMENT_PENDING, priced snapshot, local OrderAwaitingPayment and job completion",
+    "failure": "Only confirmed UNKNOWN_SKU/INSUFFICIENT_STOCK reject. Transient/unknown effects retry same operation; contradictions block job visibly while order remains RESERVING; no repair exit or new business terminal state",
+    "runtime": "Only orders_app credential for orders_db; explicit Inventory target, worker/SQL/RPC/lease budgets; health-only skeleton retained; labdata observes Orders and Inventory after startup with effective overlays",
+    "local_evidence": {
+      "date": "2026-10-23",
+      "environment": "Windows AMD64 portable Go1.27.3",
+      "results": "Orders/model/worker/config unit tests and opt-in test compilation, datalab/smokecli regressions, go vet, go build ./..., real health-only service process smoke PASS. PostgreSQL/Inventory/SIGKILL acceptance cases require isolated native container CI; current results are in PR/Actions."
+    },
+    "diagram_validation": {
+      "date": "2026-10-23",
+      "source_commit": "450e139506f88f0f2570df12abc05a7b6c0a304a",
+      "renderer": "Mermaid 11.4.1",
+      "result": "Original semicolon label parse error reproduced; repaired PR and Orders guide sequences rendered as SVG/PNG and visually inspected. This is separate from structural Documentation checks and business runtime validation."
+    },
+    "g1": "Owner reviews code/migrations, repeat/conflict, 1000/100 stock conservation, persistent step after SIGKILL/restart and stale worker guards; green mandatory checks and accepted review precede explicit G1 acceptance. Broader roadmap stage1 also lists payment model/basic metrics, retained as a visible boundary; no G2 claim",
+    "remaining_scope": "No Payments, Kafka publisher/consumer, CancelOrder, finalization/F11, Redis, full dataset reset, capacity or A/B result",
+    "validation": {
+      "date": "2026-10-23",
+      "verified_head": "1aec8ab098bccb9b7b501285fffda06360310d19",
+      "code_source": "d09f1fe6652cc18cf88cd4ce30f604be379f2ef0",
+      "source": "docs/development/evidence/orders/VALIDATION.md",
+      "go_run": "https://github.com/Includeoyasi/faultline-lab/actions/runs/39989398467",
+      "documentation_run": "https://github.com/Includeoyasi/faultline-lab/actions/runs/39989398444",
+      "result": "Native Linux AMD64/ARM64 quality and real PostgreSQL-only/combined smoke PASS: admission conflicts, atomic failure, lease fences, 1000 attempts/100 units, process SIGKILL before Reserve and after Inventory commit, deployed API before/after PostgreSQL restart, observed metadata and scoped cleanup",
+      "boundaries": "SQL generations model takeover; no two simultaneous Orders processes, no injected lost Create response or separate SQL-connection measurement during RPC; personal Docker/WSL not started, Windows Docker/macOS runtime NOT_RUN; owner G1 acceptance not implied"
+    }
   }
 }
 ```
@@ -3560,12 +3771,12 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `4a8b8ac8a7fa096cd13d4f2edbf2c187f25081e5490653fa0f141d1e1f83c1ec` |
+| `CONTEXT_STATE.json` | `1a1fd62f1de944932125b31a4e2be55d0aa7646ad90d93bc3da7986f18b6c2b0` |
 | `tools/context_intro.md` | `91fb656b2ec7b4dcd798be45f7b78ec2452763455476ebcd55762b465ad25d2b` |
 | `tools/update_context.ps1` | `73dff2e2da1f7ea7e8fc8fe2dc70bde722f4d697c1ca7c685d297214cd133e33` |
-| `README.md` | `bdfebd2fbc801c1f05a5e6391fcfc9f4ddb5227e4ee11d75982a31ce5d0f65b7` |
+| `README.md` | `b29d761f9e961d2c18089ed1c8ee7b8a4b443ab623eaf7ba8c8c712461e6eb8c` |
 | `README.ru.md` | `d9cbe989a91bb2aa1db27ff7cfd20e30a38496bbf679b2e10dc923a390e2262e` |
-| `docs/README.md` | `9b33aa290ad15d972e0947969ae88e00e251d797e467333d11d4ad2e56f740d0` |
+| `docs/README.md` | `37abd2cb6ebaf614b6c6799454de4a313523c1e6f186e18054e5db7821745bde` |
 | `docs/ROADMAP.md` | `4cecbf9ecfd16dfef30f8ec22f2f7a592a9b47abc8de6ef8079c1be375077dee` |
 | `docs/architecture/DESIGN.md` | `f862de88c86c177aeda21bf9c99ed9fcacbf22d0579ddfc80d83782a2fdd375c` |
 | `docs/architecture/PROCESSES.md` | `dd6d00ee9d169236fe0f0d14de4b6f54d778a7cf79489f6b6a3354357e2e9ec6` |
@@ -3584,33 +3795,33 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/TASK_TRACKING.md` | `46baf95126af2e7e362d6751e957057e915a98f4b7606739178c57427aec61d8` |
 | `docs/development/REPOSITORY_SECURITY.md` | `e15d0de41447fcf81b76f4264a76483895940dc1c03f6ab809e3a626b9f8278a` |
 | `.github/CODEOWNERS` | `95de6cc3de1ba640d0ab9e2b9bfbdea79b7ce6641a8bcdb0bcef1f7607666415` |
-| `docs/development/TOOLCHAIN.md` | `0f157d8c47342cd957eddfb4e97a653da495e6ec61cb99cecd1a71ac454ab70b` |
+| `docs/development/TOOLCHAIN.md` | `1bf71b1d8c664c8c766c1ae16b3ec606868cfc4c8939755c08352419c9f0e9e1` |
 | `go.mod` | `52f08a91aac4ab4b0edf1d6838f200c210a2b198a705bc258ecf3e156bcd8192` |
 | `go.sum` | `82f6a57c35ab438d05ee37801803006774b39fe8cad86402fa03ff0af81b1baf` |
-| `cmd/orders/main.go` | `131626df0bae0819d49c3d46793809c839cacb6dbd71a93b4bc1740a04ea3e6c` |
+| `cmd/orders/main.go` | `45e34e14480d6e225361278885a948670b9d48b7a6576852c5aadd2d6b6eeed5` |
 | `cmd/inventory/main.go` | `01ff23a872198afb07aceda2a2a14e7bf0ebc21f0510ef384b0c35c69cb266b8` |
 | `cmd/payments/main.go` | `3ceb9fe70d25948079c3682ad409c4970918d30036f74afb6451858725c351c1` |
-| `build/Dockerfile` | `b8dbdcfd1d38c90bd8a06feb89fc35dd4945b3218669ae01b38b215a49be1e55` |
-| `compose.yaml` | `05a53e758aaaef80bfd0fcf6a74b30648fba848f7fc9d523bca6e58717d71e49` |
-| `tools/go.sh` | `9d0060a4cc3fde4e46d85da1bbdf470cc8b96520245b294e928f5c9117d346a2` |
+| `build/Dockerfile` | `6a34c8e886fbdfb37dfd54e5e9259f8ae2a4e10bf06b4fbb7194154f79075052` |
+| `compose.yaml` | `d1ca71da50b66aa35542adee8a4a00bfaf8f21cc5bd9de2547ce800859c94fd4` |
+| `tools/go.sh` | `a41113db0f47274c332f0ad8b899e59b8abf74366bab5499d5f97096199cbe4d` |
 | `.golangci.yml` | `44651a36c889767cd425bc12b46e07c8bffc924024de23af1176057f78f3a74a` |
 | `.github/workflows/go.yml` | `263ce3321dfe0a69fc018efca13af710962a8f53516473873c24f472b1e839a6` |
 | `.dockerignore` | `e75b314d79f67eec6dafc763b1e4c118597186f106f91a73749750d4ab0cf045` |
-| `docs/development/SERVICE_RUNTIME.md` | `189adfbcfa489f45efdd217d64640447fa4ac4a7bb6bae57aba90375fe551338` |
+| `docs/development/SERVICE_RUNTIME.md` | `5dbe5328c6252278d35817ad8cf0487b5c9c621fe5cd587e61c78c762703308c` |
 | `internal/service/config.go` | `a5cd706cc41d0fb88ea96b0ffaeff4f7ecf32bf31394ec5398efb39fba240a89` |
 | `internal/service/log.go` | `034f82245011a1a905514e9f21d16953dd4ce325cdfc720d8832d1d924a5773f` |
 | `internal/service/run.go` | `990600e1e53cfb8c50ab09c92c905c61d3be64f9b241c5bfd52393d684219b09` |
 | `internal/service/config_test.go` | `c628504d6e9ad8432832b6ceb98796589ef86140dc9cf76b8dd6b2018250014f` |
 | `internal/service/log_test.go` | `1b8f3fc837128930d5ef7a99d75a183bc7037035d5e756ea2faabe800d61f732` |
 | `internal/service/run_test.go` | `8a70e4e7ed779fd77f3823a03ab3d1fda80edd6cd7da5ca315472815c096694d` |
-| `tests/smoke/services_test.go` | `87abb6ef18d3d50588479e2a255e4777a7e6afebd1e3ee74c566286cae083b89` |
+| `tests/smoke/services_test.go` | `39d64ecb87f52ca672ee8c75c870b667253e7928e030d796cee4bf5ab7e231e8` |
 | `configs/env/local.env.example` | `e1ed433b87891f1416c0eee2143c8c5be7131002169fb6061e86ce00fb97ba12` |
 | `configs/env/container.env.example` | `968bffa2aa651eb168d4cf58fb6935ec8eeb9d636ad5e20dfb5c836be61b2c2b` |
 | `.gitignore` | `f2b608989f7ce4e52f1dd1bed1015febf699d7593df371b99ee957b308a03546` |
 | `internal/service/command.go` | `e571f49daf1664aa64c3c9db53a8e0b0d7fb5f2be18b6b2ba8b10cdce64d41b4` |
 | `internal/service/command_test.go` | `56eb2c958131551d61097e00fd66a34068332c141b81c3eaa5ec8358072a7051` |
 | `internal/service/shutdown_test.go` | `9387689f5183003faabddb0c5f6d6d5fd5c89e410fec66cf76aa94eebf25be58` |
-| `docs/development/CONTAINER_RUNTIME.md` | `152ae34e3bf0d8346a59cc828c307ea9df425e98102d725322db830944bb5678` |
+| `docs/development/CONTAINER_RUNTIME.md` | `c9ea6c6cd105873de02e2a0121ae88d29c243619d355ed457c79086aaf6e61de` |
 | `docs/development/evidence/p01/WINDOWS_SMOKE.md` | `8b17000ed9fb0c10083508e57a3d6da29ca36dc624e0d5d27be8c1f9ff837b53` |
 | `docs/development/evidence/p01/windows-2026-10-15/report.json` | `b08d9deabadc65c765d9173482e9171782aeff28affb5e7fd9bf0b201d5add65` |
 | `docs/development/evidence/p01/windows-2026-10-15/orders.jsonl` | `84ff81f5e1e0d74fc37e092972581d0243e46ef5ff6f88d7c75e8bfa4a2fe8c2` |
@@ -3674,9 +3885,9 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/database/sql/seed/inventory.sql` | `61b9efdd980a8508fd1f36e4c4e2d0a72f907cb2c5ae0a8c9afe8c75de0deb2d` |
 | `migrations/orders/0001_schema.sql` | `7a2abc0f03d1dac75ea31f86a6abfadae9532eaee42416167be45aee5d5ab16f` |
 | `migrations/payments/0001_schema.sql` | `2856144143bedd41e0380818034ae85025f18b3f40baa295c4eace2d48519af4` |
-| `internal/datalab/run_test.go` | `43c2110a0f77958a7566762f3e86ac57dd0729c89978de344ca27220d948a147` |
-| `internal/datalab/run.go` | `3da57ad1ecf2445feedc6caacca943292d84c99bbeb990168b977e1d815cc5fc` |
-| `compose.postgres.yaml` | `edab063cc996ccba4ca3e2dfaf322d6d876b7c2367d0775648e5ee161b90d1b6` |
+| `internal/datalab/run_test.go` | `ffec2b98e16460ecb382b7017680fb7d6fef1cf055f0cac77d18578fc2d39c0c` |
+| `internal/datalab/run.go` | `1af5175b5846cd4b40dc06f352402a74efca4b6e9873c85064bef9876823a4ae` |
+| `compose.postgres.yaml` | `147d79a9a14d7e65352bfde96928cadb8a1403c4aba3147f809b92b380f1df73` |
 | `internal/smoke/exec_adapter.go` | `5f903f8c590d90655b333d6988139d9276ca5e6dbb400bfff10b0af0dda0c4ba` |
 | `docs/development/POSTGRES.md` | `940d5f729ed58cd3f6b9190965f341d2006a85baee08bf9708c467c304d77310` |
 | `internal/database/config_unix_test.go` | `c8e157471af06e5ca233c8ee8e005c9ffe43166066019a53504aef5f408a2e27` |
@@ -3710,7 +3921,7 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/evidence/p02/infrastructure-images.json` | `99f4762612ea8763059ec8354c6b7fe1dba1bb92760e02bd3cf66ca4e7c24783` |
 | `docs/development/evidence/p02/windows-infrastructure-cleanup.json` | `2f7ff1d247b962053e55c83ab2857b138db6ececd44ef79d2e0a8d15769cce4f` |
 | `docs/development/evidence/p02/windows-infrastructure-report.json` | `04252a7eb6e4bd0faad678ec377f06c75c1d4e93ca5869311aa850c054a8a522` |
-| `internal/datalab/infrastructure_test.go` | `b28cc181621318ceb012d7aea563fdf0f6018875c1fb8cd4beb9bed27465930b` |
+| `internal/datalab/infrastructure_test.go` | `d4615e84d8c50001b5a2d1f7c176e152b2e7da39706d6fc438d86ecc73e3f421` |
 | `internal/infrastructure/check.go` | `d60ad61dce85e2ccdb63bb8e257ba94e523677c0eddc0b45a5896906255ae8d8` |
 | `internal/infrastructure/config.go` | `4de22b0f4c2c8c0b910cba3f414d0325fc1c71f8a26d6c6a2c0b16f3cf55c51d` |
 | `internal/infrastructure/config_test.go` | `e8d7367565dc5d9f971d400f74b67150f43fd135e1a9e6fdf758f56ea8f9b707` |
@@ -3746,7 +3957,7 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/inventory/store/config_test.go` | `704699f26c474dc6e070827a51cca3634d6848eb98e42e15b1385c5fc7c3f764` |
 | `docs/architecture/PLATFORM_EVIDENCE.md` | `627fe9d237e63bac68c26675b50a2d130176209d897cf8d917b4024233e28aa3` |
 | `docs/adr/0004-platform-evidence.md` | `a38a4602e20f43fa537e09b00495dd65e57394178c3baecc9fac4c561fcc80d6` |
-| `docs/development/RUN_METADATA.md` | `049e45f50d7e77b76d6b219728e067d08c720164340a77ef4237c496bf9269ee` |
+| `docs/development/RUN_METADATA.md` | `c83cc4dc60c2c9dad8f1136c361bd554897d98e9cc211acc8fd556d09f79847a` |
 | `docs/development/evidence/run-metadata/VALIDATION.md` | `45edce3374c7239486da84ddc801473c67255689db5bc133be42f2581b662166` |
 | `docs/development/evidence/run-metadata/windows-smoke.json` | `89341fcbe659492faeb8f545c1065a8ec7903a82097da9b56cb5c774bf333173` |
 | `docs/development/evidence/run-metadata/windows-postgres.json` | `4e7bf8c3a353d09117d9acab30bf8a77de92e6550f755412bf5ee3fba039c35b` |
@@ -3755,7 +3966,31 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/runmeta/collect.go` | `0f6ead062aeb5f935b7358d0eb1736f3ab3dac0ddc35ceead7372c95028495c6` |
 | `internal/runmeta/collect_test.go` | `a6ea9f35ae66e53366a09ba76639022082fd82d9104e4acaae9d9e65fa6860d8` |
 | `internal/smoke/metadata_test.go` | `d6892d54ac1c0b6ebc5e46949aaa666cbdd4d1ecd359368914aeef6fa7a95809` |
-| `tests/smokecli/metadata_test.go` | `821683ccc4abb578f7446dd81adaf65e00f5e7182ec888a77d9f9cb50673afe9` |
+| `tests/smokecli/metadata_test.go` | `4cd7f8981d71b801324c1baf7018c0193e7f508e849f6e289db9e5eefecbfe7e` |
+| `api/orders/v1/orders.proto` | `b78ac9a98a4678d8bff1d00c5b86590a886a88e76b41c227246fd470b114d5af` |
+| `compose.orders.yaml` | `8c42ef7afef2a7112ea8ab377acd0c421e07bf271fe78774f9121ca5f612b630` |
+| `configs/orders/local.json` | `bbc41114f8ebce78589ad655da679c3d88ef7d7ea339b6083a4977e0a1df7a47` |
+| `migrations/orders/0002_reservations.sql` | `09b3a546ecb1218f39bdc0f03bef0d873263941571f477c2be4e0b0cacd5c98e` |
+| `docs/development/ORDERS.md` | `2d88d1e15a983ea71f791b1a7b77a4792f51d18969abc87dfa81838b5cda92cb` |
+| `internal/orders/command.go` | `ad45753f1275a6e4270cc29c1352cfd7b4d1924770d5ff018fa08f053d2cac75` |
+| `internal/orders/config.go` | `f6c499619e529a50edf90496a945732303b45a6a1af2a3dd37b67142aee996b8` |
+| `internal/orders/config_test.go` | `45cf56bbbb3d87fcbb29489e32c5cfe7e0af4244251add71b68f82a9128186b7` |
+| `internal/orders/server.go` | `bc02ceaeb35838e7b6e936a1662560679aaf19013af903c2d88697cca32a7673` |
+| `internal/orders/acceptance/foundation_test.go` | `2c37b026996780cc5015f6a5a8c4214e3f27b74fa8984218d0f65c0519313540` |
+| `internal/orders/acceptance/process_test.go` | `b6cb3652e1768793710b7c628777c3257d58525bb5ac8b88736991dc2a6c761d` |
+| `internal/orders/model/model.go` | `1a66920dcdcc43b6de8c6e97686ca302a0b5dbbaaafca7db42475aa50c21fff8` |
+| `internal/orders/model/model_test.go` | `70003047c04df6791c2bf3fd8874c5cf47d3dd7711a241f04d868f6ac580163f` |
+| `internal/orders/store/claim.go` | `7bb68cbddd93cb08379352788dfd4dd05f409ed0b55b4bf49953c3a736bcb979` |
+| `internal/orders/store/close.go` | `18b2b65e9e22de5b25a73b311a75de085c82c26420e6b0d33ca2f164a0bed3ef` |
+| `internal/orders/store/config.go` | `3e2d4d33157fd57741750217268e243ed3cc2230820862e249da84de4f14ccec` |
+| `internal/orders/store/create.go` | `70a2917c7b9b16cfb71ba29150a34e2555ff6b5fbc7a4a33ed9fd7a425c6f96a` |
+| `internal/orders/store/get_by_request_key.go` | `3a2854766d719a90666208e4820ba41366b71dce3cfc9e6ca21f8efc521885ae` |
+| `internal/orders/store/get_order.go` | `41530724cb26c26ee82d8deef2b0e251d879a8935c88d045e79dda4e73c8899b` |
+| `internal/orders/store/resolve.go` | `760778b9b8be1673bf7c9eacdd01dbb3435c27d7dd5b102728ab52b105152a17` |
+| `internal/orders/store/store.go` | `63dbb2cae04e0fa7071b22b0615d10899bff2b952740de479c0f918367c70533` |
+| `internal/orders/worker/worker.go` | `f0d8731a6cb676888c16a16ab183b0e7720ebe0128298ec338cd128a05f4c001` |
+| `internal/orders/worker/worker_test.go` | `8fce4a9351bcf26a4dfa250fd376d7e534aec27c78cb1605cffd721a5839ce4c` |
+| `docs/development/evidence/orders/VALIDATION.md` | `45e0d2d27fbc66d25a329abb8f96e376dbf3fa22fccb3fd4ac05f9020945bdf2` |
 
 ## Полные самостоятельные приложения
 
@@ -3952,6 +4187,30 @@ SHA-256 относится к исходному файлу на момент с
 - [Metadata platform/resource/provenance tests](#appendix-internal-runmeta-collect-test-go) — `internal/runmeta/collect_test.go`
 - [Smoke metadata cancellation and failure tests](#appendix-internal-smoke-metadata-test-go) — `internal/smoke/metadata_test.go`
 - [Validate observed metadata in completed real smoke reports](#appendix-smokecli-real-report-metadata-test) — `tests/smokecli/metadata_test.go`
+- [api/orders/v1/orders.proto](#orders-api-orders-v1-orders-proto) — `api/orders/v1/orders.proto`
+- [compose.orders.yaml](#orders-compose-orders-yaml) — `compose.orders.yaml`
+- [configs/orders/local.json](#orders-configs-orders-local-json) — `configs/orders/local.json`
+- [migrations/orders/0002_reservations.sql](#orders-migrations-orders-0002-reservations-sql) — `migrations/orders/0002_reservations.sql`
+- [docs/development/ORDERS.md](#orders-docs-development-ORDERS-md) — `docs/development/ORDERS.md`
+- [internal/orders/command.go](#orders-internal-orders-command-go) — `internal/orders/command.go`
+- [internal/orders/config.go](#orders-internal-orders-config-go) — `internal/orders/config.go`
+- [internal/orders/config_test.go](#orders-internal-orders-config-test-go) — `internal/orders/config_test.go`
+- [internal/orders/server.go](#orders-internal-orders-server-go) — `internal/orders/server.go`
+- [internal/orders/acceptance/foundation_test.go](#orders-internal-orders-acceptance-foundation-test-go) — `internal/orders/acceptance/foundation_test.go`
+- [internal/orders/acceptance/process_test.go](#orders-internal-orders-acceptance-process-test-go) — `internal/orders/acceptance/process_test.go`
+- [internal/orders/model/model.go](#orders-internal-orders-model-model-go) — `internal/orders/model/model.go`
+- [internal/orders/model/model_test.go](#orders-internal-orders-model-model-test-go) — `internal/orders/model/model_test.go`
+- [internal/orders/store/claim.go](#orders-internal-orders-store-claim-go) — `internal/orders/store/claim.go`
+- [internal/orders/store/close.go](#orders-internal-orders-store-close-go) — `internal/orders/store/close.go`
+- [internal/orders/store/config.go](#orders-internal-orders-store-config-go) — `internal/orders/store/config.go`
+- [internal/orders/store/create.go](#orders-internal-orders-store-create-go) — `internal/orders/store/create.go`
+- [internal/orders/store/get_by_request_key.go](#orders-internal-orders-store-get-by-request-key-go) — `internal/orders/store/get_by_request_key.go`
+- [internal/orders/store/get_order.go](#orders-internal-orders-store-get-order-go) — `internal/orders/store/get_order.go`
+- [internal/orders/store/resolve.go](#orders-internal-orders-store-resolve-go) — `internal/orders/store/resolve.go`
+- [internal/orders/store/store.go](#orders-internal-orders-store-store-go) — `internal/orders/store/store.go`
+- [internal/orders/worker/worker.go](#orders-internal-orders-worker-worker-go) — `internal/orders/worker/worker.go`
+- [internal/orders/worker/worker_test.go](#orders-internal-orders-worker-worker-test-go) — `internal/orders/worker/worker_test.go`
+- [Orders native acceptance and crash evidence — 2026-10-23](#orders-native-validation-2026-10-23) — `docs/development/evidence/orders/VALIDATION.md`
 
 <a id="appendix-readme-en"></a>
 
@@ -3960,7 +4219,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
 </p>
 
 <p align="center">
@@ -3978,14 +4237,14 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Project guide
 
 The repository contains three Go service processes with explicit configuration, gRPC health, JSON logs and bounded shutdown. The shop workflow, infrastructure and experiments follow the [roadmap](#appendix-roadmap); the architecture diagram below describes their intended boundaries.
 
-[Build tools](#appendix-toolchain) · [Runtime guide](#appendix-container-runtime) · [Inventory API](#inventory-docs-development-inventory-md) · [Go container smoke](#go-smoke-guide).
+[Build tools](#appendix-toolchain) · [Runtime guide](#appendix-container-runtime) · [Inventory API](#inventory-docs-development-inventory-md) · [Orders API](#orders-docs-development-ORDERS-md) · [Go container smoke](#go-smoke-guide).
 
 **Live work and review status:** [Issues](https://github.com/Includeoyasi/faultline-lab/issues), [pull requests](https://github.com/Includeoyasi/faultline-lab/pulls) and [milestones](https://github.com/Includeoyasi/faultline-lab/milestones). The repository keeps specifications and dated evidence, including the [Windows baseline](#windows-smoke-proof), rather than a second progress board. Performance claims require their own measurements.
 
@@ -4073,7 +4332,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience |
 | **G4** | Reproducible engineering lab |
 
-The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
 
 [Engineering decisions and review](#appendix-engineering-decisions) traces owner feedback through the rationale, changes and verification. It also links the separate [Go smoke task](https://github.com/Includeoyasi/faultline-lab/issues/9); its execution and review are tracked in GitHub.
 
@@ -4141,7 +4400,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
 </p>
 
 <p align="center">
@@ -4159,7 +4418,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Навигация по проекту
@@ -4243,7 +4502,7 @@ flowchart LR
 
 G0 — архитектура; G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Порядок и критерии приёмки описаны в workflow; факты принятия сохраняются с датой и источником.
 
-[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
 
 [Инженерные решения и ревью](#appendix-engineering-decisions) связывают замечания владельца с обоснованием, изменениями и проверками. Выполнение переноса контейнерного smoke на Go и его ревью ведутся в [задаче #9](https://github.com/Includeoyasi/faultline-lab/issues/9).
 
@@ -4303,6 +4562,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Поднять три runtime-контейнера | [Контейнерный каркас](#appendix-container-runtime) — сборка, health, остановка и smoke с отчётом |
 | Подготовить базы и исходные данные | [PostgreSQL](#p02-docs-development-postgres-md) — роли, миграции, seed, схемы взаимодействий и reset |
 | Работать со складом | [Inventory](#inventory-docs-development-inventory-md) — API, резервы, повторы, отмена и проверка транзакций |
+| Принимать заказы | [Orders](#orders-docs-development-ORDERS-md) — приём, долговечное резервирование, восстановление и критерии G1 |
 | Запустить инфраструктуру вместе | [Kafka и Redis](#p02-infra-docs-development-infrastructure-md) — общий smoke, ACL, TTL, сохранность Kafka и очистка |
 | Прочитать платформы и ресурсы отчёта | [Метаданные запуска](#appendix-docs-development-run-metadata-md) — происхождение значений, неизвестные поля и ограничения |
 | Разобрать смену Kafka publisher и повторы | [Публикация Kafka](#p02-infra-docs-architecture-kafka-publishing-md) — проблема, три механизма и совместные сценарии на схемах |
@@ -4317,7 +4577,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Проверить отдельный backlog | [Перенос smoke на Go](#appendix-go-smoke-backlog) — задача #9, границы и критерии |
 | Проверить права и защиту main | [Безопасность репозитория](#appendix-repository-security) — действующая защита и переход на аккаунт исполнителя |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
@@ -4332,7 +4592,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
 - [ADR 0002](#appendix-adr-0002): согласованный порядок фиксации решений в PR, ADR и обзорной странице.
 - [ADR 0003](#appendix-adr-0003): принятое решение о Go smoke и его последствия.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -5432,7 +5692,7 @@ Codex (AI-Your-Bro) — исполнитель: готовит проектны�
 
 #### Стандарт код-ревью
 
-[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/.github/pull_request_template.md) содержит краткий применимый чек-лист.
 
 После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; владелец проекта рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению владельца проекта или действие самого владельца проекта.
 
@@ -5693,7 +5953,7 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
+Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
@@ -5892,7 +6152,7 @@ Go-модуль, закреплённые инструменты и нативн
 - Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
 - Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
 
-Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
 
 <a id="appendix-lab-boundary"></a>
 
@@ -6186,13 +6446,13 @@ Docker рекомендует разделять ответственности 
 
 ### Баннер Faultline Lab
 
-Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner.svg).
+Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/assets/banner.svg).
 
 #### Задание
 
 Подготовить три альтернативных варианта с акцентом на технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее. Сделаны векторные композиции с читаемым названием, тёмным текстом на светлом фоне и встроенными title/description. Внешних шрифтов, скриптов и удалённых графических зависимостей нет.
 
-![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner-concepts/comparison.png)
+![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/assets/banner-concepts/comparison.png)
 
 | Вариант | Образ | Палитра | Статус |
 | :--- | :--- | :--- | :--- |
@@ -6202,13 +6462,13 @@ Docker рекомендует разделять ответственности 
 
 #### Выбранное решение
 
-![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner-concepts/02-experiment-flow.png)
+![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/assets/banner-concepts/02-experiment-flow.png)
 
 Абстрактные линии проходят через область наблюдения. Это метафора исследования поведения системы и сравнения изменений; линии не являются графиком измеренных результатов. Композиция не зависит от домена магазина и подходит будущим подключаемым бизнесам.
 
 Размер SVG — 1280 × 420; README задаёт ширину 100%. Исходник масштабируется, PNG служит предварительным просмотром. Основная подпись: **Explore how systems behave.** Нижняя последовательность: **Hypothesis → Experiment → Evidence**.
 
-Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
+Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
 
 Баннеры отрендерены локально и визуально просмотрены на общем листе. Проверены отсутствие обрезанного текста и соответствие композиций заданию. Отдельный preview выбранного варианта используется для проверки основного баннера. Выбранный вариант слит в main через [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4), merge commit 8c392b8. Проверка отрисовки нового README на GitHub пока не выполнялась.
 
@@ -6346,7 +6606,7 @@ P01 не достигает всей контрольной точки G1: ба�
 | GitHub Issue | Текущая стадия, исполнитель, критерии выполнения, блокеры и связь с PR |
 | GitHub PR | Diff, результаты проверок, замечания и решение владельца по HEAD |
 | ADR | Существенное решение, варианты, последствия и основание принятия |
-| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
+| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
 
 #### Стадии в Issue
 
@@ -6466,7 +6726,7 @@ GitHub разрешает machine account, зарегистрированный 
 
 Исходный набор версий проверен по официальным источникам 15 октября 2026 года: [Go releases](https://go.dev/dl/), [golangci-lint releases](https://github.com/golangci/golangci-lint/releases/tag/v2.14.0), Go module proxy и Docker Registry. Оба закреплённых digest относятся к multi-platform индексам, а не к одному варианту CPU.
 
-21 октября Go обновлён до [1.27.3](https://go.dev/doc/devel/release#go1.27.3), чтобы устранить блокирующий CI security finding GO-2026-6809 в стандартной библиотеке crypto/x509. SHA-256 индекса получен из официального Docker Registry и сверен с байтами ответа; наличие Linux AMD64 и ARM64 подтверждено в [данных проверки индекса](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/development/evidence/go-toolchain/go-1.27.3-registry.json). Пересборка этим toolchain обновляет стандартную библиотеку и в статических runtime-бинарниках. Исторические evidence и установленный host Go 1.27.2 сохраняются; основной путь запуска проверок остаётся контейнерным.
+21 октября Go обновлён до [1.27.3](https://go.dev/doc/devel/release#go1.27.3), чтобы устранить блокирующий CI security finding GO-2026-6809 в стандартной библиотеке crypto/x509. SHA-256 индекса получен из официального Docker Registry и сверен с байтами ответа; наличие Linux AMD64 и ARM64 подтверждено в [данных проверки индекса](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/development/evidence/go-toolchain/go-1.27.3-registry.json). Пересборка этим toolchain обновляет стандартную библиотеку и в статических runtime-бинарниках. Исторические evidence и установленный host Go 1.27.2 сохраняются; основной путь запуска проверок остаётся контейнерным.
 
 gRPC v1.84.0 добавлен для реального health API в P01-04; версия проверена через официальный Go proxy. JSON-логи использует стандартный log/slog. Инструменты закреплены через [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools). PostgreSQL использует pgx v5.11.0; инфраструктурные проверки — franz-go v1.22.2 и go-redis v9.23.0, закреплённые в go.mod/go.sum.
 
@@ -6485,7 +6745,7 @@ docker compose run --rm toolchain service-smoke
 
 `versions` выводит фактические Go, golangci-lint, build metadata goimports и версию govulncheck. `generate` создаёт protobuf-код и нормализует импорты. `check` повторяет генерацию и отклоняет diff в API, затем проверяет gofmt/goimports, tidy без diff, verify, build, согласованные линтеры, unit/race commands и govulncheck. Ошибка любого шага завершает команду с ненулевым кодом. Набор линтеров — govet, staticcheck, errcheck, ineffassign, unused.
 
-`build` создаёт Linux-бинарники bin/orders, bin/inventory, bin/payments для архитектуры toolchain-контейнера и выводит build metadata. Они игнорируются Git. На Windows эти Linux-бинарники не запускаются напрямую. `service-smoke` проверяет три отдельных процесса: health, JSON-диагностику ошибок, выход и независимость; Inventory запускается явной командой `health-only`. Его бизнес-RPC и PostgreSQL проверяются отдельным [интеграционным прогоном](#inventory-docs-development-inventory-md).
+`build` создаёт Linux-бинарники bin/orders, bin/inventory, bin/payments для архитектуры toolchain-контейнера и выводит build metadata. Они игнорируются Git. На Windows эти Linux-бинарники не запускаются напрямую. `service-smoke` проверяет три отдельных процесса: health, JSON-диагностику ошибок, выход и независимость; Orders и Inventory запускаются явной командой `health-only`. Их бизнес-RPC и PostgreSQL проверяются отдельным интеграционным прогоном: [Inventory](#inventory-docs-development-inventory-md), [Orders](#orders-docs-development-ORDERS-md).
 
 Для исправления форматирования: `docker compose run --rm toolchain format`. Эта команда меняет Go-исходники в рабочей копии. Неподдерживаемая команда и лишние аргументы дают exit code 2.
 
@@ -6654,12 +6914,12 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/Includeoyasi/faultline-lab/internal/service"
+	"github.com/Includeoyasi/faultline-lab/internal/orders"
 )
 
 func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
-	exitCode := service.Execute(ctx, "orders", os.Args[1:], os.LookupEnv, os.Stderr)
+	exitCode := orders.Execute(ctx, os.Args[1:], os.LookupEnv, os.Stderr)
 	stop()
 	os.Exit(exitCode)
 }
@@ -6773,13 +7033,17 @@ COPY migrations ./migrations
 RUN CGO_ENABLED=0 go build -trimpath -o /out/labdata ./cmd/labdata \
     && CGO_ENABLED=0 go test -c -o /out/database.test ./internal/database \
     && CGO_ENABLED=0 go test -c -o /out/inventory.test ./internal/inventory/store \
-    && CGO_ENABLED=0 go build -trimpath -o /out/inventory ./cmd/inventory
+    && CGO_ENABLED=0 go test -c -o /out/orders.test ./internal/orders/acceptance \
+    && CGO_ENABLED=0 go build -trimpath -o /out/inventory ./cmd/inventory \
+    && CGO_ENABLED=0 go build -trimpath -o /out/orders ./cmd/orders
 
 FROM scratch AS labdata
 COPY --from=labdata-build /out/labdata /app/labdata
 COPY --from=labdata-build /out/database.test /app/database.test
 COPY --from=labdata-build /out/inventory.test /app/inventory.test
 COPY --from=labdata-build /out/inventory /app/inventory
+COPY --from=labdata-build /out/orders.test /app/orders.test
+COPY --from=labdata-build /out/orders /app/orders
 USER 65532:65532
 ENTRYPOINT ["/app/labdata"]
 ```
@@ -6815,6 +7079,7 @@ x-service-build: &service-build
 services:
   orders:
     <<: *runtime
+    command: [health-only]
     build:
       <<: *service-build
       args:
@@ -6909,7 +7174,8 @@ source_files() {
 
 generate() {
   protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative api/inventory/v1/inventory.proto
-  goimports -w api/inventory/v1
+  protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative api/orders/v1/orders.proto
+  goimports -w api/inventory/v1 api/orders/v1
 }
 
 case "${1:-versions}" in
@@ -7133,7 +7399,7 @@ node_modules
 
 ### Сервисы: конфигурация, логи и жизненный цикл
 
-Три независимых процесса Orders, Inventory и Payments проверяют настройки, пишут JSON в stderr и обслуживают стандартный `grpc.health.v1.Health/Check`. Этот документ описывает общий жизненный цикл. [Бизнес-API Inventory](#inventory-docs-development-inventory-md) использует PostgreSQL; Orders и Payments сохраняют каркас. Для проверки Inventory без БД предусмотрена явная команда `health-only`, подтверждающая только работу gRPC-каркаса.
+Три независимых процесса Orders, Inventory и Payments проверяют настройки, пишут JSON в stderr и обслуживают стандартный `grpc.health.v1.Health/Check`. Этот документ описывает общий жизненный цикл. [Inventory](#inventory-docs-development-inventory-md) и [Orders](#orders-docs-development-ORDERS-md) используют PostgreSQL; Orders вызывает Inventory по gRPC, а Payments сохраняет каркас. Для независимой проверки Orders и Inventory предусмотрена явная команда `health-only`, подтверждающая только работу gRPC-каркаса.
 
 Конфигурация и базовый процесс введены в PR #6/#7; контейнерный жизненный цикл — в [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). Это исторические источники реализации. Актуальные задачи и ревью — в [GitHub](https://github.com/Includeoyasi/faultline-lab/issues).
 
@@ -7176,7 +7442,7 @@ flowchart LR
 | :--- | :--- | :--- |
 | Listener локального процесса | [local.env.example](#appendix-local-env-example) | `localhost:50051`; для нескольких процессов на одном хосте задаются разные порты |
 | Listener в контейнере | [container.env.example](#appendix-container-env-example) | `:50051` — явный wildcard внутри сетевого пространства контейнера; разные контейнеры могут использовать один внутренний порт |
-| Endpoint другого сервиса | Будущая deployment-конфигурация, когда появятся клиенты | Имена Compose DNS, например `inventory:50051`; IP контейнеров не закрепляются |
+| Endpoint другого сервиса | Deployment-конфигурация Orders; `inventory_target` в его профиле | Имена Compose DNS, например `inventory:50051`; IP контейнеров не закрепляются |
 | Доступ с хоста | Явная публикация при запуске | Для локальной разработки привязка только к loopback; без `-p` порт не публикуется на интерфейсах хоста |
 
 Образцы содержат только несекретные настройки. Личные копии `*.env` игнорируются Git и исключены из Docker build context; окружение передаёт launcher, приложение не загружает dotenv самостоятельно. Loopback в тестах — изолированный fixture с динамическим портом, а в наблюдённых логах — фактический адрес запущенного тестового процесса.
@@ -7936,7 +8202,7 @@ func freeAddress(t *testing.T) string {
 func start(t *testing.T, binary string, overrides map[string]string) *process {
 	t.Helper()
 	p := &process{cmd: exec.Command(binary), logs: &logCapture{started: make(chan string, 1)}, done: make(chan struct{})}
-	if strings.TrimSuffix(filepath.Base(binary), ".exe") == "inventory" {
+	if name := strings.TrimSuffix(filepath.Base(binary), ".exe"); name == "inventory" || name == "orders" {
 		p.cmd.Args = append(p.cmd.Args, "health-only")
 	}
 	values := map[string]string{"FL_GRPC_ADDR": freeAddress(t)}
@@ -8148,7 +8414,7 @@ func assertFailure(t *testing.T, binary, service string, overrides map[string]st
 	ctx, cancel := context.WithTimeout(t.Context(), 10*time.Second)
 	defer cancel()
 	cmd := exec.CommandContext(ctx, binary)
-	if strings.TrimSuffix(filepath.Base(binary), ".exe") == "inventory" {
+	if name := strings.TrimSuffix(filepath.Base(binary), ".exe"); name == "inventory" || name == "orders" {
 		cmd.Args = append(cmd.Args, "health-only")
 	}
 	cmd.Env = childEnvironment(overrides)
@@ -8636,7 +8902,7 @@ flowchart TB
 
 [Dockerfile](#appendix-toolchain-dockerfile) использует закреплённый [toolchain](#appendix-toolchain) как stage общего multi-stage Dockerfile. Сервис выбирается build argument, разрешены только orders/inventory/payments. Финальный `scratch` содержит один статический бинарник и запускает его напрямую: без компилятора, shell, root и промежуточного процесса вместо PID 1. CA bundle и timezone database сейчас не требуются; перед появлением TLS-клиентов состав образа пересматривается явно.
 
-[Compose](#appendix-compose-toolchain) задаёт read-only root filesystem, `cap_drop: ALL`, `no-new-privileges`, внутреннюю сеть и отсутствие публикации портов. Базовый каркас не получает host mounts или Docker socket; Inventory использует явную команду `health-only`. Его отдельный [бизнес-профиль](#inventory-docs-development-inventory-md) подключает конфигурацию, один прикладной секрет и сеть данных. Toolchain остаётся временным сервисом профиля tools; сборка runtime использует его stage напрямую.
+[Compose](#appendix-compose-toolchain) задаёт read-only root filesystem, `cap_drop: ALL`, `no-new-privileges`, внутреннюю сеть и отсутствие публикации портов. Базовый каркас не получает host mounts или Docker socket; Orders и Inventory используют явную команду `health-only`. Их [профили Inventory](#inventory-docs-development-inventory-md) и [Orders](#orders-docs-development-ORDERS-md) подключают конфигурацию, по одному прикладному секрету и сеть данных. Toolchain остаётся временным сервисом профиля tools; сборка runtime использует его stage напрямую.
 
 #### Требования и запуск
 
@@ -9893,7 +10159,7 @@ JSON schema version 2 сохраняет `run_id`, `project`, `result`, `service
 
 Отчёт не содержит полного inspect Env или разрешённого Compose-конфига. Пути checkout и домашнего каталога редактируются в диагностике. Smoke использует несекретный профиль; сторонние произвольные логи перед публикацией нужно проверять отдельно. Это проверка каркаса, а не измерение бизнес-корректности или capacity.
 
-После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
+После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
 
 <a id="go-smoke-main"></a>
 
@@ -16828,10 +17094,10 @@ func metadataFixture(args []string) (command.Output, bool) {
 	case args[0] == "info":
 		return command.Output{Stdout: `{"os":"linux","arch":"amd64","cpus":6,"memory":2147483648,"version":"29.0.0"}`}, true
 	case args[0] == "compose" && slices.Contains(args, "config"):
-		return command.Output{Stdout: `{"services":{"postgres":{},"kafka":{},"redis":{},"inventory":{}},"private":"` + strings.Join([]string{"", "Users", "private"}, "/") + ` PASSWORD=metadata-secret"}`}, true
+		return command.Output{Stdout: `{"services":{"postgres":{},"kafka":{},"redis":{},"inventory":{},"orders":{}},"private":"` + strings.Join([]string{"", "Users", "private"}, "/") + ` PASSWORD=metadata-secret"}`}, true
 	case args[0] == "compose" && slices.Contains(args, "ps"):
 		name := args[len(args)-1]
-		index := slices.Index([]string{"postgres", "kafka", "redis", "inventory"}, name)
+		index := slices.Index([]string{"postgres", "kafka", "redis", "inventory", "orders"}, name)
 		return command.Output{Stdout: strings.Repeat(string(rune('a'+index)), 64)}, true
 	case args[0] == "compose" && slices.Contains(args, "version"):
 		return command.Output{Stdout: "5.0.0"}, true
@@ -16875,7 +17141,7 @@ func TestRunCleanupAndReports(t *testing.T) {
 			defer cancel()
 			cleaned := false
 			imageExists := false
-			inventoryStarted := false
+			inventoryStarted, ordersStarted := false, false
 			execute := func(commandCtx context.Context, program string, args []string) (command.Output, error) {
 				if program != "docker" {
 					t.Fatal("unexpected executable")
@@ -16883,7 +17149,10 @@ func TestRunCleanupAndReports(t *testing.T) {
 				if slices.Contains(args, "up") && slices.Contains(args, "inventory") {
 					inventoryStarted = true
 				}
-				if args[0] == "compose" && slices.Contains(args, "config") && (!inventoryStarted || !slices.Contains(args, "compose.inventory.yaml")) {
+				if slices.Contains(args, "up") && slices.Contains(args, "orders") {
+					ordersStarted = true
+				}
+				if args[0] == "compose" && slices.Contains(args, "config") && (!inventoryStarted || !ordersStarted || !slices.Contains(args, "compose.orders.yaml") || !slices.Contains(args, "compose.inventory.yaml")) {
 					t.Fatal("metadata must observe the started Inventory business profile")
 				}
 				if scenario == "metadata-cancel" && args[0] == "info" {
@@ -16964,8 +17233,12 @@ func TestRunCleanupAndReports(t *testing.T) {
 				t.Fatal("postgres-only metadata missing")
 			}
 			inventory := saved.Environment.Services["inventory"]
+			orders := saved.Environment.Services["orders"]
 			if wantSuccess && scenario != "metadata-missing" && (inventory.Image.Status != "KNOWN" || inventory.Usage.Status != "MEASURED") {
 				t.Fatal("Inventory business container metadata missing")
+			}
+			if wantSuccess && scenario != "metadata-missing" && (orders.Image.Status != "KNOWN" || orders.Usage.Status != "MEASURED") {
+				t.Fatal("Orders metadata missing")
 			}
 			if strings.Contains(string(data), "metadata-secret") || strings.Contains(string(data), strings.Join([]string{"", "Users", "private"}, "/")) {
 				t.Fatal("raw Compose data leaked")
@@ -17179,13 +17452,14 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	env := []string{}
 	for _, item := range os.Environ() {
 		key, _, _ := strings.Cut(item, "=")
-		if !strings.EqualFold(key, "FL_PG_SECRETS_DIR") && !strings.EqualFold(key, "FL_INFRA_SECRETS_DIR") && !strings.EqualFold(key, "FL_INVENTORY_DATASET_ID") {
+		if !strings.EqualFold(key, "FL_PG_SECRETS_DIR") && !strings.EqualFold(key, "FL_INFRA_SECRETS_DIR") && !strings.EqualFold(key, "FL_INVENTORY_DATASET_ID") && !strings.EqualFold(key, "FL_ORDERS_DATASET_ID") {
 			env = append(env, item)
 		}
 	}
 	env = append(env, "FL_PG_SECRETS_DIR="+cfg.Secrets)
 	// Each disposable database gets a unique namespace, independent of test keys.
 	env = append(env, "FL_INVENTORY_DATASET_ID="+project)
+	env = append(env, "FL_ORDERS_DATASET_ID="+project)
 	if fullStack {
 		env = append(env, "FL_INFRA_SECRETS_DIR="+infraCfg.Secrets)
 	}
@@ -17197,7 +17471,7 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	if fullStack {
 		services = append(services, "kafka", "redis")
 	}
-	observedServices := append(append([]string{}, services...), "inventory")
+	observedServices := append(append([]string{}, services...), "inventory", "orders")
 	evidence := report{SchemaVersion: 1, Project: project, Started: time.Now().UTC(), Result: "FAIL", Cleanup: "PENDING", Events: []event{}, Environment: runmeta.New(observedServices)}
 	save := func() error {
 		data, e := json.MarshalIndent(evidence, "", "  ")
@@ -17271,7 +17545,7 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	}
 	mayExist = true
 	buildServices := []string{"dbtool"}
-	buildServices = append(buildServices, "inventory")
+	buildServices = append(buildServices, "inventory", "orders")
 	if fullStack {
 		buildServices = append(buildServices, "infrastructure-check")
 	}
@@ -17279,7 +17553,7 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	defer func() {
 		logCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
-		logServices := append(append([]string{}, services...), "inventory")
+		logServices := append(append([]string{}, services...), "inventory", "orders")
 		_, _ = call(logCtx, "dependency logs", 5*time.Second, compose(append([]string{"logs", "--no-color", "--tail", "200"}, logServices...)...)...)
 	}()
 	if _, err = call(ctx, "build dbtool", 10*time.Minute, compose(append([]string{"build"}, buildServices...)...)...); err != nil {
@@ -17308,11 +17582,20 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	var deployed []string
 	for index, value := range base {
 		if value == "-p" {
-			deployed = append(append(append([]string{}, base[:index]...), "-f", "compose.inventory.yaml"), base[index:]...)
+			deployed = append(append(append([]string{}, base[:index]...), "-f", "compose.inventory.yaml", "-f", "compose.orders.yaml"), base[index:]...)
 			break
 		}
 	}
 	_, err = call(ctx, "start Inventory business container", 60*time.Second, append(deployed, "up", "-d", "--no-deps", "--wait", "--wait-timeout", "45", "inventory")...)
+	if err != nil {
+		return err
+	}
+	// Exercise controlled Orders crash windows before starting its autonomous
+	// deployment worker, so it cannot consume the tests' deliberately paused jobs.
+	if _, err = call(ctx, "Orders admission, 1000/100 contention and process crash recovery", 5*time.Minute, compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "-e", "FL_INVENTORY_TARGET=inventory:50051", "--entrypoint", "/app/orders.test", "dbtool", "-test.run=^TestOrders(Foundation|ProcessCrash)$", "-test.v", "-test.timeout=270s")...); err != nil {
+		return err
+	}
+	_, err = call(ctx, "start Orders business container", 60*time.Second, append(deployed, "up", "-d", "--no-deps", "--wait", "--wait-timeout", "45", "orders")...)
 	// Observe the business container with its effective overlay, before its
 	// functional probes. Raw config bypasses call() to keep secrets out of logs.
 	evidence.Environment = runmeta.Collect(ctx, func(ctx context.Context, args []string) (string, error) {
@@ -17330,6 +17613,13 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 		return e
 	}
 	if err = deployedProbe("Inventory deployed gRPC API"); err != nil {
+		return err
+	}
+	ordersProbe := func(stage string) error {
+		_, e := call(ctx, stage, 45*time.Second, compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "-e", "FL_ORDERS_TARGET=orders:50051", "--entrypoint", "/app/orders.test", "dbtool", "-test.run=^TestOrdersDeployed$", "-test.v", "-test.timeout=30s")...)
+		return e
+	}
+	if err = ordersProbe("Orders deployed admission and reserve API"); err != nil {
 		return err
 	}
 	// Inventory tests add owned fixtures; capture the baseline after their writes.
@@ -17370,6 +17660,9 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 		return err
 	}
 	if err = deployedProbe("Inventory deployed API after PostgreSQL restart"); err != nil {
+		return err
+	}
+	if err = ordersProbe("Orders deployed API after PostgreSQL restart"); err != nil {
 		return err
 	}
 	if fullStack {
@@ -17450,6 +17743,7 @@ services:
       FL_DATA_CONFIG: /etc/faultline/postgres.json
       FL_DATA_SECRETS: /run/secrets
       FL_INVENTORY_DATASET_ID: ${FL_INVENTORY_DATASET_ID:-}
+      FL_ORDERS_DATASET_ID: ${FL_ORDERS_DATASET_ID:-}
     volumes:
       - ./configs/postgres/local.json:/etc/faultline/postgres.json:ro
     secrets:
@@ -18839,7 +19133,7 @@ flowchart TB
 
 Kafka работает в KRaft с явными broker/controller listeners, статическим quorum и постоянным cluster ID. Автоматическое создание топиков выключено. Один broker не обеспечивает репликационную доступность: `acks=all` здесь означает подтверждение единственным ISR. Сохраняется проверка штатного restart, а не аварии диска/хоста.
 
-Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/199f6912701aac70a04d9e07e270ebb4520c9f98/docs/development/POSTGRES.md#подготовка-стенда).
+Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/development/POSTGRES.md#подготовка-стенда).
 
 Контейнеры зависимостей и runtime-проверок непривилегированные, с read-only root, без capabilities и с `no-new-privileges`; запись разрешена в явные volume/tmpfs. Временный toolchain имеет отдельные права для сборки в workspace, описанные в [его руководстве](#appendix-toolchain). Порты доступны через DNS внутренней сети: `postgres`, `kafka:9092`, `redis:6379`. Kafka PLAINTEXT и Redis без TLS допустимы только в этом изолированном локальном профиле; удалённое размещение требует отдельного профиля аутентификации, TLS и сетевых правил.
 
@@ -19221,14 +19515,14 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 			ctx, cancel := context.WithCancel(t.Context())
 			defer cancel()
 			cleaned, logged, afterCalled := false, false, false
-			inventoryStarted := false
+			inventoryStarted, ordersStarted := false, false
 			var password, passwordHash string
 			checkpoint := `{"version":1,"topic":"faultline-smoke","partition":0,"offset":7,"key":"checkpoint","value":"expected"}`
 			execute := func(commandCtx context.Context, program string, args []string) (command.Output, error) {
 				if program != "docker" {
 					t.Fatal("unexpected executable")
 				}
-				if args[0] == "compose" && slices.Contains(args, "config") && (!inventoryStarted || !slices.Contains(args, "compose.inventory.yaml") || !slices.Contains(args, "compose.infrastructure.yaml")) {
+				if args[0] == "compose" && slices.Contains(args, "config") && (!inventoryStarted || !ordersStarted || !slices.Contains(args, "compose.orders.yaml") || !slices.Contains(args, "compose.inventory.yaml") || !slices.Contains(args, "compose.infrastructure.yaml")) {
 					t.Fatal("metadata must observe the combined Inventory business profile")
 				}
 				if scenario == "metadata-cancel" && args[0] == "info" {
@@ -19273,7 +19567,12 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 					}
 				}
 				if slices.Contains(args, "up") {
-					if slices.Contains(args, "inventory") {
+					if slices.Contains(args, "orders") {
+						ordersStarted = true
+						if !slices.Contains(args, "compose.orders.yaml") {
+							t.Fatal("Orders overlay missing")
+						}
+					} else if slices.Contains(args, "inventory") {
 						inventoryStarted = true
 						if !slices.Contains(args, "compose.inventory.yaml") || !slices.Contains(args, "--no-deps") {
 							t.Fatal("business start lost its isolated overlay")
@@ -19337,7 +19636,7 @@ func TestCombinedInfrastructureLifecycle(t *testing.T) {
 				t.Fatal("incorrect saved verdict")
 			}
 			if scenario == "success" {
-				for _, service := range []string{"postgres", "kafka", "redis", "inventory"} {
+				for _, service := range []string{"postgres", "kafka", "redis", "inventory", "orders"} {
 					if saved.Environment.Services[service].Image.Status != "KNOWN" || saved.Environment.Services[service].Usage.Status != "MEASURED" {
 						t.Fatal("combined metadata missing", service)
 					}
@@ -22579,7 +22878,7 @@ flowchart LR
 | `limits` | Значения `HostConfig.Memory` в байтах и `HostConfig.NanoCpus` в миллиардных долях CPU |
 | `usage_snapshot` | Один стартовый снимок `docker stats`: время, CPU в процентах и используемая память в байтах |
 
-`KNOWN` означает полученное значение; `UNKNOWN` содержит причину отсутствия. Нулевой лимит имеет статус `NOT_CONFIGURED`: ограничение не задано **в этом поле**, но возможны quota/cpuset и ограничения родительской группы. `NOT_MEASURED` отличается от измеренного нулевого потребления. Снимок Docker stats снимается после старта наблюдаемых контейнеров, до проверок их API; это не измерение нагрузки, RSS или capacity. В `labdata` этому предшествуют подготовка PostgreSQL и проверки хранилища, необходимые для запуска бизнес-контейнера Inventory.
+`KNOWN` означает полученное значение; `UNKNOWN` содержит причину отсутствия. Нулевой лимит имеет статус `NOT_CONFIGURED`: ограничение не задано **в этом поле**, но возможны quota/cpuset и ограничения родительской группы. `NOT_MEASURED` отличается от измеренного нулевого потребления. Снимок Docker stats снимается после старта наблюдаемых контейнеров, до проверок их API; это не измерение нагрузки, RSS или capacity. В `labdata` этому предшествуют подготовка PostgreSQL и проверки хранилища, необходимые для запуска бизнес-контейнеров Inventory и Orders.
 
 | Пример | Backend / image | Запрос / image | Вывод |
 | :--- | :--- | :--- | :--- |
@@ -22588,7 +22887,7 @@ flowchart LR
 
 Совпадение платформ не доказывает native execution. `execution_profile=UNVERIFIED` и `comparison_eligibility=NOT_EVALUATED`: полный допуск A/B по F03/F06 добавляется перед сравнительными экспериментами. Функциональный результат и пригодность измерений — разные выводы.
 
-Покрытие: Orders/Inventory/Payments в `smoke`; PostgreSQL и бизнес-контейнер Inventory в `labdata smoke`; дополнительно Kafka/Redis в режиме `-infrastructure`. Inventory наблюдается с последним overlay `compose.inventory.yaml`, который включает его бизнес-API. Платформа временных `run --rm` инструментов не выводится из их тегов. Недоступный inspect и частичный запуск сохраняют известные факты и причины неизвестности; если запуск не дошёл до сбора, значения остаются неизвестными. Отмена прекращает новые запросы и сохраняет адресную очистку. Общий бюджет сбора — 30 секунд, на команду — пять секунд. Полный Compose config, inspect, stderr, секреты и домашние пути не сохраняются в новом блоке.
+Покрытие: Orders/Inventory/Payments в `smoke`; PostgreSQL и бизнес-контейнеры Inventory/Orders в `labdata smoke`; дополнительно Kafka/Redis в режиме `-infrastructure`. Бизнес-контейнеры наблюдаются с эффективными overlay `compose.inventory.yaml` и `compose.orders.yaml`. Платформа временных `run --rm` инструментов не выводится из их тегов. Недоступный inspect и частичный запуск сохраняют известные факты и причины неизвестности; если запуск не дошёл до сбора, значения остаются неизвестными. Отмена прекращает новые запросы и сохраняет адресную очистку. Общий бюджет сбора — 30 секунд, на команду — пять секунд. Полный Compose config, inspect, stderr, секреты и домашние пути не сохраняются в новом блоке.
 
 CI отдельно проверяет полноту метаданных успешных прогонов в своём известном профиле. Эта проверка читает сохранённые отчёты и не меняет функциональный exit-код обычного CLI.
 
@@ -23806,8 +24105,8 @@ func TestSuccessfulReportsHaveObservedMetadata(t *testing.T) {
 		services []string
 	}{
 		{"smoke", 3, []string{"orders", "inventory", "payments"}},
-		{"postgres", 1, []string{"postgres", "inventory"}},
-		{"infrastructure", 1, []string{"postgres", "kafka", "redis", "inventory"}},
+		{"postgres", 1, []string{"postgres", "inventory", "orders"}},
+		{"infrastructure", 1, []string{"postgres", "kafka", "redis", "inventory", "orders"}},
 	} {
 		t.Run(test.kind, func(t *testing.T) {
 			r := latestSuccessfulReport(t, root, test.kind)
@@ -23872,3 +24171,2347 @@ func latestSuccessfulReport(t *testing.T, root, kind string) savedReport {
 	}
 	return latest
 }
+
+<a id="orders-api-orders-v1-orders-proto"></a>
+
+## Приложение: api/orders/v1/orders.proto
+
+Полный исходный документ: `api/orders/v1/orders.proto`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```protobuf
+syntax = "proto3";
+
+package faultline.orders.v1;
+option go_package = "github.com/Includeoyasi/faultline-lab/api/orders/v1;ordersv1";
+
+service Orders {
+  rpc CreateOrder(CreateOrderRequest) returns (Acceptance);
+  rpc GetOrder(GetOrderRequest) returns (Order);
+  rpc GetOrderByRequestKey(GetOrderByRequestKeyRequest) returns (Order);
+}
+
+enum OrderState {
+  ORDER_STATE_UNSPECIFIED = 0;
+  ORDER_STATE_ACCEPTED = 1;
+  ORDER_STATE_RESERVING = 2;
+  ORDER_STATE_PAYMENT_PENDING = 3;
+  ORDER_STATE_REJECTED = 4;
+}
+
+message Item { string sku = 1; int64 quantity = 2; }
+message PricedItem { string sku = 1; int64 quantity = 2; int64 unit_price_minor = 3; }
+message CreateOrderRequest {
+  string dataset_id = 1;
+  string request_key = 2;
+  repeated Item items = 3;
+}
+// Immutable acknowledgement of admission, including on replay after progress.
+// Use GetOrder for current state. A transport error means unknown outcome:
+// retry the same request_key and payload or look up by request_key.
+message Acceptance {
+  string dataset_id = 1;
+  string order_id = 2;
+  string request_key = 3;
+  OrderState state = 4;
+}
+message GetOrderRequest { string dataset_id = 1; string order_id = 2; }
+message GetOrderByRequestKeyRequest { string dataset_id = 1; string request_key = 2; }
+message Order {
+  string dataset_id = 1;
+  string order_id = 2;
+  string request_key = 3;
+  OrderState state = 4;
+  int64 version = 5;
+  repeated Item items = 6;
+  repeated PricedItem priced_items = 7;
+  int64 total_minor = 8;
+  string currency = 9;
+  string rejection = 10;
+  // Diagnostic code, not a terminal order state. No automatic repair implied.
+  string blocked_reason = 11;
+  string reserve_operation_id = 12;
+}
+```
+
+<a id="orders-compose-orders-yaml"></a>
+
+## Приложение: compose.orders.yaml
+
+Полный исходный документ: `compose.orders.yaml`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```yaml
+services:
+  orders:
+    command: []
+    environment:
+      FL_ORDERS_CONFIG: /etc/faultline/orders.json
+      FL_ORDERS_DATASET_ID: ${FL_ORDERS_DATASET_ID:?set the shared dataset identity before starting Orders}
+    volumes:
+      - ./configs/orders/local.json:/etc/faultline/orders.json:ro
+    secrets:
+      - {source: orders-app-password, target: orders_app.password}
+    networks: [runtime, data]
+    mem_limit: 128m
+    cpus: 0.5
+    depends_on:
+      postgres:
+        condition: service_healthy
+      inventory:
+        condition: service_healthy
+```
+
+<a id="orders-configs-orders-local-json"></a>
+
+## Приложение: configs/orders/local.json
+
+Полный исходный документ: `configs/orders/local.json`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```json
+{
+  "database": {
+    "host": "postgres",
+    "port": 5432,
+    "database": "orders_db",
+    "user": "orders_app",
+    "sslmode": "disable",
+    "password_file": "/run/secrets/orders_app.password",
+    "connect_timeout": "5s",
+    "request_timeout": "3s",
+    "max_connections": 4
+  },
+  "inventory_target": "inventory:50051",
+  "worker_count": 2,
+  "rpc_timeout": "4s",
+  "lease": "10s",
+  "poll_interval": "100ms",
+  "retry_min": "250ms",
+  "retry_max": "5s"
+}
+```
+
+<a id="orders-migrations-orders-0002-reservations-sql"></a>
+
+## Приложение: migrations/orders/0002_reservations.sql
+
+Полный исходный документ: `migrations/orders/0002_reservations.sql`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```sql
+-- One isolated database is bound to one dataset; protective records have no TTL.
+CREATE TABLE orders.dataset (
+    singleton boolean PRIMARY KEY DEFAULT true CHECK (singleton),
+    dataset_id text NOT NULL CHECK (length(dataset_id) BETWEEN 1 AND 128)
+);
+CREATE TABLE orders.orders (
+    order_id text PRIMARY KEY,
+    request_key text NOT NULL UNIQUE,
+    request_hash text NOT NULL CHECK (length(request_hash) = 64),
+    reserve_operation_id text NOT NULL UNIQUE,
+    state text NOT NULL CHECK (state IN ('ACCEPTED','RESERVING','PAYMENT_PENDING','REJECTED')),
+    version bigint NOT NULL CHECK (version > 0),
+    items jsonb NOT NULL CHECK (jsonb_typeof(items) = 'array' AND jsonb_array_length(items) BETWEEN 1 AND 100),
+    reservation jsonb,
+    rejection text NOT NULL DEFAULT '',
+    created_at timestamptz NOT NULL DEFAULT now(),
+    updated_at timestamptz NOT NULL DEFAULT now(),
+    CHECK ((state = 'PAYMENT_PENDING') = (reservation IS NOT NULL)),
+    CHECK ((state = 'REJECTED') = (rejection <> ''))
+);
+CREATE TABLE orders.reserve_jobs (
+    order_id text PRIMARY KEY REFERENCES orders.orders(order_id),
+    generation bigint NOT NULL DEFAULT 0 CHECK (generation >= 0),
+    order_version bigint NOT NULL DEFAULT 1 CHECK (order_version > 0),
+    attempts bigint NOT NULL DEFAULT 0 CHECK (attempts >= 0),
+    lease_until timestamptz,
+    available_at timestamptz NOT NULL DEFAULT now(),
+    done boolean NOT NULL DEFAULT false,
+    blocked_reason text NOT NULL DEFAULT '',
+    last_error text NOT NULL DEFAULT ''
+);
+CREATE INDEX reserve_jobs_ready ON orders.reserve_jobs(available_at,order_id)
+    WHERE NOT done AND blocked_reason = '';
+-- Local facts only. Kafka publication and F09 are a separate package.
+CREATE TABLE orders.outbox (
+    event_id text PRIMARY KEY,
+    order_id text NOT NULL REFERENCES orders.orders(order_id),
+    aggregate_version bigint NOT NULL CHECK (aggregate_version > 0),
+    event_type text NOT NULL CHECK (event_type = 'OrderAwaitingPayment'),
+    payload jsonb NOT NULL,
+    created_at timestamptz NOT NULL DEFAULT now(),
+    UNIQUE (order_id,aggregate_version)
+);
+```
+
+<a id="orders-docs-development-ORDERS-md"></a>
+
+## Приложение: docs/development/ORDERS.md
+
+Полный исходный документ: `docs/development/ORDERS.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Orders: приём заказа и устойчивое резервирование
+
+#### 1. Проблема и проверяемые случаи
+
+Orders принимает заказ раньше, чем заканчивается резервирование в Inventory. Ответ `ACCEPTED` подтверждает сохранённые заказ и задачу, а текущее состояние читается отдельно. Главный отказный случай — Inventory сохранил резерв, но Orders потерял ответ или упал перед сохранением результата. После перезапуска повторяется прежняя операция, поэтому один заказ не расходует товар дважды. Этот срез заканчивается на `PAYMENT_PENDING`: оплата и завершение покупки требуют следующих пакетов.
+
+```mermaid
+sequenceDiagram
+    participant C as Клиент
+    participant O as Orders
+    participant D as orders_db
+    participant I as Inventory
+    C->>O: CreateOrder(dataset, request_key, items)
+    O->>D: TX: заказ ACCEPTED + reserve_job
+    D-->>O: COMMIT
+    O-->>C: Неизменное подтверждение ACCEPTED
+    O->>D: Захват job: lease + новое поколение
+    O->>I: Reserve с постоянным operation_id
+    Note over I: Резерв сохранён
+    I--xO: Ответ потерян, Orders падает
+    Note over O: Перезапуск после истечения lease
+    O->>D: Новый захват той же job
+    O->>I: Тот же Reserve и operation_id
+    I-->>O: Сохранённый результат
+    O->>I: GetReservation
+    I-->>O: Текущий RESERVED совпадает со снимком
+    O->>D: TX: PAYMENT_PENDING + цены + outbox + job done<br/>при актуальных поколении, версии и lease
+    C->>O: GetOrder / GetOrderByRequestKey
+    O-->>C: Текущее PAYMENT_PENDING
+```
+
+| Случай | Требуемый результат |
+|---|---|
+| Повтор Create с тем же смыслом | Тот же order_id и прежнее подтверждение приёма |
+| Тот же ключ с другими позициями | ALREADY_EXISTS без второго заказа |
+| Подтверждённая нехватка или неизвестный SKU | REJECTED с сохранённой причиной |
+| Timeout или недоступность Inventory | Сохранённый незавершённый шаг и следующая попытка |
+| Поздний результат старого worker | Не меняет заказ, job или outbox |
+| Исторический RESERVED, текущий RELEASED | Видимая блокировка job; заказ остаётся RESERVING |
+
+#### 2. Паттерны и варианты
+
+Используется принятый в G0 durable workflow внутри Orders: одна конкретная задача резервирования в PostgreSQL. Ключ клиентского запроса защищает приём, а постоянный `reserve_operation_id` — внешний эффект в Inventory. Короткий SQL-захват использует `FOR UPDATE SKIP LOCKED`, lease и поколение; завершение дополнительно проверяет версию заказа и время БД. RPC выполняются после завершения транзакции захвата. Это SQL-защита записи результата, а протокол Kafka publisher/F09 реализуется отдельно.
+
+| Вариант | Следствие |
+|---|---|
+| Reserve только внутри клиентского RPC | После неизвестного исхода нет сохранённого продолжения |
+| Очередь только в памяти | Принятая работа теряется с процессом |
+| Одна reserve_job в orders_db | Нужны повтор и fencing; принятый шаг переживает рестарт |
+
+Основа: [PostgreSQL locking clause](https://www.postgresql.org/docs/18/sql-select.html#SQL-FOR-UPDATE-SHARE), [gRPC deadlines](https://grpc.io/docs/guides/deadlines/), [принятый процесс](#appendix-g0-processes).
+
+#### 3. Решение и компромиссы
+
+Приём одной транзакцией сохраняет канонические позиции, хэш запроса, заказ и job; `request_key` уникален в неизменном наборе данных. Ответ Create всегда описывает первоначальное принятие, даже когда GetOrder уже показывает другой этап. Успех Reserve проверяется по идентификаторам, составу и количеству позиций, валюте, ценам и сумме без переполнения, затем сверяется с GetReservation. Подтверждённый успех атомарно сохраняет снимок цен, `PAYMENT_PENDING`, локальный `OrderAwaitingPayment` и завершённую job. Только `INSUFFICIENT_STOCK` и `UNKNOWN_SKU` завершают заказ как `REJECTED`; противоречия и ошибки контракта блокируют job с диагностическим кодом. Цена восстановления — дополнительные SQL-записи и запрос сверки; SQL-соединение с открытой транзакцией во время RPC не удерживается. Сетевые ошибки повторяются без фиксированного лимита количества попыток, с ограниченными ресурсами и backoff с jitter.
+
+| API / состояние | Семантика |
+|---|---|
+| CreateOrder → Acceptance | Неизменный ответ ACCEPTED после commit |
+| GetOrder / GetOrderByRequestKey | Текущее состояние и причина блокировки, если она есть |
+| ACCEPTED → RESERVING | Job взята в работу; её идентичность сохраняется |
+| PAYMENT_PENDING | Резерв подтверждён; платежа ещё нет |
+| REJECTED | Подтверждённый сохранённый бизнес-отказ Inventory |
+| INVALID_ARGUMENT / ALREADY_EXISTS | Неверный ввод / конфликт смысла прежнего ключа |
+| FAILED_PRECONDITION / NOT_FOUND | Чужой dataset / заказ сейчас не найден |
+| UNAVAILABLE / DEADLINE_EXCEEDED / CANCELLED | Исход приёма может быть неизвестен; повторить прежний ключ |
+
+#### 4. Реализация, запуск и критерии G1
+
+API задан в [orders.proto](#orders-api-orders-v1-orders-proto); SQL находится в [store](#orders-internal-orders-store-store-go), по одному публичному методу на файл и с запросами в константах. Новая [миграция 0002](#orders-migrations-orders-0002-reservations-sql) добавляет dataset binding, заказы с каноническими позициями, reserve jobs и локальный outbox, сохраняя прежнюю миграцию. Бизнес-процесс запускается обычной командой Orders, а `health-only` оставляет доступными независимые проверки каркаса. Конфигурация явно задаёт адрес Inventory, прикладную роль orders_app, SQL-пул, workers, RPC/lease/retry-бюджеты. Lease должен покрывать общий RPC-бюджет, фиксацию результата и секундный запас; время владения проверяется в PostgreSQL. Интеграционный `labdata smoke` проверяет приём, конкуренцию, откаты, устаревшие попытки, SIGKILL до и после эффекта Inventory и повтор API после перезапуска PostgreSQL. Состав доказательств и границы фактических прогонов находятся в PR и Actions, а решение о G1 принимает владелец проекта.
+
+После подготовки баз по [POSTGRES.md](#p02-docs-development-postgres-md) один dataset задаётся обоим сервисам:
+
+```powershell
+$env:FL_INVENTORY_DATASET_ID = 'dataset-' + [guid]::NewGuid().ToString('N')
+$env:FL_ORDERS_DATASET_ID = $env:FL_INVENTORY_DATASET_ID
+docker compose -f compose.yaml -f compose.postgres.yaml -f compose.inventory.yaml -f compose.orders.yaml -p faultline-data-local up -d --build --wait postgres inventory orders
+docker compose run --rm toolchain generate
+```
+
+| Критерий G1: основа заказа и склада | Доказательство для ревью |
+|---|---|
+| Код, миграции и три API Orders работают с Inventory | Реальные PostgreSQL, TCP gRPC и scratch-контейнеры |
+| Повторы не создают новый заказ или складской эффект | Конкурентный одинаковый ключ, конфликт payload, повтор после прогресса и рестарта |
+| Конкуренция сохраняет складской баланс | 1000 попыток на 100 единиц: 100 PAYMENT_PENDING, 900 подтверждённых отказов |
+| Принятый шаг переживает падение процесса | SIGKILL до Reserve и после commit Inventory; прежний operation_id после перезапуска |
+| Неактуальный worker не перезаписывает результат | Поколение/версия и истечение lease во время SQL-ожидания |
+| Транзакционные границы сохраняются при ошибке | Ошибка вставки job или outbox откатывает весь соответствующий переход |
+| Нет нерешённых нарушений складских инвариантов | Ревью и обязательные проверки итогового HEAD успешны |
+| Владелец принимает этап | Явное решение G1; может быть принято вместе с ревью MR |
+
+#### 5. Акценты ревью и границы пакета
+
+Проверьте различие исторического подтверждения Create и текущего состояния GetOrder, а также исторического Reserve receipt и актуального резерва. Захват и завершение блокируют сначала job, затем заказ; последняя проверка lease откатывает также уже подготовленный outbox. Противоречивый ответ не даёт автоматического успеха, отказа, возврата или повторного резерва под новым ключом. Ключи, блокировки и локальные события живут весь срок dataset без TTL; полный согласованный reset всех трёх сервисов относится к продолжению F10. F11 уже согласован для неизвестного Commit в FINALIZING, но этот срез Commit не выполняет и F11 не закрывает. Базовая приёмка G1 из [workflow](#appendix-development-process) относится к заказу и складу, а модель Payments и базовые метрики из расширенного состава этапа 1 roadmap должны быть явно учтены при обсуждении полноты этапа. Здесь подготовлена основа и доказательства для этого решения; сквозной MVP/G2 требует Kafka, Payments, компенсаций и инструментов эксперимента.
+
+| Продолжение | Граница |
+|---|---|
+| F09 | Отдельный согласованный протокол и PR для публикации Kafka |
+| Payments, CancelOrder и финализация/F11 | Следующие бизнес-пакеты |
+| Redis, loadgen, verifier и наблюдаемость | Подготовка сквозного эксперимента |
+| F06/F12 и допуск A/B | Перед сравнением эффективности, без вывода о capacity из smoke |
+
+<a id="orders-internal-orders-command-go"></a>
+
+## Приложение: internal/orders/command.go
+
+Полный исходный документ: `internal/orders/command.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+// Package orders serves admission/read APIs and a bounded durable reserve worker.
+package orders
+
+import (
+	"context"
+	"io"
+	"log/slog"
+	"time"
+
+	inventoryv1 "github.com/Includeoyasi/faultline-lab/api/inventory/v1"
+	"github.com/Includeoyasi/faultline-lab/internal/orders/store"
+	"github.com/Includeoyasi/faultline-lab/internal/orders/worker"
+	"github.com/Includeoyasi/faultline-lab/internal/service"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
+)
+
+func Execute(ctx context.Context, args []string, lookup func(string) (string, bool), output io.Writer) int {
+	if len(args) > 0 {
+		if len(args) == 1 && args[0] == "health-only" {
+			return service.Execute(ctx, "orders", nil, lookup, output)
+		}
+		return service.Execute(ctx, "orders", args, lookup, output)
+	}
+	logger := slog.New(slog.NewJSONHandler(output, nil)).With("service", "orders")
+	if _, err := service.LoadConfig(lookup); err != nil {
+		logger.ErrorContext(ctx, "configuration rejected", "error", err.Error())
+		return 1
+	}
+	path, _ := lookup("FL_ORDERS_CONFIG")
+	dataset, _ := lookup("FL_ORDERS_DATASET_ID")
+	cfg, err := LoadConfig(path, dataset)
+	if err != nil {
+		logger.ErrorContext(ctx, "configuration rejected", "error", err.Error())
+		return 1
+	}
+	backend, err := store.Open(ctx, cfg.Database)
+	if err != nil {
+		logger.ErrorContext(ctx, "orders startup failed", "error", err.Error())
+		return 1
+	}
+	defer backend.Close()
+	conn, err := grpc.NewClient("passthrough:///"+cfg.InventoryTarget, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		logger.ErrorContext(ctx, "cannot configure Inventory client")
+		return 1
+	}
+	defer func() { _ = conn.Close() }()
+	duration := func(value string) time.Duration { v, _ := time.ParseDuration(value); return v }
+	processor := worker.Processor{Jobs: backend, Inventory: inventoryv1.NewInventoryClient(conn), Lease: duration(cfg.Lease), RPCTimeout: duration(cfg.RPCTimeout), RetryMin: duration(cfg.RetryMin), RetryMax: duration(cfg.RetryMax), Logger: logger}
+	workersCtx, stop := context.WithCancel(ctx)
+	defer stop()
+	done := make(chan struct{})
+	go func() { processor.Run(workersCtx, cfg.WorkerCount, duration(cfg.PollInterval)); close(done) }()
+	err = service.RunRegistered(ctx, "orders", lookup, output, func(server *grpc.Server) { Register(server, backend) })
+	stop()
+	<-done
+	if err != nil {
+		return 1
+	}
+	return 0
+}
+```
+
+<a id="orders-internal-orders-config-go"></a>
+
+## Приложение: internal/orders/config.go
+
+Полный исходный документ: `internal/orders/config.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package orders
+
+import (
+	"encoding/json"
+	"errors"
+	"io"
+	"net"
+	"os"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/Includeoyasi/faultline-lab/internal/orders/store"
+)
+
+type Config struct {
+	Database        store.Config `json:"database"`
+	InventoryTarget string       `json:"inventory_target"`
+	WorkerCount     int          `json:"worker_count"`
+	RPCTimeout      string       `json:"rpc_timeout"`
+	Lease           string       `json:"lease"`
+	PollInterval    string       `json:"poll_interval"`
+	RetryMin        string       `json:"retry_min"`
+	RetryMax        string       `json:"retry_max"`
+}
+
+func LoadConfig(path, dataset string) (Config, error) {
+	var c Config
+	file, err := os.Open(path)
+	if err != nil {
+		return c, errors.New("cannot open Orders configuration")
+	}
+	defer func() { _ = file.Close() }()
+	d := json.NewDecoder(io.LimitReader(file, 32<<10))
+	d.DisallowUnknownFields()
+	if err = d.Decode(&c); err != nil {
+		return c, errors.New("invalid Orders configuration")
+	}
+	var extra any
+	if err = d.Decode(&extra); !errors.Is(err, io.EOF) {
+		return c, errors.New("trailing Orders configuration")
+	}
+	c.Database.DatasetID = dataset
+	return c, c.Validate()
+}
+func (c Config) Validate() error {
+	if err := c.Database.Validate(); err != nil {
+		return err
+	}
+	host, port, e := net.SplitHostPort(c.InventoryTarget)
+	number, e2 := strconv.Atoi(port)
+	if e != nil || e2 != nil || host == "" || strings.ContainsAny(host, "/\\@ \t\r\n") || number < 1 || number > 65535 || c.WorkerCount < 1 || c.WorkerCount > 8 {
+		return errors.New("orders requires an explicit Inventory host:port and 1..8 workers")
+	}
+	durations := []string{c.RPCTimeout, c.Lease, c.PollInterval, c.RetryMin, c.RetryMax}
+	values := make([]time.Duration, len(durations))
+	for i, value := range durations {
+		v, err := time.ParseDuration(value)
+		if err != nil || v < time.Millisecond || v > time.Minute {
+			return errors.New("orders worker durations must be in [1ms,1m]")
+		}
+		values[i] = v
+	}
+	sql, _ := time.ParseDuration(c.Database.RequestTimeout)
+	if values[1] < values[0]+sql+time.Second || values[3] > values[4] {
+		return errors.New("orders lease must cover RPC, result transaction and a one-second margin; retry bounds must be ordered")
+	}
+	return nil
+}
+```
+
+<a id="orders-internal-orders-config-test-go"></a>
+
+## Приложение: internal/orders/config_test.go
+
+Полный исходный документ: `internal/orders/config_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package orders
+
+import (
+	"encoding/json"
+	"os"
+	"path/filepath"
+	"testing"
+)
+
+func TestConfigurationBudgetsAndIdentity(t *testing.T) {
+	c, err := LoadConfig("../../configs/orders/local.json", "dataset")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range []string{"foreign-user", "no-peer", "bad-peer", "unbounded-workers", "short-lease", "zero-retry", "reversed-retry"} {
+		t.Run(name, func(t *testing.T) {
+			invalid := c
+			switch name {
+			case "foreign-user":
+				invalid.Database.User = "inventory_app"
+			case "no-peer":
+				invalid.InventoryTarget = ""
+			case "bad-peer":
+				invalid.InventoryTarget = "inventory:0"
+			case "unbounded-workers":
+				invalid.WorkerCount = 100
+			case "short-lease":
+				invalid.Lease = "4s"
+			case "zero-retry":
+				invalid.RetryMin = "0s"
+			case "reversed-retry":
+				invalid.RetryMin = "10s"
+			}
+			if err = invalid.Validate(); err == nil {
+				t.Fatal("invalid configuration accepted")
+			}
+		})
+	}
+	data, err := json.Marshal(c)
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "config.json")
+	if err = os.WriteFile(path, append(data, []byte(` {"trailing":true}`)...), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if _, err = LoadConfig(path, "dataset"); err == nil {
+		t.Fatal("trailing configuration accepted")
+	}
+}
+```
+
+<a id="orders-internal-orders-server-go"></a>
+
+## Приложение: internal/orders/server.go
+
+Полный исходный документ: `internal/orders/server.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package orders
+
+import (
+	"context"
+	"errors"
+
+	ordersv1 "github.com/Includeoyasi/faultline-lab/api/orders/v1"
+	"github.com/Includeoyasi/faultline-lab/internal/orders/model"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+)
+
+type Backend interface {
+	Create(context.Context, model.Request) (model.Acceptance, error)
+	GetOrder(context.Context, string, string) (model.Order, error)
+	GetByRequestKey(context.Context, string, string) (model.Order, error)
+}
+type Server struct {
+	ordersv1.UnimplementedOrdersServer
+	backend Backend
+}
+
+func Register(server *grpc.Server, backend Backend) {
+	ordersv1.RegisterOrdersServer(server, &Server{backend: backend})
+}
+func (s *Server) CreateOrder(ctx context.Context, r *ordersv1.CreateOrderRequest) (*ordersv1.Acceptance, error) {
+	request := model.Request{DatasetID: r.GetDatasetId(), RequestKey: r.GetRequestKey()}
+	for _, item := range r.GetItems() {
+		request.Items = append(request.Items, model.Item{SKU: item.GetSku(), Quantity: item.GetQuantity()})
+	}
+	if _, _, err := model.Canonical(request); err != nil {
+		return nil, rpcError(err)
+	}
+	result, err := s.backend.Create(ctx, request)
+	if err != nil {
+		return nil, rpcError(err)
+	}
+	return &ordersv1.Acceptance{DatasetId: result.DatasetID, OrderId: result.OrderID, RequestKey: result.RequestKey, State: ordersv1.OrderState_ORDER_STATE_ACCEPTED}, nil
+}
+func (s *Server) GetOrder(ctx context.Context, r *ordersv1.GetOrderRequest) (*ordersv1.Order, error) {
+	if !model.ValidIdentifier(r.GetDatasetId()) || !model.ValidIdentifier(r.GetOrderId()) {
+		return nil, rpcError(model.ErrInvalid)
+	}
+	o, err := s.backend.GetOrder(ctx, r.GetDatasetId(), r.GetOrderId())
+	if err != nil {
+		return nil, rpcError(err)
+	}
+	return protoOrder(o), nil
+}
+func (s *Server) GetOrderByRequestKey(ctx context.Context, r *ordersv1.GetOrderByRequestKeyRequest) (*ordersv1.Order, error) {
+	if !model.ValidIdentifier(r.GetDatasetId()) || !model.ValidIdentifier(r.GetRequestKey()) {
+		return nil, rpcError(model.ErrInvalid)
+	}
+	o, err := s.backend.GetByRequestKey(ctx, r.GetDatasetId(), r.GetRequestKey())
+	if err != nil {
+		return nil, rpcError(err)
+	}
+	return protoOrder(o), nil
+}
+func protoOrder(o model.Order) *ordersv1.Order {
+	result := &ordersv1.Order{DatasetId: o.DatasetID, OrderId: o.OrderID, RequestKey: o.RequestKey, State: ordersv1.OrderState(ordersv1.OrderState_value["ORDER_STATE_"+o.State]), Version: o.Version, Rejection: o.Rejection, BlockedReason: o.BlockedReason, ReserveOperationId: o.OperationID}
+	for _, item := range o.Items {
+		result.Items = append(result.Items, &ordersv1.Item{Sku: item.SKU, Quantity: item.Quantity})
+	}
+	if o.Reservation != nil {
+		result.TotalMinor = o.Reservation.TotalMinor
+		result.Currency = o.Reservation.Currency
+		for _, item := range o.Reservation.Items {
+			result.PricedItems = append(result.PricedItems, &ordersv1.PricedItem{Sku: item.SKU, Quantity: item.Quantity, UnitPriceMinor: item.UnitPriceMinor})
+		}
+	}
+	return result
+}
+func rpcError(err error) error {
+	switch {
+	case errors.Is(err, model.ErrInvalid):
+		return status.Error(codes.InvalidArgument, model.ErrInvalid.Error())
+	case errors.Is(err, model.ErrDataset):
+		return status.Error(codes.FailedPrecondition, model.ErrDataset.Error())
+	case errors.Is(err, model.ErrKeyConflict):
+		return status.Error(codes.AlreadyExists, model.ErrKeyConflict.Error())
+	case errors.Is(err, model.ErrNotFound):
+		return status.Error(codes.NotFound, model.ErrNotFound.Error())
+	case errors.Is(err, context.Canceled):
+		return status.Error(codes.Canceled, "orders request canceled; outcome may be unknown")
+	case errors.Is(err, context.DeadlineExceeded):
+		return status.Error(codes.DeadlineExceeded, "orders deadline exceeded; outcome may be unknown")
+	default:
+		return status.Error(codes.Unavailable, "orders storage unavailable; retry the same request key")
+	}
+}
+```
+
+<a id="orders-internal-orders-acceptance-foundation-test-go"></a>
+
+## Приложение: internal/orders/acceptance/foundation_test.go
+
+Полный исходный документ: `internal/orders/acceptance/foundation_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+// Package acceptance exercises Orders with real PostgreSQL and Inventory gRPC.
+package acceptance
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"net"
+	"os"
+	"path/filepath"
+	"sync"
+	"testing"
+	"time"
+
+	inventoryv1 "github.com/Includeoyasi/faultline-lab/api/inventory/v1"
+	ordersv1 "github.com/Includeoyasi/faultline-lab/api/orders/v1"
+	"github.com/Includeoyasi/faultline-lab/internal/database"
+	"github.com/Includeoyasi/faultline-lab/internal/orders"
+	"github.com/Includeoyasi/faultline-lab/internal/orders/model"
+	"github.com/Includeoyasi/faultline-lab/internal/orders/store"
+	"github.com/Includeoyasi/faultline-lab/internal/orders/worker"
+	"github.com/jackc/pgx/v5"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/proto"
+)
+
+type fixture struct {
+	store       *store.Store
+	db          *pgx.Conn
+	inventoryDB *pgx.Conn
+	config      database.Config
+	dataset     string
+	peer        inventoryv1.InventoryClient
+}
+
+func setup(t *testing.T) *fixture {
+	t.Helper()
+	if os.Getenv("FL_DATA_INTEGRATION") != "1" {
+		t.Skip("requires isolated PostgreSQL and Inventory")
+	}
+	cfg, err := database.Load(os.Getenv("FL_DATA_CONFIG"), os.Getenv("FL_DATA_SECRETS"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	dataset := os.Getenv("FL_ORDERS_DATASET_ID")
+	if dataset == "" {
+		t.Fatal("Orders dataset required")
+	}
+	backend, err := store.Open(t.Context(), store.Config{Host: cfg.Host, Port: cfg.Port, Database: "orders_db", User: "orders_app", SSLMode: cfg.SSLMode, PasswordFile: filepath.Join(cfg.Secrets, "orders_app.password"), DatasetID: dataset, ConnectTimeout: "5s", RequestTimeout: "10s", MaxConnections: 4})
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(backend.Close)
+	db, err := database.Connect(t.Context(), cfg, "orders_db", "orders_app")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { database.Close(db) })
+	inv, err := database.Connect(t.Context(), cfg, "inventory_db", "inventory_app")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { database.Close(inv) })
+	target := os.Getenv("FL_INVENTORY_TARGET")
+	if target == "" {
+		t.Fatal("Inventory target required")
+	}
+	conn, err := grpc.NewClient("passthrough:///"+target, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { _ = conn.Close() })
+	return &fixture{store: backend, db: db, inventoryDB: inv, config: cfg, dataset: dataset, peer: inventoryv1.NewInventoryClient(conn)}
+}
+func execute(t *testing.T, db *pgx.Conn, sql string, args ...any) {
+	t.Helper()
+	if _, err := db.Exec(t.Context(), sql, args...); err != nil {
+		t.Fatal(err)
+	}
+}
+func number(t *testing.T, db *pgx.Conn, sql string, args ...any) int64 {
+	t.Helper()
+	var n int64
+	if err := db.QueryRow(t.Context(), sql, args...).Scan(&n); err != nil {
+		t.Fatal(err)
+	}
+	return n
+}
+func (f *fixture) product(t *testing.T, sku string, quantity int64) {
+	t.Helper()
+	execute(t, f.inventoryDB, "INSERT INTO inventory.products(sku,title,price_minor,currency) VALUES($1,$1,123,'RUB')", sku)
+	execute(t, f.inventoryDB, "INSERT INTO inventory.stock(sku,available) VALUES($1,$2)", sku, quantity)
+}
+func (f *fixture) request(key, sku string) model.Request {
+	return model.Request{DatasetID: f.dataset, RequestKey: key, Items: []model.Item{{SKU: sku, Quantity: 1}}}
+}
+func (f *fixture) processor(peer worker.Inventory) *worker.Processor {
+	return &worker.Processor{Jobs: f.store, Inventory: peer, Lease: 30 * time.Second, RPCTimeout: 5 * time.Second, RetryMin: time.Millisecond, RetryMax: time.Second}
+}
+func (f *fixture) create(t *testing.T, key, sku string) model.Acceptance {
+	t.Helper()
+	r, err := f.store.Create(t.Context(), f.request(key, sku))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return r
+}
+func (f *fixture) read(t *testing.T, id string) model.Order {
+	t.Helper()
+	o, err := f.store.GetOrder(t.Context(), f.dataset, id)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return o
+}
+func (f *fixture) step(t *testing.T) {
+	t.Helper()
+	worked, err := f.processor(f.peer).Step(t.Context())
+	if err != nil || !worked {
+		t.Fatal(worked, err)
+	}
+}
+func (f *fixture) ddlFault(t *testing.T, table string) func() {
+	t.Helper()
+	migrator, err := database.Connect(t.Context(), f.config, "orders_db", "orders_migrator")
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Only fixed, test-owned table identifiers are permitted here.
+	if table != "reserve_jobs" && table != "outbox" {
+		t.Fatal("invalid fault target")
+	}
+	execute(t, migrator, "ALTER TABLE orders."+table+" ADD CONSTRAINT test_insert_failure CHECK(false) NOT VALID")
+	var once sync.Once
+	restore := func() {
+		once.Do(func() {
+			execute(t, migrator, "ALTER TABLE orders."+table+" DROP CONSTRAINT test_insert_failure")
+			database.Close(migrator)
+		})
+	}
+	t.Cleanup(restore)
+	return restore
+}
+func TestOrdersFoundation(t *testing.T) {
+	f := setup(t)
+	t.Run("concurrent admission immutable receipt and current read", func(t *testing.T) {
+		f.product(t, "orders-admission", 5)
+		request := f.request("admission", "orders-admission")
+		accepted := make(chan model.Acceptance, 20)
+		var wg sync.WaitGroup
+		for range 20 {
+			wg.Go(func() {
+				r, err := f.store.Create(t.Context(), request)
+				if err != nil {
+					t.Error(err)
+					return
+				}
+				accepted <- r
+			})
+		}
+		wg.Wait()
+		close(accepted)
+		var first model.Acceptance
+		for r := range accepted {
+			if first.OrderID == "" {
+				first = r
+			}
+			if r != first {
+				t.Fatal("different admission receipt")
+			}
+		}
+		if first.OrderID == "" || number(t, f.db, "SELECT count(*) FROM orders.reserve_jobs WHERE order_id=$1", first.OrderID) != 1 {
+			t.Fatal("missing unique job")
+		}
+		changed := request
+		changed.Items = []model.Item{{SKU: "orders-admission", Quantity: 2}}
+		if _, err := f.store.Create(t.Context(), changed); !errors.Is(err, model.ErrKeyConflict) {
+			t.Fatal(err)
+		}
+		f.step(t)
+		if f.read(t, first.OrderID).State != model.PaymentPending {
+			t.Fatal("reserve did not progress")
+		}
+		repeated, err := f.store.Create(t.Context(), request)
+		if err != nil || repeated != first {
+			t.Fatal("progress changed acceptance", err)
+		}
+		current, err := f.store.GetByRequestKey(t.Context(), f.dataset, "admission")
+		if err != nil || current.State != model.PaymentPending || current.Reservation.TotalMinor != 123 {
+			t.Fatal(current, err)
+		}
+		if number(t, f.inventoryDB, "SELECT available FROM inventory.stock WHERE sku='orders-admission'") != 4 || number(t, f.db, "SELECT count(*) FROM orders.outbox WHERE order_id=$1", first.OrderID) != 1 {
+			t.Fatal("duplicate effect")
+		}
+		if _, err = f.store.GetOrder(t.Context(), "other", first.OrderID); !errors.Is(err, model.ErrDataset) {
+			t.Fatal("foreign dataset accepted", err)
+		}
+	})
+	t.Run("failed job insert rolls back admission", func(t *testing.T) {
+		restore := f.ddlFault(t, "reserve_jobs")
+		if _, err := f.store.Create(t.Context(), f.request("failed-admission", "SKU-001")); err == nil {
+			t.Fatal("injected failure ignored")
+		}
+		if number(t, f.db, "SELECT count(*) FROM orders.orders WHERE request_key='failed-admission'") != 0 {
+			t.Fatal("partial admission")
+		}
+		restore()
+	})
+	t.Run("outbox failure rolls back result and replay recovers", func(t *testing.T) {
+		f.product(t, "orders-outbox", 2)
+		a := f.create(t, "outbox", "orders-outbox")
+		restore := f.ddlFault(t, "outbox")
+		if _, err := f.processor(f.peer).Step(t.Context()); err == nil {
+			t.Fatal("injected event failure ignored")
+		}
+		o := f.read(t, a.OrderID)
+		if o.State != model.Reserving || o.Reservation != nil || number(t, f.db, "SELECT count(*) FROM orders.reserve_jobs WHERE order_id=$1 AND done", a.OrderID) != 0 {
+			t.Fatal("partial completion")
+		}
+		restore()
+		execute(t, f.db, "UPDATE orders.reserve_jobs SET lease_until=clock_timestamp()-interval '1 second' WHERE order_id=$1", a.OrderID)
+		f.step(t)
+		if f.read(t, a.OrderID).State != model.PaymentPending || number(t, f.inventoryDB, "SELECT available FROM inventory.stock WHERE sku='orders-outbox'") != 1 || number(t, f.db, "SELECT count(*) FROM orders.outbox WHERE order_id=$1", a.OrderID) != 1 {
+			t.Fatal("replay duplicated effect")
+		}
+	})
+	t.Run("expired old worker cannot finish or reschedule", func(t *testing.T) {
+		a := f.create(t, "takeover", "absent-sku")
+		old, err := f.store.Claim(t.Context(), 30*time.Second)
+		if err != nil || old == nil {
+			t.Fatal(err)
+		}
+		execute(t, f.db, "UPDATE orders.reserve_jobs SET lease_until=clock_timestamp()-interval '1 second' WHERE order_id=$1", a.OrderID)
+		fresh, err := f.store.Claim(t.Context(), 30*time.Second)
+		if err != nil || fresh == nil || fresh.Generation <= old.Generation || fresh.Order.OperationID != old.Order.OperationID {
+			t.Fatal(fresh, err)
+		}
+		for _, r := range []model.Resolution{{RetryReason: "OLD"}, {BlockedReason: "OLD"}, {Reservation: &model.Reservation{Version: 1, Items: []model.PricedItem{{SKU: "absent-sku", Quantity: 1, UnitPriceMinor: 1}}, TotalMinor: 1, Currency: "RUB"}}} {
+			if err = f.store.Resolve(t.Context(), *old, r, 0); !errors.Is(err, model.ErrStale) {
+				t.Fatal("stale effect accepted", err)
+			}
+		}
+		if err = f.store.Resolve(t.Context(), *fresh, model.Resolution{Rejection: "UNKNOWN_SKU"}, 0); err != nil {
+			t.Fatal(err)
+		}
+		if f.read(t, a.OrderID).State != model.Rejected || number(t, f.db, "SELECT count(*) FROM orders.outbox WHERE order_id=$1", a.OrderID) != 0 {
+			t.Fatal("old result survived takeover")
+		}
+	})
+	t.Run("lease expiry during order lock wait rolls back the result", func(t *testing.T) {
+		a := f.create(t, "lease-wait", "lease-wait-sku")
+		job, err := f.store.Claim(t.Context(), 30*time.Second)
+		if err != nil || job == nil {
+			t.Fatal(err)
+		}
+		lock, err := f.db.Begin(t.Context())
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer func() { _ = lock.Rollback(context.Background()) }()
+		if _, err = lock.Exec(t.Context(), "SELECT 1 FROM orders.orders WHERE order_id=$1 FOR UPDATE", a.OrderID); err != nil {
+			t.Fatal(err)
+		}
+		observer, err := database.Connect(t.Context(), f.config, "orders_db", "orders_app")
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer database.Close(observer)
+		execute(t, observer, "UPDATE orders.reserve_jobs SET lease_until=clock_timestamp()+interval '300 milliseconds' WHERE order_id=$1", a.OrderID)
+		done := make(chan error, 1)
+		go func() {
+			done <- f.store.Resolve(t.Context(), *job, model.Resolution{Reservation: &model.Reservation{Version: 1, Items: []model.PricedItem{{SKU: "lease-wait-sku", Quantity: 1, UnitPriceMinor: 1}}, TotalMinor: 1, Currency: "RUB"}}, 0)
+		}()
+		ticker := time.NewTicker(5 * time.Millisecond)
+		defer ticker.Stop()
+		deadline := time.NewTimer(3 * time.Second)
+		defer deadline.Stop()
+		for number(t, observer, "SELECT count(*) FROM pg_stat_activity WHERE usename='orders_app' AND wait_event_type='Lock' AND query LIKE 'SELECT o.order_id%'") == 0 {
+			select {
+			case <-deadline.C:
+				t.Fatal("Resolve did not reach the locked order")
+			case err := <-done:
+				t.Fatal("Resolve exited before the lock wait", err)
+			case <-ticker.C:
+			}
+		}
+		for number(t, observer, "SELECT count(*) FROM orders.reserve_jobs WHERE order_id=$1 AND lease_until<=clock_timestamp()", a.OrderID) == 0 {
+			select {
+			case <-deadline.C:
+				t.Fatal("database lease did not expire")
+			case <-ticker.C:
+			}
+		}
+		if err = lock.Rollback(t.Context()); err != nil {
+			t.Fatal(err)
+		}
+		select {
+		case err = <-done:
+			if !errors.Is(err, model.ErrStale) {
+				t.Fatal("expired result accepted", err)
+			}
+		case <-time.After(3 * time.Second):
+			t.Fatal("result did not finish")
+		}
+		if f.read(t, a.OrderID).State != model.Reserving || number(t, f.db, "SELECT count(*) FROM orders.outbox WHERE order_id=$1", a.OrderID) != 0 {
+			t.Fatal("expired result leaked writes")
+		}
+		fresh, err := f.store.Claim(t.Context(), 30*time.Second)
+		if err != nil || fresh == nil {
+			t.Fatal(err)
+		}
+		if err = f.store.Resolve(t.Context(), *fresh, model.Resolution{Rejection: "UNKNOWN_SKU"}, 0); err != nil {
+			t.Fatal(err)
+		}
+	})
+	t.Run("historical success with released current reservation stays unresolved", func(t *testing.T) {
+		f.product(t, "orders-contradiction", 2)
+		a := f.create(t, "contradiction", "orders-contradiction")
+		o := f.read(t, a.OrderID)
+		request := &inventoryv1.ReserveRequest{DatasetId: f.dataset, OrderId: o.OrderID, OperationId: o.OperationID, Items: []*inventoryv1.Item{{Sku: "orders-contradiction", Quantity: 1}}}
+		if _, err := f.peer.Reserve(t.Context(), request); err != nil {
+			t.Fatal(err)
+		}
+		if _, err := f.peer.ReleaseReservation(t.Context(), &inventoryv1.ChangeReservationRequest{DatasetId: f.dataset, OrderId: o.OrderID, OperationId: "release-contradiction"}); err != nil {
+			t.Fatal(err)
+		}
+		f.step(t)
+		current := f.read(t, a.OrderID)
+		if current.State != model.Reserving || current.BlockedReason != "RESERVATION_CONTRADICTION" || current.Reservation != nil || number(t, f.db, "SELECT count(*) FROM orders.outbox WHERE order_id=$1", a.OrderID) != 0 {
+			t.Fatal("false success from historical receipt", current)
+		}
+	})
+	t.Run("1000 accepted attempts compete for 100 units", func(t *testing.T) {
+		f.product(t, "orders-g1", 100)
+		listener, err := net.Listen("tcp", "127.0.0.1:0")
+		if err != nil {
+			t.Fatal(err)
+		}
+		server := grpc.NewServer()
+		orders.Register(server, f.store)
+		go func() { _ = server.Serve(listener) }()
+		t.Cleanup(server.Stop)
+		conn, err := grpc.NewClient("passthrough:///"+listener.Addr().String(), grpc.WithTransportCredentials(insecure.NewCredentials()))
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer func() { _ = conn.Close() }()
+		client := ordersv1.NewOrdersClient(conn)
+		workerCtx, stop := context.WithCancel(t.Context())
+		done := make(chan struct{})
+		go func() { f.processor(f.peer).Run(workerCtx, 4, time.Millisecond); close(done) }()
+		defer func() { stop(); <-done }()
+		ids := make(chan string, 1000)
+		slots := make(chan struct{}, 8)
+		var wg sync.WaitGroup
+		for i := range 1000 {
+			slots <- struct{}{}
+			wg.Go(func() {
+				defer func() { <-slots }()
+				ctx, cancel := context.WithTimeout(t.Context(), 15*time.Second)
+				defer cancel()
+				r, err := client.CreateOrder(ctx, &ordersv1.CreateOrderRequest{DatasetId: f.dataset, RequestKey: fmt.Sprintf("g1-%d", i), Items: []*ordersv1.Item{{Sku: "orders-g1", Quantity: 1}}})
+				if err != nil {
+					t.Error(err)
+					return
+				}
+				ids <- r.GetOrderId()
+			})
+		}
+		wg.Wait()
+		close(ids)
+		deadline := time.NewTimer(60 * time.Second)
+		defer deadline.Stop()
+		ticker := time.NewTicker(10 * time.Millisecond)
+		defer ticker.Stop()
+		for number(t, f.db, "SELECT count(*) FROM orders.orders WHERE request_key LIKE 'g1-%' AND state IN ('PAYMENT_PENDING','REJECTED')") != 1000 {
+			select {
+			case <-deadline.C:
+				t.Fatal("accepted jobs did not settle")
+			case <-ticker.C:
+			}
+		}
+		if len(ids) != 1000 || number(t, f.db, "SELECT count(*) FROM orders.orders WHERE request_key LIKE 'g1-%' AND state='PAYMENT_PENDING'") != 100 || number(t, f.db, "SELECT count(*) FROM orders.orders WHERE request_key LIKE 'g1-%' AND rejection='INSUFFICIENT_STOCK'") != 900 || number(t, f.inventoryDB, "SELECT available FROM inventory.stock WHERE sku='orders-g1'") != 0 || number(t, f.inventoryDB, "SELECT sum(quantity) FROM inventory.reservation_items WHERE sku='orders-g1'") != 100 {
+			t.Fatal("G1 conservation failed")
+		}
+		t.Log("1000 attempts: 100 PAYMENT_PENDING, 900 durable stock rejections, stock balance 0")
+	})
+}
+func TestOrdersDeployed(t *testing.T) {
+	if os.Getenv("FL_DATA_INTEGRATION") != "1" {
+		t.Skip("requires business containers")
+	}
+	conn, err := grpc.NewClient("passthrough:///"+os.Getenv("FL_ORDERS_TARGET"), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer func() { _ = conn.Close() }()
+	client := ordersv1.NewOrdersClient(conn)
+	ctx, cancel := context.WithTimeout(t.Context(), 20*time.Second)
+	defer cancel()
+	dataset := os.Getenv("FL_ORDERS_DATASET_ID")
+	request := &ordersv1.CreateOrderRequest{DatasetId: dataset, RequestKey: "deployed-orders", Items: []*ordersv1.Item{{Sku: "SKU-001", Quantity: 1}}}
+	first, err := client.CreateOrder(ctx, request, grpc.WaitForReady(true))
+	if err != nil || first.GetState() != ordersv1.OrderState_ORDER_STATE_ACCEPTED {
+		t.Fatal(first, err)
+	}
+	ticker := time.NewTicker(20 * time.Millisecond)
+	defer ticker.Stop()
+	for {
+		current, err := client.GetOrderByRequestKey(ctx, &ordersv1.GetOrderByRequestKeyRequest{DatasetId: dataset, RequestKey: request.RequestKey})
+		if err != nil {
+			t.Fatal(err)
+		}
+		if current.GetState() == ordersv1.OrderState_ORDER_STATE_PAYMENT_PENDING {
+			if current.GetTotalMinor() <= 0 || current.GetBlockedReason() != "" {
+				t.Fatal(current)
+			}
+			break
+		}
+		select {
+		case <-ctx.Done():
+			t.Fatal("deployment did not reserve")
+		case <-ticker.C:
+		}
+	}
+	repeated, err := client.CreateOrder(ctx, request)
+	if err != nil || !proto.Equal(first, repeated) {
+		t.Fatal("deployment receipt changed", err)
+	}
+	read, err := client.GetOrder(ctx, &ordersv1.GetOrderRequest{DatasetId: dataset, OrderId: first.OrderId})
+	if err != nil || read.GetState() != ordersv1.OrderState_ORDER_STATE_PAYMENT_PENDING {
+		t.Fatal(read, err)
+	}
+	request.Items[0].Quantity++
+	if _, err = client.CreateOrder(ctx, request); status.Code(err) != codes.AlreadyExists {
+		t.Fatal("changed payload accepted", err)
+	}
+	t.Log("scratch Orders: immutable admission, durable reserve and current reads PASS")
+}
+```
+
+<a id="orders-internal-orders-acceptance-process-test-go"></a>
+
+## Приложение: internal/orders/acceptance/process_test.go
+
+Полный исходный документ: `internal/orders/acceptance/process_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package acceptance
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"net"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"strings"
+	"sync"
+	"sync/atomic"
+	"syscall"
+	"testing"
+	"time"
+
+	inventoryv1 "github.com/Includeoyasi/faultline-lab/api/inventory/v1"
+	ordersv1 "github.com/Includeoyasi/faultline-lab/api/orders/v1"
+	"github.com/Includeoyasi/faultline-lab/internal/orders"
+	"github.com/Includeoyasi/faultline-lab/internal/orders/store"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/proto"
+)
+
+type startupCapture struct {
+	mu      sync.Mutex
+	pending string
+	started chan string
+}
+
+func (c *startupCapture) Write(data []byte) (int, error) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.pending += string(data)
+	for {
+		line, rest, ok := strings.Cut(c.pending, "\n")
+		if !ok {
+			break
+		}
+		c.pending = rest
+		var record struct {
+			Message string `json:"msg"`
+			Address string `json:"grpc_address"`
+		}
+		if json.Unmarshal([]byte(line), &record) == nil && record.Message == "service started" {
+			select {
+			case c.started <- record.Address:
+			default:
+			}
+		}
+	}
+	return len(data), nil
+}
+
+type pausingInventory struct {
+	inventoryv1.UnimplementedInventoryServer
+	peer        inventoryv1.InventoryClient
+	afterCommit bool
+	first       atomic.Bool
+	paused      chan *inventoryv1.ReserveRequest
+}
+
+func (p *pausingInventory) Reserve(ctx context.Context, r *inventoryv1.ReserveRequest) (*inventoryv1.OperationResult, error) {
+	if !p.first.Swap(true) {
+		if p.afterCommit {
+			if _, err := p.peer.Reserve(ctx, r); err != nil {
+				return nil, err
+			}
+		}
+		p.paused <- proto.Clone(r).(*inventoryv1.ReserveRequest)
+		<-ctx.Done()
+		return nil, status.Error(codes.Canceled, "controlled lost reply")
+	}
+	return p.peer.Reserve(ctx, r)
+}
+func (p *pausingInventory) GetReservation(ctx context.Context, r *inventoryv1.GetReservationRequest) (*inventoryv1.Reservation, error) {
+	return p.peer.GetReservation(ctx, r)
+}
+func (f *fixture) startOrders(t *testing.T, target string) (ordersv1.OrdersClient, func(bool)) {
+	t.Helper()
+	cfg := orders.Config{Database: store.Config{Host: f.config.Host, Port: f.config.Port, Database: "orders_db", User: "orders_app", SSLMode: f.config.SSLMode, PasswordFile: filepath.Join(f.config.Secrets, "orders_app.password"), ConnectTimeout: "5s", RequestTimeout: "3s", MaxConnections: 2}, InventoryTarget: target, WorkerCount: 1, RPCTimeout: "20s", Lease: "25s", PollInterval: "10ms", RetryMin: "10ms", RetryMax: "100ms"}
+	data, err := json.Marshal(cfg)
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "orders.json")
+	if err = os.WriteFile(path, data, 0o600); err != nil {
+		t.Fatal(err)
+	}
+	listener, err := net.Listen("tcp", "127.0.0.1:0")
+	if err != nil {
+		t.Fatal(err)
+	}
+	hint := listener.Addr().String()
+	_ = listener.Close()
+	cmd := exec.CommandContext(t.Context(), "/app/orders")
+	capture := &startupCapture{started: make(chan string, 1)}
+	cmd.Stdout = capture
+	cmd.Stderr = capture
+	for _, entry := range os.Environ() {
+		key, _, _ := strings.Cut(entry, "=")
+		if !strings.HasPrefix(key, "FL_") {
+			cmd.Env = append(cmd.Env, entry)
+		}
+	}
+	cmd.Env = append(cmd.Env, "FL_GRPC_ADDR="+hint, "FL_ORDERS_CONFIG="+path, "FL_ORDERS_DATASET_ID="+f.dataset)
+	if err = cmd.Start(); err != nil {
+		t.Fatal(err)
+	}
+	done := make(chan error, 1)
+	go func() { done <- cmd.Wait() }()
+	var once sync.Once
+	stop := func(hard bool) {
+		once.Do(func() {
+			var e error
+			if hard {
+				e = cmd.Process.Kill()
+			} else {
+				e = cmd.Process.Signal(syscall.SIGTERM)
+			}
+			if e != nil && !errors.Is(e, os.ErrProcessDone) {
+				t.Error(e)
+			}
+			select {
+			case e = <-done:
+				if !hard && e != nil {
+					t.Error("graceful Orders exit", e)
+				}
+			case <-time.After(10 * time.Second):
+				_ = cmd.Process.Kill()
+				<-done
+				t.Error("Orders did not stop")
+			}
+		})
+	}
+	t.Cleanup(func() { stop(true) })
+	var address string
+	select {
+	case address = <-capture.started:
+	case err = <-done:
+		once.Do(func() {})
+		t.Fatal("Orders exited before startup", err)
+	case <-time.After(10 * time.Second):
+		t.Fatal("Orders startup timed out")
+	}
+	conn, err := grpc.NewClient("passthrough:///"+address, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { _ = conn.Close() })
+	return ordersv1.NewOrdersClient(conn), stop
+}
+func TestOrdersProcessCrash(t *testing.T) {
+	f := setup(t)
+	for _, after := range []bool{false, true} {
+		name := "before-reserve"
+		if after {
+			name = "after-inventory-commit"
+		}
+		t.Run(name, func(t *testing.T) {
+			sku := "orders-crash-" + name
+			f.product(t, sku, 2)
+			proxy := &pausingInventory{peer: f.peer, afterCommit: after, paused: make(chan *inventoryv1.ReserveRequest, 1)}
+			listener, err := net.Listen("tcp", "127.0.0.1:0")
+			if err != nil {
+				t.Fatal(err)
+			}
+			server := grpc.NewServer()
+			inventoryv1.RegisterInventoryServer(server, proxy)
+			go func() { _ = server.Serve(listener) }()
+			t.Cleanup(server.Stop)
+			first, kill := f.startOrders(t, listener.Addr().String())
+			ctx, cancel := context.WithTimeout(t.Context(), 30*time.Second)
+			defer cancel()
+			request := &ordersv1.CreateOrderRequest{DatasetId: f.dataset, RequestKey: "crash-" + name, Items: []*ordersv1.Item{{Sku: sku, Quantity: 1}}}
+			accepted, err := first.CreateOrder(ctx, request, grpc.WaitForReady(true))
+			if err != nil {
+				t.Fatal(err)
+			}
+			var reserve *inventoryv1.ReserveRequest
+			select {
+			case reserve = <-proxy.paused:
+			case <-ctx.Done():
+				t.Fatal("worker did not reach crash window")
+			}
+			kill(true)
+			if number(t, f.db, "SELECT count(*) FROM orders.orders WHERE order_id=$1 AND state='RESERVING'", accepted.OrderId) != 1 {
+				t.Fatal("durable attempt lost")
+			}
+			expected := int64(2)
+			if after {
+				expected = 1
+			}
+			if number(t, f.inventoryDB, "SELECT available FROM inventory.stock WHERE sku=$1", sku) != expected {
+				t.Fatal("wrong crash window")
+			}
+			execute(t, f.db, "UPDATE orders.reserve_jobs SET lease_until=clock_timestamp()-interval '1 second' WHERE order_id=$1", accepted.OrderId)
+			second, stop := f.startOrders(t, listener.Addr().String())
+			defer stop(false)
+			ticker := time.NewTicker(10 * time.Millisecond)
+			defer ticker.Stop()
+			for {
+				result, err := second.GetOrder(ctx, &ordersv1.GetOrderRequest{DatasetId: f.dataset, OrderId: accepted.OrderId}, grpc.WaitForReady(true))
+				if err != nil {
+					t.Fatal(err)
+				}
+				if result.GetState() == ordersv1.OrderState_ORDER_STATE_PAYMENT_PENDING {
+					if result.GetReserveOperationId() != reserve.GetOperationId() {
+						t.Fatal("restart changed operation")
+					}
+					break
+				}
+				select {
+				case <-ctx.Done():
+					t.Fatal("job not resumed")
+				case <-ticker.C:
+				}
+			}
+			repeated, err := second.CreateOrder(ctx, request)
+			if err != nil || !proto.Equal(accepted, repeated) {
+				t.Fatal("admission changed after crash", err)
+			}
+			if number(t, f.inventoryDB, "SELECT available FROM inventory.stock WHERE sku=$1", sku) != 1 || number(t, f.db, "SELECT count(*) FROM orders.outbox WHERE order_id=$1", accepted.OrderId) != 1 || number(t, f.inventoryDB, "SELECT count(*) FROM inventory.operations WHERE operation_id=$1", reserve.GetOperationId()) != 1 {
+				t.Fatal("crash replay duplicated effect")
+			}
+			t.Log("SIGKILL " + name + ": same operation, one stock effect, one local event; restarted Orders completed reserve")
+		})
+	}
+}
+```
+
+<a id="orders-internal-orders-model-model-go"></a>
+
+## Приложение: internal/orders/model/model.go
+
+Полный исходный документ: `internal/orders/model/model.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+// Package model defines Orders' request identity and durable reserve step.
+package model
+
+import (
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
+	"errors"
+	"regexp"
+	"slices"
+	"strings"
+)
+
+var (
+	ErrInvalid     = errors.New("invalid orders request")
+	ErrKeyConflict = errors.New("request key already has another payload")
+	ErrDataset     = errors.New("dataset does not match orders")
+	ErrNotFound    = errors.New("order not found")
+	ErrStale       = errors.New("reserve attempt no longer owns the job")
+	identifier     = regexp.MustCompile(`^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$`)
+	sku            = regexp.MustCompile(`^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$`)
+)
+
+const (
+	Accepted       = "ACCEPTED"
+	Reserving      = "RESERVING"
+	PaymentPending = "PAYMENT_PENDING"
+	Rejected       = "REJECTED"
+)
+
+type Item struct {
+	SKU      string `json:"sku"`
+	Quantity int64  `json:"quantity"`
+}
+type PricedItem struct {
+	SKU            string `json:"sku"`
+	Quantity       int64  `json:"quantity"`
+	UnitPriceMinor int64  `json:"unit_price_minor"`
+}
+type Request struct {
+	DatasetID  string `json:"dataset_id"`
+	RequestKey string `json:"request_key"`
+	Items      []Item `json:"items"`
+}
+type Acceptance struct {
+	DatasetID  string
+	OrderID    string
+	RequestKey string
+}
+type Reservation struct {
+	Version    int64        `json:"version"`
+	Items      []PricedItem `json:"items"`
+	TotalMinor int64        `json:"total_minor"`
+	Currency   string       `json:"currency"`
+}
+type Order struct {
+	DatasetID     string       `json:"dataset_id"`
+	OrderID       string       `json:"order_id"`
+	RequestKey    string       `json:"request_key"`
+	OperationID   string       `json:"reserve_operation_id"`
+	State         string       `json:"state"`
+	Version       int64        `json:"version"`
+	Items         []Item       `json:"items"`
+	Reservation   *Reservation `json:"reservation,omitempty"`
+	Rejection     string       `json:"rejection,omitempty"`
+	BlockedReason string       `json:"blocked_reason,omitempty"`
+}
+type Job struct {
+	Order        Order
+	Generation   int64
+	OrderVersion int64
+	Attempts     int64
+}
+
+// Resolution is one verified peer outcome or a bounded diagnostic code.
+type Resolution struct {
+	Reservation   *Reservation
+	Rejection     string
+	BlockedReason string
+	RetryReason   string
+}
+
+func ValidIdentifier(value string) bool { return identifier.MatchString(value) }
+func Canonical(r Request) (Request, string, error) {
+	if !ValidIdentifier(r.DatasetID) || !ValidIdentifier(r.RequestKey) || len(r.Items) < 1 || len(r.Items) > 100 {
+		return Request{}, "", ErrInvalid
+	}
+	r.Items = slices.Clone(r.Items)
+	slices.SortFunc(r.Items, func(a, b Item) int { return strings.Compare(a.SKU, b.SKU) })
+	for i, item := range r.Items {
+		if !sku.MatchString(item.SKU) || item.Quantity <= 0 || i > 0 && item.SKU == r.Items[i-1].SKU {
+			return Request{}, "", ErrInvalid
+		}
+	}
+	data, err := json.Marshal(r)
+	if err != nil {
+		return Request{}, "", err
+	}
+	hash := sha256.Sum256(data)
+	return r, hex.EncodeToString(hash[:]), nil
+}
+```
+
+<a id="orders-internal-orders-model-model-test-go"></a>
+
+## Приложение: internal/orders/model/model_test.go
+
+Полный исходный документ: `internal/orders/model/model_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package model
+
+import (
+	"errors"
+	"reflect"
+	"testing"
+)
+
+func TestCanonicalIdentity(t *testing.T) {
+	r := Request{DatasetID: "dataset", RequestKey: "key", Items: []Item{{SKU: "b", Quantity: 2}, {SKU: "a", Quantity: 1}}}
+	before := append([]Item(nil), r.Items...)
+	sorted, hash, err := Canonical(r)
+	if err != nil || !reflect.DeepEqual(r.Items, before) {
+		t.Fatal("validation mutated input", err)
+	}
+	_, again, err := Canonical(sorted)
+	if err != nil || hash != again {
+		t.Fatal("ordering changed identity")
+	}
+	sorted.Items[0].Quantity++
+	_, changed, _ := Canonical(sorted)
+	if hash == changed {
+		t.Fatal("quantity not in identity")
+	}
+	r.Items = append(r.Items, Item{SKU: "a", Quantity: 1})
+	if _, _, err = Canonical(r); !errors.Is(err, ErrInvalid) {
+		t.Fatal("duplicate SKU accepted")
+	}
+	r.Items = []Item{{SKU: "a", Quantity: 0}}
+	if _, _, err = Canonical(r); !errors.Is(err, ErrInvalid) {
+		t.Fatal("zero quantity accepted")
+	}
+}
+```
+
+<a id="orders-internal-orders-store-claim-go"></a>
+
+## Приложение: internal/orders/store/claim.go
+
+Полный исходный документ: `internal/orders/store/claim.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"context"
+	"errors"
+	"time"
+
+	"github.com/Includeoyasi/faultline-lab/internal/orders/model"
+	"github.com/jackc/pgx/v5"
+)
+
+const (
+	selectJobSQL = `SELECT j.order_id FROM orders.reserve_jobs j
+ WHERE NOT j.done AND j.blocked_reason='' AND j.available_at<=clock_timestamp()
+ AND (j.lease_until IS NULL OR j.lease_until<=clock_timestamp())
+ ORDER BY j.available_at,j.order_id LIMIT 1 FOR UPDATE OF j SKIP LOCKED`
+	lockOrderSQL  = readOrderSQL + " WHERE o.order_id=$1 FOR UPDATE OF o"
+	startOrderSQL = "UPDATE orders.orders SET state='RESERVING',version=version+1,updated_at=clock_timestamp() WHERE order_id=$1 AND state='ACCEPTED' RETURNING version"
+	claimJobSQL   = `UPDATE orders.reserve_jobs SET generation=generation+1,attempts=attempts+1,order_version=$2,
+ lease_until=clock_timestamp()+make_interval(secs=>$3) WHERE order_id=$1 RETURNING generation,attempts`
+)
+
+func (s *Store) Claim(ctx context.Context, lease time.Duration) (*model.Job, error) {
+	if lease < time.Millisecond || lease > time.Minute {
+		return nil, model.ErrInvalid
+	}
+	ctx, cancel := context.WithTimeout(ctx, s.timeout)
+	defer cancel()
+	tx, err := s.pool.Begin(ctx)
+	if err != nil {
+		return nil, storageError(err)
+	}
+	defer rollback(tx)
+	var id string
+	err = tx.QueryRow(ctx, selectJobSQL).Scan(&id)
+	if errors.Is(err, pgx.ErrNoRows) {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, storageError(err)
+	}
+	o, err := s.read(tx.QueryRow(ctx, lockOrderSQL, id))
+	if err != nil {
+		return nil, err
+	}
+	if o.State == model.Accepted {
+		if err = tx.QueryRow(ctx, startOrderSQL, id).Scan(&o.Version); err != nil {
+			return nil, storageError(err)
+		}
+		o.State = model.Reserving
+	}
+	if o.State != model.Reserving {
+		return nil, errors.New("reserve job has incompatible order phase")
+	}
+	job := &model.Job{Order: o, OrderVersion: o.Version}
+	if err = tx.QueryRow(ctx, claimJobSQL, id, o.Version, lease.Seconds()).Scan(&job.Generation, &job.Attempts); err != nil {
+		return nil, storageError(err)
+	}
+	if err = tx.Commit(ctx); err != nil {
+		return nil, storageError(err)
+	}
+	return job, nil
+}
+```
+
+<a id="orders-internal-orders-store-close-go"></a>
+
+## Приложение: internal/orders/store/close.go
+
+Полный исходный документ: `internal/orders/store/close.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+func (s *Store) Close() { s.pool.Close() }
+```
+
+<a id="orders-internal-orders-store-config-go"></a>
+
+## Приложение: internal/orders/store/config.go
+
+Полный исходный документ: `internal/orders/store/config.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"io"
+	"net"
+	"net/url"
+	"os"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/Includeoyasi/faultline-lab/internal/orders/model"
+	"github.com/jackc/pgx/v5/pgxpool"
+)
+
+// Config contains only Orders's application identity. Credentials are files.
+type Config struct {
+	Host           string `json:"host"`
+	Port           uint16 `json:"port"`
+	Database       string `json:"database"`
+	User           string `json:"user"`
+	SSLMode        string `json:"sslmode"`
+	PasswordFile   string `json:"password_file"`
+	DatasetID      string `json:"-"`
+	ConnectTimeout string `json:"connect_timeout"`
+	RequestTimeout string `json:"request_timeout"`
+	MaxConnections int32  `json:"max_connections"`
+}
+
+func LoadConfig(path, dataset string) (Config, error) {
+	var cfg Config
+	file, err := os.Open(path)
+	if err != nil {
+		return cfg, errors.New("cannot open Orders configuration")
+	}
+	defer func() { _ = file.Close() }()
+	decoder := json.NewDecoder(io.LimitReader(file, 16<<10))
+	decoder.DisallowUnknownFields()
+	if err = decoder.Decode(&cfg); err != nil {
+		return cfg, errors.New("invalid Orders configuration")
+	}
+	var extra any
+	if err = decoder.Decode(&extra); !errors.Is(err, io.EOF) {
+		return cfg, errors.New("trailing Orders configuration")
+	}
+	cfg.DatasetID = dataset
+	return cfg, cfg.Validate()
+}
+func (c Config) Validate() error {
+	connect, e1 := time.ParseDuration(c.ConnectTimeout)
+	request, e2 := time.ParseDuration(c.RequestTimeout)
+	if c.Host == "" || strings.ContainsAny(c.Host, "/\\@ \t\r\n") || c.Port == 0 || c.Database != "orders_db" || c.User != "orders_app" || c.SSLMode != "disable" || c.PasswordFile == "" || !model.ValidIdentifier(c.DatasetID) || c.MaxConnections < 1 || c.MaxConnections > 8 || e1 != nil || e2 != nil || connect < time.Millisecond || connect > time.Minute || request < time.Millisecond || request > time.Minute {
+		return errors.New("orders requires its application identity, dataset, secret file, explicit endpoint, bounded timeouts and 1..8 connections")
+	}
+	return nil
+}
+func Open(ctx context.Context, c Config) (*Store, error) {
+	if err := c.Validate(); err != nil {
+		return nil, err
+	}
+	password, err := os.ReadFile(c.PasswordFile)
+	if err != nil {
+		return nil, errors.New("orders credential unavailable")
+	}
+	secret := strings.TrimSpace(string(password))
+	if len(secret) != 64 {
+		return nil, errors.New("orders credential malformed")
+	}
+	for _, char := range secret {
+		if !strings.ContainsRune("0123456789abcdef", char) {
+			return nil, errors.New("orders credential malformed")
+		}
+	}
+	address := url.URL{Scheme: "postgres", Host: net.JoinHostPort(c.Host, strconv.Itoa(int(c.Port))), Path: c.Database, User: url.UserPassword(c.User, secret)}
+	address.RawQuery = url.Values{"sslmode": {c.SSLMode}, "require_auth": {"scram-sha-256"}}.Encode()
+	cfg, err := pgxpool.ParseConfig(address.String())
+	if err != nil {
+		return nil, errors.New("cannot configure Orders database")
+	}
+	cfg.MaxConns = c.MaxConnections
+	cfg.MinConns = 0
+	cfg.ConnConfig.ConnectTimeout, _ = time.ParseDuration(c.ConnectTimeout)
+	budget, _ := time.ParseDuration(c.RequestTimeout)
+	cfg.ConnConfig.RuntimeParams["statement_timeout"] = strconv.FormatInt(budget.Milliseconds(), 10)
+	cfg.ConnConfig.RuntimeParams["lock_timeout"] = strconv.FormatInt(budget.Milliseconds(), 10)
+	cfg.ConnConfig.RuntimeParams["timezone"] = "UTC"
+	pool, err := pgxpool.NewWithConfig(ctx, cfg)
+	if err != nil {
+		return nil, storageError(err)
+	}
+	store, err := NewStore(ctx, pool, c.DatasetID, budget)
+	if err != nil {
+		pool.Close()
+		return nil, err
+	}
+	return store, nil
+}
+```
+
+<a id="orders-internal-orders-store-create-go"></a>
+
+## Приложение: internal/orders/store/create.go
+
+Полный исходный документ: `internal/orders/store/create.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"context"
+	"crypto/rand"
+	"encoding/hex"
+	"encoding/json"
+	"errors"
+
+	"github.com/Includeoyasi/faultline-lab/internal/orders/model"
+	"github.com/jackc/pgx/v5"
+)
+
+const (
+	lockRequestSQL    = "SELECT pg_advisory_xact_lock(hashtextextended($1,1))"
+	findAcceptanceSQL = "SELECT order_id,request_hash FROM orders.orders WHERE request_key=$1"
+	insertOrderSQL    = `INSERT INTO orders.orders(order_id,request_key,request_hash,reserve_operation_id,state,version,items) VALUES($1,$2,$3,$4,'ACCEPTED',1,$5)`
+	insertJobSQL      = "INSERT INTO orders.reserve_jobs(order_id) VALUES($1)"
+)
+
+func (s *Store) Create(ctx context.Context, r model.Request) (model.Acceptance, error) {
+	r, hash, err := model.Canonical(r)
+	if err != nil {
+		return model.Acceptance{}, err
+	}
+	if r.DatasetID != s.dataset {
+		return model.Acceptance{}, model.ErrDataset
+	}
+	ctx, cancel := context.WithTimeout(ctx, s.timeout)
+	defer cancel()
+	tx, err := s.pool.Begin(ctx)
+	if err != nil {
+		return model.Acceptance{}, storageError(err)
+	}
+	defer rollback(tx)
+	if _, err = tx.Exec(ctx, lockRequestSQL, r.RequestKey); err != nil {
+		return model.Acceptance{}, storageError(err)
+	}
+	accepted := model.Acceptance{DatasetID: s.dataset, RequestKey: r.RequestKey}
+	var previousHash string
+	err = tx.QueryRow(ctx, findAcceptanceSQL, r.RequestKey).Scan(&accepted.OrderID, &previousHash)
+	if err == nil {
+		if hash != previousHash {
+			return model.Acceptance{}, model.ErrKeyConflict
+		}
+		return accepted, nil
+	}
+	if !errors.Is(err, pgx.ErrNoRows) {
+		return model.Acceptance{}, storageError(err)
+	}
+	var token [16]byte
+	if _, err = rand.Read(token[:]); err != nil {
+		return model.Acceptance{}, errors.New("cannot generate order identity")
+	}
+	accepted.OrderID = "order-" + hex.EncodeToString(token[:])
+	items, err := json.Marshal(r.Items)
+	if err != nil {
+		return model.Acceptance{}, err
+	}
+	if _, err = tx.Exec(ctx, insertOrderSQL, accepted.OrderID, r.RequestKey, hash, "reserve-"+accepted.OrderID, items); err != nil {
+		return model.Acceptance{}, storageError(err)
+	}
+	if _, err = tx.Exec(ctx, insertJobSQL, accepted.OrderID); err != nil {
+		return model.Acceptance{}, storageError(err)
+	}
+	if err = tx.Commit(ctx); err != nil {
+		return model.Acceptance{}, storageError(err)
+	}
+	return accepted, nil
+}
+```
+
+<a id="orders-internal-orders-store-get-by-request-key-go"></a>
+
+## Приложение: internal/orders/store/get_by_request_key.go
+
+Полный исходный документ: `internal/orders/store/get_by_request_key.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"context"
+
+	"github.com/Includeoyasi/faultline-lab/internal/orders/model"
+)
+
+const getByRequestKeySQL = readOrderSQL + " WHERE o.request_key=$1"
+
+func (s *Store) GetByRequestKey(ctx context.Context, dataset, key string) (model.Order, error) {
+	if err := s.validateLookup(dataset, key); err != nil {
+		return model.Order{}, err
+	}
+	ctx, cancel := context.WithTimeout(ctx, s.timeout)
+	defer cancel()
+	return s.read(s.pool.QueryRow(ctx, getByRequestKeySQL, key))
+}
+```
+
+<a id="orders-internal-orders-store-get-order-go"></a>
+
+## Приложение: internal/orders/store/get_order.go
+
+Полный исходный документ: `internal/orders/store/get_order.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"context"
+
+	"github.com/Includeoyasi/faultline-lab/internal/orders/model"
+)
+
+const getOrderSQL = readOrderSQL + " WHERE o.order_id=$1"
+
+func (s *Store) GetOrder(ctx context.Context, dataset, id string) (model.Order, error) {
+	if err := s.validateLookup(dataset, id); err != nil {
+		return model.Order{}, err
+	}
+	ctx, cancel := context.WithTimeout(ctx, s.timeout)
+	defer cancel()
+	return s.read(s.pool.QueryRow(ctx, getOrderSQL, id))
+}
+```
+
+<a id="orders-internal-orders-store-resolve-go"></a>
+
+## Приложение: internal/orders/store/resolve.go
+
+Полный исходный документ: `internal/orders/store/resolve.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package store
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"time"
+
+	"github.com/Includeoyasi/faultline-lab/internal/orders/model"
+	"github.com/jackc/pgx/v5"
+)
+
+const (
+	lockOwnedJobSQL = `SELECT order_version FROM orders.reserve_jobs WHERE order_id=$1 AND generation=$2
+ AND NOT done AND blocked_reason='' AND lease_until>clock_timestamp() FOR UPDATE`
+	resolveOrderSQL = `UPDATE orders.orders SET state=$3,version=version+1,reservation=$4,rejection=$5,updated_at=clock_timestamp()
+ WHERE order_id=$1 AND version=$2 AND state='RESERVING' RETURNING version`
+	insertEventSQL = `INSERT INTO orders.outbox(event_id,order_id,aggregate_version,event_type,payload) VALUES($1,$2,$3,'OrderAwaitingPayment',$4)`
+	resolveJobSQL  = `UPDATE orders.reserve_jobs SET done=$3,blocked_reason=$4,last_error=$5,
+ available_at=clock_timestamp()+make_interval(secs=>$6),lease_until=NULL
+ WHERE order_id=$1 AND generation=$2 AND lease_until>clock_timestamp()`
+)
+
+// Resolve atomically commits a verified result or reschedules the same operation.
+// Job-first row locking matches Claim. The final lease CAS also covers lock waits.
+func (s *Store) Resolve(ctx context.Context, j model.Job, r model.Resolution, delay time.Duration) error {
+	count := 0
+	for _, set := range []bool{r.Reservation != nil, r.Rejection != "", r.BlockedReason != "", r.RetryReason != ""} {
+		if set {
+			count++
+		}
+	}
+	if count != 1 || delay < 0 || delay > time.Minute || !model.ValidIdentifier(j.Order.OrderID) || j.Generation < 1 {
+		return model.ErrInvalid
+	}
+	if j.Order.DatasetID != s.dataset {
+		return model.ErrDataset
+	}
+	if r.Rejection != "" && r.Rejection != "INSUFFICIENT_STOCK" && r.Rejection != "UNKNOWN_SKU" {
+		return model.ErrInvalid
+	}
+	if len(r.BlockedReason) > 128 || len(r.RetryReason) > 128 {
+		return model.ErrInvalid
+	}
+	ctx, cancel := context.WithTimeout(ctx, s.timeout)
+	defer cancel()
+	tx, err := s.pool.Begin(ctx)
+	if err != nil {
+		return storageError(err)
+	}
+	defer rollback(tx)
+	var expected int64
+	if err = tx.QueryRow(ctx, lockOwnedJobSQL, j.Order.OrderID, j.Generation).Scan(&expected); err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return model.ErrStale
+		}
+		return storageError(err)
+	}
+	current, err := s.read(tx.QueryRow(ctx, lockOrderSQL, j.Order.OrderID))
+	if err != nil {
+		return err
+	}
+	if expected != j.OrderVersion || current.Version != j.OrderVersion || current.State != model.Reserving {
+		return model.ErrStale
+	}
+	done := r.Reservation != nil || r.Rejection != ""
+	if done {
+		current.Version++
+		current.Rejection = r.Rejection
+		current.Reservation = r.Reservation
+		current.State = model.Rejected
+		var snapshot []byte
+		if r.Reservation != nil {
+			current.State = model.PaymentPending
+			snapshot, err = json.Marshal(r.Reservation)
+			if err != nil {
+				return err
+			}
+		}
+		if err = tx.QueryRow(ctx, resolveOrderSQL, current.OrderID, j.OrderVersion, current.State, snapshot, r.Rejection).Scan(&current.Version); err != nil {
+			return storageError(err)
+		}
+		if r.Reservation != nil {
+			payload, e := json.Marshal(current)
+			if e != nil {
+				return e
+			}
+			if _, err = tx.Exec(ctx, insertEventSQL, current.OperationID+":awaiting-payment", current.OrderID, current.Version, payload); err != nil {
+				return storageError(err)
+			}
+		}
+	}
+	tag, err := tx.Exec(ctx, resolveJobSQL, current.OrderID, j.Generation, done, r.BlockedReason, r.RetryReason, delay.Seconds())
+	if err != nil {
+		return storageError(err)
+	}
+	if tag.RowsAffected() != 1 {
+		return model.ErrStale
+	}
+	if err = tx.Commit(ctx); err != nil {
+		return storageError(err)
+	}
+	return nil
+}
+```
+
+<a id="orders-internal-orders-store-store-go"></a>
+
+## Приложение: internal/orders/store/store.go
+
+Полный исходный документ: `internal/orders/store/store.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+// Package store owns Orders data and short transactions, never peer RPCs.
+package store
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"time"
+
+	"github.com/Includeoyasi/faultline-lab/internal/orders/model"
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
+)
+
+const (
+	bindDatasetSQL = "INSERT INTO orders.dataset(dataset_id) VALUES($1) ON CONFLICT(singleton) DO NOTHING"
+	readDatasetSQL = "SELECT dataset_id FROM orders.dataset WHERE singleton"
+	readOrderSQL   = `SELECT o.order_id,o.request_key,o.reserve_operation_id,o.state,o.version,o.items,o.reservation,o.rejection,j.blocked_reason
+ FROM orders.orders o JOIN orders.reserve_jobs j USING(order_id)`
+)
+
+type Store struct {
+	pool    *pgxpool.Pool
+	dataset string
+	timeout time.Duration
+}
+
+func NewStore(ctx context.Context, pool *pgxpool.Pool, dataset string, timeout time.Duration) (*Store, error) {
+	if !model.ValidIdentifier(dataset) || timeout < time.Millisecond || timeout > time.Minute {
+		return nil, model.ErrInvalid
+	}
+	ctx, cancel := context.WithTimeout(ctx, timeout)
+	defer cancel()
+	tx, err := pool.Begin(ctx)
+	if err != nil {
+		return nil, storageError(err)
+	}
+	defer rollback(tx)
+	if _, err = tx.Exec(ctx, bindDatasetSQL, dataset); err != nil {
+		return nil, storageError(err)
+	}
+	var actual string
+	if err = tx.QueryRow(ctx, readDatasetSQL).Scan(&actual); err != nil {
+		return nil, storageError(err)
+	}
+	if actual != dataset {
+		return nil, model.ErrDataset
+	}
+	if err = tx.Commit(ctx); err != nil {
+		return nil, storageError(err)
+	}
+	return &Store{pool: pool, dataset: dataset, timeout: timeout}, nil
+}
+func rollback(tx pgx.Tx) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	_ = tx.Rollback(ctx)
+}
+func storageError(err error) error {
+	for _, known := range []error{context.Canceled, context.DeadlineExceeded, model.ErrNotFound, model.ErrStale} {
+		if errors.Is(err, known) {
+			return known
+		}
+	}
+	return errors.New("orders storage operation failed; outcome may be unknown")
+}
+func (s *Store) read(row pgx.Row) (model.Order, error) {
+	o := model.Order{DatasetID: s.dataset}
+	var items, snapshot []byte
+	err := row.Scan(&o.OrderID, &o.RequestKey, &o.OperationID, &o.State, &o.Version, &items, &snapshot, &o.Rejection, &o.BlockedReason)
+	if errors.Is(err, pgx.ErrNoRows) {
+		return o, model.ErrNotFound
+	}
+	if err != nil {
+		return o, storageError(err)
+	}
+	if err = json.Unmarshal(items, &o.Items); err != nil {
+		return o, storageError(err)
+	}
+	if len(snapshot) > 0 {
+		if err = json.Unmarshal(snapshot, &o.Reservation); err != nil {
+			return o, storageError(err)
+		}
+	}
+	return o, nil
+}
+func (s *Store) validateLookup(dataset, key string) error {
+	if !model.ValidIdentifier(dataset) || !model.ValidIdentifier(key) {
+		return model.ErrInvalid
+	}
+	if dataset != s.dataset {
+		return model.ErrDataset
+	}
+	return nil
+}
+```
+
+<a id="orders-internal-orders-worker-worker-go"></a>
+
+## Приложение: internal/orders/worker/worker.go
+
+Полный исходный документ: `internal/orders/worker/worker.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+// Package worker executes the one durable reserve step owned by Orders.
+package worker
+
+import (
+	"context"
+	"errors"
+	"log/slog"
+	"math"
+	"math/rand/v2"
+	"reflect"
+	"sync"
+	"time"
+
+	inventoryv1 "github.com/Includeoyasi/faultline-lab/api/inventory/v1"
+	"github.com/Includeoyasi/faultline-lab/internal/orders/model"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+)
+
+type Jobs interface {
+	Claim(context.Context, time.Duration) (*model.Job, error)
+	Resolve(context.Context, model.Job, model.Resolution, time.Duration) error
+}
+type Inventory interface {
+	Reserve(context.Context, *inventoryv1.ReserveRequest, ...grpc.CallOption) (*inventoryv1.OperationResult, error)
+	GetReservation(context.Context, *inventoryv1.GetReservationRequest, ...grpc.CallOption) (*inventoryv1.Reservation, error)
+}
+type Processor struct {
+	Jobs       Jobs
+	Inventory  Inventory
+	Lease      time.Duration
+	RPCTimeout time.Duration
+	RetryMin   time.Duration
+	RetryMax   time.Duration
+	Logger     *slog.Logger
+}
+
+func (p *Processor) Step(ctx context.Context) (bool, error) {
+	job, err := p.Jobs.Claim(ctx, p.Lease)
+	if err != nil || job == nil {
+		return false, err
+	}
+	rpcCtx, cancel := context.WithTimeout(ctx, p.RPCTimeout)
+	resolution := p.reserve(rpcCtx, job.Order)
+	cancel()
+	delay := p.RetryMin
+	for attempt := int64(1); attempt < job.Attempts && delay < p.RetryMax; attempt++ {
+		if delay > p.RetryMax/2 {
+			delay = p.RetryMax
+			break
+		}
+		delay *= 2
+	}
+	if delay > p.RetryMin {
+		delay = p.RetryMin + time.Duration(rand.Int64N(int64(delay-p.RetryMin)+1))
+	}
+	err = p.Jobs.Resolve(ctx, *job, resolution, delay)
+	if errors.Is(err, model.ErrStale) {
+		return true, nil
+	}
+	if err == nil && p.Logger != nil {
+		p.Logger.InfoContext(ctx, "reserve attempt recorded", "order_id", job.Order.OrderID, "operation_id", job.Order.OperationID, "generation", job.Generation, "attempt", job.Attempts, "blocked_reason", resolution.BlockedReason, "retry_reason", resolution.RetryReason, "rejection", resolution.Rejection)
+	}
+	return true, err
+}
+
+// Run has bounded parallelism and joins every worker before returning.
+func (p *Processor) Run(ctx context.Context, count int, poll time.Duration) {
+	var wg sync.WaitGroup
+	for range count {
+		wg.Go(func() {
+			timer := time.NewTimer(0)
+			defer timer.Stop()
+			for {
+				select {
+				case <-ctx.Done():
+					return
+				case <-timer.C:
+				}
+				worked, err := p.Step(ctx)
+				if err != nil && ctx.Err() == nil && p.Logger != nil {
+					p.Logger.ErrorContext(ctx, "reserve attempt unavailable; durable job retained")
+				}
+				wait := poll
+				if worked && err == nil {
+					wait = 0
+				}
+				timer.Reset(wait)
+			}
+		})
+	}
+	wg.Wait()
+}
+func (p *Processor) reserve(ctx context.Context, o model.Order) model.Resolution {
+	request := &inventoryv1.ReserveRequest{DatasetId: o.DatasetID, OrderId: o.OrderID, OperationId: o.OperationID}
+	for _, item := range o.Items {
+		request.Items = append(request.Items, &inventoryv1.Item{Sku: item.SKU, Quantity: item.Quantity})
+	}
+	result, err := p.Inventory.Reserve(ctx, request)
+	if err != nil {
+		return peerError(err)
+	}
+	if result == nil || result.GetOperationId() != o.OperationID {
+		return model.Resolution{BlockedReason: "INVALID_RESERVE_IDENTITY"}
+	}
+	switch result.GetOutcome() {
+	case inventoryv1.Outcome_OUTCOME_INSUFFICIENT_STOCK, inventoryv1.Outcome_OUTCOME_UNKNOWN_SKU:
+		if result.GetReservationAtOperation() != nil {
+			return model.Resolution{BlockedReason: "INVALID_REJECTION_SNAPSHOT"}
+		}
+		reason := "UNKNOWN_SKU"
+		if result.GetOutcome() == inventoryv1.Outcome_OUTCOME_INSUFFICIENT_STOCK {
+			reason = "INSUFFICIENT_STOCK"
+		}
+		return model.Resolution{Rejection: reason}
+	case inventoryv1.Outcome_OUTCOME_APPLIED:
+		historical, ok := verified(o, result.GetReservationAtOperation())
+		if !ok {
+			return model.Resolution{BlockedReason: "INVALID_RESERVE_SNAPSHOT"}
+		}
+		current, err := p.Inventory.GetReservation(ctx, &inventoryv1.GetReservationRequest{DatasetId: o.DatasetID, OrderId: o.OrderID})
+		if err != nil {
+			if status.Code(err) == codes.NotFound {
+				return model.Resolution{RetryReason: "RESERVATION_NOT_YET_OBSERVED"}
+			}
+			return peerError(err)
+		}
+		observed, ok := verified(o, current)
+		if !ok || !reflect.DeepEqual(historical, observed) {
+			return model.Resolution{BlockedReason: "RESERVATION_CONTRADICTION"}
+		}
+		return model.Resolution{Reservation: observed}
+	default:
+		return model.Resolution{BlockedReason: "UNEXPECTED_RESERVE_OUTCOME"}
+	}
+}
+func peerError(err error) model.Resolution {
+	switch status.Code(err) {
+	case codes.DeadlineExceeded, codes.Canceled, codes.Unavailable, codes.ResourceExhausted, codes.Aborted, codes.Internal, codes.Unknown:
+		return model.Resolution{RetryReason: "INVENTORY_UNCONFIRMED"}
+	default:
+		return model.Resolution{BlockedReason: "INVENTORY_CONTRACT_ERROR"}
+	}
+}
+func verified(o model.Order, r *inventoryv1.Reservation) (*model.Reservation, bool) {
+	if r == nil || r.GetDatasetId() != o.DatasetID || r.GetOrderId() != o.OrderID || r.GetState() != inventoryv1.ReservationState_RESERVATION_STATE_RESERVED || r.GetVersion() < 1 || len(r.GetItems()) != len(o.Items) || len(r.GetCurrency()) != 3 {
+		return nil, false
+	}
+	for _, c := range r.GetCurrency() {
+		if c < 'A' || c > 'Z' {
+			return nil, false
+		}
+	}
+	bySKU := make(map[string]*inventoryv1.PricedItem, len(r.GetItems()))
+	for _, item := range r.GetItems() {
+		if item == nil || bySKU[item.GetSku()] != nil {
+			return nil, false
+		}
+		bySKU[item.GetSku()] = item
+	}
+	snapshot := &model.Reservation{Version: r.GetVersion(), Currency: r.GetCurrency(), Items: []model.PricedItem{}}
+	for _, item := range o.Items {
+		priced := bySKU[item.SKU]
+		if priced == nil || priced.GetQuantity() != item.Quantity || priced.GetUnitPriceMinor() < 0 {
+			return nil, false
+		}
+		price := priced.GetUnitPriceMinor()
+		if price > 0 && item.Quantity > math.MaxInt64/price {
+			return nil, false
+		}
+		amount := item.Quantity * price
+		if snapshot.TotalMinor > math.MaxInt64-amount {
+			return nil, false
+		}
+		snapshot.TotalMinor += amount
+		snapshot.Items = append(snapshot.Items, model.PricedItem{SKU: item.SKU, Quantity: item.Quantity, UnitPriceMinor: price})
+	}
+	return snapshot, snapshot.TotalMinor == r.GetTotalMinor()
+}
+```
+
+<a id="orders-internal-orders-worker-worker-test-go"></a>
+
+## Приложение: internal/orders/worker/worker_test.go
+
+Полный исходный документ: `internal/orders/worker/worker_test.go`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+```go
+package worker
+
+import (
+	"context"
+	"errors"
+	"math"
+	"testing"
+	"time"
+
+	inventoryv1 "github.com/Includeoyasi/faultline-lab/api/inventory/v1"
+	"github.com/Includeoyasi/faultline-lab/internal/orders/model"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/proto"
+)
+
+type fakeJobs struct {
+	job         model.Job
+	resolution  model.Resolution
+	delay       time.Duration
+	finishError error
+}
+
+func (f *fakeJobs) Claim(context.Context, time.Duration) (*model.Job, error) { return &f.job, nil }
+func (f *fakeJobs) Resolve(_ context.Context, _ model.Job, r model.Resolution, d time.Duration) error {
+	f.resolution = r
+	f.delay = d
+	return f.finishError
+}
+
+type fakeInventory struct {
+	result    *inventoryv1.OperationResult
+	current   *inventoryv1.Reservation
+	err       error
+	readErr   error
+	operation string
+}
+
+func (f *fakeInventory) Reserve(_ context.Context, r *inventoryv1.ReserveRequest, _ ...grpc.CallOption) (*inventoryv1.OperationResult, error) {
+	f.operation = r.OperationId
+	return f.result, f.err
+}
+func (f *fakeInventory) GetReservation(context.Context, *inventoryv1.GetReservationRequest, ...grpc.CallOption) (*inventoryv1.Reservation, error) {
+	return f.current, f.readErr
+}
+func TestReserveOutcomeGuards(t *testing.T) {
+	order := model.Order{DatasetID: "data", OrderID: "order", OperationID: "reserve", State: model.Reserving, Items: []model.Item{{SKU: "sku", Quantity: 2}}}
+	good := &inventoryv1.Reservation{DatasetId: "data", OrderId: "order", State: inventoryv1.ReservationState_RESERVATION_STATE_RESERVED, Version: 1, Items: []*inventoryv1.PricedItem{{Sku: "sku", Quantity: 2, UnitPriceMinor: 100}}, TotalMinor: 200, Currency: "RUB"}
+	for _, name := range []string{"success", "timeout", "refused", "unknown-sku", "unexpected", "wrong-key", "wrong-dataset", "wrong-order", "wrong-items", "wrong-total", "negative-price", "overflow", "duplicate-sku", "wrong-currency", "missing", "released", "committed", "version-changed", "not-found", "lookup-unavailable", "stale-finish"} {
+		t.Run(name, func(t *testing.T) {
+			historical := proto.Clone(good).(*inventoryv1.Reservation)
+			current := proto.Clone(good).(*inventoryv1.Reservation)
+			peer := &fakeInventory{result: &inventoryv1.OperationResult{OperationId: "reserve", Outcome: inventoryv1.Outcome_OUTCOME_APPLIED, ReservationAtOperation: historical}, current: current}
+			jobs := &fakeJobs{job: model.Job{Order: order, Generation: 1, OrderVersion: 2, Attempts: 50}}
+			want := "blocked"
+			switch name {
+			case "success":
+				want = "success"
+			case "timeout":
+				peer.err = status.Error(codes.DeadlineExceeded, "unknown")
+				want = "retry"
+			case "refused":
+				peer.result.Outcome = inventoryv1.Outcome_OUTCOME_INSUFFICIENT_STOCK
+				peer.result.ReservationAtOperation = nil
+				want = "reject"
+			case "unknown-sku":
+				peer.result.Outcome = inventoryv1.Outcome_OUTCOME_UNKNOWN_SKU
+				peer.result.ReservationAtOperation = nil
+				want = "reject"
+			case "unexpected":
+				peer.result.Outcome = inventoryv1.Outcome_OUTCOME_RESERVATION_EXISTS
+			case "wrong-key":
+				peer.result.OperationId = "other"
+			case "wrong-dataset":
+				historical.DatasetId = "other"
+			case "wrong-order":
+				historical.OrderId = "other"
+			case "wrong-items":
+				historical.Items[0].Quantity = 3
+			case "wrong-total":
+				historical.TotalMinor++
+			case "negative-price":
+				historical.Items[0].UnitPriceMinor = -1
+			case "overflow":
+				historical.Items[0].UnitPriceMinor = math.MaxInt64
+			case "duplicate-sku":
+				historical.Items = append(historical.Items, proto.Clone(historical.Items[0]).(*inventoryv1.PricedItem))
+			case "wrong-currency":
+				historical.Currency = "rub"
+			case "missing":
+				peer.result.ReservationAtOperation = nil
+			case "released":
+				current.State = inventoryv1.ReservationState_RESERVATION_STATE_RELEASED
+			case "committed":
+				current.State = inventoryv1.ReservationState_RESERVATION_STATE_COMMITTED
+			case "version-changed":
+				current.Version++
+			case "not-found":
+				peer.readErr = status.Error(codes.NotFound, "not yet visible")
+				want = "retry"
+			case "lookup-unavailable":
+				peer.readErr = status.Error(codes.Unavailable, "offline")
+				want = "retry"
+			case "stale-finish":
+				jobs.finishError = model.ErrStale
+				want = "success"
+			}
+			p := Processor{Jobs: jobs, Inventory: peer, Lease: time.Second, RPCTimeout: time.Second, RetryMin: time.Millisecond, RetryMax: time.Second}
+			if worked, err := p.Step(t.Context()); !worked || err != nil {
+				t.Fatal(worked, err)
+			}
+			if peer.operation != order.OperationID {
+				t.Fatal("changed operation identity")
+			}
+			r := jobs.resolution
+			switch want {
+			case "success":
+				if r.Reservation == nil {
+					t.Fatal(r)
+				}
+			case "retry":
+				if r.RetryReason == "" || jobs.delay < time.Millisecond || jobs.delay > time.Second {
+					t.Fatal(r, jobs.delay)
+				}
+			case "reject":
+				if r.Rejection == "" {
+					t.Fatal(r)
+				}
+			case "blocked":
+				if r.BlockedReason == "" || r.Reservation != nil {
+					t.Fatal(r)
+				}
+			}
+		})
+	}
+}
+func TestCanceledWorkerKeepsAttemptUnconfirmed(t *testing.T) {
+	ctx, cancel := context.WithCancel(t.Context())
+	cancel()
+	jobs := &fakeJobs{job: model.Job{Order: model.Order{OperationID: "stable"}}, finishError: context.Canceled}
+	p := Processor{Jobs: jobs, Inventory: &fakeInventory{err: status.Error(codes.Canceled, "canceled")}, RPCTimeout: time.Second, RetryMin: time.Millisecond, RetryMax: time.Second}
+	if _, err := p.Step(ctx); !errors.Is(err, context.Canceled) || jobs.resolution.Rejection != "" {
+		t.Fatal(err, jobs.resolution)
+	}
+}
+```
+
+<a id="orders-native-validation-2026-10-23"></a>
+
+## Приложение: Orders native acceptance and crash evidence — 2026-10-23
+
+Полный исходный документ: `docs/development/evidence/orders/VALIDATION.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### Orders: датированные доказательства — 23 октября 2026 года
+
+Исходный код: `d09f1fe6652cc18cf88cd4ce30f604be379f2ef0`; проверенный HEAD вместе с контекстом: `1aec8ab098bccb9b7b501285fffda06360310d19`. Это сохранённый результат конкретного прогона; актуальные проверки и решение владельца находятся в [PR #29](https://github.com/Includeoyasi/faultline-lab/pull/29).
+
+| Среда / проверка | Фактический результат |
+|---|---|
+| Windows AMD64, portable Go 1.27.3 | Orders/config/model/worker, datalab/smokecli, vet и build PASS; интеграционные случаи без FL_DATA_INTEGRATION пропускаются |
+| Windows, отдельные health-only процессы | PASS после разрешённого запуска вне ограничения loopback; первый sandbox-прогон получил запрет сокета |
+| Native Linux AMD64 и ARM64, Go 1.27.3 | [Go CI](https://github.com/Includeoyasi/faultline-lab/actions/runs/39989398467) PASS: генерация, форматирование, tidy/verify, build, lint, unit/race, govulncheck, сервисный и контейнерный smoke |
+| Реальные PostgreSQL + Inventory, оба native профиля | PostgreSQL-only и совместный PostgreSQL/Kafka/Redis PASS |
+| Документы и контекст | [Documentation](https://github.com/Includeoyasi/faultline-lab/actions/runs/39989398444) PASS |
+
+В обоих режимах каждый native job выполнял [TestOrdersFoundation и TestOrdersProcessCrash](#orders-internal-orders-acceptance-foundation-test-go) с явным FL_DATA_INTEGRATION=1. Проверены конкурентный повтор Create и конфликт payload, откат при ошибке INSERT job/outbox, поколения worker и истечение lease во время ожидания строки заказа. Сценарий G1 принимает 1000 запросов на 100 единиц и проверяет 100 PAYMENT_PENDING, 900 сохранённых INSUFFICIENT_STOCK, доступность 0 и сумму резервов 100. Настоящий процесс Orders получает SIGKILL до первого Reserve либо после commit Inventory; после запуска прежняя операция даёт один складской эффект и одно локальное событие. Исторический успешный Reserve с текущим RELEASED оставляет диагностируемый незавершённый заказ.
+
+Scratch-контейнер Orders проверен до и после перезапуска PostgreSQL: неизменный ответ Create, текущее чтение обоими API, конфликт изменённого payload и подтверждённый резерв. Последующие host CLI tests проверили фактические образы, ресурсные снимки и метаданные Orders/Inventory во всех отчётах; адресная очистка собственных ресурсов завершилась успешно.
+
+Отрисовка документов, 23 октября: Mermaid 11.4.1 воспроизвёл parse error на неэкранированной точке с запятой в подписи потерянного ответа. После замены разделителей обе схемы — описание PR и руководство Orders — успешно отрисованы в SVG/PNG и визуально проверены. Структурная проверка Documentation сама по себе не подтверждает отрисовку Mermaid; эта проверка выполнена отдельно и не меняет результаты бизнес-сценариев выше.
+
+Границы: takeover моделируется реальными SQL Claim/Resolve разных поколений, а не двумя одновременно работающими процессами Orders. Потеря именно ответа Create не инъецируется; проверяется неизменный повтор после прогресса и рестарта. Отсутствие SQL-транзакции во время RPC следует из кода, отдельного измерительного теста нет. Docker/WSL на личном Windows ПК для этого среза не запускались; Windows Docker и macOS runtime — NOT_RUN. Эти функциональные результаты не являются capacity/A/B-измерением или приёмкой G1 владельцем.

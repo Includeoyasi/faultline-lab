@@ -1,0 +1,18 @@
+services:
+  orders:
+    command: []
+    environment:
+      FL_ORDERS_CONFIG: /etc/faultline/orders.json
+      FL_ORDERS_DATASET_ID: ${FL_ORDERS_DATASET_ID:?set the shared dataset identity before starting Orders}
+    volumes:
+      - ./configs/orders/local.json:/etc/faultline/orders.json:ro
+    secrets:
+      - {source: orders-app-password, target: orders_app.password}
+    networks: [runtime, data]
+    mem_limit: 128m
+    cpus: 0.5
+    depends_on:
+      postgres:
+        condition: service_healthy
+      inventory:
+        condition: service_healthy

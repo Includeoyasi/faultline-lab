@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package faultline.orders.v1;
+option go_package = "github.com/Includeoyasi/faultline-lab/api/orders/v1;ordersv1";
+
+service Orders {
+  rpc CreateOrder(CreateOrderRequest) returns (Acceptance);
+  rpc GetOrder(GetOrderRequest) returns (Order);
+  rpc GetOrderByRequestKey(GetOrderByRequestKeyRequest) returns (Order);
+}
+
+enum OrderState {
+  ORDER_STATE_UNSPECIFIED = 0;
+  ORDER_STATE_ACCEPTED = 1;
+  ORDER_STATE_RESERVING = 2;
+  ORDER_STATE_PAYMENT_PENDING = 3;
+  ORDER_STATE_REJECTED = 4;
+}
+
+message Item { string sku = 1; int64 quantity = 2; }
+message PricedItem { string sku = 1; int64 quantity = 2; int64 unit_price_minor = 3; }
+message CreateOrderRequest {
+  string dataset_id = 1;
+  string request_key = 2;
+  repeated Item items = 3;
+}
+// Immutable acknowledgement of admission, including on replay after progress.
+// Use GetOrder for current state. A transport error means unknown outcome:
+// retry the same request_key and payload or look up by request_key.
+message Acceptance {
+  string dataset_id = 1;
+  string order_id = 2;
+  string request_key = 3;
+  OrderState state = 4;
+}
+message GetOrderRequest { string dataset_id = 1; string order_id = 2; }
+message GetOrderByRequestKeyRequest { string dataset_id = 1; string request_key = 2; }
+message Order {
+  string dataset_id = 1;
+  string order_id = 2;
+  string request_key = 3;
+  OrderState state = 4;
+  int64 version = 5;
+  repeated Item items = 6;
+  repeated PricedItem priced_items = 7;
+  int64 total_minor = 8;
+  string currency = 9;
+  string rejection = 10;
+  // Diagnostic code, not a terminal order state. No automatic repair implied.
+  string blocked_reason = 11;
+  string reserve_operation_id = 12;
+}

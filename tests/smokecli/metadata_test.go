@@ -23,8 +23,8 @@ func TestSuccessfulReportsHaveObservedMetadata(t *testing.T) {
 		services []string
 	}{
 		{"smoke", 3, []string{"orders", "inventory", "payments"}},
-		{"postgres", 1, []string{"postgres", "inventory"}},
-		{"infrastructure", 1, []string{"postgres", "kafka", "redis", "inventory"}},
+		{"postgres", 1, []string{"postgres", "inventory", "orders"}},
+		{"infrastructure", 1, []string{"postgres", "kafka", "redis", "inventory", "orders"}},
 	} {
 		t.Run(test.kind, func(t *testing.T) {
 			r := latestSuccessfulReport(t, root, test.kind)

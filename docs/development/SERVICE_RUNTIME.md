@@ -1,6 +1,6 @@
 # Сервисы: конфигурация, логи и жизненный цикл
 
-Три независимых процесса Orders, Inventory и Payments проверяют настройки, пишут JSON в stderr и обслуживают стандартный `grpc.health.v1.Health/Check`. Этот документ описывает общий жизненный цикл. [Бизнес-API Inventory](INVENTORY.md) использует PostgreSQL; Orders и Payments сохраняют каркас. Для проверки Inventory без БД предусмотрена явная команда `health-only`, подтверждающая только работу gRPC-каркаса.
+Три независимых процесса Orders, Inventory и Payments проверяют настройки, пишут JSON в stderr и обслуживают стандартный `grpc.health.v1.Health/Check`. Этот документ описывает общий жизненный цикл. [Inventory](INVENTORY.md) и [Orders](ORDERS.md) используют PostgreSQL; Orders вызывает Inventory по gRPC, а Payments сохраняет каркас. Для независимой проверки Orders и Inventory предусмотрена явная команда `health-only`, подтверждающая только работу gRPC-каркаса.
 
 Конфигурация и базовый процесс введены в PR #6/#7; контейнерный жизненный цикл — в [PR #8](https://github.com/Includeoyasi/faultline-lab/pull/8). Это исторические источники реализации. Актуальные задачи и ревью — в [GitHub](https://github.com/Includeoyasi/faultline-lab/issues).
 
@@ -43,7 +43,7 @@ flowchart LR
 | :--- | :--- | :--- |
 | Listener локального процесса | [local.env.example](../../configs/env/local.env.example) | `localhost:50051`; для нескольких процессов на одном хосте задаются разные порты |
 | Listener в контейнере | [container.env.example](../../configs/env/container.env.example) | `:50051` — явный wildcard внутри сетевого пространства контейнера; разные контейнеры могут использовать один внутренний порт |
-| Endpoint другого сервиса | Будущая deployment-конфигурация, когда появятся клиенты | Имена Compose DNS, например `inventory:50051`; IP контейнеров не закрепляются |
+| Endpoint другого сервиса | Deployment-конфигурация Orders; `inventory_target` в его профиле | Имена Compose DNS, например `inventory:50051`; IP контейнеров не закрепляются |
 | Доступ с хоста | Явная публикация при запуске | Для локальной разработки привязка только к loopback; без `-p` порт не публикуется на интерфейсах хоста |
 
 Образцы содержат только несекретные настройки. Личные копии `*.env` игнорируются Git и исключены из Docker build context; окружение передаёт launcher, приложение не загружает dotenv самостоятельно. Loopback в тестах — изолированный fixture с динамическим портом, а в наблюдённых логах — фактический адрес запущенного тестового процесса.

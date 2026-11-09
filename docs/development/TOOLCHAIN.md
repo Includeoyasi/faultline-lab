@@ -37,7 +37,7 @@ docker compose run --rm toolchain service-smoke
 
 `versions` выводит фактические Go, golangci-lint, build metadata goimports и версию govulncheck. `generate` создаёт protobuf-код и нормализует импорты. `check` повторяет генерацию и отклоняет diff в API, затем проверяет gofmt/goimports, tidy без diff, verify, build, согласованные линтеры, unit/race commands и govulncheck. Ошибка любого шага завершает команду с ненулевым кодом. Набор линтеров — govet, staticcheck, errcheck, ineffassign, unused.
 
-`build` создаёт Linux-бинарники bin/orders, bin/inventory, bin/payments для архитектуры toolchain-контейнера и выводит build metadata. Они игнорируются Git. На Windows эти Linux-бинарники не запускаются напрямую. `service-smoke` проверяет три отдельных процесса: health, JSON-диагностику ошибок, выход и независимость; Inventory запускается явной командой `health-only`. Его бизнес-RPC и PostgreSQL проверяются отдельным [интеграционным прогоном](INVENTORY.md).
+`build` создаёт Linux-бинарники bin/orders, bin/inventory, bin/payments для архитектуры toolchain-контейнера и выводит build metadata. Они игнорируются Git. На Windows эти Linux-бинарники не запускаются напрямую. `service-smoke` проверяет три отдельных процесса: health, JSON-диагностику ошибок, выход и независимость; Orders и Inventory запускаются явной командой `health-only`. Их бизнес-RPC и PostgreSQL проверяются отдельным интеграционным прогоном: [Inventory](INVENTORY.md), [Orders](ORDERS.md).
 
 Для исправления форматирования: `docker compose run --rm toolchain format`. Эта команда меняет Go-исходники в рабочей копии. Неподдерживаемая команда и лишние аргументы дают exit code 2.
 

@@ -189,13 +189,14 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	env := []string{}
 	for _, item := range os.Environ() {
 		key, _, _ := strings.Cut(item, "=")
-		if !strings.EqualFold(key, "FL_PG_SECRETS_DIR") && !strings.EqualFold(key, "FL_INFRA_SECRETS_DIR") && !strings.EqualFold(key, "FL_INVENTORY_DATASET_ID") {
+		if !strings.EqualFold(key, "FL_PG_SECRETS_DIR") && !strings.EqualFold(key, "FL_INFRA_SECRETS_DIR") && !strings.EqualFold(key, "FL_INVENTORY_DATASET_ID") && !strings.EqualFold(key, "FL_ORDERS_DATASET_ID") {
 			env = append(env, item)
 		}
 	}
 	env = append(env, "FL_PG_SECRETS_DIR="+cfg.Secrets)
 	// Each disposable database gets a unique namespace, independent of test keys.
 	env = append(env, "FL_INVENTORY_DATASET_ID="+project)
+	env = append(env, "FL_ORDERS_DATASET_ID="+project)
 	if fullStack {
 		env = append(env, "FL_INFRA_SECRETS_DIR="+infraCfg.Secrets)
 	}
@@ -207,7 +208,7 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	if fullStack {
 		services = append(services, "kafka", "redis")
 	}
-	observedServices := append(append([]string{}, services...), "inventory")
+	observedServices := append(append([]string{}, services...), "inventory", "orders")
 	evidence := report{SchemaVersion: 1, Project: project, Started: time.Now().UTC(), Result: "FAIL", Cleanup: "PENDING", Events: []event{}, Environment: runmeta.New(observedServices)}
 	save := func() error {
 		data, e := json.MarshalIndent(evidence, "", "  ")
@@ -281,7 +282,7 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	}
 	mayExist = true
 	buildServices := []string{"dbtool"}
-	buildServices = append(buildServices, "inventory")
+	buildServices = append(buildServices, "inventory", "orders")
 	if fullStack {
 		buildServices = append(buildServices, "infrastructure-check")
 	}
@@ -289,7 +290,7 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	defer func() {
 		logCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
-		logServices := append(append([]string{}, services...), "inventory")
+		logServices := append(append([]string{}, services...), "inventory", "orders")
 		_, _ = call(logCtx, "dependency logs", 5*time.Second, compose(append([]string{"logs", "--no-color", "--tail", "200"}, logServices...)...)...)
 	}()
 	if _, err = call(ctx, "build dbtool", 10*time.Minute, compose(append([]string{"build"}, buildServices...)...)...); err != nil {
@@ -318,11 +319,20 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	var deployed []string
 	for index, value := range base {
 		if value == "-p" {
-			deployed = append(append(append([]string{}, base[:index]...), "-f", "compose.inventory.yaml"), base[index:]...)
+			deployed = append(append(append([]string{}, base[:index]...), "-f", "compose.inventory.yaml", "-f", "compose.orders.yaml"), base[index:]...)
 			break
 		}
 	}
 	_, err = call(ctx, "start Inventory business container", 60*time.Second, append(deployed, "up", "-d", "--no-deps", "--wait", "--wait-timeout", "45", "inventory")...)
+	if err != nil {
+		return err
+	}
+	// Exercise controlled Orders crash windows before starting its autonomous
+	// deployment worker, so it cannot consume the tests' deliberately paused jobs.
+	if _, err = call(ctx, "Orders admission, 1000/100 contention and process crash recovery", 5*time.Minute, compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "-e", "FL_INVENTORY_TARGET=inventory:50051", "--entrypoint", "/app/orders.test", "dbtool", "-test.run=^TestOrders(Foundation|ProcessCrash)$", "-test.v", "-test.timeout=270s")...); err != nil {
+		return err
+	}
+	_, err = call(ctx, "start Orders business container", 60*time.Second, append(deployed, "up", "-d", "--no-deps", "--wait", "--wait-timeout", "45", "orders")...)
 	// Observe the business container with its effective overlay, before its
 	// functional probes. Raw config bypasses call() to keep secrets out of logs.
 	evidence.Environment = runmeta.Collect(ctx, func(ctx context.Context, args []string) (string, error) {
@@ -340,6 +350,13 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 		return e
 	}
 	if err = deployedProbe("Inventory deployed gRPC API"); err != nil {
+		return err
+	}
+	ordersProbe := func(stage string) error {
+		_, e := call(ctx, stage, 45*time.Second, compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "-e", "FL_ORDERS_TARGET=orders:50051", "--entrypoint", "/app/orders.test", "dbtool", "-test.run=^TestOrdersDeployed$", "-test.v", "-test.timeout=30s")...)
+		return e
+	}
+	if err = ordersProbe("Orders deployed admission and reserve API"); err != nil {
 		return err
 	}
 	// Inventory tests add owned fixtures; capture the baseline after their writes.
@@ -380,6 +397,9 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 		return err
 	}
 	if err = deployedProbe("Inventory deployed API after PostgreSQL restart"); err != nil {
+		return err
+	}
+	if err = ordersProbe("Orders deployed API after PostgreSQL restart"); err != nil {
 		return err
 	}
 	if fullStack {

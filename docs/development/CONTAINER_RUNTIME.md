@@ -23,7 +23,7 @@ flowchart TB
 
 [Dockerfile](../../build/Dockerfile) использует закреплённый [toolchain](TOOLCHAIN.md) как stage общего multi-stage Dockerfile. Сервис выбирается build argument, разрешены только orders/inventory/payments. Финальный `scratch` содержит один статический бинарник и запускает его напрямую: без компилятора, shell, root и промежуточного процесса вместо PID 1. CA bundle и timezone database сейчас не требуются; перед появлением TLS-клиентов состав образа пересматривается явно.
 
-[Compose](../../compose.yaml) задаёт read-only root filesystem, `cap_drop: ALL`, `no-new-privileges`, внутреннюю сеть и отсутствие публикации портов. Базовый каркас не получает host mounts или Docker socket; Inventory использует явную команду `health-only`. Его отдельный [бизнес-профиль](INVENTORY.md) подключает конфигурацию, один прикладной секрет и сеть данных. Toolchain остаётся временным сервисом профиля tools; сборка runtime использует его stage напрямую.
+[Compose](../../compose.yaml) задаёт read-only root filesystem, `cap_drop: ALL`, `no-new-privileges`, внутреннюю сеть и отсутствие публикации портов. Базовый каркас не получает host mounts или Docker socket; Orders и Inventory используют явную команду `health-only`. Их [профили Inventory](INVENTORY.md) и [Orders](ORDERS.md) подключают конфигурацию, по одному прикладному секрету и сеть данных. Toolchain остаётся временным сервисом профиля tools; сборка runtime использует его stage напрямую.
 
 ## Требования и запуск
 

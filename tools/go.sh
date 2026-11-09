@@ -45,7 +45,8 @@ source_files() {
 
 generate() {
   protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative api/inventory/v1/inventory.proto
-  goimports -w api/inventory/v1
+  protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative api/orders/v1/orders.proto
+  goimports -w api/inventory/v1 api/orders/v1
 }
 
 case "${1:-versions}" in
