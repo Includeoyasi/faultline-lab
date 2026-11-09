@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **74**. Дата снимка: **2026-10-23**, Europe/Moscow. Исходный коммит внешних материалов: `450e139506f88f0f2570df12abc05a7b6c0a304a`.
+Ревизия: **75**. Дата снимка: **2026-11-10**, Europe/Moscow. Исходный коммит внешних материалов: `afecc0a6022a38a9c5ddd6d61986aac6230f1e09`.
 
 ## Выполнение задач
 
@@ -71,9 +71,9 @@ JSON ниже включён для автономного чтения реше
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 74,
+  "context_revision": 75,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-23",
+  "context_updated_on": "2026-11-10",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -87,7 +87,7 @@ JSON ниже включён для автономного чтения реше
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "450e139506f88f0f2570df12abc05a7b6c0a304a",
+    "snapshot_ref": "afecc0a6022a38a9c5ddd6d61986aac6230f1e09",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -3443,6 +3443,12 @@ JSON ниже включён для автономного чтения реше
       "date": "2026-10-23",
       "summary": "Repaired Mermaid sequence labels in Orders materials and separately rendered both PR and guide diagrams with Mermaid 11.4.1; structural documentation checks alone do not verify rendering",
       "trigger": "Owner reported the PR diagram parse error; business behavior and acceptance criteria unchanged"
+    },
+    {
+      "revision": 75,
+      "date": "2026-11-10",
+      "summary": "Prepared the five-block F09 decision proposal against merged Orders: separate public stream_sequence, one-record fresh-client activation, explicit recovery/retention costs, implementation boundary and acceptance scenarios; rendered and visually inspected five diagrams. Recorded owner merge of Orders without implying G1 approval.",
+      "trigger": "Owner asked what decisions were needed after merging Orders PR29 and authorized preparation of decision material; no publisher implementation or GitHub publication authorized by that request"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -3584,18 +3590,24 @@ JSON ниже включён для автономного чтения реше
     "f09": {
       "kind": "PROPOSED_DESIGN_NOT_IMPLEMENTED",
       "source": "docs/architecture/KAFKA_PUBLISHING.md",
-      "protocol": "Read monotonic lease generation G -> initialize transactional producer using stable lane ID -> claim lease only by CAS on that same G; no producer reuse after failed CAS and no reinit under old generation",
-      "ordering": "One unacknowledged version per stream per Kafka transaction; next version only after confirmed Kafka commit and durable SQL mark; cross-stream batching allowed",
-      "limits": "Contenders can fence a live publisher and hurt availability; client automatic epoch recovery must be excluded for stale lease; PostgreSQL/Kafka boundary still permits duplicate event IDs",
-      "future_checks": "A pause/resume and B takeover, delayed init/CAS, lost commit/SQL mark, retry/reinit, read_committed, inbox/version guards; F09 remains open until implemented and verified",
+      "code_basis": "Orders PR29 owner merge c0fb069ef100698b33b14e05398e4cada42670fb; existing Orders/Inventory outbox does not publish to Kafka",
+      "protocol": "Read free/expired DB-clock lease generation G -> real ProducerID initialization on fresh client with stable dataset/service/lane transactional ID -> CAS exactly that G and expiry -> one record and one commit attempt -> conditional SQL publication mark -> Close; failed CAS or any error closes client without reuse or abort recovery",
+      "ordering": "Exactly one Kafka record, one transaction, one fresh client and one SQL activation per attempt, including across streams. Next fact of a stream waits for confirmed Kafka commit and durable SQL mark; retry preserves event_id/stream_sequence/payload",
+      "public_sequence": "Separate contiguous stream_sequence from aggregate_version: Orders first public fact is business version 3 / sequence 1. Allocate with business/outbox row-counter TX, not nextval; rollback consumes no number. Backfill unpublished outbox under stopped writers without changing IDs/payload",
+      "receiver": "Inbox/job commit before offset, contiguous persisted-offset progress, atomic effect/cursor/job completion serialized per dataset/owner/aggregate stream; known irrelevant types get durable no-op jobs; conflicting ID/sequence/payload, unknown contract or missing prefix remain diagnostic unfinished work",
+      "client_review": "Pinned franz-go v1.22.2 has automatic PID recovery paths in txn.go and sink.go. Source audit supports the single-record fresh-client restriction for found paths; it is not runtime proof. Require no post-CAS InitProducerID in an attempt; no repeated Begin/End/TryAbort or GroupTransactSession/EndAndBeginTransaction. Preserve negotiated transaction feature mode without artificial MaxVersions cap",
+      "isolation_and_history": "One dataset per isolated Compose/Kafka in MVP, dataset-qualified envelope/group/transactional ID; existing three topic partitions and order_id key retained. Test orders/inventory topics keep full dataset history with cleanup.policy=delete and retention.ms/retention.bytes=-1; no protective TTL, scoped cleanup required; shared broker namespacing/full reset not claimed",
+      "limits": "Contender init can fence an active publisher before losing SQL CAS, hurting availability. Producer initialization/CAS per fact and history storage cost are unmeasured; batching deferred. SQL/Kafka have no global TX, so duplicate facts remain possible; single-broker disk loss and reconstruction of truncated history excluded",
+      "implementation_boundary": "Separate proposed F09 PR: both real outbox publishers and migrations, lab receiver in isolated SQL schema/role, protocol tracing and controlled two-process failure scenarios on native AMD64/ARM64. No Payments business implementation, finalization/F11, CancelOrder or complete reset/F10",
+      "future_checks": "Real pause/takeover/resume; delayed init/CAS; unknown commit/lost SQL mark; client timeout/fencing/PID and retention errors; sequence rollback/concurrency; receiver crashes/conflicts/no-op/gaps/bootstrap; bounded outages/resources and scoped cleanup. Runtime protocol checks NOT_RUN during preparation",
       "presentation": {
-        "updated_on": "2026-10-19",
-        "source_commit": "996ccd015b549be6fa670c34f3376755e74782c2",
-        "provenance": "Owner requested in voice chat separate visual explanations of SQL lease, Kafka fencing and idempotent consumer, then their joint operation, for architecture review",
-        "route": "One paused-replica failure; three mechanisms; exact activation; end-to-end delivery; lost SQL publication mark; costs, alternatives and future checks",
-        "preserved_contracts": "Distinct SQL generation and Kafka epoch; read G -> broker init -> CAS same G; no reinit under old lease; independent post-commit delivery and SQL mark; inbox+durable job before offset, version/state guards in worker transaction",
-        "validation": "Seven Mermaid sequence diagrams rendered with Mermaid 11.4.1 and visually inspected; local documentation links and safety checks passed; this is document validation, not runtime validation of the proposed protocol",
-        "decision": "Presentation change only; protocol remains proposed and unimplemented, owner design acceptance pending"
+        "updated_on": "2026-11-10",
+        "source_commit": "afecc0a6022a38a9c5ddd6d61986aac6230f1e09",
+        "provenance": "Direct owner request in chat to prepare decision material after Orders merge; existing five-block architecture format retained",
+        "route": "Problem/localization; patterns/alternatives; recommendation/cost; separate PR plan; concrete D1-D3 decisions. Five sequence diagrams show the anomaly, three mechanisms and combined activation; detailed contract, acceptance matrix and sources are expandable",
+        "preserved_contracts": "Distinct SQL generation and Kafka epoch; read G -> real broker init -> CAS same G; no reinit under old lease; independent post-commit delivery and SQL mark; inbox+durable job before offset and transactional worker guards",
+        "validation": "Five diagrams rendered with Mermaid 11.4.1 and visually inspected; each block has 3-10 prose sentences; standalone HTML desktop/mobile checks PASS, local documentation links/structure and safety tests PASS. This is document/source validation, not runtime validation of the proposed protocol",
+        "decision": "Proposed D1 combined lease/fencing/inbox, D2 separate public sequence, D3 bounded first PR. No owner architectural approval or implementation evidence inferred"
       }
     },
     "ci_refinement": "Initial Linux CI stopped at staticcheck ST1005 and an unused Compose wrapper; lower-case error messages and removal retain all checks. Redis default username is now rejected before ACL generation; affected Windows tests/vet pass. Actual final-HEAD CI results belong in PR/Actions."
@@ -3726,6 +3738,14 @@ JSON ниже включён для автономного чтения реше
   "orders_foundation": {
     "recorded_on": "2026-10-23",
     "source_commit": "d09f1fe6652cc18cf88cd4ce30f604be379f2ef0",
+    "owner_merge": {
+      "recorded_on": "2026-11-10",
+      "pr": "https://github.com/Includeoyasi/faultline-lab/pull/29",
+      "merge_commit": "c0fb069ef100698b33b14e05398e4cada42670fb",
+      "merged_at_utc": "2026-11-09T21:00:02Z",
+      "provenance": "Owner reported the merge in this chat; GitHub PR API confirmed merged=true and the merge commit/time",
+      "boundary": "Records code merge only; explicit G1 acceptance and F09 architecture approval are separate decisions"
+    },
     "guide": "docs/development/ORDERS.md",
     "api": [
       "CreateOrder",
@@ -3771,7 +3791,7 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `1a1fd62f1de944932125b31a4e2be55d0aa7646ad90d93bc3da7986f18b6c2b0` |
+| `CONTEXT_STATE.json` | `07f78a5707cd1274c474ec9ac8685dbdd10d12796076d5a564334bcefa75c578` |
 | `tools/context_intro.md` | `91fb656b2ec7b4dcd798be45f7b78ec2452763455476ebcd55762b465ad25d2b` |
 | `tools/update_context.ps1` | `73dff2e2da1f7ea7e8fc8fe2dc70bde722f4d697c1ca7c685d297214cd133e33` |
 | `README.md` | `b29d761f9e961d2c18089ed1c8ee7b8a4b443ab623eaf7ba8c8c712461e6eb8c` |
@@ -3915,7 +3935,7 @@ SHA-256 относится к исходному файлу на момент с
 | `configs/kafka/server.properties` | `57b6d202650fff467f94c84c8bd41f1575807209e2f9f5fc4ea95b526291644b` |
 | `configs/kafka/start.sh` | `3b4d8fea3474105c4c36d425f78f7d3152fed6d41929fe6bc941574ba2c827cf` |
 | `configs/redis/redis.conf` | `029a2c2bb179d718ccee7f551dc74b09c3fabe7195d41fae3d31619e072aeb12` |
-| `docs/architecture/KAFKA_PUBLISHING.md` | `a816285716b5640c9496a637093a1e0f22a1f986e9ec64946409a4b22608d564` |
+| `docs/architecture/KAFKA_PUBLISHING.md` | `934d060e172cf7ea641737308b03246da0b6a06d72fc92f8d55f9cf4605a68de` |
 | `docs/development/INFRASTRUCTURE.md` | `f204c1979552e5d82a64c63926f394fc649d1ab127da6759a76443b85bc2be0a` |
 | `docs/development/evidence/p02/INFRASTRUCTURE.md` | `e8cf387eec497eb0acb88b757472102a70ace2a56baa9c6063b6c6e992275e25` |
 | `docs/development/evidence/p02/infrastructure-images.json` | `99f4762612ea8763059ec8354c6b7fe1dba1bb92760e02bd3cf66ca4e7c24783` |
@@ -4219,7 +4239,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
 </p>
 
 <p align="center">
@@ -4237,7 +4257,7 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Project guide
@@ -4332,7 +4352,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience |
 | **G4** | Reproducible engineering lab |
 
-The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
 
 [Engineering decisions and review](#appendix-engineering-decisions) traces owner feedback through the rationale, changes and verification. It also links the separate [Go smoke task](https://github.com/Includeoyasi/faultline-lab/issues/9); its execution and review are tracked in GitHub.
 
@@ -4400,7 +4420,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
 </p>
 
 <p align="center">
@@ -4418,7 +4438,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Навигация по проекту
@@ -4502,7 +4522,7 @@ flowchart LR
 
 G0 — архитектура; G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Порядок и критерии приёмки описаны в workflow; факты принятия сохраняются с датой и источником.
 
-[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
 
 [Инженерные решения и ревью](#appendix-engineering-decisions) связывают замечания владельца с обоснованием, изменениями и проверками. Выполнение переноса контейнерного smoke на Go и его ревью ведутся в [задаче #9](https://github.com/Includeoyasi/faultline-lab/issues/9).
 
@@ -4577,7 +4597,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Проверить отдельный backlog | [Перенос smoke на Go](#appendix-go-smoke-backlog) — задача #9, границы и критерии |
 | Проверить права и защиту main | [Безопасность репозитория](#appendix-repository-security) — действующая защита и переход на аккаунт исполнителя |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
@@ -4592,7 +4612,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
 - [ADR 0002](#appendix-adr-0002): согласованный порядок фиксации решений в PR, ADR и обзорной странице.
 - [ADR 0003](#appendix-adr-0003): принятое решение о Go smoke и его последствия.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -5692,7 +5712,7 @@ Codex (AI-Your-Bro) — исполнитель: готовит проектны�
 
 #### Стандарт код-ревью
 
-[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/.github/pull_request_template.md) содержит краткий применимый чек-лист.
 
 После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; владелец проекта рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению владельца проекта или действие самого владельца проекта.
 
@@ -5953,7 +5973,7 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
+Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
@@ -6152,7 +6172,7 @@ Go-модуль, закреплённые инструменты и нативн
 - Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
 - Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
 
-Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
 
 <a id="appendix-lab-boundary"></a>
 
@@ -6446,13 +6466,13 @@ Docker рекомендует разделять ответственности 
 
 ### Баннер Faultline Lab
 
-Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/assets/banner.svg).
+Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/assets/banner.svg).
 
 #### Задание
 
 Подготовить три альтернативных варианта с акцентом на технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее. Сделаны векторные композиции с читаемым названием, тёмным текстом на светлом фоне и встроенными title/description. Внешних шрифтов, скриптов и удалённых графических зависимостей нет.
 
-![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/assets/banner-concepts/comparison.png)
+![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/assets/banner-concepts/comparison.png)
 
 | Вариант | Образ | Палитра | Статус |
 | :--- | :--- | :--- | :--- |
@@ -6462,13 +6482,13 @@ Docker рекомендует разделять ответственности 
 
 #### Выбранное решение
 
-![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/assets/banner-concepts/02-experiment-flow.png)
+![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/assets/banner-concepts/02-experiment-flow.png)
 
 Абстрактные линии проходят через область наблюдения. Это метафора исследования поведения системы и сравнения изменений; линии не являются графиком измеренных результатов. Композиция не зависит от домена магазина и подходит будущим подключаемым бизнесам.
 
 Размер SVG — 1280 × 420; README задаёт ширину 100%. Исходник масштабируется, PNG служит предварительным просмотром. Основная подпись: **Explore how systems behave.** Нижняя последовательность: **Hypothesis → Experiment → Evidence**.
 
-Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
+Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
 
 Баннеры отрендерены локально и визуально просмотрены на общем листе. Проверены отсутствие обрезанного текста и соответствие композиций заданию. Отдельный preview выбранного варианта используется для проверки основного баннера. Выбранный вариант слит в main через [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4), merge commit 8c392b8. Проверка отрисовки нового README на GitHub пока не выполнялась.
 
@@ -6606,7 +6626,7 @@ P01 не достигает всей контрольной точки G1: ба�
 | GitHub Issue | Текущая стадия, исполнитель, критерии выполнения, блокеры и связь с PR |
 | GitHub PR | Diff, результаты проверок, замечания и решение владельца по HEAD |
 | ADR | Существенное решение, варианты, последствия и основание принятия |
-| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
+| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
 
 #### Стадии в Issue
 
@@ -6726,7 +6746,7 @@ GitHub разрешает machine account, зарегистрированный 
 
 Исходный набор версий проверен по официальным источникам 15 октября 2026 года: [Go releases](https://go.dev/dl/), [golangci-lint releases](https://github.com/golangci/golangci-lint/releases/tag/v2.14.0), Go module proxy и Docker Registry. Оба закреплённых digest относятся к multi-platform индексам, а не к одному варианту CPU.
 
-21 октября Go обновлён до [1.27.3](https://go.dev/doc/devel/release#go1.27.3), чтобы устранить блокирующий CI security finding GO-2026-6809 в стандартной библиотеке crypto/x509. SHA-256 индекса получен из официального Docker Registry и сверен с байтами ответа; наличие Linux AMD64 и ARM64 подтверждено в [данных проверки индекса](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/development/evidence/go-toolchain/go-1.27.3-registry.json). Пересборка этим toolchain обновляет стандартную библиотеку и в статических runtime-бинарниках. Исторические evidence и установленный host Go 1.27.2 сохраняются; основной путь запуска проверок остаётся контейнерным.
+21 октября Go обновлён до [1.27.3](https://go.dev/doc/devel/release#go1.27.3), чтобы устранить блокирующий CI security finding GO-2026-6809 в стандартной библиотеке crypto/x509. SHA-256 индекса получен из официального Docker Registry и сверен с байтами ответа; наличие Linux AMD64 и ARM64 подтверждено в [данных проверки индекса](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/development/evidence/go-toolchain/go-1.27.3-registry.json). Пересборка этим toolchain обновляет стандартную библиотеку и в статических runtime-бинарниках. Исторические evidence и установленный host Go 1.27.2 сохраняются; основной путь запуска проверок остаётся контейнерным.
 
 gRPC v1.84.0 добавлен для реального health API в P01-04; версия проверена через официальный Go proxy. JSON-логи использует стандартный log/slog. Инструменты закреплены через [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools). PostgreSQL использует pgx v5.11.0; инфраструктурные проверки — franz-go v1.22.2 и go-redis v9.23.0, закреплённые в go.mod/go.sum.
 
@@ -10159,7 +10179,7 @@ JSON schema version 2 сохраняет `run_id`, `project`, `result`, `service
 
 Отчёт не содержит полного inspect Env или разрешённого Compose-конфига. Пути checkout и домашнего каталога редактируются в диагностике. Smoke использует несекретный профиль; сторонние произвольные логи перед публикацией нужно проверять отдельно. Это проверка каркаса, а не измерение бизнес-корректности или capacity.
 
-После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
+После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
 
 <a id="go-smoke-main"></a>
 
@@ -18755,18 +18775,16 @@ logfile ""
 
 Полный исходный документ: `docs/architecture/KAFKA_PUBLISHING.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
-### Публикация событий в Kafka: смена реплик, повторы и порядок
+### F09: надёжная публикация событий в Kafka
 
-**Проектное предложение для ревью.** Документ относится к F09 из [аудита](https://github.com/Includeoyasi/faultline-lab/issues/20) и [задаче Kafka/Redis](https://github.com/Includeoyasi/faultline-lab/issues/16). Описанные outbox, владение публикацией и обработчик событий ещё не реализованы. Текущий инфраструктурный smoke проверяет запись, чтение и штатный restart; он не доказывает предложенный протокол.
-
-Маршрут чтения: [проблема](#problem) → [три механизма](#mechanisms) → [совместная работа](#together) → [цена и альтернативы](#tradeoffs) → [проверки для принятия](#review).
+**Материал для архитектурного решения · 10 ноября 2026 года · предложение.** Основа кода — принятый [Orders PR #29](https://github.com/Includeoyasi/faultline-lab/pull/29), commit `c0fb069ef100698b33b14e05398e4cada42670fb`. Документ задаёт предлагаемый контракт отдельного PR F09 и критерии его проверки.
 
 <a id="problem"></a>
-#### 1. Проблема: первая реплика проснулась после передачи работы второй
+#### 1. Проблема и случаи для проверки
 
-Возьмём Inventory. Две реплики **одного сервиса** используют его базу и отправляют события резерва в Kafka. В базе уже сохранены два события одного резерва: **v1 «Резерв создан»** и **v2 «Резерв снят»**. Это версии изменений бизнес-объекта, а не версии приложения.
+Orders и Inventory уже атомарно сохраняют бизнес-изменение и локальный outbox в своей PostgreSQL-базе, но ещё не публикуют эти факты в Kafka. Если первая реплика зависла перед отправкой, вторая может продолжить работу, после чего первая проснётся со старым событием. Без защиты получатель увидит «резерв создан → резерв снят → резерв создан» и при наивном применении вернёт состояние назад. Нужны сохранение порядка публичных событий и один бизнес-эффект при повторной доставке. Отдельная проблема текущего Orders — его первый публичный факт имеет бизнес-версию 3, поэтому разность бизнес-версий сама по себе не доказывает потерю события.
 
-Ниже намеренно убраны защиты, чтобы показать сбой. Отправитель событий называется **publisher**; его клиент Kafka — **producer**.
+##### Аномалия без защиты
 
 ```mermaid
 sequenceDiagram
@@ -18775,309 +18793,231 @@ sequenceDiagram
     participant DB as База Inventory
     participant B as Вторая реплика
     participant K as Kafka
-    A->>DB: Получить право публикации и<br/>прочитать v1
-    Note over A: Пауза перед отправкой v1
-    Note over DB: Срок права первой реплики истёк
-    B->>DB: Получить право публикации
-    B->>K: Отправить v1 «Резерв создан»
-    K-->>B: Публикация подтверждена
-    B->>DB: Отметить v1 опубликованной
-    B->>K: Отправить v2 «Резерв снят»
-    K-->>B: Публикация подтверждена
-    Note over A: Первая реплика возобновилась
-    A->>K: Повторно отправить сохранённую v1
-    Note over K: Без блокировки прежнего<br/>отправителя<br/>видимый порядок может стать v1,<br/>v2, v1
+    participant C as Получатель
+    A->>DB: Прочитать E1 «Резерв создан»
+    Note over A: Пауза перед отправкой
+    Note over DB: Право первой реплики истекло
+    B->>DB: Забрать публикацию
+    B->>K: E1 «Резерв создан»
+    K-->>C: E1
+    B->>DB: Отметить E1 опубликованным
+    B->>K: E2 «Резерв снят»
+    K-->>C: E2
+    Note over A: Первая реплика проснулась
+    A->>K: Снова отправить E1
+    K-->>C: Поздний E1
+    Note over C: Без проверки статус<br/>ошибочно откатывается назад
 ```
 
-**Аномалия:** если получатель без проверки применяет последнее прочитанное событие, снятый резерв снова выглядит созданным. Kafka не переставляла сообщения: первая реплика **заново опубликовала старое**. Это модель риска для будущего outbox, а не обнаруженный сбой работающего бизнеса.
-
-Нам нужны две гарантии: прежний отправитель не продолжает публикацию после смены владельца, а повторная доставка не меняет бизнес-данные второй раз.
+| Случай | Как локализовать | Корректный итог |
+|---|---|---|
+| Старая реплика проснулась после передачи работы | Остановить A перед produce, дать B опубликовать E1/E2, возобновить A | Поздняя A не завершает старую публикацию |
+| Kafka сохранила E1, SQL-отметка потеряна | Прервать отправителя между Kafka commit и отметкой outbox | Допустимо E1, E1, E2, один эффект E1 |
+| Получатель упал после сохранения работы | Прервать между inbox/job commit и offset commit | Повтор доставки не создаёт вторую job |
+| Orders впервые публикует бизнес-версию 3 | Создать новый заказ и завершить резервирование | Это первое публичное событие, а не потеря двух предыдущих |
 
 <a id="mechanisms"></a>
-#### 2. Три механизма и их ответственность
+#### 2. Паттерны и возможные решения
 
-| Механизм | На какой вопрос отвечает | Где действует |
-| :--- | :--- | :--- |
-| **SQL lease с поколением** — временное право работы | Какая реплика сейчас владеет публикацией? | В базе сервиса-отправителя |
-| **Kafka producer fencing** — блокировка устаревшего отправителя | Можно ли прежнему producer продолжать после смены? | В Kafka |
-| **Идемпотентный consumer: inbox, версия, допустимый переход** | Как применить событие без повторного или устаревшего эффекта? | В базе сервиса-получателя |
+Основа — [Transactional Outbox](https://microservices.io/patterns/data/transactional-outbox.html): намерение отправить событие сохраняется вместе с бизнес-изменением. SQL lease выбирает владельца работы на ограниченный срок, а поколение защищает последующие записи этого владельца в базе. [Producer fencing Kafka](https://kafka.apache.org/43/javadoc/org/apache/kafka/common/errors/ProducerFencedException.html) блокирует прежнего отправителя при инициализации замены с тем же transactional ID. [Идемпотентный получатель](https://microservices.io/patterns/communication-style/idempotent-consumer.html) сохраняет идентификатор события и работу одной транзакцией, затем применяет работу с проверкой порядка. Эти механизмы закрывают разные окна сбоя, поэтому одна проверка lease или одна producer idempotence недостаточна. Их конкретная связка SQL и Kafka в этом документе — проектное решение для Faultline Lab, которое ещё требует реализации и отказных проверок.
 
-Общая предпосылка — **Transactional Outbox**: изменение резерва и запись события сохраняются **одной транзакцией PostgreSQL Inventory**. Publisher отправляет сохранённое событие позже. Так бизнес-изменение не остаётся без записи о необходимости публикации. Общей транзакции PostgreSQL–Kafka здесь нет.
-
-##### 2.1. SQL lease: выбрать владельца работы
-
-В строке lease хранятся владелец, срок и монотонное **SQL-поколение**. Реплика получает право на ограниченный срок и продлевает его, пока работает. Получение права проверяет поколение и срок по времени PostgreSQL.
-
-**CAS** (compare-and-swap) здесь означает: «измени строку, только если её поколение всё ещё равно ожидаемому». Захват новым владельцем увеличивает поколение; продление, освобождение и отметка outbox проверяют его. Для работы необходимо также действующее право по сроку.
+##### Механизм A — SQL lease и поколение
 
 ```mermaid
 sequenceDiagram
-    autonumber
-    participant A as Первая реплика
+    participant A as Реплика A
     participant DB as SQL lease
-    participant B as Вторая реплика
-    Note over A,DB: Первая владеет lease,<br/>SQL-поколение 11
-    A->>DB: Продлить действующий lease с<br/>поколением 11
-    DB-->>A: Продление выполнено
-    Note over A: Реплика приостановлена
-    Note over DB: Lease истёк
-    Note over B: Инициализация Kafka показана<br/>отдельно ниже
-    B->>DB: Захватить истёкший lease через CAS<br/>поколения 11
-    DB-->>B: Новый владелец — вторая реплика,<br/>поколение 12
-    A->>DB: После паузы изменить lease или<br/>outbox с поколением 11
+    participant B as Реплика B
+    Note over A,DB: A владеет поколением 11
+    Note over A: Длительная пауза
+    Note over DB: Lease истёк по времени БД
+    B->>DB: После Kafka init выполнить CAS поколения 11
+    DB-->>B: Владелец B, поколение 12
+    A->>DB: Продлить lease или отметить outbox<br/>с поколением 11
     DB-->>A: Отказ — поколение уже 12
+    Note over DB: Эта защита действует в SQL<br/>и сама по себе не блокирует Kafka
 ```
 
-**Что защищено:** первая реплика не может продлить старое право, снять право второй или поставить SQL-отметку от имени прежнего владельца.
-
-**Чего недостаточно:** проверка SQL lease перед отправкой не блокирует Kafka. Реплика может зависнуть **между проверкой и отправкой**, а брокер не читает таблицу lease. Нужна защита на стороне самого брокера. Эта схема показывает только SQL-часть; полный порядок получения права — в [разделе 3.1](#activation).
-
-##### 2.2. Kafka fencing: запретить устаревшему producer продолжать
-
-Для одной **линии публикации** обе реплики при смене используют один стабильный `transactional.id`. Линия — фиксированный набор потоков событий сервиса, закреплённый за партицией. У разных линий разные ID.
-
-Kafka различает поколения producer (**producer epoch**). При инициализации замены с тем же transactional ID предыдущий producer становится устаревшим. Числа в примере условны: **SQL-поколение 11/12 и Kafka epoch 7/8 — разные счётчики**, они не передаются друг другу как один общий токен.
+##### Механизм B — Kafka fencing
 
 ```mermaid
 sequenceDiagram
-    autonumber
-    participant A as Producer первой<br/>реплики
+    participant A as Producer A
     participant K as Kafka
-    participant B as Producer второй<br/>реплики
+    participant B as Producer B
     participant C as Получатель
-    Note over A,K: Один transactional ID линии, у<br/>первой epoch 7
-    Note over A: Пауза перед отправкой
-    B->>K: Инициализировать замену с тем же<br/>transactional ID
-    K-->>B: Новое поколение producer, условно<br/>epoch 8
-    Note over K: Прежний producer с epoch 7<br/>блокируется
-    Note over B: SQL-захват после инициализации<br/>показан в общей схеме
-    B->>K: После захвата lease — транзакция с<br/>v1 и commit
-    K-->>B: Commit подтверждён
-    K-->>C: v1 видна при read_committed
-    A->>K: После паузы продолжить со старым<br/>epoch 7
+    Note over A,K: Стабильный transactional ID линии
+    Note over A: Пауза, прежний Kafka epoch
+    B->>K: Реально инициализировать замену
+    K-->>B: Новое поколение producer
+    Note over K: Прежний producer заблокирован
+    B->>K: После SQL CAS отправить E1 и commit
+    K-->>C: E1 видна при read_committed
+    A->>K: Продолжить старую транзакцию
     K-->>A: Отказ устаревшему producer
-    Note over A: Закрыть producer и остановить эту<br/>попытку
+    Note over A: Закрыть клиент<br/>не восстанавливать его под старым lease
 ```
 
-**Что защищено:** прежний producer не может успешно продолжить публикацию своей транзакции после fencing. Если его записи успели попасть в незавершённую транзакцию, получатель с `read_committed` их не применяет.
-
-**Что остаётся:** событие, **уже закоммиченное** до смены реплики, не исчезает. Другая реплика может повторить его при потере SQL-отметки. Идемпотентность самого producer не устраняет такую повторную отправку из приложения.
-
-Fencing — механизм Kafka, а не новый тип бизнес-события. Получатели читают только подтверждённые транзакции (`read_committed`). Заблокированный producer нельзя автоматически пересоздать и продолжить работу под прежним SQL-поколением.
-
-##### 2.3. Идемпотентный consumer: не применить событие дважды
-
-В принятой [архитектуре](#appendix-design-review) приём события отделён от выполнения работы. Получатель одной SQL-транзакцией сохраняет **inbox** — учёт принятых event ID — и **долговечную задачу (job)**. После commit можно подтвердить offset. Внутренний воркер сервиса выполняет сохранённую работу, проверяя версию и допустимый переход.
+##### Механизм C — inbox и сохранённая работа
 
 ```mermaid
 sequenceDiagram
-    autonumber
     participant K as Kafka
     participant C as Получатель
     participant DB as База получателя
-    participant W as Внутренний воркер
-    K->>C: Событие E1, версия 1
-    C->>DB: Одна SQL-транзакция: inbox E1 и<br/>job для E1
-    DB-->>C: Commit — событие и работа<br/>сохранены
-    C->>K: Подтвердить offset
-    W->>DB: Взять сохранённую job
-    W->>DB: Одна SQL-транзакция: проверить<br/>версию, применить переход,<br/>завершить job
-    DB-->>W: Commit
-    K->>C: Повтор E1, версия 1
-    C->>DB: Проверить inbox
-    DB-->>C: E1 уже принято — вторую job не<br/>создавать
-    K->>C: Событие E2, версия 2
-    C->>DB: Одна SQL-транзакция: inbox E2 и<br/>job для E2
-    DB-->>C: Commit
-    C->>K: Подтвердить offset
-    W->>DB: Проверить версию, атомарно<br/>применить переход и завершить job
-    DB-->>W: Commit — применена версия 2
-    K->>C: Поздний повтор E1 после версии 2
-    C->>DB: Проверить inbox
-    DB-->>C: E1 уже принято — состояние версии<br/>2 не меняется
+    participant W as Воркер
+    K->>C: E1, номер публичного события 1
+    C->>DB: Одна SQL TX — inbox E1 и job E1
+    DB-->>C: COMMIT
+    C->>K: Теперь подтвердить offset
+    W->>DB: Одна SQL TX — проверить номер,<br/>применить эффект, продвинуть курсор,<br/>завершить job
+    DB-->>W: COMMIT
+    K->>C: Повтор E1
+    C->>DB: Проверить прежний ID и содержимое
+    DB-->>C: Уже сохранено — второй job нет
+    Note over W,DB: Поздняя или параллельная job<br/>не откатывает состояние
 ```
-
-Inbox защищается уникальностью event ID в области обработчика; повтор с тем же содержимым не создаёт вторую job. Воркер хранит последнюю применённую версию **каждого входящего потока** и защищает проверку, изменение состояния, продвижение версии и завершение job одной SQL-транзакцией от конкурирующих воркеров. Версии разных владельцев не сравниваются как один общий счётчик.
-
-| Входящее событие или сохранённая job | Действие |
-| :--- | :--- |
-| Уже принятый event ID с тем же содержимым | Не создавать вторую job |
-| Тот же event ID, но другое содержимое | Диагностировать конфликт, не применять как новое |
-| Job со следующей ожидаемой версией, допустимый переход | Применить атомарно с продвижением версии и завершением job |
-| Устаревшая версия с неизвестным ID или недопустимый переход | Не откатывать состояние; диагностировать нарушение контракта |
-| Job версии 3, когда применена только версия 1 | Не применять молча; дождаться/восстановить пропуск по контракту |
-
-Crash после inbox/job commit, но до offset commit даёт повтор без второй job. Crash воркера до его SQL commit не оставляет частично применённого изменения. Внешний RPC или платёж этой транзакцией не охватывается: для него нужны идемпотентная операция и отдельное восстановление неизвестного результата.
-
-При пропуске версии событие не теряется: оно остаётся в долговечной job с явным ожиданием/диагностикой. Альтернативный путь обработки не может подтверждать offset до надёжного сохранения работы. Защитные записи живут вместе с изолированным набором экспериментальных данных; их согласованная очистка не допускает старых сообщений в новый запуск.
-
-<a id="together"></a>
-#### 3. Как механизмы работают вместе
-
-<a id="activation"></a>
-##### 3.1. Передача публикации второй реплике
-
-Именно здесь связываются SQL lease и Kafka fencing. **Порядок — часть предложенного протокола:** прочитать SQL-поколение → инициализировать producer в Kafka → захватить lease через CAS **того же прочитанного поколения**.
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant A as Первая реплика
-    participant DB as База Inventory
-    participant B as Вторая реплика
-    participant K as Kafka
-    Note over A: Пауза, lease поколения 11 истёк<br/>producer первой реплики имеет<br/>epoch 7
-    B->>DB: Прочитать SQL-поколение 11 и<br/>проверить срок
-    DB-->>B: Lease свободен или истёк
-    B->>K: Инициализировать producer с<br/>постоянным ID линии
-    K-->>B: Новый epoch 8, producer первой<br/>реплики fenced
-    B->>DB: CAS: поколение всё ещё 11, lease<br/>свободен или истёк?
-    alt Условия выполнены
-        DB-->>B: Захват успешен, новое<br/>SQL-поколение 12
-        B->>K: Отправить минимальную<br/>неподтверждённую версию и commit
-        K-->>B: Commit подтверждён
-        B->>DB: Долговечно отметить публикацию при<br/>действующем lease 12
-        DB-->>B: Отметка сохранена — можно брать<br/>следующую версию
-    else Кто-то уже изменил поколение или занял lease
-        DB-->>B: CAS отклонён
-        Note over B: Ничего не публиковать, закрыть<br/>producer<br/>новая попытка начинается с чтения<br/>поколения
-    end
-    A->>K: После паузы отправить событие<br/>старым producer
-    K-->>A: Отказ — epoch 7 устарел
-```
-
-Если при первоначальном чтении lease занят, кандидат ждёт, не инициализируя producer. При получении права проверяется **время PostgreSQL**. После неудачного CAS нельзя перечитать поколение и использовать уже инициализированный producer. После fencing, потери lease или неизвестного commit попытка останавливается; новая требует полного цикла активации. Старое освобождение не может снять lease нового владельца.
-
-**Почему нельзя сократить до «инициализация → захват»:**
-
-| Шаг | Гонка без чтения поколения до инициализации |
-| :--- | :--- |
-| 1 | Вторая реплика получает Kafka epoch 7 и замирает до SQL-захвата |
-| 2 | Первая получает epoch 8 и SQL lease поколения 11 |
-| 3 | Lease первой истекает; вторая просыпается и получает поколение 12 со своим старым epoch 7 |
-| Итог | Producer первой с epoch 8 не заблокирован этой передачей права |
-
-При полном протоколе первая меняет SQL-поколение после старого чтения второй. Поэтому CAS второй отклоняется; получить новое право с прежней инициализацией она не сможет. Задержавшаяся broker-инициализация всё ещё может помешать действующему producer, но не даёт права публиковать без успешного CAS.
-
-##### 3.2. От бизнес-изменения до одного эффекта у получателя
-
-Каждый сервис обращается к **своей** базе. Прямого доступа получателя к базе Inventory нет. Стрелки ниже показывают порядок операций внутри ветвей. После Kafka commit SQL-отметка отправителя и приём события получателем идут независимо — общей транзакции между ними нет.
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant I as Inventory
-    participant IDB as База Inventory
-    participant P as Действующий<br/>publisher Inventory
-    participant K as Kafka
-    participant C as Сервис-получатель
-    participant CDB as База получателя
-    I->>IDB: Одна SQL-транзакция: изменить<br/>резерв и добавить v1 в outbox
-    IDB-->>I: Commit
-    P->>IDB: Прочитать минимальную<br/>неопубликованную v1
-    Note over P: SQL lease действителен, producer<br/>активирован
-    P->>K: Kafka-транзакция: v1, затем commit
-    K-->>P: Commit подтверждён
-    par Отправитель сохраняет прогресс публикации
-        P->>IDB: SQL-отметка v1 при том же<br/>действующем lease
-        IDB-->>P: Отметка долговечно сохранена
-        Note over P: Теперь разрешена v2 этого потока
-    and Получатель независимо принимает событие
-        K-->>C: v1 видна при read_committed сразу<br/>после Kafka commit
-        C->>CDB: Одна SQL-транзакция: inbox и<br/>долговечная job
-        CDB-->>C: Commit
-        C->>K: Подтвердить offset
-        Note over C,CDB: Внутренний воркер позже проверит<br/>версию<br/>и выполнит job по схеме 2.3
-    end
-```
-
-**Граница порядка:** поток — события одного агрегата одного владельца, например одного резерва Inventory. Stream key включает сервис-владельца, тип и ID агрегата; все события потока идут в одну партицию одного топика. Общего порядка между разными агрегатами, топиками или версиями Orders и Inventory нет.
-
-Publisher берёт **не более одной неподтверждённой версии каждого потока в Kafka-транзакцию**. Разные потоки можно объединять в batch. Следующая версия одного потока ждёт и подтверждённого Kafka commit, и долговечной SQL-отметки предыдущей. При неизвестном результате записи отметки сначала перечитывается её состояние. Число партиций не меняется незаметно во время эксперимента: для изменения нужен отдельный порядок переноса потоков.
-
-##### 3.3. Почему повтор остаётся даже с fencing
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant A as Первая реплика
-    participant DB as База Inventory
-    participant B as Вторая реплика
-    participant K as Kafka
-    participant C as Получатель
-    A->>K: Отправить v1 и выполнить commit
-    K-->>A: Commit подтверждён
-    Note over A,DB: Сбой до SQL-отметки<br/>публикации v1
-    Note over B: Полная активация: чтение<br/>поколения,<br/>Kafka init, CAS и новый lease
-    B->>DB: Найти минимальную неопубликованную<br/>версию
-    DB-->>B: v1 — её отметки нет
-    B->>K: Повтор v1 и commit
-    K-->>B: Commit подтверждён
-    B->>DB: Долговечно отметить v1
-    DB-->>B: Отметка сохранена
-    B->>K: Теперь отправить v2 и commit
-    K-->>C: Видимая последовательность v1, v1,<br/>v2
-    Note over C: Inbox убирает повторный эффект v1<br/>версия и переход защищают<br/>состояние
-```
-
-Если отправить v1 и v2 вместе, а SQL-отметки потерять, повтор batch даст **v1, v2, v1, v2**. Ограничение одной версии на поток сохраняет последовательность **v1, v1, v2**. Таймаут Kafka commit означает неизвестный исход, а не доказанный abort; восстановление учитывает возможный уже состоявшийся commit.
 
 <a id="tradeoffs"></a>
-#### 4. Почему предложено это сочетание и какова его цена
+| Вариант | За | Против | Оценка |
+|---|---|---|---|
+| Только SQL lease перед produce | Мало кода | Пауза после проверки оставляет старую отправку возможной | Не обеспечивает требуемый порядок |
+| Только защита получателя | Бизнес-эффект можно сделать идемпотентным | Порядок самого журнала при takeover не обеспечен | Более слабая гарантия |
+| Один отправитель без автоматического takeover | Простой протокол | Восстановление требует гарантированно остановить прежний процесс | Резервный вариант с простоем |
+| Lease + Kafka fencing + inbox | Автоматическая смена реплики и проверяемый порядок | Больше обращений, возможны лишние fencing | Рекомендуемый MVP |
+| CDC через отдельный connector | Публикация из журнала БД | Новая инфраструктура и собственный протокол эксплуатации | Отдельный вариант расширения |
 
-Lease выбирает владельца в PostgreSQL, fencing исполняет запрет в Kafka, inbox и версия защищают данные получателя. По отдельности они закрывают разные окна сбоя. **Связка чтения поколения, Kafka init и SQL CAS — наше проектное предложение**, а не готовый стандартный рецепт и не уже принятое решение владельца.
+<a id="together"></a>
+#### 3. Рекомендуемое решение и его цена
 
-| Упрощение | Что оно оставляет открытым |
-| :--- | :--- |
-| Проверять только lease перед отправкой | Пауза после проверки позволяет прежней реплике отправить позже |
-| Включить только идемпотентность producer | Повтор из outbox после рестарта и SQL-владение не покрываются |
-| Оставить только inbox и проверку версий | Получатель может защитить бизнес-данные, но строгого порядка публикации при смене реплик это не даёт |
-| Один publisher без автоматической смены | Убирает автоматическую гонку передачи, но требует гарантированно остановить прежний процесс и принять простой на восстановление |
+Рекомендую сохранить строгий порядок публичных фактов одного агрегата и добавить отдельный непрерывный `stream_sequence`, сохранив `aggregate_version` как бизнес-ревизию. Номер выделяется транзакционным изменением строки счётчика вместе с новым outbox-фактом, поскольку PostgreSQL [nextval не откатывается вместе с транзакцией](https://www.postgresql.org/docs/18/functions-sequence.html). Для первого PR предлагаю одну фиксированную линию публикации на сервис и ровно одну Kafka-запись, одну транзакцию и свежий клиент на каждую SQL-активацию. Клиент имеет пути автоматического восстановления producer ID, поэтому его повторное использование нельзя считать доказанно совместимым с выбранной SQL-активацией. По проверенным исходникам franz-go выбранное ограничение исключает найденные пути такого восстановления, но этот вывод ещё должен пройти тест трассы запросов и реального takeover. Следующий факт потока ждёт Kafka commit и SQL-отметку предыдущего, а после любой ошибки клиент закрывается и начинается полный новый цикл активации. Цена — инициализация producer и SQL CAS на каждый факт, а также возможный простой из-за конкурента, который успел заблокировать producer и проиграл CAS. Полный журнал растёт до удаления изолированного набора, поэтому адресная очистка тестовых данных входит в приёмку. Эти накладные расходы пока не измерены, поэтому ускорение через batching предлагается рассматривать после доказательства базовой корректности.
 
-**Цена по доступности:** конкурент с тем же transactional ID может заблокировать действующего producer **до своего неудачного SQL CAS**. Сам он публиковать не будет, но действующий владелец будет вынужден восстановиться. Нужны backoff с jitter, диагностика лишних fencing и отсутствие непрерывного цикла переинициализаций.
+##### Два счётчика с разным смыслом
 
-**Цена по скорости:** один поток ждёт двух последовательных подтверждений — Kafka и SQL. Это может ограничить скорость публикации этого потока; величина не измерена. Batch разных потоков сохраняется. Увеличение числа worker не означает увеличение числа конкурентов за одну линию.
+| Изменение Orders | aggregate_version — ревизия заказа | stream_sequence — публичный факт |
+|---|---|---|
+| ACCEPTED | 1 | События нет |
+| RESERVING | 2 | События нет |
+| PAYMENT_PENDING / OrderAwaitingPayment | 3 | 1 |
+| Следующий будущий публичный факт после внутренних переходов | Например 6 | 2 |
+| Повтор первого факта | Прежняя 3 | Прежний 1 и прежний event_id |
 
-Гарантия exactly-once между PostgreSQL и Kafka **не заявляется**. Выбор сочетания ещё нужно подтвердить проверками и ревью, отдельно оценив необходимость строгого порядка публикации и допустимый простой.
+<a id="activation"></a>
+##### Совместная работа — одна попытка публикации
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant P as Реплика publisher
+    participant DB as Своя PostgreSQL
+    participant K as Kafka
+    participant C as Получатель
+    participant CDB as База получателя
+    P->>DB: Прочитать свободный или истёкший lease<br/>и его поколение G
+    DB-->>P: Ожидаемое поколение G
+    P->>K: Свежий клиент — ProducerID<br/>со стабильным transactional ID
+    K-->>P: Инициализация завершена<br/>прежний producer fenced
+    P->>DB: CAS того же G и срока lease по времени БД
+    alt CAS отклонён
+        DB-->>P: Права публикации нет
+        Note over P: Закрыть клиент<br/>ничего не отправлять
+    else CAS успешен
+        DB-->>P: Новое SQL-поколение G плюс 1
+        P->>DB: Прочитать минимальный неотмеченный факт
+        P->>K: Begin, ProduceSync — ровно одна запись,<br/>единственный TryCommit
+        K-->>P: Commit подтверждён
+        par Прогресс отправителя
+            P->>DB: Отметить факт при том же<br/>действующем lease
+            DB-->>P: COMMIT
+            Note over P: Закрыть клиент и освободить lease<br/>следующая попытка — полный новый цикл
+        and Независимый приём
+            K-->>C: Подтверждённый факт при read_committed
+            C->>CDB: Inbox и job одной транзакцией
+            CDB-->>C: COMMIT
+            C->>K: Подтвердить offset
+        end
+    end
+```
+
+<details>
+<summary>Технический контракт: идентификаторы, клиент, получатель и хранение</summary>
+
+| Граница протокола | Предложенное правило |
+|---|---|
+| Поток и партиция | Dataset + владелец + тип агрегата + ID, Kafka key = order_id, три партиции на топик как в G0, их число фиксировано на жизнь набора |
+| Линия и идентификаторы | Одна линия на сервис обслуживает его партиции, transactional ID = dataset + сервис + линия, без PID, случайной попытки или номера lease |
+| SQL и Kafka поколения | Разные счётчики, SQL CAS сравнивает именно G, прочитанное до broker init, после отказа CAS прежний клиент не используется |
+| Повтор после неизвестного commit или потерянной SQL-отметки | Отправить тот же event_id/sequence/payload через новую активацию, следующий номер этого потока пока ждёт |
+| Ошибка клиента | После ошибки produce/commit или потери lease — Close, без нового Begin, повторного End, TryAbort-recovery либо другой produce на этом клиенте |
+| Приём и применение | Inbox/job до offset commit, курсор и эффект job атомарны, сериализация по потоку, прогресс offset только по непрерывно сохранённым записям |
+| Необходимые и нецелевые события | Все известные факты потока учитываются в порядке, нецелевой тип получает сохранённую no-op job, неизвестный контракт блокирует применение с диагностикой |
+| Bootstrap и история | Пустой получатель начинает с sequence 1 и полного журнала, произвольный первый номер не становится базой, пропуск или обрезанная история остаются диагностируемой незавершённой работой |
+| Изоляция и хранение | Dataset в envelope, consumer group и transactional ID, проверка активного dataset, отдельный Compose/Kafka на набор в MVP, без TTL защитных записей |
+| Топики первого PR | orders.events.v1 и inventory.events.v1, cleanup.policy=delete и retention.ms/retention.bytes=-1 на этих тестовых топиках до удаления набора, существующий общий smoke-профиль не меняется |
+| Граница атомарности | Общей транзакции PostgreSQL–Kafka нет, дубли допустимы, потеря диска единственного брокера и восстановление обрезанной истории не входят в гарантию |
+
+</details>
+
+<a id="implementation"></a>
+#### 4. План реализации отдельного PR F09
+
+Первый PR должен связать реальные outbox Orders и Inventory с Kafka и проверить получателя в изолированной тестовой SQL-схеме. Тестовый получатель относится к лаборатории и не добавляет четвёртый бизнес-сервис или платёжное поведение. Новые миграции расширят текущие схемы без изменения старых миграций, а backfill сохранит идентификаторы и содержимое уже записанных фактов. Проверки клиента на трассе запросов выполняются до подключения основного publisher, чтобы найденный автоматический re-init не оказался скрытым свойством готового решения. Итог предъявляется через один отдельный PR с фактическими результатами native AMD64/ARM64 и явно перечисленными границами проверки.
+
+| Шаг | Конкретный результат |
+|---|---|
+| 1 — Контракт и миграции | Envelope со stream_sequence и dataset, счётчик потока, lease и SQL-отметки, уникальность ID/номера, backfill всех прежних outbox по order_id и aggregate_version при остановленных writers |
+| 2 — Ограниченный Kafka-адаптер | Закреплённые franz-go v1.22.2 / Kafka 4.3.1, один факт на свежий клиент и активацию, ограниченные сроки, Close при ошибках, backoff/jitter и остановка без утечки ресурсов |
+| 3 — Публикация и тестовый приём | Оба сервиса отправляют свои факты, отдельная тестовая роль сохраняет inbox/jobs/projection, чтение read_committed и проверка потока |
+| 4 — Отказные проверки и доказательства | Управляемые барьеры остановки двух процессов, трасса Kafka API, SQL-поколения, видимый журнал, число эффектов, отчёты и адресная очистка |
+| Следующие пакеты | Payments и его consumer, бизнес-финализация/F11, CancelOrder, полный reset/F10 и эксперименты остаются в своих пакетах |
+
+<details>
+<summary>Полная матрица приёмки: отказы, порядок и восстановление</summary>
+
+| Критерий приёмки | Проверяемый результат |
+|---|---|
+| Первая запись Orders и внутренний переход без факта | Aggregate version 3 / sequence 1, следующий публичный номер 2, ложного пропуска нет |
+| Откат и конкурентная запись бизнес-фактов | Откат не расходует номер, повторы не создают новый факт, committed sequence непрерывен и уникален |
+| A приостановлена до produce, B сменила владельца, A возобновлена | A не добавляет поздний committed факт после более нового номера B |
+| A приостановлена после produce или при неизвестном commit | Незавершённое не видно при read_committed, возможный состоявшийся commit восстанавливается повтором того же факта |
+| Commit E1 без SQL-отметки при готовом E2 | Видим E1, E1, E2 и один эффект каждого номера |
+| Запоздалые broker init и SQL CAS | Отказ CAS запрещает отправку, прежний клиент не переиспользуется, лишний fencing диагностируется |
+| Клиент получил timeout/fencing/ошибку PID или LogStartOffset | После успешного CAS в трассе одной попытки нет нового InitProducerID, расширять lifecycle до выполнения этого критерия запрещено |
+| Crash до offset commit и до/после применения job | Нет второй job, частичного эффекта или отката курсора |
+| Нецелевой известный тип, неверный ID/payload/номер, чужой dataset | No-op продвигает законный номер, конфликт и пропуск сохраняют диагностику, чужой набор не меняется |
+| Пустой consumer и обрезанная история | Полный журнал начинается с 1, недоступная голова не принимается за корректную базу |
+| Работа при Kafka/SQL outage и остановке процесса | Неподтверждённые факты сохранены, попытки и ресурсы ограничены, после восстановления сохраняются порядок и один эффект |
+
+</details>
 
 <a id="review"></a>
-#### 5. Что проверить до принятия и реализации
+#### 5. Решения владельца и отдельные акценты
 
-##### Контракт Go-клиента
+Предлагаю принять три решения ниже одним архитектурным согласованием F09. Рекомендация ориентирована на проверяемый первый срез, поэтому производительность этого ограничения должна оцениваться последующим измерением. Возможность исправить пробел добавлением stream_sequence и ограниченный lifecycle клиента обоснованы текущими схемами и исходниками, но это ещё не runtime-доказательство. Сверены код после merge Orders, первичные источники механизмов и пути recovery franz-go, а пять схем отрисованы Mermaid и проверены визуально. Приёмка G1, уже согласованные G0/F03/F11 и последующая реализация F09 остаются разными решениями.
 
-В инфраструктурной пробе используется **franz-go v1.22.2**. При реализации outbox требуется проверить поведение именно этого клиента, а не переносить пример Java API буквально:
+| Решение | Рекомендация к принятию | Цена или альтернатива |
+|---|---|---|
+| D1 — Как выполнить гарантию порядка при смене реплик | SQL lease + Kafka fencing + inbox/job по указанному протоколу | Конкурент может временно остановить исправного publisher, нужен backoff и диагностика |
+| D2 — Как отличать пропуск события от внутреннего перехода | Добавить stream_sequence, сохранив aggregate_version | Дополнительный транзакционный счётчик и backfill, альтернатива — цепочка previous_event_id |
+| D3 — Граница первого PR | Один факт / одна Kafka TX / свежий клиент / полная активация, оба outbox и тестовый получатель | Больше сетевых и SQL-обращений на факт, журнал растёт до удаления dataset, адресная очистка тестов обязательна, batching — отдельная оптимизация |
 
-- Постоянный `transactional.id` составляется из изолированного набора данных, сервиса и линии; не содержит случайный ID процесса, PID или номер попытки. SQL-поколение не сбрасывается и не переиспользуется за жизнь набора данных.
-- До SQL CAS должна состояться реальная broker-инициализация. В franz-go требуется `ProducerID(ctx)`; одних `NewClient` и `BeginTransaction` недостаточно.
-- Все результаты produce проверяются до commit; успешный commit не должен скрывать ошибку части записей.
-- Устаревший producer не восстанавливает epoch автоматически под прежним SQL lease, включая внутренние пути библиотеки. В 1.22.2 это зависит от transaction protocol и типа ошибки; общий retry вокруг `BeginTransaction` не подходит.
-- При потере lease, fencing или неизвестном commit работа прекращается с ограниченными сроками и закрытием producer. Одна линия обслуживается последовательно.
-- Получатели используют `read_committed`. Текущая одноразовая нетранзакционная проба включает `AllowIdempotentProduceCancellation`; эта опция несовместима с transactional ID и не переносится в outbox.
+**Формулировка решения:** «Согласованы D1–D3» либо конкретные изменения к указанному пункту.
 
-##### Будущие сценарии проверки
+<details>
+<summary>Первичные источники и основание предложения</summary>
 
-| Точка остановки первой реплики | Что делает вторая | Что требуется доказать |
-| :--- | :--- | :--- |
-| После lease, до produce | Полная активация и публикация | Прежний producer fenced; старое SQL-поколение не разрешает отметку или переинициализацию |
-| После produce, до commit | Полная активация и публикация | Незавершённая транзакция первой не видна при `read_committed` |
-| После commit v1, до SQL-отметки; v2 уже есть | Повтор минимальной версии, отметка, затем v2 | Видимый порядок v1, v1, v2; бизнес-эффект v1 один |
-| До первой broker-инициализации | Успевает активироваться | Поздняя инициализация первой может помешать второй, но старый CAS не даёт захватить право; восстановление ограничено и наблюдаемо |
-| После init, до CAS; SQL-поколение за паузу сменилось | Получает и затем теряет lease | CAS первой отклоняется даже после истечения нового lease; producer не переиспользуется |
-| После fencing, при retry/recreate | Уже владеет новой попыткой | Первая не возобновляет публикацию под прежним SQL-поколением |
-| После inbox/job commit, до offset commit | Повторно доставляет событие | Inbox и job сохранены атомарно; повтор не создаёт вторую job |
-| Воркер получателя остановлен до/после SQL commit | Другой воркер возобновляет job | Переход, версия и завершение job атомарны; повторного бизнес-эффекта нет |
-| Пропуск версии или устаревшее событие с неизвестным ID | Продолжает доставку | Нет молчаливого пропуска/отката состояния; сохранён путь восстановления или диагностики |
+| Основание | Что в нём проверяется |
+|---|---|
+| [Orders](#orders-docs-development-ORDERS-md), [его outbox](#orders-migrations-orders-0002-reservations-sql), [Resolve](#orders-internal-orders-store-resolve-go) и [Inventory outbox](#inventory-migrations-inventory-0003-reservations-sql) | Существующие факты, бизнес-версии, атомарность и границы текущей реализации |
+| [Принятый G0](#appendix-design-review), [Roadmap](#appendix-roadmap), [аудит F09](https://github.com/Includeoyasi/faultline-lab/issues/20) | Три сервиса, три партиции, один активный publisher на сервис, отдельный PR |
+| [Outbox](https://microservices.io/patterns/data/transactional-outbox.html) и [Idempotent Consumer](https://microservices.io/patterns/communication-style/idempotent-consumer.html) | Общепринятые паттерны, повтор между Kafka commit и SQL-отметкой |
+| [Kafka producer](https://kafka.apache.org/43/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html) и [fencing](https://kafka.apache.org/43/javadoc/org/apache/kafka/common/errors/ProducerFencedException.html) | Стабильный transactional ID, замена producer и изоляция подтверждённых транзакций |
+| [franz-go v1.22.2 txn.go](https://github.com/twmb/franz-go/blob/v1.22.2/pkg/kgo/txn.go) | Recovery в BeginTransaction, повторный TryAbort после неизвестного EndTxn, запрет повторных вызовов под старым lease |
+| [franz-go sink.go](https://github.com/twmb/franz-go/blob/v1.22.2/pkg/kgo/sink.go) и [metadata.go](https://github.com/twmb/franz-go/blob/v1.22.2/pkg/kgo/metadata.go) | Внутренний reload PID при LogStartOffset и ранее подтверждённом batch, начальный lastAckedOffset=-1 у нового клиента |
+| [franz-go client.go](https://github.com/twmb/franz-go/blob/v1.22.2/pkg/kgo/client.go) и [producer.go](https://github.com/twmb/franz-go/blob/v1.22.2/pkg/kgo/producer.go) | Согласование TV1/TV2 и реальный ProducerID init, искусственный MaxVersions cap не используется |
+| [PostgreSQL sequence](https://www.postgresql.org/docs/18/functions-sequence.html) | Почему nextval не подходит для непрерывного номера committed событий |
 
-Тесты должны останавливаться на явных барьерах и сохранять SQL-поколения, Kafka epochs и видимые записи. Также нужны потеря ACK/commit, истечение lease, отмена и рестарт coordinator. Обычный успешный restart этого не доказывает. F09 остаётся открытой до реализации и проверки.
-
-Для ревью достаточно пройти схемы и оценить три вопроса: нужен ли выбранный строгий порядок публикации; приемлема ли цена смены владельца по доступности; достаточен ли набор проверок для защиты от поздней первой реплики. Согласование предложения, реализация и доказательства проверок фиксируются отдельно.
-
-#### Источники механизмов
-
-- [Apache Kafka: KafkaProducer API](https://kafka.apache.org/43/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html) и [ProducerFencedException](https://kafka.apache.org/43/javadoc/org/apache/kafka/common/errors/ProducerFencedException.html) — транзакционный producer и блокировка прежнего producer с тем же transactional ID.
-- [Martin Kleppmann: How to do distributed locking](https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html) — сценарий паузы дольше lease и принцип проверки fencing на стороне защищаемого ресурса. Это объясняет общий приём, но не доказывает нашу связку SQL и Kafka.
-- [Transactional Outbox](https://microservices.io/patterns/data/transactional-outbox.html) и [Idempotent Consumer](https://microservices.io/patterns/communication-style/idempotent-consumer.html) — описания паттернов автором каталога Chris Richardson.
-- [franz-go v1.22.2](https://github.com/twmb/franz-go/releases/tag/v1.22.2), [transaction API и восстановление](https://github.com/twmb/franz-go/blob/v1.22.2/pkg/kgo/txn.go), [ProducerID](https://github.com/twmb/franz-go/blob/v1.22.2/pkg/kgo/producer.go) — исходники выбранного Go-клиента для будущей проверки протокола.
+</details>
 
 <a id="p02-infra-docs-development-infrastructure-md"></a>
 
@@ -19133,7 +19073,7 @@ flowchart TB
 
 Kafka работает в KRaft с явными broker/controller listeners, статическим quorum и постоянным cluster ID. Автоматическое создание топиков выключено. Один broker не обеспечивает репликационную доступность: `acks=all` здесь означает подтверждение единственным ISR. Сохраняется проверка штатного restart, а не аварии диска/хоста.
 
-Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/450e139506f88f0f2570df12abc05a7b6c0a304a/docs/development/POSTGRES.md#подготовка-стенда).
+Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/development/POSTGRES.md#подготовка-стенда).
 
 Контейнеры зависимостей и runtime-проверок непривилегированные, с read-only root, без capabilities и с `no-new-privileges`; запись разрешена в явные volume/tmpfs. Временный toolchain имеет отдельные права для сборки в workspace, описанные в [его руководстве](#appendix-toolchain). Порты доступны через DNS внутренней сети: `postgres`, `kafka:9092`, `redis:6379`. Kafka PLAINTEXT и Redis без TLS допустимы только в этом изолированном локальном профиле; удалённое размещение требует отдельного профиля аутентификации, TLS и сетевых правил.
 

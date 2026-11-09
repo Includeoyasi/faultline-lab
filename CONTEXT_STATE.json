@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 74,
+  "context_revision": 75,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-10-23",
+  "context_updated_on": "2026-11-10",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "450e139506f88f0f2570df12abc05a7b6c0a304a",
+    "snapshot_ref": "afecc0a6022a38a9c5ddd6d61986aac6230f1e09",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -3373,6 +3373,12 @@
       "date": "2026-10-23",
       "summary": "Repaired Mermaid sequence labels in Orders materials and separately rendered both PR and guide diagrams with Mermaid 11.4.1; structural documentation checks alone do not verify rendering",
       "trigger": "Owner reported the PR diagram parse error; business behavior and acceptance criteria unchanged"
+    },
+    {
+      "revision": 75,
+      "date": "2026-11-10",
+      "summary": "Prepared the five-block F09 decision proposal against merged Orders: separate public stream_sequence, one-record fresh-client activation, explicit recovery/retention costs, implementation boundary and acceptance scenarios; rendered and visually inspected five diagrams. Recorded owner merge of Orders without implying G1 approval.",
+      "trigger": "Owner asked what decisions were needed after merging Orders PR29 and authorized preparation of decision material; no publisher implementation or GitHub publication authorized by that request"
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -3514,18 +3520,24 @@
     "f09": {
       "kind": "PROPOSED_DESIGN_NOT_IMPLEMENTED",
       "source": "docs/architecture/KAFKA_PUBLISHING.md",
-      "protocol": "Read monotonic lease generation G -> initialize transactional producer using stable lane ID -> claim lease only by CAS on that same G; no producer reuse after failed CAS and no reinit under old generation",
-      "ordering": "One unacknowledged version per stream per Kafka transaction; next version only after confirmed Kafka commit and durable SQL mark; cross-stream batching allowed",
-      "limits": "Contenders can fence a live publisher and hurt availability; client automatic epoch recovery must be excluded for stale lease; PostgreSQL/Kafka boundary still permits duplicate event IDs",
-      "future_checks": "A pause/resume and B takeover, delayed init/CAS, lost commit/SQL mark, retry/reinit, read_committed, inbox/version guards; F09 remains open until implemented and verified",
+      "code_basis": "Orders PR29 owner merge c0fb069ef100698b33b14e05398e4cada42670fb; existing Orders/Inventory outbox does not publish to Kafka",
+      "protocol": "Read free/expired DB-clock lease generation G -> real ProducerID initialization on fresh client with stable dataset/service/lane transactional ID -> CAS exactly that G and expiry -> one record and one commit attempt -> conditional SQL publication mark -> Close; failed CAS or any error closes client without reuse or abort recovery",
+      "ordering": "Exactly one Kafka record, one transaction, one fresh client and one SQL activation per attempt, including across streams. Next fact of a stream waits for confirmed Kafka commit and durable SQL mark; retry preserves event_id/stream_sequence/payload",
+      "public_sequence": "Separate contiguous stream_sequence from aggregate_version: Orders first public fact is business version 3 / sequence 1. Allocate with business/outbox row-counter TX, not nextval; rollback consumes no number. Backfill unpublished outbox under stopped writers without changing IDs/payload",
+      "receiver": "Inbox/job commit before offset, contiguous persisted-offset progress, atomic effect/cursor/job completion serialized per dataset/owner/aggregate stream; known irrelevant types get durable no-op jobs; conflicting ID/sequence/payload, unknown contract or missing prefix remain diagnostic unfinished work",
+      "client_review": "Pinned franz-go v1.22.2 has automatic PID recovery paths in txn.go and sink.go. Source audit supports the single-record fresh-client restriction for found paths; it is not runtime proof. Require no post-CAS InitProducerID in an attempt; no repeated Begin/End/TryAbort or GroupTransactSession/EndAndBeginTransaction. Preserve negotiated transaction feature mode without artificial MaxVersions cap",
+      "isolation_and_history": "One dataset per isolated Compose/Kafka in MVP, dataset-qualified envelope/group/transactional ID; existing three topic partitions and order_id key retained. Test orders/inventory topics keep full dataset history with cleanup.policy=delete and retention.ms/retention.bytes=-1; no protective TTL, scoped cleanup required; shared broker namespacing/full reset not claimed",
+      "limits": "Contender init can fence an active publisher before losing SQL CAS, hurting availability. Producer initialization/CAS per fact and history storage cost are unmeasured; batching deferred. SQL/Kafka have no global TX, so duplicate facts remain possible; single-broker disk loss and reconstruction of truncated history excluded",
+      "implementation_boundary": "Separate proposed F09 PR: both real outbox publishers and migrations, lab receiver in isolated SQL schema/role, protocol tracing and controlled two-process failure scenarios on native AMD64/ARM64. No Payments business implementation, finalization/F11, CancelOrder or complete reset/F10",
+      "future_checks": "Real pause/takeover/resume; delayed init/CAS; unknown commit/lost SQL mark; client timeout/fencing/PID and retention errors; sequence rollback/concurrency; receiver crashes/conflicts/no-op/gaps/bootstrap; bounded outages/resources and scoped cleanup. Runtime protocol checks NOT_RUN during preparation",
       "presentation": {
-        "updated_on": "2026-10-19",
-        "source_commit": "996ccd015b549be6fa670c34f3376755e74782c2",
-        "provenance": "Owner requested in voice chat separate visual explanations of SQL lease, Kafka fencing and idempotent consumer, then their joint operation, for architecture review",
-        "route": "One paused-replica failure; three mechanisms; exact activation; end-to-end delivery; lost SQL publication mark; costs, alternatives and future checks",
-        "preserved_contracts": "Distinct SQL generation and Kafka epoch; read G -> broker init -> CAS same G; no reinit under old lease; independent post-commit delivery and SQL mark; inbox+durable job before offset, version/state guards in worker transaction",
-        "validation": "Seven Mermaid sequence diagrams rendered with Mermaid 11.4.1 and visually inspected; local documentation links and safety checks passed; this is document validation, not runtime validation of the proposed protocol",
-        "decision": "Presentation change only; protocol remains proposed and unimplemented, owner design acceptance pending"
+        "updated_on": "2026-11-10",
+        "source_commit": "afecc0a6022a38a9c5ddd6d61986aac6230f1e09",
+        "provenance": "Direct owner request in chat to prepare decision material after Orders merge; existing five-block architecture format retained",
+        "route": "Problem/localization; patterns/alternatives; recommendation/cost; separate PR plan; concrete D1-D3 decisions. Five sequence diagrams show the anomaly, three mechanisms and combined activation; detailed contract, acceptance matrix and sources are expandable",
+        "preserved_contracts": "Distinct SQL generation and Kafka epoch; read G -> real broker init -> CAS same G; no reinit under old lease; independent post-commit delivery and SQL mark; inbox+durable job before offset and transactional worker guards",
+        "validation": "Five diagrams rendered with Mermaid 11.4.1 and visually inspected; each block has 3-10 prose sentences; standalone HTML desktop/mobile checks PASS, local documentation links/structure and safety tests PASS. This is document/source validation, not runtime validation of the proposed protocol",
+        "decision": "Proposed D1 combined lease/fencing/inbox, D2 separate public sequence, D3 bounded first PR. No owner architectural approval or implementation evidence inferred"
       }
     },
     "ci_refinement": "Initial Linux CI stopped at staticcheck ST1005 and an unused Compose wrapper; lower-case error messages and removal retain all checks. Redis default username is now rejected before ACL generation; affected Windows tests/vet pass. Actual final-HEAD CI results belong in PR/Actions."
@@ -3656,6 +3668,14 @@
   "orders_foundation": {
     "recorded_on": "2026-10-23",
     "source_commit": "d09f1fe6652cc18cf88cd4ce30f604be379f2ef0",
+    "owner_merge": {
+      "recorded_on": "2026-11-10",
+      "pr": "https://github.com/Includeoyasi/faultline-lab/pull/29",
+      "merge_commit": "c0fb069ef100698b33b14e05398e4cada42670fb",
+      "merged_at_utc": "2026-11-09T21:00:02Z",
+      "provenance": "Owner reported the merge in this chat; GitHub PR API confirmed merged=true and the merge commit/time",
+      "boundary": "Records code merge only; explicit G1 acceptance and F09 architecture approval are separate decisions"
+    },
     "guide": "docs/development/ORDERS.md",
     "api": [
       "CreateOrder",
