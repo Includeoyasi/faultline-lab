@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 76,
+  "context_revision": 77,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-11-19",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821",
+    "snapshot_ref": "fdf96aea19078c6a29786171cf454d164fa1d97b",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -617,11 +617,11 @@
   },
   "toolchain": {
     "document": "docs/development/TOOLCHAIN.md",
-    "go": "1.27.3",
+    "go": "1.27.4",
     "goimports": "golang.org/x/tools v0.52.0",
     "govulncheck": "golang.org/x/vuln v1.9.0",
     "golangci_lint": "v2.14.0",
-    "go_image": "golang:1.27.3-trixie@sha256:604106102d33b1084e37ca08adf98ac0813624ae8595bd0d7f3965ecebded09c",
+    "go_image": "golang:1.27.4-trixie@sha256:f18c3d73a184fb0582828510722e723b63a93f7188d11dd223d9be6f6880e65d",
     "lint_image": "golangci/golangci-lint:v2.14.0@sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f",
     "image_indexes": "VERIFIED_LINUX_AMD64_AND_ARM64",
     "application_dependencies": "google.golang.org/grpc v1.84.0; STANDARD_LOG_SLOG; TOOL_DIRECTIVES_PINNED",
