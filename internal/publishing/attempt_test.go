@@ -19,15 +19,15 @@ func (h *initTrace) OnBrokerWrite(_ kgo.BrokerMetadata, key int16, _ int, _, _ t
 	}
 }
 
-// Run only against the disposable F09 broker with its three-partition test topic.
+// Run only against the disposable publishing test broker with its three-partition test topic.
 func TestTakeover(t *testing.T) {
-	broker := os.Getenv("FL_F09_TEST_BROKER")
+	broker := os.Getenv("FL_PUBLISHING_TEST_BROKER")
 	if broker == "" {
-		t.Skip("set FL_F09_TEST_BROKER for isolated broker")
+		t.Skip("set FL_PUBLISHING_TEST_BROKER for isolated broker")
 	}
 	ctx, cancel := context.WithTimeout(t.Context(), 45*time.Second)
 	defer cancel()
-	lane := "f09-test-" + time.Now().UTC().Format("20060102150405.000000000")
+	lane := "publisher-takeover-" + time.Now().UTC().Format("20060102150405.000000000")
 	record := func(value string) *kgo.Record {
 		return &kgo.Record{Topic: "orders.events.v1", Key: []byte(lane), Value: []byte(value)}
 	}

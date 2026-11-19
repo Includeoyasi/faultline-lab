@@ -18,9 +18,9 @@ import (
 // Runs in a new disposable Compose project with no host ports. The reader
 // connects as a separate role that has access only to its own schema.
 func TestPublicationAndReplay(t *testing.T) {
-	dsn := os.Getenv("FL_F09_TEST_DB")
+	dsn := os.Getenv("FL_PUBLISHING_TEST_DB")
 	if dsn == "" {
-		t.Skip("requires isolated F09 database")
+		t.Skip("requires isolated publishing database")
 	}
 	ctx, cancel := context.WithTimeout(t.Context(), 90*time.Second)
 	defer cancel()
@@ -35,20 +35,20 @@ func TestPublicationAndReplay(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	exec("CREATE ROLE f09_reader LOGIN")
+	exec("CREATE ROLE publishing_reader LOGIN")
 	exec(Schema)
-	exec("GRANT USAGE ON SCHEMA f09_receiver TO f09_reader; GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA f09_receiver TO f09_reader")
+	exec("GRANT USAGE ON SCHEMA publishing_receiver TO publishing_reader; GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA publishing_receiver TO publishing_reader")
 	cfg, err := pgxpool.ParseConfig(dsn)
 	if err != nil {
 		t.Fatal(err)
 	}
-	cfg.ConnConfig.User = "f09_reader"
+	cfg.ConnConfig.User = "publishing_reader"
 	reader, err := pgxpool.NewWithConfig(ctx, cfg)
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer reader.Close()
-	broker := os.Getenv("FL_F09_TEST_BROKER")
+	broker := os.Getenv("FL_PUBLISHING_TEST_BROKER")
 	for _, owner := range []string{"orders", "inventory"} {
 		paths, err := fs.Glob(migrations.Files, owner+"/*.sql")
 		if err != nil || len(paths) < 2 {
@@ -115,7 +115,7 @@ func TestPublicationAndReplay(t *testing.T) {
 			}
 		}()
 		var cursor, effects int
-		if err := reader.QueryRow(ctx, "SELECT cursor,effects FROM f09_receiver.projection WHERE owner=$1", owner).Scan(&cursor, &effects); err != nil {
+		if err := reader.QueryRow(ctx, "SELECT cursor,effects FROM publishing_receiver.projection WHERE owner=$1", owner).Scan(&cursor, &effects); err != nil {
 			t.Fatal(err)
 		}
 		expected := 2

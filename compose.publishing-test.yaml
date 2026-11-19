@@ -19,15 +19,15 @@ services:
       file: compose.publishing.yaml
       service: publishing-topics
   test:
-    image: ${FL_F09_TOOLCHAIN:?set the local toolchain image}
+    image: ${FL_PUBLISHING_TOOLCHAIN:?set the local toolchain image}
     working_dir: /workspace
     volumes:
       - .:/workspace:ro
     networks: [data]
     entrypoint: [go, test, -v, -count=1, -timeout=180s, ./internal/publishing/...]
     environment:
-      FL_F09_TEST_BROKER: kafka:9092
-      FL_F09_TEST_DB: postgres://postgres@postgres/postgres?sslmode=disable
+      FL_PUBLISHING_TEST_BROKER: kafka:9092
+      FL_PUBLISHING_TEST_DB: postgres://postgres@postgres/postgres?sslmode=disable
 volumes:
   kafka-data:
 networks:

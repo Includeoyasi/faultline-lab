@@ -37,10 +37,11 @@ func Receive(ctx context.Context, cl *kgo.Client, pool *pgxpool.Pool, dataset st
 	return ctx.Err()
 }
 
+// Save implements the Idempotent Consumer pattern by committing the inbox entry and job together.
 func Save(ctx context.Context, pool *pgxpool.Pool, dataset string, r *kgo.Record) error {
 	var e publishing.Event
 	diagnostic := func(reason string) error {
-		_, err := pool.Exec(ctx, "INSERT INTO f09_receiver.diagnostic VALUES($1,$2,$3,$4) ON CONFLICT DO NOTHING", r.Topic, r.Partition, r.Offset, reason)
+		_, err := pool.Exec(ctx, "INSERT INTO publishing_receiver.diagnostic VALUES($1,$2,$3,$4) ON CONFLICT DO NOTHING", r.Topic, r.Partition, r.Offset, reason)
 		if err != nil {
 			return err
 		}
@@ -51,19 +52,19 @@ func Save(ctx context.Context, pool *pgxpool.Pool, dataset string, r *kgo.Record
 	}
 	conflict := errors.New("conflicting event identity or sequence")
 	err := pgx.BeginFunc(ctx, pool, func(tx pgx.Tx) error {
-		_, err := tx.Exec(ctx, "INSERT INTO f09_receiver.inbox VALUES($1,$2,$3,$4,$5,$6,$7) ON CONFLICT DO NOTHING", dataset, e.Owner, e.EventID, e.OrderID, e.StreamSequence, e.Type, r.Value)
+		_, err := tx.Exec(ctx, "INSERT INTO publishing_receiver.inbox VALUES($1,$2,$3,$4,$5,$6,$7) ON CONFLICT DO NOTHING", dataset, e.Owner, e.EventID, e.OrderID, e.StreamSequence, e.Type, r.Value)
 		if err != nil {
 			return err
 		}
 		var stored []byte
-		err = tx.QueryRow(ctx, "SELECT body FROM f09_receiver.inbox WHERE dataset=$1 AND owner=$2 AND event_id=$3", dataset, e.Owner, e.EventID).Scan(&stored)
+		err = tx.QueryRow(ctx, "SELECT body FROM publishing_receiver.inbox WHERE dataset=$1 AND owner=$2 AND event_id=$3", dataset, e.Owner, e.EventID).Scan(&stored)
 		if errors.Is(err, pgx.ErrNoRows) || err == nil && !bytes.Equal(stored, r.Value) {
 			return conflict
 		}
 		if err != nil {
 			return err
 		}
-		_, err = tx.Exec(ctx, "INSERT INTO f09_receiver.job(dataset,owner,event_id) VALUES($1,$2,$3) ON CONFLICT DO NOTHING", dataset, e.Owner, e.EventID)
+		_, err = tx.Exec(ctx, "INSERT INTO publishing_receiver.job(dataset,owner,event_id) VALUES($1,$2,$3) ON CONFLICT DO NOTHING", dataset, e.Owner, e.EventID)
 		return err
 	})
 	if errors.Is(err, conflict) {
@@ -77,17 +78,17 @@ func Save(ctx context.Context, pool *pgxpool.Pool, dataset string, r *kgo.Record
 func Apply(ctx context.Context, pool *pgxpool.Pool, dataset, owner, order string) error {
 	return pgx.BeginFunc(ctx, pool, func(tx pgx.Tx) error {
 		args := []any{dataset, owner, order}
-		_, err := tx.Exec(ctx, "INSERT INTO f09_receiver.projection(dataset,owner,order_id) VALUES($1,$2,$3) ON CONFLICT DO NOTHING", args...)
+		_, err := tx.Exec(ctx, "INSERT INTO publishing_receiver.projection(dataset,owner,order_id) VALUES($1,$2,$3) ON CONFLICT DO NOTHING", args...)
 		if err != nil {
 			return err
 		}
 		var cursor, seq int64
 		var id, kind string
-		err = tx.QueryRow(ctx, "SELECT cursor FROM f09_receiver.projection WHERE dataset=$1 AND owner=$2 AND order_id=$3 FOR UPDATE", args...).Scan(&cursor)
+		err = tx.QueryRow(ctx, "SELECT cursor FROM publishing_receiver.projection WHERE dataset=$1 AND owner=$2 AND order_id=$3 FOR UPDATE", args...).Scan(&cursor)
 		if err != nil {
 			return err
 		}
-		err = tx.QueryRow(ctx, "SELECT i.event_id,i.kind,i.seq FROM f09_receiver.inbox i JOIN f09_receiver.job j USING(dataset,owner,event_id) WHERE dataset=$1 AND owner=$2 AND i.order_id=$3 AND NOT j.done ORDER BY seq LIMIT 1", args...).Scan(&id, &kind, &seq)
+		err = tx.QueryRow(ctx, "SELECT i.event_id,i.kind,i.seq FROM publishing_receiver.inbox i JOIN publishing_receiver.job j USING(dataset,owner,event_id) WHERE dataset=$1 AND owner=$2 AND i.order_id=$3 AND NOT j.done ORDER BY seq LIMIT 1", args...).Scan(&id, &kind, &seq)
 		if err != nil {
 			return err
 		}
@@ -98,11 +99,11 @@ func Apply(ctx context.Context, pool *pgxpool.Pool, dataset, owner, order string
 		if (relevant && kind != "InventoryReserved" && kind != "InventoryCommitted" && kind != "InventoryReleased") || (!relevant && kind != "OrderAwaitingPayment") {
 			return errors.New("unknown event contract")
 		}
-		_, err = tx.Exec(ctx, "UPDATE f09_receiver.projection SET cursor=$4,state=CASE WHEN $5 THEN $6 ELSE state END,effects=effects+CASE WHEN $5 THEN 1 ELSE 0 END WHERE dataset=$1 AND owner=$2 AND order_id=$3", dataset, owner, order, seq, relevant, kind)
+		_, err = tx.Exec(ctx, "UPDATE publishing_receiver.projection SET cursor=$4,state=CASE WHEN $5 THEN $6 ELSE state END,effects=effects+CASE WHEN $5 THEN 1 ELSE 0 END WHERE dataset=$1 AND owner=$2 AND order_id=$3", dataset, owner, order, seq, relevant, kind)
 		if err != nil {
 			return err
 		}
-		_, err = tx.Exec(ctx, "UPDATE f09_receiver.job SET done=true WHERE dataset=$1 AND owner=$2 AND event_id=$3", dataset, owner, id)
+		_, err = tx.Exec(ctx, "UPDATE publishing_receiver.job SET done=true WHERE dataset=$1 AND owner=$2 AND event_id=$3", dataset, owner, id)
 		return err
 	})
 }

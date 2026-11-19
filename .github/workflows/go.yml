@@ -36,17 +36,17 @@ jobs:
         run: docker compose build toolchain
       - name: Run Go quality checks
         run: docker compose run --rm toolchain check
-      - name: Verify F09 takeover and durable delivery on an isolated broker and database
+      - name: Verify publisher takeover and durable delivery on an isolated broker and database
         shell: bash
         run: |
           set -euo pipefail
-          export FL_F09_TOOLCHAIN="$(docker compose images -q toolchain | head -1)"
-          if [[ -z "$FL_F09_TOOLCHAIN" ]]; then export FL_F09_TOOLCHAIN="$(basename "$PWD")-toolchain"; fi
-          f09=(docker compose -p "f09-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" -f compose.f09-test.yaml)
-          trap '"${f09[@]}" down -v --remove-orphans' EXIT
-          "${f09[@]}" up -d --wait kafka postgres
-          "${f09[@]}" run --rm topics
-          "${f09[@]}" run --rm test
+          export FL_PUBLISHING_TOOLCHAIN="$(docker compose images -q toolchain | head -1)"
+          if [[ -z "$FL_PUBLISHING_TOOLCHAIN" ]]; then export FL_PUBLISHING_TOOLCHAIN="$(basename "$PWD")-toolchain"; fi
+          publishing_stack=(docker compose -p "publishing-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" -f compose.publishing-test.yaml)
+          trap '"${publishing_stack[@]}" down -v --remove-orphans' EXIT
+          "${publishing_stack[@]}" up -d --wait kafka postgres
+          "${publishing_stack[@]}" run --rm topics
+          "${publishing_stack[@]}" run --rm test
       - name: Verify service processes, health and isolation
         run: docker compose run --rm toolchain service-smoke
       - name: Reject invalid toolchain command

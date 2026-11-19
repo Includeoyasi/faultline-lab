@@ -39,6 +39,7 @@ func Execute(ctx context.Context, args []string, lookup func(string) (string, bo
 	}
 	defer backend.Close()
 	if broker, enabled := lookup("FL_OUTBOX_BROKER"); enabled && broker != "" {
+		// Graceful shutdown: cancel the outbox relay and wait for it before closing the store.
 		publishCtx, cancel := context.WithCancel(ctx)
 		done := make(chan struct{})
 		go func() {
