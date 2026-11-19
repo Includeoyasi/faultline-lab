@@ -125,5 +125,8 @@ func TestPublicationAndReplay(t *testing.T) {
 		if cursor != 2 || effects != expected {
 			t.Fatalf("%s cursor %d effects %d", owner, cursor, effects)
 		}
+		if owner == "inventory" {
+			t.Run("process takeover", func(t *testing.T) { verifyProcessTakeover(t, ctx, pool, reader, p) })
+		}
 	}
 }
