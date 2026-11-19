@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 77,
+  "context_revision": 78,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-11-19",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "fdf96aea19078c6a29786171cf454d164fa1d97b",
+    "snapshot_ref": "d1d812c028fccf1f3b1fec1a9d1575e3d5d649c2",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
