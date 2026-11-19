@@ -1,0 +1,20 @@
+services:
+  payments:
+    command: [process]
+    restart: on-failure
+    environment:
+      FL_PAYMENTS_DATASET_ID: ${FL_ORDERS_DATASET_ID:?set the same dataset as Orders}
+      FL_PAYMENTS_DB_ADDR: postgres:5432
+      FL_PAYMENTS_PASSWORD_FILE: /run/secrets/payments_app.password
+      FL_OUTBOX_BROKER: kafka:9092
+      FL_PAYMENTS_SEED: ${FL_PAYMENTS_SEED:-local}
+      FL_PAYMENTS_DECLINE_BPS: ${FL_PAYMENTS_DECLINE_BPS:-500}
+      FL_PAYMENTS_MAX_DELAY: ${FL_PAYMENTS_MAX_DELAY:-1s}
+    secrets:
+      - {source: payments-app-password, target: payments_app.password}
+    networks: [runtime, data]
+    depends_on:
+      publishing-topics:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy

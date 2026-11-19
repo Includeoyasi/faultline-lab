@@ -34,7 +34,7 @@ type Publisher struct {
 // Once implements the Transactional Outbox relay and attempts one fact. Generation is observed before Kafka initialization.
 // The mark and lease release share a SQL statement and lock the lease row.
 func (p Publisher) Once(ctx context.Context) error {
-	if p.Owner != "orders" && p.Owner != "inventory" {
+	if p.Owner != "orders" && p.Owner != "inventory" && p.Owner != "payments" {
 		return errors.New("unknown publisher schema")
 	}
 	ctx, cancel := context.WithTimeout(ctx, 20*time.Second)

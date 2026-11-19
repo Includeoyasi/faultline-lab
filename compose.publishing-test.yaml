@@ -24,7 +24,7 @@ services:
     volumes:
       - .:/workspace:ro
     networks: [data]
-    entrypoint: [go, test, -v, -count=1, -timeout=180s, ./internal/publishing/...]
+    entrypoint: [go, test, -v, -count=1, -timeout=180s, ./internal/publishing/..., ./internal/payments]
     environment:
       FL_PUBLISHING_TEST_BROKER: kafka:9092
       FL_PUBLISHING_TEST_DB: postgres://postgres@postgres/postgres?sslmode=disable
