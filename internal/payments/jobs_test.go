@@ -16,7 +16,6 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/twmb/franz-go/pkg/kgo"
-	"github.com/twmb/franz-go/pkg/kmsg"
 )
 
 // The first process exits with accepted offsets and no worker running.
@@ -80,17 +79,6 @@ func TestPaymentRecovery(t *testing.T) {
 	producer, err := kgo.NewClient(kgo.SeedBrokers(broker), kgo.TransactionalID("orders-payment-test-input"))
 	check(err)
 	defer producer.Close()
-	spec := kmsg.NewCreateTopicsRequestTopic()
-	spec.Topic = topic
-	spec.NumPartitions = 1
-	spec.ReplicationFactor = 1
-	req := kmsg.NewPtrCreateTopicsRequest()
-	req.Topics = []kmsg.CreateTopicsRequestTopic{spec}
-	rsp, err := req.RequestWith(ctx, producer)
-	check(err)
-	if rsp.Topics[0].ErrorCode != 0 {
-		t.Fatalf("create input topic: %+v", rsp.Topics[0])
-	}
 	expected := map[string]string{}
 	var records []*kgo.Record
 	seen := map[bool]bool{}
