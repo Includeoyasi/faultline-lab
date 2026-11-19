@@ -70,7 +70,7 @@ func TestPublicationAndReplay(t *testing.T) {
 			exec("INSERT INTO orders.orders(order_id,request_key,request_hash,reserve_operation_id,state,version,items) VALUES ('o','r',repeat('a',64),'reserve','ACCEPTED',1,'[{}]')")
 			kind = "OrderAwaitingPayment"
 		} else {
-			exec("INSERT INTO inventory.reservations(order_id,state,version) VALUES('o','RESERVED',1)")
+			exec("INSERT INTO inventory.reservations(order_id,state,version,total_minor,currency) VALUES('o','RESERVED',1,100,'RUB')")
 		}
 		exec("INSERT INTO " + owner + ".outbox(event_id,order_id,aggregate_version,event_type,payload) VALUES('one','o',3,'" + kind + "','{}')")
 		apply(paths[len(paths)-1])
