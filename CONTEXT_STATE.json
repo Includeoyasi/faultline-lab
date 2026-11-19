@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 78,
+  "context_revision": 79,
   "context_created_on": "2026-10-13",
   "context_updated_on": "2026-11-19",
   "user_timezone": "Europe/Moscow",
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "d1d812c028fccf1f3b1fec1a9d1575e3d5d649c2",
+    "snapshot_ref": "b1c061ca748218da0fc785bf2f4d1fc1511e7148",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -3677,6 +3677,7 @@
     "limits": "Dirty worktree before source commit, fingerprints recorded; physical host profile unverified; macOS runtime NOT_RUN; no capacity conclusion",
     "real_report_validation": "TestSuccessfulReportsHaveObservedMetadata PASS against the three saved real Windows reports; read-only, no Docker restart"
   },
+  "payments_ledger": {"source": "migrations/payments/0002_ledger.sql", "scope": "One immutable debit and at most one matching full refund per order in the isolated database. The application-role smoke verifies constraints and projected ledger entries. The payment worker and Kafka intake are separate implementation work."},
   "orders_foundation": {
     "recorded_on": "2026-10-23",
     "source_commit": "d09f1fe6652cc18cf88cd4ce30f604be379f2ef0",
