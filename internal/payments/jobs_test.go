@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
+	"os/exec"
 	"testing"
 	"time"
 
@@ -17,6 +18,32 @@ import (
 	"github.com/twmb/franz-go/pkg/kgo"
 	"github.com/twmb/franz-go/pkg/kmsg"
 )
+
+// The first process exits with accepted offsets and no worker running.
+func TestPaymentIntakeChild(t *testing.T) {
+	if os.Getenv("FL_PAYMENT_INTAKE_CHILD") != "1" {
+		t.Skip("started by recovery test")
+	}
+	ctx, cancel := context.WithTimeout(t.Context(), 45*time.Second)
+	defer cancel()
+	pool, err := pgxpool.New(ctx, os.Getenv("FL_PUBLISHING_TEST_DB"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer pool.Close()
+	p := processor{pool: pool, dataset: "payment-test", seed: "example", declineBPS: 5000, maxDelay: time.Hour}
+	if err = p.bind(ctx); err != nil {
+		t.Fatal(err)
+	}
+	cl, err := newConsumer(os.Getenv("FL_PUBLISHING_TEST_BROKER"), p.dataset, "payment-test-input")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer cl.Close()
+	if err = p.receive(ctx, cl); err == nil || err.Error() != "invalid Orders event JSON" {
+		t.Fatalf("unexpected intake exit: %v", err)
+	}
+}
 
 func TestPaymentRecovery(t *testing.T) {
 	dsn, broker := os.Getenv("FL_PUBLISHING_TEST_DB"), os.Getenv("FL_PUBLISHING_TEST_BROKER")
@@ -91,6 +118,7 @@ func TestPaymentRecovery(t *testing.T) {
 	for _, r := range records {
 		check(producer.ProduceSync(ctx, r).FirstErr())
 	}
+	check(producer.ProduceSync(ctx, &kgo.Record{Topic: topic, Key: records[0].Key, Value: records[0].Value}).FirstErr())
 	// A fresh group consumes until a sentinel on the same partition. Its offset
 	// remains unacknowledged; both preceding jobs must already be durable.
 	sentinel := &kgo.Record{Topic: topic, Value: []byte("invalid")}
@@ -104,7 +132,11 @@ func TestPaymentRecovery(t *testing.T) {
 			t.Fatalf("expected unacknowledged invalid input, got %v", err)
 		}
 	}
-	consume(p)
+	child := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestPaymentIntakeChild$")
+	child.Env = append(os.Environ(), "FL_PAYMENT_INTAKE_CHILD=1")
+	if out, err := child.CombinedOutput(); err != nil {
+		t.Fatalf("intake process: %v: %s", err, out)
+	}
 	if err = p.finish(ctx); !errors.Is(err, pgx.ErrNoRows) {
 		t.Fatalf("simulated delay: %v", err)
 	}
@@ -115,6 +147,14 @@ func TestPaymentRecovery(t *testing.T) {
 	consume(p)
 	for _, r := range records {
 		check(p.save(ctx, r))
+	}
+	var changed publishing.Event
+	check(json.Unmarshal(records[0].Value, &changed))
+	changed.EventID += ":conflict"
+	conflicting, err := json.Marshal(changed)
+	check(err)
+	if err = p.save(ctx, &kgo.Record{Key: records[0].Key, Value: conflicting}); err == nil {
+		t.Fatal("conflicting request accepted")
 	}
 	// Advance only the persisted test deadline, without sleeping for business time.
 	_, err = p.pool.Exec(ctx, "UPDATE payments.jobs SET ready_at=clock_timestamp()")
