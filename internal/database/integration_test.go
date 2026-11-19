@@ -91,6 +91,13 @@ func TestPostgresFoundation(t *testing.T) {
 			t.Fatal("repeat modified history", e)
 		}
 	})
+	t.Run("payment debit and full refund", func(t *testing.T) {
+		service, err := cfg.Service("payments")
+		if err != nil {
+			t.Fatal(err)
+		}
+		checkPaymentLedger(t, ctx, connect(t, service.Database, service.AppUser))
+	})
 	t.Run("repeat migrations restore application access", func(t *testing.T) {
 		service, _ := cfg.Service("inventory")
 		conn := connect(t, service.Database, service.MigrationUser)
