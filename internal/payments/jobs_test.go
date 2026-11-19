@@ -76,7 +76,7 @@ func TestPaymentRecovery(t *testing.T) {
 		t.Fatal("bound to another dataset")
 	}
 	const topic = "payment-test-input"
-	producer, err := kgo.NewClient(kgo.SeedBrokers(broker), kgo.TransactionalID("orders-payment-test-input"))
+	producer, err := kgo.NewClient(kgo.SeedBrokers(broker), kgo.ProducerBatchCompression(kgo.NoCompression()), kgo.TransactionalID("orders-payment-test-input"))
 	check(err)
 	defer producer.Close()
 	expected := map[string]string{}

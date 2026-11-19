@@ -13,7 +13,8 @@ import (
 // Cancellation also terminates in-flight network operations.
 func attempt(ctx context.Context, brokers []string, lane string, hooks []kgo.Hook,
 	claim func(context.Context) (*kgo.Record, error), mark func(context.Context) error) error {
-	cl, err := kgo.NewClient(kgo.WithContext(ctx), kgo.SeedBrokers(brokers...), kgo.TransactionalID(lane),
+	// The lab broker cannot load the native Snappy library from its noexec tmpfs.
+	cl, err := kgo.NewClient(kgo.ProducerBatchCompression(kgo.NoCompression()), kgo.WithContext(ctx), kgo.SeedBrokers(brokers...), kgo.TransactionalID(lane),
 		kgo.TransactionTimeout(15*time.Second), kgo.WithHooks(hooks...))
 	if err != nil {
 		return err
