@@ -77,7 +77,7 @@ func TestPaymentRecovery(t *testing.T) {
 		t.Fatal("bound to another dataset")
 	}
 	const topic = "payment-test-input"
-	producer, err := kgo.NewClient(kgo.SeedBrokers(broker))
+	producer, err := kgo.NewClient(kgo.SeedBrokers(broker), kgo.TransactionalID("orders-payment-test-input"))
 	check(err)
 	defer producer.Close()
 	spec := kmsg.NewCreateTopicsRequestTopic()
@@ -115,6 +115,11 @@ func TestPaymentRecovery(t *testing.T) {
 	if len(records) != 2 {
 		t.Fatal("missing simulator outcome")
 	}
+	// Mirror the real Orders relay: initialize the transactional producer
+	// before publishing the batch that a read_committed consumer can see.
+	_, _, err = producer.ProducerID(ctx)
+	check(err)
+	check(producer.BeginTransaction())
 	for _, r := range records {
 		check(producer.ProduceSync(ctx, r).FirstErr())
 	}
@@ -123,6 +128,7 @@ func TestPaymentRecovery(t *testing.T) {
 	// remains unacknowledged; both preceding jobs must already be durable.
 	sentinel := &kgo.Record{Topic: topic, Value: []byte("invalid")}
 	check(producer.ProduceSync(ctx, sentinel).FirstErr())
+	check(producer.EndTransaction(ctx, kgo.TryCommit))
 	consume := func(p processor) {
 		cl, err := newConsumer(broker, p.dataset, topic)
 		check(err)
