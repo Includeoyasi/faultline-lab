@@ -38,6 +38,16 @@ func Execute(ctx context.Context, args []string, lookup func(string) (string, bo
 		return 1
 	}
 	defer backend.Close()
+	if broker, enabled := lookup("FL_OUTBOX_BROKER"); enabled && broker != "" {
+		// Graceful shutdown: cancel the outbox relay and wait for it before closing the store.
+		publishCtx, cancel := context.WithCancel(ctx)
+		done := make(chan struct{})
+		go func() {
+			defer close(done)
+			backend.Publish(publishCtx, broker, logger)
+		}()
+		defer func() { cancel(); <-done }()
+	}
 	if err = service.RunRegistered(ctx, "inventory", lookup, output, func(server *grpc.Server) { Register(server, backend) }); err != nil {
 		return 1
 	}

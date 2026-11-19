@@ -1,0 +1,19 @@
+services:
+  orders:
+    environment:
+      FL_OUTBOX_BROKER: kafka:9092
+  inventory:
+    environment:
+      FL_OUTBOX_BROKER: kafka:9092
+  publishing-topics:
+    image: apache/kafka:4.3.1@sha256:77e3df9054047a88b520d0cc46e16696d3b22022e1d580aeccd2632df6532837
+    depends_on:
+      kafka:
+        condition: service_healthy
+    networks: [data]
+    entrypoint: [/bin/sh, -ec]
+    command:
+      - |
+        for topic in orders.events.v1 inventory.events.v1; do
+          /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:9092 --create --if-not-exists --topic "$$topic" --partitions 3 --replication-factor 1 --config cleanup.policy=delete --config retention.ms=-1 --config retention.bytes=-1
+        done

@@ -1,0 +1,35 @@
+# Disposable test project. No host ports are published.
+services:
+  kafka:
+    extends:
+      file: compose.infrastructure.yaml
+      service: kafka
+  postgres:
+    image: postgres:18.6-bookworm@sha256:afc7e2d441324c0388fa80c3d24f733b4194a4eb7f47dd8ee2b08eb1a24a647c
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    networks: [data]
+    healthcheck:
+      test: [CMD, pg_isready, -U, postgres]
+      interval: 2s
+      timeout: 2s
+      retries: 25
+  topics:
+    extends:
+      file: compose.publishing.yaml
+      service: publishing-topics
+  test:
+    image: ${FL_PUBLISHING_TOOLCHAIN:?set the local toolchain image}
+    working_dir: /workspace
+    volumes:
+      - .:/workspace:ro
+    networks: [data]
+    entrypoint: [go, test, -v, -count=1, -timeout=180s, ./internal/publishing/...]
+    environment:
+      FL_PUBLISHING_TEST_BROKER: kafka:9092
+      FL_PUBLISHING_TEST_DB: postgres://postgres@postgres/postgres?sslmode=disable
+volumes:
+  kafka-data:
+networks:
+  data:
+    internal: true
