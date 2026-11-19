@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **75**. Дата снимка: **2026-11-10**, Europe/Moscow. Исходный коммит внешних материалов: `afecc0a6022a38a9c5ddd6d61986aac6230f1e09`.
+Ревизия: **76**. Дата снимка: **2026-11-19**, Europe/Moscow. Исходный коммит внешних материалов: `8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821`.
 
 ## Выполнение задач
 
@@ -71,9 +71,9 @@ JSON ниже включён для автономного чтения реше
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 75,
+  "context_revision": 76,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-11-10",
+  "context_updated_on": "2026-11-19",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -87,7 +87,7 @@ JSON ниже включён для автономного чтения реше
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "afecc0a6022a38a9c5ddd6d61986aac6230f1e09",
+    "snapshot_ref": "8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -3057,6 +3057,11 @@ JSON ниже включён для автономного чтения реше
       "path": "docs/development/evidence/orders/VALIDATION.md",
       "title": "Orders native acceptance and crash evidence — 2026-10-23",
       "anchor": "orders-native-validation-2026-10-23"
+    },
+    {
+      "path": "docs/adr/0005-kafka-publishing.md",
+      "anchor": "appendix-adr-0005-kafka-publishing",
+      "title": "ADR 0005. Kafka publishing"
     }
   ],
   "change_history": [
@@ -3449,6 +3454,12 @@ JSON ниже включён для автономного чтения реше
       "date": "2026-11-10",
       "summary": "Prepared the five-block F09 decision proposal against merged Orders: separate public stream_sequence, one-record fresh-client activation, explicit recovery/retention costs, implementation boundary and acceptance scenarios; rendered and visually inspected five diagrams. Recorded owner merge of Orders without implying G1 approval.",
       "trigger": "Owner asked what decisions were needed after merging Orders PR29 and authorized preparation of decision material; no publisher implementation or GitHub publication authorized by that request"
+    },
+    {
+      "summary": "Recorded owner approval of F09 D1-D3 and implementation source.",
+      "date": "2026-11-19",
+      "trigger": "Direct owner instruction in chat to begin implementation",
+      "revision": 76
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -3588,7 +3599,7 @@ JSON ниже включён для автономного чтения реше
     "macos_runtime": "NOT_RUN",
     "ci": "Native Linux AMD64/ARM64 quality/race/vulnerability, existing smoke and new combined checks are defined by .github/workflows/go.yml; actual head results belong in PR/Actions",
     "f09": {
-      "kind": "PROPOSED_DESIGN_NOT_IMPLEMENTED",
+      "kind": "OWNER_APPROVED_D1_D2_D3",
       "source": "docs/architecture/KAFKA_PUBLISHING.md",
       "code_basis": "Orders PR29 owner merge c0fb069ef100698b33b14e05398e4cada42670fb; existing Orders/Inventory outbox does not publish to Kafka",
       "protocol": "Read free/expired DB-clock lease generation G -> real ProducerID initialization on fresh client with stable dataset/service/lane transactional ID -> CAS exactly that G and expiry -> one record and one commit attempt -> conditional SQL publication mark -> Close; failed CAS or any error closes client without reuse or abort recovery",
@@ -3607,8 +3618,9 @@ JSON ниже включён для автономного чтения реше
         "route": "Problem/localization; patterns/alternatives; recommendation/cost; separate PR plan; concrete D1-D3 decisions. Five sequence diagrams show the anomaly, three mechanisms and combined activation; detailed contract, acceptance matrix and sources are expandable",
         "preserved_contracts": "Distinct SQL generation and Kafka epoch; read G -> real broker init -> CAS same G; no reinit under old lease; independent post-commit delivery and SQL mark; inbox+durable job before offset and transactional worker guards",
         "validation": "Five diagrams rendered with Mermaid 11.4.1 and visually inspected; each block has 3-10 prose sentences; standalone HTML desktop/mobile checks PASS, local documentation links/structure and safety tests PASS. This is document/source validation, not runtime validation of the proposed protocol",
-        "decision": "Proposed D1 combined lease/fencing/inbox, D2 separate public sequence, D3 bounded first PR. No owner architectural approval or implementation evidence inferred"
-      }
+        "decision": "Owner approved D1 then D2 and D3 in chat on 2026-11-19 and authorized implementation."
+      },
+      "implementation": "Orders and Inventory publishers, sequence migrations, isolated test receiver and broker takeover tests in the source snapshot. Runtime evidence belongs in PR30."
     },
     "ci_refinement": "Initial Linux CI stopped at staticcheck ST1005 and an unused Compose wrapper; lower-case error messages and removal retain all checks. Redis default username is now rejected before ACL generation; affected Windows tests/vet pass. Actual final-HEAD CI results belong in PR/Actions."
   },
@@ -3791,7 +3803,7 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `07f78a5707cd1274c474ec9ac8685dbdd10d12796076d5a564334bcefa75c578` |
+| `CONTEXT_STATE.json` | `a32bcb5311352c7e89b40231b1430ecc5edf2bed08d9c41b194c03b8a031548c` |
 | `tools/context_intro.md` | `91fb656b2ec7b4dcd798be45f7b78ec2452763455476ebcd55762b465ad25d2b` |
 | `tools/update_context.ps1` | `73dff2e2da1f7ea7e8fc8fe2dc70bde722f4d697c1ca7c685d297214cd133e33` |
 | `README.md` | `b29d761f9e961d2c18089ed1c8ee7b8a4b443ab623eaf7ba8c8c712461e6eb8c` |
@@ -3825,7 +3837,7 @@ SHA-256 относится к исходному файлу на момент с
 | `compose.yaml` | `d1ca71da50b66aa35542adee8a4a00bfaf8f21cc5bd9de2547ce800859c94fd4` |
 | `tools/go.sh` | `a41113db0f47274c332f0ad8b899e59b8abf74366bab5499d5f97096199cbe4d` |
 | `.golangci.yml` | `44651a36c889767cd425bc12b46e07c8bffc924024de23af1176057f78f3a74a` |
-| `.github/workflows/go.yml` | `263ce3321dfe0a69fc018efca13af710962a8f53516473873c24f472b1e839a6` |
+| `.github/workflows/go.yml` | `b7bc396ffa1d8c59bd361ad99dd061d0de48150dad6e2806a6cb7366cb5a4afd` |
 | `.dockerignore` | `e75b314d79f67eec6dafc763b1e4c118597186f106f91a73749750d4ab0cf045` |
 | `docs/development/SERVICE_RUNTIME.md` | `5dbe5328c6252278d35817ad8cf0487b5c9c621fe5cd587e61c78c762703308c` |
 | `internal/service/config.go` | `a5cd706cc41d0fb88ea96b0ffaeff4f7ecf32bf31394ec5398efb39fba240a89` |
@@ -3960,7 +3972,7 @@ SHA-256 относится к исходному файлу на момент с
 | `docs/development/evidence/inventory/windows-postgres.json` | `b6229f2c5813cb0d3fb0ac35f9739584ee05f8a2c16023bc7d74f0b60428a218` |
 | `docs/development/evidence/inventory/windows-infrastructure.json` | `2d411e270263e35627adc5c98d47ebf943c5f1603aa44206bd8d1a31ff5d089f` |
 | `docs/development/evidence/inventory/source-hashes.json` | `d3c79640894521b22dc41ff0734a5e3a8bfcd99008da7e26d18b1db57f7f500f` |
-| `internal/inventory/command.go` | `af1f7af15cee12e4c6244c5fe49d180b04c4403388e0ae0eb9418fe5a4a3a0b6` |
+| `internal/inventory/command.go` | `496f34b57ffca2d5f248162ea4e5820474140c07bb5efc9e228d42241e0bbfce` |
 | `internal/inventory/store/config.go` | `ea9b17e58018a19a79a31d4ce758f85358aef433a628a5a8c16ca803d19534f5` |
 | `internal/inventory/store/deployment_test.go` | `0bf8bbdf1fcff0e16b6b869335450f88da1c3d7572746b668c5e302988bd0ada` |
 | `internal/inventory/store/integration_test.go` | `4f1e39419b1ff61d1de1af2eb4baafc8790f96008d5d873466254ccd3ec9ced3` |
@@ -3992,7 +4004,7 @@ SHA-256 относится к исходному файлу на момент с
 | `configs/orders/local.json` | `bbc41114f8ebce78589ad655da679c3d88ef7d7ea339b6083a4977e0a1df7a47` |
 | `migrations/orders/0002_reservations.sql` | `09b3a546ecb1218f39bdc0f03bef0d873263941571f477c2be4e0b0cacd5c98e` |
 | `docs/development/ORDERS.md` | `2d88d1e15a983ea71f791b1a7b77a4792f51d18969abc87dfa81838b5cda92cb` |
-| `internal/orders/command.go` | `ad45753f1275a6e4270cc29c1352cfd7b4d1924770d5ff018fa08f053d2cac75` |
+| `internal/orders/command.go` | `58fc44ec256200047a138252b5c7042f7323fd3757bbb90b312506f551012b50` |
 | `internal/orders/config.go` | `f6c499619e529a50edf90496a945732303b45a6a1af2a3dd37b67142aee996b8` |
 | `internal/orders/config_test.go` | `45cf56bbbb3d87fcbb29489e32c5cfe7e0af4244251add71b68f82a9128186b7` |
 | `internal/orders/server.go` | `bc02ceaeb35838e7b6e936a1662560679aaf19013af903c2d88697cca32a7673` |
@@ -4011,6 +4023,7 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/orders/worker/worker.go` | `f0d8731a6cb676888c16a16ab183b0e7720ebe0128298ec338cd128a05f4c001` |
 | `internal/orders/worker/worker_test.go` | `8fce4a9351bcf26a4dfa250fd376d7e534aec27c78cb1605cffd721a5839ce4c` |
 | `docs/development/evidence/orders/VALIDATION.md` | `45e0d2d27fbc66d25a329abb8f96e376dbf3fa22fccb3fd4ac05f9020945bdf2` |
+| `docs/adr/0005-kafka-publishing.md` | `ab888619272e3088d027e54c9e5c1a03577f6661e53df048847637679b94a737` |
 
 ## Полные самостоятельные приложения
 
@@ -4231,6 +4244,7 @@ SHA-256 относится к исходному файлу на момент с
 - [internal/orders/worker/worker.go](#orders-internal-orders-worker-worker-go) — `internal/orders/worker/worker.go`
 - [internal/orders/worker/worker_test.go](#orders-internal-orders-worker-worker-test-go) — `internal/orders/worker/worker_test.go`
 - [Orders native acceptance and crash evidence — 2026-10-23](#orders-native-validation-2026-10-23) — `docs/development/evidence/orders/VALIDATION.md`
+- [ADR 0005. Kafka publishing](#appendix-adr-0005-kafka-publishing) — `docs/adr/0005-kafka-publishing.md`
 
 <a id="appendix-readme-en"></a>
 
@@ -4239,7 +4253,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
 </p>
 
 <p align="center">
@@ -4257,7 +4271,7 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Project guide
@@ -4352,7 +4366,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience |
 | **G4** | Reproducible engineering lab |
 
-The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
 
 [Engineering decisions and review](#appendix-engineering-decisions) traces owner feedback through the rationale, changes and verification. It also links the separate [Go smoke task](https://github.com/Includeoyasi/faultline-lab/issues/9); its execution and review are tracked in GitHub.
 
@@ -4420,7 +4434,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
 </p>
 
 <p align="center">
@@ -4438,7 +4452,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Навигация по проекту
@@ -4522,7 +4536,7 @@ flowchart LR
 
 G0 — архитектура; G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Порядок и критерии приёмки описаны в workflow; факты принятия сохраняются с датой и источником.
 
-[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
 
 [Инженерные решения и ревью](#appendix-engineering-decisions) связывают замечания владельца с обоснованием, изменениями и проверками. Выполнение переноса контейнерного smoke на Go и его ревью ведутся в [задаче #9](https://github.com/Includeoyasi/faultline-lab/issues/9).
 
@@ -4597,7 +4611,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Проверить отдельный backlog | [Перенос smoke на Go](#appendix-go-smoke-backlog) — задача #9, границы и критерии |
 | Проверить права и защиту main | [Безопасность репозитория](#appendix-repository-security) — действующая защита и переход на аккаунт исполнителя |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
@@ -4612,7 +4626,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
 - [ADR 0002](#appendix-adr-0002): согласованный порядок фиксации решений в PR, ADR и обзорной странице.
 - [ADR 0003](#appendix-adr-0003): принятое решение о Go smoke и его последствия.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -5712,7 +5726,7 @@ Codex (AI-Your-Bro) — исполнитель: готовит проектны�
 
 #### Стандарт код-ревью
 
-[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/.github/pull_request_template.md) содержит краткий применимый чек-лист.
 
 После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; владелец проекта рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению владельца проекта или действие самого владельца проекта.
 
@@ -5973,7 +5987,7 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
+Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
@@ -6172,7 +6186,7 @@ Go-модуль, закреплённые инструменты и нативн
 - Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
 - Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
 
-Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
 
 <a id="appendix-lab-boundary"></a>
 
@@ -6466,13 +6480,13 @@ Docker рекомендует разделять ответственности 
 
 ### Баннер Faultline Lab
 
-Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/assets/banner.svg).
+Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/docs/assets/banner.svg).
 
 #### Задание
 
 Подготовить три альтернативных варианта с акцентом на технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее. Сделаны векторные композиции с читаемым названием, тёмным текстом на светлом фоне и встроенными title/description. Внешних шрифтов, скриптов и удалённых графических зависимостей нет.
 
-![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/assets/banner-concepts/comparison.png)
+![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/docs/assets/banner-concepts/comparison.png)
 
 | Вариант | Образ | Палитра | Статус |
 | :--- | :--- | :--- | :--- |
@@ -6482,13 +6496,13 @@ Docker рекомендует разделять ответственности 
 
 #### Выбранное решение
 
-![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/assets/banner-concepts/02-experiment-flow.png)
+![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/docs/assets/banner-concepts/02-experiment-flow.png)
 
 Абстрактные линии проходят через область наблюдения. Это метафора исследования поведения системы и сравнения изменений; линии не являются графиком измеренных результатов. Композиция не зависит от домена магазина и подходит будущим подключаемым бизнесам.
 
 Размер SVG — 1280 × 420; README задаёт ширину 100%. Исходник масштабируется, PNG служит предварительным просмотром. Основная подпись: **Explore how systems behave.** Нижняя последовательность: **Hypothesis → Experiment → Evidence**.
 
-Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
+Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
 
 Баннеры отрендерены локально и визуально просмотрены на общем листе. Проверены отсутствие обрезанного текста и соответствие композиций заданию. Отдельный preview выбранного варианта используется для проверки основного баннера. Выбранный вариант слит в main через [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4), merge commit 8c392b8. Проверка отрисовки нового README на GitHub пока не выполнялась.
 
@@ -6626,7 +6640,7 @@ P01 не достигает всей контрольной точки G1: ба�
 | GitHub Issue | Текущая стадия, исполнитель, критерии выполнения, блокеры и связь с PR |
 | GitHub PR | Diff, результаты проверок, замечания и решение владельца по HEAD |
 | ADR | Существенное решение, варианты, последствия и основание принятия |
-| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
+| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
 
 #### Стадии в Issue
 
@@ -6746,7 +6760,7 @@ GitHub разрешает machine account, зарегистрированный 
 
 Исходный набор версий проверен по официальным источникам 15 октября 2026 года: [Go releases](https://go.dev/dl/), [golangci-lint releases](https://github.com/golangci/golangci-lint/releases/tag/v2.14.0), Go module proxy и Docker Registry. Оба закреплённых digest относятся к multi-platform индексам, а не к одному варианту CPU.
 
-21 октября Go обновлён до [1.27.3](https://go.dev/doc/devel/release#go1.27.3), чтобы устранить блокирующий CI security finding GO-2026-6809 в стандартной библиотеке crypto/x509. SHA-256 индекса получен из официального Docker Registry и сверен с байтами ответа; наличие Linux AMD64 и ARM64 подтверждено в [данных проверки индекса](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/development/evidence/go-toolchain/go-1.27.3-registry.json). Пересборка этим toolchain обновляет стандартную библиотеку и в статических runtime-бинарниках. Исторические evidence и установленный host Go 1.27.2 сохраняются; основной путь запуска проверок остаётся контейнерным.
+21 октября Go обновлён до [1.27.3](https://go.dev/doc/devel/release#go1.27.3), чтобы устранить блокирующий CI security finding GO-2026-6809 в стандартной библиотеке crypto/x509. SHA-256 индекса получен из официального Docker Registry и сверен с байтами ответа; наличие Linux AMD64 и ARM64 подтверждено в [данных проверки индекса](https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/docs/development/evidence/go-toolchain/go-1.27.3-registry.json). Пересборка этим toolchain обновляет стандартную библиотеку и в статических runtime-бинарниках. Исторические evidence и установленный host Go 1.27.2 сохраняются; основной путь запуска проверок остаётся контейнерным.
 
 gRPC v1.84.0 добавлен для реального health API в P01-04; версия проверена через официальный Go proxy. JSON-логи использует стандартный log/slog. Инструменты закреплены через [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools). PostgreSQL использует pgx v5.11.0; инфраструктурные проверки — franz-go v1.22.2 и go-redis v9.23.0, закреплённые в go.mod/go.sum.
 
@@ -7327,6 +7341,17 @@ jobs:
         run: docker compose build toolchain
       - name: Run Go quality checks
         run: docker compose run --rm toolchain check
+      - name: Verify F09 takeover and durable delivery on an isolated broker and database
+        shell: bash
+        run: |
+          set -euo pipefail
+          export FL_F09_TOOLCHAIN="$(docker compose images -q toolchain | head -1)"
+          if [[ -z "$FL_F09_TOOLCHAIN" ]]; then export FL_F09_TOOLCHAIN="$(basename "$PWD")-toolchain"; fi
+          f09=(docker compose -p "f09-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" -f compose.f09-test.yaml)
+          trap '"${f09[@]}" down -v --remove-orphans' EXIT
+          "${f09[@]}" up -d --wait kafka postgres
+          "${f09[@]}" run --rm topics
+          "${f09[@]}" run --rm test
       - name: Verify service processes, health and isolation
         run: docker compose run --rm toolchain service-smoke
       - name: Reject invalid toolchain command
@@ -10179,7 +10204,7 @@ JSON schema version 2 сохраняет `run_id`, `project`, `result`, `service
 
 Отчёт не содержит полного inspect Env или разрешённого Compose-конфига. Пути checkout и домашнего каталога редактируются в диагностике. Smoke использует несекретный профиль; сторонние произвольные логи перед публикацией нужно проверять отдельно. Это проверка каркаса, а не измерение бизнес-корректности или capacity.
 
-После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
+После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
 
 <a id="go-smoke-main"></a>
 
@@ -19073,7 +19098,7 @@ flowchart TB
 
 Kafka работает в KRaft с явными broker/controller listeners, статическим quorum и постоянным cluster ID. Автоматическое создание топиков выключено. Один broker не обеспечивает репликационную доступность: `acks=all` здесь означает подтверждение единственным ISR. Сохраняется проверка штатного restart, а не аварии диска/хоста.
 
-Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/afecc0a6022a38a9c5ddd6d61986aac6230f1e09/docs/development/POSTGRES.md#подготовка-стенда).
+Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821/docs/development/POSTGRES.md#подготовка-стенда).
 
 Контейнеры зависимостей и runtime-проверок непривилегированные, с read-only root, без capabilities и с `no-new-privileges`; запись разрешена в явные volume/tmpfs. Временный toolchain имеет отдельные права для сборки в workspace, описанные в [его руководстве](#appendix-toolchain). Порты доступны через DNS внутренней сети: `postgres`, `kafka:9092`, `redis:6379`. Kafka PLAINTEXT и Redis без TLS допустимы только в этом изолированном локальном профиле; удалённое размещение требует отдельного профиля аутентификации, TLS и сетевых правил.
 
@@ -21097,6 +21122,15 @@ func Execute(ctx context.Context, args []string, lookup func(string) (string, bo
 		return 1
 	}
 	defer backend.Close()
+	if broker, enabled := lookup("FL_OUTBOX_BROKER"); enabled && broker != "" {
+		publishCtx, cancel := context.WithCancel(ctx)
+		done := make(chan struct{})
+		go func() {
+			defer close(done)
+			backend.Publish(publishCtx, broker, logger)
+		}()
+		defer func() { cancel(); <-done }()
+	}
 	if err = service.RunRegistered(ctx, "inventory", lookup, output, func(server *grpc.Server) { Register(server, backend) }); err != nil {
 		return 1
 	}
@@ -24438,6 +24472,15 @@ func Execute(ctx context.Context, args []string, lookup func(string) (string, bo
 		return 1
 	}
 	defer backend.Close()
+	if broker, enabled := lookup("FL_OUTBOX_BROKER"); enabled && broker != "" {
+		publishCtx, cancel := context.WithCancel(ctx)
+		done := make(chan struct{})
+		go func() {
+			defer close(done)
+			backend.Publish(publishCtx, broker, logger)
+		}()
+		defer func() { cancel(); <-done }()
+	}
 	conn, err := grpc.NewClient("passthrough:///"+cfg.InventoryTarget, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		logger.ErrorContext(ctx, "cannot configure Inventory client")
@@ -26455,3 +26498,17 @@ Scratch-контейнер Orders проверен до и после перез
 Отрисовка документов, 23 октября: Mermaid 11.4.1 воспроизвёл parse error на неэкранированной точке с запятой в подписи потерянного ответа. После замены разделителей обе схемы — описание PR и руководство Orders — успешно отрисованы в SVG/PNG и визуально проверены. Структурная проверка Documentation сама по себе не подтверждает отрисовку Mermaid; эта проверка выполнена отдельно и не меняет результаты бизнес-сценариев выше.
 
 Границы: takeover моделируется реальными SQL Claim/Resolve разных поколений, а не двумя одновременно работающими процессами Orders. Потеря именно ответа Create не инъецируется; проверяется неизменный повтор после прогресса и рестарта. Отсутствие SQL-транзакции во время RPC следует из кода, отдельного измерительного теста нет. Docker/WSL на личном Windows ПК для этого среза не запускались; Windows Docker и macOS runtime — NOT_RUN. Эти функциональные результаты не являются capacity/A/B-измерением или приёмкой G1 владельцем.
+
+<a id="appendix-adr-0005-kafka-publishing"></a>
+
+## Приложение: ADR 0005. Kafka publishing
+
+Полный исходный документ: `docs/adr/0005-kafka-publishing.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
+
+### F09. Публикация событий Orders и Inventory
+
+19 ноября 2026 года владелец проекта в чате согласовал D1, затем D2 и D3 и поручил реализацию.
+
+При смене отправителя PostgreSQL выдаёт право на публикацию, Kafka блокирует предыдущего отправителя, получатель сохраняет событие и задачу одной транзакцией. События одного потока получают непрерывный номер в транзакции бизнес-операции. Каждая попытка использует свежий клиент и одну запись. Отдельная нумерация позволяет распознать пропуск даже при внутренних переходах заказа. Цена решения — инициализация клиента и захват права на каждую запись, а также хранение полного журнала тестового набора.
+
+Порядок проверки и границы первого PR описаны в [материалах F09](#p02-infra-docs-architecture-kafka-publishing-md).

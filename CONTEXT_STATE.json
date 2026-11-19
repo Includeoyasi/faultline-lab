@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 75,
+  "context_revision": 76,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-11-10",
+  "context_updated_on": "2026-11-19",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "afecc0a6022a38a9c5ddd6d61986aac6230f1e09",
+    "snapshot_ref": "8a0eee7fa71355a44fcb1b97f6e79b1afd3e3821",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -2987,6 +2987,11 @@
       "path": "docs/development/evidence/orders/VALIDATION.md",
       "title": "Orders native acceptance and crash evidence — 2026-10-23",
       "anchor": "orders-native-validation-2026-10-23"
+    },
+    {
+      "path": "docs/adr/0005-kafka-publishing.md",
+      "anchor": "appendix-adr-0005-kafka-publishing",
+      "title": "ADR 0005. Kafka publishing"
     }
   ],
   "change_history": [
@@ -3379,6 +3384,12 @@
       "date": "2026-11-10",
       "summary": "Prepared the five-block F09 decision proposal against merged Orders: separate public stream_sequence, one-record fresh-client activation, explicit recovery/retention costs, implementation boundary and acceptance scenarios; rendered and visually inspected five diagrams. Recorded owner merge of Orders without implying G1 approval.",
       "trigger": "Owner asked what decisions were needed after merging Orders PR29 and authorized preparation of decision material; no publisher implementation or GitHub publication authorized by that request"
+    },
+    {
+      "summary": "Recorded owner approval of F09 D1-D3 and implementation source.",
+      "date": "2026-11-19",
+      "trigger": "Direct owner instruction in chat to begin implementation",
+      "revision": 76
     }
   ],
   "go_smoke_validation_2026_10_16": {
@@ -3518,7 +3529,7 @@
     "macos_runtime": "NOT_RUN",
     "ci": "Native Linux AMD64/ARM64 quality/race/vulnerability, existing smoke and new combined checks are defined by .github/workflows/go.yml; actual head results belong in PR/Actions",
     "f09": {
-      "kind": "PROPOSED_DESIGN_NOT_IMPLEMENTED",
+      "kind": "OWNER_APPROVED_D1_D2_D3",
       "source": "docs/architecture/KAFKA_PUBLISHING.md",
       "code_basis": "Orders PR29 owner merge c0fb069ef100698b33b14e05398e4cada42670fb; existing Orders/Inventory outbox does not publish to Kafka",
       "protocol": "Read free/expired DB-clock lease generation G -> real ProducerID initialization on fresh client with stable dataset/service/lane transactional ID -> CAS exactly that G and expiry -> one record and one commit attempt -> conditional SQL publication mark -> Close; failed CAS or any error closes client without reuse or abort recovery",
@@ -3537,8 +3548,9 @@
         "route": "Problem/localization; patterns/alternatives; recommendation/cost; separate PR plan; concrete D1-D3 decisions. Five sequence diagrams show the anomaly, three mechanisms and combined activation; detailed contract, acceptance matrix and sources are expandable",
         "preserved_contracts": "Distinct SQL generation and Kafka epoch; read G -> real broker init -> CAS same G; no reinit under old lease; independent post-commit delivery and SQL mark; inbox+durable job before offset and transactional worker guards",
         "validation": "Five diagrams rendered with Mermaid 11.4.1 and visually inspected; each block has 3-10 prose sentences; standalone HTML desktop/mobile checks PASS, local documentation links/structure and safety tests PASS. This is document/source validation, not runtime validation of the proposed protocol",
-        "decision": "Proposed D1 combined lease/fencing/inbox, D2 separate public sequence, D3 bounded first PR. No owner architectural approval or implementation evidence inferred"
-      }
+        "decision": "Owner approved D1 then D2 and D3 in chat on 2026-11-19 and authorized implementation."
+      },
+      "implementation": "Orders and Inventory publishers, sequence migrations, isolated test receiver and broker takeover tests in the source snapshot. Runtime evidence belongs in PR30."
     },
     "ci_refinement": "Initial Linux CI stopped at staticcheck ST1005 and an unused Compose wrapper; lower-case error messages and removal retain all checks. Redis default username is now rejected before ACL generation; affected Windows tests/vet pass. Actual final-HEAD CI results belong in PR/Actions."
   },
