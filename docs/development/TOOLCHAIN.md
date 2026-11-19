@@ -6,14 +6,14 @@
 
 | Компонент | Источник закрепления | Версия |
 | :--- | :--- | :--- |
-| Go | [go.mod](../../go.mod), [Dockerfile](../../build/Dockerfile) | 1.27.3 |
+| Go | [go.mod](../../go.mod), [Dockerfile](../../build/Dockerfile) | 1.27.4 |
 | goimports | tool directive в go.mod, go.sum | golang.org/x/tools v0.52.0 |
 | govulncheck | tool directive в go.mod, go.sum | golang.org/x/vuln v1.9.0 |
 | protoc | Dockerfile, официальные архивы с SHA256 для AMD64/ARM64 | 32.1 |
 | protoc-gen-go | tool directive в go.mod, go.sum | v1.36.11 |
 | protoc-gen-go-grpc | tool directive в go.mod, go.sum | v1.6.2 |
 | golangci-lint | Dockerfile, официальный образ с digest | v2.14.0 |
-| База toolchain | Dockerfile, индекс с AMD64/ARM64 | golang:1.27.3-trixie, sha256:604106102d33b1084e37ca08adf98ac0813624ae8595bd0d7f3965ecebded09c |
+| База toolchain | Dockerfile, индекс с AMD64/ARM64 | golang:1.27.4-trixie, sha256:f18c3d73a184fb0582828510722e723b63a93f7188d11dd223d9be6f6880e65d |
 | Образ линтера | Dockerfile, индекс с AMD64/ARM64 | golangci/golangci-lint:v2.14.0, sha256:ad862ba6b3798cbe0fd9fd7408d498fd74fbd2623a92406b2fd3898faf0bf98f |
 
 Исходный набор версий проверен по официальным источникам 15 октября 2026 года: [Go releases](https://go.dev/dl/), [golangci-lint releases](https://github.com/golangci/golangci-lint/releases/tag/v2.14.0), Go module proxy и Docker Registry. Оба закреплённых digest относятся к multi-platform индексам, а не к одному варианту CPU.
@@ -54,3 +54,5 @@ Toolchain — временный сервис профиля tools. Явный `
 На Windows установлены host Go1.27.2, WSL2.7.13 и Docker Desktop4.95. [Runtime smoke и shutdown](evidence/p01/WINDOWS_SMOKE.md) PASS; основной путь сборки остаётся контейнерным. Личная macOS не проверена, performance capacity не измерена. После работы Docker Desktop/WSL VM выключаются; установленные инструменты и полезные кеши сохраняются.
 
 Версии, директивы tools и образы обновляются совместно отдельным проверяемым изменением. GOTOOLCHAIN=local запрещает неявную загрузку другого Go, контейнер использует GOFLAGS=-mod=readonly. После изменения go.mod/go.sum контейнер пересобирается. Текущая защита main и required checks отражаются в [безопасности репозитория](REPOSITORY_SECURITY.md), а не выводятся из наличия workflow.
+
+19 ноября образ сборки обновлён до Go 1.27.4 для устранения [GO-2026-6859](https://pkg.go.dev/vuln/GO-2026-6859) в net/http.
