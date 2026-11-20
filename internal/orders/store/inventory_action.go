@@ -61,7 +61,8 @@ func (s *Store) RecordInventoryAttempt(ctx context.Context, job model.InventoryA
 	defer cancel()
 	tag, err := s.pool.Exec(ctx, `UPDATE orders.inventory_actions SET lease_until=NULL,
  available_at=clock_timestamp()+make_interval(secs=>$4),blocked_reason=$5,last_error=$6
- WHERE order_id=$1 AND generation=$2 AND operation_id=$3 AND NOT done`,
+ WHERE order_id=$1 AND generation=$2 AND operation_id=$3 AND NOT done
+ AND lease_until>clock_timestamp()`,
 		job.Order.OrderID, job.Generation, job.OperationID, delay.Seconds(), blocked, reason)
 	if err != nil {
 		return storageError(err)

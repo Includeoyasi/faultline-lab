@@ -2,6 +2,7 @@ package acceptance
 
 import (
 	"encoding/json"
+	"errors"
 	"testing"
 	"time"
 
@@ -77,6 +78,14 @@ func testPaymentWorkflow(t *testing.T, f *fixture) {
 			}
 			if f.read(t, order.OrderID).State != scenario.middle {
 				t.Fatal("payment did not create the expected workflow state")
+			}
+			stale, err := f.store.ClaimInventoryAction(t.Context(), time.Second)
+			if err != nil || stale == nil {
+				t.Fatal("could not claim action for lease test", err)
+			}
+			execute(t, f.db, "UPDATE orders.inventory_actions SET lease_until=clock_timestamp()-interval '1 second' WHERE order_id=$1", order.OrderID)
+			if err = f.store.RecordInventoryAttempt(t.Context(), *stale, "STALE_RESULT", "", time.Second); !errors.Is(err, model.ErrStale) {
+				t.Fatal("expired lease changed the job", err)
 			}
 			p := workflow.Processor{Backend: f.store, Inventory: f.peer, Lease: 30 * time.Second,
 				RPCTimeout: 5 * time.Second, RetryMin: time.Millisecond, RetryMax: time.Second}
