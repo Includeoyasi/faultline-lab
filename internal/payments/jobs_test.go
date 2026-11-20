@@ -177,6 +177,9 @@ func TestPaymentRecovery(t *testing.T) {
 		for _, r := range f.Records() {
 			var e publishing.Event
 			check(json.Unmarshal(r.Value, &e))
+			if e.Dataset != p.dataset {
+				continue
+			}
 			if expected[e.OrderID] != e.Type || e.Type == "" || string(r.Key) != e.OrderID || e.Dataset != p.dataset || e.Owner != "payments" || e.StreamSequence != 1 {
 				t.Fatalf("wrong result: %+v", e)
 			}

@@ -28,6 +28,17 @@ services:
     environment:
       FL_PUBLISHING_TEST_BROKER: kafka:9092
       FL_PUBLISHING_TEST_DB: postgres://postgres@postgres/postgres?sslmode=disable
+  workflow-test:
+    image: ${FL_PUBLISHING_TOOLCHAIN:?set the local toolchain image}
+    working_dir: /workspace
+    volumes:
+      - .:/workspace:ro
+    networks: [data]
+    entrypoint: [go, test, -v, -count=1, -timeout=170s, -run, "^TestOrderPaymentWorkflow$", ./internal/payments]
+    environment:
+      FL_PUBLISHING_TEST_BROKER: kafka:9092
+      FL_PUBLISHING_TEST_DB: postgres://postgres@postgres/postgres?sslmode=disable
+      FL_RUN_ORDER_PAYMENT_WORKFLOW: "1"
 volumes:
   kafka-data:
 networks:
