@@ -15,8 +15,10 @@ import (
 const (
 	bindDatasetSQL = "INSERT INTO orders.dataset(dataset_id) VALUES($1) ON CONFLICT(singleton) DO NOTHING"
 	readDatasetSQL = "SELECT dataset_id FROM orders.dataset WHERE singleton"
-	readOrderSQL   = `SELECT o.order_id,o.request_key,o.reserve_operation_id,o.state,o.version,o.items,o.reservation,o.rejection,j.blocked_reason
- FROM orders.orders o JOIN orders.reserve_jobs j USING(order_id)`
+	readOrderSQL   = `SELECT o.order_id,o.request_key,o.reserve_operation_id,o.state,o.version,o.items,o.reservation,o.rejection,
+ COALESCE(NULLIF(a.blocked_reason,''),j.blocked_reason)
+ FROM orders.orders o JOIN orders.reserve_jobs j USING(order_id)
+ LEFT JOIN orders.inventory_actions a USING(order_id)`
 )
 
 type Store struct {

@@ -10,6 +10,7 @@ import (
 	inventoryv1 "github.com/Includeoyasi/faultline-lab/api/inventory/v1"
 	"github.com/Includeoyasi/faultline-lab/internal/orders/store"
 	"github.com/Includeoyasi/faultline-lab/internal/orders/worker"
+	"github.com/Includeoyasi/faultline-lab/internal/orders/workflow"
 	"github.com/Includeoyasi/faultline-lab/internal/service"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -40,7 +41,9 @@ func Execute(ctx context.Context, args []string, lookup func(string) (string, bo
 		return 1
 	}
 	defer backend.Close()
-	if broker, enabled := lookup("FL_OUTBOX_BROKER"); enabled && broker != "" {
+	broker, brokerEnabled := lookup("FL_OUTBOX_BROKER")
+	brokerEnabled = brokerEnabled && broker != ""
+	if brokerEnabled {
 		// Graceful shutdown: cancel the outbox relay and wait for it before closing the store.
 		publishCtx, cancel := context.WithCancel(ctx)
 		done := make(chan struct{})
@@ -62,9 +65,26 @@ func Execute(ctx context.Context, args []string, lookup func(string) (string, bo
 	defer stop()
 	done := make(chan struct{})
 	go func() { processor.Run(workersCtx, cfg.WorkerCount, duration(cfg.PollInterval)); close(done) }()
-	err = service.RunRegistered(ctx, "orders", lookup, output, func(server *grpc.Server) { Register(server, backend) })
+	var workflowDone chan error
+	if brokerEnabled {
+		p := workflow.Processor{Backend: backend, Inventory: inventoryv1.NewInventoryClient(conn), Lease: duration(cfg.Lease), RPCTimeout: duration(cfg.RPCTimeout), RetryMin: duration(cfg.RetryMin), RetryMax: duration(cfg.RetryMax), Logger: logger}
+		workflowDone = make(chan error, 1)
+		go func() {
+			err := p.Run(workersCtx, broker, dataset, cfg.WorkerCount, duration(cfg.PollInterval))
+			workflowDone <- err
+			stop()
+		}()
+	}
+	err = service.RunRegistered(workersCtx, "orders", lookup, output, func(server *grpc.Server) { Register(server, backend) })
 	stop()
 	<-done
+	if brokerEnabled {
+		workflowErr := <-workflowDone
+		if ctx.Err() == nil && workflowErr != nil {
+			logger.ErrorContext(ctx, "order event receiver stopped", "error", workflowErr)
+			return 1
+		}
+	}
 	if err != nil {
 		return 1
 	}
