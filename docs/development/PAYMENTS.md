@@ -27,4 +27,4 @@ LEFT JOIN payments.debits d USING (order_id)
 LEFT JOIN payments.outbox o USING (order_id);
 ```
 
-Для SUCCEEDED сумма списания совпадает с суммой резерва. Для DECLINED поле debited_minor пусто. Заполненное published_at означает, что relay получил подтверждение Kafka и отметил событие. Топик результата — `payments.events.v1`. Применение этого результата в Orders относится к следующей точке.
+Для SUCCEEDED сумма списания совпадает с суммой резерва. Для DECLINED поле debited_minor пусто. Заполненное published_at означает, что relay получил подтверждение Kafka и отметил событие. Топик результата — `payments.events.v1`. Orders сохраняет исход и продолжает работу со складом, как описано в [руководстве Orders](ORDERS.md).
