@@ -13,6 +13,14 @@ import (
 
 type initTrace struct{ count atomic.Int32 }
 
+type cancelPartitioned struct {
+	cancel context.CancelFunc
+}
+
+func (h cancelPartitioned) OnProduceRecordPartitioned(_ *kgo.Record, _ int32) {
+	h.cancel()
+}
+
 func (h *initTrace) OnBrokerWrite(_ kgo.BrokerMetadata, key int16, _ int, _, _ time.Duration, _ error) {
 	if key == 22 {
 		h.count.Add(1)
@@ -64,5 +72,32 @@ func TestTakeover(t *testing.T) {
 	}
 	if old.count.Load() != 1 || newTrace.count.Load() != 1 {
 		t.Fatalf("unexpected InitProducerID counts: old %d replacement %d", old.count.Load(), newTrace.count.Load())
+	}
+}
+
+func TestCancelBufferedProduce(t *testing.T) {
+	broker := os.Getenv("FL_PUBLISHING_TEST_BROKER")
+	if broker == "" {
+		t.Skip("set FL_PUBLISHING_TEST_BROKER for isolated broker")
+	}
+	ctx, cancel := context.WithCancel(t.Context())
+	defer cancel()
+	done := make(chan error, 1)
+	var marked atomic.Bool
+	go func() {
+		done <- attempt(ctx, []string{broker}, "publisher-cancel-buffered",
+			[]kgo.Hook{cancelPartitioned{cancel: cancel}},
+			func(context.Context) (*kgo.Record, error) {
+				return &kgo.Record{Topic: "orders.events.v1", Key: []byte("cancel-buffered"), Value: []byte("value")}, nil
+			},
+			func(context.Context) error { marked.Store(true); return nil })
+	}()
+	select {
+	case err := <-done:
+		if err == nil || marked.Load() {
+			t.Fatalf("canceled produce: error %v, SQL marked %v", err, marked.Load())
+		}
+	case <-time.After(10 * time.Second):
+		t.Fatal("canceled producer did not release its buffered record")
 	}
 }

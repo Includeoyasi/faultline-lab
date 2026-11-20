@@ -47,6 +47,10 @@ jobs:
           "${publishing_stack[@]}" up -d --wait kafka postgres
           "${publishing_stack[@]}" run --rm topics
           "${publishing_stack[@]}" exec -T kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:9092 --create --topic payment-test-input --partitions 1 --replication-factor 1 --config retention.ms=-1 --config retention.bytes=-1
+          if ! "${publishing_stack[@]}" run --rm workflow-test; then
+            "${publishing_stack[@]}" logs --tail=250 kafka
+            exit 1
+          fi
           if ! "${publishing_stack[@]}" run --rm test; then
             "${publishing_stack[@]}" logs --tail=250 kafka
             exit 1

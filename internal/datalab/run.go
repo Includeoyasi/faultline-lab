@@ -332,6 +332,16 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	if _, err = call(ctx, "Orders admission, 1000/100 contention and process crash recovery", 5*time.Minute, compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "-e", "FL_INVENTORY_TARGET=inventory:50051", "--entrypoint", "/app/orders.test", "dbtool", "-test.run=^TestOrders(Foundation|ProcessCrash)$", "-test.v", "-test.timeout=270s")...); err != nil {
 		return err
 	}
+	if fullStack {
+		_, err = call(ctx, "Orders payment workflow process crash recovery", 3*time.Minute,
+			compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1",
+				"-e", "FL_INVENTORY_TARGET=inventory:50051", "-e", "FL_PUBLISHING_TEST_BROKER=kafka:9092",
+				"--entrypoint", "/app/orders.test", "dbtool",
+				"-test.run=^TestOrdersWorkflowProcessCrash$", "-test.v", "-test.timeout=150s")...)
+		if err != nil {
+			return err
+		}
+	}
 	_, err = call(ctx, "start Orders business container", 60*time.Second, append(deployed, "up", "-d", "--no-deps", "--wait", "--wait-timeout", "45", "orders")...)
 	// Observe the business container with its effective overlay, before its
 	// functional probes. Raw config bypasses call() to keep secrets out of logs.

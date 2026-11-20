@@ -2,7 +2,7 @@
 
 Самостоятельный переносимый контекст для ИИ-агентов и чатов ChatGPT. Полные источники включены ниже; локальный компьютер для чтения не требуется.
 
-Ревизия: **81**. Дата снимка: **2026-11-19**, Europe/Moscow. Исходный коммит внешних материалов: `1e63878f8b0e04942f76074081aa3d4a5a8de02d`.
+Ревизия: **88**. Дата снимка: **2026-11-21**, Europe/Moscow. Исходный коммит внешних материалов: `d15fd822d12207530f078af74e44acbf6d8878b8`.
 
 ## Выполнение задач
 
@@ -71,9 +71,9 @@ JSON ниже включён для автономного чтения реше
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 81,
+  "context_revision": 88,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-11-19",
+  "context_updated_on": "2026-11-21",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -87,7 +87,7 @@ JSON ниже включён для автономного чтения реше
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "1e63878f8b0e04942f76074081aa3d4a5a8de02d",
+    "snapshot_ref": "d15fd822d12207530f078af74e44acbf6d8878b8",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -3748,6 +3748,7 @@ JSON ниже включён для автономного чтения реше
     "real_report_validation": "TestSuccessfulReportsHaveObservedMetadata PASS against the three saved real Windows reports; read-only, no Docker restart"
   },
   "payments_ledger": {"source": "migrations/payments/0002_ledger.sql", "scope": "One immutable debit and at most one matching full refund per order in the isolated database. The application-role smoke verifies constraints and projected ledger entries. The Payments processor persists the Orders inbox and simulator decision before acknowledging Kafka. A due job commits the terminal state, optional debit and result outbox together. Recovery scenario: internal/payments/jobs_test.go. Operating guide: docs/development/PAYMENTS.md. CI broker logs (run 44606535791) showed a native Snappy library load denied on the noexec tmpfs; outbox producers use uncompressed records."},
+  "orders_payment_workflow": {"recorded_on": "2026-11-21", "source_commit": "d15fd822d12207530f078af74e44acbf6d8878b8", "scope": "Orders durably receives payment and inventory events, invokes the same Inventory operation on retry, fences expired action leases and publishes terminal order facts after the matching Inventory confirmation. A new Payments consumer reads the retained backlog from the beginning.", "evidence": "The Kafka/PostgreSQL workflow and producer cancellation tests passed on both architectures on f83d72f. Application-role, expired-lease, contradiction, rollback and separate process crash tests require current CI results.", "boundary": "Client cancellation and refunds remain separately scoped; no claim of G2 acceptance."},
   "orders_foundation": {
     "recorded_on": "2026-10-23",
     "source_commit": "d09f1fe6652cc18cf88cd4ce30f604be379f2ef0",
@@ -3804,7 +3805,7 @@ SHA-256 относится к исходному файлу на момент с
 
 | Источник | SHA-256 |
 |---|---|
-| `CONTEXT_STATE.json` | `f12de0565413f3420c6df3c2ad4015e85b4a7a849e2bbd03164418763232b945` |
+| `CONTEXT_STATE.json` | `8e67e138ad17415043a8590544c6149082dc540d5beaef9e6a49b50206ee9af9` |
 | `tools/context_intro.md` | `91fb656b2ec7b4dcd798be45f7b78ec2452763455476ebcd55762b465ad25d2b` |
 | `tools/update_context.ps1` | `73dff2e2da1f7ea7e8fc8fe2dc70bde722f4d697c1ca7c685d297214cd133e33` |
 | `README.md` | `b29d761f9e961d2c18089ed1c8ee7b8a4b443ab623eaf7ba8c8c712461e6eb8c` |
@@ -3838,7 +3839,7 @@ SHA-256 относится к исходному файлу на момент с
 | `compose.yaml` | `d1ca71da50b66aa35542adee8a4a00bfaf8f21cc5bd9de2547ce800859c94fd4` |
 | `tools/go.sh` | `a41113db0f47274c332f0ad8b899e59b8abf74366bab5499d5f97096199cbe4d` |
 | `.golangci.yml` | `44651a36c889767cd425bc12b46e07c8bffc924024de23af1176057f78f3a74a` |
-| `.github/workflows/go.yml` | `13c9fd05128b38fb87f4bf98785af79ae3bab213f4f164a079fe596f37894b2f` |
+| `.github/workflows/go.yml` | `6e092fdd28f25e27f8139714ce1c5d5e56ae923b2ee4e7fdb22c9047e960cf13` |
 | `.dockerignore` | `e75b314d79f67eec6dafc763b1e4c118597186f106f91a73749750d4ab0cf045` |
 | `docs/development/SERVICE_RUNTIME.md` | `5dbe5328c6252278d35817ad8cf0487b5c9c621fe5cd587e61c78c762703308c` |
 | `internal/service/config.go` | `a5cd706cc41d0fb88ea96b0ffaeff4f7ecf32bf31394ec5398efb39fba240a89` |
@@ -3919,7 +3920,7 @@ SHA-256 относится к исходному файлу на момент с
 | `migrations/orders/0001_schema.sql` | `7a2abc0f03d1dac75ea31f86a6abfadae9532eaee42416167be45aee5d5ab16f` |
 | `migrations/payments/0001_schema.sql` | `2856144143bedd41e0380818034ae85025f18b3f40baa295c4eace2d48519af4` |
 | `internal/datalab/run_test.go` | `ffec2b98e16460ecb382b7017680fb7d6fef1cf055f0cac77d18578fc2d39c0c` |
-| `internal/datalab/run.go` | `1af5175b5846cd4b40dc06f352402a74efca4b6e9873c85064bef9876823a4ae` |
+| `internal/datalab/run.go` | `eca906b4800c5a62a3df0e6c68f685d487320d0d2c3882af8cc24d50298642ad` |
 | `compose.postgres.yaml` | `147d79a9a14d7e65352bfde96928cadb8a1403c4aba3147f809b92b380f1df73` |
 | `internal/smoke/exec_adapter.go` | `5f903f8c590d90655b333d6988139d9276ca5e6dbb400bfff10b0af0dda0c4ba` |
 | `docs/development/POSTGRES.md` | `940d5f729ed58cd3f6b9190965f341d2006a85baee08bf9708c467c304d77310` |
@@ -4000,18 +4001,18 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/runmeta/collect_test.go` | `a6ea9f35ae66e53366a09ba76639022082fd82d9104e4acaae9d9e65fa6860d8` |
 | `internal/smoke/metadata_test.go` | `d6892d54ac1c0b6ebc5e46949aaa666cbdd4d1ecd359368914aeef6fa7a95809` |
 | `tests/smokecli/metadata_test.go` | `4cd7f8981d71b801324c1baf7018c0193e7f508e849f6e289db9e5eefecbfe7e` |
-| `api/orders/v1/orders.proto` | `b78ac9a98a4678d8bff1d00c5b86590a886a88e76b41c227246fd470b114d5af` |
+| `api/orders/v1/orders.proto` | `715b503525d2196c06401b2d6241a9d4f3a60f4b2ee0b66c4b281829642304cb` |
 | `compose.orders.yaml` | `8c42ef7afef2a7112ea8ab377acd0c421e07bf271fe78774f9121ca5f612b630` |
 | `configs/orders/local.json` | `bbc41114f8ebce78589ad655da679c3d88ef7d7ea339b6083a4977e0a1df7a47` |
 | `migrations/orders/0002_reservations.sql` | `09b3a546ecb1218f39bdc0f03bef0d873263941571f477c2be4e0b0cacd5c98e` |
-| `docs/development/ORDERS.md` | `2d88d1e15a983ea71f791b1a7b77a4792f51d18969abc87dfa81838b5cda92cb` |
-| `internal/orders/command.go` | `2f13d4446b696247253c8ac3d5cbfe394b71ac079c79c9a6a7d2f9069f4327e4` |
+| `docs/development/ORDERS.md` | `a71ff2dc937bb28b60229f3e92d33920fb954abb39a373bc2d4b8c5898e1bcf0` |
+| `internal/orders/command.go` | `9aa074e080050bbca44fff6209cec4c93c6d533937b46001bb6698499b236039` |
 | `internal/orders/config.go` | `f6c499619e529a50edf90496a945732303b45a6a1af2a3dd37b67142aee996b8` |
 | `internal/orders/config_test.go` | `45cf56bbbb3d87fcbb29489e32c5cfe7e0af4244251add71b68f82a9128186b7` |
 | `internal/orders/server.go` | `bc02ceaeb35838e7b6e936a1662560679aaf19013af903c2d88697cca32a7673` |
-| `internal/orders/acceptance/foundation_test.go` | `2c37b026996780cc5015f6a5a8c4214e3f27b74fa8984218d0f65c0519313540` |
-| `internal/orders/acceptance/process_test.go` | `b6cb3652e1768793710b7c628777c3257d58525bb5ac8b88736991dc2a6c761d` |
-| `internal/orders/model/model.go` | `1a66920dcdcc43b6de8c6e97686ca302a0b5dbbaaafca7db42475aa50c21fff8` |
+| `internal/orders/acceptance/foundation_test.go` | `7e02f68822241de70c4b1477e8e69e6ae8533afbdfc08dfb9252ef32e1287c2b` |
+| `internal/orders/acceptance/process_test.go` | `8754eebd3fed33d359778e084008dc2f27790ec64de66da7aab0f1e56ea2226a` |
+| `internal/orders/model/model.go` | `bbfca34928dee6d6fd8bafe5a7e71f66ab2f367d7b7ba3eb78d679d4fcd716da` |
 | `internal/orders/model/model_test.go` | `70003047c04df6791c2bf3fd8874c5cf47d3dd7711a241f04d868f6ac580163f` |
 | `internal/orders/store/claim.go` | `7bb68cbddd93cb08379352788dfd4dd05f409ed0b55b4bf49953c3a736bcb979` |
 | `internal/orders/store/close.go` | `18b2b65e9e22de5b25a73b311a75de085c82c26420e6b0d33ca2f164a0bed3ef` |
@@ -4020,7 +4021,7 @@ SHA-256 относится к исходному файлу на момент с
 | `internal/orders/store/get_by_request_key.go` | `3a2854766d719a90666208e4820ba41366b71dce3cfc9e6ca21f8efc521885ae` |
 | `internal/orders/store/get_order.go` | `41530724cb26c26ee82d8deef2b0e251d879a8935c88d045e79dda4e73c8899b` |
 | `internal/orders/store/resolve.go` | `760778b9b8be1673bf7c9eacdd01dbb3435c27d7dd5b102728ab52b105152a17` |
-| `internal/orders/store/store.go` | `63dbb2cae04e0fa7071b22b0615d10899bff2b952740de479c0f918367c70533` |
+| `internal/orders/store/store.go` | `af960ec34eba47cd99b44678dc482300f7fbf74e69dd8d2d0496de5121191e26` |
 | `internal/orders/worker/worker.go` | `f0d8731a6cb676888c16a16ab183b0e7720ebe0128298ec338cd128a05f4c001` |
 | `internal/orders/worker/worker_test.go` | `8fce4a9351bcf26a4dfa250fd376d7e534aec27c78cb1605cffd721a5839ce4c` |
 | `docs/development/evidence/orders/VALIDATION.md` | `45e0d2d27fbc66d25a329abb8f96e376dbf3fa22fccb3fd4ac05f9020945bdf2` |
@@ -4254,7 +4255,7 @@ SHA-256 относится к исходному файлу на момент с
 Полный исходный документ: `README.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/docs/assets/banner.svg" alt="Faultline Lab — a research lab for hypotheses, experiments and evidence" width="100%">
 </p>
 
 <p align="center">
@@ -4272,7 +4273,7 @@ SHA-256 относится к исходному файлу на момент с
   <a href="#appendix-docs-index">Documentation</a> ·
   <a href="#appendix-g0-processes">Process atlas</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/PROJECT_CONTEXT.md">Agent handoff</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/PROJECT_CONTEXT.md">Agent handoff</a>
 </p>
 
 #### Project guide
@@ -4367,7 +4368,7 @@ flowchart LR
 | **G3** | Failure recovery and resilience |
 | **G4** | Reproducible engineering lab |
 
-The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
+The [code review standard](#appendix-code-review) covers Go correctness, concurrency, data integrity and evidence. Review expectations and milestone decisions are in the [development workflow](#appendix-development-process). [AGENTS.md](#appendix-agents) gives implementers their working rules; [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/PROJECT_CONTEXT.md) embeds specifications, decisions and dated evidence for users and testers without repository access.
 
 [Engineering decisions and review](#appendix-engineering-decisions) traces owner feedback through the rationale, changes and verification. It also links the separate [Go smoke task](https://github.com/Includeoyasi/faultline-lab/issues/9); its execution and review are tracked in GitHub.
 
@@ -4435,7 +4436,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
 Полный исходный документ: `README.ru.md`. Текст включён непосредственно ниже; чтение исходного пути не требуется.
 
 <p align="center">
-  <img src="https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
+  <img src="https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/docs/assets/banner.svg" alt="Faultline Lab — исследовательская лаборатория: гипотеза, эксперимент, доказательства" width="100%">
 </p>
 
 <p align="center">
@@ -4453,7 +4454,7 @@ After changing canonical documents, update `CONTEXT_STATE.json` and its revision
   <a href="#appendix-docs-index">Документация</a> ·
   <a href="#appendix-g0-processes">Атлас процессов</a> ·
   <a href="#appendix-roadmap">Roadmap</a> ·
-  <a href="https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/PROJECT_CONTEXT.md">Контекст для агентов</a>
+  <a href="https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/PROJECT_CONTEXT.md">Контекст для агентов</a>
 </p>
 
 #### Навигация по проекту
@@ -4537,7 +4538,7 @@ flowchart LR
 
 G0 — архитектура; G1 — основа заказа и склада; G2 — сквозной MVP; G3 — устойчивость; G4 — воспроизводимая лаборатория. Порядок и критерии приёмки описаны в workflow; факты принятия сохраняются с датой и источником.
 
-[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
+[Правила код-ревью](#appendix-code-review) задают стандарт Go, проверки корректности и критерии слияния. [Порядок разработки](#appendix-development-process) описывает процесс и приёмку этапов. [AGENTS.md](#appendix-agents) задаёт правила исполнителю. [PROJECT_CONTEXT.md](https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/PROJECT_CONTEXT.md) включает полные документы, решения и датированные доказательства: его можно передать агенту без доступа к репозиторию.
 
 [Инженерные решения и ревью](#appendix-engineering-decisions) связывают замечания владельца с обоснованием, изменениями и проверками. Выполнение переноса контейнерного smoke на Go и его ревью ведутся в [задаче #9](https://github.com/Includeoyasi/faultline-lab/issues/9).
 
@@ -4612,7 +4613,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 | Проверить отдельный backlog | [Перенос smoke на Go](#appendix-go-smoke-backlog) — задача #9, границы и критерии |
 | Проверить права и защиту main | [Безопасность репозитория](#appendix-repository-security) — действующая защита и переход на аккаунт исполнителя |
 | Подготовить эксперимент | [Roadmap](#appendix-roadmap) → [Шаблон отчёта](#appendix-report-template) |
-| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
+| Ввести другого ИИ в задачу | [Переносимый контекст](https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/PROJECT_CONTEXT.md) — полный самостоятельный снимок |
 
 #### Источники решений
 
@@ -4627,7 +4628,7 @@ pwsh -NoProfile -File tools/update_context.ps1 -CheckOnly
 - [ADR 0001](#appendix-adr-0001): свидетельство явного принятия G0.
 - [ADR 0002](#appendix-adr-0002): согласованный порядок фиксации решений в PR, ADR и обзорной странице.
 - [ADR 0003](#appendix-adr-0003): принятое решение о Go smoke и его последствия.
-- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
+- [Структурированное состояние](https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/CONTEXT_STATE.json): принятые решения, датированные проверки и история ревизий.
 
 `PROJECT_CONTEXT.md` генерируется из источников и содержит их полные тексты. Источники редактируются напрямую; снимок обновляется через `tools/update_context.ps1`. Подробные документы пока ведутся на русском; публичное введение доступно на двух языках.
 
@@ -5727,7 +5728,7 @@ Codex (AI-Your-Bro) — исполнитель: готовит проектны�
 
 #### Стандарт код-ревью
 
-[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/.github/pull_request_template.md) содержит краткий применимый чек-лист.
+[Правила код-ревью](#appendix-code-review) определяют Go-стиль, обработку ошибок, context, конкурентность, работу с данными, доказательства тестирования и порядок разбора замечаний. [Шаблон PR](https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/.github/pull_request_template.md) содержит краткий применимый чек-лист.
 
 После bootstrap изменения готовятся в отдельных ветках и предъявляются через PR. Исполнитель делает self-review и предоставляет фактические результаты; владелец проекта рассматривает предъявленный HEAD. ИИ не одобряет и не сливает собственный PR. Успешный CI подтверждает выполненные проверки; решение человека фиксируется отдельно. Обычный путь после приёмки — squash merge по явному поручению владельца проекта или действие самого владельца проекта.
 
@@ -5990,7 +5991,7 @@ This repository documents a project built with AI implementation and human techn
 
 #### Before changing anything
 
-Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
+Read the [decisions and evidence snapshot](https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/PROJECT_CONTEXT.md), [approved design](#appendix-design-review) and [development workflow](#appendix-development-process). The executor, AI-Your-Bro, follows [AGENTS.md](#appendix-agents).
 
 The [code review standard](#appendix-code-review) covers idiomatic Go, errors, context, concurrency, data integrity, tests and evidence. It also defines blocking comments, optional suggestions and the baseline Go checks to activate with the first module. The detailed standard is currently written in Russian.
 
@@ -6189,7 +6190,7 @@ Go-модуль, закреплённые инструменты и нативн
 - Контракты, миграции и операционные последствия понятны; для затронутого риска есть достаточное доказательство.
 - Документация и переносимый контекст актуальны. Человек рассмотрел этот результат и явно согласовал слияние.
 
-Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
+Стандарт помогает принимать улучшения без стремления к недостижимому совершенству. Основание подхода к обязательным замечаниям и косметике — [Google: The Standard of Code Review](https://google.github.io/eng-practices/review/reviewer/standard.html). Для короткой проверки каждого PR используется [шаблон](https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/.github/pull_request_template.md); он ссылается на этот документ и не дублирует всю спецификацию.
 
 <a id="appendix-lab-boundary"></a>
 
@@ -6483,13 +6484,13 @@ Docker рекомендует разделять ответственности 
 
 ### Баннер Faultline Lab
 
-Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/docs/assets/banner.svg).
+Статус на 13 октября 2026 года: **владелец проекта выбрал вариант 2 — «Поток эксперимента»**. Основание: прямое сообщение «Мне нравится вариант 2». Выбранный SVG применяется в обоих README через общий файл [banner.svg](https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/docs/assets/banner.svg).
 
 #### Задание
 
 Подготовить три альтернативных варианта с акцентом на технологичность, современность, доступность, мягкие пастельные тона, исследование и будущее. Сделаны векторные композиции с читаемым названием, тёмным текстом на светлом фоне и встроенными title/description. Внешних шрифтов, скриптов и удалённых графических зависимостей нет.
 
-![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/docs/assets/banner-concepts/comparison.png)
+![Три концепции баннера](https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/docs/assets/banner-concepts/comparison.png)
 
 | Вариант | Образ | Палитра | Статус |
 | :--- | :--- | :--- | :--- |
@@ -6499,13 +6500,13 @@ Docker рекомендует разделять ответственности 
 
 #### Выбранное решение
 
-![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/docs/assets/banner-concepts/02-experiment-flow.png)
+![Поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/docs/assets/banner-concepts/02-experiment-flow.png)
 
 Абстрактные линии проходят через область наблюдения. Это метафора исследования поведения системы и сравнения изменений; линии не являются графиком измеренных результатов. Композиция не зависит от домена магазина и подходит будущим подключаемым бизнесам.
 
 Размер SVG — 1280 × 420; README задаёт ширину 100%. Исходник масштабируется, PNG служит предварительным просмотром. Основная подпись: **Explore how systems behave.** Нижняя последовательность: **Hypothesis → Experiment → Evidence**.
 
-Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
+Исходники: [карта системы](https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/docs/assets/banner-concepts/01-system-map.svg), [поток эксперимента](https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/docs/assets/banner-concepts/02-experiment-flow.svg), [исследовательский горизонт](https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/docs/assets/banner-concepts/03-research-horizon.svg). Из выбранного исходника копируется общий banner.svg; если его изменяют, исходник концепции и preview обновляются вместе.
 
 Баннеры отрендерены локально и визуально просмотрены на общем листе. Проверены отсутствие обрезанного текста и соответствие композиций заданию. Отдельный preview выбранного варианта используется для проверки основного баннера. Выбранный вариант слит в main через [PR #4](https://github.com/Includeoyasi/faultline-lab/pull/4), merge commit 8c392b8. Проверка отрисовки нового README на GitHub пока не выполнялась.
 
@@ -6643,7 +6644,7 @@ P01 не достигает всей контрольной точки G1: ба�
 | GitHub Issue | Текущая стадия, исполнитель, критерии выполнения, блокеры и связь с PR |
 | GitHub PR | Diff, результаты проверок, замечания и решение владельца по HEAD |
 | ADR | Существенное решение, варианты, последствия и основание принятия |
-| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
+| [Контекст](https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/PROJECT_CONTEXT.md) | Полные спецификации, датированные решения и доказательства для автономного чтения |
 
 #### Стадии в Issue
 
@@ -6763,7 +6764,7 @@ GitHub разрешает machine account, зарегистрированный 
 
 Исходный набор версий проверен по официальным источникам 15 октября 2026 года: [Go releases](https://go.dev/dl/), [golangci-lint releases](https://github.com/golangci/golangci-lint/releases/tag/v2.14.0), Go module proxy и Docker Registry. Оба закреплённых digest относятся к multi-platform индексам, а не к одному варианту CPU.
 
-21 октября Go обновлён до [1.27.3](https://go.dev/doc/devel/release#go1.27.3), чтобы устранить блокирующий CI security finding GO-2026-6809 в стандартной библиотеке crypto/x509. SHA-256 индекса получен из официального Docker Registry и сверен с байтами ответа; наличие Linux AMD64 и ARM64 подтверждено в [данных проверки индекса](https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/docs/development/evidence/go-toolchain/go-1.27.3-registry.json). Пересборка этим toolchain обновляет стандартную библиотеку и в статических runtime-бинарниках. Исторические evidence и установленный host Go 1.27.2 сохраняются; основной путь запуска проверок остаётся контейнерным.
+21 октября Go обновлён до [1.27.3](https://go.dev/doc/devel/release#go1.27.3), чтобы устранить блокирующий CI security finding GO-2026-6809 в стандартной библиотеке crypto/x509. SHA-256 индекса получен из официального Docker Registry и сверен с байтами ответа; наличие Linux AMD64 и ARM64 подтверждено в [данных проверки индекса](https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/docs/development/evidence/go-toolchain/go-1.27.3-registry.json). Пересборка этим toolchain обновляет стандартную библиотеку и в статических runtime-бинарниках. Исторические evidence и установленный host Go 1.27.2 сохраняются; основной путь запуска проверок остаётся контейнерным.
 
 gRPC v1.84.0 добавлен для реального health API в P01-04; версия проверена через официальный Go proxy. JSON-логи использует стандартный log/slog. Инструменты закреплены через [Go tool directives](https://go.dev/doc/modules/managing-dependencies#tools). PostgreSQL использует pgx v5.11.0; инфраструктурные проверки — franz-go v1.22.2 и go-redis v9.23.0, закреплённые в go.mod/go.sum.
 
@@ -7357,6 +7358,10 @@ jobs:
           "${publishing_stack[@]}" up -d --wait kafka postgres
           "${publishing_stack[@]}" run --rm topics
           "${publishing_stack[@]}" exec -T kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:9092 --create --topic payment-test-input --partitions 1 --replication-factor 1 --config retention.ms=-1 --config retention.bytes=-1
+          if ! "${publishing_stack[@]}" run --rm workflow-test; then
+            "${publishing_stack[@]}" logs --tail=250 kafka
+            exit 1
+          fi
           if ! "${publishing_stack[@]}" run --rm test; then
             "${publishing_stack[@]}" logs --tail=250 kafka
             exit 1
@@ -10213,7 +10218,7 @@ JSON schema version 2 сохраняет `run_id`, `project`, `result`, `service
 
 Отчёт не содержит полного inspect Env или разрешённого Compose-конфига. Пути checkout и домашнего каталога редактируются в диагностике. Smoke использует несекретный профиль; сторонние произвольные логи перед публикацией нужно проверять отдельно. Это проверка каркаса, а не измерение бизнес-корректности или capacity.
 
-После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
+После локальной проверки остановите Docker Desktop и его WSL VM по [правилу личного компьютера](https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/docs/development/CONTAINER_RUNTIME.md#личный-компьютер-запуск-по-необходимости), сохранив установленные инструменты и кеши.
 
 <a id="go-smoke-main"></a>
 
@@ -17656,6 +17661,16 @@ func runMode(ctx context.Context, out io.Writer, root string, execute func(conte
 	if _, err = call(ctx, "Orders admission, 1000/100 contention and process crash recovery", 5*time.Minute, compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1", "-e", "FL_INVENTORY_TARGET=inventory:50051", "--entrypoint", "/app/orders.test", "dbtool", "-test.run=^TestOrders(Foundation|ProcessCrash)$", "-test.v", "-test.timeout=270s")...); err != nil {
 		return err
 	}
+	if fullStack {
+		_, err = call(ctx, "Orders payment workflow process crash recovery", 3*time.Minute,
+			compose("run", "--rm", "--no-deps", "-e", "FL_DATA_INTEGRATION=1",
+				"-e", "FL_INVENTORY_TARGET=inventory:50051", "-e", "FL_PUBLISHING_TEST_BROKER=kafka:9092",
+				"--entrypoint", "/app/orders.test", "dbtool",
+				"-test.run=^TestOrdersWorkflowProcessCrash$", "-test.v", "-test.timeout=150s")...)
+		if err != nil {
+			return err
+		}
+	}
 	_, err = call(ctx, "start Orders business container", 60*time.Second, append(deployed, "up", "-d", "--no-deps", "--wait", "--wait-timeout", "45", "orders")...)
 	// Observe the business container with its effective overlay, before its
 	// functional probes. Raw config bypasses call() to keep secrets out of logs.
@@ -19114,7 +19129,7 @@ flowchart TB
 
 Kafka работает в KRaft с явными broker/controller listeners, статическим quorum и постоянным cluster ID. Автоматическое создание топиков выключено. Один broker не обеспечивает репликационную доступность: `acks=all` здесь означает подтверждение единственным ISR. Сохраняется проверка штатного restart, а не аварии диска/хоста.
 
-Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/1e63878f8b0e04942f76074081aa3d4a5a8de02d/docs/development/POSTGRES.md#подготовка-стенда).
+Redis запускается с выключенным `default` user. Пользователь `lab` имеет только необходимые команды и ключи `faultline:smoke:*`. Сервер получает ACL с хешем пароля, проверка — отдельный файл пароля. Ни пароль, ни хеш не выводятся в отчёт. Каталог секретов и правила прав файлов соответствуют [локальной модели PostgreSQL](https://github.com/Includeoyasi/faultline-lab/blob/d15fd822d12207530f078af74e44acbf6d8878b8/docs/development/POSTGRES.md#подготовка-стенда).
 
 Контейнеры зависимостей и runtime-проверок непривилегированные, с read-only root, без capabilities и с `no-new-privileges`; запись разрешена в явные volume/tmpfs. Временный toolchain имеет отдельные права для сборки в workspace, описанные в [его руководстве](#appendix-toolchain). Порты доступны через DNS внутренней сети: `postgres`, `kafka:9092`, `redis:6379`. Kafka PLAINTEXT и Redis без TLS допустимы только в этом изолированном локальном профиле; удалённое размещение требует отдельного профиля аутентификации, TLS и сетевых правил.
 
@@ -24187,6 +24202,10 @@ enum OrderState {
   ORDER_STATE_RESERVING = 2;
   ORDER_STATE_PAYMENT_PENDING = 3;
   ORDER_STATE_REJECTED = 4;
+  ORDER_STATE_FINALIZING = 5;
+  ORDER_STATE_COMPLETED = 6;
+  ORDER_STATE_CANCELLING = 7;
+  ORDER_STATE_CANCELLED = 8;
 }
 
 message Item { string sku = 1; int64 quantity = 2; }
@@ -24342,7 +24361,24 @@ CREATE TABLE orders.outbox (
 
 #### 1. Проблема и проверяемые случаи
 
-Orders принимает заказ раньше, чем заканчивается резервирование в Inventory. Ответ `ACCEPTED` подтверждает сохранённые заказ и задачу, а текущее состояние читается отдельно. Главный отказный случай — Inventory сохранил резерв, но Orders потерял ответ или упал перед сохранением результата. После перезапуска повторяется прежняя операция, поэтому один заказ не расходует товар дважды. Этот срез заканчивается на `PAYMENT_PENDING`: оплата и завершение покупки требуют следующих пакетов.
+Orders принимает заказ раньше, чем заканчивается резервирование в Inventory. Ответ `ACCEPTED` подтверждает сохранённые заказ и задачу, а текущее состояние читается отдельно. Главный отказный случай — Inventory сохранил резерв, но Orders потерял ответ или упал перед сохранением результата. После перезапуска повторяется прежняя операция, поэтому один заказ не расходует товар дважды. Схема ниже показывает границу приёма и резервирования. Продолжение после оплаты описано в разделе «Завершение после оплаты».
+
+#### Завершение после оплаты
+
+При включённом `FL_OUTBOX_BROKER` Orders принимает события Payments и Inventory с начала доступной истории. Приём сохраняет inbox и последовательный номер источника до подтверждения Kafka. Для каждого заказа номера Payments и Inventory проверяются независимо. Повтор идентичного события безопасен; пропуск или конфликт останавливает приём с сообщением в журнале.
+
+`PaymentSucceeded` создаёт задачу подтверждения резерва и переводит заказ в `FINALIZING`. `PaymentDeclined` создаёт задачу освобождения и переводит заказ в `CANCELLING`. Повторы используют один operation_id. После подтверждённого `InventoryCommitted` заказ становится `COMPLETED`, а после `InventoryReleased` — `CANCELLED`. Конечный переход и событие Orders сохраняются вместе. Событие склада может прийти раньше результата оплаты: оно остаётся в inbox до появления нужного основания.
+
+В orders_db под ролью orders_app можно проверить ожидающие записи и задачи:
+
+```sql
+SELECT owner, order_id, stream_sequence, applied, last_error
+FROM orders.inbox WHERE NOT applied ORDER BY available_at;
+SELECT order_id, action, operation_id, attempts, done, blocked_reason, last_error
+FROM orders.inventory_actions WHERE NOT done ORDER BY available_at;
+```
+
+Несовместимый подтверждённый результат оставляет заказ в промежуточном состоянии. Причину можно увидеть в inbox или `blocked_reason` задачи. Клиентская отмена и возврат после успешного списания требуют отдельной реализации.
 
 ```mermaid
 sequenceDiagram
@@ -24436,7 +24472,7 @@ docker compose run --rm toolchain generate
 | Продолжение | Граница |
 |---|---|
 | F09 | Отдельный согласованный протокол и PR для публикации Kafka |
-| Payments, CancelOrder и финализация/F11 | Следующие бизнес-пакеты |
+| CancelOrder и возврат после оплаты | Следующие бизнес-пакеты |
 | Redis, loadgen, verifier и наблюдаемость | Подготовка сквозного эксперимента |
 | F06/F12 и допуск A/B | Перед сравнением эффективности, без вывода о capacity из smoke |
 
@@ -24459,6 +24495,7 @@ import (
 	inventoryv1 "github.com/Includeoyasi/faultline-lab/api/inventory/v1"
 	"github.com/Includeoyasi/faultline-lab/internal/orders/store"
 	"github.com/Includeoyasi/faultline-lab/internal/orders/worker"
+	"github.com/Includeoyasi/faultline-lab/internal/orders/workflow"
 	"github.com/Includeoyasi/faultline-lab/internal/service"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -24489,7 +24526,9 @@ func Execute(ctx context.Context, args []string, lookup func(string) (string, bo
 		return 1
 	}
 	defer backend.Close()
-	if broker, enabled := lookup("FL_OUTBOX_BROKER"); enabled && broker != "" {
+	broker, brokerEnabled := lookup("FL_OUTBOX_BROKER")
+	brokerEnabled = brokerEnabled && broker != ""
+	if brokerEnabled {
 		// Graceful shutdown: cancel the outbox relay and wait for it before closing the store.
 		publishCtx, cancel := context.WithCancel(ctx)
 		done := make(chan struct{})
@@ -24511,9 +24550,26 @@ func Execute(ctx context.Context, args []string, lookup func(string) (string, bo
 	defer stop()
 	done := make(chan struct{})
 	go func() { processor.Run(workersCtx, cfg.WorkerCount, duration(cfg.PollInterval)); close(done) }()
-	err = service.RunRegistered(ctx, "orders", lookup, output, func(server *grpc.Server) { Register(server, backend) })
+	var workflowDone chan error
+	if brokerEnabled {
+		p := workflow.Processor{Backend: backend, Inventory: inventoryv1.NewInventoryClient(conn), Lease: duration(cfg.Lease), RPCTimeout: duration(cfg.RPCTimeout), RetryMin: duration(cfg.RetryMin), RetryMax: duration(cfg.RetryMax), Logger: logger}
+		workflowDone = make(chan error, 1)
+		go func() {
+			err := p.Run(workersCtx, broker, dataset, cfg.WorkerCount, duration(cfg.PollInterval))
+			workflowDone <- err
+			stop()
+		}()
+	}
+	err = service.RunRegistered(workersCtx, "orders", lookup, output, func(server *grpc.Server) { Register(server, backend) })
 	stop()
 	<-done
+	if brokerEnabled {
+		workflowErr := <-workflowDone
+		if ctx.Err() == nil && workflowErr != nil {
+			logger.ErrorContext(ctx, "order event receiver stopped", "error", workflowErr)
+			return 1
+		}
+	}
 	if err != nil {
 		return 1
 	}
@@ -24898,7 +24954,7 @@ func (f *fixture) ddlFault(t *testing.T, table string) func() {
 		t.Fatal(err)
 	}
 	// Only fixed, test-owned table identifiers are permitted here.
-	if table != "reserve_jobs" && table != "outbox" {
+	if table != "reserve_jobs" && table != "outbox" && table != "inventory_actions" {
 		t.Fatal("invalid fault target")
 	}
 	execute(t, migrator, "ALTER TABLE orders."+table+" ADD CONSTRAINT test_insert_failure CHECK(false) NOT VALID")
@@ -24914,6 +24970,7 @@ func (f *fixture) ddlFault(t *testing.T, table string) func() {
 }
 func TestOrdersFoundation(t *testing.T) {
 	f := setup(t)
+	t.Run("payment outcomes with application roles", func(t *testing.T) { testPaymentWorkflow(t, f) })
 	t.Run("concurrent admission immutable receipt and current read", func(t *testing.T) {
 		f.product(t, "orders-admission", 5)
 		request := f.request("admission", "orders-admission")
@@ -25299,7 +25356,7 @@ func (p *pausingInventory) Reserve(ctx context.Context, r *inventoryv1.ReserveRe
 func (p *pausingInventory) GetReservation(ctx context.Context, r *inventoryv1.GetReservationRequest) (*inventoryv1.Reservation, error) {
 	return p.peer.GetReservation(ctx, r)
 }
-func (f *fixture) startOrders(t *testing.T, target string) (ordersv1.OrdersClient, func(bool)) {
+func (f *fixture) startOrders(t *testing.T, target string, extraEnv ...string) (ordersv1.OrdersClient, func(bool)) {
 	t.Helper()
 	cfg := orders.Config{Database: store.Config{Host: f.config.Host, Port: f.config.Port, Database: "orders_db", User: "orders_app", SSLMode: f.config.SSLMode, PasswordFile: filepath.Join(f.config.Secrets, "orders_app.password"), ConnectTimeout: "5s", RequestTimeout: "3s", MaxConnections: 2}, InventoryTarget: target, WorkerCount: 1, RPCTimeout: "20s", Lease: "25s", PollInterval: "10ms", RetryMin: "10ms", RetryMax: "100ms"}
 	data, err := json.Marshal(cfg)
@@ -25327,6 +25384,7 @@ func (f *fixture) startOrders(t *testing.T, target string) (ordersv1.OrdersClien
 		}
 	}
 	cmd.Env = append(cmd.Env, "FL_GRPC_ADDR="+hint, "FL_ORDERS_CONFIG="+path, "FL_ORDERS_DATASET_ID="+f.dataset)
+	cmd.Env = append(cmd.Env, extraEnv...)
 	if err = cmd.Start(); err != nil {
 		t.Fatal(err)
 	}
@@ -25487,6 +25545,10 @@ const (
 	Reserving      = "RESERVING"
 	PaymentPending = "PAYMENT_PENDING"
 	Rejected       = "REJECTED"
+	Finalizing     = "FINALIZING"
+	Completed      = "COMPLETED"
+	Cancelling     = "CANCELLING"
+	Cancelled      = "CANCELLED"
 )
 
 type Item struct {
@@ -25531,6 +25593,15 @@ type Job struct {
 	Generation   int64
 	OrderVersion int64
 	Attempts     int64
+}
+
+// InventoryAction is a leased request whose operation identity survives retries.
+type InventoryAction struct {
+	Order       Order
+	OperationID string
+	Action      string
+	Generation  int64
+	Attempts    int64
 }
 
 // Resolution is one verified peer outcome or a bounded diagnostic code.
@@ -26067,8 +26138,10 @@ import (
 const (
 	bindDatasetSQL = "INSERT INTO orders.dataset(dataset_id) VALUES($1) ON CONFLICT(singleton) DO NOTHING"
 	readDatasetSQL = "SELECT dataset_id FROM orders.dataset WHERE singleton"
-	readOrderSQL   = `SELECT o.order_id,o.request_key,o.reserve_operation_id,o.state,o.version,o.items,o.reservation,o.rejection,j.blocked_reason
- FROM orders.orders o JOIN orders.reserve_jobs j USING(order_id)`
+	readOrderSQL   = `SELECT o.order_id,o.request_key,o.reserve_operation_id,o.state,o.version,o.items,o.reservation,o.rejection,
+ COALESCE(NULLIF(a.blocked_reason,''),j.blocked_reason)
+ FROM orders.orders o JOIN orders.reserve_jobs j USING(order_id)
+ LEFT JOIN orders.inventory_actions a USING(order_id)`
 )
 
 type Store struct {

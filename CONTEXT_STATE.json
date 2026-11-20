@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "project_id": "faultline-lab",
-  "context_revision": 81,
+  "context_revision": 88,
   "context_created_on": "2026-10-13",
-  "context_updated_on": "2026-11-19",
+  "context_updated_on": "2026-11-21",
   "user_timezone": "Europe/Moscow",
   "language": "ru",
   "repository": {
@@ -17,7 +17,7 @@
     "license": "MIT",
     "license_approval": "Прямое сообщение владельца проекта 2026-10-13: возьми MIT",
     "first_commit": "6897f4ae1596c7e9e2b44e64ca8974e78fad54b8",
-    "snapshot_ref": "1e63878f8b0e04942f76074081aa3d4a5a8de02d",
+    "snapshot_ref": "d15fd822d12207530f078af74e44acbf6d8878b8",
     "snapshot_ref_semantics": "Existing source commit for immutable external materials; not a claim about current branch HEAD or review status"
   },
   "roles": {
@@ -3678,6 +3678,7 @@
     "real_report_validation": "TestSuccessfulReportsHaveObservedMetadata PASS against the three saved real Windows reports; read-only, no Docker restart"
   },
   "payments_ledger": {"source": "migrations/payments/0002_ledger.sql", "scope": "One immutable debit and at most one matching full refund per order in the isolated database. The application-role smoke verifies constraints and projected ledger entries. The Payments processor persists the Orders inbox and simulator decision before acknowledging Kafka. A due job commits the terminal state, optional debit and result outbox together. Recovery scenario: internal/payments/jobs_test.go. Operating guide: docs/development/PAYMENTS.md. CI broker logs (run 44606535791) showed a native Snappy library load denied on the noexec tmpfs; outbox producers use uncompressed records."},
+  "orders_payment_workflow": {"recorded_on": "2026-11-21", "source_commit": "d15fd822d12207530f078af74e44acbf6d8878b8", "scope": "Orders durably receives payment and inventory events, invokes the same Inventory operation on retry, fences expired action leases and publishes terminal order facts after the matching Inventory confirmation. A new Payments consumer reads the retained backlog from the beginning.", "evidence": "The Kafka/PostgreSQL workflow and producer cancellation tests passed on both architectures on f83d72f. Application-role, expired-lease, contradiction, rollback and separate process crash tests require current CI results.", "boundary": "Client cancellation and refunds remain separately scoped; no claim of G2 acceptance."},
   "orders_foundation": {
     "recorded_on": "2026-10-23",
     "source_commit": "d09f1fe6652cc18cf88cd4ce30f604be379f2ef0",

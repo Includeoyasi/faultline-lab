@@ -2,6 +2,9 @@ services:
   orders:
     environment:
       FL_OUTBOX_BROKER: kafka:9092
+    depends_on:
+      publishing-topics:
+        condition: service_completed_successfully
   inventory:
     environment:
       FL_OUTBOX_BROKER: kafka:9092

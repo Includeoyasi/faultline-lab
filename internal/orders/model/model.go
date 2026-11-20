@@ -26,6 +26,10 @@ const (
 	Reserving      = "RESERVING"
 	PaymentPending = "PAYMENT_PENDING"
 	Rejected       = "REJECTED"
+	Finalizing     = "FINALIZING"
+	Completed      = "COMPLETED"
+	Cancelling     = "CANCELLING"
+	Cancelled      = "CANCELLED"
 )
 
 type Item struct {
@@ -70,6 +74,15 @@ type Job struct {
 	Generation   int64
 	OrderVersion int64
 	Attempts     int64
+}
+
+// InventoryAction is a leased request whose operation identity survives retries.
+type InventoryAction struct {
+	Order       Order
+	OperationID string
+	Action      string
+	Generation  int64
+	Attempts    int64
 }
 
 // Resolution is one verified peer outcome or a bounded diagnostic code.
