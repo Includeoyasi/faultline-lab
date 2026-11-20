@@ -80,7 +80,7 @@ func (p *pausingInventory) Reserve(ctx context.Context, r *inventoryv1.ReserveRe
 func (p *pausingInventory) GetReservation(ctx context.Context, r *inventoryv1.GetReservationRequest) (*inventoryv1.Reservation, error) {
 	return p.peer.GetReservation(ctx, r)
 }
-func (f *fixture) startOrders(t *testing.T, target string) (ordersv1.OrdersClient, func(bool)) {
+func (f *fixture) startOrders(t *testing.T, target string, extraEnv ...string) (ordersv1.OrdersClient, func(bool)) {
 	t.Helper()
 	cfg := orders.Config{Database: store.Config{Host: f.config.Host, Port: f.config.Port, Database: "orders_db", User: "orders_app", SSLMode: f.config.SSLMode, PasswordFile: filepath.Join(f.config.Secrets, "orders_app.password"), ConnectTimeout: "5s", RequestTimeout: "3s", MaxConnections: 2}, InventoryTarget: target, WorkerCount: 1, RPCTimeout: "20s", Lease: "25s", PollInterval: "10ms", RetryMin: "10ms", RetryMax: "100ms"}
 	data, err := json.Marshal(cfg)
@@ -108,6 +108,7 @@ func (f *fixture) startOrders(t *testing.T, target string) (ordersv1.OrdersClien
 		}
 	}
 	cmd.Env = append(cmd.Env, "FL_GRPC_ADDR="+hint, "FL_ORDERS_CONFIG="+path, "FL_ORDERS_DATASET_ID="+f.dataset)
+	cmd.Env = append(cmd.Env, extraEnv...)
 	if err = cmd.Start(); err != nil {
 		t.Fatal(err)
 	}

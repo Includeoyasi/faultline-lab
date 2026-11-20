@@ -12,6 +12,23 @@ import (
 	"github.com/twmb/franz-go/pkg/kgo"
 )
 
+func (f *fixture) inventoryEvent(t *testing.T, orderID, kind string) *kgo.Record {
+	t.Helper()
+	var event publishing.Event
+	event.Dataset, event.Owner, event.OrderID, event.SchemaVersion = f.dataset, "inventory", orderID, 1
+	err := f.inventoryDB.QueryRow(t.Context(), `SELECT event_id,aggregate_version,stream_sequence,event_type,payload,created_at
+ FROM inventory.outbox WHERE order_id=$1 AND event_type=$2`, orderID, kind).
+		Scan(&event.EventID, &event.AggregateVersion, &event.StreamSequence, &event.Type, &event.Payload, &event.OccurredAt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	data, err := json.Marshal(event)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return &kgo.Record{Topic: "inventory.events.v1", Key: []byte(orderID), Value: data}
+}
+
 // This complements the Kafka workflow test by using the actual limited
 // orders_app and inventory_app identities from the PostgreSQL smoke.
 func testPaymentWorkflow(t *testing.T, f *fixture) {
@@ -31,23 +48,7 @@ func testPaymentWorkflow(t *testing.T, f *fixture) {
 			if order.State != model.PaymentPending || order.Reservation == nil {
 				t.Fatalf("reservation not saved: %+v", order)
 			}
-			inventoryRecord := func(kind string) *kgo.Record {
-				t.Helper()
-				var event publishing.Event
-				event.Dataset, event.Owner, event.OrderID, event.SchemaVersion = f.dataset, "inventory", order.OrderID, 1
-				err := f.inventoryDB.QueryRow(t.Context(), `SELECT event_id,aggregate_version,stream_sequence,event_type,payload,created_at
- FROM inventory.outbox WHERE order_id=$1 AND event_type=$2`, order.OrderID, kind).
-					Scan(&event.EventID, &event.AggregateVersion, &event.StreamSequence, &event.Type, &event.Payload, &event.OccurredAt)
-				if err != nil {
-					t.Fatal(err)
-				}
-				data, err := json.Marshal(event)
-				if err != nil {
-					t.Fatal(err)
-				}
-				return &kgo.Record{Topic: "inventory.events.v1", Key: []byte(order.OrderID), Value: data}
-			}
-			reserved := inventoryRecord("InventoryReserved")
+			reserved := f.inventoryEvent(t, order.OrderID, "InventoryReserved")
 			if err := f.store.ReceiveEvent(t.Context(), reserved); err != nil {
 				t.Fatal(err)
 			}
@@ -104,7 +105,7 @@ func testPaymentWorkflow(t *testing.T, f *fixture) {
 			if f.read(t, order.OrderID).State != scenario.middle {
 				t.Fatal("RPC reply alone prematurely completed the order")
 			}
-			terminal := inventoryRecord(scenario.inventoryEvent)
+			terminal := f.inventoryEvent(t, order.OrderID, scenario.inventoryEvent)
 			if err = f.store.ReceiveEvent(t.Context(), terminal); err != nil {
 				t.Fatal(err)
 			}
