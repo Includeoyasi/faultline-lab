@@ -146,6 +146,7 @@ func (f *fixture) ddlFault(t *testing.T, table string) func() {
 }
 func TestOrdersFoundation(t *testing.T) {
 	f := setup(t)
+	t.Run("payment outcomes with application roles", func(t *testing.T) { testPaymentWorkflow(t, f) })
 	t.Run("concurrent admission immutable receipt and current read", func(t *testing.T) {
 		f.product(t, "orders-admission", 5)
 		request := f.request("admission", "orders-admission")
