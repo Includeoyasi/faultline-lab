@@ -7,12 +7,11 @@
 package ordersv1
 
 import (
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
-
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -30,6 +29,10 @@ const (
 	OrderState_ORDER_STATE_RESERVING       OrderState = 2
 	OrderState_ORDER_STATE_PAYMENT_PENDING OrderState = 3
 	OrderState_ORDER_STATE_REJECTED        OrderState = 4
+	OrderState_ORDER_STATE_FINALIZING      OrderState = 5
+	OrderState_ORDER_STATE_COMPLETED       OrderState = 6
+	OrderState_ORDER_STATE_CANCELLING      OrderState = 7
+	OrderState_ORDER_STATE_CANCELLED       OrderState = 8
 )
 
 // Enum value maps for OrderState.
@@ -40,6 +43,10 @@ var (
 		2: "ORDER_STATE_RESERVING",
 		3: "ORDER_STATE_PAYMENT_PENDING",
 		4: "ORDER_STATE_REJECTED",
+		5: "ORDER_STATE_FINALIZING",
+		6: "ORDER_STATE_COMPLETED",
+		7: "ORDER_STATE_CANCELLING",
+		8: "ORDER_STATE_CANCELLED",
 	}
 	OrderState_value = map[string]int32{
 		"ORDER_STATE_UNSPECIFIED":     0,
@@ -47,6 +54,10 @@ var (
 		"ORDER_STATE_RESERVING":       2,
 		"ORDER_STATE_PAYMENT_PENDING": 3,
 		"ORDER_STATE_REJECTED":        4,
+		"ORDER_STATE_FINALIZING":      5,
+		"ORDER_STATE_COMPLETED":       6,
+		"ORDER_STATE_CANCELLING":      7,
+		"ORDER_STATE_CANCELLED":       8,
 	}
 )
 
@@ -609,14 +620,18 @@ const file_api_orders_v1_orders_proto_rawDesc = "" +
 	"\trejection\x18\n" +
 	" \x01(\tR\trejection\x12%\n" +
 	"\x0eblocked_reason\x18\v \x01(\tR\rblockedReason\x120\n" +
-	"\x14reserve_operation_id\x18\f \x01(\tR\x12reserveOperationId*\x99\x01\n" +
+	"\x14reserve_operation_id\x18\f \x01(\tR\x12reserveOperationId*\x87\x02\n" +
 	"\n" +
 	"OrderState\x12\x1b\n" +
 	"\x17ORDER_STATE_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14ORDER_STATE_ACCEPTED\x10\x01\x12\x19\n" +
 	"\x15ORDER_STATE_RESERVING\x10\x02\x12\x1f\n" +
 	"\x1bORDER_STATE_PAYMENT_PENDING\x10\x03\x12\x18\n" +
-	"\x14ORDER_STATE_REJECTED\x10\x042\x95\x02\n" +
+	"\x14ORDER_STATE_REJECTED\x10\x04\x12\x1a\n" +
+	"\x16ORDER_STATE_FINALIZING\x10\x05\x12\x19\n" +
+	"\x15ORDER_STATE_COMPLETED\x10\x06\x12\x1a\n" +
+	"\x16ORDER_STATE_CANCELLING\x10\a\x12\x19\n" +
+	"\x15ORDER_STATE_CANCELLED\x10\b2\x95\x02\n" +
 	"\x06Orders\x12W\n" +
 	"\vCreateOrder\x12'.faultline.orders.v1.CreateOrderRequest\x1a\x1f.faultline.orders.v1.Acceptance\x12L\n" +
 	"\bGetOrder\x12$.faultline.orders.v1.GetOrderRequest\x1a\x1a.faultline.orders.v1.Order\x12d\n" +
