@@ -6,12 +6,12 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/Includeoyasi/faultline-lab/internal/service"
+	"github.com/Includeoyasi/faultline-lab/internal/payments"
 )
 
 func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
-	exitCode := service.Execute(ctx, "payments", os.Args[1:], os.LookupEnv, os.Stderr)
+	exitCode := payments.Execute(ctx, os.Args[1:], os.LookupEnv, os.Stderr)
 	stop()
 	os.Exit(exitCode)
 }

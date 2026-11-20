@@ -14,6 +14,6 @@ services:
     entrypoint: [/bin/sh, -ec]
     command:
       - |
-        for topic in orders.events.v1 inventory.events.v1; do
+        for topic in orders.events.v1 inventory.events.v1 payments.events.v1; do
           /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:9092 --create --if-not-exists --topic "$$topic" --partitions 3 --replication-factor 1 --config cleanup.policy=delete --config retention.ms=-1 --config retention.bytes=-1
         done
