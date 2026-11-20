@@ -73,6 +73,15 @@ func testPaymentWorkflow(t *testing.T, f *fixture) {
 			if err = f.store.ReceiveEvent(t.Context(), payment); err != nil {
 				t.Fatal(err)
 			}
+			restore := f.ddlFault(t, "inventory_actions")
+			if _, err = f.store.ApplyEvent(t.Context()); err == nil {
+				t.Fatal("injected action insert failure was ignored")
+			}
+			if f.read(t, order.OrderID).State != model.PaymentPending ||
+				number(t, f.db, "SELECT count(*) FROM orders.inbox WHERE owner='payments' AND order_id=$1 AND applied", order.OrderID) != 0 {
+				t.Fatal("payment transition survived a failed action insert")
+			}
+			restore()
 			if worked, err := f.store.ApplyEvent(t.Context()); err != nil || !worked {
 				t.Fatal(worked, err)
 			}
@@ -116,4 +125,41 @@ func testPaymentWorkflow(t *testing.T, f *fixture) {
 			}
 		})
 	}
+	t.Run("conflicting amount does not advance the order", func(t *testing.T) {
+		const sku = "orders-workflow-wrong-amount"
+		f.product(t, sku, 1)
+		accepted := f.create(t, sku, sku)
+		f.step(t)
+		order := f.read(t, accepted.OrderID)
+		if order.Reservation == nil {
+			t.Fatal("reservation missing")
+		}
+		payload, err := json.Marshal(map[string]any{
+			"order_id": order.OrderID, "state": "SUCCEEDED",
+			"amount_minor": order.Reservation.TotalMinor + 1, "currency": order.Reservation.Currency,
+			"causation_id": order.OperationID + ":awaiting-payment",
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+		event := publishing.Event{Dataset: f.dataset, Owner: "payments", OrderID: order.OrderID,
+			EventID: order.OrderID + ":wrong-amount", AggregateVersion: 2, StreamSequence: 1,
+			Type: "PaymentSucceeded", Payload: payload, SchemaVersion: 1, OccurredAt: time.Now().UTC()}
+		data, err := json.Marshal(event)
+		if err != nil {
+			t.Fatal(err)
+		}
+		record := &kgo.Record{Topic: "payments.events.v1", Key: []byte(order.OrderID), Value: data}
+		if err = f.store.ReceiveEvent(t.Context(), record); err != nil {
+			t.Fatal(err)
+		}
+		if worked, err := f.store.ApplyEvent(t.Context()); err != nil || !worked {
+			t.Fatal(worked, err)
+		}
+		if f.read(t, order.OrderID).State != model.PaymentPending ||
+			number(t, f.db, "SELECT count(*) FROM orders.inventory_actions WHERE order_id=$1", order.OrderID) != 0 ||
+			number(t, f.db, "SELECT count(*) FROM orders.inbox WHERE owner='payments' AND order_id=$1 AND NOT applied AND last_error='PAYMENT_CONTRADICTION'", order.OrderID) != 1 {
+			t.Fatal("contradictory payment result advanced the order")
+		}
+	})
 }

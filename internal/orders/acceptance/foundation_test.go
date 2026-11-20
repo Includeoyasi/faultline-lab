@@ -130,7 +130,7 @@ func (f *fixture) ddlFault(t *testing.T, table string) func() {
 		t.Fatal(err)
 	}
 	// Only fixed, test-owned table identifiers are permitted here.
-	if table != "reserve_jobs" && table != "outbox" {
+	if table != "reserve_jobs" && table != "outbox" && table != "inventory_actions" {
 		t.Fatal("invalid fault target")
 	}
 	execute(t, migrator, "ALTER TABLE orders."+table+" ADD CONSTRAINT test_insert_failure CHECK(false) NOT VALID")
