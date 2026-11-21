@@ -86,7 +86,7 @@ func run(ctx context.Context, lookup func(string) (string, bool), output io.Writ
 }
 
 func newConsumer(broker, dataset, topic string) (*kgo.Client, error) {
-	return kgo.NewClient(kgo.SeedBrokers(broker), kgo.ConsumeTopics(topic), kgo.ConsumerGroup("payments-v1-"+dataset), kgo.FetchIsolationLevel(kgo.ReadCommitted()), kgo.DisableAutoCommit(), kgo.BlockRebalanceOnPoll())
+	return kgo.NewClient(kgo.SeedBrokers(broker), kgo.ConsumeTopics(topic), kgo.ConsumerGroup("payments-v1-"+dataset), kgo.ConsumeResetOffset(kgo.NewOffset().AtStart()), kgo.FetchIsolationLevel(kgo.ReadCommitted()), kgo.DisableAutoCommit(), kgo.BlockRebalanceOnPoll())
 }
 
 func (p processor) receive(ctx context.Context, cl *kgo.Client) error {

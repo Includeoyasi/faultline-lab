@@ -98,7 +98,9 @@ func TestPaymentRecovery(t *testing.T) {
 		e := publishing.Event{Owner: "orders", Dataset: p.dataset, OrderID: order, EventID: order + ":awaiting-payment", Type: "OrderAwaitingPayment", StreamSequence: 1, AggregateVersion: 3, SchemaVersion: 1, OccurredAt: time.Now().UTC(), Payload: json.RawMessage(payload)}
 		value, err := json.Marshal(e)
 		check(err)
-		records = append(records, &kgo.Record{Topic: topic, Key: []byte(order), Value: value})
+		// A new consumer must recover a backlog older than the client's
+		// default reset window.
+		records = append(records, &kgo.Record{Topic: topic, Key: []byte(order), Value: value, Timestamp: time.Now().Add(-2 * time.Hour)})
 	}
 	if len(records) != 2 {
 		t.Fatal("missing simulator outcome")
@@ -111,7 +113,7 @@ func TestPaymentRecovery(t *testing.T) {
 	for _, r := range records {
 		check(producer.ProduceSync(ctx, r).FirstErr())
 	}
-	check(producer.ProduceSync(ctx, &kgo.Record{Topic: topic, Key: records[0].Key, Value: records[0].Value}).FirstErr())
+	check(producer.ProduceSync(ctx, &kgo.Record{Topic: topic, Key: records[0].Key, Value: records[0].Value, Timestamp: records[0].Timestamp}).FirstErr())
 	// A fresh group consumes until a sentinel on the same partition. Its offset
 	// remains unacknowledged; both preceding jobs must already be durable.
 	sentinel := &kgo.Record{Topic: topic, Value: []byte("invalid")}
@@ -177,6 +179,9 @@ func TestPaymentRecovery(t *testing.T) {
 		for _, r := range f.Records() {
 			var e publishing.Event
 			check(json.Unmarshal(r.Value, &e))
+			if e.Dataset != p.dataset {
+				continue
+			}
 			if expected[e.OrderID] != e.Type || e.Type == "" || string(r.Key) != e.OrderID || e.Dataset != p.dataset || e.Owner != "payments" || e.StreamSequence != 1 {
 				t.Fatalf("wrong result: %+v", e)
 			}

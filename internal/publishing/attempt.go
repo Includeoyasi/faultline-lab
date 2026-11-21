@@ -4,6 +4,7 @@ package publishing
 import (
 	"context"
 	"errors"
+	"sync"
 	"time"
 
 	"github.com/twmb/franz-go/pkg/kgo"
@@ -19,7 +20,15 @@ func attempt(ctx context.Context, brokers []string, lane string, hooks []kgo.Hoo
 	if err != nil {
 		return err
 	}
-	defer cl.Close()
+	// Canceling the client context stops its loops. Close must also fail any
+	// buffered record, otherwise ProduceSync can wait forever on shutdown.
+	var closeOnce sync.Once
+	closeClient := func() { closeOnce.Do(cl.Close) }
+	stopClosing := context.AfterFunc(ctx, closeClient)
+	defer func() {
+		stopClosing()
+		closeClient()
+	}()
 	id, _, err := cl.ProducerID(ctx)
 	if err != nil {
 		return err

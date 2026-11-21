@@ -5,6 +5,7 @@ import (
 	"errors"
 	"io/fs"
 	"os"
+	"strings"
 	"testing"
 	"time"
 
@@ -61,7 +62,17 @@ func TestPublicationAndReplay(t *testing.T) {
 			}
 			exec(string(b))
 		}
-		for _, path := range paths[:len(paths)-1] {
+		publication := -1
+		for i, path := range paths {
+			if strings.HasSuffix(path, "_publishing.sql") {
+				publication = i
+				break
+			}
+		}
+		if publication < 0 {
+			t.Fatalf("%s has no publishing migration", owner)
+		}
+		for _, path := range paths[:publication] {
 			apply(path)
 		}
 		exec("INSERT INTO " + owner + ".dataset(dataset_id) VALUES ('fixture')")
@@ -73,7 +84,10 @@ func TestPublicationAndReplay(t *testing.T) {
 			exec("INSERT INTO inventory.reservations(order_id,state,version,total_minor,currency) VALUES('o','RESERVED',1,100,'RUB')")
 		}
 		exec("INSERT INTO " + owner + ".outbox(event_id,order_id,aggregate_version,event_type,payload) VALUES('one','o',3,'" + kind + "','{}')")
-		apply(paths[len(paths)-1])
+		apply(paths[publication])
+		for _, path := range paths[publication+1:] {
+			apply(path)
+		}
 		insert := "INSERT INTO " + owner + ".outbox(event_id,order_id,aggregate_version,event_type,payload) VALUES('two','o',6,'" + kind + "','{}')"
 		exec("BEGIN; " + insert + "; ROLLBACK")
 		exec(insert)

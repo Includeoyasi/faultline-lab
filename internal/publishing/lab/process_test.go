@@ -140,7 +140,8 @@ func verifyProcessTakeover(t *testing.T, ctx context.Context, pool, reader *pgxp
 		t.Fatal(err)
 	}
 	defer cl.Close()
-	for _, want := range []int64{1, 1, 2, 3, 4, 5} {
+	expected := []int64{1, 1, 2, 3, 4, 5}
+	for index := 0; index < len(expected); {
 		fetch := cl.PollRecords(ctx, 1)
 		if es := fetch.Errors(); len(es) > 0 {
 			t.Fatal(es[0].Err)
@@ -150,6 +151,10 @@ func verifyProcessTakeover(t *testing.T, ctx context.Context, pool, reader *pgxp
 			t.Fatal("missing committed record")
 		}
 		r := records[0]
+		if string(r.Key) != "o" {
+			continue
+		}
+		want := expected[index]
 		var e publishing.Event
 		if err = json.Unmarshal(r.Value, &e); err != nil || e.StreamSequence != want || e.OrderID != "o" {
 			t.Fatalf("expected sequence %d, got %s", want, r.Value)
@@ -162,6 +167,7 @@ func verifyProcessTakeover(t *testing.T, ctx context.Context, pool, reader *pgxp
 				t.Fatal(err)
 			}
 		}
+		index++
 	}
 	var cursor, effects int
 	var state string
